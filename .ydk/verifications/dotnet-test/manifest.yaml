@@ -1,0 +1,7 @@
+name: dotnet-test
+description: Run NPOI.TestCases, NPOI.OOXML.TestCases and NPOI.OOXML4Net.TestCases on net10.0
+trigger: git:pre-push
+parallel: false
+timeout: 1500
+requires: []
+supports_auto_fix: false

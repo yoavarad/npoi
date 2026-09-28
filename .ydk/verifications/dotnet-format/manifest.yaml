@@ -1,0 +1,7 @@
+name: dotnet-format
+description: dotnet format --verify-no-changes on changed .cs files only
+trigger: git:pre-push
+parallel: false
+timeout: 900
+requires: []
+supports_auto_fix: false
