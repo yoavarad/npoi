@@ -164,3 +164,15 @@ examples/.vs/
 docs/superpowers/
 
 BenchmarkDotNet.Artifacts
+
+# ydk machine-local / regenerable state -- must not be tracked:
+# worktrees are live git worktrees (nested .git, would corrupt the repo);
+# active-task.json and .verified are transient per-session markers;
+# memory/ is a regenerable ChromaDB index (ydk memory index).
+.ydk/cache/
+.ydk/spec-check-results.json
+.ydk/worktrees/
+.ydk/active-task.json
+.ydk/.verified
+.ydk/memory/
+.claude/settings.local.json
