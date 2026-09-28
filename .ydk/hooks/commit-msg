@@ -1,0 +1,13 @@
+#!/bin/sh
+TOPLEVEL=$(git rev-parse --show-toplevel)
+if [ -x "$TOPLEVEL/.venv/Scripts/python.exe" ]; then
+  PY="$TOPLEVEL/.venv/Scripts/python.exe"
+elif [ -x "$TOPLEVEL/.venv/bin/python" ]; then
+  PY="$TOPLEVEL/.venv/bin/python"
+elif command -v uv >/dev/null 2>&1 && [ -x "$(uv tool dir --color never)/ydk/Scripts/python.exe" ]; then
+  # Windows: python3 is often the Microsoft Store stub; use the uv-installed ydk interpreter
+  PY="$(uv tool dir --color never)/ydk/Scripts/python.exe"
+else
+  PY=$(command -v python3 || command -v python || echo python3)
+fi
+"$PY" -m ydk.hooks.commit_msg "$1"
