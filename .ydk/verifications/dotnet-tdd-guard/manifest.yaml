@@ -1,0 +1,6 @@
+name: dotnet-tdd-guard
+description: Production .cs changes (main/, ooxml/, openxml4Net/) must include a test change under testcases/
+trigger: git:pre-commit
+parallel: true
+timeout: 30
+requires: []
