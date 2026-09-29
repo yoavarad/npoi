@@ -1,0 +1,6 @@
+bin/
+obj/
+.ydk/
+scratchpad/
+testcases/
+benchmarks/

@@ -27,3 +27,10 @@ Conventions, preferences, and domain knowledge.
 - **`.ydk/proofs/` is gitignored** (decision, task #27): proofs are per-run `ydk task done` output, machine-local and noisy; the PR body and CI are the durable record. (ole-extractor commits them; this fork does not.)
 - **Guard hook uses a repo-relative command** (`python .claude/hooks/guard.py` in `.claude/settings.json`): `guard.py` is stdlib-only, so any `python` on PATH works from the repo root or any worktree. No absolute user paths in tracked settings.
 - **`.ydk/state.json` stage is `03`** (implementation; the stage-gate only blocks source edits in stages 01/02).
+
+## Knowledge Graph (graphify)
+
+- `graphify-out/` holds the code graph. Query it with `graphify query "<question>"`, `graphify path "A" "B"`, `graphify explain "X"`.
+- **Refresh after code changes:** run `graphify update .` from the repo root (AST-only, no API cost, ~4 min cold). Scope is set by `.graphifyignore` (excludes `bin/`, `obj/`, `testcases/`, `benchmarks/`, `scratchpad/`, `.ydk/`).
+- **`graph.json` (~68MB), `GRAPH_REPORT.md`, `graph.html`, `manifest.json` are committed on purpose** so exploration works on a fresh clone. `graphify-out/cache/`, dated snapshot dirs and `graphify-out/*.graphify_*` are gitignored. Expect large diffs when re-committing the graph; do it only occasionally.
+- `.claude/settings.json` has graphify `PreToolUse` hooks (`hook-guard search` / `read --strict`) that steer searches to the graph.

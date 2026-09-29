@@ -177,5 +177,12 @@ BenchmarkDotNet.Artifacts
 .ydk/memory/
 .claude/settings.local.json
 
+# graphify working files (graph.json/GRAPH_REPORT.md/graph.html are kept)
+graphify-out/*.graphify_*
+graphify-out/cache/
+graphify-out/20[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
+*.graphify-bak
+
 # YDK per-run proofs
 .ydk/proofs/
+__pycache__/
