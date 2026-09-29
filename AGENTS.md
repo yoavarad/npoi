@@ -6,7 +6,9 @@ Guidance for AI agents and new contributors working in this codebase.
 
 NPOI is a .NET port of [Apache POI](https://poi.apache.org/) for reading and
 writing Microsoft Office file formats without requiring COM or an Office
-installation. Targets net472, netstandard2.0, netstandard2.1, and net8.0.
+installation. Library projects target net472, netstandard2.0, netstandard2.1, net8.0, and net10.0
+(set in each library `.csproj`); test projects target net472 and net10.0. Building
+needs the .NET 10 SDK. See `docs/project-rules.md` for fork rules and gotchas.
 
 ## Code Style
 
