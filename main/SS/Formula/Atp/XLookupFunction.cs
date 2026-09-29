@@ -208,7 +208,7 @@ namespace NPOI.SS.Formula.Atp
 
             public bool IsRow
             {
-                get { return false; }
+                get { return true; }
             }
 
             public bool IsColumn
@@ -228,26 +228,28 @@ namespace NPOI.SS.Formula.Atp
 
             public bool Contains(int row, int col)
             {
-                throw new NotImplementedException();
+                return true;
             }
 
             public bool ContainsColumn(int col)
             {
-                throw new NotImplementedException();
+                return true;
             }
 
             public bool ContainsRow(int row)
             {
-                throw new NotImplementedException();
+                return true;
             }
 
             public ValueEval GetAbsoluteValue(int row, int col)
             {
-                if(col == 0)
-                {
-                    return _notFound;
-                }
-                return new StringEval("");
+                // used for implicit intersection of a single cell: always the not-found value
+                return _notFound;
+            }
+
+            private ValueEval GetRelative(int relRow, int relCol)
+            {
+                return relCol == 0 ? _notFound : new StringEval("");
             }
 
             public TwoDEval GetColumn(int columnIndex)
@@ -257,7 +259,7 @@ namespace NPOI.SS.Formula.Atp
 
             public ValueEval GetRelativeValue(int relativeRowIndex, int relativeColumnIndex)
             {
-                return GetAbsoluteValue(relativeRowIndex, relativeColumnIndex);
+                return GetRelative(relativeRowIndex, relativeColumnIndex);
             }
 
             public TwoDEval GetRow(int rowIndex)
@@ -267,12 +269,12 @@ namespace NPOI.SS.Formula.Atp
 
             public ValueEval GetValue(int sheetIndex, int rowIndex, int columnIndex)
             {
-                return GetAbsoluteValue(rowIndex, columnIndex);
+                return GetRelative(rowIndex, columnIndex);
             }
 
             public ValueEval GetValue(int rowIndex, int columnIndex)
             {
-                return GetAbsoluteValue(rowIndex, columnIndex);
+                return GetRelative(rowIndex, columnIndex);
             }
 
             public bool IsSubTotal(int rowIndex, int columnIndex)
