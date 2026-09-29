@@ -106,7 +106,7 @@ namespace TestCases
  */
         private Stream OpenClasspathResource(String sampleFileName)
         {
-            FileStream file = new FileStream(_resolvedDataDir + sampleFileName, FileMode.Open, FileAccess.Read);
+            FileStream file = new FileStream(_resolvedDataDir + sampleFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             return file;
         }
 
@@ -174,7 +174,7 @@ namespace TestCases
             //		System.out.println("Opening " + f.GetAbsolutePath());
             try
             {
-                return new FileStream(_resolvedDataDir + sampleFileName, FileMode.Open, FileAccess.Read);
+                return new FileStream(_resolvedDataDir + sampleFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             }
             catch (FileNotFoundException)
             {
@@ -207,7 +207,7 @@ namespace TestCases
             //{
             //    throw new RuntimeException(e);
             //}
-            return new FileStream(path,FileMode.OpenOrCreate);
+            return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
         public string[] GetFiles()
         {
