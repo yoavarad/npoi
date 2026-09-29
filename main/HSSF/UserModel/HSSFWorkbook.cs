@@ -2446,6 +2446,10 @@ namespace NPOI.HSSF.UserModel
 
         public void RemoveAt(int index)
         {
+            if(index < 0 || index >= _sheets.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
             RemoveSheetAt(index);
         }
 

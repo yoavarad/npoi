@@ -1507,5 +1507,15 @@ namespace TestCases.HSSF.UserModel
             });
             wb.Close();
         }
+
+        [Test]
+        public void TestRemoveAtOutOfRangeThrowsArgumentOutOfRange()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            wb.CreateSheet("A");
+            Assert.Throws<ArgumentOutOfRangeException>(() => wb.RemoveAt(5));
+            Assert.Throws<ArgumentOutOfRangeException>(() => wb.RemoveAt(-1));
+            wb.Close();
+        }
     }
 }
