@@ -2,4 +2,4 @@
 #   git config blame.ignoreRevsFile .git-blame-ignore-revs
 
 # chore(format): reformat whole repo with dotnet format (.editorconfig) -- task #46
-b92ea5659f30bf338aeb0f09f7e087c5f413210a
+8ad419fef032f47c85e6fa3799f579f752322e14
