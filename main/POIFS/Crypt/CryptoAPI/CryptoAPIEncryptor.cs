@@ -290,13 +290,13 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 cipher = encryptor.InitCipherForBlock(cipher, block);
             }
 
-            public new void Write(int b)
+            public override void Write(int b)
             {
                 try
                 {
                     oneByte[0] = (byte) b;
                     cipher.Update(oneByte, 0, 1, oneByte, 0);
-                    base.Write(oneByte);
+                    base.WriteByte(oneByte[0]);
                 }
                 catch(Exception e)
                 {
@@ -304,7 +304,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 }
             }
 
-            public new void Write(byte[] b, int off, int len)
+            public override void Write(byte[] b, int off, int len)
             {
                 try
                 {

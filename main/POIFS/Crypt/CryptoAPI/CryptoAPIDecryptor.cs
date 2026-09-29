@@ -32,6 +32,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
 
         private sealed class SeekableMemoryStream : MemoryStream
         {
+            private readonly CryptoAPIDecryptor decryptor;
             Cipher cipher;
             byte[] oneByte = { 0 };
 
@@ -42,18 +43,15 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                     throw new IndexOutOfRangeException(string.Format("seek position({0}) is greater than stream length({1})", pos, Length));
                 }
 
-                //this.pos = pos;
-                //mark = pos;
-                throw new NotImplementedException();
+                Position = pos;
             }
 
             public void SetBlock(int block)
             {
-                //cipher = InitCipherForBlock(cipher, block);
-                throw new NotImplementedException();
+                cipher = decryptor.InitCipherForBlock(cipher, block);
             }
 
-            public int Read()
+            public override int ReadByte()
             {
                 int ch = base.ReadByte();
                 if(ch == -1)
@@ -73,7 +71,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             public override int Read(byte[] b, int off, int len)
             {
                 int readLen = base.Read(b, off, len);
-                if(readLen == -1)
+                if(readLen <= 0)
                     return 0;
                 try
                 {
@@ -86,11 +84,11 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 return readLen;
             }
 
-            public SeekableMemoryStream(byte[] buf)
+            public SeekableMemoryStream(byte[] buf, CryptoAPIDecryptor decryptor)
                 : base(buf)
             {
-                //cipher = InitCipherForBlock(null, 0);
-                throw new NotImplementedException();
+                this.decryptor = decryptor;
+                cipher = decryptor.InitCipherForBlock(null, 0);
             }
         }
 
@@ -213,7 +211,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             MemoryStream bos = new MemoryStream();
             IOUtils.Copy(dis, bos);
             dis.Close();
-            SeekableMemoryStream sbis = new SeekableMemoryStream(bos.ToArray());
+            SeekableMemoryStream sbis = new SeekableMemoryStream(bos.ToArray(), this);
             LittleEndianInputStream leis = new LittleEndianInputStream(sbis);
             int streamDescriptorArrayOffset = (int)leis.ReadUInt();
             int streamDescriptorArraySize = (int)leis.ReadUInt();
@@ -242,14 +240,29 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             {
                 sbis.Seek(entry.streamOffset);
                 sbis.SetBlock(entry.block);
-                Stream is1 = new BufferedStream(sbis, entry.streamSize);
-                fsOut.CreateDocument(is1, entry.streamName);
+                long remaining = sbis.Length - sbis.Position;
+                if(entry.streamSize < 0 || entry.streamSize > remaining)
+                {
+                    throw new EncryptedDocumentException("Invalid stream size in EncryptedSummary: " + entry.streamSize);
+                }
+                byte[] streamData = new byte[entry.streamSize];
+                int total = 0;
+                while(total < streamData.Length)
+                {
+                    int n = sbis.Read(streamData, total, streamData.Length - total);
+                    if(n <= 0)
+                    {
+                        break;
+                    }
+                    total += n;
+                }
+                fsOut.CreateDocument(new MemoryStream(streamData, 0, total), entry.streamName);
             }
 
             leis.Close();
             sbis = null;
 
-            bos.Seek(0, SeekOrigin.Begin); //bos.Reset();
+            bos.SetLength(0); //bos.Reset();
             fsOut.WriteFileSystem(bos);
             fsOut.Close();
             _length = bos.Length;

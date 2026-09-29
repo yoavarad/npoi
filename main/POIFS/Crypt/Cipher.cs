@@ -56,9 +56,14 @@ namespace NPOI.POIFS.Crypt
                 cp = new KeyParameter(key.GetEncoded());
                 cp = new ParametersWithIV(cp, parameterSpec.GetIV());
             }
+            else if(aps == null)
+            {
+                Init(cipherMode, key);
+                return;
+            }
             else
             {
-                throw new NotImplementedException();
+                throw new ArgumentException("Unsupported algorithm parameter spec: " + aps.GetType().Name, nameof(aps));
             }
             cipherImpl.Init(cipherMode == ENCRYPT_MODE, cp);
         }
@@ -101,7 +106,7 @@ namespace NPOI.POIFS.Crypt
                 case "RSA":
                     return 2147483647;
                 default:
-                    throw new NotImplementedException();
+                    throw new ArgumentException("Unknown cipher algorithm: " + jceId, nameof(jceId));
             }
         }
 
