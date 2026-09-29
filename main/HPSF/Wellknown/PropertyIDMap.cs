@@ -533,12 +533,12 @@ namespace NPOI.HPSF.Wellknown
 
         public bool Contains(KeyValuePair<long, string> item)
         {
-            throw new NotImplementedException();
+            return ((ICollection<KeyValuePair<long, string>>) idMap).Contains(item);
         }
 
         public void CopyTo(KeyValuePair<long, string>[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            ((ICollection<KeyValuePair<long, string>>) idMap).CopyTo(array, arrayIndex);
         }
 
         public bool Remove(KeyValuePair<long, string> item)

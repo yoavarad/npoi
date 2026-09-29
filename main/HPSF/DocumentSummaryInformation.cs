@@ -311,24 +311,14 @@ namespace NPOI.HPSF
         }
 
         /// <summary>
-        /// <para>
-        /// Returns the heading pair (or <c>null</c>)
-        /// <strong>when this method is implemented. Please note that the
-        /// return type is likely to change!</strong>
-        /// </para>
+        /// Gets or sets the heading pair (or <c>null</c>) as the raw, unparsed
+        /// bytes of its VT_VECTOR | VT_VARIANT value (element count followed by the elements).
         /// </summary>
         /// <return>heading pair value</return>
         public byte[] HeadingPair
         {
-            get
-            {
-                NotYetImplemented("Reading byte arrays ");
-                return (byte[]) GetProperty(PropertyIDMap.PID_HEADINGPAIR);
-            }
-            set
-            {
-                NotYetImplemented("Writing byte arrays ");
-            }
+            get => GetProperty(PropertyIDMap.PID_HEADINGPAIR) as byte[];
+            set => SetRawVectorProperty(PropertyIDMap.PID_HEADINGPAIR, Variant.VT_VECTOR | Variant.VT_VARIANT, value);
         }
 
         /// <summary>
@@ -342,24 +332,41 @@ namespace NPOI.HPSF
 
 
         /// <summary>
-        /// <para>
-        /// Returns the doc parts (or <c>null</c>)
-        /// <strong>when this method is implemented. Please note that the
-        /// return type is likely to change!</strong>
-        /// </para>
+        /// Gets or sets the doc parts (or <c>null</c>) as the raw, unparsed bytes
+        /// of its VT_VECTOR | VT_LPSTR (or VT_LPWSTR) value (element count followed by the elements).
         /// </summary>
         /// <return>doc parts value</return>
         public byte[] Docparts
         {
-            get
+            get => GetProperty(PropertyIDMap.PID_DOCPARTS) as byte[];
+            set => SetRawVectorProperty(PropertyIDMap.PID_DOCPARTS, Variant.VT_VECTOR | Variant.VT_LPSTR, value);
+        }
+
+        /// <summary>
+        /// Stores raw vector bytes, keeping the variant type of an existing property
+        /// (e.g. VT_LPWSTR doc parts) so the bytes stay consistent with their type.
+        /// A <c>null</c> value removes the property. The bytes are written as-is
+        /// (not validated); values read back may carry up to 3 zero padding bytes.
+        /// </summary>
+        private void SetRawVectorProperty(int id, long defaultType, byte[] value)
+        {
+            if(value == null)
             {
-                NotYetImplemented("Reading byte arrays");
-                return (byte[]) GetProperty(PropertyIDMap.PID_DOCPARTS);
+                Remove1stProperty(id);
+                return;
             }
-            set
+
+            Section s = FirstSection;
+            long type = defaultType;
+            foreach(Property p in s.Properties)
             {
-                NotYetImplemented("Writing byte arrays");
+                if(p.ID == id)
+                {
+                    type = p.Type;
+                    break;
+                }
             }
+            s.SetProperty(id, type, value);
         }
 
         /// <summary>
@@ -723,18 +730,6 @@ namespace NPOI.HPSF
                     AddSection(s);
                 }
             }
-        }
-
-        /// <summary>
-        /// Throws an {@link UnsupportedOperationException} with a message text
-        /// telling which functionality is not yet implemented.
-        /// </summary>
-        /// <param name="msg">text telling was leaves to be implemented, e.g.
-        /// "Reading byte arrays".
-        /// </param>
-        private void NotYetImplemented(String msg)
-        {
-            throw new NotImplementedException(msg + " is not yet implemented.");
         }
     }
 }
