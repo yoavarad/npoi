@@ -169,17 +169,4 @@ namespace NPOI.POIFS.Crypt.Agile
             return certList;
         }
     }
-
-    internal sealed class CertificateFactory
-    {
-        internal static CertificateFactory GetInstance(string v)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal X509Certificate GenerateCertificate(MemoryStream memoryStream)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }
