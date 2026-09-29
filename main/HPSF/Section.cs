@@ -990,10 +990,12 @@ namespace NPOI.HPSF
                 length += LittleEndianConsts.INT_SIZE;
 
                 String value = ls.Value+"\0";
-                LittleEndian.PutUInt(value.Length, out1);
+                byte[] bytes = CodePageUtil.GetBytesInCodePage(value, codepage);
+                // Unicode lengths count characters; all other codepages count bytes.
+                int len = (codepage == CodePageUtil.CP_UNICODE) ? value.Length : bytes.Length;
+                LittleEndian.PutUInt(len, out1);
                 length += LittleEndianConsts.INT_SIZE;
 
-                byte[] bytes = CodePageUtil.GetBytesInCodePage(value, codepage);
                 out1.Write(bytes, 0, bytes.Length);
                 length += bytes.Length;
 

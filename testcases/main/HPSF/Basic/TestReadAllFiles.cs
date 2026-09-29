@@ -187,8 +187,8 @@ namespace TestCases.HPSF.Basic
                     var s = dsi.Category;
                     s = dsi.Company;
                     var a = dsi.CustomProperties;
-                    // FIXME dsi.Docparts;
-                    // FIXME dsi.HeadingPair;
+                    var bytes = dsi.Docparts;
+                    bytes = dsi.HeadingPair;
                     _ = dsi.HiddenCount;
                     _ = dsi.LineCount;
                     var b = dsi.LinksDirty;

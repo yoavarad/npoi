@@ -892,7 +892,14 @@ namespace NPOI.HPSF
         /// @see Object#hashCode()
         public override int GetHashCode()
         {
-            throw new NotImplementedException("FIXME: Not yet implemented.");
+            // Only header fields are hashed: they are all compared by Equals, and
+            // Property.GetHashCode is not content-based for array values.
+            int hash = ByteOrder;
+            hash = hash * 31 + ClassID.GetHashCode();
+            hash = hash * 31 + Format;
+            hash = hash * 31 + OSVersion;
+            hash = hash * 31 + SectionCount;
+            return hash;
         }
 
 
