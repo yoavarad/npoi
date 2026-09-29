@@ -92,7 +92,10 @@ namespace NPOI.XSSF.UserModel
             {
                 return Int32.Parse(bookName);
             }
-            catch(FormatException) { }
+            catch(FormatException)
+            {
+                // not numeric: look it up as an external link name below
+            }
 
             // Look up an External Link Table for this name
             List<ExternalLinksTable> tables = _uBook.ExternalLinksTable;

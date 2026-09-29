@@ -125,7 +125,7 @@ namespace NPOI.XSSF.Streaming
             }
             catch
             {
-
+                // best-effort close kept for now; upstream propagates close errors (tracked in #69, see IDisposable audit #39)
             }
         }
 

@@ -624,6 +624,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                     }
                     catch(FormatException)
                     {
+                        // try the next format
                     }
                 }
             }
@@ -638,6 +639,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                 }
                 catch(FormatException)
                 {
+                    // try the next format
                 }
             }
             //if you're here, no pattern matched, throw exception

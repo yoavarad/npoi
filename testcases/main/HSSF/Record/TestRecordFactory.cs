@@ -265,5 +265,15 @@ namespace TestCases.HSSF.Record
             HSSFTestDataSamples.OpenSampleWorkbook(sampleFileName);
         }
 
+        [Test]
+        public void TestRecordFormatExceptionFromConstructorIsNotRewrapped()
+        {
+            // WriteAccessRecord rejects more than 112 bytes of data
+            byte[] data = new byte[120];
+            RecordFormatException ex = Assert.Throws<RecordFormatException>(
+                () => RecordFactory.CreateRecord(TestcaseRecordInputStream.Create(WriteAccessRecord.sid, data)));
+            Assert.That(ex.Message, Does.StartWith("Expected data size (112)"));
+        }
+
     }
 }

@@ -1398,5 +1398,14 @@ namespace TestCases.POIFS.Storage
                 }
             }
         }
+
+        [Test]
+        public void TestIsUsedOutOfRangeIndex()
+        {
+            BlockAllocationTableReader table = new BlockAllocationTableReader(POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS);
+            ClassicAssert.IsFalse(table.IsUsed(5));
+            ClassicAssert.IsFalse(table.IsUsed(-1));
+            Assert.Throws<IOException>(() => table.GetNextBlockIndex(5));
+        }
     }
 }

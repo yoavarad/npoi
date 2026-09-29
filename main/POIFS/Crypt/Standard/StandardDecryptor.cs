@@ -219,6 +219,8 @@ namespace NPOI.POIFS.Crypt.Standard
             }
             catch
             {
+                // [MS-OFFCRYPTO] 2.3.4.15 allows arbitrary padding bytes, so padding checks may fail;
+                // the tail beyond StreamSize is discarded anyway
                 finalPlain = Array.Empty<byte>();
             }
             finalized = true;
@@ -338,7 +340,10 @@ namespace NPOI.POIFS.Crypt.Standard
                         plainOffset = plainCount; // discard
                     }
                 }
-                catch { }
+                catch
+                {
+                    // draining unread data on Close is optional; errors in discarded data must not fail Close
+                }
             }
             encryptedInput.Close();
             plainBuffer = Array.Empty<byte>();

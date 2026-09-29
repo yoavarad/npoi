@@ -96,6 +96,7 @@ namespace NPOI.SS.Formula.Functions
             }
             catch(FormatException)
             {
+                // not numeric: try month names below
             }
 
             string[] months = DateTimeFormatInfo.InvariantInfo.MonthNames;

@@ -1021,11 +1021,13 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 sheet = GetWorkbook().GetSheetAt(0) as XSSFSheet;
             }
-            catch(InvalidFormatException ife)
+            catch(InvalidFormatException)
             {
+                // no usable embedded workbook: callers treat a null sheet as "no data", as Apache POI does
             }
-            catch(IOException ioe)
+            catch(IOException)
             {
+                // same as above
             }
             return sheet;
         }

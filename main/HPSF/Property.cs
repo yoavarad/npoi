@@ -69,6 +69,8 @@ namespace NPOI.HPSF
     /// </summary>
     public class Property
     {
+        private static readonly POILogger LOG = POILogFactory.GetLogger(typeof(Property));
+
         /// <summary>
         /// Default codepage for <see cref="CodePageString"/>
         /// </summary>
@@ -332,13 +334,12 @@ namespace NPOI.HPSF
                     m.Add(id, b.ToString());
                 }
             }
-            catch(SystemException)
+            catch(SystemException ex)
             {
-                //POILogger l = POILogFactory.GetLogger(getClass());
-                //l.log(POILogger.WARN,
-                //        "The property Set's dictionary contains bogus data. "
-                //        + "All dictionary entries starting with the one with ID "
-                //        + id + " will be ignored.", ex);
+                // keep the entries read so far, as Apache POI does, but do not drop the failure silently
+                LOG.Log(POILogger.WARN,
+                        "The property Set's dictionary contains bogus data. "
+                        + "All dictionary entries after the last valid one will be ignored.", ex);
             }
             return m;
         }
@@ -533,7 +534,8 @@ namespace NPOI.HPSF
                 }
                 catch(Exception e)
                 {
-                    //LOG.log(POILogger.WARN, "can't serialize string", e);
+                    // ToString must not throw; log and fall back to the partial dump
+                    LOG.Log(POILogger.WARN, "can't serialize string", e);
                 }
 
                 // skip length field
@@ -628,7 +630,8 @@ namespace NPOI.HPSF
             }
             catch(Exception e)
             {
-                //LOG.log(POILogger.WARN, "Can't decode id " + ID);
+                // undecodable value: report it and return null, as Apache POI does
+                LOG.Log(POILogger.WARN, "Can't decode id " + ID, e);
             }
             return null;
         }

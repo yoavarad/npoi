@@ -157,15 +157,13 @@ namespace NPOI.POIFS.Crypt.Standard
             {
                 if(finalized)
                     return;
-                try
-                {
-                    byte[] finalBlock = cipher.DoFinal();
-                    if(finalBlock != null && finalBlock.Length > 0)
-                        cipherOut.Write(finalBlock, 0, finalBlock.Length);
-                }
-                catch { }
-                cipherOut.Flush();
+                // a failure here would leave a truncated/corrupt EncryptedPackage, so let it surface;
+                // mark finalized first so a later Close/writer event does not retry and mask it
                 finalized = true;
+                byte[] finalBlock = cipher.DoFinal();
+                if(finalBlock != null && finalBlock.Length > 0)
+                    cipherOut.Write(finalBlock, 0, finalBlock.Length);
+                cipherOut.Flush();
             }
 
             public override void Close()

@@ -175,9 +175,9 @@ namespace NPOI.Common.UserModel.Fonts
                     Charset = Encoding.GetEncoding(charsetName);
                     return;
                 }
-                catch(Exception e)
+                catch(Exception e) when(e is ArgumentException || e is NotSupportedException)
                 {
-
+                    // charset not available on this runtime: Charset stays null, as Apache POI does
                 }
             }
             Charset = null;

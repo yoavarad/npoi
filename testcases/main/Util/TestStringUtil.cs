@@ -275,5 +275,12 @@ namespace TestCases.Util
             // search for unicode characters
             ClassicAssert.AreEqual(1, StringUtil.CountMatches(test, '\u00a9'), "Unicode");
         }
+
+        [Test]
+        public void TestPutUnicodeBEOutputTooSmall()
+        {
+            // the original ArgumentException must surface, not a message-less InvalidOperationException
+            Assert.Throws<ArgumentException>(() => StringUtil.PutUnicodeBE("abc", new byte[4], 0));
+        }
     }
 }
