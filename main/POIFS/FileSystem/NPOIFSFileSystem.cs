@@ -459,11 +459,11 @@ namespace NPOI.POIFS.FileSystem
         public override bool TryGetBlockAt(int offset, out ByteBuffer buffer)
         {
             // The header block doesn't count, so add one
-            long startAt = (offset + 1) * bigBlockSize.GetBigBlockSize();
+            long startAt = ((long) offset + 1) * bigBlockSize.GetBigBlockSize();
 
             buffer = null;
 
-            if(startAt >= _data.Size)
+            if(startAt < 0 || startAt >= _data.Size)
                 return false;
 
             try
@@ -487,7 +487,7 @@ namespace NPOI.POIFS.FileSystem
                 return byteBuffer;
 
             // The header block doesn't count, so add one
-            long startAt = (offset + 1) * bigBlockSize.GetBigBlockSize();
+            long startAt = ((long) offset + 1) * bigBlockSize.GetBigBlockSize();
             // Allocate and write
             ByteBuffer buffer = ByteBuffer.CreateBuffer(GetBigBlockSize());
             // byte[] buffer = new byte[GetBigBlockSize()];

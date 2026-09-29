@@ -56,14 +56,16 @@ namespace NPOI.POIFS.FileSystem
         private ByteBuffer GetBlockAt(int offset, bool throwIfNotFound)
         {
             // Which big block is this?
-            int byteOffset = offset * POIFSConstants.SMALL_BLOCK_SIZE;
-            int bigBlockNumber = byteOffset / _filesystem.GetBigBlockSize();
-            int bigBlockOffset = byteOffset % _filesystem.GetBigBlockSize();
+            if(offset < 0)
+                throw new IndexOutOfRangeException("Invalid mini block " + offset);
+            long byteOffset = (long) offset * POIFSConstants.SMALL_BLOCK_SIZE;
+            long bigBlockNumber = byteOffset / _filesystem.GetBigBlockSize();
+            int bigBlockOffset = (int) (byteOffset % _filesystem.GetBigBlockSize());
 
             // Now locate the data block for it
             NPOIFSStream.StreamBlockByteBufferIterator it = _mini_stream.GetBlockIterator() as NPOIFSStream.StreamBlockByteBufferIterator;
 
-            for(int i = 0; i < bigBlockNumber; i++)
+            for(long i = 0; i < bigBlockNumber; i++)
             {
                 it.Next();
             }
@@ -273,7 +275,12 @@ namespace NPOI.POIFS.FileSystem
 
         public override ChainLoopDetector GetChainLoopDetector()
         {
-            return new ChainLoopDetector(_root.Size, this);
+            // Cover every mini block the SBATs can address, so a loop is detected
+            //  even when the root property understates the mini stream size
+            long sbatCapacity = (long) _sbat_blocks.Count
+                * _filesystem.GetBigBlockSizeDetails().GetBATEntriesPerBlock()
+                * POIFSConstants.SMALL_BLOCK_SIZE;
+            return new ChainLoopDetector(Math.Max(_root.Size, sbatCapacity), this);
         }
 
         public override int GetBlockStoreBlockSize()

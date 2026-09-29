@@ -199,8 +199,7 @@ namespace NPOI.POIFS.FileSystem
 
             for(int i = 0; i < _marked_offset_count; i++)
             {
-                _data.MoveNext();
-                _buffer = _data.Current;
+                _buffer = NextBlock();
                 _current_offset += _buffer.Remain;
             }
 
@@ -210,8 +209,7 @@ namespace NPOI.POIFS.FileSystem
             if(_current_offset != _marked_offset)
             {
                 // Grab the right block
-                _data.MoveNext();
-                _buffer = _data.Current;
+                _buffer = NextBlock();
                 _current_block_count++;
 
                 // Skip to the right place in it
@@ -294,10 +292,7 @@ namespace NPOI.POIFS.FileSystem
                 if(_buffer == null || _buffer.Remain == 0)
                 {
                     _current_block_count++;
-                    //_buffer = _data.next();
-                    _data.MoveNext();
-                    _buffer = _data.Current;
-
+                    _buffer = NextBlock();
                 }
 
                 int limit = Math.Min(len - read, _buffer.Remain);
@@ -305,6 +300,17 @@ namespace NPOI.POIFS.FileSystem
                 _current_offset += limit;
                 read += limit;
             }
+        }
+
+        private ByteBuffer NextBlock()
+        {
+            // A chain shorter than the declared document size would otherwise
+            //  leave us spinning on an exhausted buffer
+            if(!_data.MoveNext())
+            {
+                throw new IndexOutOfRangeException("Can't read past the end of the stream - block chain is shorter than the document size " + _document_size);
+            }
+            return _data.Current;
         }
 
         public override int ReadByte()
