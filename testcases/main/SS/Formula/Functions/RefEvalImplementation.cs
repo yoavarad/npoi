@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     public class RefEvalImplementation : RefEval
     {

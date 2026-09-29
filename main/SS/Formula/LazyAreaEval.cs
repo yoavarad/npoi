@@ -18,11 +18,11 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
-    using System.Text;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
+    using System;
+    using System.Text;
 
     /**
      * Provides Lazy Evaluation to 3D Ranges
@@ -35,7 +35,7 @@ namespace NPOI.SS.Formula
         public LazyAreaEval(AreaI ptg, SheetRangeEvaluator evaluator)
             : base(ptg, evaluator)
         {
-            
+
             _evaluator = evaluator;
         }
 
@@ -43,7 +43,7 @@ namespace NPOI.SS.Formula
                 int lastColumnIndex, SheetRangeEvaluator evaluator) :
             base(evaluator, firstRowIndex, firstColumnIndex, lastRowIndex, lastColumnIndex)
         {
-            
+
             _evaluator = evaluator;
         }
 
@@ -56,7 +56,7 @@ namespace NPOI.SS.Formula
         {
             return _evaluator.GetSheetEvaluator(sheetIndex).LastRowNum;
         }
-        
+
         public override ValueEval GetRelativeValue(int sheetIndex, int relativeRowIndex, int relativeColumnIndex)
         {
             int rowIx = (relativeRowIndex + FirstRow);
@@ -67,7 +67,7 @@ namespace NPOI.SS.Formula
 
         public override TwoDEval GetRow(int rowIndex)
         {
-            if (rowIndex >= Height)
+            if(rowIndex >= Height)
             {
                 throw new ArgumentException("Invalid rowIndex " + rowIndex
                         + ".  Allowable range is (0.." + Height + ").");
@@ -77,7 +77,7 @@ namespace NPOI.SS.Formula
         }
         public override TwoDEval GetColumn(int columnIndex)
         {
-            if (columnIndex >= Width)
+            if(columnIndex >= Width)
             {
                 throw new ArgumentException("Invalid columnIndex " + columnIndex
                         + ".  Allowable range is (0.." + Width + ").");

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -43,16 +43,18 @@ namespace TestCases.SS.Formula.PTG
         [Test]
         public void TestInvalidFunctionIndex()
         {
-            ClassicAssert.Throws<RuntimeException>(()=>{
+            ClassicAssert.Throws<RuntimeException>(() =>
+            {
                 new FunctionPtg(40000, 2, null, 255);
             });
-            
+
         }
 
         [Test]
         public void TestInvalidRuntimeClass()
         {
-            ClassicAssert.Throws<RuntimeException>(()=>{
+            ClassicAssert.Throws<RuntimeException>(() =>
+            {
                 new FunctionPtg(1, 300, null, 255);
             });
         }
@@ -82,5 +84,3 @@ namespace TestCases.SS.Formula.PTG
         }
     }
 }
-
-

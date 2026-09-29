@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.DDF;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
 
     /// <summary>
     /// Represents binary data stored in the file.  Eg. A GIF, JPEG etc...
@@ -64,7 +64,7 @@ namespace NPOI.HSSF.UserModel
 
                 //PNG created on MAC may have a 16-byte prefix which prevents successful reading.
                 //Just cut it off!.
-                if (PngUtils.MatchesPngHeader(pictureData, 16))
+                if(PngUtils.MatchesPngHeader(pictureData, 16))
                 {
                     byte[] png = new byte[pictureData.Length - 16];
                     System.Array.Copy(pictureData, 16, png, 0, png.Length);
@@ -82,7 +82,7 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                return blip.RecordId - unchecked((short)0xF018);
+                return blip.RecordId - unchecked((short) 0xF018);
             }
         }
         /// <summary>
@@ -91,7 +91,7 @@ namespace NPOI.HSSF.UserModel
         /// <returns>the file extension.</returns>
         public String SuggestFileExtension()
         {
-            switch (blip.RecordId)
+            switch(blip.RecordId)
             {
                 case EscherMetafileBlip.RECORD_ID_WMF:
                     return "wmf";
@@ -116,7 +116,7 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                switch (blip.RecordId)
+                switch(blip.RecordId)
                 {
                     case EscherMetafileBlip.RECORD_ID_WMF:
                         return "image/x-wmf";
@@ -150,7 +150,7 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                switch (blip.RecordId)
+                switch(blip.RecordId)
                 {
                     case EscherMetafileBlip.RECORD_ID_WMF:
                         return PictureType.WMF;

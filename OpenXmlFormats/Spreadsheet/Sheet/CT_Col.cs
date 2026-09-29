@@ -1,12 +1,11 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml;
-using NPOI.OpenXml4Net.Util;
 using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -269,18 +268,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_Col()
         {
-            
+
         }
 
         public static CT_Col Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Col ctObj = new CT_Col();
             ctObj.min = XmlHelper.ReadUInt(node.Attributes["min"]);
             ctObj.max = XmlHelper.ReadUInt(node.Attributes["max"]);
             ctObj.widthField = XmlHelper.ReadDouble(node.Attributes["width"]);
-            if (node.Attributes["style"] != null)
+            if(node.Attributes["style"] != null)
                 ctObj.style = XmlHelper.ReadUInt(node.Attributes["style"]);
             else
                 ctObj.style = null;
@@ -302,13 +301,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "max", this.max);
             XmlHelper.WriteAttribute(sw, "width", this.width);
             if(this.style!=null)
-                XmlHelper.WriteAttribute(sw, "style", (uint)this.style,true);
-            XmlHelper.WriteAttribute(sw, "hidden", this.hidden,false);
-            XmlHelper.WriteAttribute(sw, "bestFit", this.bestFit,false);
-            XmlHelper.WriteAttribute(sw, "customWidth", this.customWidth,false);
-            XmlHelper.WriteAttribute(sw, "phonetic", this.phonetic,false);
+                XmlHelper.WriteAttribute(sw, "style", (uint) this.style, true);
+            XmlHelper.WriteAttribute(sw, "hidden", this.hidden, false);
+            XmlHelper.WriteAttribute(sw, "bestFit", this.bestFit, false);
+            XmlHelper.WriteAttribute(sw, "customWidth", this.customWidth, false);
+            XmlHelper.WriteAttribute(sw, "phonetic", this.phonetic, false);
             XmlHelper.WriteAttribute(sw, "outlineLevel", this.outlineLevel);
-            XmlHelper.WriteAttribute(sw, "collapsed", this.collapsed,false);
+            XmlHelper.WriteAttribute(sw, "collapsed", this.collapsed, false);
             sw.Write("/>");
         }
 
@@ -343,7 +342,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             col.styleField = this.styleField;
             col.widthField = this.widthField;
             col.widthSpecifiedField = this.widthSpecifiedField;
-            
+
             return col;
         }
 
@@ -414,7 +413,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public override bool Equals(object obj)
         {
-            if (obj is not CT_Col col)
+            if(obj is not CT_Col col)
             {
                 return false;
             }

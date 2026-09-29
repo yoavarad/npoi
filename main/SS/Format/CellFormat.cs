@@ -134,33 +134,33 @@ namespace NPOI.SS.Format
         {
             return GetInstance(LocaleUtil.GetUserLocale(), format);
         }
-                /**
-         * Returns a {@link CellFormat} that applies the given format.  Two calls
-         * with the same format may or may not return the same object.
-         *
-         * @param locale The locale.
-         * @param format The format.
-         *
-         * @return A {@link CellFormat} that applies the given format.
-         */
+        /**
+ * Returns a {@link CellFormat} that applies the given format.  Two calls
+ * with the same format may or may not return the same object.
+ *
+ * @param locale The locale.
+ * @param format The format.
+ *
+ * @return A {@link CellFormat} that applies the given format.
+ */
         public static CellFormat GetInstance(CultureInfo locale, String format)
         {
             Dictionary<String, CellFormat> formatMap = formatCache.TryGetValue(locale, out Dictionary<string, CellFormat> value) ? value : null;
-            if (formatMap == null)
+            if(formatMap == null)
             {
                 formatMap = new Dictionary<String, CellFormat>();
                 formatCache[locale] = formatMap;
             }
             CellFormat fmt = null;
-            if (formatMap.TryGetValue(format, out CellFormat value1))
+            if(formatMap.TryGetValue(format, out CellFormat value1))
                 fmt = value1;
-            if (fmt == null)
+            if(fmt == null)
             {
-                if (format.Equals("General") || format.Equals("@"))
-                   fmt = CreateGeneralFormat(locale);
+                if(format.Equals("General") || format.Equals("@"))
+                    fmt = CreateGeneralFormat(locale);
                 else
-                   fmt = new CellFormat(locale, format);
-               formatMap.Add(format, fmt);
+                    fmt = new CellFormat(locale, format);
+                formatMap.Add(format, fmt);
             }
             return fmt;
         }
@@ -178,14 +178,14 @@ namespace NPOI.SS.Format
             List<CellFormatPart> parts = new List<CellFormatPart>();
 
             //while (m.Success)
-            foreach (Match m in mc)
+            foreach(Match m in mc)
             {
                 try
                 {
                     String valueDesc = m.Groups[0].Value;
 
                     // Strip out the semicolon if it's there
-                    if (valueDesc.EndsWith(';'))
+                    if(valueDesc.EndsWith(';'))
                         valueDesc = valueDesc.Substring(0, valueDesc.Length - 1);
 
                     parts.Add(new CellFormatPart(locale, valueDesc));
@@ -198,7 +198,7 @@ namespace NPOI.SS.Format
                 }
             }
             formatPartCount = parts.Count;
-            switch (formatPartCount)
+            switch(formatPartCount)
             {
                 case 1:
                     posNumFmt = parts[(0)];
@@ -240,11 +240,11 @@ namespace NPOI.SS.Format
         public virtual CellFormatResult Apply(Object value)
         {
             //if (value is Number) {
-            if (NPOI.Util.Number.IsNumber(value))
+            if(NPOI.Util.Number.IsNumber(value))
             {
                 double val ;
                 double.TryParse(value.ToString(), out val);
-                if (val < 0 &&
+                if(val < 0 &&
                     ((formatPartCount == 2
                             && !posNumFmt.HasCondition && !negNumFmt.HasCondition)
                     || (formatPartCount == 3 && !negNumFmt.HasCondition)
@@ -260,12 +260,12 @@ namespace NPOI.SS.Format
                     return GetApplicableFormatPart(val).Apply(val);
                 }
             }
-            else if (value is DateTime time)
+            else if(value is DateTime time)
             {
                 // Don't know (and can't get) the workbook date windowing (1900 or 1904)
                 // so assume 1900 date windowing
                 Double numericValue = DateUtil.GetExcelDate(time);
-                if (DateUtil.IsValidExcelDate(numericValue))
+                if(DateUtil.IsValidExcelDate(numericValue))
                 {
                     return GetApplicableFormatPart(numericValue).Apply(time);
                 }
@@ -302,7 +302,7 @@ namespace NPOI.SS.Format
          */
         public CellFormatResult Apply(ICell c)
         {
-            switch (UltimateType(c))
+            switch(UltimateType(c))
             {
                 case CellType.Blank:
                     return Apply("");
@@ -310,11 +310,11 @@ namespace NPOI.SS.Format
                     return Apply(c.BooleanCellValue);
                 case CellType.Numeric:
                     Double value = c.NumericCellValue;
-                    if (GetApplicableFormatPart(value).CellFormatType == CellFormatType.DATE)
+                    if(GetApplicableFormatPart(value).CellFormatType == CellFormatType.DATE)
                     {
-                        if (DateUtil.IsValidExcelDate(value))
+                        if(DateUtil.IsValidExcelDate(value))
                         {
-                            return Apply((DateTime)c.DateCellValue, value);
+                            return Apply((DateTime) c.DateCellValue, value);
                         }
                         else
                         {
@@ -343,14 +343,14 @@ namespace NPOI.SS.Format
         private CellFormatPart GetApplicableFormatPart(Object value)
         {
             //if (value is Number) {
-            if (NPOI.Util.Number.IsNumber(value))
+            if(NPOI.Util.Number.IsNumber(value))
             {
                 double val;
                 double.TryParse(value.ToString(), out val);
 
-                if (formatPartCount == 1)
+                if(formatPartCount == 1)
                 {
-                    if (!posNumFmt.HasCondition
+                    if(!posNumFmt.HasCondition
                             || (posNumFmt.HasCondition && posNumFmt.Applies(val)))
                     {
                         return posNumFmt;
@@ -360,14 +360,14 @@ namespace NPOI.SS.Format
                         return new CellFormatPart(locale, "General");
                     }
                 }
-                else if (formatPartCount == 2)
+                else if(formatPartCount == 2)
                 {
-                    if ((!posNumFmt.HasCondition && val >= 0)
+                    if((!posNumFmt.HasCondition && val >= 0)
                             || (posNumFmt.HasCondition && posNumFmt.Applies(val)))
                     {
                         return posNumFmt;
                     }
-                    else if (!negNumFmt.HasCondition
+                    else if(!negNumFmt.HasCondition
                             || (negNumFmt.HasCondition && negNumFmt.Applies(val)))
                     {
                         return negNumFmt;
@@ -380,12 +380,12 @@ namespace NPOI.SS.Format
                 }
                 else
                 {
-                    if ((!posNumFmt.HasCondition && val > 0)
+                    if((!posNumFmt.HasCondition && val > 0)
                             || (posNumFmt.HasCondition && posNumFmt.Applies(val)))
                     {
                         return posNumFmt;
                     }
-                    else if ((!negNumFmt.HasCondition && val < 0)
+                    else if((!negNumFmt.HasCondition && val < 0)
                           || (negNumFmt.HasCondition && negNumFmt.Applies(val)))
                     {
                         return negNumFmt;
@@ -416,7 +416,7 @@ namespace NPOI.SS.Format
         public static CellType UltimateType(ICell cell)
         {
             CellType type = cell.CellType;
-            if (type == CellType.Formula)
+            if(type == CellType.Formula)
                 return cell.CachedFormulaResultType;
             else
                 return type;
@@ -433,9 +433,9 @@ namespace NPOI.SS.Format
 
         public override bool Equals(Object obj)
         {
-            if (this == obj)
+            if(this == obj)
                 return true;
-            if (obj is CellFormat that)
+            if(obj is CellFormat that)
             {
                 return format.Equals(that.format);
             }

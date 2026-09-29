@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NPOI.OpenXml4Net.Exceptions;
+using NPOI.Util;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml;
 using System.Xml.XPath;
-using NPOI.Util;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {
@@ -70,13 +70,13 @@ namespace NPOI.OpenXml4Net.OPC.Internal
         {
             this.container = pkg;
             this.defaultContentType = new SortedList<String, String>();
-            if (in1 != null)
+            if(in1 != null)
             {
                 try
                 {
                     ParseContentTypesFile(in1);
                 }
-                catch (InvalidFormatException ex)
+                catch(InvalidFormatException ex)
                 {
                     throw new InvalidFormatException("Can't read content types part !", ex);
                 }
@@ -124,11 +124,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal
         {
             bool defaultCTExists = false;
             String extension = partName.Extension.ToLower();
-            if ((extension.Length == 0)
+            if((extension.Length == 0)
                     || (this.defaultContentType.ContainsKey(extension) && !(defaultCTExists = this.defaultContentType
                             .ContainsValue(contentType))))
                 this.AddOverrideContentType(partName, contentType);
-            else if (!defaultCTExists)
+            else if(!defaultCTExists)
                 this.AddDefaultContentType(extension, contentType);
         }
 
@@ -143,7 +143,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
         private void AddOverrideContentType(PackagePartName partName,
                 String contentType)
         {
-            if (overrideContentType == null)
+            if(overrideContentType == null)
                 overrideContentType = new SortedList<PackagePartName, String>();
 
             if(!overrideContentType.ContainsKey(partName))
@@ -188,11 +188,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public void RemoveContentType(PackagePartName partName)
         {
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("partName");
 
             /* Override content type */
-            if (this.overrideContentType != null
+            if(this.overrideContentType != null
                     && this.overrideContentType.ContainsKey(partName))
             {
                 // Remove the override definition for the specified part.
@@ -203,13 +203,13 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             /* Default content type */
             String extensionToDelete = partName.Extension;
             bool deleteDefaultContentTypeFlag = true;
-            if (this.container != null)
+            if(this.container != null)
             {
                 try
                 {
-                    foreach (PackagePart part in this.container.GetParts())
+                    foreach(PackagePart part in this.container.GetParts())
                     {
-                        if (!part.PartName.Equals(partName) && part.PartName.Extension
+                        if(!part.PartName.Equals(partName) && part.PartName.Extension
                                         .Equals(extensionToDelete, StringComparison.InvariantCultureIgnoreCase))
                         {
                             deleteDefaultContentTypeFlag = false;
@@ -217,14 +217,14 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                         }
                     }
                 }
-                catch (InvalidFormatException e)
+                catch(InvalidFormatException e)
                 {
                     throw new InvalidOperationException(e.Message);
                 }
             }
 
             // Remove the default content type, no other part use this content type.
-            if (deleteDefaultContentTypeFlag)
+            if(deleteDefaultContentTypeFlag)
             {
                 this.defaultContentType.Remove(extensionToDelete);
             }
@@ -236,20 +236,20 @@ namespace NPOI.OpenXml4Net.OPC.Internal
              * element Both a matching Default element and a matching Override
              * element, in which case the Override element takes precedence.
              */
-            if (this.container != null)
+            if(this.container != null)
             {
                 try
                 {
-                    foreach (PackagePart part in this.container.GetParts())
+                    foreach(PackagePart part in this.container.GetParts())
                     {
-                        if (!part.PartName.Equals(partName)
+                        if(!part.PartName.Equals(partName)
                                 && this.GetContentType(part.PartName) == null)
                             throw new InvalidOperationException(
                                     "Rule M2.4 is not respected: Nor a default element or override element is associated with the part: "
                                             + part.PartName.Name);
                     }
                 }
-                catch (InvalidFormatException e)
+                catch(InvalidFormatException e)
                 {
                     throw new InvalidOperationException(e.Message);
                 }
@@ -266,7 +266,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public bool IsContentTypeRegister(String contentType)
         {
-            if (contentType == null)
+            if(contentType == null)
                 throw new ArgumentException("contentType");
 
             return defaultContentType.ContainsValue(contentType) || (overrideContentType != null && overrideContentType.ContainsValue(contentType));
@@ -313,15 +313,15 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public String GetContentType(PackagePartName partName)
         {
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("partName");
 
-            if ((this.overrideContentType != null)
+            if((this.overrideContentType != null)
                     && this.overrideContentType.TryGetValue(partName, out string type))
                 return type;
 
             String extension = partName.Extension.ToLower();
-            if (this.defaultContentType.TryGetValue(extension, out string contentType))
+            if(this.defaultContentType.TryGetValue(extension, out string contentType))
                 return contentType;
 
             /*
@@ -331,7 +331,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
              * matching Default element and a matching Override element, in which
              * case the Override element takes precedence.
              */
-            if (this.container != null && this.container.GetPart(partName) != null)
+            if(this.container != null && this.container.GetPart(partName) != null)
             {
                 throw new OpenXml4NetException(
                         "Rule M2.4 exception : this error should NEVER happen! If you can provide the triggering file, then please raise a bug at https://bz.apache.org/bugzilla/enter_bug.cgi?product=POI and attach a file that triggers it, thanks!");
@@ -348,7 +348,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
         public void ClearAll()
         {
             this.defaultContentType.Clear();
-            if (this.overrideContentType != null)
+            if(this.overrideContentType != null)
                 this.overrideContentType.Clear();
         }
 
@@ -358,7 +358,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public void ClearOverrideContentTypes()
         {
-            if (this.overrideContentType != null)
+            if(this.overrideContentType != null)
                 this.overrideContentType.Clear();
         }
 
@@ -381,7 +381,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                 nsMgr.AddNamespace("x", TYPES_NAMESPACE_URI);
 
                 XPathNodeIterator iterator = xpathnav.Select("//x:"+DEFAULT_TAG_NAME,nsMgr);
-                while (iterator.MoveNext())
+                while(iterator.MoveNext())
                 {
                     // Default content types
                     //iterator.Current;
@@ -391,7 +391,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                 }
                 iterator = xpathnav.Select("//x:" + OVERRIDE_TAG_NAME, nsMgr);
 
-                while (iterator.MoveNext())
+                while(iterator.MoveNext())
                 {
 
                     // Overriden content types
@@ -403,7 +403,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                     AddOverrideContentType(partName, contentType);
                 }
             }
-            catch (UriFormatException urie)
+            catch(UriFormatException urie)
             {
                 throw new InvalidFormatException(urie.Message);
             }
@@ -427,17 +427,17 @@ namespace NPOI.OpenXml4Net.OPC.Internal
 
             // Adding default types
             IEnumerator<KeyValuePair<string, string>> contentTypes = defaultContentType.GetEnumerator();
-            while (contentTypes.MoveNext())
+            while(contentTypes.MoveNext())
             {
                 AppendDefaultType(xmlOutDoc, typesElem, contentTypes.Current);
             }
 
             // Adding specific types if any exist
-            if (overrideContentType != null)
+            if(overrideContentType != null)
             {
 
                 IEnumerator<KeyValuePair<PackagePartName, string>> overrideContentTypes = overrideContentType.GetEnumerator();
-                while (overrideContentTypes.MoveNext())
+                while(overrideContentTypes.MoveNext())
                 {
                     AppendSpecificTypes(xmlOutDoc, typesElem, overrideContentTypes.Current);
                 }
@@ -465,7 +465,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             root.AppendChild(elem);
             elem.SetAttribute(
                     PART_NAME_ATTRIBUTE_NAME,
-                    ((PackagePartName)entry.Key).Name);
+                    ((PackagePartName) entry.Key).Name);
             elem.SetAttribute(
                     CONTENT_TYPE_ATTRIBUTE_NAME, entry.Value);
         }

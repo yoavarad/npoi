@@ -17,10 +17,10 @@
 
 namespace TestCases.Util
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Class to Test IntList
@@ -55,11 +55,11 @@ namespace TestCases.Util
             0, 1, 2, 3, 5
         };
 
-            for (int j = 0; j < testArray.Length; j++)
+            for(int j = 0; j < testArray.Length; j++)
             {
                 list.Add(testArray[j]);
             }
-            for (int j = 0; j < testArray.Length; j++)
+            for(int j = 0; j < testArray.Length; j++)
             {
                 ClassicAssert.AreEqual(testArray[j], list.Get(j));
             }
@@ -69,7 +69,7 @@ namespace TestCases.Util
             list.Add(0, -1);
             ClassicAssert.AreEqual(-1, list.Get(0));
             ClassicAssert.AreEqual(testArray.Length + 1, list.Count);
-            for (int j = 0; j < testArray.Length; j++)
+            for(int j = 0; j < testArray.Length; j++)
             {
                 ClassicAssert.AreEqual(testArray[j], list.Get(j + 1));
             }
@@ -78,7 +78,7 @@ namespace TestCases.Util
             list.Add(5, 4);
             ClassicAssert.AreEqual(4, list.Get(5));
             ClassicAssert.AreEqual(testArray.Length + 2, list.Count);
-            for (int j = 0; j < list.Count; j++)
+            for(int j = 0; j < list.Count; j++)
             {
                 ClassicAssert.AreEqual(j - 1, list.Get(j));
             }
@@ -86,7 +86,7 @@ namespace TestCases.Util
             // add at the end
             list.Add(list.Count, 6);
             ClassicAssert.AreEqual(testArray.Length + 3, list.Count);
-            for (int j = 0; j < list.Count; j++)
+            for(int j = 0; j < list.Count; j++)
             {
                 ClassicAssert.AreEqual(j - 1, list.Get(j));
             }
@@ -97,7 +97,7 @@ namespace TestCases.Util
                 list.Add(list.Count + 1, 8);
                 Assert.Fail("should have thrown exception");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
@@ -105,22 +105,22 @@ namespace TestCases.Util
 
             // Test growth
             list = new IntList(0);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
             ClassicAssert.AreEqual(1000, list.Count);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(j, list.Get(j));
             }
             list = new IntList(0);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(0, j);
             }
             ClassicAssert.AreEqual(1000, list.Count);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(j, list.Get(999 - j));
             }
@@ -130,7 +130,7 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 list.Add(j);
             }
@@ -139,7 +139,7 @@ namespace TestCases.Util
             list2.AddAll(list);
             list2.AddAll(list);
             ClassicAssert.AreEqual(2 * list.Count, list2.Count);
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 ClassicAssert.AreEqual(list2.Get(j), j);
                 ClassicAssert.AreEqual(list2.Get(j + list.Count), j);
@@ -147,7 +147,7 @@ namespace TestCases.Util
             IntList empty = new IntList();
             int limit = list.Count;
 
-            for (int j = 0; j < limit; j++)
+            for(int j = 0; j < limit; j++)
             {
                 ClassicAssert.IsTrue(list.AddAll(j, empty));
                 ClassicAssert.AreEqual(limit, list.Count);
@@ -157,7 +157,7 @@ namespace TestCases.Util
                 list.AddAll(limit + 1, empty);
                 Assert.Fail("should have thrown an exception");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
@@ -218,19 +218,19 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 500; j++)
+            for(int j = 0; j < 500; j++)
             {
                 list.Add(j);
             }
             ClassicAssert.AreEqual(500, list.Count);
             list.Clear();
             ClassicAssert.AreEqual(0, list.Count);
-            for (int j = 0; j < 500; j++)
+            for(int j = 0; j < 500; j++)
             {
                 list.Add(j + 1);
             }
             ClassicAssert.AreEqual(500, list.Count);
-            for (int j = 0; j < 500; j++)
+            for(int j = 0; j < 500; j++)
             {
                 ClassicAssert.AreEqual(j + 1, list.Get(j));
             }
@@ -240,13 +240,13 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j += 2)
+            for(int j = 0; j < 1000; j += 2)
             {
                 list.Add(j);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
-                if (j % 2 == 0)
+                if(j % 2 == 0)
                 {
                     ClassicAssert.IsTrue(list.Contains(j));
                 }
@@ -262,7 +262,7 @@ namespace TestCases.Util
             IntList list = new IntList();
 
             ClassicAssert.IsTrue(list.ContainsAll(list));
-            for (int j = 0; j < 10; j++)
+            for(int j = 0; j < 10; j++)
             {
                 list.Add(j);
             }
@@ -308,23 +308,23 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
-            for (int j = 0; j < 1001; j++)
+            for(int j = 0; j < 1001; j++)
             {
                 try
                 {
                     ClassicAssert.AreEqual(j, list.Get(j));
-                    if (j == 1000)
+                    if(j == 1000)
                     {
                         Assert.Fail("should have gotten exception");
                     }
                 }
-                catch (IndexOutOfRangeException)
+                catch(IndexOutOfRangeException)
                 {
-                    if (j != 1000)
+                    if(j != 1000)
                     {
                         Assert.Fail("unexpected IndexOutOfBoundsException");
                     }
@@ -336,13 +336,13 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j / 2);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
-                if (j < 500)
+                if(j < 500)
                 {
                     ClassicAssert.AreEqual(j * 2, list.IndexOf(j));
                 }
@@ -380,13 +380,13 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j / 2);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
-                if (j < 500)
+                if(j < 500)
                 {
                     ClassicAssert.AreEqual(1 + j * 2, list.LastIndexOf(j));
                 }
@@ -401,20 +401,20 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(j, list.Remove(0));
                 ClassicAssert.AreEqual(999 - j, list.Count);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(999 - j, list.Remove(999 - j));
                 ClassicAssert.AreEqual(999 - j, list.Count);
@@ -424,7 +424,7 @@ namespace TestCases.Util
                 list.Remove(0);
                 Assert.Fail("should have caught IndexOutOfBoundsException");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
@@ -435,13 +435,13 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j / 2);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
-                if (j < 500)
+                if(j < 500)
                 {
                     ClassicAssert.IsTrue(list.RemoveValue(j));
                     ClassicAssert.IsTrue(list.RemoveValue(j));
@@ -454,7 +454,7 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
@@ -462,9 +462,9 @@ namespace TestCases.Util
             IntList listOdd = new IntList();
             IntList listEven = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
-                if (j % 2 == 0)
+                if(j % 2 == 0)
                 {
                     listEven.Add(j);
                 }
@@ -495,7 +495,7 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
@@ -503,9 +503,9 @@ namespace TestCases.Util
             IntList listOdd = new IntList();
             IntList listEven = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
-                if (j % 2 == 0)
+                if(j % 2 == 0)
                 {
                     listEven.Add(j);
                 }
@@ -536,24 +536,24 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
-            for (int j = 0; j < 1001; j++)
+            for(int j = 0; j < 1001; j++)
             {
                 try
                 {
                     list.Set(j, j + 1);
-                    if (j == 1000)
+                    if(j == 1000)
                     {
                         Assert.Fail("Should have gotten exception");
                     }
                     ClassicAssert.AreEqual(j + 1, list.Get(j));
                 }
-                catch (IndexOutOfRangeException)
+                catch(IndexOutOfRangeException)
                 {
-                    if (j != 1000)
+                    if(j != 1000)
                     {
                         Assert.Fail("premature exception");
                     }
@@ -565,13 +565,13 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(j, list.Count);
                 list.Add(j);
                 ClassicAssert.AreEqual(j + 1, list.Count);
             }
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(1000 - j, list.Count);
                 list.RemoveValue(j);
@@ -583,14 +583,14 @@ namespace TestCases.Util
         {
             IntList list = new IntList();
 
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 list.Add(j);
             }
             int[] a1 = list.ToArray();
 
             ClassicAssert.AreEqual(a1.Length, list.Count);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(a1[j], list.Get(j));
             }
@@ -598,7 +598,7 @@ namespace TestCases.Util
             int[] a3 = list.ToArray(a2);
 
             ClassicAssert.AreSame(a2, a3);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(a2[j], list.Get(j));
             }
@@ -610,12 +610,12 @@ namespace TestCases.Util
             ClassicAssert.IsTrue(a4 != ashort);
             ClassicAssert.IsTrue(a5 != aLong);
             ClassicAssert.AreEqual(a4.Length, list.Count);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(a3[j], list.Get(j));
             }
             ClassicAssert.AreEqual(a5.Length, list.Count);
-            for (int j = 0; j < 1000; j++)
+            for(int j = 0; j < 1000; j++)
             {
                 ClassicAssert.AreEqual(a5[j], list.Get(j));
             }

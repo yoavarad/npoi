@@ -19,14 +19,14 @@ using System.Xml;
 
 namespace NPOI.XSSF.UserModel
 {
-    using NPOI.OpenXmlFormats.Dml.Chart;
-    using System.Collections.Generic;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Dml;
+    using NPOI.OpenXmlFormats.Dml.Chart;
+    using NPOI.XDDF.UserModel.Chart;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
-    using NPOI.OpenXmlFormats.Dml;
-    using NPOI.XDDF.UserModel.Chart;
 
     /**
      * Represents a SpreadsheetML Chart
@@ -238,6 +238,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-
-
-

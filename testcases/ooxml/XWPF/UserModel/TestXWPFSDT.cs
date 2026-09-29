@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,10 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.XWPF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
-using NPOI.XWPF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 
 namespace TestCases.XWPF.UserModel
 {
@@ -37,9 +38,9 @@ namespace TestCases.XWPF.UserModel
             String tag = null;
             String title = null;
             List<AbstractXWPFSDT> sdts = ExtractAllSDTs(doc);
-            foreach (AbstractXWPFSDT sdt in sdts)
+            foreach(AbstractXWPFSDT sdt in sdts)
             {
-                if (sdt.Content.ToString().Equals("Rich_text"))
+                if(sdt.Content.ToString().Equals("Rich_text"))
                 {
                     tag = "MyTag";
                     title = "MyTitle";
@@ -76,7 +77,7 @@ namespace TestCases.XWPF.UserModel
 
             ClassicAssert.AreEqual(contents.Length, sdts.Count, "number of sdts");
 
-            for (int i = 0; i < contents.Length; i++)
+            for(int i = 0; i < contents.Length; i++)
             {//contents.Length; i++){
                 AbstractXWPFSDT sdt = sdts[i];
 
@@ -132,7 +133,7 @@ namespace TestCases.XWPF.UserModel
             //this test case was triggered by Tika-1130
             targs.Add("sdt_incell2 abcdefg");
 
-            for (int i = 0; i < sdts.Count; i++)
+            for(int i = 0; i < sdts.Count; i++)
             {
                 AbstractXWPFSDT sdt = sdts[i];
                 ClassicAssert.AreEqual(targs[i], sdt.Content.Text, targs[i]);
@@ -151,7 +152,7 @@ namespace TestCases.XWPF.UserModel
         }
 
         [Test]
-        public void Test62859() 
+        public void Test62859()
         {
             //this doesn't test the exact code path for this issue, but
             //it does test for a related issue, and the fix fixes both.
@@ -170,23 +171,23 @@ namespace TestCases.XWPF.UserModel
             List<AbstractXWPFSDT> sdts = new List<AbstractXWPFSDT>();
 
             IList<XWPFHeader> headers = doc.HeaderList;
-            foreach (XWPFHeader header in headers)
+            foreach(XWPFHeader header in headers)
             {
                 sdts.AddRange(ExtractSDTsFromBodyElements(header.BodyElements));
             }
             sdts.AddRange(ExtractSDTsFromBodyElements(doc.BodyElements));
 
             IList<XWPFFooter> footers = doc.FooterList;
-            foreach (XWPFFooter footer in footers)
+            foreach(XWPFFooter footer in footers)
             {
                 sdts.AddRange(ExtractSDTsFromBodyElements(footer.BodyElements));
             }
 
-            foreach (XWPFFootnote footnote in doc.GetFootnotes())
+            foreach(XWPFFootnote footnote in doc.GetFootnotes())
             {
                 sdts.AddRange(ExtractSDTsFromBodyElements(footnote.BodyElements));
             }
-            foreach (KeyValuePair<int, XWPFFootnote> e in doc.Endnotes)
+            foreach(KeyValuePair<int, XWPFFootnote> e in doc.Endnotes)
             {
                 sdts.AddRange(ExtractSDTsFromBodyElements(e.Value.BodyElements));
             }
@@ -196,27 +197,27 @@ namespace TestCases.XWPF.UserModel
         private List<AbstractXWPFSDT> ExtractSDTsFromBodyElements(IList<IBodyElement> elements)
         {
             List<AbstractXWPFSDT> sdts = new List<AbstractXWPFSDT>();
-            foreach (IBodyElement e in elements)
+            foreach(IBodyElement e in elements)
             {
-                if (e is XWPFSDT)
+                if(e is XWPFSDT)
                 {
                     XWPFSDT sdt = (XWPFSDT)e;
                     sdts.Add(sdt);
                 }
-                else if (e is XWPFParagraph)
+                else if(e is XWPFParagraph)
                 {
 
                     XWPFParagraph p = (XWPFParagraph)e;
-                    foreach (IRunElement e2 in p.IRuns)
+                    foreach(IRunElement e2 in p.IRuns)
                     {
-                        if (e2 is XWPFSDT)
+                        if(e2 is XWPFSDT)
                         {
                             XWPFSDT sdt = (XWPFSDT)e2;
                             sdts.Add(sdt);
                         }
                     }
                 }
-                else if (e is XWPFTable)
+                else if(e is XWPFTable)
                 {
                     XWPFTable table = (XWPFTable)e;
                     sdts.AddRange(ExtractSDTsFromTable(table));
@@ -229,17 +230,17 @@ namespace TestCases.XWPF.UserModel
         {
 
             List<AbstractXWPFSDT> sdts = new List<AbstractXWPFSDT>();
-            foreach (XWPFTableRow r in table.Rows)
+            foreach(XWPFTableRow r in table.Rows)
             {
-                foreach (ICell c in r.GetTableICells())
+                foreach(ICell c in r.GetTableICells())
                 {
-                    if (c is XWPFSDTCell)
+                    if(c is XWPFSDTCell)
                     {
-                        sdts.Add((XWPFSDTCell)c);
+                        sdts.Add((XWPFSDTCell) c);
                     }
-                    else if (c is XWPFTableCell)
+                    else if(c is XWPFTableCell)
                     {
-                        sdts.AddRange(ExtractSDTsFromBodyElements(((XWPFTableCell)c).BodyElements));
+                        sdts.AddRange(ExtractSDTsFromBodyElements(((XWPFTableCell) c).BodyElements));
                     }
                 }
             }

@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -64,7 +64,7 @@ namespace NPOI.HSSF.Record
             get { return (field_1_print_gridlines == 1); }
             set
             {
-                if (value)
+                if(value)
                 {
                     field_1_print_gridlines = 1;
                 }

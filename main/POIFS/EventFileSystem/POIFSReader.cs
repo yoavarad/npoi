@@ -27,14 +27,13 @@
 
 namespace NPOI.POIFS.EventFileSystem
 {
+    using NPOI.POIFS.FileSystem;
+    using NPOI.POIFS.Properties;
+    using NPOI.POIFS.Storage;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
-
-    using NPOI.POIFS.FileSystem;
-    using NPOI.POIFS.Properties;
-    using NPOI.POIFS.Storage;
 
     /// <summary>
     /// An event-driven Reader for POIFS file systems. Users of this class
@@ -54,7 +53,7 @@ namespace NPOI.POIFS.EventFileSystem
 
         protected virtual void OnStreamReaded(POIFSReaderEventArgs e)
         {
-            if (StreamReaded != null)
+            if(StreamReaded != null)
             {
                 StreamReaded(this, e);
             }
@@ -116,11 +115,11 @@ namespace NPOI.POIFS.EventFileSystem
 
         public void RegisterListener(POIFSReaderListener listener)
         {
-            if (listener == null)
+            if(listener == null)
             {
                 throw new NullReferenceException();
             }
-            if (registryClosed)
+            if(registryClosed)
             {
                 throw new InvalidOperationException();
             }
@@ -165,11 +164,11 @@ namespace NPOI.POIFS.EventFileSystem
                                      POIFSDocumentPath path,
                                      String name)
         {
-            if ((listener == null) || (name == null) || (name.Length == 0))
+            if((listener == null) || (name == null) || (name.Length == 0))
             {
                 throw new NullReferenceException();
             }
-            if (registryClosed)
+            if(registryClosed)
             {
                 throw new InvalidOperationException();
             }
@@ -193,12 +192,12 @@ namespace NPOI.POIFS.EventFileSystem
             List<DocumentDescriptor> documents =
                 new List<DocumentDescriptor>();
 
-            while (properties.MoveNext())
+            while(properties.MoveNext())
             {
                 Property property = (Property)properties.Current;
                 String name = property.Name;
 
-                if (property.IsDirectory)
+                if(property.IsDirectory)
                 {
                     POIFSDocumentPath new_path = new POIFSDocumentPath(path,
                                                      new String[]
@@ -208,20 +207,20 @@ namespace NPOI.POIFS.EventFileSystem
 
                     ProcessProperties(
                         small_blocks, big_blocks,
-                        ((DirectoryProperty)property).Children, new_path);
+                        ((DirectoryProperty) property).Children, new_path);
                 }
                 else
                 {
                     int startBlock = property.StartBlock;
                     IEnumerator listeners = registry.GetListeners(path, name);
                     OPOIFSDocument document = null;
-                    if (listeners.MoveNext())
+                    if(listeners.MoveNext())
                     {
                         listeners.Reset();
                         int size = property.Size;
-                        
 
-                        if (property.ShouldUseSmallBlocks)
+
+                        if(property.ShouldUseSmallBlocks)
                         {
                             document =
                                 new OPOIFSDocument(name, small_blocks
@@ -239,7 +238,7 @@ namespace NPOI.POIFS.EventFileSystem
                         //        new POIFSReaderEvent(
                         //            new DocumentInputStream(document), path,
                         //            name));
-                        while (listeners.MoveNext())
+                        while(listeners.MoveNext())
                         {
                             POIFSReaderListener listener =
                                 (POIFSReaderListener)listeners.Current;
@@ -252,7 +251,7 @@ namespace NPOI.POIFS.EventFileSystem
                     else
                     {
                         // consume the document's data and discard it
-                        if (property.ShouldUseSmallBlocks)
+                        if(property.ShouldUseSmallBlocks)
                         {
                             small_blocks.FetchBlocks(startBlock, -1);
                         }

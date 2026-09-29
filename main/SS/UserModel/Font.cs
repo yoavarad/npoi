@@ -43,9 +43,9 @@ namespace NPOI.SS.UserModel
         DoubleAccounting = 0x22
     }
 
-    public enum FontSuperScript:short
-    { 
-    
+    public enum FontSuperScript : short
+    {
+
         /**
          * no type Offsetting (not super or subscript)
          */
@@ -65,7 +65,7 @@ namespace NPOI.SS.UserModel
         Sub = 2,
     }
 
-    public enum FontColor:short
+    public enum FontColor : short
     {
         /// <summary>
         /// Allow accessing the Initial value.
@@ -110,7 +110,7 @@ namespace NPOI.SS.UserModel
         /// </remarks>
         /// <see cref="FontHeight"/>
         double FontHeightInPoints { get; set; }
- 
+
         /// <summary>
         /// get whether to use italics or not
         /// </summary>

@@ -15,17 +15,18 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.XSSF.UserModel;
-using System.Collections.Generic;
-using System;
-using NPOI.SS.UserModel;
-using TestCases;
-using System.IO;
-using NPOI.XSSF.Model;
-using NPOI.XSSF;
 using NPOI;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
+using NPOI.XSSF;
+using NPOI.XSSF.Model;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using TestCases;
 
 namespace TestCases.XSSF.Model
 {
@@ -89,7 +90,7 @@ namespace TestCases.XSSF.Model
             st = new CT_Rst();
             CT_RElt r = st.AddNewR();
             CT_RPrElt pr = r.AddNewRPr();
-            pr.AddNewColor().SetRgb(new byte[] { (byte)0xFF, 0, 0 }); //red
+            pr.AddNewColor().SetRgb(new byte[] { (byte) 0xFF, 0, 0 }); //red
             pr.AddNewI().val = (true);  //bold
             pr.AddNewB().val = (true);  //italic
             r.t = ("Second string");
@@ -194,7 +195,7 @@ namespace TestCases.XSSF.Model
             IList<CT_Rst> items1 = sst1.Items;
             IList<CT_Rst> items2 = sst2.Items;
             ClassicAssert.AreEqual(items1.Count, items2.Count);
-            for (int i = 0; i < items1.Count; i++)
+            for(int i = 0; i < items1.Count; i++)
             {
                 CT_Rst st1 = items1[i];
                 CT_Rst st2 = items2[i];
@@ -218,7 +219,7 @@ namespace TestCases.XSSF.Model
             ISheet s = w.CreateSheet();
             int i = 0;
             List<String> lst = ReadStrings("48936-strings.txt");
-            foreach (String str in lst)
+            foreach(String str in lst)
             {
                 s.CreateRow(i++).CreateCell(0).SetCellValue(str);
             }
@@ -227,13 +228,13 @@ namespace TestCases.XSSF.Model
             {
                 w = XSSFTestDataSamples.WriteOutAndReadBack(w);
             }
-            catch (POIXMLException)
+            catch(POIXMLException)
             {
                 Assert.Fail("Detected Bug #48936");
             }
             s = w.GetSheetAt(0);
             i = 0;
-            foreach (String str in lst)
+            foreach(String str in lst)
             {
                 String val = s.GetRow(i++).GetCell(0).StringCellValue;
                 ClassicAssert.AreEqual(str, val);
@@ -249,9 +250,9 @@ namespace TestCases.XSSF.Model
             StreamReader br =
                     new StreamReader(samples.OpenResourceAsStream(filename));
             String s;
-            while ((s = br.ReadLine()) != null)
+            while((s = br.ReadLine()) != null)
             {
-                if (s.Trim().Length > 0)
+                if(s.Trim().Length > 0)
                 {
                     strs.Add(s.Trim());
                 }
@@ -275,7 +276,7 @@ namespace TestCases.XSSF.Model
 
             // Write the workbook without touching any string cells
             byte[] writtenBytes;
-            using (MemoryStream ms = new MemoryStream())
+            using(MemoryStream ms = new MemoryStream())
             {
                 wb.Write(ms, false);
                 writtenBytes = ms.ToArray();
@@ -319,7 +320,7 @@ namespace TestCases.XSSF.Model
             ClassicAssert.AreEqual(origCount, sst2.Count);
             ClassicAssert.AreEqual(origUnique, sst2.UniqueCount);
             ClassicAssert.AreEqual(origItems.Count, sst2.Items.Count);
-            for (int i = 0; i < origItems.Count; i++)
+            for(int i = 0; i < origItems.Count; i++)
                 ClassicAssert.AreEqual(origItems[i].ToString(), sst2.Items[i].ToString());
 
             wb1.Close();
@@ -372,4 +373,3 @@ namespace TestCases.XSSF.Model
 
     }
 }
-

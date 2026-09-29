@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,15 +25,14 @@
  * 
  * ==============================================================*/
 
+using NPOI.POIFS.Common;
+using NPOI.POIFS.Dev;
+using NPOI.Util;
 using System;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
-using NPOI.POIFS.Dev;
-using NPOI.POIFS.Common;
-using NPOI.Util;
+using System.Text;
 
 namespace NPOI.POIFS.Properties
 {
@@ -42,7 +41,7 @@ namespace NPOI.POIFS.Properties
     /// implementing POIFS Property behavior.
     /// @author Marc Johnson (mjohnson at apache dot org)
     /// </summary>
-    public abstract class Property:Child, POIFSViewable
+    public abstract class Property : Child, POIFSViewable
     {
         private const byte   _default_fill             = ( byte ) 0x00;
         private const int    _name_size_offset         = 0x40;
@@ -96,7 +95,7 @@ namespace NPOI.POIFS.Properties
         protected Property()
         {
             _raw_data = new byte[POIFSConstants.PROPERTY_SIZE];
-            for (int i = 0; i < this._raw_data.Length; i++)
+            for(int i = 0; i < this._raw_data.Length; i++)
             {
                 this._raw_data[i] = _default_fill;
             }
@@ -110,7 +109,7 @@ namespace NPOI.POIFS.Properties
                                                   _NO_INDEX, _raw_data);
             _child_property    = new IntegerField(_child_property_offset,
                                                   _NO_INDEX, _raw_data);
-            _storage_clsid     = new HPSF.ClassID(_raw_data,_storage_clsid_offset);
+            _storage_clsid     = new HPSF.ClassID(_raw_data, _storage_clsid_offset);
             _user_flags        = new IntegerField(_user_flags_offset, 0, _raw_data);
             _seconds_1         = new IntegerField(_seconds_1_offset, 0,
                                                   _raw_data);
@@ -133,9 +132,9 @@ namespace NPOI.POIFS.Properties
         /// <param name="index">index number</param>
         /// <param name="array">byte data</param>
         /// <param name="offset">offset into byte data</param>
-        protected Property(int index, byte [] array, int offset)
+        protected Property(int index, byte[] array, int offset)
         {
-            _raw_data = new byte[ POIFSConstants.PROPERTY_SIZE ];
+            _raw_data = new byte[POIFSConstants.PROPERTY_SIZE];
             System.Array.Copy(array, offset, _raw_data, 0, POIFSConstants.PROPERTY_SIZE);
             _name_size         = new ShortField(_name_size_offset, _raw_data);
             _property_type     =
@@ -147,7 +146,7 @@ namespace NPOI.POIFS.Properties
                                                   _raw_data);
             _child_property    = new IntegerField(_child_property_offset,
                                                   _raw_data);
-            _storage_clsid     = new HPSF.ClassID(_raw_data,_storage_clsid_offset);
+            _storage_clsid     = new HPSF.ClassID(_raw_data, _storage_clsid_offset);
             _user_flags        = new IntegerField(_user_flags_offset, 0, _raw_data);
             _seconds_1         = new IntegerField(_seconds_1_offset, _raw_data);
             _days_1            = new IntegerField(_days_1_offset, _raw_data);
@@ -159,7 +158,7 @@ namespace NPOI.POIFS.Properties
             int name_length = (_name_size.Value / LittleEndianConsts.SHORT_SIZE)
                               - 1;
 
-            if (name_length < 1)
+            if(name_length < 1)
             {
                 _name = "";
             }
@@ -168,9 +167,9 @@ namespace NPOI.POIFS.Properties
                 char[] char_array  = new char[ name_length ];
                 int    name_offset = 0;
 
-                for (int j = 0; j < name_length; j++)
+                for(int j = 0; j < name_length; j++)
                 {
-                    char_array[ j ] = ( char ) new ShortField(name_offset,
+                    char_array[j] = (char) new ShortField(name_offset,
                                                               _raw_data).Value;
                     name_offset     += LittleEndianConsts.SHORT_SIZE;
                 }
@@ -187,7 +186,7 @@ namespace NPOI.POIFS.Properties
         /// written.</param>
         public void WriteData(Stream stream)
         {
-            stream.Write(_raw_data,0,this._raw_data.Length);
+            stream.Write(_raw_data, 0, this._raw_data.Length);
         }
 
         /// <summary>
@@ -201,9 +200,9 @@ namespace NPOI.POIFS.Properties
             {
                 _start_block.Set(value, _raw_data);
             }
-            get 
+            get
             {
-                return _start_block.Value; 
+                return _start_block.Value;
             }
         }
 
@@ -246,20 +245,20 @@ namespace NPOI.POIFS.Properties
                 short offset = 0;
                 int j = 0;
 
-                for (; j < limit; j++)
+                for(; j < limit; j++)
                 {
-                    ShortField.Write(offset, (short)char_array[j], ref _raw_data);
+                    ShortField.Write(offset, (short) char_array[j], ref _raw_data);
                     offset += LittleEndianConsts.SHORT_SIZE;
                 }
-                for (; j < _max_name_length + 1; j++)
+                for(; j < _max_name_length + 1; j++)
                 {
-                    ShortField.Write(offset, (short)0, ref _raw_data);
+                    ShortField.Write(offset, (short) 0, ref _raw_data);
                     offset += LittleEndianConsts.SHORT_SIZE;
                 }
 
                 // double the count, and include the null at the end
                 _name_size
-                    .Set((short)((limit + 1)
+                    .Set((short) ((limit + 1)
                                     * LittleEndianConsts.SHORT_SIZE), ref _raw_data);
             }
         }
@@ -279,7 +278,7 @@ namespace NPOI.POIFS.Properties
         /// Gets or sets the storage class ID for this property stream. ThIs Is the Class ID
         /// of the COM object which can read and write this property stream </summary>
         /// <value>Storage Class ID</value>
-        public HPSF.ClassID StorageClsid 
+        public HPSF.ClassID StorageClsid
         {
             get
             {
@@ -288,16 +287,16 @@ namespace NPOI.POIFS.Properties
             set
             {
                 _storage_clsid = value;
-                if (value == null)
+                if(value == null)
                 {
-                    for (int i = _storage_clsid_offset; i < _storage_clsid_offset + HPSF.ClassID.LENGTH; i++)
-                        _raw_data[i] = (byte)0;
+                    for(int i = _storage_clsid_offset; i < _storage_clsid_offset + HPSF.ClassID.LENGTH; i++)
+                        _raw_data[i] = (byte) 0;
                 }
                 else
                 {
                     value.Write(_raw_data, _storage_clsid_offset);
                 }
-               
+
             }
         }
         /// <summary>
@@ -354,10 +353,11 @@ namespace NPOI.POIFS.Properties
         /// <value>the size of the document, in bytes</value>
         public virtual int Size
         {
-            set{
+            set
+            {
                 _size.Set(value, _raw_data);
             }
-            get 
+            get
             {
                 return _size.Value;
             }
@@ -399,7 +399,8 @@ namespace NPOI.POIFS.Properties
         /// <value>The index of the previous child.</value>
         public int PreviousChildIndex
         {
-            get{
+            get
+            {
                 return _previous_property.Value;
             }
         }
@@ -429,7 +430,7 @@ namespace NPOI.POIFS.Properties
             {
                 _previous_child = value;
                 _previous_property.Set((value == null) ? _NO_INDEX
-                                                       : ((Property)value)
+                                                       : ((Property) value)
                                                            .Index, _raw_data);
             }
             get
@@ -448,7 +449,7 @@ namespace NPOI.POIFS.Properties
             {
                 _next_child = value;
                 _next_property.Set((value == null) ? _NO_INDEX
-                                                   : ((Property)value)
+                                                   : ((Property) value)
                                                        .Index, _raw_data);
             }
             get
@@ -478,11 +479,11 @@ namespace NPOI.POIFS.Properties
                 long time = _days_1.Value;
 
                 time <<= 32;
-                time += ((long)_seconds_1.Value) & 0x0000FFFFL;
+                time += ((long) _seconds_1.Value) & 0x0000FFFFL;
                 results[3] = "Time 1        = " + time;
                 time = _days_2.Value;
                 time <<= 32;
-                time += ((long)_seconds_2.Value) & 0x0000FFFFL;
+                time += ((long) _seconds_2.Value) & 0x0000FFFFL;
                 results[4] = "Time 2        = " + time;
                 results[5] = "Size          = " + Size;
                 return results;

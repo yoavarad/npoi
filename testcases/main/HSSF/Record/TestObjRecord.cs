@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.Collections;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
 
     /**
      * Tests the serialization and deserialization of the ObjRecord class works correctly.
@@ -49,7 +50,7 @@ namespace TestCases.HSSF.Record
         };
 
         private static byte[] recdataNeedingPadding = {
-    	    21, 0, 18, 0, 0, 0, 1, 0, 17, 96, 0, 0, 0, 0, 56, 111, unchecked((byte)-52), 3, 0, 0, 0, 0, 6, 0, 2, 0, 0, 0, 0, 0, 0, 0
+            21, 0, 18, 0, 0, 0, 1, 0, 17, 96, 0, 0, 0, 0, 56, 111, unchecked((byte)-52), 3, 0, 0, 0, 0, 6, 0, 2, 0, 0, 0, 0, 0, 0, 0
         };
         [Test]
         public void TestLoad()
@@ -81,7 +82,7 @@ namespace TestCases.HSSF.Record
             ObjRecord record = new ObjRecord();
             CommonObjectDataSubRecord ftCmo = new CommonObjectDataSubRecord();
             ftCmo.ObjectType = (CommonObjectType.Comment);
-            ftCmo.ObjectId = ((short)1024);
+            ftCmo.ObjectId = ((short) 1024);
             ftCmo.IsLocked = (true);
             ftCmo.IsPrintable = (true);
             ftCmo.IsAutoFill = (true);
@@ -107,7 +108,7 @@ namespace TestCases.HSSF.Record
         {
             ObjRecord record = new ObjRecord(TestcaseRecordInputStream.Create(ObjRecord.sid, recdataNeedingPadding));
 
-            if (record.RecordSize == 34)
+            if(record.RecordSize == 34)
             {
                 throw new AssertionException("Identified bug 45133");
             }

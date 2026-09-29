@@ -109,9 +109,9 @@ namespace TestCases.XSSF.UserModel
         public void TestApplyFontIndex()
         {
             XSSFRichTextString rt = new XSSFRichTextString("Apache POI");
-            rt.ApplyFont(0, 10, (short)1);
+            rt.ApplyFont(0, 10, (short) 1);
 
-            rt.ApplyFont((short)1);
+            rt.ApplyFont((short) 1);
 
             ClassicAssert.IsNotNull(rt.GetFontAtIndex(0));
         }
@@ -126,17 +126,17 @@ namespace TestCases.XSSF.UserModel
 
             try
             {
-                rt.ApplyFont(0, 10, (short)1);
+                rt.ApplyFont(0, 10, (short) 1);
                 Assert.Fail("Fails without styles in the table");
             }
-            catch (ArgumentOutOfRangeException )
+            catch(ArgumentOutOfRangeException)
             {
                 // expected
             }
 
             tbl.PutFont(new XSSFFont());
-            rt.ApplyFont(0, 10, (short)1);
-            rt.ApplyFont((short)1);
+            rt.ApplyFont(0, 10, (short) 1);
+            rt.ApplyFont((short) 1);
         }
 
         [Test]
@@ -144,34 +144,34 @@ namespace TestCases.XSSF.UserModel
         {
             XSSFRichTextString rt = new XSSFRichTextString("Apache POI");
 
-            rt.ApplyFont(0, 0, (short)1);
+            rt.ApplyFont(0, 0, (short) 1);
 
             try
             {
-                rt.ApplyFont(11, 10, (short)1);
+                rt.ApplyFont(11, 10, (short) 1);
                 Assert.Fail("Should catch Exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("11"));
             }
 
             try
             {
-                rt.ApplyFont(-1, 10, (short)1);
+                rt.ApplyFont(-1, 10, (short) 1);
                 Assert.Fail("Should catch Exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("-1"));
             }
 
             try
             {
-                rt.ApplyFont(0, 555, (short)1);
+                rt.ApplyFont(0, 555, (short) 1);
                 Assert.Fail("Should catch Exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("555"));
             }
@@ -240,7 +240,7 @@ namespace TestCases.XSSF.UserModel
             XSSFRichTextString rt = new XSSFRichTextString("Apache");
             CT_Rst ct = rt.GetCTRst();
             string t=ct.t;
-            
+
             ClassicAssert.AreEqual("<t>Apache</t>", ct.XmlText);
             rt.String = "  Apache";
             ClassicAssert.AreEqual("<t xml:space=\"preserve\">  Apache</t>", ct.XmlText);
@@ -498,27 +498,27 @@ namespace TestCases.XSSF.UserModel
         public void TestBug56511()
         {
             XSSFWorkbook wb = XSSFTestDataSamples.OpenSampleWorkbook("56511.xlsx");
-            foreach (XSSFSheet sheet in wb)
+            foreach(XSSFSheet sheet in wb)
             {
                 int lastRow = sheet.LastRowNum;
-                for (int rowIdx = sheet.FirstRowNum; rowIdx <= lastRow; rowIdx++)
+                for(int rowIdx = sheet.FirstRowNum; rowIdx <= lastRow; rowIdx++)
                 {
                     XSSFRow row = sheet.GetRow(rowIdx) as XSSFRow;
-                    if (row != null)
+                    if(row != null)
                     {
                         int lastCell = row.LastCellNum;
 
-                        for (int cellIdx = row.FirstCellNum; cellIdx <= lastCell; cellIdx++)
+                        for(int cellIdx = row.FirstCellNum; cellIdx <= lastCell; cellIdx++)
                         {
 
                             XSSFCell cell = row.GetCell(cellIdx) as XSSFCell;
-                            if (cell != null)
+                            if(cell != null)
                             {
                                 //System.out.Println("row " + rowIdx + " column " + cellIdx + ": " + cell.CellType + ": " + cell.ToString());
 
                                 XSSFRichTextString richText = cell.RichStringCellValue as XSSFRichTextString;
                                 int anzFormattingRuns = richText.NumFormattingRuns;
-                                for (int run = 0; run < anzFormattingRuns; run++)
+                                for(int run = 0; run < anzFormattingRuns; run++)
                                 {
                                     /*XSSFFont font =*/
                                     richText.GetFontOfFormattingRun(run);
@@ -545,12 +545,12 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsNull(rt.GetFontOfFormattingRun(0));
             ClassicAssert.AreEqual(-1, rt.GetLengthOfFormattingRun(0));
 
-            rt = (XSSFRichTextString)row.GetCell(1).RichStringCellValue;
+            rt = (XSSFRichTextString) row.GetCell(1).RichStringCellValue;
             ClassicAssert.AreEqual(0, row.GetCell(1).RichStringCellValue.NumFormattingRuns);
             ClassicAssert.IsNull(rt.GetFontOfFormattingRun(1));
             ClassicAssert.AreEqual(-1, rt.GetLengthOfFormattingRun(1));
 
-            rt = (XSSFRichTextString)row.GetCell(2).RichStringCellValue;
+            rt = (XSSFRichTextString) row.GetCell(2).RichStringCellValue;
             ClassicAssert.AreEqual(2, rt.NumFormattingRuns);
             ClassicAssert.IsNotNull(rt.GetFontOfFormattingRun(0));
             ClassicAssert.AreEqual(4, rt.GetLengthOfFormattingRun(0));
@@ -560,7 +560,7 @@ namespace TestCases.XSSF.UserModel
 
             ClassicAssert.IsNull(rt.GetFontOfFormattingRun(2));
 
-            rt = (XSSFRichTextString)row.GetCell(3).RichStringCellValue;
+            rt = (XSSFRichTextString) row.GetCell(3).RichStringCellValue;
             ClassicAssert.AreEqual(3, rt.NumFormattingRuns);
             ClassicAssert.IsNull(rt.GetFontOfFormattingRun(0));
             ClassicAssert.AreEqual(1, rt.GetLengthOfFormattingRun(0));

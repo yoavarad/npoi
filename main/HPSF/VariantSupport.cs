@@ -141,11 +141,11 @@ namespace NPOI.HPSF
                  int length, long type, int codepage)
         {
             LittleEndianByteArrayInputStream lei = new LittleEndianByteArrayInputStream(src, offset);
-            return Read( lei, length, type, codepage );
+            return Read(lei, length, type, codepage);
         }
 
-        public static Object Read( LittleEndianByteArrayInputStream lei,
-            int length, long type, int codepage )
+        public static Object Read(LittleEndianByteArrayInputStream lei,
+            int length, long type, int codepage)
         {
             int offset = lei.GetReadIndex();
             TypedPropertyValue typedPropertyValue = new TypedPropertyValue( (int) type, null );
@@ -153,15 +153,16 @@ namespace NPOI.HPSF
             {
                 typedPropertyValue.ReadValue(lei);
             }
-            catch ( InvalidOperationException exc )
+            catch(InvalidOperationException exc)
             {
                 int propLength = Math.Min( length, lei.Available() );
                 byte[] v = IOUtils.SafelyAllocate(propLength, MAX_RECORD_LENGTH);
                 lei.ReadFully(v, 0, propLength);
-                throw new ReadingNotSupportedException( type, v );
+                throw new ReadingNotSupportedException(type, v);
             }
 
-            switch ( (int) type ) {
+            switch((int) type)
+            {
                 /*
                  * we have more property types that can be converted into Java
                  * objects, but current API need to be preserved, and it returns
@@ -185,7 +186,7 @@ namespace NPOI.HPSF
                  * --sergey
                  */
                 case Variant.VT_I2:
-                    return (short)typedPropertyValue.Value;
+                    return (short) typedPropertyValue.Value;
 
                 case Variant.VT_FILETIME:
                     Filetime filetime = (Filetime) typedPropertyValue.Value;
@@ -193,7 +194,7 @@ namespace NPOI.HPSF
 
                 case Variant.VT_LPSTR:
                     CodePageString cpString = (CodePageString) typedPropertyValue.Value;
-                    return cpString.GetJavaValue( codepage );
+                    return cpString.GetJavaValue(codepage);
 
                 case Variant.VT_LPWSTR:
                     UnicodeString uniString = (UnicodeString) typedPropertyValue.Value;
@@ -224,7 +225,7 @@ namespace NPOI.HPSF
                 case Variant.VT_BOOL:
                     VariantBool bool1 = (VariantBool) typedPropertyValue.Value;
                     return bool1.Value;
-                
+
                 /*
                  * it is not very good, but what can do without breaking current
                  * API? --sergey
@@ -233,8 +234,8 @@ namespace NPOI.HPSF
                     int unpadded = lei.GetReadIndex()-offset;
                     lei.SetReadIndex(offset);
                     byte[] v = IOUtils.SafelyAllocate(unpadded, MAX_RECORD_LENGTH);
-                    lei.ReadFully( v, 0, unpadded );
-                    throw new ReadingNotSupportedException( type, v );
+                    lei.ReadFully(v, 0, unpadded);
+                    throw new ReadingNotSupportedException(type, v);
             }
         }
 
@@ -270,17 +271,18 @@ namespace NPOI.HPSF
             switch((int) type)
             {
                 case Variant.VT_BOOL:
-                    if (value is Boolean bValue)
+                    if(value is Boolean bValue)
                     {
                         int bb = bValue ? 0xff : 0x00;
-                        out1.WriteByte((byte)bb);
-                        out1.WriteByte((byte)bb);
+                        out1.WriteByte((byte) bb);
+                        out1.WriteByte((byte) bb);
                         length = 2;
                     }
                     break;
 
                 case Variant.VT_LPSTR:
-                    if (value is String s1) {
+                    if(value is String s1)
+                    {
                         CodePageString codePageString = new CodePageString();
                         codePageString.SetJavaValue(s1, codepage);
                         length = codePageString.Write(out1);
@@ -290,9 +292,10 @@ namespace NPOI.HPSF
                     break;
 
                 case Variant.VT_LPWSTR:
-                    if (value is String) {
+                    if(value is String)
+                    {
                         UnicodeString uniString = new UnicodeString();
-                        uniString.SetJavaValue((String)value);
+                        uniString.SetJavaValue((String) value);
                         length = uniString.Write(out1);
                     }
                     //int nrOfChars = ((String)value).Length + 1;
@@ -314,7 +317,7 @@ namespace NPOI.HPSF
                     break;
 
                 case Variant.VT_CF:
-                    if (value is byte[] cf)
+                    if(value is byte[] cf)
                     {
                         out1.Write(cf, 0, cf.Length);
                         length = cf.Length;
@@ -332,62 +335,65 @@ namespace NPOI.HPSF
                 case Variant.VT_I2:
                     if(Number.IsNumber(value))
                     {
-                        LittleEndian.PutShort(out1, (short)(int)value);
+                        LittleEndian.PutShort(out1, (short) (int) value);
                         length = LittleEndianConsts.SHORT_SIZE;
                     }
                     break;
                 case Variant.VT_UI2:
-                    if (Number.IsNumber(value)) {
-                        LittleEndian.PutUShort((ushort)(int)value, out1);
+                    if(Number.IsNumber(value))
+                    {
+                        LittleEndian.PutUShort((ushort) (int) value, out1);
                         length = LittleEndianConsts.SHORT_SIZE;
                     }
-                break;
+                    break;
                 case Variant.VT_I4:
                     if(Number.IsNumber(value))
                     {
-                        LittleEndian.PutInt((int)value, out1);
+                        LittleEndian.PutInt((int) value, out1);
                         length = LittleEndianConsts.INT_SIZE;
                     }
                     break;
                 case Variant.VT_UI4:
-                    if (Number.IsNumber(value))
+                    if(Number.IsNumber(value))
                     {
-                        LittleEndian.PutUInt((uint)(long)value, out1);
+                        LittleEndian.PutUInt((uint) (long) value, out1);
                         length = LittleEndianConsts.INT_SIZE;
                     }
                     break;
                 case Variant.VT_I8:
-                    if (Number.IsNumber(value))
+                    if(Number.IsNumber(value))
                     {
                         LittleEndian.PutLong(Convert.ToInt64(value), out1);
                         length = LittleEndianConsts.LONG_SIZE;
                     }
-                    
+
                     break;
-                case Variant.VT_UI8: 
-                    if (value is BigInteger || Number.IsNumber(value)) {
+                case Variant.VT_UI8:
+                    if(value is BigInteger || Number.IsNumber(value))
+                    {
                         BigInteger bi = (value is BigInteger) ? (BigInteger)value : BigInteger.ValueOf((long)value);
-                        if (bi.BitLength() > 64) {
+                        if(bi.BitLength() > 64)
+                        {
                             throw new WritingNotSupportedException(type, value);
                         }
                         byte[] biBytesBE = bi.ToByteArray();
                         byte[] biBytesLE = new byte[LittleEndianConsts.LONG_SIZE];
                         int i = biBytesBE.Length;
-                        foreach (byte b in biBytesBE)
+                        foreach(byte b in biBytesBE)
                         {
-                            if (i<=LittleEndianConsts.LONG_SIZE)
+                            if(i<=LittleEndianConsts.LONG_SIZE)
                             {
                                 biBytesLE[i-1] = b;
                             }
                             i--;
                         }
-    
+
                         out1.Write(biBytesLE, 0, biBytesLE.Length);
                         length = LittleEndianConsts.LONG_SIZE;
                     }
                     break;
                 case Variant.VT_R4:
-                    if (value is float)
+                    if(value is float)
                     {
                         int floatBits = BitConverter.ToInt32(BitConverter.GetBytes((float)value), 0);
                         LittleEndian.PutInt(floatBits, out1);
@@ -395,9 +401,9 @@ namespace NPOI.HPSF
                     }
                     break;
                 case Variant.VT_R8:
-                    if (value is double)
+                    if(value is double)
                     {
-                        LittleEndian.PutDouble((double)value, out1);
+                        LittleEndian.PutDouble((double) value, out1);
                         length = LittleEndianConsts.DOUBLE_SIZE;
                     }
                     break;
@@ -411,12 +417,12 @@ namespace NPOI.HPSF
                     break;
             }
 
-            
+
             /* The variant type is not supported yet. However, if the value
              * is a byte array we can write it nevertheless. */
-            if (length == -1)
+            if(length == -1)
             {
-                if (value is byte[])
+                if(value is byte[])
                 {
                     byte[] b = (byte[]) value;
                     out1.Write(b, 0, b.Length);
@@ -428,7 +434,7 @@ namespace NPOI.HPSF
                     throw new WritingNotSupportedException(type, value);
                 }
             }
-        
+
             /* pad values to 4-bytes */
             int padding = (4-(length & 0x3)) & 0x3;
             out1.Write(paddingBytes, 0, padding);
@@ -437,4 +443,3 @@ namespace NPOI.HPSF
         }
     }
 }
-

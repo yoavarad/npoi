@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -47,7 +47,7 @@ namespace NPOI.SS.Extractor
             get { return _filename; }
             set
             {
-                if (value == null)
+                if(value == null)
                 {
                     this._filename = "unknown.bin";
                 }
@@ -72,7 +72,7 @@ namespace NPOI.SS.Extractor
         /// <param name="embeddedData">the embedded object byte array</param>
         public void SetEmbeddedData(byte[] embeddedData)
         {
-            this._embeddedData = (embeddedData == null) ? null : (byte[])embeddedData.Clone();
+            this._embeddedData = (embeddedData == null) ? null : (byte[]) embeddedData.Clone();
         }
 
         public IShape Shape
@@ -90,4 +90,3 @@ namespace NPOI.SS.Extractor
         }
     }
 }
-

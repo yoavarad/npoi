@@ -1,16 +1,16 @@
-﻿
+
 namespace NPOI.HSSF.Record.Chart
 {
     /// <summary>
     /// The CrtLink record is written but unused.
     /// </summary>
-    public class CrtLinkRecord:StandardRecord
+    public class CrtLinkRecord : StandardRecord
     {
         //0x1022
         public const short sid = 0x1022;
 
         public CrtLinkRecord()
-        { 
+        {
         }
 
         public CrtLinkRecord(RecordInputStream in1)

@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.XSSF.UserModel;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using System;
-using System.Text; 
 using Cysharp.Text;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.XSSF.UserModel;
+using System;
+using System.Text;
 
 namespace NPOI.XSSF.UserModel.Helpers
 {
@@ -56,17 +56,19 @@ namespace NPOI.XSSF.UserModel.Helpers
 
         public long MapId
         {
-            get { 
+            get
+            {
                 return ctXmlColumnPr.mapId;
             }
         }
 
         public String XPath
         {
-            get { 
-                return ctXmlColumnPr.xpath; 
+            get
+            {
+                return ctXmlColumnPr.xpath;
             }
-            
+
         }
         /// <summary>
         /// (see Open Office XML Part 4: chapter 3.5.1.3) An integer representing the unique identifier of this column. 
@@ -93,7 +95,7 @@ namespace NPOI.XSSF.UserModel.Helpers
                 int numberOfCommonXPathAxis = table.GetCommonXpath().Split('/').Length - 1;
 
                 String[] xPathTokens = ctXmlColumnPr.xpath.Split('/');
-                for (int i = numberOfCommonXPathAxis; i < xPathTokens.Length; i++)
+                for(int i = numberOfCommonXPathAxis; i < xPathTokens.Length; i++)
                 {
                     localXPath.Append("/" + xPathTokens[i]);
                 }
@@ -109,5 +111,3 @@ namespace NPOI.XSSF.UserModel.Helpers
     }
 
 }
-
-

@@ -35,9 +35,10 @@ namespace NPOI.SS.Formula.PTG
         {
             get { return true; }
         }
-        public override byte DefaultOperandClass 
+        public override byte DefaultOperandClass
         {
-            get {
+            get
+            {
                 throw new NotImplementedException("Control tokens are not classified");
             }
         }

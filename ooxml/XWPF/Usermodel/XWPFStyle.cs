@@ -17,9 +17,8 @@
 
 namespace NPOI.XWPF.UserModel
 {
-    using System;
-
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * @author Philipp Epp
@@ -60,7 +59,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return ctStyle.styleId;
             }
-            set 
+            set
             {
                 ctStyle.styleId =value;
             }
@@ -76,7 +75,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return ctStyle.type;
             }
-            set 
+            set
             {
                 ctStyle.type = value;
             }
@@ -112,7 +111,7 @@ namespace NPOI.XWPF.UserModel
         {
             get
             {
-                if (ctStyle.basedOn != null)
+                if(ctStyle.basedOn != null)
                     return ctStyle.basedOn.val;
                 else
                     return null;
@@ -127,7 +126,7 @@ namespace NPOI.XWPF.UserModel
         {
             get
             {
-                if (ctStyle.link != null)
+                if(ctStyle.link != null)
                     return ctStyle.link.val;
                 else
                     return null;
@@ -141,7 +140,7 @@ namespace NPOI.XWPF.UserModel
         {
             get
             {
-                if (ctStyle.next != null)
+                if(ctStyle.next != null)
                     return ctStyle.next.val;
                 else
                     return null;
@@ -152,7 +151,7 @@ namespace NPOI.XWPF.UserModel
         {
             get
             {
-                if (ctStyle.IsSetName())
+                if(ctStyle.IsSetName())
                     return ctStyle.name.val;
                 return null;
             }

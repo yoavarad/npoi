@@ -17,10 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    
-    using NPOI.Util;
 
     /**
      * @author Glen Stampoultzis (glens at apache.org)

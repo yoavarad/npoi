@@ -17,12 +17,12 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestWeekdayFunc

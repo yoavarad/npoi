@@ -17,14 +17,15 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF.Record;
-    using NPOI.HSSF.Record;
 
     /**
      * Tests the NameRecord Serializes/deserializes correctly
@@ -74,7 +75,7 @@ namespace TestCases.HSSF.Record
             wb.CreateSheet("Sheet1");
             name.NameName = (/*setter*/"test");
             name.RefersToFormula = (/*setter*/"Sheet1!$B$3");
-            if (name.RefersToFormula.Equals("Sheet1!B3"))
+            if(name.RefersToFormula.Equals("Sheet1!B3"))
             {
                 Assert.Fail("Identified bug 46174");
             }

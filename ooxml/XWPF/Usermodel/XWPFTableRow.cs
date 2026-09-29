@@ -16,10 +16,10 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
-    using System.Collections.Generic;
     using NPOI.XWPF.Model;
+    using System;
+    using System.Collections.Generic;
 
 
     /**
@@ -59,20 +59,20 @@ namespace NPOI.XWPF.UserModel
         }
         public void MergeCells(int startIndex, int endIndex)
         {
-            if (startIndex >= endIndex)
+            if(startIndex >= endIndex)
             {
                 throw new ArgumentOutOfRangeException("Start index must be smaller than end index");
             }
-            if (startIndex < 0 || endIndex >= this.tableCells.Count)
+            if(startIndex < 0 || endIndex >= this.tableCells.Count)
             {
                 throw new ArgumentOutOfRangeException("Invalid start index and end index");
             }
             XWPFTableCell startCell = this.GetCell(startIndex);
             //remove merged cells
-            for (int i = endIndex; i >startIndex; i--)
+            for(int i = endIndex; i >startIndex; i--)
                 this.RemoveCell(i);
-            
-            if (!startCell.GetCTTc().IsSetTcPr())
+
+            if(!startCell.GetCTTc().IsSetTcPr())
             {
                 startCell.GetCTTc().AddNewTcPr();
             }
@@ -84,7 +84,7 @@ namespace NPOI.XWPF.UserModel
         }
         public XWPFTableCell GetCell(int pos)
         {
-            if (pos >= 0 && pos < ctRow.SizeOfTcArray())
+            if(pos >= 0 && pos < ctRow.SizeOfTcArray())
             {
                 return GetTableCells()[(pos)];
             }
@@ -92,7 +92,7 @@ namespace NPOI.XWPF.UserModel
         }
         public void RemoveCell(int pos)
         {
-            if (pos >= 0 && pos < ctRow.SizeOfTcArray())
+            if(pos >= 0 && pos < ctRow.SizeOfTcArray())
             {
                 tableCells.RemoveAt(pos);
                 ctRow.RemoveTc(pos);
@@ -140,13 +140,13 @@ namespace NPOI.XWPF.UserModel
             get
             {
                 CT_TrPr properties = GetTrPr();
-                return properties.SizeOfTrHeightArray() == 0 ? 0 : (int)properties.GetTrHeightArray(0).val;
+                return properties.SizeOfTrHeightArray() == 0 ? 0 : (int) properties.GetTrHeightArray(0).val;
             }
             set
             {
                 CT_TrPr properties = GetTrPr();
                 CT_Height h = properties.SizeOfTrHeightArray() == 0 ? properties.AddNewTrHeight() : properties.GetTrHeightArray(0);
-                h.val = (ulong)value;
+                h.val = (ulong) value;
             }
         }
 
@@ -175,11 +175,11 @@ namespace NPOI.XWPF.UserModel
 
             foreach(object o in ctRow.Items)
             {
-                if (o is CT_Tc tc)
+                if(o is CT_Tc tc)
                 {
                     cells.Add(new XWPFTableCell(tc, this, table.Body));
                 }
-                else if (o is CT_SdtCell cell)
+                else if(o is CT_SdtCell cell)
                 {
                     cells.Add(new XWPFSDTCell(cell, this, table.Body));
                 }
@@ -194,10 +194,10 @@ namespace NPOI.XWPF.UserModel
          */
         public List<XWPFTableCell> GetTableCells()
         {
-            if (tableCells == null)
+            if(tableCells == null)
             {
                 List<XWPFTableCell> cells = new List<XWPFTableCell>();
-                foreach (CT_Tc tableCell in ctRow.GetTcList())
+                foreach(CT_Tc tableCell in ctRow.GetTcList())
                 {
                     cells.Add(new XWPFTableCell(tableCell, this, table.Body));
                 }
@@ -217,9 +217,9 @@ namespace NPOI.XWPF.UserModel
          */
         public XWPFTableCell GetTableCell(CT_Tc cell)
         {
-            for (int i = 0; i < tableCells.Count; i++)
+            for(int i = 0; i < tableCells.Count; i++)
             {
-                if (tableCells[(i)].GetCTTc() == cell) 
+                if(tableCells[(i)].GetCTTc() == cell)
                     return tableCells[(i)];
             }
             return null;
@@ -236,10 +236,10 @@ namespace NPOI.XWPF.UserModel
             get
             {
                 bool isCant = false;
-                if (ctRow.IsSetTrPr())
+                if(ctRow.IsSetTrPr())
                 {
                     CT_TrPr trpr = GetTrPr();
-                    if (trpr.SizeOfCantSplitArray() > 0)
+                    if(trpr.SizeOfCantSplitArray() > 0)
                     {
                         CT_OnOff onoff = trpr.GetCantSplitList()[0];
                         isCant = onoff.IsSetVal() ? onoff.val : true;
@@ -248,7 +248,7 @@ namespace NPOI.XWPF.UserModel
                 }
                 return isCant;
             }
-            set 
+            set
             {
                 SetCantSplitRow(value);
             }
@@ -293,17 +293,17 @@ namespace NPOI.XWPF.UserModel
             get
             {
                 bool repeat = false;
-                foreach (XWPFTableRow row in table.Rows)
+                foreach(XWPFTableRow row in table.Rows)
                 {
                     repeat = row.GetRepeat();
-                    if (row == this || !repeat)
+                    if(row == this || !repeat)
                     {
                         break;
                     }
                 }
                 return repeat;
             }
-            set 
+            set
             {
                 SetRepeatHeader(value);
             }
@@ -312,10 +312,10 @@ namespace NPOI.XWPF.UserModel
         private bool GetRepeat()
         {
             bool repeat = false;
-            if (ctRow.IsSetTrPr())
+            if(ctRow.IsSetTrPr())
             {
                 CT_TrPr trpr = GetTrPr();
-                if (trpr.SizeOfTblHeaderArray() > 0)
+                if(trpr.SizeOfTblHeaderArray() > 0)
                 {
                     CT_OnOff rpt = trpr.GetTblHeaderArray(0);
                     repeat = (rpt.IsSetVal() ? rpt.val : true);

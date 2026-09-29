@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -33,16 +33,16 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public DropBarAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_DROPBAR, container)
         {
-            dropBar = (DropBarRecord)rs.GetNext();
+            dropBar = (DropBarRecord) rs.GetNext();
             rs.GetNext();
-            lineFormat = (LineFormatRecord)rs.GetNext();
-            areaFormat = (AreaFormatRecord)rs.GetNext();
+            lineFormat = (LineFormatRecord) rs.GetNext();
+            areaFormat = (AreaFormatRecord) rs.GetNext();
 
-            if (rs.PeekNextChartSid() == GelFrameRecord.sid)
+            if(rs.PeekNextChartSid() == GelFrameRecord.sid)
             {
                 gelFrame = new GelFrameAggregate(rs, this);
             }
-            if (rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
+            if(rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
             {
                 shapProps = new ShapePropsAggregate(rs, this);
             }
@@ -58,9 +58,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(lineFormat);
             rv.VisitRecord(areaFormat);
 
-            if (gelFrame != null)
+            if(gelFrame != null)
                 gelFrame.VisitContainedRecords(rv);
-            if (shapProps != null)
+            if(shapProps != null)
                 shapProps.VisitContainedRecords(rv);
 
             WriteEndBlock(rv);

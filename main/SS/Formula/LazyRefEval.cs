@@ -18,12 +18,12 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
-    using System.Text;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
-    using NPOI.SS.Util;
     using NPOI.SS.Formula.PTG;
+    using NPOI.SS.Util;
+    using System;
+    using System.Text;
 
     /**
      * Provides Lazy Evaluation to a 3D Reference
@@ -36,10 +36,10 @@ namespace NPOI.SS.Formula
         private readonly SheetRangeEvaluator _evaluator;
 
         public LazyRefEval(int rowIndex, int columnIndex, SheetRangeEvaluator sre)
-            :base(sre, rowIndex, columnIndex)
+            : base(sre, rowIndex, columnIndex)
         {
-           
-            if (sre == null)
+
+            if(sre == null)
             {
                 throw new ArgumentException("sre must not be null");
             }

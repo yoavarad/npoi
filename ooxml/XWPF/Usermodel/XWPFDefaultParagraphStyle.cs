@@ -17,8 +17,8 @@
 
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * Default Paragraph style, from which other styles will override
@@ -42,8 +42,8 @@ namespace NPOI.XWPF.UserModel
         {
             get
             {
-                if (ppr.IsSetSpacing())
-                    return (int)ppr.spacing.after;
+                if(ppr.IsSetSpacing())
+                    return (int) ppr.spacing.after;
                 return -1;
             }
         }

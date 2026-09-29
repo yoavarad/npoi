@@ -15,13 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
 using NPOI.SS.Util;
-using System.Collections;
-using System.Globalization;
 using NPOI.Util;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
 namespace NPOI.SS.Format
 {
@@ -56,7 +56,7 @@ namespace NPOI.SS.Format
         private DecimalFormat decimalFmt;
         private static List<Special> EmptySpecialList = new List<Special>();
 
-        
+
 
         private readonly GeneralNumberFormatter SIMPLE_NUMBER;
         /// <summary>
@@ -78,14 +78,14 @@ namespace NPOI.SS.Format
 
             public override void FormatValue(StringBuilder toAppendTo, Object value)
             {
-                if (value == null)
+                if(value == null)
                 {
                     return;
                 }
 
                 CellFormatter cf;
                 //if (value is Number)
-                if (NPOI.Util.Number.IsNumber(value))
+                if(NPOI.Util.Number.IsNumber(value))
                 {
                     double num;
                     double.TryParse(value.ToString(), out num);
@@ -154,7 +154,7 @@ namespace NPOI.SS.Format
             improperFraction = ph.IsImproperFraction;
 
             // These are inconsistent settings, so ditch 'em
-            if ((ph.DecimalPoint != null || ph.Exponent != null) && ph.Slash != null)
+            if((ph.DecimalPoint != null || ph.Exponent != null) && ph.Slash != null)
             {
                 slash = null;
                 numerator = null;
@@ -167,10 +167,10 @@ namespace NPOI.SS.Format
 
             int precision = interpretPrecision(ph.DecimalPoint, specials);
             int fractionPartWidth = 0;
-            if (ph.DecimalPoint != null)
+            if(ph.DecimalPoint != null)
             {
                 fractionPartWidth = 1 + precision;
-                if (precision == 0)
+                if(precision == 0)
                 {
                     // This means the format has a ".", but that output should have no decimals after it.
                     // We just stop treating it specially
@@ -187,15 +187,15 @@ namespace NPOI.SS.Format
                 decimalPoint = null;
             }
 
-            if (decimalPoint != null)
+            if(decimalPoint != null)
             {
                 afterInteger = decimalPoint;
             }
-            else if (exponent != null)
+            else if(exponent != null)
             {
                 afterInteger = exponent;
             }
-            else if (numerator != null)
+            else if(numerator != null)
             {
                 afterInteger = numerator;
             }
@@ -204,11 +204,11 @@ namespace NPOI.SS.Format
                 afterInteger = null;
             }
 
-            if (exponent != null)
+            if(exponent != null)
             {
                 afterFractional = exponent;
             }
-            else if (numerator != null)
+            else if(numerator != null)
             {
                 afterFractional = numerator;
             }
@@ -219,7 +219,7 @@ namespace NPOI.SS.Format
 
             double[] scaleByRef = { ph.Scale };
             showGroupingSeparator = interpretIntegerCommas(descBuf, specials, decimalPoint, integerEnd(), fractionalEnd(), scaleByRef);
-            if (exponent == null)
+            if(exponent == null)
             {
                 scale = scaleByRef[0];
             }
@@ -229,29 +229,29 @@ namespace NPOI.SS.Format
                 scale = 1;
             }
 
-            if (precision != 0)
+            if(precision != 0)
             {
                 // TODO: if decimalPoint is null (-> index == -1), return the whole list?
                 int startIndex = specials.IndexOf(decimalPoint) + 1;
                 fractionalSpecials.AddRange(specials.GetRange(startIndex, fractionalEnd() - startIndex));
             }
 
-            if (exponent != null)
+            if(exponent != null)
             {
                 int exponentPos = specials.IndexOf(exponent);
                 exponentSpecials.AddRange(specialsFor(exponentPos, 2));
                 exponentDigitSpecials.AddRange(specialsFor(exponentPos + 2));
             }
 
-            if (slash != null)
+            if(slash != null)
             {
-                if (numerator != null)
+                if(numerator != null)
                 {
                     numeratorSpecials.AddRange(specialsFor(specials.IndexOf(numerator)));
                 }
 
                 denominatorSpecials.AddRange(specialsFor(specials.IndexOf(slash) + 1));
-                if (denominatorSpecials.Count == 0)
+                if(denominatorSpecials.Count == 0)
                 {
                     // no denominator follows the slash, drop the fraction idea
                     numeratorSpecials.Clear();
@@ -275,7 +275,7 @@ namespace NPOI.SS.Format
 
             integerSpecials.AddRange(specials.GetRange(0, integerEnd()));
 
-            if (exponent == null)
+            if(exponent == null)
             {
                 StringBuilder fmtBuf = new StringBuilder();
 
@@ -296,29 +296,29 @@ namespace NPOI.SS.Format
                 StringBuilder fmtBuf = new StringBuilder();
                 bool first = true;
                 List<Special> specialList = integerSpecials;
-                if (integerSpecials.Count == 1)
+                if(integerSpecials.Count == 1)
                 {
                     // If we don't do this, we Get ".6e5" instead of "6e4"
                     fmtBuf.Append("0");
                     first = false;
                 }
                 else
-                    foreach (Special s in specialList)
+                    foreach(Special s in specialList)
                     {
-                        if (IsDigitFmt(s))
+                        if(IsDigitFmt(s))
                         {
                             fmtBuf.Append(first ? '#' : '0');
                             first = false;
                         }
                     }
-                if (fractionalSpecials.Count > 0)
+                if(fractionalSpecials.Count > 0)
                 {
                     fmtBuf.Append('.');
-                    foreach (Special s in fractionalSpecials)
+                    foreach(Special s in fractionalSpecials)
                     {
-                        if (IsDigitFmt(s))
+                        if(IsDigitFmt(s))
                         {
-                            if (!first)
+                            if(!first)
                                 fmtBuf.Append('0');
                             first = false;
                         }
@@ -337,18 +337,18 @@ namespace NPOI.SS.Format
 
         private static void placeZeros(StringBuilder sb, List<Special> specials)
         {
-            foreach (Special s in specials)
+            foreach(Special s in specials)
             {
-                if (IsDigitFmt(s))
+                if(IsDigitFmt(s))
                     sb.Append('0');
             }
         }
 
         private static Special firstDigit(List<Special> specials)
         {
-            foreach (Special s in specials)
+            foreach(Special s in specials)
             {
-                if (IsDigitFmt(s))
+                if(IsDigitFmt(s))
                     return s;
             }
             return null;
@@ -380,22 +380,22 @@ namespace NPOI.SS.Format
 
         private static int maxValue(List<Special> s)
         {
-            return (int)Math.Round(Math.Pow(10, s.Count) - 1);
+            return (int) Math.Round(Math.Pow(10, s.Count) - 1);
         }
 
         private List<Special> specialsFor(int pos, int takeFirst)
         {
-            if (pos >= specials.Count)
+            if(pos >= specials.Count)
                 return EmptySpecialList;
             List<Special>.Enumerator it = specials.GetRange(pos + takeFirst, specials.Count - pos - takeFirst).GetEnumerator();
             //.ListIterator(pos + takeFirst);
             it.MoveNext();
             Special last = it.Current;
             int end = pos + takeFirst;
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 Special s = it.Current;
-                if (!IsDigitFmt(s) || s.pos - last.pos > 1)
+                if(!IsDigitFmt(s) || s.pos - last.pos > 1)
                     break;
                 end++;
                 last = s;
@@ -417,14 +417,14 @@ namespace NPOI.SS.Format
         private int calculateintPartWidth()
         {
             int digitCount = 0;
-            foreach (Special s in specials)
+            foreach(Special s in specials)
             {
                 //!! Handle fractions: The previous set of digits before that is the numerator, so we should stop short of that
-                if (s == afterInteger)
+                if(s == afterInteger)
                 {
                     break;
                 }
-                else if (IsDigitFmt(s))
+                else if(IsDigitFmt(s))
                 {
                     digitCount++;
                 }
@@ -436,12 +436,12 @@ namespace NPOI.SS.Format
         {
             int idx = specials.IndexOf(decimalPoint);
             int precision = 0;
-            if (idx != -1)
+            if(idx != -1)
             {
                 // skip over the decimal point itself
-                foreach (Special s in specials.GetRange(idx + 1, specials.Count - idx - 1))
+                foreach(Special s in specials.GetRange(idx + 1, specials.Count - idx - 1))
                 {
-                    if (!IsDigitFmt(s))
+                    if(!IsDigitFmt(s))
                     {
                         break;
                     }
@@ -459,16 +459,16 @@ namespace NPOI.SS.Format
             bool stillScaling = true;
             bool integerCommas = false;
             //while (it.HasPrevious())
-            for (int i = list.Count - 1; i >= 0; i--)
+            for(int i = list.Count - 1; i >= 0; i--)
             {
                 Special s = list[i];
-                if (s.ch != ',')
+                if(s.ch != ',')
                 {
                     stillScaling = false;
                 }
                 else
                 {
-                    if (stillScaling)
+                    if(stillScaling)
                     {
                         scale[0] /= 1000;
                     }
@@ -479,14 +479,14 @@ namespace NPOI.SS.Format
                 }
             }
 
-            if (decimalPoint != null)
+            if(decimalPoint != null)
             {
                 list = specials.GetRange(0, fractionalEnd);//.ListIterator(fractionalEnd());
                 //while (it.HasPrevious())
-                for (int i = list.Count - 1; i >= 0; i--)
+                for(int i = list.Count - 1; i >= 0; i--)
                 {
                     Special s = list[i];
-                    if (s.ch != ',')
+                    if(s.ch != ',')
                     {
                         break;
                     }
@@ -500,10 +500,10 @@ namespace NPOI.SS.Format
             // Now strip them out -- we only need their interpretation, not their presence
             int Removed = 0;
             List<Special> toRemove = [];
-            foreach (var s in specials)
+            foreach(var s in specials)
             {
                 s.pos -= Removed;
-                if (s.ch == ',')
+                if(s.ch == ',')
                 {
                     Removed++;
                     //it.Remove();
@@ -511,7 +511,7 @@ namespace NPOI.SS.Format
                     sb.Remove(s.pos, 1);
                 }
             }
-            foreach (Special e in toRemove)
+            foreach(Special e in toRemove)
             {
                 specials.Remove(e);
             }
@@ -543,14 +543,14 @@ namespace NPOI.SS.Format
             // this method is called with a negative value and the number is
             // formatted with a minus sign at the start.
             bool negative = value < 0;
-            if (negative)
+            if(negative)
                 value = -value;
 
             // Split out the fractional part if we need to print a fraction
             double fractional = 0;
-            if (slash != null)
+            if(slash != null)
             {
-                if (improperFraction)
+                if(improperFraction)
                 {
                     fractional = value;
                     value = 0;
@@ -559,18 +559,18 @@ namespace NPOI.SS.Format
                 {
                     fractional = value % 1.0;
                     //noinspection SillyAssignment
-                    value = (long)value;
+                    value = (long) value;
                 }
             }
 
             SortedList<CellNumberStringMod, object> mods = new SortedList<CellNumberStringMod, object>();
             StringBuilder output = new StringBuilder(localiseFormat(desc));
 
-            if (exponent != null)
+            if(exponent != null)
             {
                 WriteScientific(value, output, mods);
             }
-            else if (improperFraction)
+            else if(improperFraction)
             {
                 WriteFraction(value, null, fractional, output, mods);
             }
@@ -579,7 +579,7 @@ namespace NPOI.SS.Format
                 StringBuilder result = new StringBuilder();
 
                 result.Append(value.ToString(printfFmt, locale));
-                if (numerator == null)
+                if(numerator == null)
                 {
                     WriteFractional(result, output);
                     Writeint(result, output, integerSpecials, mods, showGroupingSeparator);
@@ -598,25 +598,25 @@ namespace NPOI.SS.Format
             CellNumberStringMod nextChange = (Changes.MoveNext() ? (CellNumberStringMod)Changes.Current : null);
             int adjust = 0;
             BitArray deletedChars = new BitArray(1024); // records chars already deleted
-            foreach (Special s in specials)
+            foreach(Special s in specials)
             {
                 int adjustedPos = s.pos + adjust;
-                if (!deletedChars[(s.pos)] && output[adjustedPos] == '#')
+                if(!deletedChars[(s.pos)] && output[adjustedPos] == '#')
                 {
                     output.Remove(adjustedPos, 1);
                     adjust--;
                     deletedChars.Set(s.pos, true);
                 }
-                while (nextChange != null && s == nextChange.GetSpecial())
+                while(nextChange != null && s == nextChange.GetSpecial())
                 {
                     int lenBefore = output.Length;
                     int modPos = s.pos + adjust;
 
-                    switch (nextChange.Op)
+                    switch(nextChange.Op)
                     {
                         case CellNumberStringMod.AFTER:
                             // ignore Adding a comma After a deleted char (which was a '#')
-                            if (nextChange.ToAdd.Equals(groupingSeparator) && deletedChars.Get(s.pos))
+                            if(nextChange.ToAdd.Equals(groupingSeparator) && deletedChars.Get(s.pos))
                                 break;
                             output.Insert(modPos + 1, nextChange.ToAdd);
                             break;
@@ -627,14 +627,14 @@ namespace NPOI.SS.Format
                         case CellNumberStringMod.REPLACE:
                             // delete starting pos in original coordinates
                             int delPos = s.pos;
-                            if (!nextChange.IsStartInclusive)
+                            if(!nextChange.IsStartInclusive)
                             {
                                 delPos++;
                                 modPos++;
                             }
 
                             // Skip over anything already deleted
-                            while (deletedChars.Get(delPos))
+                            while(deletedChars.Get(delPos))
                             {
                                 delPos++;
                                 modPos++;
@@ -642,23 +642,23 @@ namespace NPOI.SS.Format
 
                             // delete end point in original
                             int delEndPos = nextChange.End.pos;
-                            if (nextChange.IsEndInclusive)
+                            if(nextChange.IsEndInclusive)
                                 delEndPos++;
 
                             // delete end point in current
                             int modEndPos = delEndPos + adjust;
 
-                            if (modPos < modEndPos)
+                            if(modPos < modEndPos)
                             {
-                                if (nextChange.ToAdd == "")
+                                if(nextChange.ToAdd == "")
                                     output.Remove(modPos, modEndPos - modPos);
                                 else
                                 {
                                     char fillCh = nextChange.ToAdd[0];
-                                    for (int i = modPos; i < modEndPos; i++)
+                                    for(int i = modPos; i < modEndPos; i++)
                                         output[i] = fillCh;
                                 }
-                                for (int k = delPos; k < delEndPos; k++)
+                                for(int k = delPos; k < delEndPos; k++)
                                     deletedChars.Set(k, true);
                                 //deletedChars.Set(delPos, delEndPos);
                             }
@@ -669,15 +669,15 @@ namespace NPOI.SS.Format
                     }
                     adjust += output.Length - lenBefore;
 
-                    if (Changes.MoveNext())
-                        nextChange = (CellNumberStringMod)Changes.Current;
+                    if(Changes.MoveNext())
+                        nextChange = (CellNumberStringMod) Changes.Current;
                     else
                         nextChange = null;
                 }
             }
 
             // Finally, add it to the string
-            if (negative)
+            if(negative)
                 toAppendTo.Append('-');
             toAppendTo.Append(output);
         }
@@ -692,9 +692,9 @@ namespace NPOI.SS.Format
             //
             string pattern = decimalFmt.Pattern;
             int pos = 0;
-            while (true)
+            while(true)
             {
-                if (pattern[pos] == '#' || pattern[pos] == '0')
+                if(pattern[pos] == '#' || pattern[pos] == '0')
                 {
                     pos++;
                 }
@@ -702,9 +702,9 @@ namespace NPOI.SS.Format
                     break;
             }
             int integerNum = pos;
-            if (pattern[0] == '#')
+            if(pattern[0] == '#')
                 integerNum--;
-            if (integerNum >= 6 && value > 1)
+            if(integerNum >= 6 && value > 1)
             {
                 pattern = pattern.Substring(1);
                 result.Append(value.ToString(pattern));
@@ -759,13 +759,13 @@ namespace NPOI.SS.Format
             int signPos = ePos + 1;
             char expSignRes = result[signPos];
 
-            if (expSignRes != '-')
+            if(expSignRes != '-')
             {
                 // not a sign, so it's a digit, and therefore a positive exponent
                 expSignRes = '+';
                 // (3) If it's missing, Put the sign into the output to keep the result
                 // lined up with the output.
-                if (tmp.IndexOf(expSignRes, ePos) < 0)
+                if(tmp.IndexOf(expSignRes, ePos) < 0)
                     result.Insert(signPos, '+');
             }
 
@@ -778,13 +778,13 @@ namespace NPOI.SS.Format
 
             // (4) In the output, remove the sign if it should not be Shown or Set it to
             // the correct value.
-            if (expSignRes == '-' || expSignFmt == '+')
+            if(expSignRes == '-' || expSignFmt == '+')
                 mods.Add(ReplaceMod(expSign, true, expSign, true, expSignRes), null);
             else
                 mods.Add(deleteMod(expSign, true, expSign, true), null);
 
             StringBuilder exponentNum = new StringBuilder(result.ToString().Substring(signPos + 1));
-            if (exponentNum.Length > 2 && exponentNum[0] == '0')
+            if(exponentNum.Length > 2 && exponentNum[0] == '0')
                 exponentNum.Remove(0, 1);
             Writeint(exponentNum, output, exponentDigitSpecials, mods, false);
         }
@@ -795,17 +795,17 @@ namespace NPOI.SS.Format
 
             // Figure out if we are to suppress either the integer or fractional part.
             // With # the suppressed part is Removed; with ? it is Replaced with spaces.
-            if (!improperFraction)
+            if(!improperFraction)
             {
                 // If fractional part is zero, and numerator doesn't have '0', write out
                 // only the integer part and strip the rest.
-                if (fractional == 0 && !HasChar('0', numeratorSpecials))
+                if(fractional == 0 && !HasChar('0', numeratorSpecials))
                 {
                     Writeint(result, output, integerSpecials, mods, false);
 
                     Special start = lastSpecial(integerSpecials);
                     Special end = lastSpecial(denominatorSpecials);
-                    if (HasChar('?', integerSpecials, numeratorSpecials, denominatorSpecials))
+                    if(HasChar('?', integerSpecials, numeratorSpecials, denominatorSpecials))
                     {
                         //if any format has '?', then replace the fraction with spaces
                         mods.Add(ReplaceMod(start, false, end, true, ' '), null);
@@ -829,7 +829,7 @@ namespace NPOI.SS.Format
                     bool removeBecauseZero = fractional == 0 && (intOnlyHash || numNoZero);
                     bool removeBecauseFraction = fractional != 0 && intNoZero;
 
-                    if (value == 0 && (removeBecauseZero || removeBecauseFraction))
+                    if(value == 0 && (removeBecauseZero || removeBecauseFraction))
                     {
                         Special start = lastSpecial(integerSpecials);
                         bool hasPlaceHolder = HasChar('?', integerSpecials, numeratorSpecials);
@@ -852,10 +852,10 @@ namespace NPOI.SS.Format
                 int n;
                 int d;
                 // the "fractional % 1" captures integer values in improper fractions
-                if (fractional == 0 || (improperFraction && fractional % 1 == 0))
+                if(fractional == 0 || (improperFraction && fractional % 1 == 0))
                 {
                     // 0 as a fraction is reported by excel as 0/1
-                    n = (int)Math.Round(fractional);
+                    n = (int) Math.Round(fractional);
                     d = 1;
                 }
                 else
@@ -864,12 +864,12 @@ namespace NPOI.SS.Format
                     n = frac.Numerator;
                     d = frac.Denominator;
                 }
-                if (improperFraction)
-                    n += (int)Math.Round(value * d);
+                if(improperFraction)
+                    n += (int) Math.Round(value * d);
                 WriteSingleint(numeratorFmt, n, output, numeratorSpecials, mods);
                 WriteSingleint(denominatorFmt, d, output, denominatorSpecials, mods);
             }
-            catch (Exception ignored)
+            catch(Exception ignored)
             {
                 //ignored.PrintStackTrace();
                 System.Console.WriteLine(ignored.StackTrace);
@@ -887,9 +887,9 @@ namespace NPOI.SS.Format
         private String localiseFormat(String format)
         {
             NumberFormatInfo dfs = locale.NumberFormat;
-            if (format.Contains(',') && dfs.NumberGroupSeparator != ",")
+            if(format.Contains(',') && dfs.NumberGroupSeparator != ",")
             {
-                if (format.Contains('.') && dfs.NumberDecimalSeparator != ".")
+                if(format.Contains('.') && dfs.NumberDecimalSeparator != ".")
                 {
                     format = ReplaceLast(format, ".", "[DECIMAL_SEPARATOR]");
                     format = format.Replace(",", dfs.NumberGroupSeparator)
@@ -900,7 +900,7 @@ namespace NPOI.SS.Format
                     format = format.Replace(",", dfs.NumberGroupSeparator);
                 }
             }
-            else if (format.Contains('.') && dfs.NumberDecimalSeparator != ".")
+            else if(format.Contains('.') && dfs.NumberDecimalSeparator != ".")
             {
                 format = format.Replace(".", dfs.NumberDecimalSeparator);
             }
@@ -910,7 +910,7 @@ namespace NPOI.SS.Format
         public static string ReplaceLast(string input, string oldValue, string newValue)
         {
             int index = input.LastIndexOf(oldValue);
-            if (index < 0)
+            if(index < 0)
             {
                 return input;
             }
@@ -932,11 +932,11 @@ namespace NPOI.SS.Format
 
         private static bool HasChar(char ch, params List<Special>[] numSpecials)
         {
-            foreach (List<Special> specials in numSpecials)
+            foreach(List<Special> specials in numSpecials)
             {
-                foreach (Special s in specials)
+                foreach(Special s in specials)
                 {
-                    if (s.ch == ch)
+                    if(s.ch == ch)
                     {
                         return true;
                     }
@@ -950,7 +950,7 @@ namespace NPOI.SS.Format
         {
 
             StringBuilder sb = new StringBuilder();
-            
+
 
             sb.Append(num.ToString(fmt, locale));
             Writeint(sb, output, numSpecials, mods, false);
@@ -964,19 +964,19 @@ namespace NPOI.SS.Format
             String decimalSeparator = dfs.NumberDecimalSeparator;
             String groupingSeparator = dfs.NumberGroupSeparator;
             int pos = result.ToString().IndexOf(decimalSeparator) - 1;
-            if (pos < 0)
+            if(pos < 0)
             {
-                if (exponent != null && numSpecials == integerSpecials)
+                if(exponent != null && numSpecials == integerSpecials)
                     pos = result.ToString().IndexOf('E') - 1;
                 else
                     pos = result.Length - 1;
             }
 
             int strip;
-            for (strip = 0; strip < pos; strip++)
+            for(strip = 0; strip < pos; strip++)
             {
                 char resultCh = result[strip];
-                if (resultCh != '0' && resultCh != groupingSeparator[0])
+                if(resultCh != '0' && resultCh != groupingSeparator[0])
                     break;
             }
 
@@ -985,10 +985,10 @@ namespace NPOI.SS.Format
             Special lastOutputintDigit = null;
             int digit = 0;
             //while (it.HasPrevious()) {
-            for (int i = numSpecials.Count - 1; i >= 0; i--)
+            for(int i = numSpecials.Count - 1; i >= 0; i--)
             {
                 char resultCh;
-                if (pos >= 0)
+                if(pos >= 0)
                     resultCh = result[pos];
                 else
                 {
@@ -998,13 +998,13 @@ namespace NPOI.SS.Format
                 Special s = numSpecials[i];
                 followWithGroupingSeparator = showGroupingSeparator && digit > 0 && digit % 3 == 0;
                 bool zeroStrip = false;
-                if (resultCh != '0' || s.ch == '0' || s.ch == '?' || pos >= strip)
+                if(resultCh != '0' || s.ch == '0' || s.ch == '?' || pos >= strip)
                 {
                     zeroStrip = (s.ch == '?' && pos < strip);
                     output[s.pos] = (zeroStrip ? ' ' : resultCh);
                     lastOutputintDigit = s;
                 }
-                if (followWithGroupingSeparator)
+                if(followWithGroupingSeparator)
                 {
                     mods.Add(insertMod(s, zeroStrip ? " " : groupingSeparator, CellNumberStringMod.AFTER), null);
                     followWithGroupingSeparator = false;
@@ -1013,17 +1013,17 @@ namespace NPOI.SS.Format
                 --pos;
             }
             StringBuilder extraLeadingDigits = new StringBuilder();
-            if (pos >= 0)
+            if(pos >= 0)
             {
                 // We ran out of places to Put digits before we ran out of digits; Put this aside so we can add it later
                 // pos was decremented at the end of the loop above when the iterator was at its end
                 ++pos;
                 extraLeadingDigits = new StringBuilder(result.ToString().Substring(0, pos));
-                if (showGroupingSeparator)
+                if(showGroupingSeparator)
                 {
-                    while (pos > 0)
+                    while(pos > 0)
                     {
-                        if (digit > 0 && digit % 3 == 0)
+                        if(digit > 0 && digit % 3 == 0)
                             extraLeadingDigits.Insert(pos, groupingSeparator);
                         digit++;
                         --pos;
@@ -1037,26 +1037,26 @@ namespace NPOI.SS.Format
         {
             int digit;
             int strip;
-            if (fractionalSpecials.Count > 0)
+            if(fractionalSpecials.Count > 0)
             {
                 string resultString = result.ToString();
                 String decimalSeparator = locale.NumberFormat.NumberDecimalSeparator;
                 digit = resultString.IndexOf(decimalSeparator) + 1;
-                if (exponent != null)
+                if(exponent != null)
                     strip = resultString.IndexOf('E') - 1;
                 else
                     strip = result.Length - 1;
-                while (strip > digit && result[strip] == '0')
+                while(strip > digit && result[strip] == '0')
                     strip--;
-                
-                foreach (Special s in fractionalSpecials)
+
+                foreach(Special s in fractionalSpecials)
                 {
-                    if (digit >= result.Length)
+                    if(digit >= result.Length)
                         break;
                     char resultCh = result[digit];
-                    if (resultCh != '0' || s.ch == '0' || digit < strip)
+                    if(resultCh != '0' || s.ch == '0' || digit < strip)
                         output[s.pos] = resultCh;
-                    else if (s.ch == '?')
+                    else if(s.ch == '?')
                     {
                         // This is when we're in trailing zeros, and the format is '?'.
                         // We still strip out remaining '#'s later

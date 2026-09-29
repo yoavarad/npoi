@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,7 +16,8 @@
 ==================================================================== */
 using NPOI.SS.UserModel;
 using NPOI.XSSF.Streaming;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace TestCases.XSSF.Streaming
 {
@@ -29,17 +30,17 @@ namespace TestCases.XSSF.Streaming
         public void IfSettingCellErrorValueShouldSetValue()
         {
             _objectToTest = new SXSSFCell(null, CellType.Error);
-            _objectToTest.SetCellErrorValue((byte)(0x00));
-            ClassicAssert.AreEqual((byte)0x00, _objectToTest.ErrorCellValue);
+            _objectToTest.SetCellErrorValue((byte) (0x00));
+            ClassicAssert.AreEqual((byte) 0x00, _objectToTest.ErrorCellValue);
         }
 
-        
+
         [Test]
         public void IfSettingCellErrorValueAndIsFormulaErrorShouldSetFormulaErrorValue()
         {
             _objectToTest = new SXSSFCell(null, CellType.Numeric);
             _objectToTest.SetCellErrorValue(FormulaError.DIV0.Code);
-            ClassicAssert.AreEqual((byte)7, _objectToTest.ErrorCellValue);
+            ClassicAssert.AreEqual((byte) 7, _objectToTest.ErrorCellValue);
         }
 
         [Test]

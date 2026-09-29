@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,8 +24,8 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
-    using NPOI.XDDF.UserModel;
     using NPOI.OpenXmlFormats.Dml.Chart;
+    using NPOI.XDDF.UserModel;
 
     public class XDDFLineChartData<T, V> : XDDFChartData<T, V>
     {
@@ -276,15 +276,13 @@ namespace NPOI.XDDF.UserModel.Chart
 
             public void UpdateIdXVal(long val)
             {
-                series.idx.val = (uint)val;
+                series.idx.val = (uint) val;
             }
 
             public void UpdateOrderVal(long val)
             {
-                series.order.val = (uint)val;
+                series.order.val = (uint) val;
             }
         }
     }
 }
-
-

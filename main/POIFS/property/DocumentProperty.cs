@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,9 +25,8 @@
  * 
  * ==============================================================*/
 
-using System;
-
 using NPOI.POIFS.FileSystem;
+using System;
 
 namespace NPOI.POIFS.Properties
 {
@@ -35,9 +34,9 @@ namespace NPOI.POIFS.Properties
     /// Trivial extension of Property for POIFSDocuments
     /// @author Marc Johnson (mjohnson at apache dot org)
     /// </summary>
-    public class DocumentProperty:Property
+    public class DocumentProperty : Property
     {
-       // the POIFSDocument this property is associated with
+        // the POIFSDocument this property is associated with
         private OPOIFSDocument _document;
 
 
@@ -50,7 +49,7 @@ namespace NPOI.POIFS.Properties
             : base()
         {
             _document = null;
-            
+
             this.Name=name;
             this.Size=size;
             this.NodeColor=_NODE_BLACK;   // simplification
@@ -62,9 +61,9 @@ namespace NPOI.POIFS.Properties
         /// <param name="index">index number</param>
         /// <param name="array">byte data</param>
         /// <param name="offset">offset into byte data</param> 
-        public DocumentProperty(int index, byte [] array, int offset):base(index, array, offset)
+        public DocumentProperty(int index, byte[] array, int offset) : base(index, array, offset)
         {
-            
+
             _document = null;
         }
 
@@ -75,7 +74,7 @@ namespace NPOI.POIFS.Properties
         public OPOIFSDocument Document
         {
             set { _document = value; }
-            get{ return _document;}
+            get { return _document; }
         }
 
         /// <summary>

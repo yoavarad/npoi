@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -36,28 +36,28 @@ namespace NPOI.SS.Formula.Atp
 
         private static ValueEval _evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length < 3)
+            if(args.Length < 3)
             {
                 return ErrorEval.VALUE_INVALID;
             }
             ValueEval notFound = BlankEval.instance;
-            if (args.Length > 3)
+            if(args.Length > 3)
             {
                 try
                 {
                     ValueEval notFoundValue = OperandResolver.GetSingleValue(args[3], srcRowIndex, srcColumnIndex);
-                    if (notFoundValue != null)
+                    if(notFoundValue != null)
                     {
                         notFound = notFoundValue;
                     }
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
             }
             LookupUtils.MatchMode matchMode = LookupUtils.MatchMode.ExactMatch;
-            if (args.Length > 4)
+            if(args.Length > 4)
             {
                 try
                 {
@@ -65,17 +65,17 @@ namespace NPOI.SS.Formula.Atp
                     int matchInt = OperandResolver.CoerceValueToInt(matchModeValue);
                     matchMode = LookupUtils.GetMatchMode(matchInt);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
-                catch (Exception )
+                catch(Exception)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
             }
             LookupUtils.SearchMode searchMode = LookupUtils.SearchMode.IterateForward;
-            if (args.Length > 5)
+            if(args.Length > 5)
             {
                 try
                 {
@@ -83,7 +83,7 @@ namespace NPOI.SS.Formula.Atp
                     int searchInt = OperandResolver.CoerceValueToInt(searchModeValue);
                     searchMode = LookupUtils.GetSearchMode(searchInt);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
@@ -104,9 +104,12 @@ namespace NPOI.SS.Formula.Atp
                 ValueEval lookupValue = OperandResolver.GetSingleValue(lookupEval, srcRowIndex, srcColumnIndex);
                 TwoDEval tableArray = LookupUtils.ResolveTableArrayArg(indexEval);
                 ValueVector vector;
-                if (tableArray.IsColumn) {
+                if(tableArray.IsColumn)
+                {
                     vector = LookupUtils.CreateColumnVector(tableArray, 0);
-                } else {
+                }
+                else
+                {
                     vector = LookupUtils.CreateRowVector(tableArray, 0);
                 }
                 int matchedIdx;
@@ -114,20 +117,22 @@ namespace NPOI.SS.Formula.Atp
                 {
                     matchedIdx = LookupUtils.XlookupIndexOfValue(lookupValue, vector, matchMode, searchMode);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
-                    if (ErrorEval.NA.Equals(e.GetErrorEval()))
+                    if(ErrorEval.NA.Equals(e.GetErrorEval()))
                     {
-                        if (notFound != BlankEval.instance)
+                        if(notFound != BlankEval.instance)
                         {
-                            if (returnEval is AreaEval area) {
+                            if(returnEval is AreaEval area)
+                            {
                                 int width = area.Width;
-                                if (width <= 1)
+                                if(width <= 1)
                                 {
                                     return notFound;
                                 }
                                 return new NotFoundAreaEval(notFound, width);
-                            } else
+                            }
+                            else
                             {
                                 return notFound;
                             }
@@ -139,19 +144,24 @@ namespace NPOI.SS.Formula.Atp
                         return e.GetErrorEval();
                     }
                 }
-                if (returnEval is AreaEval eval) {
+                if(returnEval is AreaEval eval)
+                {
                     AreaEval area = (AreaEval)returnEval;
-                    if (tableArray.IsColumn) {
-                        return area.Offset(matchedIdx, matchedIdx,0, area.Width - 1);
-                    } else {
-                        return area.Offset(0, area.Height - 1,matchedIdx, matchedIdx);
+                    if(tableArray.IsColumn)
+                    {
+                        return area.Offset(matchedIdx, matchedIdx, 0, area.Width - 1);
                     }
-                } else
+                    else
+                    {
+                        return area.Offset(0, area.Height - 1, matchedIdx, matchedIdx);
+                    }
+                }
+                else
                 {
                     return returnEval;
                 }
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -166,9 +176,9 @@ namespace NPOI.SS.Formula.Atp
                 _width = width;
                 _notFound = notFound;
             }
-            public int FirstRow 
-            { 
-                get { return 0; } 
+            public int FirstRow
+            {
+                get { return 0; }
             }
 
             public int LastRow
@@ -233,7 +243,7 @@ namespace NPOI.SS.Formula.Atp
 
             public ValueEval GetAbsoluteValue(int row, int col)
             {
-                if (col == 0)
+                if(col == 0)
                 {
                     return _notFound;
                 }

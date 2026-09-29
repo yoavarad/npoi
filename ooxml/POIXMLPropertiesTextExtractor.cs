@@ -18,12 +18,12 @@
 namespace NPOI
 {
 
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.OpenXml4Net.OPC.Internal;
+    using NPOI.OpenXmlFormats;
     using System;
     using System.Collections.Generic;
-    using NPOI.OpenXmlFormats;
+    using System.Text;
 
     /**
      * A {@link POITextExtractor} for returning the textual
@@ -64,13 +64,15 @@ using Cysharp.Text;
 
         private static void AppendIfPresent(StringBuilder text, String thing, DateTime? value)
         {
-            if (value == null) { return; }
+            if(value == null)
+            { return; }
             AppendIfPresent(text, thing, value.ToString());
         }
 
         private static void AppendIfPresent(StringBuilder text, String thing, String value)
         {
-            if (value == null) { return; }
+            if(value == null)
+            { return; }
             text.Append(thing);
             text.Append(" = ");
             text.Append(value);
@@ -82,7 +84,7 @@ using Cysharp.Text;
          */
         public String GetCorePropertiesText()
         {
-            if (Document == null)
+            if(Document == null)
             {  // event based extractor does not have a document
                 return "";
             }
@@ -119,7 +121,7 @@ using Cysharp.Text;
          */
         public String GetExtendedPropertiesText()
         {
-            if (Document == null)
+            if(Document == null)
             {  // event based extractor does not have a document
                 return "";
             }
@@ -151,7 +153,7 @@ using Cysharp.Text;
         */
         public String GetCustomPropertiesText()
         {
-            if (Document == null)
+            if(Document == null)
             {  // event based extractor does not have a document
                 return "";
             }
@@ -159,7 +161,7 @@ using Cysharp.Text;
             CT_CustomProperties props = Document.GetProperties().CustomProperties.GetUnderlyingProperties();
 
             List<CT_Property> properties = props.GetPropertyList();
-            foreach (CT_Property property in properties)
+            foreach(CT_Property property in properties)
             {
                 if(property.Item==null)
                     continue;
@@ -227,4 +229,3 @@ using Cysharp.Text;
 
 
 }
-

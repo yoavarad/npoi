@@ -14,15 +14,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using NPOI.OpenXmlFormats;
-using System;
 using NPOI.HSSF.Util;
-using System.Text;
-using NPOI.Util;
-using NPOI.SS.UserModel;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using SkiaSharp;
 using NPOI.OOXML.XSSF.UserModel;
+using NPOI.OpenXmlFormats;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
+using NPOI.Util;
+using SkiaSharp;
+using System;
+using System.Text;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -72,7 +72,8 @@ namespace NPOI.XSSF.UserModel
         }
 
         public XSSFColor(SKColor clr, IIndexedColorMap map)
-            : this(map) {
+            : this(map)
+        {
 
             ctColor.SetRgb(clr.Red, clr.Green, clr.Blue);
         }
@@ -87,7 +88,7 @@ namespace NPOI.XSSF.UserModel
         public XSSFColor(IndexedColors indexedColor, IIndexedColorMap colorMap)
             : this(new CT_Color(), colorMap)
         {
-            ctColor.indexed = (uint)indexedColor.Index;
+            ctColor.indexed = (uint) indexedColor.Index;
         }
         /// <summary>
         ///A bool value indicating the ctColor is automatic and system ctColor dependent.
@@ -98,7 +99,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctColor.auto;
             }
-            set 
+            set
             {
                 ctColor.auto = value;
                 ctColor.autoSpecified = true;
@@ -110,7 +111,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctColor.IsSetIndexed();
             }
-            
+
         }
         public override bool IsRGB
         {
@@ -135,10 +136,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (!ctColor.IsSetRgb()) return false;
+                if(!ctColor.IsSetRgb())
+                    return false;
                 return ctColor.rgb.Length == 4;
             }
-            
+
         }
         /**
          * A bool value indicating if the ctColor has a tint or not
@@ -147,7 +149,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (!ctColor.IsSetTint())
+                if(!ctColor.IsSetTint())
                 {
                     return false;
                 }
@@ -158,7 +160,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return ctColor.indexedSpecified ? (short)ctColor.indexed : (short)0;
+                return ctColor.indexedSpecified ? (short) ctColor.indexed : (short) 0;
             }
         }
         /**
@@ -170,16 +172,16 @@ namespace NPOI.XSSF.UserModel
             {
                 return Index;
             }
-            set 
+            set
             {
-                ctColor.indexed = (uint)value;
+                ctColor.indexed = (uint) value;
                 ctColor.indexedSpecified = true;
             }
         }
 
         [Obsolete("use property RGB")]
         public byte[] GetRgb()
-        { 
+        {
             return this.RGB;
         }
 
@@ -189,22 +191,23 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctColor.rgb;
             }
-            
+
         }
 
         protected override byte[] IndexedRGB
         {
             get
             {
-                if (IsIndexed)
+                if(IsIndexed)
                 {
-                   if (indexedColorMap != null) return indexedColorMap.GetRGB(Index);
-                   return DefaultIndexedColorMap.GetDefaultRGB(Index);
+                    if(indexedColorMap != null)
+                        return indexedColorMap.GetRGB(Index);
+                    return DefaultIndexedColorMap.GetDefaultRGB(Index);
                 }
                 return null;
             }
-           
-       }
+
+        }
         /**
          * Standard Red Green Blue ctColor value (RGB).
          * If there was an A (Alpha) value, it will be stripped.
@@ -214,9 +217,10 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 byte[] rgb = GetRGBOrARGB();
-                if (rgb == null) return null;
+                if(rgb == null)
+                    return null;
 
-                if (rgb.Length == 4)
+                if(rgb.Length == 4)
                 {
                     // Need to trim off the alpha
                     byte[] tmp = new byte[3];
@@ -241,15 +245,16 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 byte[] rgb = GetRGBOrARGB();
-                if (rgb == null) return null;
+                if(rgb == null)
+                    return null;
 
-                if (rgb.Length == 3)
+                if(rgb.Length == 3)
                 {
                     // Pad with the default Alpha
                     byte[] tmp = new byte[4];
                     unchecked
                     {
-                        tmp[0] = (byte)-1;
+                        tmp[0] = (byte) -1;
                     }
                     Array.Copy(rgb, 0, tmp, 1, 3);
                     return tmp;
@@ -259,7 +264,7 @@ namespace NPOI.XSSF.UserModel
                     return rgb;
                 }
             }
-            
+
         }
         /**
          * Standard Alpha Red Green Blue ctColor value (ARGB).
@@ -278,15 +283,15 @@ namespace NPOI.XSSF.UserModel
         public byte[] GetRgbWithTint()
         {
             byte[] rgb = ctColor.GetRgb();
-            if (rgb != null)
+            if(rgb != null)
             {
-                if (rgb.Length == 4)
+                if(rgb.Length == 4)
                 {
                     byte[] tmp = new byte[3];
                     Array.Copy(rgb, 1, tmp, 0, 3);
                     rgb = tmp;
                 }
-                for (int i = 0; i < rgb.Length; i++)
+                for(int i = 0; i < rgb.Length; i++)
                 {
                     rgb[i] = ApplyTint(rgb[i] & 0xFF, ctColor.tint);
                 }
@@ -297,17 +302,17 @@ namespace NPOI.XSSF.UserModel
 
         private static byte ApplyTint(int lum, double tint)
         {
-            if (tint > 0)
+            if(tint > 0)
             {
-                return (byte)(lum * (1.0 - tint) + (255 - 255 * (1.0 - tint)));
+                return (byte) (lum * (1.0 - tint) + (255 - 255 * (1.0 - tint)));
             }
-            else if (tint < 0)
+            else if(tint < 0)
             {
-                return (byte)(lum * (1 + tint));
+                return (byte) (lum * (1 + tint));
             }
             else
             {
-                return (byte)lum;
+                return (byte) lum;
             }
         }
 
@@ -328,11 +333,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return ctColor.themeSpecified ? (int)ctColor.theme : (int)0;
+                return ctColor.themeSpecified ? (int) ctColor.theme : (int) 0;
             }
-            set 
+            set
             {
-                ctColor.theme = (uint)value;
+                ctColor.theme = (uint) value;
             }
         }
 
@@ -384,7 +389,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctColor.tint;
             }
-            set 
+            set
             {
                 ctColor.tint = value;
                 ctColor.tintSpecified = true;
@@ -412,17 +417,18 @@ namespace NPOI.XSSF.UserModel
             // FIXME: this method would be more useful if it could convert any Color to an XSSFColor
             // Currently the only benefit of this method is to throw an IllegalArgumentException
             // instead of a ClassCastException.
-            if (color != null && color is not XSSFColor) {
+            if(color != null && color is not XSSFColor)
+            {
                 throw new ArgumentException("Only XSSFColor objects are supported");
             }
-            return (XSSFColor)color;
+            return (XSSFColor) color;
         }
         // Helper methods for {@link #equals(Object)}
         private bool SameIndexed(XSSFColor other)
         {
-            if (IsIndexed == other.IsIndexed)
+            if(IsIndexed == other.IsIndexed)
             {
-                if (IsIndexed)
+                if(IsIndexed)
                 {
                     return Indexed == other.Indexed;
                 }
@@ -432,9 +438,9 @@ namespace NPOI.XSSF.UserModel
         }
         private bool SameARGB(XSSFColor other)
         {
-            if (IsRGB == other.IsRGB)
+            if(IsRGB == other.IsRGB)
             {
-                if (IsRGB)
+                if(IsRGB)
                 {
                     return Arrays.Equals(ARGB, other.ARGB);
                 }
@@ -444,9 +450,9 @@ namespace NPOI.XSSF.UserModel
         }
         private bool SameTheme(XSSFColor other)
         {
-            if (IsThemed == other.IsThemed)
+            if(IsThemed == other.IsThemed)
             {
-                if (IsThemed)
+                if(IsThemed)
                 {
                     return Theme == other.Theme;
                 }
@@ -456,9 +462,9 @@ namespace NPOI.XSSF.UserModel
         }
         private bool SameTint(XSSFColor other)
         {
-            if (HasTint == other.HasTint)
+            if(HasTint == other.HasTint)
             {
-                if (HasTint)
+                if(HasTint)
                 {
                     return Tint == other.Tint;
                 }
@@ -477,7 +483,7 @@ namespace NPOI.XSSF.UserModel
 
         public override bool Equals(Object o)
         {
-            if (o == null || o is not XSSFColor other)
+            if(o == null || o is not XSSFColor other)
                 return false;
 
             // Compare each field in ctColor.
@@ -492,4 +498,3 @@ namespace NPOI.XSSF.UserModel
     }
 
 }
-

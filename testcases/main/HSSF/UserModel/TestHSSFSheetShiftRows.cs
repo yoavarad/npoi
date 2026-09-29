@@ -17,7 +17,8 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     using TestCases.HSSF;
     using TestCases.SS.UserModel;
@@ -35,9 +36,9 @@ namespace TestCases.HSSF.UserModel
         public TestHSSFSheetShiftRows()
             : base(HSSFITestDataProvider.Instance)
         {
-            
+
         }
 
- 
+
     }
 }

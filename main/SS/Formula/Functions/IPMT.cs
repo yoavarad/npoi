@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -26,7 +26,7 @@ namespace NPOI.SS.Formula.Functions
         protected override double Eval(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
 
-            if (args.Length != 4)
+            if(args.Length != 4)
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
 
             double result;

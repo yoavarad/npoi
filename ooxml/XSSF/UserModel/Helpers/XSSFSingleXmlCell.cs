@@ -16,10 +16,10 @@
 ==================================================================== */
 
 using NPOI.OpenXmlFormats.Spreadsheet;
-using System;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.Model;
-using NPOI.SS.UserModel;
+using System;
 namespace NPOI.XSSF.UserModel.Helpers
 {
 
@@ -58,13 +58,13 @@ namespace NPOI.XSSF.UserModel.Helpers
             CellReference cellReference = new CellReference(SingleXmlCell.r);
 
             IRow row = parent.GetXSSFSheet().GetRow(cellReference.Row);
-            if (row == null)
+            if(row == null)
             {
                 row = parent.GetXSSFSheet().CreateRow(cellReference.Row);
             }
 
             cell = row.GetCell(cellReference.Col);
-            if (cell == null)
+            if(cell == null)
             {
                 cell = row.CreateCell(cellReference.Col);
             }

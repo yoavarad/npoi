@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.SS.Formula.Functions;
+using System;
 
 namespace NPOI.SS.Formula.Eval
 {
@@ -14,7 +14,7 @@ namespace NPOI.SS.Formula.Eval
 
         public ValueEval EvaluateArray(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -30,20 +30,20 @@ namespace NPOI.SS.Formula.Eval
                 double d0 = SingleOperandEvaluate(arg0, srcRowIndex, srcColumnIndex);
                 double d1 = SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                 result = Evaluate(d0, d1);
-                if (result == 0.0)
+                if(result == 0.0)
                 { // this '==' matches +0.0 and -0.0
                     // Excel Converts -0.0 to +0.0 for '*', '/', '%', '+' and '^'
-                    if (this is not SS.Formula.Eval.SubtractEval)
+                    if(this is not SS.Formula.Eval.SubtractEval)
                     {
                         return NumberEval.ZERO;
                     }
                 }
-                if (Double.IsNaN(result) || Double.IsInfinity(result))
+                if(Double.IsNaN(result) || Double.IsInfinity(result))
                 {
                     return ErrorEval.NUM_ERROR;
                 }
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -80,8 +80,10 @@ namespace NPOI.SS.Formula.Eval
 
                 double[,] result = new double[height, width];
 
-                for (int j = 0; j < height; j++) {
-                    for (int i = 0; i < width; i++) {
+                for(int j = 0; j < height; j++)
+                {
+                    for(int i = 0; i < width; i++)
+                    {
                         result[j, i] = _evaluateFunc(d1[j, i], d2[j, i]);
 
                     }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -24,7 +24,8 @@ namespace TestCases.XWPF
     using NPOI.Util;
     using NPOI.XWPF;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework; using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
     using System.Reflection.Metadata;
@@ -240,30 +241,37 @@ namespace TestCases.XWPF
         }
 
         [Test]
-        public void Test63788() {
+        public void Test63788()
+        {
             using(XWPFDocument doc = new XWPFDocument())
             {
 
                 XWPFNumbering numbering = doc.CreateNumbering();
 
-                for(int i = 10; i >= 0; i--) {
+                for(int i = 10; i >= 0; i--)
+                {
                     addNumberingWithAbstractId(numbering, i);        //add numbers in reverse order
                 }
 
-                for(int i = 0; i <= 10; i++) {
+                for(int i = 0; i <= 10; i++)
+                {
                     ClassicAssert.AreEqual(i, int.Parse(numbering.GetAbstractNum(i.ToString()).GetAbstractNum().abstractNumId));
                 }
 
                 //attempt to remove item with numId 2
                 ClassicAssert.IsTrue(numbering.RemoveAbstractNum("2"));
 
-                for(int i = 0; i <= 10; i++) {
+                for(int i = 0; i <= 10; i++)
+                {
                     XWPFAbstractNum abstractNum = numbering.GetAbstractNum(i.ToString());
 
                     // we removed id "2", so this one should be empty, all others not
-                    if(i == 2) {
+                    if(i == 2)
+                    {
                         ClassicAssert.IsNull(abstractNum, "Failed for " + i);
-                    } else {
+                    }
+                    else
+                    {
                         ClassicAssert.IsNotNull(abstractNum, "Failed for " + i);
                         ClassicAssert.AreEqual(i, int.Parse(abstractNum.GetAbstractNum().abstractNumId));
                     }
@@ -293,7 +301,8 @@ namespace TestCases.XWPF
         [Test]
         public void CorrectParagraphAlignment()
         {
-            using(var document = XWPFTestDataSamples.OpenSampleDocument("bug-paragraph-alignment.docx")) {
+            using(var document = XWPFTestDataSamples.OpenSampleDocument("bug-paragraph-alignment.docx"))
+            {
                 XWPFParagraph centeredParagraph = document.GetParagraphArray(0);
                 ClassicAssert.IsFalse(centeredParagraph.IsAlignmentSet());
                 ClassicAssert.AreEqual(ParagraphAlignment.LEFT, centeredParagraph.Alignment); // LEFT is a fallback value here.
@@ -322,4 +331,3 @@ namespace TestCases.XWPF
         }
     }
 }
-

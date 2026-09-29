@@ -24,9 +24,8 @@
 
 namespace NPOI.POIFS.Crypt.Dsig.Services
 {
-    using System;
-
     using NPOI.POIFS.Crypt.Dsig;
+    using System;
 
 
     /**

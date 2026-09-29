@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
-using System.Security;
 using NPOI.Util;
 using System;
 using System.Buffers;
+using System.IO;
+using System.Security;
 using System.Security.Cryptography;
 
 namespace NPOI.POIFS.Crypt
@@ -52,7 +52,7 @@ namespace NPOI.POIFS.Crypt
             : base(stream)
         {
             _baseStream = stream ?? throw new ArgumentNullException(nameof(stream));
-            
+
             if(!stream.CanRead)
                 throw new ArgumentException("Stream must be readable.", nameof(stream));
 
@@ -68,7 +68,7 @@ namespace NPOI.POIFS.Crypt
             this._chunk = IOUtils.SafelyAllocate(cs, CryptoFunctions.MAX_RECORD_LENGTH);
             this._plain = IOUtils.SafelyAllocate(cs, CryptoFunctions.MAX_RECORD_LENGTH);
             this._chunkBits = Number.BitCount(_chunk.Length - 1);
-            this._lastIndex = (int)(_pos >> _chunkBits);
+            this._lastIndex = (int) (_pos >> _chunkBits);
             this._cipher = InitCipherForBlock(null, _lastIndex);
         }
 
@@ -109,7 +109,7 @@ namespace NPOI.POIFS.Crypt
 
         public override int ReadByte()
         {
-            return (byte)ReadUByte();
+            return (byte) ReadUByte();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -211,7 +211,7 @@ namespace NPOI.POIFS.Crypt
 
         private int RemainingBytes()
         {
-            return (int)(_size - _pos);
+            return (int) (_size - _pos);
         }
 
         private void NextChunk()

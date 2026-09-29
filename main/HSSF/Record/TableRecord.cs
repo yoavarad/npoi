@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.SS.Util;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.SS.Util;
     /**
      * DATATABLE (0x0236)<p/>
      *

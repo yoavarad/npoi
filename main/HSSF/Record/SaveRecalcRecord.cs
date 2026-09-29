@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Save Recalc Record 
@@ -67,7 +67,7 @@ namespace NPOI.HSSF.Record
             }
             set
             {
-                field_1_recalc = (short)((value == true) ? 1
+                field_1_recalc = (short) ((value == true) ? 1
                                             : 0);
             }
         }

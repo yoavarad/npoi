@@ -15,16 +15,16 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
-using NPOI.XSSF.Model;
 using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.SS.Util;
-using System;
-using NPOI.SS.Formula.PTG;
-using NPOI.SS.Formula;
 using NPOI.SS;
-using NPOI.Util;
+using NPOI.SS.Formula;
 using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.PTG;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.Util;
+using NPOI.XSSF.Model;
+using System;
 using System.Globalization;
 using System.IO;
 
@@ -95,20 +95,20 @@ namespace NPOI.XSSF.UserModel
         {
             _cell = cell;
             _row = row;
-            if (cell.r != null)
+            if(cell.r != null)
             {
                 _cellNum = new CellReference(cell.r).Col;
             }
             else
             {
                 int prevNum = row.LastCellNum;
-                if (prevNum != -1)
+                if(prevNum != -1)
                 {
                     _cellNum = (row as XSSFRow).GetCell(prevNum - 1, MissingCellPolicy.RETURN_NULL_AND_BLANK).ColumnIndex + 1;
                 }
             }
-            _sharedStringSource = ((XSSFWorkbook)row.Sheet.Workbook).GetSharedStringSource();
-            _stylesSource = ((XSSFWorkbook)row.Sheet.Workbook).GetStylesSource();
+            _sharedStringSource = ((XSSFWorkbook) row.Sheet.Workbook).GetSharedStringSource();
+            _stylesSource = ((XSSFWorkbook) row.Sheet.Workbook).GetStylesSource();
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace NPOI.XSSF.UserModel
         private bool IsRichTextCacheValid()
         {
             ST_CellType? cellType = _cell.t;
-            return _cachedRichTextValue != null 
-                && _cachedRichTextValueSource == _cell.v 
-                && (_cachedRichTextCellType == cellType 
+            return _cachedRichTextValue != null
+                && _cachedRichTextValueSource == _cell.v
+                && (_cachedRichTextCellType == cellType
                     || (cellType == null && _cachedRichTextCellType == default(ST_CellType)));
         }
 
@@ -213,7 +213,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CellType cellType = CellType;
-                switch (cellType)
+                switch(cellType)
                 {
                     case CellType.Blank:
                         return false;
@@ -259,17 +259,17 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CellType cellType = CellType;
-                switch (cellType)
+                switch(cellType)
                 {
                     case CellType.Blank:
                         return 0.0;
                     case CellType.Formula:
                     case CellType.Numeric:
-                        if (_cell.IsSetV())
+                        if(_cell.IsSetV())
                         {
-                            if (string.IsNullOrEmpty(_cell.v))
+                            if(string.IsNullOrEmpty(_cell.v))
                                 return 0.0;
-                            if (IsNumericCacheValid())
+                            if(IsNumericCacheValid())
                                 return _cachedNumericValue.Value;
                             try
                             {
@@ -277,7 +277,7 @@ namespace NPOI.XSSF.UserModel
                                 _cachedNumericValueSource = _cell.v;
                                 return _cachedNumericValue.Value;
                             }
-                            catch (FormatException)
+                            catch(FormatException)
                             {
                                 throw TypeMismatch(CellType.Numeric, CellType.String, false);
                             }
@@ -302,14 +302,14 @@ namespace NPOI.XSSF.UserModel
          */
         public ICell SetCellValue(double value)
         {
-            if (Double.IsInfinity(value))
+            if(Double.IsInfinity(value))
             {
                 // Excel does not support positive/negative infInities,
                 // rather, it gives a #DIV/0! error in these case
                 _cell.t = (ST_CellType.e);
                 _cell.v = (FormulaError.DIV0.String);
             }
-            else if (Double.IsNaN(value))
+            else if(Double.IsNaN(value))
             {
                 _cell.t = (ST_CellType.e);
                 _cell.v = (FormulaError.NUM.String);
@@ -352,24 +352,24 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (IsRichTextCacheValid())
+                if(IsRichTextCacheValid())
                     return _cachedRichTextValue;
 
                 CellType cellType = CellType;
                 XSSFRichTextString rt;
-                switch (cellType)
+                switch(cellType)
                 {
                     case CellType.Blank:
                         rt = new XSSFRichTextString("");
                         break;
                     case CellType.String:
-                        if (_cell.t == ST_CellType.inlineStr)
+                        if(_cell.t == ST_CellType.inlineStr)
                         {
-                            if (_cell.IsSetIs())
+                            if(_cell.IsSetIs())
                             {
                                 rt = new XSSFRichTextString(_cell.@is);
                             }
-                            else if (_cell.IsSetV())
+                            else if(_cell.IsSetV())
                             {
                                 rt = new XSSFRichTextString(_cell.v);
                             }
@@ -378,13 +378,13 @@ namespace NPOI.XSSF.UserModel
                                 rt = new XSSFRichTextString("");
                             }
                         }
-                        else if (_cell.t == ST_CellType.str)
+                        else if(_cell.t == ST_CellType.str)
                         {
                             rt = new XSSFRichTextString(_cell.IsSetV() ? _cell.v : "");
                         }
                         else
                         {
-                            if (_cell.IsSetV())
+                            if(_cell.IsSetV())
                             {
                                 int idx = Int32.Parse(_cell.v);
                                 rt = new XSSFRichTextString(_sharedStringSource.GetEntryAt(idx));
@@ -412,7 +412,7 @@ namespace NPOI.XSSF.UserModel
 
         private static void CheckFormulaCachedValueType(CellType expectedTypeCode, CellType cachedValueType)
         {
-            if (cachedValueType != expectedTypeCode)
+            if(cachedValueType != expectedTypeCode)
             {
                 throw TypeMismatch(expectedTypeCode, cachedValueType, true);
             }
@@ -441,25 +441,25 @@ namespace NPOI.XSSF.UserModel
          */
         public ICell SetCellValue(IRichTextString str)
         {
-            if (str == null || str.String == null)
+            if(str == null || str.String == null)
             {
                 SetCellType(CellType.Blank);
                 return this;
             }
 
-            if (str.Length > SpreadsheetVersion.EXCEL2007.MaxTextLength)
+            if(str.Length > SpreadsheetVersion.EXCEL2007.MaxTextLength)
             {
                 throw new ArgumentException("The maximum length of cell contents (text) is 32,767 characters");
             }
             CellType cellType = CellType;
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Formula:
                     _cell.v = (str.String);
                     _cell.t= (ST_CellType.str);
                     break;
                 default:
-                    if (_cell.t == ST_CellType.inlineStr)
+                    if(_cell.t == ST_CellType.inlineStr)
                     {
                         //set the 'pre-Evaluated result
                         _cell.v = str.String;
@@ -497,18 +497,18 @@ namespace NPOI.XSSF.UserModel
 
         public void RemoveFormula()
         {
-            if (CellType == CellType.Blank)
+            if(CellType == CellType.Blank)
                 return;
 
-            if (IsPartOfArrayFormulaGroup)
+            if(IsPartOfArrayFormulaGroup)
             {
                 TryToDeleteArrayFormula(null);
                 return;
             }
-            ((XSSFWorkbook)_row.Sheet.Workbook).OnDeleteFormula(this);
-            if (_cell.IsSetF())
+            ((XSSFWorkbook) _row.Sheet.Workbook).OnDeleteFormula(this);
+            if(_cell.IsSetF())
             {
-                ((XSSFSheet)_row.Sheet).OnDeleteFormula(this, null);
+                ((XSSFSheet) _row.Sheet).OnDeleteFormula(this, null);
                 _cell.unsetF();
             }
         }
@@ -523,19 +523,19 @@ namespace NPOI.XSSF.UserModel
         protected internal String GetCellFormula(XSSFEvaluationWorkbook fpb)
         {
             CellType cellType = CellType;
-            if (cellType != CellType.Formula) 
+            if(cellType != CellType.Formula)
                 throw TypeMismatch(CellType.Formula, cellType, false);
 
             CT_CellFormula f = _cell.f;
-            if (IsPartOfArrayFormulaGroup && f == null)
+            if(IsPartOfArrayFormulaGroup && f == null)
             {
                 XSSFCell cell = ((XSSFSheet)Sheet).GetFirstCellInArrayFormula(this);
                 return cell.GetCellFormula(fpb);
             }
-            if (f.t == ST_CellFormulaType.shared)
+            if(f.t == ST_CellFormulaType.shared)
             {
                 //return ConvertSharedFormula((int)f.si);
-                return ConvertSharedFormula((int)f.si, fpb == null ? XSSFEvaluationWorkbook.Create(Sheet.Workbook) : fpb);
+                return ConvertSharedFormula((int) f.si, fpb == null ? XSSFEvaluationWorkbook.Create(Sheet.Workbook) : fpb);
             }
             return f.Value;
         }
@@ -551,7 +551,8 @@ namespace NPOI.XSSF.UserModel
             XSSFSheet sheet = (XSSFSheet)Sheet;
 
             CT_CellFormula f = sheet.GetSharedFormula(si);
-            if (f == null) throw new InvalidOperationException(
+            if(f == null)
+                throw new InvalidOperationException(
                      "Master cell of a shared formula with sid=" + si + " was not found");
 
             String sharedFormula = f.Value;
@@ -584,7 +585,7 @@ namespace NPOI.XSSF.UserModel
          */
         public ICell SetCellFormula(String formula)
         {
-            if (IsPartOfArrayFormulaGroup)
+            if(IsPartOfArrayFormulaGroup)
             {
                 NotifyArrayFormulaChanging();
             }
@@ -604,13 +605,13 @@ namespace NPOI.XSSF.UserModel
         /// <param name="message">a customized exception message for the case if deletion of the cell is impossible. If null, a default message will be generated</param>
         internal void TryToDeleteArrayFormula(String message)
         {
-            if (!IsPartOfArrayFormulaGroup)
+            if(!IsPartOfArrayFormulaGroup)
                 return;
 
             CellRangeAddress arrayFormulaRange = ArrayFormulaRange;
-            if (arrayFormulaRange.NumberOfCells > 1)
+            if(arrayFormulaRange.NumberOfCells > 1)
             {
-                if (message == null)
+                if(message == null)
                 {
                     message = "Cell " + new CellReference(this).FormatAsString() + " is part of a multi-cell array formula. " +
                             "You cannot change part of an array.";
@@ -624,13 +625,13 @@ namespace NPOI.XSSF.UserModel
         private XSSFCell SetFormula(String formula, FormulaType formulaType)
         {
             XSSFWorkbook wb = (XSSFWorkbook)_row.Sheet.Workbook;
-            if (formula == null)
+            if(formula == null)
             {
                 RemoveFormula();
                 return this;
             }
 
-            if (wb.CellFormulaValidation)
+            if(wb.CellFormulaValidation)
             {
                 IFormulaParsingWorkbook fpb = XSSFEvaluationWorkbook.Create(wb);
                 //validate through the FormulaParser
@@ -655,7 +656,8 @@ namespace NPOI.XSSF.UserModel
                 _cell.f = f;
             }
 
-            if (_cell.IsSetV()) _cell.unsetV();
+            if(_cell.IsSetV())
+                _cell.unsetV();
             InvalidateAllCaches();
             return this;
         }
@@ -693,7 +695,7 @@ namespace NPOI.XSSF.UserModel
         public String GetReference()
         {
             String ref1 = _cell.r;
-            if (ref1 == null)
+            if(ref1 == null)
             {
                 return new CellAddress(this).FormatAsString();
             }
@@ -718,13 +720,13 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 XSSFCellStyle style = GetExplicitCellStyle();
-                if (style == null)
+                if(style == null)
                 {
                     style = GetDefaultCellStyleFromColumn();
                 }
                 // Return default style at index 0 if no explicit or column style exists
                 // This matches HSSFCell behavior which always returns a non-null style
-                if (style == null && _stylesSource != null)
+                if(style == null && _stylesSource != null)
                 {
                     style = _stylesSource.GetStyleAt(0);
                 }
@@ -732,9 +734,10 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                if (value == null)
+                if(value == null)
                 {
-                    if (_cell.IsSetS()) _cell.unsetS();
+                    if(_cell.IsSetS())
+                        _cell.unsetS();
                 }
                 else
                 {
@@ -742,7 +745,7 @@ namespace NPOI.XSSF.UserModel
                     xStyle.VerifyBelongsToStylesSource(_stylesSource);
 
                     long idx = _stylesSource.PutStyle(xStyle);
-                    _cell.s = (uint)idx;
+                    _cell.s = (uint) idx;
                 }
             }
         }
@@ -750,12 +753,12 @@ namespace NPOI.XSSF.UserModel
         private XSSFCellStyle GetExplicitCellStyle()
         {
             XSSFCellStyle style = null;
-            if (_stylesSource != null && _cell.IsSetS())
+            if(_stylesSource != null && _cell.IsSetS())
             {
-                if (_stylesSource.NumCellStyles > 0)
+                if(_stylesSource.NumCellStyles > 0)
                 {
                     long idx = _cell.s;
-                    style = _stylesSource.GetStyleAt((int)idx);
+                    style = _stylesSource.GetStyleAt((int) idx);
                 }
             }
             return style;
@@ -765,9 +768,9 @@ namespace NPOI.XSSF.UserModel
         {
             XSSFCellStyle style = null;
             XSSFSheet sheet = (XSSFSheet)Sheet;
-            if (sheet != null)
+            if(sheet != null)
             {
-                style = (XSSFCellStyle)sheet.GetColumnStyle(ColumnIndex);
+                style = (XSSFCellStyle) sheet.GetColumnStyle(ColumnIndex);
             }
             return style;
         }
@@ -775,16 +778,16 @@ namespace NPOI.XSSF.UserModel
         internal void ApplyDefaultCellStyleIfNecessary()
         {
             XSSFCellStyle style = GetExplicitCellStyle();
-            if (style == null)
+            if(style == null)
             {
                 XSSFSheet sheet = (XSSFSheet)Sheet;
-                if (sheet != null)
+                if(sheet != null)
                 {
                     XSSFCellStyle defaultStyle = GetDefaultCellStyleFromColumn();
                     // Only apply if it's a real column-specific style, not just the
                     // workbook default (index 0). Cells without an explicit style
                     // already implicitly use style 0.
-                    if (defaultStyle != null && defaultStyle.Index != 0)
+                    if(defaultStyle != null && defaultStyle.Index != 0)
                     {
                         CellStyle = defaultStyle;
                     }
@@ -795,10 +798,10 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_cachedStyle == null)
+                if(_cachedStyle == null)
                 {
                     _cachedStyle = CellStyle;
-                    if (_cachedStyle == null)
+                    if(_cachedStyle == null)
                     {
                         _cachedStyle = _stylesSource.CreateCellStyle();
                     }
@@ -827,13 +830,13 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if ((_cell.f != null && _cell.f.t != ST_CellFormulaType.dataTable) || ((XSSFSheet)Sheet).IsCellInArrayFormulaContext(this))
+                if((_cell.f != null && _cell.f.t != ST_CellFormulaType.dataTable) || ((XSSFSheet) Sheet).IsCellInArrayFormulaContext(this))
                 {
                     return true;
                 }
                 return false;
             }
-            
+
         }
         /// <summary>
         /// Return the cell type.  Tables in an array formula return
@@ -848,7 +851,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
 
-                if (IsFormulaCell)
+                if(IsFormulaCell)
                 {
                     return CellType.Formula;
                 }
@@ -863,7 +866,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (!IsFormulaCell)
+                if(!IsFormulaCell)
                 {
                     throw new InvalidOperationException("Only formula cells have cached results");
                 }
@@ -879,12 +882,12 @@ namespace NPOI.XSSF.UserModel
         /// <returns></returns>
         private CellType GetBaseCellType(bool blankCells)
         {
-            switch (_cell.t)
+            switch(_cell.t)
             {
                 case ST_CellType.b:
                     return CellType.Boolean;
                 case ST_CellType.n:
-                    if (!_cell.IsSetV() && blankCells)
+                    if(!_cell.IsSetV() && blankCells)
                     {
                         // ooxml does have a separate cell type of 'blank'.  A blank cell Gets encoded as
                         // (either not present or) a numeric cell with no value Set.
@@ -912,7 +915,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (CellType != CellType.Numeric && CellType != CellType.Formula)
+                if(CellType != CellType.Numeric && CellType != CellType.Formula)
                 {
                     return null;
                 }
@@ -951,7 +954,7 @@ namespace NPOI.XSSF.UserModel
 #endif
         public void SetCellValue(DateTime? value)
         {
-            if (value == null)
+            if(value == null)
             {
                 SetCellType(CellType.Blank);
                 return;
@@ -987,7 +990,7 @@ namespace NPOI.XSSF.UserModel
             return SetCellValue(value.Value);
         }
 #endif
-        
+
         /// <summary>
         /// Returns the error message, such as #VALUE!
         /// </summary>
@@ -996,7 +999,8 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CellType cellType = GetBaseCellType(true);
-                if (cellType != CellType.Error) throw TypeMismatch(CellType.Error, cellType, false);
+                if(cellType != CellType.Error)
+                    throw TypeMismatch(CellType.Error, cellType, false);
 
                 return _cell.v;
             }
@@ -1012,7 +1016,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 String code = this.ErrorCellString;
-                if (code == null)
+                if(code == null)
                 {
                     return 0;
                 }
@@ -1056,7 +1060,8 @@ namespace NPOI.XSSF.UserModel
         {
             CT_Cell blank = new CT_Cell();
             blank.r = (_cell.r);
-            if (_cell.IsSetS()) blank.s=(_cell.s);
+            if(_cell.IsSetS())
+                blank.s=(_cell.s);
             _cell.Set(blank);
         }
         public ICell SetBlank()
@@ -1083,16 +1088,16 @@ namespace NPOI.XSSF.UserModel
         {
             CellType prevType = CellType;
 
-            if (IsPartOfArrayFormulaGroup)
+            if(IsPartOfArrayFormulaGroup)
             {
                 NotifyArrayFormulaChanging();
             }
-            if (prevType == CellType.Formula && cellType != CellType.Formula)
+            if(prevType == CellType.Formula && cellType != CellType.Formula)
             {
-                ((XSSFWorkbook)Sheet.Workbook).OnDeleteFormula(this);
+                ((XSSFWorkbook) Sheet.Workbook).OnDeleteFormula(this);
             }
 
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Blank:
                     SetBlankInternal();
@@ -1109,7 +1114,7 @@ namespace NPOI.XSSF.UserModel
                     _cell.t = (ST_CellType.e);
                     break;
                 case CellType.String:
-                    if (prevType != CellType.String)
+                    if(prevType != CellType.String)
                     {
                         String str = ConvertCellValueToString();
                         XSSFRichTextString rt = new XSSFRichTextString(str);
@@ -1120,18 +1125,19 @@ namespace NPOI.XSSF.UserModel
                     _cell.t= (ST_CellType.s);
                     break;
                 case CellType.Formula:
-                    if (!_cell.IsSetF())
+                    if(!_cell.IsSetF())
                     {
                         CT_CellFormula f = new CT_CellFormula();
                         f.Value = "0";
                         _cell.f = (f);
-                        if (_cell.IsSetT()) _cell.unsetT();
+                        if(_cell.IsSetT())
+                            _cell.unsetT();
                     }
                     break;
                 default:
                     throw new ArgumentException("Illegal cell type: " + cellType);
             }
-            if (cellType != CellType.Formula && _cell.IsSetF())
+            if(cellType != CellType.Formula && _cell.IsSetF())
             {
                 _cell.unsetF();
             }
@@ -1148,7 +1154,7 @@ namespace NPOI.XSSF.UserModel
         /// </returns>
         public override String ToString()
         {
-            switch (CellType)
+            switch(CellType)
             {
                 case CellType.Blank:
                     return "";
@@ -1159,7 +1165,7 @@ namespace NPOI.XSSF.UserModel
                 case CellType.Formula:
                     return CellFormula;
                 case CellType.Numeric:
-                    if (DateUtil.IsCellDateFormatted(this))
+                    if(DateUtil.IsCellDateFormatted(this))
                     {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
                         return sdf.Format(DateCellValue, CultureInfo.CurrentCulture);
@@ -1196,14 +1202,20 @@ namespace NPOI.XSSF.UserModel
         /// <returns></returns>
         private static String GetCellTypeName(CellType cellTypeCode)
         {
-            switch (cellTypeCode)
+            switch(cellTypeCode)
             {
-                case CellType.Blank: return "blank";
-                case CellType.String: return "text";
-                case CellType.Boolean: return "bool";
-                case CellType.Error: return "error";
-                case CellType.Numeric: return "numeric";
-                case CellType.Formula: return "formula";
+                case CellType.Blank:
+                    return "blank";
+                case CellType.String:
+                    return "text";
+                case CellType.Boolean:
+                    return "bool";
+                case CellType.Error:
+                    return "error";
+                case CellType.Numeric:
+                    return "numeric";
+                case CellType.Formula:
+                    return "formula";
             }
             return "#unknown cell type (" + cellTypeCode + ")#";
         }
@@ -1226,7 +1238,7 @@ namespace NPOI.XSSF.UserModel
         {
             SpreadsheetVersion v = SpreadsheetVersion.EXCEL2007;
             int maxcol = SpreadsheetVersion.EXCEL2007.LastColumnIndex;
-            if (cellIndex < 0 || cellIndex > maxcol)
+            if(cellIndex < 0 || cellIndex > maxcol)
             {
                 throw new ArgumentException("Invalid column index (" + cellIndex
                         + ").  Allowable column range for " + v.ToString() + " is (0.."
@@ -1243,9 +1255,9 @@ namespace NPOI.XSSF.UserModel
             {
                 return Sheet.GetCellComment(new CellAddress(this));
             }
-            set 
+            set
             {
-                if (value == null)
+                if(value == null)
                 {
                     RemoveCellComment();
                     return;
@@ -1257,9 +1269,10 @@ namespace NPOI.XSSF.UserModel
         /// <summary>
         /// Removes the comment for this cell, if there is one.
         /// </summary>
-        public void RemoveCellComment() {
+        public void RemoveCellComment()
+        {
             IComment comment = this.CellComment;
-            if (comment != null)
+            if(comment != null)
             {
                 CellAddress ref1 = new CellAddress(GetReference());
                 XSSFSheet sh = (XSSFSheet)Sheet;
@@ -1276,11 +1289,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return ((XSSFSheet)Sheet).GetHyperlink(_row.RowNum, _cellNum);
+                return ((XSSFSheet) Sheet).GetHyperlink(_row.RowNum, _cellNum);
             }
-            set 
+            set
             {
-                if (value == null)
+                if(value == null)
                 {
                     RemoveHyperlink();
                     return;
@@ -1291,7 +1304,7 @@ namespace NPOI.XSSF.UserModel
                 link.SetCellReference(new CellReference(_row.RowNum, _cellNum).FormatAsString());
 
                 // Add to the lists
-                ((XSSFSheet)Sheet).AddHyperlink(link);
+                ((XSSFSheet) Sheet).AddHyperlink(link);
             }
         }
 
@@ -1300,7 +1313,7 @@ namespace NPOI.XSSF.UserModel
          */
         public void RemoveHyperlink()
         {
-            ((XSSFSheet)Sheet).RemoveHyperlink(_row.RowNum, _cellNum);
+            ((XSSFSheet) Sheet).RemoveHyperlink(_row.RowNum, _cellNum);
         }
         /**
          * Returns the xml bean containing information about the cell's location (reference), value,
@@ -1325,12 +1338,12 @@ namespace NPOI.XSSF.UserModel
         {
             CellType cellType = CellType;
 
-            if (cellType == CellType.Formula)
+            if(cellType == CellType.Formula)
             {
                 cellType = GetBaseCellType(false);
             }
 
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Boolean:
                     return TRUE_AS_STRING.Equals(_cell.v);
@@ -1353,7 +1366,7 @@ namespace NPOI.XSSF.UserModel
         {
             CellType cellType = CellType;
 
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Blank:
                     return "";
@@ -1375,14 +1388,14 @@ namespace NPOI.XSSF.UserModel
             }
             cellType = GetBaseCellType(false);
             String textValue = _cell.v;
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Boolean:
-                    if (TRUE_AS_STRING.Equals(textValue))
+                    if(TRUE_AS_STRING.Equals(textValue))
                     {
                         return "TRUE";
                     }
-                    if (FALSE_AS_STRING.Equals(textValue))
+                    if(FALSE_AS_STRING.Equals(textValue))
                     {
                         return "FALSE";
                     }
@@ -1401,7 +1414,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 XSSFCell cell = ((XSSFSheet)Sheet).GetFirstCellInArrayFormula(this);
-                if (cell == null)
+                if(cell == null)
                 {
                     throw new InvalidOperationException("Cell " + GetReference()
                             + " is not part of an array formula.");
@@ -1415,7 +1428,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return ((XSSFSheet)Sheet).IsCellInArrayFormulaContext(this);
+                return ((XSSFSheet) Sheet).IsCellInArrayFormulaContext(this);
             }
         }
 
@@ -1426,10 +1439,10 @@ namespace NPOI.XSSF.UserModel
          */
         internal void NotifyArrayFormulaChanging(String msg)
         {
-            if (IsPartOfArrayFormulaGroup)
+            if(IsPartOfArrayFormulaGroup)
             {
                 CellRangeAddress cra = this.ArrayFormulaRange;
-                if (cra.NumberOfCells > 1)
+                if(cra.NumberOfCells > 1)
                 {
                     throw new InvalidOperationException(msg);
                 }
@@ -1455,10 +1468,11 @@ namespace NPOI.XSSF.UserModel
 
         public bool IsMergedCell
         {
-            get {
+            get
+            {
                 return this.Sheet.IsMergedRegion(new CellRangeAddress(this.RowIndex, this.RowIndex, this.ColumnIndex, this.ColumnIndex));
             }
-            
+
         }
 
         #endregion

@@ -17,10 +17,9 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System;
-
     using NPOI.SS.Formula.Function;
     using NPOI.SS.Formula.PTG;
+    using System;
     /**
      * Represents a syntactic element from a formula by encapsulating the corresponding <c>Ptg</c>
      * token.  Each <c>ParseNode</c> may have child <c>ParseNode</c>s in the case when the wrapped
@@ -43,28 +42,28 @@ namespace NPOI.HSSF.Model
             _children = children;
             _isIf = IsIf(token);
             int tokenCount = 1;
-            for (int i = 0; i < children.Length; i++)
+            for(int i = 0; i < children.Length; i++)
             {
                 tokenCount += children[i].GetTokenCount();
             }
-            if (_isIf)
+            if(_isIf)
             {
                 // there will be 2 or 3 extra tAttr tokens according to whether the false param is present
                 tokenCount += children.Length;
             }
             _tokenCount = tokenCount;
         }
-        public ParseNode(Ptg token):this(token, EMPTY_ARRAY) 
+        public ParseNode(Ptg token) : this(token, EMPTY_ARRAY)
         {
-            
+
         }
-        public ParseNode(Ptg token, ParseNode child0):this(token, new ParseNode[] { child0, })
+        public ParseNode(Ptg token, ParseNode child0) : this(token, new ParseNode[] { child0, })
         {
-            
+
         }
-        public ParseNode(Ptg token, ParseNode child0, ParseNode child1): this(token, new ParseNode[] { child0, child1, })
+        public ParseNode(Ptg token, ParseNode child0, ParseNode child1) : this(token, new ParseNode[] { child0, child1, })
         {
-           
+
         }
         private int GetTokenCount()
         {
@@ -85,12 +84,12 @@ namespace NPOI.HSSF.Model
         }
         private void CollectPtgs(TokenCollector temp)
         {
-            if (IsIf(this.Token))
+            if(IsIf(this.Token))
             {
                 CollectIfPtgs(temp);
                 return;
             }
-            for (int i = 0; i < Children.Length; i++)
+            for(int i = 0; i < Children.Length; i++)
             {
                 Children[i].CollectPtgs(temp);
             }
@@ -119,8 +118,8 @@ namespace NPOI.HSSF.Model
             int trueParamSize = temp.SumTokenSizes(ifAttrIndex + 1, skipAfterTrueParamIndex);
 
             AttrPtg attrIf = AttrPtg.CreateIf(trueParamSize + 4); // distance to start of false parameter/tFuncVar. +4 for tAttrSkip after true
-            
-            if (Children.Length > 2)
+
+            if(Children.Length > 2)
             {
                 // false param present
 
@@ -151,9 +150,9 @@ namespace NPOI.HSSF.Model
 
         private static bool IsIf(Ptg token)
         {
-            if (token is FuncVarPtg func)
+            if(token is FuncVarPtg func)
             {
-                if (FunctionMetadataRegistry.FUNCTION_NAME_IF.Equals(func.Name))
+                if(FunctionMetadataRegistry.FUNCTION_NAME_IF.Equals(func.Name))
                 {
                     return true;
                 }
@@ -189,7 +188,7 @@ namespace NPOI.HSSF.Model
             public int SumTokenSizes(int fromIx, int toIx)
             {
                 int result = 0;
-                for (int i = fromIx; i < toIx; i++)
+                for(int i = fromIx; i < toIx; i++)
                 {
                     result += _ptgs[i].Size;
                 }
@@ -203,7 +202,7 @@ namespace NPOI.HSSF.Model
 
             public void Add(Ptg token)
             {
-                if (token == null)
+                if(token == null)
                 {
                     throw new ArgumentException("token must not be null");
                 }
@@ -213,7 +212,7 @@ namespace NPOI.HSSF.Model
 
             public void SetPlaceholder(int index, Ptg token)
             {
-                if (_ptgs[index] != null)
+                if(_ptgs[index] != null)
                 {
                     throw new InvalidOperationException("Invalid placeholder index (" + index + ")");
                 }

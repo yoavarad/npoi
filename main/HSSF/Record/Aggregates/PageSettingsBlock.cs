@@ -18,12 +18,12 @@
 namespace NPOI.HSSF.Record.Aggregates
 {
 
-    using System;
-    using System.Collections;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     /**
      * Groups the page settings records for a worksheet.<p/>
@@ -59,7 +59,8 @@ namespace NPOI.HSSF.Record.Aggregates
         public PageSettingsBlock(RecordStream rs)
         {
             _plsRecords = new List<PLSAggregate>();
-            while (ReadARecord(rs)) ;
+            while(ReadARecord(rs))
+                ;
         }
 
         /**
@@ -82,7 +83,7 @@ namespace NPOI.HSSF.Record.Aggregates
          */
         public static bool IsComponentRecord(int sid)
         {
-            switch (sid)
+            switch(sid)
             {
                 case HorizontalPageBreakRecord.sid:
                 case VerticalPageBreakRecord.sid:
@@ -107,54 +108,54 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private bool ReadARecord(RecordStream rs)
         {
-            switch (rs.PeekNextSid())
+            switch(rs.PeekNextSid())
             {
                 case HorizontalPageBreakRecord.sid:
                     CheckNotPresent(_rowBreaksRecord);
-                    _rowBreaksRecord = (PageBreakRecord)rs.GetNext();
+                    _rowBreaksRecord = (PageBreakRecord) rs.GetNext();
                     break;
                 case VerticalPageBreakRecord.sid:
                     CheckNotPresent(_columnBreaksRecord);
-                    _columnBreaksRecord = (PageBreakRecord)rs.GetNext();
+                    _columnBreaksRecord = (PageBreakRecord) rs.GetNext();
                     break;
                 case HeaderRecord.sid:
                     CheckNotPresent(header);
-                    header = (HeaderRecord)rs.GetNext();
+                    header = (HeaderRecord) rs.GetNext();
                     break;
                 case FooterRecord.sid:
                     CheckNotPresent(footer);
-                    footer = (FooterRecord)rs.GetNext();
+                    footer = (FooterRecord) rs.GetNext();
                     break;
                 case HCenterRecord.sid:
                     CheckNotPresent(_hCenter);
-                    _hCenter = (HCenterRecord)rs.GetNext();
+                    _hCenter = (HCenterRecord) rs.GetNext();
                     break;
                 case VCenterRecord.sid:
                     CheckNotPresent(_vCenter);
-                    _vCenter = (VCenterRecord)rs.GetNext();
+                    _vCenter = (VCenterRecord) rs.GetNext();
                     break;
                 case LeftMarginRecord.sid:
                     CheckNotPresent(_leftMargin);
-                    _leftMargin = (LeftMarginRecord)rs.GetNext();
+                    _leftMargin = (LeftMarginRecord) rs.GetNext();
                     break;
                 case RightMarginRecord.sid:
                     CheckNotPresent(_rightMargin);
-                    _rightMargin = (RightMarginRecord)rs.GetNext();
+                    _rightMargin = (RightMarginRecord) rs.GetNext();
                     break;
                 case TopMarginRecord.sid:
                     CheckNotPresent(_topMargin);
-                    _topMargin = (TopMarginRecord)rs.GetNext();
+                    _topMargin = (TopMarginRecord) rs.GetNext();
                     break;
                 case BottomMarginRecord.sid:
                     CheckNotPresent(_bottomMargin);
-                    _bottomMargin = (BottomMarginRecord)rs.GetNext();
+                    _bottomMargin = (BottomMarginRecord) rs.GetNext();
                     break;
                 case UnknownRecord.PLS_004D: // PLS
                     _plsRecords.Add(new PLSAggregate(rs));
                     break;
                 case PrintSetupRecord.sid:
                     CheckNotPresent(printSetup);
-                    printSetup = (PrintSetupRecord)rs.GetNext();
+                    printSetup = (PrintSetupRecord) rs.GetNext();
                     break;
                 case UnknownRecord.BITMAP_00E9: // BITMAP
                     CheckNotPresent(_bitmap);
@@ -166,7 +167,7 @@ namespace NPOI.HSSF.Record.Aggregates
                     break;
                 case HeaderFooterRecord.sid:
                     HeaderFooterRecord hf = (HeaderFooterRecord)rs.GetNext();
-                    if (hf.IsCurrentSheet)
+                    if(hf.IsCurrentSheet)
                         _headerFooter = hf;
                     else
                         _sviewHeaderFooters.Add(hf);
@@ -180,7 +181,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private static void CheckNotPresent(Record rec)
         {
-            if (rec != null)
+            if(rec != null)
             {
                 throw new RecordFormatException("Duplicate PageSettingsBlock record (sid=0x"
                         + StringUtil.ToHexString(rec.Sid) + ")");
@@ -191,7 +192,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             get
             {
-                if (_rowBreaksRecord == null)
+                if(_rowBreaksRecord == null)
                 {
                     _rowBreaksRecord = new HorizontalPageBreakRecord();
                 }
@@ -203,7 +204,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             get
             {
-                if (_columnBreaksRecord == null)
+                if(_columnBreaksRecord == null)
                 {
                     _columnBreaksRecord = new VerticalPageBreakRecord();
                 }
@@ -239,7 +240,7 @@ namespace NPOI.HSSF.Record.Aggregates
             VisitIfPresent(_rowBreaksRecord, rv);
             VisitIfPresent(_columnBreaksRecord, rv);
             // Write out empty header / footer records if these are missing
-            if (header == null)
+            if(header == null)
             {
                 rv.VisitRecord(new HeaderRecord(""));
             }
@@ -247,7 +248,7 @@ namespace NPOI.HSSF.Record.Aggregates
             {
                 rv.VisitRecord(header);
             }
-            if (footer == null)
+            if(footer == null)
             {
                 rv.VisitRecord(new FooterRecord(""));
             }
@@ -261,27 +262,28 @@ namespace NPOI.HSSF.Record.Aggregates
             VisitIfPresent(_rightMargin, rv);
             VisitIfPresent(_topMargin, rv);
             VisitIfPresent(_bottomMargin, rv);
-		    foreach (RecordAggregate pls in _plsRecords) {
-			    pls.VisitContainedRecords(rv);
-		    }
+            foreach(RecordAggregate pls in _plsRecords)
+            {
+                pls.VisitContainedRecords(rv);
+            }
             VisitIfPresent(printSetup, rv);
-            
+
             VisitIfPresent(_printSize, rv);
             VisitIfPresent(_headerFooter, rv);
             VisitIfPresent(_bitmap, rv);
         }
         private static void VisitIfPresent(Record r, RecordVisitor rv)
         {
-            if (r != null)
+            if(r != null)
             {
                 rv.VisitRecord(r);
             }
         }
         private static void VisitIfPresent(PageBreakRecord r, RecordVisitor rv)
         {
-            if (r != null)
+            if(r != null)
             {
-                if (r.IsEmpty)
+                if(r.IsEmpty)
                 {
                     // its OK to not serialize empty page break records
                     return;
@@ -322,17 +324,17 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             PrintSetupRecord retval = new PrintSetupRecord();
 
-            retval.PaperSize = ((short)1);
-            retval.Scale = ((short)100);
-            retval.PageStart = ((short)1);
-            retval.FitWidth = ((short)1);
-            retval.FitHeight = ((short)1);
-            retval.Options = ((short)2);
-            retval.HResolution = ((short)300);
-            retval.VResolution = ((short)300);
+            retval.PaperSize = ((short) 1);
+            retval.Scale = ((short) 100);
+            retval.PageStart = ((short) 1);
+            retval.FitWidth = ((short) 1);
+            retval.FitHeight = ((short) 1);
+            retval.Options = ((short) 2);
+            retval.HResolution = ((short) 300);
+            retval.VResolution = ((short) 300);
             retval.HeaderMargin = (0.5);
             retval.FooterMargin = (0.5);
-            retval.Copies = ((short)1);
+            retval.Copies = ((short) 1);
             return retval;
         }
 
@@ -347,7 +349,7 @@ namespace NPOI.HSSF.Record.Aggregates
             {
                 return header;
             }
-            set 
+            set
             {
                 header = value;
             }
@@ -376,7 +378,7 @@ namespace NPOI.HSSF.Record.Aggregates
             {
                 return printSetup;
             }
-            set 
+            set
             {
                 printSetup = value;
             }
@@ -385,14 +387,18 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private IMargin GetMarginRec(MarginType margin)
         {
-            switch (margin)
+            switch(margin)
             {
-                case MarginType.LeftMargin: return _leftMargin;
-                case MarginType.RightMargin: return _rightMargin;
-                case MarginType.TopMargin: return _topMargin;
-                case MarginType.BottomMargin: return _bottomMargin;
+                case MarginType.LeftMargin:
+                    return _leftMargin;
+                case MarginType.RightMargin:
+                    return _rightMargin;
+                case MarginType.TopMargin:
+                    return _topMargin;
+                case MarginType.BottomMargin:
+                    return _bottomMargin;
                 default:
-                    throw new InvalidOperationException("Unknown margin constant:  " + (short)margin);
+                    throw new InvalidOperationException("Unknown margin constant:  " + (short) margin);
             }
         }
 
@@ -405,13 +411,13 @@ namespace NPOI.HSSF.Record.Aggregates
         public double GetMargin(MarginType margin)
         {
             IMargin m = GetMarginRec(margin);
-            if (m != null)
+            if(m != null)
             {
                 return m.Margin;
             }
             else
             {
-                switch (margin)
+                switch(margin)
                 {
                     case MarginType.LeftMargin:
                         return .75;
@@ -434,9 +440,9 @@ namespace NPOI.HSSF.Record.Aggregates
         public void SetMargin(MarginType margin, double size)
         {
             IMargin m = GetMarginRec(margin);
-            if (m == null)
+            if(m == null)
             {
-                switch (margin)
+                switch(margin)
                 {
                     case MarginType.LeftMargin:
                         _leftMargin = new LeftMarginRecord();
@@ -498,7 +504,7 @@ namespace NPOI.HSSF.Record.Aggregates
          */
         public void SetRowBreak(int row, short fromCol, short toCol)
         {
-            this.RowBreaksRecord.AddBreak((short)row, fromCol, toCol);
+            this.RowBreaksRecord.AddBreak((short) row, fromCol, toCol);
         }
 
         /**
@@ -507,9 +513,9 @@ namespace NPOI.HSSF.Record.Aggregates
          */
         public void RemoveRowBreak(int row)
         {
-            if (this.RowBreaksRecord.GetBreaks().Length < 1)
+            if(this.RowBreaksRecord.GetBreaks().Length < 1)
                 throw new ArgumentException("Sheet does not define any row breaks");
-            this.RowBreaksRecord.RemoveBreak((short)row);
+            this.RowBreaksRecord.RemoveBreak((short) row);
         }
 
         /**
@@ -615,11 +621,11 @@ namespace NPOI.HSSF.Record.Aggregates
         /// <param name="rec"></param>
         public void AddLateHeaderFooter(HeaderFooterRecord rec)
         {
-            if (_headerFooter != null)
+            if(_headerFooter != null)
             {
                 throw new ArgumentNullException("This page settings block already has a header/footer record");
             }
-            if (rec.Sid != UnknownRecord.HEADER_FOOTER_089C)
+            if(rec.Sid != UnknownRecord.HEADER_FOOTER_089C)
             {
                 throw new RecordFormatException("Unexpected header-footer record sid: 0x" + StringUtil.ToHexString(rec.Sid));
             }
@@ -634,9 +640,9 @@ namespace NPOI.HSSF.Record.Aggregates
         /// <param name="rs"></param> 
         public void AddLateRecords(RecordStream rs)
         {
-            while (true)
+            while(true)
             {
-                if (!ReadARecord(rs))
+                if(!ReadARecord(rs))
                 {
                     break;
                 }
@@ -649,10 +655,10 @@ namespace NPOI.HSSF.Record.Aggregates
             List<HeaderFooterRecord> hfRecordsToIterate = new List<HeaderFooterRecord>(_sviewHeaderFooters);
             Dictionary<String, HeaderFooterRecord> hfGuidMap = new Dictionary<String, HeaderFooterRecord>();
 
-            foreach (HeaderFooterRecord hf in hfRecordsToIterate)
+            foreach(HeaderFooterRecord hf in hfRecordsToIterate)
             {
                 string key = HexDump.ToHex(hf.Guid);
-                if (hfGuidMap.ContainsKey(key))
+                if(hfGuidMap.ContainsKey(key))
                     hfGuidMap[key] = hf;
                 else
                     hfGuidMap.Add(HexDump.ToHex(hf.Guid), hf);
@@ -660,13 +666,13 @@ namespace NPOI.HSSF.Record.Aggregates
 
             // loop through HeaderFooterRecord records having not-empty GUID and match them with
             // CustomViewSettingsRecordAggregate blocks having UserSViewBegin with the same GUID
-            foreach (HeaderFooterRecord hf in hfRecordsToIterate)
+            foreach(HeaderFooterRecord hf in hfRecordsToIterate)
             {
-                foreach (RecordBase rb in sheetRecords)
+                foreach(RecordBase rb in sheetRecords)
                 {
-                    if (rb is CustomViewSettingsRecordAggregate cv)
+                    if(rb is CustomViewSettingsRecordAggregate cv)
                     {
-                        cv.VisitContainedRecords(new CustomRecordVisitor1(cv,hf,_sviewHeaderFooters,hfGuidMap));
+                        cv.VisitContainedRecords(new CustomRecordVisitor1(cv, hf, _sviewHeaderFooters, hfGuidMap));
                     }
                 }
             }
@@ -678,7 +684,7 @@ namespace NPOI.HSSF.Record.Aggregates
             readonly HeaderFooterRecord _hf;
             readonly List<HeaderFooterRecord> _sviewHeaderFooters;
             readonly Dictionary<String, HeaderFooterRecord> _hfGuidMap;
-            public CustomRecordVisitor1(CustomViewSettingsRecordAggregate cv, HeaderFooterRecord hf, 
+            public CustomRecordVisitor1(CustomViewSettingsRecordAggregate cv, HeaderFooterRecord hf,
                 List<HeaderFooterRecord> sviewHeaderFooter, Dictionary<String, HeaderFooterRecord> hfGuidMap)
             {
                 this._cv = cv;
@@ -691,12 +697,12 @@ namespace NPOI.HSSF.Record.Aggregates
 
             public void VisitRecord(Record r)
             {
-                if (r.Sid == UserSViewBegin.sid)
+                if(r.Sid == UserSViewBegin.sid)
                 {
                     String guid = HexDump.ToHex(((UserSViewBegin) r).Guid);
                     HeaderFooterRecord hf = _hfGuidMap[guid];
 
-                    if (hf != null)
+                    if(hf != null)
                     {
                         {
                             _cv.Append(_hf);

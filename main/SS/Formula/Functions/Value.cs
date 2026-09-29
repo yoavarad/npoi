@@ -20,10 +20,10 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Formula.Eval;
+    using System;
     using System.Globalization;
+    using System.Text;
 
     public class Value : Fixed1ArgFunction
     {
@@ -38,13 +38,13 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
             String strText = OperandResolver.CoerceValueToString(veText);
             Double result = ConvertTextToNumber(strText);
-            if (Double.IsNaN(result))
+            if(Double.IsNaN(result))
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -65,20 +65,20 @@ namespace NPOI.SS.Formula.Functions
 
             int len = strText.Length;
             int i;
-            for (i = 0; i < len; i++)
+            for(i = 0; i < len; i++)
             {
                 char ch = strText[i];
-                if (Char.IsDigit(ch) || ch == '.')
+                if(Char.IsDigit(ch) || ch == '.')
                 {
                     break;
                 }
-                switch (ch)
+                switch(ch)
                 {
                     case ' ':
                         // intervening spaces between '$', '-', '+' are OK
                         continue;
                     case '$':
-                        if (foundCurrency)
+                        if(foundCurrency)
                         {
                             // only one currency symbols is allowed
                             return Double.NaN;
@@ -86,14 +86,14 @@ namespace NPOI.SS.Formula.Functions
                         foundCurrency = true;
                         continue;
                     case '+':
-                        if (foundUnaryMinus || foundUnaryPlus)
+                        if(foundUnaryMinus || foundUnaryPlus)
                         {
                             return Double.NaN;
                         }
                         foundUnaryPlus = true;
                         continue;
                     case '-':
-                        if (foundUnaryMinus || foundUnaryPlus)
+                        if(foundUnaryMinus || foundUnaryPlus)
                         {
                             return Double.NaN;
                         }
@@ -104,10 +104,10 @@ namespace NPOI.SS.Formula.Functions
                         return Double.NaN;
                 }
             }
-            if (i >= len)
+            if(i >= len)
             {
                 // didn't find digits or '.'
-                if (foundCurrency || foundUnaryMinus || foundUnaryPlus)
+                if(foundCurrency || foundUnaryMinus || foundUnaryPlus)
                 {
                     return Double.NaN;
                 }
@@ -120,35 +120,36 @@ namespace NPOI.SS.Formula.Functions
             int lastThousandsSeparatorIndex = short.MinValue;
 
             StringBuilder sb = new StringBuilder(len);
-            for (; i < len; i++)
+            for(; i < len; i++)
             {
                 char ch = strText[i];
-                if (Char.IsDigit(ch))
+                if(Char.IsDigit(ch))
                 {
                     sb.Append(ch);
                     continue;
                 }
-                switch (ch)
+                switch(ch)
                 {
                     case ' ':
                         String remainingTextTrimmed = strText.Substring(i).Trim();
                         // support for value[space]%
-                        if (remainingTextTrimmed.Equals("%")) {
+                        if(remainingTextTrimmed.Equals("%"))
+                        {
                             foundPercentage= true;
                             break;
                         }
-                        if (remainingTextTrimmed.Length > 0)
+                        if(remainingTextTrimmed.Length > 0)
                         {
                             // intervening spaces not allowed once the digits start
                             return Double.NaN;
                         }
                         break;
                     case '.':
-                        if (foundDecimalPoint)
+                        if(foundDecimalPoint)
                         {
                             return Double.NaN;
                         }
-                        if (i - lastThousandsSeparatorIndex < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
+                        if(i - lastThousandsSeparatorIndex < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
                         {
                             return Double.NaN;
                         }
@@ -156,14 +157,14 @@ namespace NPOI.SS.Formula.Functions
                         sb.Append('.');
                         continue;
                     case ',':
-                        if (foundDecimalPoint)
+                        if(foundDecimalPoint)
                         {
                             // thousands separators not allowed after '.' or 'E'
                             return Double.NaN;
                         }
                         int distanceBetweenThousandsSeparators = i - lastThousandsSeparatorIndex;
                         // as long as there are 3 or more digits between
-                        if (distanceBetweenThousandsSeparators < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
+                        if(distanceBetweenThousandsSeparators < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
                         {
                             return Double.NaN;
                         }
@@ -173,7 +174,7 @@ namespace NPOI.SS.Formula.Functions
 
                     case 'E':
                     case 'e':
-                        if (i - lastThousandsSeparatorIndex < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
+                        if(i - lastThousandsSeparatorIndex < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
                         {
                             return Double.NaN;
                         }
@@ -189,9 +190,9 @@ namespace NPOI.SS.Formula.Functions
                         return Double.NaN;
                 }
             }
-            if (!foundDecimalPoint)
+            if(!foundDecimalPoint)
             {
-                if (i - lastThousandsSeparatorIndex < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
+                if(i - lastThousandsSeparatorIndex < MIN_DISTANCE_BETWEEN_THOUSANDS_SEPARATOR)
                 {
                     return Double.NaN;
                 }
@@ -201,7 +202,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 d = Double.Parse(sb.ToString(), CultureInfo.InvariantCulture);
             }
-            catch (FormatException)
+            catch(FormatException)
             {
                 // still a problem parsing the number - probably out of range
                 return Double.NaN;

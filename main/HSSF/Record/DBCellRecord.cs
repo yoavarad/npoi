@@ -51,7 +51,7 @@ namespace NPOI.HSSF.Record
             int size = in1.Remaining;
             field_2_cell_offsets = new short[size / 2];
 
-            for (int i = 0; i < field_2_cell_offsets.Length; i++)
+            for(int i = 0; i < field_2_cell_offsets.Length; i++)
             {
                 field_2_cell_offsets[i] = in1.ReadShort();
             }
@@ -60,11 +60,12 @@ namespace NPOI.HSSF.Record
         private int field_1_row_offset;
         private short[] field_2_cell_offsets;
 
-           /**
-         * offset from the start of this DBCellRecord to the start of the first cell in
-         * the next DBCell block.
-         */
-        public DBCellRecord(int rowOffset, short[]cellOffsets) {
+        /**
+      * offset from the start of this DBCellRecord to the start of the first cell in
+      * the next DBCell block.
+      */
+        public DBCellRecord(int rowOffset, short[] cellOffsets)
+        {
             field_1_row_offset = rowOffset;
             field_2_cell_offsets = cellOffsets;
         }
@@ -72,7 +73,7 @@ namespace NPOI.HSSF.Record
         // need short list impl.
         public void AddCellOffset(short offset)
         {
-            if (field_2_cell_offsets == null)
+            if(field_2_cell_offsets == null)
             {
                 field_2_cell_offsets = new short[1];
             }
@@ -117,7 +118,7 @@ namespace NPOI.HSSF.Record
          */
         public int NumCellOffsets
         {
-            get{return field_2_cell_offsets.Length;}
+            get { return field_2_cell_offsets.Length; }
         }
 
         public override String ToString()
@@ -127,7 +128,7 @@ namespace NPOI.HSSF.Record
             buffer.Append("[DBCELL]\n");
             buffer.Append("    .rowoffset       = ")
                 .Append(StringUtil.ToHexString(RowOffset)).Append("\n");
-            for (int k = 0; k < field_2_cell_offsets.Length; k++)
+            for(int k = 0; k < field_2_cell_offsets.Length; k++)
             {
                 buffer.Append("    .cell_").Append(k).Append(" = ")
                     .Append(HexDump.ShortToHex(field_2_cell_offsets[k])).Append("\n");
@@ -138,7 +139,7 @@ namespace NPOI.HSSF.Record
         public override void Serialize(ILittleEndianOutput out1)
         {
             out1.WriteInt(field_1_row_offset);
-            for (int k = 0; k < field_2_cell_offsets.Length; k++)
+            for(int k = 0; k < field_2_cell_offsets.Length; k++)
             {
                 out1.WriteShort(field_2_cell_offsets[k]);
             }

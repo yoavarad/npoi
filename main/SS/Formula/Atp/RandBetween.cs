@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -17,8 +17,8 @@
 namespace NPOI.SS.Formula.Atp
 {
 
-    using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.Functions;
     using System;
 
     /**
@@ -37,7 +37,7 @@ namespace NPOI.SS.Formula.Atp
     class RandBetween : FreeRefFunction
     {
         private readonly Random _rnd;
-        
+
         public static FreeRefFunction Instance = new RandBetween();
 
         private RandBetween()
@@ -58,7 +58,7 @@ namespace NPOI.SS.Formula.Atp
 
             double bottom, top;
 
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -67,12 +67,12 @@ namespace NPOI.SS.Formula.Atp
             {
                 bottom = OperandResolver.CoerceValueToDouble(OperandResolver.GetSingleValue(args[0], ec.RowIndex, ec.ColumnIndex));
                 top = OperandResolver.CoerceValueToDouble(OperandResolver.GetSingleValue(args[1], ec.RowIndex, ec.ColumnIndex));
-                if (bottom > top)
+                if(bottom > top)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -80,12 +80,12 @@ namespace NPOI.SS.Formula.Atp
             bottom = Math.Ceiling(bottom);
             top = Math.Floor(top);
 
-            if (bottom > top)
+            if(bottom > top)
             {
                 top = bottom;
             }
 
-            return new NumberEval(bottom + (long)(_rnd.NextDouble() * (top - bottom + 1)));
+            return new NumberEval(bottom + (long) (_rnd.NextDouble() * (top - bottom + 1)));
 
         }
     }

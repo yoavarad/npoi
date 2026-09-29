@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,14 +16,14 @@
 ==================================================================== */
 namespace NPOI.XSSF.Model
 {
-    using System;
-    using NPOI.SS.UserModel;
-    using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.OpenXmlFormats.Spreadsheet.Document;
+    using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Xml;
-    using System.Collections.Generic;
-    using NPOI.OpenXmlFormats.Spreadsheet.Document;
 
 
     /**
@@ -62,7 +62,7 @@ namespace NPOI.XSSF.Model
                 ExternalLinkDocument doc = ExternalLinkDocument.Parse(xmldoc, NamespaceManager);
                 link = doc.ExternalLink;
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -105,7 +105,7 @@ namespace NPOI.XSSF.Model
             {
                 String rId = link.externalBook.id;
                 PackageRelationship rel = GetPackagePart().GetRelationship(rId);
-                if (rel != null && rel.TargetMode == TargetMode.External)
+                if(rel != null && rel.TargetMode == TargetMode.External)
                 {
                     return rel.TargetUri.OriginalString;
                 }
@@ -118,7 +118,7 @@ namespace NPOI.XSSF.Model
             {
                 String rId = link.externalBook.id;
 
-                if (string.IsNullOrEmpty(rId))
+                if(string.IsNullOrEmpty(rId))
                 {
                     // We're a new External Link Table, so nothing to remove
                 }
@@ -143,7 +143,7 @@ namespace NPOI.XSSF.Model
                 CT_ExternalSheetName[] sheetNames =
                         link.externalBook.sheetNames.sheetName;
                 List<String> names = new List<String>(sheetNames.Length);
-                foreach (CT_ExternalSheetName name in sheetNames)
+                foreach(CT_ExternalSheetName name in sheetNames)
                 {
                     names.Add(name.val);
                 }
@@ -158,7 +158,7 @@ namespace NPOI.XSSF.Model
                 CT_ExternalDefinedName[] extNames =
                         link.externalBook.definedNames.definedName;
                 List<IName> names = new List<IName>(extNames.Length);
-                foreach (CT_ExternalDefinedName extName in extNames)
+                foreach(CT_ExternalDefinedName extName in extNames)
                 {
                     names.Add(new ExternalName(extName, this));
                 }
@@ -197,7 +197,7 @@ namespace NPOI.XSSF.Model
                 get
                 {
                     int sheetId = SheetIndex;
-                    if (sheetId >= 0)
+                    if(sheetId >= 0)
                     {
                         return externalLinkTable.SheetNames[(sheetId)];
                     }
@@ -211,15 +211,15 @@ namespace NPOI.XSSF.Model
             {
                 get
                 {
-                    if (name.IsSetSheetId())
+                    if(name.IsSetSheetId())
                     {
-                        return (int)name.sheetId;
+                        return (int) name.sheetId;
                     }
                     return -1;
                 }
                 set
                 {
-                    name.sheetId = (uint)value;
+                    name.sheetId = (uint) value;
                 }
             }
             public String RefersToFormula

@@ -17,13 +17,13 @@
 
 namespace TestCases.SS.Formula.PTG
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
     using TestCases.HSSF.Record;
 
@@ -74,9 +74,9 @@ namespace TestCases.SS.Formula.PTG
             {
                 HSSFTestDataSamples.WriteOutAndReadBack(wb);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("Coding Error: This method should never be called. This ptg should be Converted"))
+                if(e.Message.Equals("Coding Error: This method should never be called. This ptg should be Converted"))
                 {
                     throw new AssertionException("Identified bug 44921");
                 }
@@ -93,7 +93,7 @@ namespace TestCases.SS.Formula.PTG
             Ptg[] ptgs = Ptg.ReadTokens(tRefN_data.Length, in1);
             byte[] outData = new byte[5];
             Ptg.SerializePtgs(ptgs, outData, 0);
-            if (outData[0] == 0x24)
+            if(outData[0] == 0x24)
             {
                 throw new AssertionException("Identified bug 45091");
             }

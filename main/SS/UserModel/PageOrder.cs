@@ -38,7 +38,7 @@ namespace NPOI.SS.UserModel
         private readonly int order;
 
         static PageOrder()
-        { 
+        {
             _table = new PageOrder[3];
             DOWN_THEN_OVER = new PageOrder(1);
             OVER_THEN_DOWN = new PageOrder(2);

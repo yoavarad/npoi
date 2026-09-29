@@ -17,15 +17,14 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
-    using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using NPOI.POIFS.FileSystem;
     using NPOI.DDF;
+    using NPOI.HSSF.Record;
+    using NPOI.POIFS.FileSystem;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.IO;
 
 
     /**
@@ -75,9 +74,9 @@ namespace NPOI.HSSF.UserModel
                 String streamName = "MBD" + HexDump.ToHex((int)streamId);
 
                 Entry entry = _root.GetEntry(streamName);
-                if (entry is DirectoryEntry)
+                if(entry is DirectoryEntry)
                 {
-                    return (DirectoryEntry)entry;
+                    return (DirectoryEntry) entry;
                 }
                 else
                 {
@@ -121,10 +120,10 @@ namespace NPOI.HSSF.UserModel
         {
             IEnumerator subRecordIter = GetObjRecord().SubRecords.GetEnumerator();
 
-            while (subRecordIter.MoveNext())
+            while(subRecordIter.MoveNext())
             {
                 Object subRecord = subRecordIter.Current;
-                if (subRecord is EmbeddedObjectRefSubRecord record)
+                if(subRecord is EmbeddedObjectRefSubRecord record)
                 {
                     return record;
                 }

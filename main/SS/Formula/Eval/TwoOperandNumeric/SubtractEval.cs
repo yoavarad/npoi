@@ -31,7 +31,7 @@ namespace NPOI.SS.Formula.Eval
             decimal dec0 = (decimal)d0;
             decimal dec1 = (decimal)d1;
             double result = decimal.ToDouble(dec0 - dec1);
-            if (result == 0.0 && negativeZero)
+            if(result == 0.0 && negativeZero)
             {
                 return -0.0;
             }

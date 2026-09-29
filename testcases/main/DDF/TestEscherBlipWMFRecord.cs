@@ -19,20 +19,20 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     [TestFixture]
     public class TestEscherBlipWMFRecord
     {
         private String dataStr;
         private byte[] data;
-        
+
         public TestEscherBlipWMFRecord()
         {
             dataStr = "2C 15 18 F0 34 00 00 00 01 01 01 01 01 01 01 01 " +
@@ -51,8 +51,8 @@ namespace TestCases.DDF
             r.BoundaryWidth=4;
             r.CacheOfSavedSize=5;
             r.CacheOfSize=6;
-            r.Filter=(byte)7;
-            r.CompressionFlag=(byte)8;
+            r.Filter=(byte) 7;
+            r.CompressionFlag=(byte) 8;
             r.SecondaryUID=new byte[] { (byte)0x01, (byte)0x01, (byte)0x01, (byte)0x01,
                                        (byte)0x01, (byte)0x01, (byte)0x01, (byte)0x01,
                                        (byte)0x01, (byte)0x01, (byte)0x01, (byte)0x01,
@@ -60,8 +60,8 @@ namespace TestCases.DDF
             r.Width=10;
             r.Height=11;
             r.RecordId=EscherBlipWMFRecord.RECORD_ID_START;
-            r.Options=(short)5420;
-            r.Data=new byte[] { (byte)0x01, (byte)0x02 };
+            r.Options=(short) 5420;
+            r.Data=new byte[] { (byte) 0x01, (byte) 0x02 };
 
             byte[] buf = new byte[r.RecordSize];
             r.Serialize(0, buf);
@@ -101,7 +101,7 @@ namespace TestCases.DDF
             ClassicAssert.AreEqual("[01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01]", HexDump.ToHex(r.SecondaryUID));
             ClassicAssert.AreEqual(10, r.Width);
             ClassicAssert.AreEqual(11, r.Height);
-            ClassicAssert.AreEqual((short)5420, r.Options);
+            ClassicAssert.AreEqual((short) 5420, r.Options);
             ClassicAssert.AreEqual("[01, 02]", HexDump.ToHex(r.Data));
         }
         [Test]

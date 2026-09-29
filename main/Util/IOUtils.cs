@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -176,7 +176,7 @@ namespace NPOI.Util
         /// <returns></returns>
         public static byte[] ToByteArray(Stream stream, int length)
         {
-            using (ByteArrayOutputStream baos = new ByteArrayOutputStream(length == Int32.MaxValue ? 4096 : length))
+            using(ByteArrayOutputStream baos = new ByteArrayOutputStream(length == Int32.MaxValue ? 4096 : length))
             {
                 byte[] buffer = new byte[4096];
                 int totalBytes = 0, readBytes;
@@ -189,19 +189,19 @@ namespace NPOI.Util
                         baos.Write(buffer, 0, readBytes);
                     }
                 } while(totalBytes < length && readBytes > 0);
-            
+
                 if(length != Int32.MaxValue && totalBytes < length)
                 {
                     throw new IOException("unexpected EOF");
                 }
-            
+
                 return baos.ToByteArray();
             }
         }
 
         public static byte[] ToByteArray(ByteBuffer buffer, int length)
         {
-            if (buffer.HasBuffer && buffer.Offset == 0)
+            if(buffer.HasBuffer && buffer.Offset == 0)
             {
                 // The backing array should work out fine for us
                 return buffer.Buffer;
@@ -241,15 +241,15 @@ namespace NPOI.Util
         public static int ReadFully(Stream stream, byte[] b, int off, int len)
         {
             int total = 0;
-            while (true)
+            while(true)
             {
                 int got = stream.Read(b, off + total, len - total - off);
-                if (got <= 0)
+                if(got <= 0)
                 {
                     return (total == 0) ? -1 : total;
                 }
                 total += got;
-                if (total == len)
+                if(total == len)
                 {
                     return total;
                 }
@@ -407,9 +407,9 @@ namespace NPOI.Util
             byte[] buff = new byte[4096];
             //inp.Position = 0;
             int count;
-            while ((count = inp.Read(buff, 0, buff.Length)) >0)
+            while((count = inp.Read(buff, 0, buff.Length)) >0)
             {
-                if (count < -1)
+                if(count < -1)
                 {
                     throw new RecordFormatException("Can't have read < -1 bytes");
                 }
@@ -420,7 +420,7 @@ namespace NPOI.Util
         public static long CalculateChecksum(byte[] data)
         {
             CRC32 sum = new CRC32();
-            return (long)sum.ByteCRC(ref data);
+            return (long) sum.ByteCRC(ref data);
         }
 
         ///<summary>
@@ -428,10 +428,10 @@ namespace NPOI.Util
         ///be printed to {@link IOUtils} class logger.
         ///</summary>
         ///<param name="closeable">resource to close</param>
-        public static void CloseQuietly(Stream closeable )
+        public static void CloseQuietly(Stream closeable)
         {
             // no need to log a NullPointerException here
-            if (closeable == null)
+            if(closeable == null)
             {
                 return;
             }
@@ -439,7 +439,7 @@ namespace NPOI.Util
             {
                 closeable.Close();
             }
-            catch (Exception exc)
+            catch(Exception exc)
             {
                 logger.Log(POILogger.ERROR, "Unable to close resource: " + exc, exc);
             }
@@ -448,7 +448,7 @@ namespace NPOI.Util
         public static void CloseQuietly(ICloseable closeable)
         {
             // no need to log a NullPointerException here
-            if (closeable == null)
+            if(closeable == null)
             {
                 return;
             }
@@ -456,7 +456,7 @@ namespace NPOI.Util
             {
                 closeable.Close();
             }
-            catch (Exception exc)
+            catch(Exception exc)
             {
                 logger.Log(POILogger.ERROR, "Unable to close resource: " + exc, exc);
             }
@@ -499,10 +499,12 @@ namespace NPOI.Util
         ///
         public static long SkipFully(InputStream input, long toSkip)
         {
-            if (toSkip < 0) {
+            if(toSkip < 0)
+            {
                 throw new ArgumentException("Skip count must be non-negative, actual: " + toSkip);
             }
-            if (toSkip == 0) {
+            if(toSkip == 0)
+            {
                 return 0L;
             }
             /*
@@ -510,19 +512,23 @@ namespace NPOI.Util
              * is ignored) - we always use the same size buffer, so if it it is recreated it will still be OK (if the buffer
              * size were variable, we would need to synch. to ensure some other thread did not create a smaller one)
              */
-            if (SKIP_BYTE_BUFFER == null) {
+            if(SKIP_BYTE_BUFFER == null)
+            {
                 SKIP_BYTE_BUFFER = new byte[SKIP_BUFFER_SIZE];
             }
             long remain = toSkip;
-            while (remain > 0) {
+            while(remain > 0)
+            {
                 // See https://issues.apache.org/jira/browse/IO-203 for why we use read() rather than delegating to skip()
                 long n = input.Read(SKIP_BYTE_BUFFER, 0, (int) Math.Min(remain, SKIP_BUFFER_SIZE));
-                if (n <= 0) { // EOF
+                if(n <= 0)
+                { // EOF
                     break;
                 }
                 remain -= n;
             }
-            if (toSkip == remain) {
+            if(toSkip == remain)
+            {
                 return -1L;
             }
             return toSkip - remain;
@@ -544,16 +550,16 @@ namespace NPOI.Util
             {
                 ThrowRFE(length, maxLength);
             }
-            return new byte[(int)length];
+            return new byte[(int) length];
         }
 
         public static void SafelyAllocateCheck(long length, int maxLength)
         {
-            if (length < 0L)
+            if(length < 0L)
             {
                 throw new RecordFormatException("Can't allocate an array of length < 0, but had " + length + " and " + maxLength);
             }
-            if (length > (long)int.MaxValue)
+            if(length > (long) int.MaxValue)
             {
                 throw new RecordFormatException("Can't allocate an array > " + int.MaxValue);
             }
@@ -562,14 +568,14 @@ namespace NPOI.Util
 
         private static void CheckLength(long length, int maxLength)
         {
-            if (BYTE_ARRAY_MAX_OVERRIDE > 0)
+            if(BYTE_ARRAY_MAX_OVERRIDE > 0)
             {
-                if (length > BYTE_ARRAY_MAX_OVERRIDE)
+                if(length > BYTE_ARRAY_MAX_OVERRIDE)
                 {
                     ThrowRFE(length, BYTE_ARRAY_MAX_OVERRIDE);
                 }
             }
-            else if (length > maxLength)
+            else if(length > maxLength)
             {
                 ThrowRFE(length, maxLength);
             }

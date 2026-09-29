@@ -21,7 +21,8 @@ namespace TestCases.SS.UserModel
     using NPOI.HSSF.Util;
     using NPOI.SS;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Text;
     using TestCases.SS;
@@ -84,13 +85,13 @@ namespace TestCases.SS.UserModel
 
             DateTime dt = DateTime.Now.AddMilliseconds(123456789);
             cell.SetCellValue(dt);
-            ClassicAssert.IsTrue((dt.Ticks - ((DateTime)cell.DateCellValue).Ticks) >= -20000);
+            ClassicAssert.IsTrue((dt.Ticks - ((DateTime) cell.DateCellValue).Ticks) >= -20000);
             ClassicAssert.AreEqual(CellType.Numeric, cell.CellType);
             AssertProhibitedValueAccess(cell, CellType.Boolean, CellType.String,
                     CellType.Formula, CellType.Error);
 
             cell.SetCellValue(dt);
-            ClassicAssert.IsTrue((dt.Ticks - ((DateTime)cell.DateCellValue).Ticks) >= -20000);
+            ClassicAssert.IsTrue((dt.Ticks - ((DateTime) cell.DateCellValue).Ticks) >= -20000);
             ClassicAssert.AreEqual(CellType.Numeric, cell.CellType);
             AssertProhibitedValueAccess(cell, CellType.Boolean, CellType.String,
                     CellType.Formula, CellType.Error);
@@ -105,11 +106,11 @@ namespace TestCases.SS.UserModel
         private static void AssertProhibitedValueAccess(ICell cell, params CellType[] types)
         {
             object a;
-            foreach (CellType type in types)
+            foreach(CellType type in types)
             {
                 try
                 {
-                    switch (type)
+                    switch(type)
                     {
                         case CellType.Numeric:
                             a = cell.NumericCellValue;
@@ -129,7 +130,7 @@ namespace TestCases.SS.UserModel
                     }
                     Assert.Fail("Should get exception when Reading cell type (" + type + ").");
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
                     // expected during successful test
                     ClassicAssert.IsTrue(e.Message.StartsWith("Cannot get a"));
@@ -414,7 +415,7 @@ namespace TestCases.SS.UserModel
                 evaluator.Evaluate(cell);
                 Assert.Fail("Expected NotImplementedFunctionException/NotImplementedException");
             }
-            catch (NotImplementedException)
+            catch(NotImplementedException)
             {
                 // expected
             }
@@ -470,7 +471,7 @@ namespace TestCases.SS.UserModel
             {
                 cell.SetCellValue(2.5);
             }
-            catch (InvalidCastException)
+            catch(InvalidCastException)
             {
                 Assert.Fail("Identified bug 46479b");
             }
@@ -634,7 +635,7 @@ namespace TestCases.SS.UserModel
             {
                 cell.SetCellValue(wb.GetCreationHelper().CreateRichTextString("hello"));
             }
-            catch (InvalidCastException)
+            catch(InvalidCastException)
             {
                 throw new AssertionException("Identified bug 44606");
             }
@@ -851,8 +852,8 @@ namespace TestCases.SS.UserModel
             // Create some styles, no change
             ICellStyle style1 = wb.CreateCellStyle();
             ICellStyle style2 = wb.CreateCellStyle();
-            style1.DataFormat = (/*setter*/(short)2);
-            style2.DataFormat = (/*setter*/(short)3);
+            style1.DataFormat = (/*setter*/(short) 2);
+            style2.DataFormat = (/*setter*/(short) 3);
 
             ClassicAssert.AreEqual(defaultStyle, cell.CellStyle);
 
@@ -934,7 +935,7 @@ namespace TestCases.SS.UserModel
             StringBuilder b = new StringBuilder();
 
             // 32767 is okay
-            for (int i = 0; i < maxlen; i++)
+            for(int i = 0; i < maxlen; i++)
             {
                 b.Append("X");
             }
@@ -947,7 +948,7 @@ namespace TestCases.SS.UserModel
                 cell.SetCellValue(b.ToString());
                 Assert.Fail("Expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("The maximum length of cell contents (text) is 32,767 characters", e.Message);
             }
@@ -1001,9 +1002,9 @@ namespace TestCases.SS.UserModel
         }
 
         [Test]
-        public void TestSetErrorValue() 
+        public void TestSetErrorValue()
         {
-            IWorkbook wb = _testDataProvider.CreateWorkbook();   
+            IWorkbook wb = _testDataProvider.CreateWorkbook();
             ISheet sheet = wb.CreateSheet();
             IRow row = sheet.CreateRow(0);
             ICell cell = row.CreateCell(0);
@@ -1016,28 +1017,40 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(CellType.Error, cell.CachedFormulaResultType,
                 "Should still be a formula even after we set an error value");
             ClassicAssert.AreEqual("A2", cell.CellFormula);
-            try {
+            try
+            {
                 _ = cell.NumericCellValue;
                 Assert.Fail("Should catch exception here");
-            } catch (InvalidOperationException) {
+            }
+            catch(InvalidOperationException)
+            {
                 // expected here
             }
-            try {
+            try
+            {
                 _ = cell.StringCellValue;
                 Assert.Fail("Should catch exception here");
-            } catch (InvalidOperationException) {
+            }
+            catch(InvalidOperationException)
+            {
                 // expected here
             }
-            try {
+            try
+            {
                 _ = cell.RichStringCellValue;
                 Assert.Fail("Should catch exception here");
-            } catch (InvalidOperationException) {
+            }
+            catch(InvalidOperationException)
+            {
                 // expected here
             }
-            try {
+            try
+            {
                 _ = cell.DateCellValue;
                 Assert.Fail("Should catch exception here");
-            } catch (InvalidOperationException) {
+            }
+            catch(InvalidOperationException)
+            {
                 // expected here
             }
             ClassicAssert.AreEqual(FormulaError.NAME.Code, cell.ErrorCellValue);
@@ -1057,13 +1070,13 @@ namespace TestCases.SS.UserModel
             ISheet sheet = wb.CreateSheet();
             IRow row = sheet.CreateRow(0);
             ICell cell = row.CreateCell(0);
-            
+
             cell.SetCellValue(5.0);
             ClassicAssert.AreEqual(CellType.Numeric, cell.CellType);
-            ClassicAssert.AreEqual(0, (int)cell.CellType);
+            ClassicAssert.AreEqual(0, (int) cell.CellType);
 
             // make sure switch(int|Enum) still works. Cases must be statically resolvable in1 Java 6 ("constant expression required")
-            switch (cell.CellType)
+            switch(cell.CellType)
             {
                 case CellType.Numeric:
                     // expected

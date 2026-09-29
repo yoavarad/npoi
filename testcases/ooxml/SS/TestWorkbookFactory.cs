@@ -25,7 +25,8 @@ namespace TestCases.SS
     using NPOI.SS.UserModel;
     using NPOI.Util;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
     using TestCases;
@@ -52,7 +53,8 @@ namespace TestCases.SS
          * @param wb the workbook to close
          * @throws IOException
          */
-        private static void AssertCloseDoesNotModifyFile(String filename, IWorkbook wb) {
+        private static void AssertCloseDoesNotModifyFile(String filename, IWorkbook wb)
+        {
             byte[] before = HSSFTestDataSamples.GetTestDataFileContent(filename);
             CloseOrRevert(wb);
             byte[] after = HSSFTestDataSamples.GetTestDataFileContent(filename);
@@ -69,14 +71,14 @@ namespace TestCases.SS
         private static void CloseOrRevert(IWorkbook wb)
         {
             // TODO: close() re-writes the sample-file?! Resort to revert() for now to close file handle...
-            if (wb is HSSFWorkbook)
+            if(wb is HSSFWorkbook)
             {
                 wb.Close();
             }
-            else if (wb is XSSFWorkbook)
+            else if(wb is XSSFWorkbook)
             {
                 XSSFWorkbook xwb = (XSSFWorkbook)wb;
-                if (PackageAccess.READ == xwb.Package.GetPackageAccess())
+                if(PackageAccess.READ == xwb.Package.GetPackageAccess())
                 {
                     xwb.Close();
                 }
@@ -188,7 +190,7 @@ namespace TestCases.SS
                 }
                 Assert.Fail();
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 // Good
             }
@@ -334,7 +336,7 @@ namespace TestCases.SS
                 AssertCloseDoesNotModifyFile(xls_prot[0], wb);
                 Assert.Fail("Shouldn't be able to open with the wrong password");
             }
-            catch (EncryptedDocumentException)
+            catch(EncryptedDocumentException)
             {
                 // expected here
             }
@@ -346,7 +348,7 @@ namespace TestCases.SS
                 AssertCloseDoesNotModifyFile(xlsx_prot[0], wb);
                 Assert.Fail("Shouldn't be able to open with the wrong password");
             }
-            catch (EncryptedDocumentException)
+            catch(EncryptedDocumentException)
             {
                 // expected here
             }
@@ -361,7 +363,7 @@ namespace TestCases.SS
                 WorkbookFactory.Create(emptyStream);
                 Assert.Fail("Shouldn't be able to create for an empty stream");
             }
-            catch (EmptyFileException )
+            catch(EmptyFileException)
             {
             }
         }
@@ -371,14 +373,14 @@ namespace TestCases.SS
         [Test]
         public void TestEmptyFile()
         {
-            
+
             FileInfo emptyFile = TempFile.CreateTempFile("empty", ".poi");
             try
             {
                 WorkbookFactory.Create(emptyFile.FullName);
                 Assert.Fail("Shouldn't be able to create for an empty file");
             }
-            catch (EmptyFileException )
+            catch(EmptyFileException)
             {
             }
             emptyFile.Delete();
@@ -396,7 +398,7 @@ namespace TestCases.SS
                 WorkbookFactory.Create(nonExistantFile.FullName, "password", true);
                 Assert.Fail("Should not be able to create for a non-existant file");
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
                 // expected
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,15 +17,16 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.Functions;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Text;
     using TestCases.HSSF;
-    using NPOI.SS.Formula.Functions;
 
     /**
      * Tests for {@link NPOI.SS.Formula.Functions.Mirr}
@@ -51,7 +52,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 mirrValue = mirr.Evaluate(values);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw new AssertFailedException("MIRR should not failed with these parameters" + e);
             }
@@ -64,7 +65,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 mirrValue = mirr.Evaluate(values);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw new AssertFailedException("MIRR should not failed with these parameters" + e);
             }
@@ -77,7 +78,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 mirrValue = mirr.Evaluate(values);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw new AssertFailedException("MIRR should not failed with these parameters" + e);
             }
@@ -90,7 +91,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 mirrValue = mirr.Evaluate(values);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw new AssertFailedException("MIRR should not failed with these parameters" + e);
             }
@@ -103,7 +104,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 mirrValue = mirr.Evaluate(values);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw new AssertFailedException("MIRR should not failed with these parameters" + e);
             }
@@ -123,7 +124,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 mirr.Evaluate(incomes);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 ClassicAssert.AreEqual(ErrorEval.DIV_ZERO, e.GetErrorEval());
                 return;
@@ -168,7 +169,7 @@ namespace TestCases.SS.Formula.Functions
             int failureCount = 0;
             int[] resultRows = { 9, 19, 29, 45 };
 
-            foreach (int rowNum in resultRows)
+            foreach(int rowNum in resultRows)
             {
                 IRow row1 = sheet.GetRow(rowNum);
                 ICell cellA1 = row1.GetCell(0);
@@ -177,9 +178,10 @@ namespace TestCases.SS.Formula.Functions
                     CellValue cv1 = fe.Evaluate(cellA1);
                     assertFormulaResult(cv1, cellA1);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
-                    if (failures.Length > 0) failures.Append('\n');
+                    if(failures.Length > 0)
+                        failures.Append('\n');
                     failures.Append("Row[").Append(cellA1.RowIndex + 1).Append("]: ").Append(cellA1.CellFormula).Append(" ");
                     failures.Append(e.Message);
                     failureCount++;
@@ -191,7 +193,7 @@ namespace TestCases.SS.Formula.Functions
             CellValue cv = fe.Evaluate(cellA);
             ClassicAssert.AreEqual(ErrorEval.DIV_ZERO.ErrorCode, cv.ErrorValue);
 
-            if (failures.Length > 0)
+            if(failures.Length > 0)
             {
                 throw new AssertFailedException(failureCount + " IRR assertions failed:\n" + failures.ToString());
             }

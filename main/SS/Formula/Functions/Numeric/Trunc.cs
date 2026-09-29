@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Licensed to the Apache Software Foundation (ASF) Under one or more
 * contributor license agreements.  See the NOTICE file distributed with
 * this work for Additional information regarding copyright ownership.
@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     public class Trunc : Var1or2ArgFunction
     {
@@ -39,14 +39,14 @@ namespace NPOI.SS.Formula.Functions
                 double d0 = NumericFunction.SingleOperandEvaluate(arg0, srcRowIndex, srcColumnIndex);
                 double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                 double multi = Math.Pow(10d, d1);
-                if (d0 < 0)
+                if(d0 < 0)
                     result = -Math.Floor(-d0*multi)/multi;
                 else
                     result = Math.Floor(d0*multi)/multi;
                 //result = Math.Floor(d0 * multi) / multi;
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,15 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NPOI.XSSF;
-using NPOI.XSSF.UserModel;
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -51,14 +51,14 @@ namespace TestCases.XSSF.UserModel
             List<XSSFShape> shapes = drawing.GetShapes();
             str.Append("drawing.Shapes.size() = " + shapes.Count);
             IEnumerator<XSSFShape> it = shapes.GetEnumerator();
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 XSSFShape shape = it.Current;
                 str.Append(", " + shape.ToString());
-                str.Append(", Col1:" + ((XSSFClientAnchor)shape.GetAnchor()).Col1);
-                str.Append(", Col2:" + ((XSSFClientAnchor)shape.GetAnchor()).Col2);
-                str.Append(", Row1:" + ((XSSFClientAnchor)shape.GetAnchor()).Row1);
-                str.Append(", Row2:" + ((XSSFClientAnchor)shape.GetAnchor()).Row2);
+                str.Append(", Col1:" + ((XSSFClientAnchor) shape.GetAnchor()).Col1);
+                str.Append(", Col2:" + ((XSSFClientAnchor) shape.GetAnchor()).Col2);
+                str.Append(", Row1:" + ((XSSFClientAnchor) shape.GetAnchor()).Row1);
+                str.Append(", Row2:" + ((XSSFClientAnchor) shape.GetAnchor()).Row2);
             }
 
             ClassicAssert.AreEqual(expectedShapes, shapes.Count,

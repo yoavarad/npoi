@@ -17,13 +17,12 @@
 
 namespace NPOI.POIFS.Crypt.BinaryRC4
 {
-    using System;
-    using System.IO;
     using NPOI.POIFS.Crypt;
-
     using NPOI.POIFS.Crypt.Standard;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using System;
+    using System.IO;
 
     public class BinaryRC4Encryptor : Encryptor
     {
@@ -80,7 +79,7 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
 
             protected override void CreateEncryptionInfoEntry(DirectoryNode dir, FileInfo tmpFile)
             {
-                ((BinaryRC4Encryptor)encryptor).CreateEncryptionInfoEntry(dir);
+                ((BinaryRC4Encryptor) encryptor).CreateEncryptionInfoEntry(dir);
             }
         }
 
@@ -114,7 +113,7 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
                 byte[] encryptedVerifierHash = cipher.DoFinal(calcVerifierHash);
                 ver.EncryptedVerifierHash = (encryptedVerifierHash);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new EncryptedDocumentException("Password Confirmation failed", e);
             }
@@ -132,7 +131,7 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
             BinaryRC4EncryptionHeader header = builder.GetHeader();
             BinaryRC4EncryptionVerifier verifier = builder.GetVerifier();
             EncryptionRecord er = new EncryptionRecordInternal(info, header, verifier);
-            
+
             DataSpaceMapUtils.CreateEncryptionEntry(dir, "EncryptionInfo", er);
         }
 

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * A Name, be that a Named Range or a Function / User Defined
@@ -48,20 +48,20 @@ namespace NPOI.SS.Formula.PTG
         public NameXPxg(String nameName)
             : this(-1, null, nameName)
         {
-            
+
         }
         public override String ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(GetType().Name);
             sb.Append(" [");
-            if (externalWorkbookNumber >= 0)
+            if(externalWorkbookNumber >= 0)
             {
                 sb.Append(" [");
                 sb.Append("workbook=").Append(ExternalWorkbookNumber);
                 sb.Append("] ");
             }
-            if (SheetName != null)
+            if(SheetName != null)
             {
                 sb.Append("sheet=").Append(SheetName);
             }
@@ -102,19 +102,19 @@ namespace NPOI.SS.Formula.PTG
         {
             StringBuilder sb = new StringBuilder();
             bool needsExclamation = false;
-            if (externalWorkbookNumber >= 0)
+            if(externalWorkbookNumber >= 0)
             {
                 sb.Append('[');
                 sb.Append(externalWorkbookNumber);
                 sb.Append(']');
                 needsExclamation = true;
             }
-            if (sheetName != null)
+            if(sheetName != null)
             {
                 SheetNameFormatter.AppendFormat(sb, sheetName);
                 needsExclamation = true;
             }
-            if (needsExclamation)
+            if(needsExclamation)
             {
                 sb.Append('!');
             }

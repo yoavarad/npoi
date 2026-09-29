@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra;
 using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
@@ -16,14 +16,14 @@ namespace NPOI.SS.Formula.Functions
             double[] values = instance.collectValues(arg);
 
             /* handle case where MDETERM is operating on an array that that is not completely filled*/
-            if (arg is AreaEval && values.Length == 1)
+            if(arg is AreaEval && values.Length == 1)
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
 
             return values;
         }
         protected override double[,] Evaluate(double[,] d1)
         {
-            if (d1.GetLength(0) != d1.GetLength(1))
+            if(d1.GetLength(0) != d1.GetLength(1))
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }

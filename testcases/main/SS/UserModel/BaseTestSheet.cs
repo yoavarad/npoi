@@ -21,7 +21,8 @@ namespace TestCases.SS.UserModel
     using NPOI.SS;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -1942,7 +1943,7 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(3, allCells.Count);
 
             double sum = 0;
-            foreach (var c in allCells)
+            foreach(var c in allCells)
             {
                 sum += c.NumericCellValue;
             }

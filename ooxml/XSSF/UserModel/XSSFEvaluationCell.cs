@@ -16,10 +16,10 @@
 ==================================================================== */
 
 using NPOI.SS.Formula;
-using NPOI.XSSF.UserModel;
-using System;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using NPOI.XSSF.UserModel;
+using System;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -37,7 +37,7 @@ namespace NPOI.XSSF.UserModel
 
         public XSSFEvaluationCell(ICell cell, XSSFEvaluationSheet EvaluationSheet)
         {
-            _cell = (XSSFCell)cell;
+            _cell = (XSSFCell) cell;
             _evalSheet = EvaluationSheet;
         }
 
@@ -49,7 +49,7 @@ namespace NPOI.XSSF.UserModel
 
         public XSSFEvaluationCell()
         {
-            
+
         }
 
         public Object IdentityKey

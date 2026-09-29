@@ -18,8 +18,8 @@
 
 namespace NPOI.DDF
 {
-    using System;
     using NPOI.Util;
+    using System;
     using System.Collections.Generic;
     using System.Text;
 
@@ -92,10 +92,10 @@ namespace NPOI.DDF
         /// <param name="data">the byte array to read from</param>
         /// <param name="offset">the offset to start reading from</param>
         /// <returns>value of instance part of options field</returns>
-        protected static short ReadInstance( byte[] data, int offset )
+        protected static short ReadInstance(byte[] data, int offset)
         {
             short options = LittleEndian.GetShort( data, offset );
-            return fInstance.GetShortValue( options );
+            return fInstance.GetShortValue(options);
         }
         /// <summary>
         /// Determine whether this is a container record by inspecting the option
@@ -106,7 +106,7 @@ namespace NPOI.DDF
         /// </value>
         public bool IsContainerRecord
         {
-            get { return Version == (short)0x000f; }
+            get { return Version == (short) 0x000f; }
         }
 
 
@@ -179,7 +179,7 @@ namespace NPOI.DDF
             get { return _recordId; }
             set { this._recordId = value; }
         }
-        
+
         /// <summary>
         /// Gets or sets the child records.
         /// </summary>
@@ -201,7 +201,7 @@ namespace NPOI.DDF
         {
             throw new NotSupportedException("The class " + this.GetType().Name + " needs to define a clone method");
         }
-        
+
         /// <summary>
         /// Returns the indexed child record.
         /// </summary>
@@ -209,7 +209,7 @@ namespace NPOI.DDF
         /// <returns></returns>
         public EscherRecord GetChild(int index)
         {
-            return (EscherRecord)ChildRecords[index];
+            return (EscherRecord) ChildRecords[index];
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace NPOI.DDF
         /// <param name="indent">The current indent level.</param>  
         public virtual void Display(int indent)
         {
-            for (int i = 0; i < indent * 4; i++)
+            for(int i = 0; i < indent * 4; i++)
             {
                 Console.Write(' ');
             }

@@ -17,17 +17,18 @@
 
 namespace TestCases.XSSF.Model
 {
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
-    using NPOI.XSSF;
-    using NPOI.XSSF.UserModel;
-    using System.Collections.Generic;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.XSSF;
     using NPOI.XSSF.Model;
+    using NPOI.XSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
 
     [TestFixture]
     public class TestThemesTable
@@ -78,14 +79,15 @@ namespace TestCases.XSSF.Model
 
             // Check each workbook in turn, and verify that the colours
             //  for the theme-applied cells in Column A are correct
-            foreach (String whatWorkbook in workbooks.Keys)
+            foreach(String whatWorkbook in workbooks.Keys)
             {
                 XSSFWorkbook workbook = workbooks[whatWorkbook];
                 XSSFSheet sheet = workbook.GetSheetAt(0) as XSSFSheet;
                 int startRN = 0;
-                if (whatWorkbook.EndsWith(testFileComplex)) startRN++;
+                if(whatWorkbook.EndsWith(testFileComplex))
+                    startRN++;
 
-                for (int rn = startRN; rn < rgbExpected.Length + startRN; rn++)
+                for(int rn = startRN; rn < rgbExpected.Length + startRN; rn++)
                 {
                     XSSFRow row = sheet.GetRow(rn) as XSSFRow;
                     ClassicAssert.IsNotNull(row, "Missing row " + rn + " in " + whatWorkbook);
@@ -114,13 +116,13 @@ namespace TestCases.XSSF.Model
                     // Check the RGB part (no tint)
                     ClassicAssert.AreEqual(rgbExpected[expectedThemeIdx], HexDump.EncodeHexString(color.RGB),
                             "Wrong theme colour " + themeElem.name + " on " + whatWorkbook);
-                    
+
                     long themeIdx = font.GetCTFont().GetColorArray(0).theme;
                     ClassicAssert.AreEqual(expectedThemeIdx, themeIdx,
                             "Wrong theme index " + expectedThemeIdx + " on " + whatWorkbook
                             );
 
-                    if (createFiles)
+                    if(createFiles)
                     {
                         XSSFCellStyle cs = row.Sheet.Workbook.CreateCellStyle() as XSSFCellStyle;
                         cs.SetFillForegroundColor(color);
@@ -129,7 +131,7 @@ namespace TestCases.XSSF.Model
                     }
                 }
 
-                if (createFiles)
+                if(createFiles)
                 {
                     FileStream fos = new FileStream("Generated_" + whatWorkbook, FileMode.Create, FileAccess.ReadWrite);
                     workbook.Write(fos);
@@ -167,7 +169,7 @@ namespace TestCases.XSSF.Model
             ClassicAssert.AreEqual(7, names.Length);
 
             // Check the non-CF colours in Columns A, B, C and E
-            for (int rn = 1; rn < 8; rn++)
+            for(int rn = 1; rn < 8; rn++)
             {
                 int idx = rn - 1;
                 XSSFRow row = sheet.GetRow(rn) as XSSFRow;
@@ -196,7 +198,7 @@ namespace TestCases.XSSF.Model
                 color = style.GetFont().GetXSSFColor();
                 ClassicAssert.AreEqual(true, color.IsThemed);
                 // TODO Fix the grey theme color in Column B
-                if (idx != 2)
+                if(idx != 2)
                 {
                     ClassicAssert.AreEqual(true, color.IsThemed);
                     ClassicAssert.AreEqual(idx, color.Theme);

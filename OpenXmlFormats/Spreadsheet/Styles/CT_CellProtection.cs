@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +27,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_CellProtection Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CellProtection ctObj = new CT_CellProtection();
             ctObj.locked = XmlHelper.ReadBool(node.Attributes["locked"], true);

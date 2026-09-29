@@ -1,4 +1,4 @@
-﻿namespace NPOI.SS.Formula.Functions
+namespace NPOI.SS.Formula.Functions
 {
     using NPOI.SS.Formula.Eval;
     using System;
@@ -17,7 +17,7 @@
         private static bool IsDefaultResult(double x, double mean)
         {
 
-            if (x == 0 && mean == 0)
+            if(x == 0 && mean == 0)
             {
                 return true;
             }
@@ -30,7 +30,7 @@
             NumericFunction.CheckValue(aDouble);
 
             // make sure that the number is positive
-            if (aDouble < 0)
+            if(aDouble < 0)
             {
                 throw new EvaluationException(ErrorEval.NUM_ERROR);
             }
@@ -46,7 +46,7 @@
         private double cumulativeProbability(int x, double lambda)
         {
             double result = 0;
-            for (int k = 0; k <= x; k++)
+            for(int k = 0; k <= x; k++)
             {
                 result += probability(k, lambda);
             }
@@ -66,7 +66,7 @@
 
         public long Factorial(int n)
         {
-            if (n < 0 || n > 20)
+            if(n < 0 || n > 20)
             {
                 throw new ArgumentException("Valid argument should be in the range [0..20]");
             }
@@ -87,7 +87,7 @@
 
                 // check for default result : excel implementation for 0,0
                 // is different to Math Common.
-                if (IsDefaultResult(x, mean))
+                if(IsDefaultResult(x, mean))
                 {
                     return new NumberEval(DEFAULT_RETURN_RESULT);
                 }
@@ -96,20 +96,20 @@
                 Poisson.CheckArgument(mean);
 
                 // truncate x : as per excel function def
-                if (cumulative)
+                if(cumulative)
                 {
-                    result = cumulativeProbability((int)x, mean);
+                    result = cumulativeProbability((int) x, mean);
                 }
                 else
                 {
-                    result = probability((int)x, mean);
+                    result = probability((int) x, mean);
                 }
 
                 // check the result
                 NumericFunction.CheckValue(result);
 
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

@@ -16,14 +16,14 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Agile
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Xml;
     using NPOI.OpenXmlFormats.Encryption;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using System;
+    using System.IO;
+    using System.Text;
+    using System.Xml;
 
     public class AgileEncryptionInfoBuilder : IEncryptionInfoBuilder
     {
@@ -41,7 +41,7 @@ namespace NPOI.POIFS.Crypt.Agile
             EncryptionDocument ed = ParseDescriptor((DocumentInputStream)dis);
             header = new AgileEncryptionHeader(ed);
             verifier = new AgileEncryptionVerifier(ed);
-            if (info.VersionMajor == EncryptionMode.Agile.VersionMajor
+            if(info.VersionMajor == EncryptionMode.Agile.VersionMajor
                 && info.VersionMinor == EncryptionMode.Agile.VersionMinor)
             {
                 decryptor = new AgileDecryptor(this);
@@ -53,40 +53,40 @@ namespace NPOI.POIFS.Crypt.Agile
         {
             this.info = info;
 
-            if (cipherAlgorithm == null)
+            if(cipherAlgorithm == null)
             {
                 cipherAlgorithm = CipherAlgorithm.aes128;
             }
-            if (cipherAlgorithm == CipherAlgorithm.rc4)
+            if(cipherAlgorithm == CipherAlgorithm.rc4)
             {
                 throw new EncryptedDocumentException("RC4 must not be used with agile encryption.");
             }
-            if (hashAlgorithm == null)
+            if(hashAlgorithm == null)
             {
                 hashAlgorithm = HashAlgorithm.sha1;
             }
-            if (chainingMode == null)
+            if(chainingMode == null)
             {
                 chainingMode = ChainingMode.cbc;
             }
-            if (!(chainingMode == ChainingMode.cbc || chainingMode == ChainingMode.cfb))
+            if(!(chainingMode == ChainingMode.cbc || chainingMode == ChainingMode.cfb))
             {
                 throw new EncryptedDocumentException("Agile encryption only supports CBC/CFB chaining.");
             }
-            if (keyBits == -1)
+            if(keyBits == -1)
             {
                 keyBits = cipherAlgorithm.defaultKeySize;
             }
-            if (blockSize == -1)
+            if(blockSize == -1)
             {
                 blockSize = cipherAlgorithm.blockSize;
             }
             bool found = false;
-            foreach (int ks in cipherAlgorithm.allowedKeySize)
+            foreach(int ks in cipherAlgorithm.allowedKeySize)
             {
                 found |= (ks == keyBits);
             }
-            if (!found)
+            if(!found)
             {
                 throw new EncryptedDocumentException("KeySize " + keyBits + " not allowed for Cipher " + cipherAlgorithm.ToString());
             }
@@ -127,7 +127,7 @@ namespace NPOI.POIFS.Crypt.Agile
             {
                 return EncryptionDocument.Parse(descriptor);
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new EncryptedDocumentException("Unable to parse encryption descriptor", e);
             }
@@ -145,7 +145,7 @@ namespace NPOI.POIFS.Crypt.Agile
 
                 return EncryptionDocument.Parse(xmlDoc);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new EncryptedDocumentException("Unable to parse encryption descriptor", e);
             }

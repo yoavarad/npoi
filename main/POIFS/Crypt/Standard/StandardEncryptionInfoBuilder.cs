@@ -16,9 +16,9 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Standard
 {
-    using System;
     using NPOI.POIFS.Crypt;
     using NPOI.Util;
+    using System;
 
     public class StandardEncryptionInfoBuilder : IEncryptionInfoBuilder
     {
@@ -40,7 +40,7 @@ namespace NPOI.POIFS.Crypt.Standard
             header = new StandardEncryptionHeader(dis);
             verifier = new StandardEncryptionVerifier(dis, header);
 
-            if (info.VersionMinor == 2 && (info.VersionMajor == 3 || info.VersionMajor == 4))
+            if(info.VersionMinor == 2 && (info.VersionMajor == 3 || info.VersionMajor == 4))
             {
                 decryptor = new StandardDecryptor(this);
             }
@@ -53,47 +53,47 @@ namespace NPOI.POIFS.Crypt.Standard
         {
             this.info = info;
 
-            if (cipherAlgorithm == null)
+            if(cipherAlgorithm == null)
             {
                 cipherAlgorithm = CipherAlgorithm.aes128;
             }
-            if (cipherAlgorithm != CipherAlgorithm.aes128 &&
+            if(cipherAlgorithm != CipherAlgorithm.aes128 &&
                 cipherAlgorithm != CipherAlgorithm.aes192 &&
                 cipherAlgorithm != CipherAlgorithm.aes256)
             {
                 throw new EncryptedDocumentException("Standard encryption only supports AES128/192/256.");
             }
 
-            if (hashAlgorithm == null)
+            if(hashAlgorithm == null)
             {
                 hashAlgorithm = HashAlgorithm.sha1;
             }
-            if (hashAlgorithm != HashAlgorithm.sha1)
+            if(hashAlgorithm != HashAlgorithm.sha1)
             {
                 throw new EncryptedDocumentException("Standard encryption only supports SHA-1.");
             }
-            if (chainingMode == null)
+            if(chainingMode == null)
             {
                 chainingMode = ChainingMode.ecb;
             }
-            if (chainingMode != ChainingMode.ecb)
+            if(chainingMode != ChainingMode.ecb)
             {
                 throw new EncryptedDocumentException("Standard encryption only supports ECB chaining.");
             }
-            if (keyBits == -1)
+            if(keyBits == -1)
             {
                 keyBits = cipherAlgorithm.defaultKeySize;
             }
-            if (blockSize == -1)
+            if(blockSize == -1)
             {
                 blockSize = cipherAlgorithm.blockSize;
             }
             bool found = false;
-            foreach (int ks in cipherAlgorithm.allowedKeySize)
+            foreach(int ks in cipherAlgorithm.allowedKeySize)
             {
                 found |= (ks == keyBits);
             }
-            if (!found)
+            if(!found)
             {
                 throw new EncryptedDocumentException("KeySize " + keyBits + " not allowed for Cipher " + cipherAlgorithm.ToString());
             }

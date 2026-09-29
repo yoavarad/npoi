@@ -18,13 +18,12 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Constant;
+    using NPOI.SS.Formula.PTG;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.SS.Formula;
-
-    using NPOI.SS.Formula.PTG;
-    using NPOI.SS.Formula.Constant;
 
 
     /**
@@ -50,7 +49,7 @@ namespace NPOI.HSSF.Record
         private short field_2_ixals;
         private readonly short field_3_not_used;
         private String field_4_name;
-        private Formula field_5_name_definition; 
+        private Formula field_5_name_definition;
 
         /**
          * 'rgoper' / 'Last received results of the DDE link'
@@ -80,13 +79,13 @@ namespace NPOI.HSSF.Record
 
             // the record body can take different forms.
             // The form is dictated by the values of 3-th and 4-th bits in field_1_option_flag
-            if (!IsOLELink && !IsStdDocumentNameIdentifier)
+            if(!IsOLELink && !IsStdDocumentNameIdentifier)
             {
                 // another switch: the fWantAdvise bit specifies whether the body describes
                 // an external defined name or a DDE data item
-                if (IsAutomaticLink)
+                if(IsAutomaticLink)
                 {
-                    if (in1.Available() > 0)
+                    if(in1.Available() > 0)
                     {
                         //body specifies DDE data item
                         int nColumns = in1.ReadUByte() + 1;
@@ -182,11 +181,11 @@ namespace NPOI.HSSF.Record
                 int result = 2 + 4;  // short and int
                 result += StringUtil.GetEncodedSize(field_4_name) - 1; //size is byte, not short 
 
-                if (!IsOLELink && !IsStdDocumentNameIdentifier)
+                if(!IsOLELink && !IsStdDocumentNameIdentifier)
                 {
-                    if (IsAutomaticLink)
+                    if(IsAutomaticLink)
                     {
-                        if (_ddeValues != null)
+                        if(_ddeValues != null)
                         {
                             result += 3; // byte, short
                             result += ConstantValueParser.GetEncodedSize(_ddeValues);
@@ -229,11 +228,11 @@ namespace NPOI.HSSF.Record
             out1.WriteByte(field_4_name.Length);
             StringUtil.WriteUnicodeStringFlagAndData(out1, field_4_name);
 
-            if (!IsOLELink && !IsStdDocumentNameIdentifier)
+            if(!IsOLELink && !IsStdDocumentNameIdentifier)
             {
-                if (IsAutomaticLink)
+                if(IsAutomaticLink)
                 {
-                    if (_ddeValues != null)
+                    if(_ddeValues != null)
                     {
                         out1.WriteByte(_nColumns - 1);
                         out1.WriteShort(_nRows - 1);
@@ -291,7 +290,7 @@ namespace NPOI.HSSF.Record
                 //}
 
                 // This was derived by trial and error, but doesn't seem quite right
-                if (IsAutomaticLink)
+                if(IsAutomaticLink)
                 {
                     return false;
                 }
@@ -311,10 +310,10 @@ namespace NPOI.HSSF.Record
             sb.Append("    .options = ").Append(field_1_option_flag).Append("\n");
             sb.Append("    .ix      = ").Append(field_2_ixals).Append("\n");
             sb.Append("    .name    = ").Append(field_4_name).Append("\n");
-            if (field_5_name_definition != null)
+            if(field_5_name_definition != null)
             {
                 Ptg[] ptgs = field_5_name_definition.Tokens;
-                for (int i = 0; i < ptgs.Length; i++)
+                for(int i = 0; i < ptgs.Length; i++)
                 {
                     Ptg ptg = ptgs[i];
                     sb.Append("    .namedef = ").Append(ptg.ToString()).Append(ptg.RVAType).Append("\n");

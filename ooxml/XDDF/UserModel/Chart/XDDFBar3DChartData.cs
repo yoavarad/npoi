@@ -1,9 +1,9 @@
 
 namespace NPOI.XDDF.UserModel.Chart;
 
-using System.Collections.Generic;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Chart;
+using System.Collections.Generic;
 
 public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 {
@@ -13,13 +13,13 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
             Dictionary<long, XDDFValueAxis> values)
     {
         this.chart = chart;
-        if (chart.barDir == null)
+        if(chart.barDir == null)
         {
             chart.barDir = new CT_BarDir { val = BarDirection.Bar.ToST_BarDir() };
         }
-        if (chart.ser != null)
+        if(chart.ser != null)
         {
-            foreach (CT_BarSer series in chart.ser)
+            foreach(CT_BarSer series in chart.ser)
             {
                 this.series.Add(new Series(series, series.cat, series.val));
             }
@@ -29,16 +29,17 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
     private void DefineAxes(Dictionary<long, XDDFChartAxis> categories, Dictionary<long, XDDFValueAxis> values)
     {
-        if (chart.axId == null || chart.axId.Count == 0)
+        if(chart.axId == null || chart.axId.Count == 0)
         {
-            if (chart.axId == null) chart.axId = [];
-            foreach (long id in categories.Keys)
+            if(chart.axId == null)
+                chart.axId = [];
+            foreach(long id in categories.Keys)
             {
-                chart.axId.Add(new CT_UnsignedInt { val = (uint)id });
+                chart.axId.Add(new CT_UnsignedInt { val = (uint) id });
             }
-            foreach (long id in values.Keys)
+            foreach(long id in values.Keys)
             {
-                chart.axId.Add(new CT_UnsignedInt { val = (uint)id });
+                chart.axId.Add(new CT_UnsignedInt { val = (uint) id });
             }
         }
         DefineAxis([.. chart.axId], categories, values);
@@ -46,7 +47,7 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
     public override void SetVaryColors(bool varyColors)
     {
-        if (chart.varyColors != null)
+        if(chart.varyColors != null)
         {
             chart.varyColors.val = varyColors ? 1 : 0;
         }
@@ -68,7 +69,7 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
     public BarGrouping GetBarGrouping()
     {
-        if (chart.grouping != null)
+        if(chart.grouping != null)
         {
             return BarGroupingExtensions.ValueOf(chart.grouping.val);
         }
@@ -80,7 +81,7 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
     public void SetBarGrouping(BarGrouping grouping)
     {
-        if (chart.grouping != null)
+        if(chart.grouping != null)
         {
             chart.grouping.val = grouping.ToST_BarGrouping();
         }
@@ -92,7 +93,7 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
     public int GetGapWidth()
     {
-        if (chart.gapWidth != null)
+        if(chart.gapWidth != null)
         {
             return chart.gapWidth.val;
         }
@@ -104,13 +105,13 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
     public void SetGapWidth(int width)
     {
-        if (chart.gapWidth != null)
+        if(chart.gapWidth != null)
         {
-            chart.gapWidth.val = (ushort)width;
+            chart.gapWidth.val = (ushort) width;
         }
         else
         {
-            chart.gapWidth = new CT_GapAmount { val = (ushort)width };
+            chart.gapWidth = new CT_GapAmount { val = (ushort) width };
         }
     }
 
@@ -123,8 +124,8 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
         ctSer.tx = new CT_SerTx();
         ctSer.cat = new CT_AxDataSource();
         ctSer.val = new CT_NumDataSource();
-        ctSer.idx = new CT_UnsignedInt { val = (uint)index };
-        ctSer.order = new CT_UnsignedInt { val = (uint)index };
+        ctSer.idx = new CT_UnsignedInt { val = (uint) index };
+        ctSer.order = new CT_UnsignedInt { val = (uint) index };
         Series added = new Series(ctSer, category, values);
         this.series.Add(added);
         return added;
@@ -150,7 +151,7 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
         protected override CT_SerTx GetSeriesText()
         {
-            if (series.tx != null)
+            if(series.tx != null)
             {
                 return series.tx;
             }
@@ -163,11 +164,11 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
         public override void SetShowLeaderLines(bool showLeaderLines)
         {
-            if (series.dLbls == null)
+            if(series.dLbls == null)
             {
                 series.dLbls = new CT_DLbls();
             }
-            if (series.dLbls.showLeaderLines != null)
+            if(series.dLbls.showLeaderLines != null)
             {
                 series.dLbls.showLeaderLines.val = showLeaderLines ? 1 : 0;
             }
@@ -179,7 +180,7 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
         public override XDDFShapeProperties GetShapeProperties()
         {
-            if (series.spPr != null)
+            if(series.spPr != null)
             {
                 return new XDDFShapeProperties(series.spPr);
             }
@@ -191,16 +192,16 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
         public override void SetShapeProperties(XDDFShapeProperties properties)
         {
-            if (properties == null)
+            if(properties == null)
             {
-                if (series.spPr != null)
+                if(series.spPr != null)
                 {
                     series.spPr = null;
                 }
             }
             else
             {
-                if (series.spPr != null)
+                if(series.spPr != null)
                 {
                     series.spPr = properties.GetXmlObject();
                 }
@@ -224,12 +225,12 @@ public class XDDFBar3DChartData<T, V> : XDDFChartData<T, V>
 
         public void UpdateIdXVal(long val)
         {
-            series.idx.val = (uint)val;
+            series.idx.val = (uint) val;
         }
 
         public void UpdateOrderVal(long val)
         {
-            series.order.val = (uint)val;
+            series.order.val = (uint) val;
         }
     }
 }

@@ -17,11 +17,12 @@
 
 namespace TestCases.SS.Formula.PTG
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
     /**
      * Tests for proper calculation of named ranges from external workbooks.
@@ -66,14 +67,14 @@ namespace TestCases.SS.Formula.PTG
                 ClassicAssert.AreEqual("VLOOKUP(PART,COSTS,2,FALSE)", cell.CellFormula);
                 ClassicAssert.AreEqual("Sheet1!$D$2", wb.GetName("COST").RefersToFormula);
                 cellRef = new CellReference(wb.GetName("COST").RefersToFormula);
-                cell = wb.GetSheet(cellRef.SheetName).GetRow(cellRef.Row).GetCell((int)cellRef.Col);
+                cell = wb.GetSheet(cellRef.SheetName).GetRow(cellRef.Row).GetCell((int) cellRef.Col);
                 ClassicAssert.AreEqual("UNITCOST*Quant", cell.CellFormula);
                 ClassicAssert.AreEqual("Sheet1!$E$2", wb.GetName("TOTALCOST").RefersToFormula);
                 cellRef = new CellReference(wb.GetName("TOTALCOST").RefersToFormula);
-                cell = wb.GetSheet(cellRef.SheetName).GetRow(cellRef.Row).GetCell((int)cellRef.Col);
+                cell = wb.GetSheet(cellRef.SheetName).GetRow(cellRef.Row).GetCell((int) cellRef.Col);
                 ClassicAssert.AreEqual("Cost*Markup_Cost", cell.CellFormula);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Assert.Fail(e.Message);
             }
@@ -90,7 +91,7 @@ namespace TestCases.SS.Formula.PTG
                 ClassicAssert.AreEqual("MarkupSheet!$B$1", wb.GetName("Markup_Cost").RefersToFormula);
                 ClassicAssert.AreEqual(MARKUP_COST_1, wb.GetSheet("MarkupSheet").GetRow(0).GetCell(1).NumericCellValue);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Assert.Fail(e.Message);
             }

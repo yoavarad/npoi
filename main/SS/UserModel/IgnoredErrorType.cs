@@ -25,7 +25,8 @@ namespace NPOI.SS.UserModel
      * TODO Implement these for HSSF too, using FeatFormulaErr2,
      *  see bugzilla bug #46136 for details
      */
-    public enum IgnoredErrorType {
+    public enum IgnoredErrorType
+    {
         /**
          * ????. Probably XSSF-only.
          */

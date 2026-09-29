@@ -14,10 +14,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.Util;
 using SkiaSharp;
+using System;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -67,15 +67,15 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetSolidFill())
+                if(rPr.IsSetSolidFill())
                 {
                     CT_SolidColorFillProperties fill = rPr.solidFill;
 
-                    if (fill.IsSetSrgbClr())
+                    if(fill.IsSetSrgbClr())
                     {
                         CT_SRgbColor clr = fill.srgbClr;
                         byte[] rgb = clr.val;
-                        return new SKColor((byte)(0xFF & rgb[0]), (byte)(0xFF & rgb[1]), (byte)(0xFF & rgb[2]));
+                        return new SKColor((byte) (0xFF & rgb[0]), (byte) (0xFF & rgb[1]), (byte) (0xFF & rgb[2]));
                     }
                 }
 
@@ -88,11 +88,16 @@ namespace NPOI.XSSF.UserModel
                 CT_SRgbColor clr = fill.IsSetSrgbClr() ? fill.srgbClr : fill.AddNewSrgbClr();
                 clr.val = (new byte[] { value.Red, value.Green, value.Blue });
 
-                if (fill.IsSetHslClr()) fill.UnsetHslClr();
-                if (fill.IsSetPrstClr()) fill.UnsetPrstClr();
-                if (fill.IsSetSchemeClr()) fill.UnsetSchemeClr();
-                if (fill.IsSetScrgbClr()) fill.UnsetScrgbClr();
-                if (fill.IsSetSysClr()) fill.UnsetSysClr();
+                if(fill.IsSetHslClr())
+                    fill.UnsetHslClr();
+                if(fill.IsSetPrstClr())
+                    fill.UnsetPrstClr();
+                if(fill.IsSetSchemeClr())
+                    fill.UnsetSchemeClr();
+                if(fill.IsSetScrgbClr())
+                    fill.UnsetScrgbClr();
+                if(fill.IsSetSysClr())
+                    fill.UnsetSysClr();
             }
         }
 
@@ -106,10 +111,11 @@ namespace NPOI.XSSF.UserModel
                 double scale = 1;
                 double size = XSSFFont.DEFAULT_FONT_SIZE;	// default font size
                 CT_TextNormalAutofit afit = ParentParagraph.ParentShape.txBody.bodyPr.normAutofit;
-                if (afit != null) scale = (double)afit.fontScale / 100000;
+                if(afit != null)
+                    scale = (double) afit.fontScale / 100000;
 
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetSz())
+                if(rPr.IsSetSz())
                 {
                     size = rPr.sz * 0.01;
                 }
@@ -119,18 +125,19 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (value == -1.0)
+                if(value == -1.0)
                 {
-                    if (rPr.IsSetSz()) rPr.UnsetSz();
+                    if(rPr.IsSetSz())
+                        rPr.UnsetSz();
                 }
                 else
                 {
-                    if (value < 1.0)
+                    if(value < 1.0)
                     {
                         throw new ArgumentException("Minimum font size is 1pt but was " + value);
                     }
 
-                    rPr.sz = ((int)(100 * value));
+                    rPr.sz = ((int) (100 * value));
                 }
             }
         }
@@ -145,7 +152,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetSpc())
+                if(rPr.IsSetSpc())
                 {
                     return rPr.spc * 0.01;
                 }
@@ -154,13 +161,14 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (value == 0.0)
+                if(value == 0.0)
                 {
-                    if (rPr.IsSetSpc()) rPr.UnsetSpc();
+                    if(rPr.IsSetSpc())
+                        rPr.UnsetSpc();
                 }
                 else
                 {
-                    rPr.spc = ((int)(100 * value));
+                    rPr.spc = ((int) (100 * value));
                 }
             }
         }
@@ -173,22 +181,25 @@ namespace NPOI.XSSF.UserModel
          */
         public void SetFont(String typeface)
         {
-            SetFontFamily(typeface, unchecked((byte)-1), unchecked((byte)-1), false);
+            SetFontFamily(typeface, unchecked((byte) -1), unchecked((byte) -1), false);
         }
 
         public void SetFontFamily(String typeface, byte charset, byte pictAndFamily, bool isSymbol)
         {
             CT_TextCharacterProperties rPr = GetRPr();
 
-            if (typeface == null)
+            if(typeface == null)
             {
-                if (rPr.IsSetLatin()) rPr.UnsetLatin();
-                if (rPr.IsSetCs()) rPr.UnsetCs();
-                if (rPr.IsSetSym()) rPr.UnsetSym();
+                if(rPr.IsSetLatin())
+                    rPr.UnsetLatin();
+                if(rPr.IsSetCs())
+                    rPr.UnsetCs();
+                if(rPr.IsSetSym())
+                    rPr.UnsetSym();
             }
             else
             {
-                if (isSymbol)
+                if(isSymbol)
                 {
                     CT_TextFont font = rPr.IsSetSym() ? rPr.sym : rPr.AddNewSym();
                     font.typeface = (typeface);
@@ -197,8 +208,10 @@ namespace NPOI.XSSF.UserModel
                 {
                     CT_TextFont latin = rPr.IsSetLatin() ? rPr.latin : rPr.AddNewLatin();
                     latin.typeface = (typeface);
-                    if ((sbyte)charset != -1) latin.charset = (sbyte)(charset);
-                    if ((sbyte)pictAndFamily != -1) latin.pitchFamily = (sbyte)(pictAndFamily);
+                    if((sbyte) charset != -1)
+                        latin.charset = (sbyte) (charset);
+                    if((sbyte) pictAndFamily != -1)
+                        latin.pitchFamily = (sbyte) (pictAndFamily);
                 }
             }
         }
@@ -212,7 +225,7 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_TextCharacterProperties rPr = GetRPr();
                 CT_TextFont font = rPr.latin;
-                if (font != null)
+                if(font != null)
                 {
                     return font.typeface;
                 }
@@ -226,9 +239,9 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_TextCharacterProperties rPr = GetRPr();
                 CT_TextFont font = rPr.latin;
-                if (font != null)
+                if(font != null)
                 {
-                    return (byte)font.pitchFamily;
+                    return (byte) font.pitchFamily;
                 }
                 return 0;
             }
@@ -242,7 +255,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetStrike())
+                if(rPr.IsSetStrike())
                 {
                     return rPr.strike != ST_TextStrikeType.noStrike;
                 }
@@ -263,7 +276,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetBaseline())
+                if(rPr.IsSetBaseline())
                 {
                     return rPr.baseline > 0;
                 }
@@ -286,7 +299,7 @@ namespace NPOI.XSSF.UserModel
          */
         public void SetBaselineOffset(double baselineOffset)
         {
-            GetRPr().baseline = ((int)baselineOffset * 1000);
+            GetRPr().baseline = ((int) baselineOffset * 1000);
         }
 
         /**
@@ -298,7 +311,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetBaseline())
+                if(rPr.IsSetBaseline())
                 {
                     return rPr.baseline < 0;
                 }
@@ -318,7 +331,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetCap())
+                if(rPr.IsSetCap())
                 {
                     return EnumConverter.ValueOf<TextCap, ST_TextCapsType>(rPr.cap);
                 }
@@ -334,7 +347,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.bSpecified)
+                if(rPr.bSpecified)
                 {
                     return rPr.b;
                 }
@@ -354,7 +367,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetI())
+                if(rPr.IsSetI())
                 {
                     return rPr.i;
                 }
@@ -374,7 +387,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextCharacterProperties rPr = GetRPr();
-                if (rPr.IsSetU())
+                if(rPr.IsSetU())
                 {
                     return rPr.u != ST_TextUnderlineType.none;
                 }

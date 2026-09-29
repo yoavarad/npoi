@@ -20,9 +20,10 @@
 namespace TestCases.SS.Formula
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
 
 
@@ -41,13 +42,13 @@ namespace TestCases.SS.Formula
         public void TestLoc()
         {
             PlainCellCache cache = new PlainCellCache();
-            for (int bookIndex = 0; bookIndex < 0x1000; bookIndex += 0x100)
+            for(int bookIndex = 0; bookIndex < 0x1000; bookIndex += 0x100)
             {
-                for (int sheetIndex = 0; sheetIndex < 0x1000; sheetIndex += 0x100)
+                for(int sheetIndex = 0; sheetIndex < 0x1000; sheetIndex += 0x100)
                 {
-                    for (int rowIndex = 0; rowIndex < 0x100000; rowIndex += 0x1000)
+                    for(int rowIndex = 0; rowIndex < 0x100000; rowIndex += 0x1000)
                     {
-                        for (int columnIndex = 0; columnIndex < 0x4000; columnIndex += 0x100)
+                        for(int columnIndex = 0; columnIndex < 0x4000; columnIndex += 0x100)
                         {
                             Loc loc = new Loc(bookIndex, sheetIndex, rowIndex, columnIndex);
                             ClassicAssert.AreEqual(bookIndex, loc.BookIndex);

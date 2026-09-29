@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -34,7 +34,7 @@ namespace NPOI.HSSF.Record
      * @version 2.0-pre
      */
 
-    public class DSFRecord: StandardRecord
+    public class DSFRecord : StandardRecord
     {
         public const short sid = 0x161;
         private readonly int _options;
@@ -44,9 +44,9 @@ namespace NPOI.HSSF.Record
         {
             _options = options;
         }
-        public DSFRecord(bool isBiff5BookStreamPresent):this(0)
+        public DSFRecord(bool isBiff5BookStreamPresent) : this(0)
         {
-            
+
             _options = biff5BookStreamFlag.SetBoolean(0, isBiff5BookStreamPresent);
         }
         /**
@@ -54,16 +54,16 @@ namespace NPOI.HSSF.Record
          * @param in the RecordInputstream to Read the record from
          */
 
-        public DSFRecord(RecordInputStream in1):this(in1.ReadShort())
+        public DSFRecord(RecordInputStream in1) : this(in1.ReadShort())
         {
-            
+
         }
 
         public bool IsBiff5BookStreamPresent
         {
-          get
+            get
             {
-            return biff5BookStreamFlag.IsSet(_options);
+                return biff5BookStreamFlag.IsSet(_options);
             }
         }
 

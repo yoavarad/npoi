@@ -17,12 +17,12 @@
 
 namespace NPOI.POIFS.Crypt.BinaryRC4
 {
-    using System;
-    using System.IO;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.CryptoAPI;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using System;
+    using System.IO;
 
     public class BinaryRC4Decryptor : Decryptor
     {
@@ -69,13 +69,13 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
                 HashAlgorithm hashAlgo = ver.HashAlgorithm;
                 MessageDigest hashAlg = CryptoFunctions.GetMessageDigest(hashAlgo);
                 byte[] calcVerifierHash = hashAlg.Digest(verifier);
-                if (Arrays.Equals(calcVerifierHash, verifierHash))
+                if(Arrays.Equals(calcVerifierHash, verifierHash))
                 {
                     SetSecretKey(skey);
                     return true;
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new EncryptedDocumentException(e);
             }
@@ -91,7 +91,7 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
             LittleEndian.PutUInt(blockKey, 0, block);
             byte[] encKey = CryptoFunctions.GenerateKey(skey.GetEncoded(), hashAlgo, blockKey, 16);
             ISecretKey key = new SecretKeySpec(encKey, skey.GetAlgorithm());
-            if (cipher == null)
+            if(cipher == null)
             {
                 EncryptionHeader em = builder.GetHeader();
                 cipher = CryptoFunctions.GetCipher(key, em.CipherAlgorithm, null, null, encryptMode);
@@ -106,14 +106,14 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
         protected internal static ISecretKey GenerateSecretKey(String password,
                 EncryptionVerifier ver)
         {
-            if (password.Length > 255)
+            if(password.Length > 255)
                 password = password.Substring(0, 255);
             HashAlgorithm hashAlgo = ver.HashAlgorithm;
             MessageDigest hashAlg = CryptoFunctions.GetMessageDigest(hashAlgo);
             byte[] hash = hashAlg.Digest(StringUtil.GetToUnicodeLE(password));
             byte[] salt = ver.Salt;
             hashAlg.Reset();
-            for (int i = 0; i < 16; i++)
+            for(int i = 0; i < 16; i++)
             {
                 hashAlg.Update(hash, 0, 5);
                 hashAlg.Update(salt);
@@ -139,7 +139,7 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
 
         public override long GetLength()
         {
-            if (_length == -1L)
+            if(_length == -1L)
             {
                 throw new InvalidOperationException("Decryptor.DataStream was not called");
             }

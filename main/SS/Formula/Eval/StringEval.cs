@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.Eval
 {
+    using NPOI.SS.Formula.PTG;
     using System;
     using System.Text;
-    using NPOI.SS.Formula.PTG;
 
 
     /**
@@ -32,14 +32,14 @@ namespace NPOI.SS.Formula.Eval
 
         private String value;
 
-        public StringEval(Ptg ptg):this(((StringPtg)ptg).Value)
+        public StringEval(Ptg ptg) : this(((StringPtg) ptg).Value)
         {
-            
+
         }
 
         public StringEval(String value)
         {
-            if (value == null)
+            if(value == null)
             {
                 throw new ArgumentException("value must not be null");
             }

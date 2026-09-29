@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Spreadsheet;
 using System;
-using NPOI.OpenXmlFormats.Dml;
 namespace NPOI.XSSF.UserModel
 {
     public class XSSFChildAnchor : XSSFAnchor
@@ -34,8 +34,10 @@ namespace NPOI.XSSF.UserModel
             off.y = Math.Min(y, cy);
             ext.cx = Math.Abs(cx - x);
             ext.cy = Math.Abs(cy - y);
-            if (x > cx) t2d.flipH = true;
-            if (y > cy) t2d.flipV = true;
+            if(x > cx)
+                t2d.flipH = true;
+            if(y > cy)
+                t2d.flipV = true;
         }
 
         public XSSFChildAnchor(CT_Transform2D t2d)
@@ -53,10 +55,10 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (int)t2d.off.x;
+                return (int) t2d.off.x;
 
             }
-            set 
+            set
             {
                 t2d.off.y = (value);
             }
@@ -66,9 +68,9 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (int)t2d.off.y;
+                return (int) t2d.off.y;
             }
-            set 
+            set
             {
                 t2d.off.y = (value);
             }
@@ -78,9 +80,9 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (int)(Dy1 + t2d.ext.cy);
+                return (int) (Dy1 + t2d.ext.cy);
             }
-            set 
+            set
             {
                 t2d.ext.cy = (value - Dy1);
             }
@@ -91,9 +93,9 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (int)(Dx1 + t2d.ext.cx);
+                return (int) (Dx1 + t2d.ext.cx);
             }
-            set 
+            set
             {
                 t2d.ext.cx = (value - Dx1);
             }

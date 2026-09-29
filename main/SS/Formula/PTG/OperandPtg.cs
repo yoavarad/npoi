@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
     using NPOI.Util;
+    using System;
     /**
      * @author Josh Micich
      */
@@ -37,13 +37,12 @@ namespace NPOI.SS.Formula.PTG
         {
             try
             {
-                return (OperandPtg)Clone();
+                return (OperandPtg) Clone();
             }
-            catch (NotSupportedException e)
+            catch(NotSupportedException e)
             {
                 throw new RuntimeException(e);
             }
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Chart;
 using NPOI.OpenXmlFormats.Dml.WordProcessing;
@@ -26,9 +26,9 @@ namespace NPOI.XWPF.UserModel
         /// <summary>
         /// constructor to create a new chart in document
         /// </summary>
-        protected XWPFChart():base()
+        protected XWPFChart() : base()
         {
-            
+
         }
 
         /// <summary>
@@ -124,7 +124,8 @@ namespace NPOI.XWPF.UserModel
         /// <param name="height"></param>
         public long ChartHeight
         {
-            get {
+            get
+            {
                 return ctInline.extent.cy;
             }
             set
@@ -143,12 +144,13 @@ namespace NPOI.XWPF.UserModel
             this.ChartHeight = height;
         }
         public uint ChartTopMargin
-        { 
+        {
             get
             {
                 return ctInline.distT;
             }
-            set {
+            set
+            {
                 ctInline.distT = value;
             }
         }
@@ -201,7 +203,8 @@ namespace NPOI.XWPF.UserModel
         }
         protected void Commit()
         {
-            using(var stream = GetPackagePart().GetOutputStream()) {
+            using(var stream = GetPackagePart().GetOutputStream())
+            {
                 chartSpace.Save(stream);
             }
         }

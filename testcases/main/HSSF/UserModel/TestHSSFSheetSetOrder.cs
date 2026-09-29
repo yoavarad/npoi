@@ -19,10 +19,11 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Model;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
     * Tests HSSFWorkbook method setSheetOrder()
@@ -46,7 +47,7 @@ namespace TestCases.HSSF.UserModel
         {
             HSSFWorkbook wb = new HSSFWorkbook();
 
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 HSSFSheet s = (HSSFSheet)wb.CreateSheet("Sheet " + i);
                 InternalSheet sheet = s.Sheet;

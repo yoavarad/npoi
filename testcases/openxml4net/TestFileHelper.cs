@@ -16,11 +16,12 @@
 ==================================================================== */
 
 
+using NPOI.OpenXml4Net.OPC.Internal;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.OpenXml4Net.OPC.Internal;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 namespace TestCases.OpenXml4Net.OPC
 {
 
@@ -45,15 +46,15 @@ namespace TestCases.OpenXml4Net.OPC
             expectedValue["/dir1/test.doc"] ="/dir1";
             expectedValue["/dir1/dir2/test.doc.xml"] = "/dir1/dir2";
 
-            foreach (String filename in expectedValue.Keys)
+            foreach(String filename in expectedValue.Keys)
             {
                 string f1 = expectedValue[filename];
                 string f2 = FileHelper.GetDirectory(filename);
 
-                if (false)
+                if(false)
                 {
                     // YK: The original version asserted expected values against File#getAbsolutePath():
-                    ClassicAssert.IsTrue(expectedValue[filename].Equals(f2,StringComparison.InvariantCultureIgnoreCase));
+                    ClassicAssert.IsTrue(expectedValue[filename].Equals(f2, StringComparison.InvariantCultureIgnoreCase));
                     // This comparison is platform dependent. A better approach is below
                 }
                 ClassicAssert.IsTrue(f1.Equals(f2));

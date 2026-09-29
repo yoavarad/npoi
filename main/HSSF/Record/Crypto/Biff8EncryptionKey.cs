@@ -1,11 +1,8 @@
 namespace NPOI.HSSF.Record.Crypto
 {
+    using NPOI.Util;
     using System;
     using System.IO;
-
-    using NPOI.Util;
-
-    
     using System.Security.Cryptography;
 
     public class Biff8EncryptionKey
@@ -31,7 +28,7 @@ namespace NPOI.HSSF.Record.Crypto
 
         internal Biff8EncryptionKey(byte[] keyDigest)
         {
-            if (keyDigest.Length != KEY_DIGEST_LENGTH)
+            if(keyDigest.Length != KEY_DIGEST_LENGTH)
             {
                 throw new ArgumentException("Expected 5 byte key digest, but got " + HexDump.ToHex(keyDigest));
             }
@@ -43,11 +40,11 @@ namespace NPOI.HSSF.Record.Crypto
             Check16Bytes(docIdData, "docId");
             int nChars = Math.Min(password.Length, 16);
             byte[] passwordData = new byte[nChars * 2];
-            for (int i = 0; i < nChars; i++)
+            for(int i = 0; i < nChars; i++)
             {
                 char ch = password[i];
-                passwordData[i * 2 + 0] = (byte)((ch << 0) & 0xFF);
-                passwordData[i * 2 + 1] = (byte)((ch << 8) & 0xFF);
+                passwordData[i * 2 + 0] = (byte) ((ch << 0) & 0xFF);
+                passwordData[i * 2 + 1] = (byte) ((ch << 8) & 0xFF);
             }
 
             using MD5CryptoServiceProvider md5 = new();
@@ -58,7 +55,7 @@ namespace NPOI.HSSF.Record.Crypto
             byte[] data = new byte[PASSWORD_HASH_NUMBER_OF_BYTES_USED * 16 + docIdData.Length * 16];
 
             int offset = 0;
-            for (int i = 0; i < 16; i++)
+            for(int i = 0; i < 16; i++)
             {
                 Array.Copy(passwordHash, 0, data, offset, PASSWORD_HASH_NUMBER_OF_BYTES_USED);
                 offset += PASSWORD_HASH_NUMBER_OF_BYTES_USED;// passwordHash.Length;
@@ -91,7 +88,7 @@ namespace NPOI.HSSF.Record.Crypto
             Array.Copy(saltHash, saltHashPrime, saltHash.Length);
             rc4.Encrypt(saltHashPrime);
 
-            using (MD5 md5 = new MD5CryptoServiceProvider())
+            using(MD5 md5 = new MD5CryptoServiceProvider())
             {
                 byte[] finalSaltResult = md5.ComputeHash(saltDataPrime);
 
@@ -108,15 +105,15 @@ namespace NPOI.HSSF.Record.Crypto
         private static byte[] xor(byte[] a, byte[] b)
         {
             byte[] c = new byte[a.Length];
-            for (int i = 0; i < c.Length; i++)
+            for(int i = 0; i < c.Length; i++)
             {
-                c[i] = (byte)(a[i] ^ b[i]);
+                c[i] = (byte) (a[i] ^ b[i]);
             }
             return c;
         }
         private static void Check16Bytes(byte[] data, String argName)
         {
-            if (data.Length != 16)
+            if(data.Length != 16)
             {
                 throw new ArgumentException("Expected 16 byte " + argName + ", but got " + HexDump.ToHex(data));
             }
@@ -130,14 +127,14 @@ namespace NPOI.HSSF.Record.Crypto
          */
         internal RC4 CreateRC4(int keyBlockNo)
         {
-            using (MD5 md5 = new MD5CryptoServiceProvider())
+            using(MD5 md5 = new MD5CryptoServiceProvider())
             {
-                using (MemoryStream baos = RecyclableMemory.GetStream(4))
+                using(MemoryStream baos = RecyclableMemory.GetStream(4))
                 {
                     new LittleEndianOutputStream(baos).WriteInt(keyBlockNo);
                     byte[] data = new byte[(int)baos.Length + _keyDigest.Length];
                     Array.Copy(_keyDigest, 0, data, 0, _keyDigest.Length);
-                    Array.Copy(baos.GetBuffer(), 0, data, _keyDigest.Length, (int)baos.Length);
+                    Array.Copy(baos.GetBuffer(), 0, data, _keyDigest.Length, (int) baos.Length);
 
                     byte[] digest = md5.ComputeHash(data);
                     return new RC4(digest);
@@ -164,7 +161,7 @@ namespace NPOI.HSSF.Record.Crypto
             {
                 return _userPasswordTLS;
             }
-            set 
+            set
             {
                 _userPasswordTLS = value;
             }

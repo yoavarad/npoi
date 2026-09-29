@@ -41,7 +41,7 @@ namespace NPOI.SS.UserModel
 
 
         static PrintCellComments()
-        { 
+        {
             _table= new PrintCellComments[4];
             NONE = new PrintCellComments(1);
             AS_DISPLAYED = new PrintCellComments(2);

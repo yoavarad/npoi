@@ -26,7 +26,7 @@ namespace NPOI.SS.Formula.PTG
         /**
          * @return the first row in the area
          */
-        int FirstRow{get;}
+        int FirstRow { get; }
 
         /**
          * @return last row in the range (x2 in x1,y1-x2,y2)
@@ -36,59 +36,61 @@ namespace NPOI.SS.Formula.PTG
         /**
          * @return the first column number in the area.
          */
-        int FirstColumn{get;}
+        int FirstColumn { get; }
 
         /**
          * @return lastcolumn in the area
          */
-        int LastColumn{get;}
+        int LastColumn { get; }
     }
 
-    	public class OffsetArea: AreaI {
+    public class OffsetArea : AreaI
+    {
 
-		private readonly int _firstColumn;
-		private readonly int _firstRow;
-		private readonly int _lastColumn;
-		private readonly int _lastRow;
+        private readonly int _firstColumn;
+        private readonly int _firstRow;
+        private readonly int _lastColumn;
+        private readonly int _lastRow;
 
-		public OffsetArea(int baseRow, int baseColumn, int relFirstRowIx, int relLastRowIx,
-				int relFirstColIx, int relLastColIx) {
-			_firstRow = baseRow + Math.Min(relFirstRowIx, relLastRowIx);
-			_lastRow = baseRow + Math.Max(relFirstRowIx, relLastRowIx);
-			_firstColumn = baseColumn + Math.Min(relFirstColIx, relLastColIx);
-			_lastColumn = baseColumn + Math.Max(relFirstColIx, relLastColIx);
-		}
+        public OffsetArea(int baseRow, int baseColumn, int relFirstRowIx, int relLastRowIx,
+                int relFirstColIx, int relLastColIx)
+        {
+            _firstRow = baseRow + Math.Min(relFirstRowIx, relLastRowIx);
+            _lastRow = baseRow + Math.Max(relFirstRowIx, relLastRowIx);
+            _firstColumn = baseColumn + Math.Min(relFirstColIx, relLastColIx);
+            _lastColumn = baseColumn + Math.Max(relFirstColIx, relLastColIx);
+        }
 
-		public int FirstColumn 
+        public int FirstColumn
         {
             get
             {
                 return _firstColumn;
             }
-		}
+        }
 
-		public int FirstRow
+        public int FirstRow
         {
             get
             {
                 return _firstRow;
             }
-		}
+        }
 
-		public int LastColumn
+        public int LastColumn
         {
             get
             {
                 return _lastColumn;
             }
-		}
+        }
 
-		public int LastRow
+        public int LastRow
         {
             get
             {
                 return _lastRow;
             }
-		}
-	}
+        }
+    }
 }

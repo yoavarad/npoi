@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,9 +24,8 @@ using System.Text;
 
 namespace NPOI.XSSF.UserModel
 {
-    using NPOI.Util;
-
     using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.Util;
 
 
     /// <summary>
@@ -165,5 +164,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-
-

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,20 +19,20 @@ namespace NPOI.XSSF.Util
             string[] names = Enum.GetNames(type);
             values = new Dictionary<string, TReturn>();
             Array array = type.GetEnumValues();
-            foreach (var member in members)
+            foreach(var member in members)
             {
                 object[] cas = member.GetCustomAttributes(typeof(XmlEnumAttribute), false);
-                if (cas.Length > 0)
+                if(cas.Length > 0)
                 {
                     XmlEnumAttribute attribute = (XmlEnumAttribute)cas[0];
-                    values.Add(attribute.Name, (TReturn)Enum.Parse(type, member.Name));
+                    values.Add(attribute.Name, (TReturn) Enum.Parse(type, member.Name));
                 }
             }
         }
 
         public static TReturn ForName(string name, TReturn defaultValue)
         {
-            if (values.TryGetValue(name, out TReturn forName))
+            if(values.TryGetValue(name, out TReturn forName))
                 return forName;
             return defaultValue;
         }

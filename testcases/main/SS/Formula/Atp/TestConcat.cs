@@ -1,7 +1,8 @@
-﻿using NPOI.HSSF.UserModel;
+using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,7 +39,7 @@ namespace TestCases.SS.Formula.Atp
         }
 
         [SetUp]
-        public void Setup() 
+        public void Setup()
         {
             wb = new HSSFWorkbook();
             evaluator = wb.GetCreationHelper().CreateFormulaEvaluator();

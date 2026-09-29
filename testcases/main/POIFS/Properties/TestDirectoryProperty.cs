@@ -25,18 +25,17 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.Text;
-using System.Collections;
-using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
 using NPOI.POIFS.Common;
-using NPOI.POIFS.Storage;
 using NPOI.POIFS.Properties;
-using TestCases.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using TestCases.POIFS.Properties;
 
 namespace TestCases.POIFS.Properties
 {
@@ -117,10 +116,10 @@ namespace TestCases.POIFS.Properties
             VerifyChildren(2);
 
             // beat on the children allocation code
-            for (int count = 1; count < 100; count++)
+            for(int count = 1; count < 100; count++)
             {
                 CreateBasicDirectoryProperty();
-                for (int j = 1; j < (count + 1); j++)
+                for(int j = 1; j < (count + 1); j++)
                 {
                     _property.AddChild(new LocalProperty(j));
                 }
@@ -134,32 +133,32 @@ namespace TestCases.POIFS.Properties
             IEnumerator<Property> iter = _property.Children;
             List<Property> children = new List<Property>();
 
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 children.Add(iter.Current);
             }
             ClassicAssert.AreEqual(count, children.Count);
-            if (count != 0)
+            if(count != 0)
             {
                 bool[] found = new bool[count];
 
                 found[_property.ChildIndex - 1] = true;
                 int total_found = 1;
-                for (var i = 0; i < found.Length; i++)
+                for(var i = 0; i < found.Length; i++)
                 {
                     found[i] = false;
                 }
                 iter = children.GetEnumerator();
-                while (iter.MoveNext())
+                while(iter.MoveNext())
                 {
                     Property child = iter.Current;
                     Child next = child.NextChild;
 
-                    if (next != null)
+                    if(next != null)
                     {
                         int index = ((Property)next).Index;
 
-                        if (index != -1)
+                        if(index != -1)
                         {
                             ClassicAssert.IsTrue(!found[index - 1], "found index " + index + " twice");
                             found[index - 1] = true;
@@ -168,11 +167,11 @@ namespace TestCases.POIFS.Properties
                     }
                     Child previous = child.PreviousChild;
 
-                    if (previous != null)
+                    if(previous != null)
                     {
                         int index = ((Property)previous).Index;
 
-                        if (index != -1)
+                        if(index != -1)
                         {
                             ClassicAssert.IsTrue(!found[index - 1], "found index " + index + " twice");
                             found[index - 1] = true;
@@ -192,27 +191,27 @@ namespace TestCases.POIFS.Properties
             _testblock = new byte[128];
             int index = 0;
 
-            for (; index < 0x40; index++)
+            for(; index < 0x40; index++)
             {
-                _testblock[index] = (byte)0;
+                _testblock[index] = (byte) 0;
             }
             int limit = Math.Min(31, name.Length);
 
-            _testblock[index++] = (byte)(2 * (limit + 1));
-            _testblock[index++] = (byte)0;
-            _testblock[index++] = (byte)1;
-            _testblock[index++] = (byte)1;
-            for (; index < 0x50; index++)
+            _testblock[index++] = (byte) (2 * (limit + 1));
+            _testblock[index++] = (byte) 0;
+            _testblock[index++] = (byte) 1;
+            _testblock[index++] = (byte) 1;
+            for(; index < 0x50; index++)
             {
-                _testblock[index] = (byte)0xff;
+                _testblock[index] = (byte) 0xff;
             }
-            for (; index < 0x80; index++)
+            for(; index < 0x80; index++)
             {
-                _testblock[index] = (byte)0;
+                _testblock[index] = (byte) 0;
             }
             byte[] name_bytes = Encoding.GetEncoding(1252).GetBytes(name);
 
-            for (index = 0; index < limit; index++)
+            for(index = 0; index < limit; index++)
             {
                 _testblock[index * 2] = name_bytes[index];
             }
@@ -226,7 +225,7 @@ namespace TestCases.POIFS.Properties
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(_testblock.Length, output.Length);
-            for (int j = 0; j < _testblock.Length; j++)
+            for(int j = 0; j < _testblock.Length; j++)
             {
                 ClassicAssert.AreEqual(_testblock[j],
                              output[j], "mismatch at offset " + j);
@@ -249,7 +248,7 @@ namespace TestCases.POIFS.Properties
                 _property.AddChild(new LocalProperty(1));
                 Assert.Fail("should have caught IOException");
             }
-            catch (IOException )
+            catch(IOException)
             {
 
                 // as expected
@@ -259,7 +258,7 @@ namespace TestCases.POIFS.Properties
                 _property.AddChild(new LocalProperty(2));
                 Assert.Fail("should have caught IOException");
             }
-            catch (IOException )
+            catch(IOException)
             {
 
                 // as expected
@@ -284,7 +283,7 @@ namespace TestCases.POIFS.Properties
                 _property.AddChild(new LocalProperty(1));
                 Assert.Fail("should have caught IOException");
             }
-            catch (IOException )
+            catch(IOException)
             {
 
                 // as expected
@@ -379,7 +378,7 @@ namespace TestCases.POIFS.Properties
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(128, output.Length);
-            for (int j = 0; j < 128; j++)
+            for(int j = 0; j < 128; j++)
             {
                 ClassicAssert.AreEqual(expected[j],
                              output[j], "mismatch at offset " + j);

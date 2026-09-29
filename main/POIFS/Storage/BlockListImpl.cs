@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -20,7 +20,7 @@ using System.IO;
 
 namespace NPOI.POIFS.Storage
 {
-    public class BlockListImpl:BlockList
+    public class BlockListImpl : BlockList
     {
         private ListManagedBlock[]         _blocks;
         private BlockAllocationTableReader _bat;
@@ -40,7 +40,7 @@ namespace NPOI.POIFS.Storage
         /// <param name="blocks">blocks to be managed</param> 
         public virtual void SetBlocks(ListManagedBlock[] blocks)
         {
-            _blocks = (ListManagedBlock[])blocks.Clone();
+            _blocks = (ListManagedBlock[]) blocks.Clone();
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace NPOI.POIFS.Storage
         /// out of range, that's ok</param>
         public virtual void Zap(int index)
         {
-            if ((index >= 0) && (index < _blocks.Length))
+            if((index >= 0) && (index < _blocks.Length))
             {
-                _blocks[ index ] = null;
+                _blocks[index] = null;
             }
         }
 
@@ -72,18 +72,18 @@ namespace NPOI.POIFS.Storage
 
             try
             {
-                result = _blocks[ index ];
-                if (result == null)
+                result = _blocks[index];
+                if(result == null)
                 {
                     throw new IOException("block[ " + index
                                           + " ] already removed");
                 }
-                _blocks[ index ] = null;
+                _blocks[index] = null;
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 throw new IOException("Cannot remove block[ " + index
-                                      + " ]; out of range[ 0 - " + 
+                                      + " ]; out of range[ 0 - " +
                                       (_blocks.Length-1) + " ]");
             }
             return result;
@@ -100,12 +100,12 @@ namespace NPOI.POIFS.Storage
         /// </returns>
         public virtual ListManagedBlock[] FetchBlocks(int startBlock, int headerPropertiesStartBlock)
         {
-            if (_bat == null)
+            if(_bat == null)
             {
                 throw new IOException(
                     "Improperly initialized list: no block allocation table provided");
             }
-            return _bat.FetchBlocks(startBlock,headerPropertiesStartBlock, this);
+            return _bat.FetchBlocks(startBlock, headerPropertiesStartBlock, this);
         }
 
 
@@ -116,8 +116,8 @@ namespace NPOI.POIFS.Storage
         public virtual BlockAllocationTableReader BAT
         {
             set
-        {
-                if (_bat != null)
+            {
+                if(_bat != null)
                 {
                     throw new IOException(
                         "Attempt to replace existing BlockAllocationTable");
@@ -134,9 +134,9 @@ namespace NPOI.POIFS.Storage
         protected int RemainingBlocks()
         {
             int c = 0;
-            for (int i = 0; i < _blocks.Length; i++)
+            for(int i = 0; i < _blocks.Length; i++)
             {
-                if (_blocks[i] != null)
+                if(_blocks[i] != null)
                     c++;
             }
 

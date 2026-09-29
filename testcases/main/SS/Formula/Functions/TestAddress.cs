@@ -17,10 +17,11 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     [TestFixture]
     public class TestAddress
     {

@@ -15,19 +15,19 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml;
+using NPOI.OOXML.XSSF.UserModel;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.XSSF.UserModel.Extensions;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NPOI.SS;
-using NPOI.OOXML.XSSF.UserModel;
+using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace NPOI.XSSF.Model
 {
@@ -80,9 +80,9 @@ namespace NPOI.XSSF.Model
             }
             set
             {
-                if (value < NumDataFormats)
+                if(value < NumDataFormats)
                 {
-                    if (value < 0)
+                    if(value < 0)
                     {
                         throw new ArgumentException("Maximum Number of Data Formats must be greater than or equal to 0");
                     }
@@ -93,7 +93,7 @@ namespace NPOI.XSSF.Model
                     }
                 }
                 MAXIMUM_NUMBER_OF_DATA_FORMATS = value;
-            }   
+            }
         }
         private StyleSheetDocument doc;
         private XSSFWorkbook workbook;
@@ -141,7 +141,7 @@ namespace NPOI.XSSF.Model
         {
             this.workbook = wb;
         }
-        public ThemesTable Theme 
+        public ThemesTable Theme
         {
             get
             {
@@ -155,7 +155,7 @@ namespace NPOI.XSSF.Model
                 //  know about it, but have already been Created by now.
                 // Only iterate in-memory collections if the model has been loaded;
                 // EnsureLoaded() will apply the theme after parsing when needed.
-                if (_isLoaded)
+                if(_isLoaded)
                 {
                     foreach(XSSFFont font in fonts)
                     {
@@ -175,16 +175,17 @@ namespace NPOI.XSSF.Model
          */
         private void EnsureLoaded()
         {
-            if (_isLoaded) return;
+            if(_isLoaded)
+                return;
             XmlDocument xmldoc = ConvertStreamToXml(GetPackagePart().GetInputStream());
             ReadFrom(xmldoc);
             _isLoaded = true;
             // Apply the theme that was set before loading
-            if (theme != null)
+            if(theme != null)
             {
-                foreach (XSSFFont font in fonts)
+                foreach(XSSFFont font in fonts)
                     font.SetThemesTable(theme);
-                foreach (XSSFCellBorder border in borders)
+                foreach(XSSFCellBorder border in borders)
                     border.SetThemesTable(theme);
             }
         }
@@ -206,12 +207,13 @@ namespace NPOI.XSSF.Model
         /// @since 3.17 beta 1
         public ITableStyle GetTableStyle(String name)
         {
-            if (name == null) return null;
+            if(name == null)
+                return null;
             EnsureLoaded();
             try
             {
                 return XSSFBuiltinTableStyle.GetStyle(
-                    (XSSFBuiltinTableStyleEnum)Enum.Parse(typeof(XSSFBuiltinTableStyleEnum), name));
+                    (XSSFBuiltinTableStyleEnum) Enum.Parse(typeof(XSSFBuiltinTableStyleEnum), name));
             }
             catch
             {
@@ -247,9 +249,10 @@ namespace NPOI.XSSF.Model
         public void EnsureThemesTable()
         {
             EnsureLoaded();
-            if (theme != null) return;
+            if(theme != null)
+                return;
             MarkTouched();
-            theme = (ThemesTable)workbook.CreateRelationship(XSSFRelation.THEME, XSSFFactory.GetInstance());
+            theme = (ThemesTable) workbook.CreateRelationship(XSSFRelation.THEME, XSSFFactory.GetInstance());
         }
         /**
          * Read this shared styles table from an XML file.
@@ -269,11 +272,12 @@ namespace NPOI.XSSF.Model
                 // Grab all the different bits we care about
                 // keep this first, as some constructors below want it
                 IIndexedColorMap customColors = CustomIndexedColorMap.FromColors(styleSheet.colors);
-                if (customColors != null) indexedColors = customColors;
+                if(customColors != null)
+                    indexedColors = customColors;
                 CT_NumFmts ctfmts = styleSheet.numFmts;
-                if (ctfmts != null)
+                if(ctfmts != null)
                 {
-                    foreach (CT_NumFmt nfmt in ctfmts.numFmt)
+                    foreach(CT_NumFmt nfmt in ctfmts.numFmt)
                     {
                         short formatId = (short)nfmt.numFmtId;
                         if(!numberFormats.ContainsKey(formatId))
@@ -282,10 +286,10 @@ namespace NPOI.XSSF.Model
                 }
 
                 CT_Fonts ctfonts = styleSheet.fonts;
-                if (ctfonts != null)
+                if(ctfonts != null)
                 {
                     int idx = 0;
-                    foreach (CT_Font font in ctfonts.font)
+                    foreach(CT_Font font in ctfonts.font)
                     {
                         // Create the font and save it. Themes Table supplied later
                         XSSFFont f = new XSSFFont(font, idx, indexedColors);
@@ -294,48 +298,48 @@ namespace NPOI.XSSF.Model
                     }
                 }
                 CT_Fills ctFills = styleSheet.fills;
-                if (ctFills != null)
+                if(ctFills != null)
                 {
-                    foreach (CT_Fill fill in ctFills.fill)
+                    foreach(CT_Fill fill in ctFills.fill)
                     {
                         fills.Add(new XSSFCellFill(fill, indexedColors));
                     }
                 }
 
                 CT_Borders ctborders = styleSheet.borders;
-                if (ctborders != null)
+                if(ctborders != null)
                 {
-                    foreach (CT_Border border in ctborders.border)
+                    foreach(CT_Border border in ctborders.border)
                     {
                         borders.Add(new XSSFCellBorder(border, indexedColors));
                     }
                 }
 
                 CT_CellXfs cellXfs = styleSheet.cellXfs;
-                if (cellXfs != null)
+                if(cellXfs != null)
                     xfs.AddRange(cellXfs.xf);
 
                 CT_CellStyleXfs cellStyleXfs = styleSheet.cellStyleXfs;
-                if (cellStyleXfs != null)
+                if(cellStyleXfs != null)
                     styleXfs.AddRange(cellStyleXfs.xf);
 
                 CT_Dxfs styleDxfs = styleSheet.dxfs;
-                if (styleDxfs != null)
+                if(styleDxfs != null)
                     dxfs.AddRange(styleDxfs.dxf);
 
 
                 CT_TableStyles ctTableStyles = styleSheet.tableStyles;
-                if (ctTableStyles != null)
+                if(ctTableStyles != null)
                 {
                     int idx = 0;
-                    foreach (CT_TableStyle style in ctTableStyles.tableStyle)
+                    foreach(CT_TableStyle style in ctTableStyles.tableStyle)
                     {
                         tableStyles.Add(style.name, new XSSFTableStyle(idx, styleDxfs, style, indexedColors));
                         idx++;
                     }
                 }
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -350,7 +354,7 @@ namespace NPOI.XSSF.Model
         {
             return GetNumberFormatAt((short) idx);
         }
-        
+
         /**
          * Get number format string given its id
          * 
@@ -360,7 +364,7 @@ namespace NPOI.XSSF.Model
         public String GetNumberFormatAt(short fmtId)
         {
             EnsureLoaded();
-            if (numberFormats.TryGetValue(fmtId, out string at))
+            if(numberFormats.TryGetValue(fmtId, out string at))
                 return at;
             else
                 return null;
@@ -369,9 +373,9 @@ namespace NPOI.XSSF.Model
         private short GetNumberFormatId(String fmt)
         {
             // Find the key, and return that
-            foreach (KeyValuePair<short, string> numFmt in numberFormats)
+            foreach(KeyValuePair<short, string> numFmt in numberFormats)
             {
-                if (numFmt.Value.Equals(fmt))
+                if(numFmt.Value.Equals(fmt))
                 {
                     return numFmt.Key;
                 }
@@ -391,19 +395,19 @@ namespace NPOI.XSSF.Model
             EnsureLoaded();
             MarkTouched();
             // Check if number format already exists
-            if (numberFormats.ContainsValue(fmt))
+            if(numberFormats.ContainsValue(fmt))
             {
                 try
                 {
                     return GetNumberFormatId(fmt);
                 }
-                catch (InvalidOperationException )
+                catch(InvalidOperationException)
                 {
                     throw new InvalidOperationException("Found the format, but couldn't figure out where - should never happen!");
                 }
             }
 
-            if (numberFormats.Count >= MAXIMUM_NUMBER_OF_DATA_FORMATS)
+            if(numberFormats.Count >= MAXIMUM_NUMBER_OF_DATA_FORMATS)
             {
                 throw new InvalidOperationException("The maximum number of Data Formats was exceeded. " +
                         "You can define up to " + MAXIMUM_NUMBER_OF_DATA_FORMATS + " formats in a .xlsx Workbook.");
@@ -411,7 +415,7 @@ namespace NPOI.XSSF.Model
 
             // Find a spare key, and add that
             short formatIndex;
-            if (numberFormats.Count == 0)
+            if(numberFormats.Count == 0)
             {
                 formatIndex = FIRST_USER_DEFINED_NUMBER_FORMAT_ID;
             }
@@ -422,16 +426,16 @@ namespace NPOI.XSSF.Model
                 // to catch arithmetic overflow, nextKey's data type
                 // must match numberFormat's key data type
                 short nextKey = (short)(numberFormats.Last().Key + 1);
-                if (nextKey < 0)
+                if(nextKey < 0)
                 {
                     throw new InvalidOperationException(
                             "Cowardly avoiding creating a number format with a negative id." +
                             "This is probably due to arithmetic overflow.");
                 }
-                formatIndex = (short)Math.Max(nextKey, FIRST_USER_DEFINED_NUMBER_FORMAT_ID);
+                formatIndex = (short) Math.Max(nextKey, FIRST_USER_DEFINED_NUMBER_FORMAT_ID);
             }
 
-            if (numberFormats.ContainsKey(formatIndex))
+            if(numberFormats.ContainsKey(formatIndex))
                 numberFormats[formatIndex] = fmt;
             else
                 numberFormats.Add(formatIndex, fmt);
@@ -452,7 +456,7 @@ namespace NPOI.XSSF.Model
         {
             EnsureLoaded();
             MarkTouched();
-            if (numberFormats.ContainsKey(index))
+            if(numberFormats.ContainsKey(index))
                 numberFormats[index] = fmt;
             else
                 numberFormats.Add(index, fmt);
@@ -472,15 +476,16 @@ namespace NPOI.XSSF.Model
             String fmt = numberFormats[index];
             bool removed = numberFormats.Remove(index);
             //bool removed = (fmt != null);
-            if (removed)
+            if(removed)
             {
-                foreach (CT_Xf style in xfs)
+                foreach(CT_Xf style in xfs)
                 {
-                    if (style.numFmtIdSpecified && style.numFmtId == index)
+                    if(style.numFmtIdSpecified && style.numFmtId == index)
                     {
                         style.applyNumberFormat = false;
                         style.numFmtId = 0;
-                        style.numFmtIdSpecified = false;;
+                        style.numFmtIdSpecified = false;
+                        ;
                     }
                 }
             }
@@ -523,12 +528,12 @@ namespace NPOI.XSSF.Model
             EnsureLoaded();
             MarkTouched();
             int idx = -1;
-            if (!forceRegistration)
+            if(!forceRegistration)
             {
                 idx = fonts.IndexOf(font);
             }
 
-            if (idx != -1)
+            if(idx != -1)
             {
                 return idx;
             }
@@ -552,16 +557,16 @@ namespace NPOI.XSSF.Model
             EnsureLoaded();
             int styleXfId = 0;
 
-            if (idx < 0 || idx >= xfs.Count)
+            if(idx < 0 || idx >= xfs.Count)
             {
                 //BUG-60343
                 return null;
             }
 
             // 0 is the empty default
-            if (xfs[idx].xfId > 0)
+            if(xfs[idx].xfId > 0)
             {
-                styleXfId = (int)xfs[idx].xfId;
+                styleXfId = (int) xfs[idx].xfId;
             }
 
             return new XSSFCellStyle(idx, styleXfId, this, theme);
@@ -572,7 +577,7 @@ namespace NPOI.XSSF.Model
             MarkTouched();
             CT_Xf mainXF = style.GetCoreXf();
 
-            if (!xfs.Contains(mainXF))
+            if(!xfs.Contains(mainXF))
             {
                 xfs.Add(mainXF);
             }
@@ -595,7 +600,7 @@ namespace NPOI.XSSF.Model
             EnsureLoaded();
             MarkTouched();
             int idx = borders.IndexOf(border);
-            if (idx != -1)
+            if(idx != -1)
             {
                 return idx;
             }
@@ -647,7 +652,7 @@ namespace NPOI.XSSF.Model
             EnsureLoaded();
             MarkTouched();
             int idx = fills.IndexOf(fill);
-            if (idx != -1)
+            if(idx != -1)
             {
                 return idx;
             }
@@ -683,7 +688,7 @@ namespace NPOI.XSSF.Model
         internal CT_Xf GetCellStyleXfAt(int idx)
         {
             EnsureLoaded();
-            if (idx < 0 || idx >= styleXfs.Count)
+            if(idx < 0 || idx >= styleXfs.Count)
                 return null;
             return styleXfs[idx];
         }
@@ -802,12 +807,12 @@ namespace NPOI.XSSF.Model
 
             // Formats
             CT_NumFmts formats = new CT_NumFmts();
-            formats.count = (uint)numberFormats.Count;
+            formats.count = (uint) numberFormats.Count;
 
-            foreach (KeyValuePair<short, String > entry in numberFormats)
+            foreach(KeyValuePair<short, String> entry in numberFormats)
             {
                 CT_NumFmt ctFmt = formats.AddNewNumFmt();
-                ctFmt.numFmtId = (uint)entry.Key;
+                ctFmt.numFmtId = (uint) entry.Key;
                 ctFmt.formatCode = entry.Value;
             }
 
@@ -815,58 +820,58 @@ namespace NPOI.XSSF.Model
 
             // Fonts
             CT_Fonts ctFonts = styleSheet.fonts;
-            if (ctFonts == null)
+            if(ctFonts == null)
                 ctFonts = new CT_Fonts();
-            ctFonts.count = (uint)fonts.Count;
-            if (ctFonts.count > 0)
+            ctFonts.count = (uint) fonts.Count;
+            if(ctFonts.count > 0)
                 ctFonts.countSpecified = true;
             List<CT_Font> ctfnt = new List<CT_Font>(fonts.Count);
 
-            foreach (XSSFFont f in fonts)
+            foreach(XSSFFont f in fonts)
                 ctfnt.Add(f.GetCTFont());
             ctFonts.SetFontArray(ctfnt);
             styleSheet.fonts = (ctFonts);
 
             // Fills
             CT_Fills ctFills = styleSheet.fills;
-            if (ctFills == null)
+            if(ctFills == null)
             {
                 ctFills = new CT_Fills();
             }
-            ctFills.count = (uint)fills.Count;
+            ctFills.count = (uint) fills.Count;
             List<CT_Fill> ctf = new List<CT_Fill>(fills.Count);
-            
-            foreach (XSSFCellFill f in fills)
-                ctf.Add( f.GetCTFill());
+
+            foreach(XSSFCellFill f in fills)
+                ctf.Add(f.GetCTFill());
             ctFills.SetFillArray(ctf);
-            if (ctFills.count > 0)
+            if(ctFills.count > 0)
                 ctFills.countSpecified = true;
             styleSheet.fills = ctFills;
 
             // Borders
             CT_Borders ctBorders = styleSheet.borders;
-            if (ctBorders == null)
+            if(ctBorders == null)
             {
                 ctBorders = new CT_Borders();
             }
-            ctBorders.count = (uint)borders.Count;
+            ctBorders.count = (uint) borders.Count;
             List<CT_Border> ctb = new List<CT_Border>(borders.Count);
-            foreach (XSSFCellBorder b in borders) 
+            foreach(XSSFCellBorder b in borders)
                 ctb.Add(b.GetCTBorder());
-            
+
             ctBorders.SetBorderArray(ctb);
             styleSheet.borders = ctBorders;
 
             // Xfs
-            if (xfs.Count > 0)
+            if(xfs.Count > 0)
             {
                 CT_CellXfs ctXfs = styleSheet.cellXfs;
-                if (ctXfs == null)
+                if(ctXfs == null)
                 {
                     ctXfs = new CT_CellXfs();
                 }
-                ctXfs.count = (uint)xfs.Count;
-                if (ctXfs.count > 0)
+                ctXfs.count = (uint) xfs.Count;
+                if(ctXfs.count > 0)
                     ctXfs.countSpecified = true;
                 ctXfs.xf = xfs;
 
@@ -874,15 +879,15 @@ namespace NPOI.XSSF.Model
             }
 
             // Style xfs
-            if (styleXfs.Count > 0)
+            if(styleXfs.Count > 0)
             {
                 CT_CellStyleXfs ctSXfs = styleSheet.cellStyleXfs;
-                if (ctSXfs == null)
+                if(ctSXfs == null)
                 {
                     ctSXfs = new CT_CellStyleXfs();
                 }
-                ctSXfs.count = (uint)(styleXfs.Count);
-                if (ctSXfs.count > 0)
+                ctSXfs.count = (uint) (styleXfs.Count);
+                if(ctSXfs.count > 0)
                     ctSXfs.countSpecified = true;
                 ctSXfs.xf = styleXfs;
 
@@ -890,15 +895,15 @@ namespace NPOI.XSSF.Model
             }
 
             // Style dxfs
-            if (dxfs.Count > 0)
+            if(dxfs.Count > 0)
             {
                 CT_Dxfs ctDxfs = styleSheet.dxfs;
-                if (ctDxfs == null)
+                if(ctDxfs == null)
                 {
                     ctDxfs = new CT_Dxfs();
                 }
-                ctDxfs.count = (uint)dxfs.Count;
-                if (ctDxfs.count > 0)
+                ctDxfs.count = (uint) dxfs.Count;
+                if(ctDxfs.count > 0)
                     ctDxfs.countSpecified = true;
                 ctDxfs.dxf = dxfs;
 
@@ -914,14 +919,16 @@ namespace NPOI.XSSF.Model
         {
             // If styles have not been modified, skip clearing the package part so
             // that the original bytes are preserved when the workbook is saved.
-            if (!_isTouched) return;
+            if(!_isTouched)
+                return;
             base.PrepareForCommit();
         }
 
         protected internal override void Commit()
         {
             // Only write out the styles if they have been modified.
-            if (!_isTouched) return;
+            if(!_isTouched)
+                return;
             PackagePart part = GetPackagePart();
             Stream out1 = part.GetOutputStream();
             WriteTo(out1);
@@ -1017,7 +1024,7 @@ namespace NPOI.XSSF.Model
         {
             EnsureLoaded();
             MarkTouched();
-            if (NumCellStyles > MAXIMUM_STYLE_ID)
+            if(NumCellStyles > MAXIMUM_STYLE_ID)
                 throw new InvalidOperationException("The maximum number of Cell Styles was exceeded. " +
                           "You can define up to " + MAXIMUM_STYLE_ID + " style in a .xlsx Workbook");
 
@@ -1027,13 +1034,13 @@ namespace NPOI.XSSF.Model
             ctXf.fontId = 0;
             ctXf.fillId = 0;
             ctXf.borderId = 0;
-            if (xfSize > 0)
+            if(xfSize > 0)
             {
                 ctXf.xfId = 0; //default styleXf
             }
-            
+
             int indexXf = PutCellXf(ctXf);
-            return new XSSFCellStyle(indexXf - 1, ctXf.xfIdSpecified ? (int)ctXf.xfId : -1, this, theme);
+            return new XSSFCellStyle(indexXf - 1, ctXf.xfIdSpecified ? (int) ctXf.xfId : -1, this, theme);
         }
 
         /**
@@ -1043,9 +1050,9 @@ namespace NPOI.XSSF.Model
             FontSuperScript typeOffset, FontUnderlineType underline)
         {
             EnsureLoaded();
-            foreach (XSSFFont font in fonts)
+            foreach(XSSFFont font in fonts)
             {
-                if ((font.IsBold == bold)
+                if((font.IsBold == bold)
                         && font.Color == color
                         && font.FontHeight == fontHeight
                         && font.FontName.Equals(name)
@@ -1097,8 +1104,3 @@ namespace NPOI.XSSF.Model
         }
     }
 }
-
-
-
-
-

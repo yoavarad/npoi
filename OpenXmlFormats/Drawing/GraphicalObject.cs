@@ -1,15 +1,15 @@
-﻿
-using System;
-using System.Xml.Serialization;
-using System.Collections.Generic;
-using System.Xml;
-using System.IO;
+
 using NPOI.OpenXml4Net.Util;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Dml
 {
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -18,13 +18,13 @@ namespace NPOI.OpenXmlFormats.Dml
         public XmlNode DomNode { get; set; }
         public static CT_GraphicalObjectData Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GraphicalObjectData ctObj = new CT_GraphicalObjectData();
             ctObj.DomNode = node;
             ctObj.uri = XmlHelper.ReadString(node.Attributes["uri"]);
             ctObj.Any = new List<string>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
                 ctObj.Any.Add(childNode.OuterXml);
             }
@@ -38,7 +38,7 @@ namespace NPOI.OpenXmlFormats.Dml
             sw.WriteStart("a", nodeName);
             XmlHelper.WriteAttribute(sw, "uri", this.uri);
             sw.Write('>');
-            foreach (string x in this.Any)
+            foreach(string x in this.Any)
             {
                 sw.Write(x);
             }
@@ -87,7 +87,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -101,12 +101,12 @@ namespace NPOI.OpenXmlFormats.Dml
         private CT_GraphicalObjectData graphicDataField;
         public static CT_GraphicalObject Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GraphicalObject ctObj = new CT_GraphicalObject();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "graphicData")
+                if(childNode.LocalName == "graphicData")
                     ctObj.graphicData = CT_GraphicalObjectData.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -119,7 +119,7 @@ namespace NPOI.OpenXmlFormats.Dml
             sw.WriteStart("a", nodeName);
             sw.WriteAttribute("xmlns:a", "http://schemas.openxmlformats.org/drawingml/2006/main");
             sw.Write('>');
-            if (this.graphicData != null)
+            if(this.graphicData != null)
                 this.graphicData.Write(sw, "graphicData");
             sw.WriteEndElement("a", nodeName);
         }

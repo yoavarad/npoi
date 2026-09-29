@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /// <summary>
     /// An implementation of the MID function
@@ -30,7 +30,7 @@ namespace NPOI.SS.Formula.Functions
     {
         public override ValueEval EvaluateFunc(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
-            if (args.Length != 3)
+            if(args.Length != 3)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -42,16 +42,16 @@ namespace NPOI.SS.Formula.Functions
 
             // Note - for start_num arg, blank/zero causes error(#VALUE!),
             // but for num_chars causes empty string to be returned.
-            if (startIx < 0)
+            if(startIx < 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            if (numChars < 0)
+            if(numChars < 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
             int len = text.Length;
-            if (numChars < 0 || startIx > len)
+            if(numChars < 0 || startIx > len)
             {
                 return new StringEval("");
             }

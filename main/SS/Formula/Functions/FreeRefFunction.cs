@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
 
     /**
      * For most Excel functions, involving references ((cell, area), (2d, 3d)), the references are 

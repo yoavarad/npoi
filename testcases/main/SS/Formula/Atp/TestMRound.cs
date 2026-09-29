@@ -20,7 +20,8 @@ namespace TestCases.SS.Formula.Atp
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Testcase for 'Analysis Toolpak' function MROUND()
@@ -40,8 +41,8 @@ namespace TestCases.SS.Formula.Atp
         [Test]
         public void TestEvaluate()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US"); 
-            
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
             HSSFWorkbook wb = new HSSFWorkbook();
             ISheet sh = wb.CreateSheet();
             ICell cell1 = sh.CreateRow(0).CreateCell(0);

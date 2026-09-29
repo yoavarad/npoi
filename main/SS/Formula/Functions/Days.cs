@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Atp;
+using NPOI.SS.Formula.Atp;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
 using NPOI.Util;
@@ -53,7 +53,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 String strText1 = OperandResolver.CoerceValueToString(ve);
                 DateTime result = DateTime.MinValue;
-                if(DateTime.TryParse(strText1,out result))
+                if(DateTime.TryParse(strText1, out result))
                     return result;
 
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);

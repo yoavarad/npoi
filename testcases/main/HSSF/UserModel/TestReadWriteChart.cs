@@ -17,15 +17,16 @@
 
 namespace TestCases.HSSF.UserModel
 {
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using NPOI.HSSF.UserModel;
-    using NPOI.HSSF.Record;
-    using TestCases.HSSF;
-    using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.Model;
     using System.Collections.Generic;
+    using TestCases.HSSF;
 
     /**
      * @author Glen Stampoultzis (glens at apache.org)

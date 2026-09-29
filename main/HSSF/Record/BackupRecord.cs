@@ -19,9 +19,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Backup Record 
@@ -48,7 +48,7 @@ namespace NPOI.HSSF.Record
 
         public BackupRecord(RecordInputStream in1)
         {
-             field_1_backup = in1.ReadShort();
+            field_1_backup = in1.ReadShort();
         }
 
         /**

@@ -17,11 +17,11 @@
 
 namespace NPOI.POIFS.Crypt.BinaryRC4
 {
-    using System;
-    using System.Diagnostics;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.Standard;
     using NPOI.Util;
+    using System;
+    using System.Diagnostics;
 
     public class BinaryRC4EncryptionVerifier : EncryptionVerifier, EncryptionRecord
     {
@@ -55,7 +55,7 @@ namespace NPOI.POIFS.Crypt.BinaryRC4
 
         protected internal void SetSalt(byte[] salt)
         {
-            if (salt == null || salt.Length != 16)
+            if(salt == null || salt.Length != 16)
             {
                 throw new EncryptedDocumentException("invalid verifier salt");
             }

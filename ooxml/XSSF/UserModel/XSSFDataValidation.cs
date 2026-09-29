@@ -14,13 +14,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System.Collections.Generic;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
-using System;
-using System.Text;
 using NPOI.SS.Util;
 using NPOI.Util;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -49,7 +49,7 @@ namespace NPOI.XSSF.UserModel
             errorStyleMappings[ERRORSTYLE.STOP]= ST_DataValidationErrorStyle.stop;
             errorStyleMappings[ERRORSTYLE.WARNING]= ST_DataValidationErrorStyle.warning;
 
-            
+
             operatorTypeMappings[OperatorType.BETWEEN] =  ST_DataValidationOperator.between;
             operatorTypeMappings[OperatorType.NOT_BETWEEN] =  ST_DataValidationOperator.notBetween;
             operatorTypeMappings[OperatorType.EQUAL] =  ST_DataValidationOperator.equal;
@@ -59,7 +59,7 @@ namespace NPOI.XSSF.UserModel
             operatorTypeMappings[OperatorType.LESS_THAN] =  ST_DataValidationOperator.lessThan;
             operatorTypeMappings[OperatorType.LESS_OR_EQUAL] =  ST_DataValidationOperator.lessThanOrEqual;
 
-            foreach (KeyValuePair<int, ST_DataValidationOperator> entry in operatorTypeMappings)
+            foreach(KeyValuePair<int, ST_DataValidationOperator> entry in operatorTypeMappings)
             {
                 operatorTypeReverseMappings[entry.Value]=entry.Key;
             }
@@ -73,7 +73,7 @@ namespace NPOI.XSSF.UserModel
             validationTypeMappings[ValidationType.TIME] =  ST_DataValidationType.time;
             validationTypeMappings[ValidationType.INTEGER] =  ST_DataValidationType.whole;
 
-            foreach (KeyValuePair<int, ST_DataValidationType> entry in validationTypeMappings)
+            foreach(KeyValuePair<int, ST_DataValidationType> entry in validationTypeMappings)
             {
                 validationTypeReverseMappings[entry.Value]= entry.Key;
             }
@@ -105,11 +105,11 @@ namespace NPOI.XSSF.UserModel
         public void CreateErrorBox(String title, String text)
         {
             // the spec does not specify a length-limit, however Excel reports files as "corrupt" if they exceed 255 bytes for these texts...
-            if (title != null && title.Length > MAX_TEXT_LENGTH)
+            if(title != null && title.Length > MAX_TEXT_LENGTH)
             {
                 throw new ArgumentOutOfRangeException("Error-title cannot be longer than 32 characters, but had: " + title);
             }
-            if (text != null && text.Length > MAX_TEXT_LENGTH)
+            if(text != null && text.Length > MAX_TEXT_LENGTH)
             {
                 throw new ArgumentOutOfRangeException("Error-text cannot be longer than 255 characters, but had: " + text);
             }
@@ -123,11 +123,11 @@ namespace NPOI.XSSF.UserModel
         public void CreatePromptBox(String title, String text)
         {
             // the spec does not specify a length-limit, however Excel reports files as "corrupt" if they exceed 255 bytes for these texts...
-            if (title != null && title.Length > MAX_TEXT_LENGTH)
+            if(title != null && title.Length > MAX_TEXT_LENGTH)
             {
                 throw new ArgumentOutOfRangeException("Prompt-title cannot be longer than 32 characters, but had: " + title);
             }
-            if (text != null && text.Length > MAX_TEXT_LENGTH)
+            if(text != null && text.Length > MAX_TEXT_LENGTH)
             {
                 throw new ArgumentOutOfRangeException("Prompt-text cannot be longer than 255 characters, but had: " + text);
             }
@@ -155,10 +155,10 @@ namespace NPOI.XSSF.UserModel
                 return null;
             }
             StringBuilder builder = new StringBuilder();
-            foreach (char c in text)
+            foreach(char c in text)
             {
                 // for now only encode characters below 32, we can add more here if needed
-                if (c < 32)
+                if(c < 32)
                 {
                     builder.Append("_x").Append(HexDump.ToHex((short) c)).Append('_');
                 }
@@ -177,7 +177,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctDdataValidation.allowBlank;
             }
-            set 
+            set
             {
                 ctDdataValidation.allowBlank =value;
             }
@@ -203,9 +203,9 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (int)ctDdataValidation.errorStyle;
+                return (int) ctDdataValidation.errorStyle;
             }
-            set 
+            set
             {
 
                 ctDdataValidation.errorStyle = (errorStyleMappings[value]);
@@ -240,7 +240,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctDdataValidation.showErrorMessage;
             }
-            set 
+            set
             {
                 ctDdataValidation.showErrorMessage = value;
             }
@@ -255,7 +255,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctDdataValidation.showInputMessage;
             }
-            set 
+            set
             {
                 ctDdataValidation.showInputMessage = value;
             }
@@ -270,9 +270,9 @@ namespace NPOI.XSSF.UserModel
             {
                 return !ctDdataValidation.showDropDown;
             }
-            set 
+            set
             {
-                if (validationConstraint.GetValidationType() == ValidationType.LIST)
+                if(validationConstraint.GetValidationType() == ValidationType.LIST)
                 {
                     ctDdataValidation.showDropDown = (!value);
                 }
@@ -298,7 +298,7 @@ namespace NPOI.XSSF.UserModel
         public String PrettyPrint()
         {
             StringBuilder builder = new StringBuilder();
-            foreach (CellRangeAddress Address in regions.CellRangeAddresses)
+            foreach(CellRangeAddress Address in regions.CellRangeAddresses)
             {
                 builder.Append(Address.FormatAsString());
             }
@@ -320,4 +320,3 @@ namespace NPOI.XSSF.UserModel
     }
 
 }
-

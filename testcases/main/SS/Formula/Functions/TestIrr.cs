@@ -17,13 +17,14 @@
 
 namespace TestCases.SS.Formula.Functions
 {
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Text;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
     using TestCases.HSSF;
-    using NPOI.SS.Formula.Functions;
 
     /**
      * Tests for {@link Irr}
@@ -95,7 +96,7 @@ namespace TestCases.SS.Formula.Functions
             int failureCount = 0;
             // TODO YK: Formulas in rows 16 and 17 operate with ArrayPtg which isn't yet supported
             // FormulaEvaluator as of r1041407 throws "Unexpected ptg class (NPOI.SS.Formula.PTG.ArrayPtg)"
-            for (int rownum = 9; rownum <= 15; rownum++)
+            for(int rownum = 9; rownum <= 15; rownum++)
             {
                 IRow row = sheet.GetRow(rownum);
                 ICell cellA = row.GetCell(0);
@@ -104,9 +105,10 @@ namespace TestCases.SS.Formula.Functions
                     CellValue cv = fe.Evaluate(cellA);
                     assertFormulaResult(cv, cellA);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
-                    if (failures.Length > 0) failures.Append('\n');
+                    if(failures.Length > 0)
+                        failures.Append('\n');
                     failures.Append("Row[" + (cellA.RowIndex + 1) + "]: " + cellA.CellFormula + " ");
                     failures.Append(e.Message);
                     failureCount++;
@@ -118,16 +120,17 @@ namespace TestCases.SS.Formula.Functions
                     CellValue cv = fe.Evaluate(cellC);
                     ClassicAssert.AreEqual(0, cv.NumberValue, 0.0001);  // should agree within 0.01%
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
-                    if (failures.Length > 0) failures.Append('\n');
+                    if(failures.Length > 0)
+                        failures.Append('\n');
                     failures.Append("Row[" + (cellC.RowIndex + 1) + "]: " + cellC.CellFormula + " ");
                     failures.Append(e.Message);
                     failureCount++;
                 }
             }
 
-            if (failures.Length > 0)
+            if(failures.Length > 0)
             {
                 throw new AssertionException(failureCount + " IRR assertions failed:\n" + failures.ToString());
             }

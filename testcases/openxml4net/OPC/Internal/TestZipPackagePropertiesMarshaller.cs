@@ -19,7 +19,8 @@ namespace TestCases.OpenXml4Net.OPC.Internal
 {
     using NPOI.OpenXml4Net.OPC.Internal;
     using NPOI.OpenXml4Net.OPC.Internal.Marshallers;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
 
@@ -36,11 +37,11 @@ namespace TestCases.OpenXml4Net.OPC.Internal
             {
                 marshaller.Marshall(null, notAZipOutputStream);
             }
-            catch (ArgumentException ex)
+            catch(ArgumentException ex)
             {
                 ClassicAssert.AreEqual("ZipOutputStream expected!", ex.Message);
             }
-            
+
         }
 
     }

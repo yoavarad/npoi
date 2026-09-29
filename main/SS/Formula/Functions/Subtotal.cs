@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,10 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
-
 using NPOI.SS.Formula.Eval;
 using NPOI.Util;
+using System.Collections.Generic;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -60,39 +59,61 @@ namespace NPOI.SS.Formula.Functions
         private static Function FindFunction(int functionCode)
         {
             //Function func;
-            switch (functionCode)
+            switch(functionCode)
             {
-                case 1: return AggregateFunction.SubtotalInstance(AggregateFunction.AVERAGE, true);
-                case 2: return Count.SubtotalInstance(true);
-                case 3: return Counta.SubtotalInstance(true);
-                case 4: return AggregateFunction.SubtotalInstance(AggregateFunction.MAX, true);
-                case 5: return AggregateFunction.SubtotalInstance(AggregateFunction.MIN, true);
-                case 6: return AggregateFunction.SubtotalInstance(AggregateFunction.PRODUCT, true);
-                case 7: return AggregateFunction.SubtotalInstance(AggregateFunction.STDEV, true);
-                case 8: return AggregateFunction.SubtotalInstance(AggregateFunction.STDEVP, true);
-                case 9: return AggregateFunction.SubtotalInstance(AggregateFunction.SUM, true);
-                case 10: return AggregateFunction.SubtotalInstance(AggregateFunction.VAR, true);
-                case 11: return AggregateFunction.SubtotalInstance(AggregateFunction.VARP, true);
-                case 101: return AggregateFunction.SubtotalInstance(AggregateFunction.AVERAGE, false);
-                case 102: return Count.SubtotalInstance(false);
-                case 103: return Counta.SubtotalInstance(false);
-                case 104: return AggregateFunction.SubtotalInstance(AggregateFunction.MAX, false);
-                case 105: return AggregateFunction.SubtotalInstance(AggregateFunction.MIN, false);
-                case 106: return AggregateFunction.SubtotalInstance(AggregateFunction.PRODUCT, false);
-                case 107: return AggregateFunction.SubtotalInstance(AggregateFunction.STDEV, false);
-                case 108: return AggregateFunction.SubtotalInstance(AggregateFunction.STDEVP, false);
-                case 109: return AggregateFunction.SubtotalInstance(AggregateFunction.SUM, false);
-                case 110: return AggregateFunction.SubtotalInstance(AggregateFunction.VAR, false);
-                case 111: return AggregateFunction.SubtotalInstance(AggregateFunction.VARP, false);
+                case 1:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.AVERAGE, true);
+                case 2:
+                    return Count.SubtotalInstance(true);
+                case 3:
+                    return Counta.SubtotalInstance(true);
+                case 4:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.MAX, true);
+                case 5:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.MIN, true);
+                case 6:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.PRODUCT, true);
+                case 7:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.STDEV, true);
+                case 8:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.STDEVP, true);
+                case 9:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.SUM, true);
+                case 10:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.VAR, true);
+                case 11:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.VARP, true);
+                case 101:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.AVERAGE, false);
+                case 102:
+                    return Count.SubtotalInstance(false);
+                case 103:
+                    return Counta.SubtotalInstance(false);
+                case 104:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.MAX, false);
+                case 105:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.MIN, false);
+                case 106:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.PRODUCT, false);
+                case 107:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.STDEV, false);
+                case 108:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.STDEVP, false);
+                case 109:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.SUM, false);
+                case 110:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.VAR, false);
+                case 111:
+                    return AggregateFunction.SubtotalInstance(AggregateFunction.VARP, false);
             }
-            
+
             throw EvaluationException.InvalidValue();
         }
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
             int nInnerArgs = args.Length - 1; // -1: first arg is used to select from a basic aggregate function
-            if (nInnerArgs < 1)
+            if(nInnerArgs < 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -104,7 +125,7 @@ namespace NPOI.SS.Formula.Functions
                 int functionCode = OperandResolver.CoerceValueToInt(ve);
                 innerFunc = FindFunction(functionCode);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -115,11 +136,11 @@ namespace NPOI.SS.Formula.Functions
             // "If there are other subtotals within ref1, ref2,... (or nested subtotals), these nested subtotals are ignored to avoid double counting."
             // For array references it is handled in1 other evaluation steps, but we need to handle this here for references to subtotal-functions
             List<ValueEval> toRemove = [];
-            foreach (var eval in list)
+            foreach(var eval in list)
             {
-                if (eval is LazyRefEval lazyRefEval)
+                if(eval is LazyRefEval lazyRefEval)
                 {
-                    if (lazyRefEval.IsSubTotal)
+                    if(lazyRefEval.IsSubTotal)
                     {
                         toRemove.Add(lazyRefEval);
                     }

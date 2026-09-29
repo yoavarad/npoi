@@ -20,10 +20,10 @@
 namespace NPOI.HSSF.Record
 {
 
-    using System;
-    using System.Text;
     using NPOI.Util;
+    using System;
     using System.Globalization;
+    using System.Text;
 
     /**
      * Title:        Continue Record - Helper class used primarily for SST Records 
@@ -70,12 +70,12 @@ namespace NPOI.HSSF.Record
                 return field_1_data.Length;
             }
         }
-        
+
         public override void Serialize(ILittleEndianOutput out1)
         {
             out1.Write(field_1_data);
         }
-        
+
         /*
          * USE ONLY within "ProcessContinue"
          */
@@ -106,7 +106,7 @@ namespace NPOI.HSSF.Record
             LittleEndian.PutUShort(destBuf, destOffset, sid);
             LittleEndian.PutUShort(destBuf, destOffset + 2, totalLen);
             int pos = destOffset + 4;
-            if (initialDataByte != null)
+            if(initialDataByte != null)
             {
                 LittleEndian.PutByte(destBuf, pos, Convert.ToByte(initialDataByte, CultureInfo.InvariantCulture));
                 pos += 1;

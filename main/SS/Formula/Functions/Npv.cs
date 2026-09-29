@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     public class Npv : Function
     {
@@ -36,7 +36,7 @@ namespace NPOI.SS.Formula.Functions
                 result = Evaluate(rate, d1);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -55,7 +55,7 @@ namespace NPOI.SS.Formula.Functions
                 result = Evaluate(rate, d1, d2);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -75,7 +75,7 @@ namespace NPOI.SS.Formula.Functions
                 result = Evaluate(rate, d1, d2, d3);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -85,7 +85,7 @@ namespace NPOI.SS.Formula.Functions
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
             int nArgs = args.Length;
-            if (nArgs < 2)
+            if(nArgs < 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -102,7 +102,7 @@ namespace NPOI.SS.Formula.Functions
                 NumericFunction.CheckValue(result);
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -111,7 +111,7 @@ namespace NPOI.SS.Formula.Functions
         private static double Evaluate(double rate, params double[] ds)
         {
             double sum = 0;
-            for (int i = 0; i < ds.Length; i++)
+            for(int i = 0; i < ds.Length; i++)
             {
                 sum += ds[i] / Math.Pow(rate + 1, i);
             }

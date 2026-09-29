@@ -20,7 +20,8 @@ namespace TestCases.SS.Formula.Functions
 
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
 
     /**
@@ -108,7 +109,7 @@ namespace TestCases.SS.Formula.Functions
             cell11.CellFormula=(formulaText);
             Evaluator.ClearAllCachedResultValues();
             CellValue cv = Evaluator.Evaluate(cell11);
-            if (cv.CellType != CellType.Numeric)
+            if(cv.CellType != CellType.Numeric)
             {
                 throw new AssertionException("Wrong result type: " + cv.FormatAsString());
             }

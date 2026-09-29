@@ -17,13 +17,13 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
-    using TestCases.HSSF;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.Globalization;
+    using TestCases.HSSF;
 
     /**
      * Tests row shifting capabilities.
@@ -59,7 +59,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual("&U", HSSFHeader.EndUnderline);
             ClassicAssert.AreEqual("&P", HSSFHeader.Page);
 
-            ClassicAssert.AreEqual("&22", HSSFFooter.FontSize((short)22));
+            ClassicAssert.AreEqual("&22", HSSFFooter.FontSize((short) 22));
             ClassicAssert.AreEqual("&\"Arial,bold\"", HSSFFooter.Font("Arial", "bold"));
         }
         [Test]
@@ -190,9 +190,9 @@ namespace TestCases.HSSF.UserModel
 
             try
             {
-                footer = (HSSFFooter)sheet.Footer;
+                footer = (HSSFFooter) sheet.Footer;
             }
-            catch (NullReferenceException)
+            catch(NullReferenceException)
             {
                 throw new AssertionException("Identified bug 47244a");
             }

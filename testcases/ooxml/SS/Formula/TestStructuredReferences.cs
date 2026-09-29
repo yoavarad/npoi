@@ -17,13 +17,13 @@
 
 namespace TestCases.SS.Formula
 {
-    using System;
-
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests Excel Table expressions (structured references)
@@ -77,7 +77,8 @@ namespace TestCases.SS.Formula
 
                 // test Adding a row to a table, issue 59814
                 IRow newRow = tableSheet.GetRow(7);
-                if (newRow == null) newRow = tableSheet.CreateRow(7);
+                if(newRow == null)
+                    newRow = tableSheet.CreateRow(7);
                 newRow.CreateCell(0, CellType.Formula).CellFormula = (/*setter*/"\\_Prime.1[[#This Row],[@Number]]*\\_Prime.1[[#This Row],[@Number]]");
                 newRow.CreateCell(1, CellType.String).SetCellValue("thirteen");
                 newRow.CreateCell(2, CellType.Numeric).SetCellValue(13);
@@ -109,7 +110,7 @@ namespace TestCases.SS.Formula
         {
             fe.ClearAllCachedResultValues();
             CellValue cv = fe.Evaluate(cell);
-            if (cv.CellType != CellType.Numeric)
+            if(cv.CellType != CellType.Numeric)
             {
                 Assert.Fail("expected numeric cell type but got " + cv.FormatAsString());
             }
@@ -120,7 +121,7 @@ namespace TestCases.SS.Formula
         {
             fe.ClearAllCachedResultValues();
             CellValue cv = fe.Evaluate(cell);
-            if (cv.CellType != CellType.String)
+            if(cv.CellType != CellType.String)
             {
                 Assert.Fail("expected String cell type but got " + cv.FormatAsString());
             }

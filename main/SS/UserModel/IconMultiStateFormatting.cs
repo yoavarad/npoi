@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -107,21 +107,24 @@ namespace NPOI.SS.UserModel
         }
         public static IconSet ByName(String name)
         {
-            foreach (IconSet set in Values())
+            foreach(IconSet set in Values())
             {
-                if (set.name.Equals(name)) return set;
+                if(set.name.Equals(name))
+                    return set;
             }
             return null;
         }
         public static IconSet ByOOXMLName(String name)
         {
-            if (name.StartsWith("Item"))
+            if(name.StartsWith("Item"))
                 name = name.Remove(0, 4);
             return ByName(name);
         }
         private IconSet(int id, int num, String name)
         {
-            this.id = id; this.num = num; this.name = name;
+            this.id = id;
+            this.num = num;
+            this.name = name;
         }
     }
 

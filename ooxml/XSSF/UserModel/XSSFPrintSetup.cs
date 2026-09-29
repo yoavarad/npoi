@@ -15,8 +15,8 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
 namespace NPOI.XSSF.UserModel
 {
 
@@ -34,7 +34,7 @@ namespace NPOI.XSSF.UserModel
         {
             this.ctWorksheet = worksheet;
 
-            if (ctWorksheet.IsSetPageSetup())
+            if(ctWorksheet.IsSetPageSetup())
             {
                 this.pageSetup = ctWorksheet.pageSetup;
             }
@@ -42,7 +42,7 @@ namespace NPOI.XSSF.UserModel
             {
                 this.pageSetup = ctWorksheet.AddNewPageSetup();
             }
-            if (ctWorksheet.IsSetPageMargins())
+            if(ctWorksheet.IsSetPageMargins())
             {
                 this.pageMargins = ctWorksheet.pageMargins;
             }
@@ -60,7 +60,7 @@ namespace NPOI.XSSF.UserModel
          */
         public void SetPaperSize(PaperSize size)
         {
-            PaperSize = ((short)(size + 1));
+            PaperSize = ((short) (size + 1));
         }
 
 
@@ -81,9 +81,9 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 ST_Orientation? val = pageSetup.orientation;
-                return val == null ? PrintOrientation.DEFAULT : PrintOrientation.ValueOf((int)val);
+                return val == null ? PrintOrientation.DEFAULT : PrintOrientation.ValueOf((int) val);
             }
-            set 
+            set
             {
                 ST_Orientation v = (ST_Orientation)(value.Value);
                 pageSetup.orientation = (v);
@@ -94,7 +94,7 @@ namespace NPOI.XSSF.UserModel
         public PrintCellComments GetCellComment()
         {
             ST_CellComments? val = pageSetup.cellComments;
-            return val == null ? PrintCellComments.NONE : PrintCellComments.ValueOf((int)val);
+            return val == null ? PrintCellComments.NONE : PrintCellComments.ValueOf((int) val);
         }
 
 
@@ -107,9 +107,9 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return PageOrder.ValueOf((int)pageSetup.pageOrder);
+                return PageOrder.ValueOf((int) pageSetup.pageOrder);
             }
-            set 
+            set
             {
                 ST_PageOrder v = (ST_PageOrder)value.Value;
                 pageSetup.pageOrder = (v);
@@ -125,11 +125,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)pageSetup.paperSize;
+                return (short) pageSetup.paperSize;
             }
-            set 
+            set
             {
-                pageSetup.paperSize = (uint)value;
+                pageSetup.paperSize = (uint) value;
             }
         }
 
@@ -141,7 +141,7 @@ namespace NPOI.XSSF.UserModel
          */
         public PaperSize GetPaperSizeEnum()
         {
-            return (PaperSize)(PaperSize - 1);
+            return (PaperSize) (PaperSize - 1);
         }
 
         /**
@@ -157,13 +157,13 @@ namespace NPOI.XSSF.UserModel
                 {
                     return 100;
                 }
-                return (short)pageSetup.scale;
+                return (short) pageSetup.scale;
             }
-            set 
+            set
             {
-                if (value < 10 || value > 400) 
+                if(value < 10 || value > 400)
                     throw new POIXMLException("Scale value not accepted: you must choose a value between 10 and 400.");
-                pageSetup.scale = (uint)value;
+                pageSetup.scale = (uint) value;
             }
         }
 
@@ -177,11 +177,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)pageSetup.firstPageNumber;
+                return (short) pageSetup.firstPageNumber;
             }
-            set 
+            set
             {
-                pageSetup.firstPageNumber = (uint)value;
+                pageSetup.firstPageNumber = (uint) value;
             }
         }
 
@@ -194,11 +194,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)pageSetup.fitToWidth;
+                return (short) pageSetup.fitToWidth;
             }
-            set 
+            set
             {
-                pageSetup.fitToWidth = (uint)value;
+                pageSetup.fitToWidth = (uint) value;
             }
         }
 
@@ -211,11 +211,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)pageSetup.fitToHeight;
+                return (short) pageSetup.fitToHeight;
             }
-            set 
+            set
             {
-                pageSetup.fitToHeight = (uint)value;
+                pageSetup.fitToHeight = (uint) value;
             }
         }
 
@@ -230,9 +230,9 @@ namespace NPOI.XSSF.UserModel
             {
                 return PageOrder == PageOrder.OVER_THEN_DOWN;
             }
-            set 
+            set
             {
-                if (value)
+                if(value)
                     PageOrder = (PageOrder.OVER_THEN_DOWN);
                 else
                     PageOrder = (PageOrder.DOWN_THEN_OVER);
@@ -250,9 +250,9 @@ namespace NPOI.XSSF.UserModel
             {
                 return Orientation == PrintOrientation.LANDSCAPE;
             }
-            set 
+            set
             {
-                if (value)
+                if(value)
                     Orientation =(PrintOrientation.LANDSCAPE);
                 else
                     Orientation = (PrintOrientation.PORTRAIT);
@@ -273,7 +273,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return pageSetup.usePrinterDefaults;
             }
-            set 
+            set
             {
                 pageSetup.usePrinterDefaults = value;
             }
@@ -290,7 +290,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return pageSetup.blackAndWhite;
             }
-            set 
+            set
             {
                 pageSetup.blackAndWhite = value;
             }
@@ -307,7 +307,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return pageSetup.draft;
             }
-            set 
+            set
             {
                 pageSetup.draft = value;
             }
@@ -324,9 +324,9 @@ namespace NPOI.XSSF.UserModel
             {
                 return GetCellComment() == PrintCellComments.AS_DISPLAYED;
             }
-            set 
+            set
             {
-                if (value)
+                if(value)
                 {
                     pageSetup.cellComments = (ST_CellComments.asDisplayed);
                 }
@@ -344,9 +344,9 @@ namespace NPOI.XSSF.UserModel
             {
                 return Orientation == PrintOrientation.DEFAULT;
             }
-            set 
+            set
             {
-                if (value)
+                if(value)
                 {
                     Orientation = (PrintOrientation.DEFAULT);
                 }
@@ -364,7 +364,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return pageSetup.useFirstPageNumber;
             }
-            set 
+            set
             {
                 pageSetup.useFirstPageNumber = (value);
             }
@@ -379,11 +379,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)pageSetup.horizontalDpi;
+                return (short) pageSetup.horizontalDpi;
             }
-            set 
+            set
             {
-                pageSetup.horizontalDpi = (uint)value;
+                pageSetup.horizontalDpi = (uint) value;
             }
         }
 
@@ -396,11 +396,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)pageSetup.verticalDpi;
+                return (short) pageSetup.verticalDpi;
             }
-            set 
+            set
             {
-                pageSetup.verticalDpi = (uint)value;
+                pageSetup.verticalDpi = (uint) value;
             }
         }
 
@@ -415,7 +415,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return pageMargins.header;
             }
-            set 
+            set
             {
                 pageMargins.header = (value);
             }
@@ -432,7 +432,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return pageMargins.footer;
             }
-            set 
+            set
             {
                 pageMargins.footer = value;
             }
@@ -467,11 +467,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)pageSetup.copies;
+                return (short) pageSetup.copies;
             }
-            set 
+            set
             {
-                pageSetup.copies = (uint)value;
+                pageSetup.copies = (uint) value;
             }
         }
 
@@ -482,11 +482,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (DisplayCellErrorType)pageSetup.errors;
+                return (DisplayCellErrorType) pageSetup.errors;
             }
             set
             {
-                pageSetup.errors = (ST_PrintError)value;
+                pageSetup.errors = (ST_PrintError) value;
             }
         }
 
@@ -494,7 +494,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                
+
                 throw new System.NotImplementedException();
             }
             set
@@ -506,6 +506,3 @@ namespace NPOI.XSSF.UserModel
         #endregion
     }
 }
-
-
-

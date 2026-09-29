@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,10 +17,9 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using NPOI.SS.Formula.Eval;
-
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
+    using System;
     using System.Text;
     /**
      * Implementation for Excel WeekNum() function.<p/>
@@ -55,19 +54,19 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve = OperandResolver.GetSingleValue(numberVE, srcRowIndex, srcColumnIndex);
                 number = OperandResolver.CoerceValueToInt(ve);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            if (number < 0)
+            if(number < 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            if (number > 3999)
+            if(number > 3999)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            if (number == 0)
+            if(number == 0)
             {
                 return new StringEval("");
             }
@@ -78,19 +77,19 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve = OperandResolver.GetSingleValue(formVE, srcRowIndex, srcColumnIndex);
                 form = OperandResolver.CoerceValueToInt(ve);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.NUM_ERROR;
             }
 
-            if (form > 4 || form < 0)
+            if(form > 4 || form < 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
             String result = integerToRoman(number);
 
-            if (form == 0)
+            if(form == 0)
             {
                 return new StringEval(result);
             }
@@ -107,9 +106,9 @@ namespace NPOI.SS.Formula.Functions
         private static String integerToRoman(int number)
         {
             StringBuilder result = new StringBuilder();
-            for (int i = 0; i < 13; i++)
+            for(int i = 0; i < 13; i++)
             {
-                while (number >= VALUES[i])
+                while(number >= VALUES[i])
                 {
                     number -= VALUES[i];
                     result.Append(ROMAN[i]);
@@ -127,7 +126,7 @@ namespace NPOI.SS.Formula.Functions
          */
         public String MakeConcise(String result, int form)
         {
-            if (form > 0)
+            if(form > 0)
             {
                 result = result.Replace("XLV", "VL"); //45
                 result = result.Replace("XCV", "VC"); //95
@@ -135,7 +134,7 @@ namespace NPOI.SS.Formula.Functions
                 result = result.Replace("CML", "LM"); //950
                 result = result.Replace("CMVC", "LMVL"); //995
             }
-            if (form == 1)
+            if(form == 1)
             {
                 result = result.Replace("CDXC", "LDXL"); //490
                 result = result.Replace("CDVC", "LDVL"); //495
@@ -143,7 +142,7 @@ namespace NPOI.SS.Formula.Functions
                 result = result.Replace("XCIX", "VCIV"); //99
                 result = result.Replace("XLIX", "VLIV"); //49
             }
-            if (form > 1)
+            if(form > 1)
             {
                 result = result.Replace("XLIX", "IL"); //49
                 result = result.Replace("XCIX", "IC"); //99
@@ -154,14 +153,14 @@ namespace NPOI.SS.Formula.Functions
                 result = result.Replace("CMIC", "XMIX"); //999
                 result = result.Replace("CMXC", "XM"); // 990
             }
-            if (form > 2)
+            if(form > 2)
             {
                 result = result.Replace("XDV", "VD");  //495
                 result = result.Replace("XDIX", "VDIV"); //499
                 result = result.Replace("XMV", "VM"); // 995
                 result = result.Replace("XMIX", "VMIV"); //999
             }
-            if (form == 4)
+            if(form == 4)
             {
                 result = result.Replace("VDIV", "ID"); //499
                 result = result.Replace("VMIV", "IM"); //999

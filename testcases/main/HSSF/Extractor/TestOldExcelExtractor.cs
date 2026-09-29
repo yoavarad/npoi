@@ -21,13 +21,14 @@ namespace TestCases.HSSF.Extractor
     using NPOI.HSSF.Extractor;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
     using System.Text;
+    using System.Threading;
     using TestCases;
     using TestCases.HSSF;
-    using System.Threading;
 
     /**
      * Unit tests for the Excel 5/95 and Excel 4 (and older) text 
@@ -107,7 +108,7 @@ namespace TestCases.HSSF.Extractor
         [Test]
         public void TestSimpleExcel5()
         {
-            foreach (String ver in new String[] { "5", "95" })
+            foreach(String ver in new String[] { "5", "95" })
             {
                 OldExcelExtractor extractor = CreateExtractor("testEXCEL_" + ver + ".xls");
 
@@ -179,7 +180,7 @@ namespace TestCases.HSSF.Extractor
         [Test]
         public void TestFormattedNumbersExcel5()
         {
-            foreach (String ver in new String[] { "5", "95" })
+            foreach(String ver in new String[] { "5", "95" })
             {
                 OldExcelExtractor extractor = CreateExtractor("testEXCEL_" + ver + ".xls");
                 String text = extractor.Text;
@@ -208,7 +209,7 @@ namespace TestCases.HSSF.Extractor
         [Test]
         public void TestFromFile()
         {
-            foreach (String ver in new String[] { "4", "5", "95" })
+            foreach(String ver in new String[] { "4", "5", "95" })
             {
                 String filename = "testEXCEL_" + ver + ".xls";
                 FileInfo f = HSSFTestDataSamples.GetSampleFile(filename);
@@ -332,7 +333,7 @@ namespace TestCases.HSSF.Extractor
                 extractor.Close();
                 Assert.Fail("Should catch exception here");
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
                 // expected here
             }
@@ -358,7 +359,7 @@ namespace TestCases.HSSF.Extractor
                 }
                 finally
                 {
-                out1.Close();
+                    out1.Close();
                 }
             }
             finally
@@ -382,7 +383,7 @@ namespace TestCases.HSSF.Extractor
                 }
                 finally
                 {
-                out1.Close();
+                    out1.Close();
                 }
                 String string1 = Encoding.UTF8.GetString(out1.ToByteArray());
                 ClassicAssert.IsTrue(string1.Contains("Table C-13--Lemons"), "Had: " + string1);
@@ -405,7 +406,7 @@ namespace TestCases.HSSF.Extractor
                 var x = ex.Text;
                 Assert.Fail();
             }
-            catch (EncryptedDocumentException)
+            catch(EncryptedDocumentException)
             {
                 ClassicAssert.IsTrue(true, "correct exception thrown");
             }

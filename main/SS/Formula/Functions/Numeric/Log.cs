@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
@@ -42,21 +42,23 @@ namespace NPOI.SS.Formula.Functions
                 result = Math.Log(d0) / NumericFunction.LOG_10_TO_BASE_e;
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
             return new NumberEval(result);
         }
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0,
-                ValueEval arg1) {
-			double result;
-			try {
-				double d0 = NumericFunction.SingleOperandEvaluate(arg0, srcRowIndex, srcColumnIndex);
-				double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
-				double logE = Math.Log(d0);
-				double base1 = d1;
-                if (base1 == Math.E)  // TODO:  Double.compare(base, Math.E) == 0, , DOSE THE "==" operator equals Double.compare
+                ValueEval arg1)
+        {
+            double result;
+            try
+            {
+                double d0 = NumericFunction.SingleOperandEvaluate(arg0, srcRowIndex, srcColumnIndex);
+                double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
+                double logE = Math.Log(d0);
+                double base1 = d1;
+                if(base1 == Math.E)  // TODO:  Double.compare(base, Math.E) == 0, , DOSE THE "==" operator equals Double.compare
                 {
                     result = logE;
                 }
@@ -64,11 +66,13 @@ namespace NPOI.SS.Formula.Functions
                 {
                     result = logE / Math.Log(base1);
                 }
-				NumericFunction.CheckValue(result);
-			} catch (EvaluationException e) {
-				return e.GetErrorEval();
-			}
-			return new NumberEval(result);
-		}
+                NumericFunction.CheckValue(result);
+            }
+            catch(EvaluationException e)
+            {
+                return e.GetErrorEval();
+            }
+            return new NumberEval(result);
+        }
     }
 }

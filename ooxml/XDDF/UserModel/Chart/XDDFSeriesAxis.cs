@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,9 +16,9 @@
 ==================================================================== */
 
 
-using System;
-using NPOI.OpenXmlFormats.Dml.Chart;
 using NPOI.OpenXmlFormats.Dml;
+using NPOI.OpenXmlFormats.Dml.Chart;
+using System;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
@@ -102,7 +102,7 @@ namespace NPOI.XDDF.UserModel.Chart
         }
         public override void CrossAxis(XDDFChartAxis axis)
         {
-            ctSerAx.crossAx.val = (uint)axis.Id;
+            ctSerAx.crossAx.val = (uint) axis.Id;
         }
         protected override CT_UnsignedInt GetCTAxId()
         {
@@ -187,5 +187,3 @@ namespace NPOI.XDDF.UserModel.Chart
         }
     }
 }
-
-

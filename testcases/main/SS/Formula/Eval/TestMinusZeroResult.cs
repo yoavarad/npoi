@@ -17,11 +17,12 @@
 
 namespace TestCases.SS.Formula.Eval
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.Exceptions;
 
     /**
@@ -75,7 +76,7 @@ namespace TestCases.SS.Formula.Eval
             CheckEval(false, EvalInstances.Equal, 0.0, MINUS_ZERO);
             CheckEval(true, EvalInstances.GreaterThan, 0.0, MINUS_ZERO);
             CheckEval(true, EvalInstances.LessThan, MINUS_ZERO, 0.0);
-            
+
             //CheckEval(true, EvalInstances.Equal, 0.0, MINUS_ZERO);
             //CheckEval(false, EvalInstances.GreaterThan, 0.0, MINUS_ZERO);
             //CheckEval(false, EvalInstances.LessThan, MINUS_ZERO, 0.0);
@@ -85,7 +86,7 @@ namespace TestCases.SS.Formula.Eval
         {
             ConfirmTextRendering("-0", MINUS_ZERO);
             // sub-normal negative numbers also display as '-0'
-            ConfirmTextRendering("-0", BitConverter.Int64BitsToDouble(unchecked((long)0x8000100020003000L)));
+            ConfirmTextRendering("-0", BitConverter.Int64BitsToDouble(unchecked((long) 0x8000100020003000L)));
         }
 
         /**
@@ -113,7 +114,7 @@ namespace TestCases.SS.Formula.Eval
         {
             ValueEval[] evalArgs;
             evalArgs = new ValueEval[dArgs.Length];
-            for (int i = 0; i < evalArgs.Length; i++)
+            for(int i = 0; i < evalArgs.Length; i++)
             {
                 evalArgs[i] = new NumberEval(dArgs[i]);
             }
@@ -128,7 +129,7 @@ namespace TestCases.SS.Formula.Eval
         public void TestJava()
         {
 
-            ClassicAssert.AreEqual(unchecked((long)0x8000000000000000L), BitConverter.DoubleToInt64Bits(MINUS_ZERO));
+            ClassicAssert.AreEqual(unchecked((long) 0x8000000000000000L), BitConverter.DoubleToInt64Bits(MINUS_ZERO));
 
             // The simple operators consider all zeros to be the same
             //ClassicAssert.IsTrue(MINUS_ZERO == MINUS_ZERO);
@@ -163,7 +164,7 @@ namespace TestCases.SS.Formula.Eval
         {
             long bitsA = BitConverter.DoubleToInt64Bits(a);
             long bitsB = BitConverter.DoubleToInt64Bits(b);
-            if (bitsA != bitsB)
+            if(bitsA != bitsB)
             {
                 throw new ComparisonFailure("value different to expected",
                         new String(HexDump.LongToHex(bitsA)), new String(HexDump.LongToHex(bitsB)));

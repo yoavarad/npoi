@@ -1,11 +1,11 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
-using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Schema;
-using NPOI.OpenXml4Net.Util;
-using System.IO;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -15,67 +15,67 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     {
         public static CT_PivotCacheDefinition Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PivotCacheDefinition ctObj = new CT_PivotCacheDefinition();
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
-            if (node.Attributes["invalid"] != null)
+            if(node.Attributes["invalid"] != null)
                 ctObj.invalid = XmlHelper.ReadBool(node.Attributes["invalid"]);
-            if (node.Attributes["saveData"] != null)
+            if(node.Attributes["saveData"] != null)
                 ctObj.saveData = XmlHelper.ReadBool(node.Attributes["saveData"]);
-            if (node.Attributes["refreshOnLoad"] != null)
+            if(node.Attributes["refreshOnLoad"] != null)
                 ctObj.refreshOnLoad = XmlHelper.ReadBool(node.Attributes["refreshOnLoad"]);
-            if (node.Attributes["optimizeMemory"] != null)
+            if(node.Attributes["optimizeMemory"] != null)
                 ctObj.optimizeMemory = XmlHelper.ReadBool(node.Attributes["optimizeMemory"]);
-            if (node.Attributes["enableRefresh"] != null)
+            if(node.Attributes["enableRefresh"] != null)
                 ctObj.enableRefresh = XmlHelper.ReadBool(node.Attributes["enableRefresh"]);
             ctObj.refreshedBy = XmlHelper.ReadString(node.Attributes["refreshedBy"]);
-            if (node.Attributes["refreshedDate"] != null)
+            if(node.Attributes["refreshedDate"] != null)
                 ctObj.refreshedDate = XmlHelper.ReadDouble(node.Attributes["refreshedDate"]);
-            if (node.Attributes["refreshedDateIso"] != null)
-                if (node.Attributes["backgroundQuery"] != null)
+            if(node.Attributes["refreshedDateIso"] != null)
+                if(node.Attributes["backgroundQuery"] != null)
                     ctObj.backgroundQuery = XmlHelper.ReadBool(node.Attributes["backgroundQuery"]);
-            if (node.Attributes["missingItemsLimit"] != null)
+            if(node.Attributes["missingItemsLimit"] != null)
                 ctObj.missingItemsLimit = XmlHelper.ReadUInt(node.Attributes["missingItemsLimit"]);
-            if (node.Attributes["createdVersion"] != null)
+            if(node.Attributes["createdVersion"] != null)
                 ctObj.createdVersion = XmlHelper.ReadByte(node.Attributes["createdVersion"]);
-            if (node.Attributes["refreshedVersion"] != null)
+            if(node.Attributes["refreshedVersion"] != null)
                 ctObj.refreshedVersion = XmlHelper.ReadByte(node.Attributes["refreshedVersion"]);
-            if (node.Attributes["minRefreshableVersion"] != null)
+            if(node.Attributes["minRefreshableVersion"] != null)
                 ctObj.minRefreshableVersion = XmlHelper.ReadByte(node.Attributes["minRefreshableVersion"]);
-            if (node.Attributes["recordCount"] != null)
+            if(node.Attributes["recordCount"] != null)
                 ctObj.recordCount = XmlHelper.ReadUInt(node.Attributes["recordCount"]);
-            if (node.Attributes["upgradeOnRefresh"] != null)
+            if(node.Attributes["upgradeOnRefresh"] != null)
                 ctObj.upgradeOnRefresh = XmlHelper.ReadBool(node.Attributes["upgradeOnRefresh"]);
-            if (node.Attributes["tupleCache1"] != null)
+            if(node.Attributes["tupleCache1"] != null)
                 ctObj.tupleCache1 = XmlHelper.ReadBool(node.Attributes["tupleCache1"]);
-            if (node.Attributes["supportSubquery"] != null)
+            if(node.Attributes["supportSubquery"] != null)
                 ctObj.supportSubquery = XmlHelper.ReadBool(node.Attributes["supportSubquery"]);
-            if (node.Attributes["supportAdvancedDrill"] != null)
+            if(node.Attributes["supportAdvancedDrill"] != null)
                 ctObj.supportAdvancedDrill = XmlHelper.ReadBool(node.Attributes["supportAdvancedDrill"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cacheSource")
+                if(childNode.LocalName == "cacheSource")
                     ctObj.cacheSource = CT_CacheSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cacheFields")
+                else if(childNode.LocalName == "cacheFields")
                     ctObj.cacheFields = CT_CacheFields.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cacheHierarchies")
+                else if(childNode.LocalName == "cacheHierarchies")
                     ctObj.cacheHierarchies = CT_CacheHierarchies.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "kpis")
+                else if(childNode.LocalName == "kpis")
                     ctObj.kpis = CT_PCDKPIs.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tupleCache")
+                else if(childNode.LocalName == "tupleCache")
                     ctObj.tupleCache = CT_TupleCache.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "calculatedItems")
+                else if(childNode.LocalName == "calculatedItems")
                     ctObj.calculatedItems = CT_CalculatedItems.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "calculatedMembers")
+                else if(childNode.LocalName == "calculatedMembers")
                     ctObj.calculatedMembers = CT_CalculatedMembers.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dimensions")
+                else if(childNode.LocalName == "dimensions")
                     ctObj.dimensions = CT_Dimensions.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "measureGroups")
+                else if(childNode.LocalName == "measureGroups")
                     ctObj.measureGroups = CT_MeasureGroups.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "maps")
+                else if(childNode.LocalName == "maps")
                     ctObj.maps = CT_MeasureDimensionMaps.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -112,34 +112,34 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "supportSubquery", this.supportSubquery);
             XmlHelper.WriteAttribute(sw, "supportAdvancedDrill", this.supportAdvancedDrill);
             sw.Write('>');
-            if (this.cacheSource != null)
+            if(this.cacheSource != null)
                 this.cacheSource.Write(sw, "cacheSource");
-            if (this.cacheFields != null)
+            if(this.cacheFields != null)
                 this.cacheFields.Write(sw, "cacheFields");
-            if (this.cacheHierarchies != null)
+            if(this.cacheHierarchies != null)
                 this.cacheHierarchies.Write(sw, "cacheHierarchies");
-            if (this.kpis != null)
+            if(this.kpis != null)
                 this.kpis.Write(sw, "kpis");
-            if (this.tupleCache != null)
+            if(this.tupleCache != null)
                 this.tupleCache.Write(sw, "tupleCache");
-            if (this.calculatedItems != null)
+            if(this.calculatedItems != null)
                 this.calculatedItems.Write(sw, "calculatedItems");
-            if (this.calculatedMembers != null)
+            if(this.calculatedMembers != null)
                 this.calculatedMembers.Write(sw, "calculatedMembers");
-            if (this.dimensions != null)
+            if(this.dimensions != null)
                 this.dimensions.Write(sw, "dimensions");
-            if (this.measureGroups != null)
+            if(this.measureGroups != null)
                 this.measureGroups.Write(sw, "measureGroups");
-            if (this.maps != null)
+            if(this.maps != null)
                 this.maps.Write(sw, "maps");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.Write("</pivotCacheDefinition>");
         }
 
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 //TODO add namespaceUri
                 this.Write(sw);
@@ -232,9 +232,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.optimizeMemoryField = false;
             this.enableRefreshField = true;
             this.backgroundQueryField = false;
-            this.createdVersionField = ((byte)(0));
-            this.refreshedVersionField = ((byte)(0));
-            this.minRefreshableVersionField = ((byte)(0));
+            this.createdVersionField = ((byte) (0));
+            this.refreshedVersionField = ((byte) (0));
+            this.minRefreshableVersionField = ((byte) (0));
             this.upgradeOnRefreshField = false;
             this.tupleCache1Field = false;
             this.supportSubqueryField = false;
@@ -710,24 +710,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Pages
     {
         public static CT_Pages Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Pages ctObj = new CT_Pages();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.page = new List<CT_PCDSCPage>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "page")
+                if(childNode.LocalName == "page")
                     ctObj.page.Add(CT_PCDSCPage.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -740,7 +740,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.page == null || this.page.Count == 0)
+            if(this.page == null || this.page.Count == 0)
             {
                 sw.Write("/>");
             }
@@ -748,9 +748,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             {
                 sw.Write('>');
 
-                if (this.page != null && this.page.Count > 0)
+                if(this.page != null && this.page.Count > 0)
                 {
-                    foreach (CT_PCDSCPage x in this.page)
+                    foreach(CT_PCDSCPage x in this.page)
                     {
                         x.Write(sw, "page");
                     }
@@ -811,24 +811,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_PCDSCPage
     {
         public static CT_PCDSCPage Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PCDSCPage ctObj = new CT_PCDSCPage();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.pageItem = new List<CT_PageItem>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "pageItem")
+                if(childNode.LocalName == "pageItem")
                     ctObj.pageItem.Add(CT_PageItem.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -841,7 +841,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.pageItem == null || this.pageItem.Count == 0)
+            if(this.pageItem == null || this.pageItem.Count == 0)
             {
                 sw.Write("/>");
             }
@@ -849,9 +849,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             {
                 sw.Write('>');
 
-                if (this.pageItem != null && this.pageItem.Count > 0)
+                if(this.pageItem != null && this.pageItem.Count > 0)
                 {
-                    foreach (CT_PageItem x in this.pageItem)
+                    foreach(CT_PageItem x in this.pageItem)
                     {
                         x.Write(sw, "pageItem");
                     }
@@ -912,16 +912,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_PageItem
     {
         public static CT_PageItem Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PageItem ctObj = new CT_PageItem();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
@@ -953,24 +953,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_RangeSets
     {
         public static CT_RangeSets Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_RangeSets ctObj = new CT_RangeSets();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.rangeSet = new List<CT_RangeSet>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "rangeSet")
+                if(childNode.LocalName == "rangeSet")
                     ctObj.rangeSet.Add(CT_RangeSet.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -983,7 +983,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.rangeSet == null || this.rangeSet.Count == 0)
+            if(this.rangeSet == null || this.rangeSet.Count == 0)
             {
                 sw.Write("/>");
             }
@@ -991,9 +991,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             {
                 sw.Write('>');
 
-                if (this.rangeSet != null && this.rangeSet.Count > 0)
+                if(this.rangeSet != null && this.rangeSet.Count > 0)
                 {
-                    foreach (CT_RangeSet x in this.rangeSet)
+                    foreach(CT_RangeSet x in this.rangeSet)
                     {
                         x.Write(sw, "rangeSet");
                     }
@@ -1054,25 +1054,25 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_RangeSet
     {
         public static CT_RangeSet Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_RangeSet ctObj = new CT_RangeSet();
-            if (node.Attributes["i1"] != null)
+            if(node.Attributes["i1"] != null)
                 ctObj.i1 = XmlHelper.ReadUInt(node.Attributes["i1"]);
-            if (node.Attributes["i2"] != null)
+            if(node.Attributes["i2"] != null)
                 ctObj.i2 = XmlHelper.ReadUInt(node.Attributes["i2"]);
-            if (node.Attributes["i3"] != null)
+            if(node.Attributes["i3"] != null)
                 ctObj.i3 = XmlHelper.ReadUInt(node.Attributes["i3"]);
-            if (node.Attributes["i4"] != null)
+            if(node.Attributes["i4"] != null)
                 ctObj.i4 = XmlHelper.ReadUInt(node.Attributes["i4"]);
             ctObj.@ref = XmlHelper.ReadString(node.Attributes["ref"]);
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
@@ -1277,25 +1277,25 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             }
         }
     }
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Consolidation
     {
         public static CT_Consolidation Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Consolidation ctObj = new CT_Consolidation();
-            if (node.Attributes["autoPage"] != null)
+            if(node.Attributes["autoPage"] != null)
                 ctObj.autoPage = XmlHelper.ReadBool(node.Attributes["autoPage"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "pages")
+                if(childNode.LocalName == "pages")
                     ctObj.pages = CT_Pages.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "rangeSets")
+                else if(childNode.LocalName == "rangeSets")
                     ctObj.rangeSets = CT_RangeSets.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1308,16 +1308,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "autoPage", this.autoPage);
 
-            if (this.pages == null && this.rangeSets == null)
+            if(this.pages == null && this.rangeSets == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.pages != null)
+                if(this.pages != null)
                     this.pages.Write(sw, "pages");
-                if (this.rangeSets != null)
+                if(this.rangeSets != null)
                     this.rangeSets.Write(sw, "rangeSets");
                 sw.WriteEndElement(nodeName);
             }
@@ -1377,16 +1377,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_WorksheetSource
     {
         public static CT_WorksheetSource Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_WorksheetSource ctObj = new CT_WorksheetSource();
             ctObj.@ref = XmlHelper.ReadString(node.Attributes["ref"]);
@@ -1469,8 +1469,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = false)]
     public enum ST_SourceType
@@ -1488,30 +1488,30 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         /// <remarks/>
         scenario,
     }
-    
-    
-    
-    
+
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CacheSource
     {
         public static CT_CacheSource Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CacheSource ctObj = new CT_CacheSource();
-            if (node.Attributes["type"] != null)
-                ctObj.type = (ST_SourceType)Enum.Parse(typeof(ST_SourceType), node.Attributes["type"].Value);
-            if (node.Attributes["connectionId"] != null)
+            if(node.Attributes["type"] != null)
+                ctObj.type = (ST_SourceType) Enum.Parse(typeof(ST_SourceType), node.Attributes["type"].Value);
+            if(node.Attributes["connectionId"] != null)
                 ctObj.connectionId = XmlHelper.ReadUInt(node.Attributes["connectionId"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "worksheetSource")
+                if(childNode.LocalName == "worksheetSource")
                     ctObj.worksheetSource = CT_WorksheetSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "consolidation")
+                else if(childNode.LocalName == "consolidation")
                     ctObj.consolidation = CT_Consolidation.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1525,18 +1525,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "type", this.type.ToString());
             XmlHelper.WriteAttribute(sw, "connectionId", this.connectionId);
 
-            if (this.worksheetSource == null && this.consolidation == null && this.extLst == null)
+            if(this.worksheetSource == null && this.consolidation == null && this.extLst == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.worksheetSource != null)
+                if(this.worksheetSource != null)
                     this.worksheetSource.Write(sw, "worksheetSource");
-                if (this.consolidation != null)
+                if(this.consolidation != null)
                     this.consolidation.Write(sw, "consolidation");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }
@@ -1556,7 +1556,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_CacheSource()
         {
-            this.connectionIdField = ((uint)(0));
+            this.connectionIdField = ((uint) (0));
         }
 
         [XmlElement("consolidation", typeof(CT_Consolidation), Order = 0)]
@@ -1643,24 +1643,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CacheFields
     {
         public static CT_CacheFields Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CacheFields ctObj = new CT_CacheFields();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.cacheField = new List<CT_CacheField>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cacheField")
+                if(childNode.LocalName == "cacheField")
                     ctObj.cacheField.Add(CT_CacheField.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -1673,7 +1673,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.cacheField == null || this.cacheField.Count == 0)
+            if(this.cacheField == null || this.cacheField.Count == 0)
             {
                 sw.Write("/>");
             }
@@ -1681,10 +1681,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             {
                 sw.Write('>');
 
-                if (this.cacheField != null && this.cacheField.Count > 0)
+                if(this.cacheField != null && this.cacheField.Count > 0)
                 {
 
-                    foreach (CT_CacheField x in this.cacheField)
+                    foreach(CT_CacheField x in this.cacheField)
                     {
                         x.Write(sw, "cacheField");
                     }
@@ -1753,80 +1753,80 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public uint SizeOfCacheFieldArray()
         {
-            if (this.cacheFieldField == null)
+            if(this.cacheFieldField == null)
                 return 0;
-            return (uint)this.cacheFieldField.Count;
+            return (uint) this.cacheFieldField.Count;
         }
     }
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_SharedItems
     {
         public static CT_SharedItems Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SharedItems ctObj = new CT_SharedItems();
-            if (node.Attributes["containsSemiMixedTypes"] != null)
+            if(node.Attributes["containsSemiMixedTypes"] != null)
                 ctObj.containsSemiMixedTypes = XmlHelper.ReadBool(node.Attributes["containsSemiMixedTypes"]);
-            if (node.Attributes["containsNonDate"] != null)
+            if(node.Attributes["containsNonDate"] != null)
                 ctObj.containsNonDate = XmlHelper.ReadBool(node.Attributes["containsNonDate"]);
-            if (node.Attributes["containsDate"] != null)
+            if(node.Attributes["containsDate"] != null)
                 ctObj.containsDate = XmlHelper.ReadBool(node.Attributes["containsDate"]);
-            if (node.Attributes["containsString"] != null)
+            if(node.Attributes["containsString"] != null)
                 ctObj.containsString = XmlHelper.ReadBool(node.Attributes["containsString"]);
-            if (node.Attributes["containsBlank"] != null)
+            if(node.Attributes["containsBlank"] != null)
                 ctObj.containsBlank = XmlHelper.ReadBool(node.Attributes["containsBlank"]);
-            if (node.Attributes["containsMixedTypes"] != null)
+            if(node.Attributes["containsMixedTypes"] != null)
                 ctObj.containsMixedTypes = XmlHelper.ReadBool(node.Attributes["containsMixedTypes"]);
-            if (node.Attributes["containsNumber"] != null)
+            if(node.Attributes["containsNumber"] != null)
                 ctObj.containsNumber = XmlHelper.ReadBool(node.Attributes["containsNumber"]);
-            if (node.Attributes["containsInteger"] != null)
+            if(node.Attributes["containsInteger"] != null)
                 ctObj.containsInteger = XmlHelper.ReadBool(node.Attributes["containsInteger"]);
-            if (node.Attributes["minValue"] != null)
+            if(node.Attributes["minValue"] != null)
                 ctObj.minValue = XmlHelper.ReadDouble(node.Attributes["minValue"]);
-            if (node.Attributes["maxValue"] != null)
+            if(node.Attributes["maxValue"] != null)
                 ctObj.maxValue = XmlHelper.ReadDouble(node.Attributes["maxValue"]);
-            if (node.Attributes["minDate"] != null)
+            if(node.Attributes["minDate"] != null)
                 ctObj.minDate = XmlHelper.ReadDateTime(node.Attributes["minDate"]);
-            if (node.Attributes["maxDate"] != null)
+            if(node.Attributes["maxDate"] != null)
                 ctObj.maxDate = XmlHelper.ReadDateTime(node.Attributes["maxDate"]);
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
-            if (node.Attributes["longText"] != null)
+            if(node.Attributes["longText"] != null)
                 ctObj.longText = XmlHelper.ReadBool(node.Attributes["longText"]);
             ctObj.Items = new List<Object>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "n")
+                if(childNode.LocalName == "n")
                 {
                     ctObj.Items.Add(CT_Number.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.n);
                 }
-                else if (childNode.LocalName == "b")
+                else if(childNode.LocalName == "b")
                 {
                     ctObj.Items.Add(CT_Boolean.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.b);
                 }
-                else if (childNode.LocalName == "d")
+                else if(childNode.LocalName == "d")
                 {
                     ctObj.Items.Add(CT_DateTime.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.d);
                 }
-                else if (childNode.LocalName == "e")
+                else if(childNode.LocalName == "e")
                 {
                     ctObj.Items.Add(CT_Error.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.e);
                 }
-                else if (childNode.LocalName == "m")
+                else if(childNode.LocalName == "m")
                 {
                     ctObj.Items.Add(CT_Missing.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.m);
                 }
-                else if (childNode.LocalName == "s")
+                else if(childNode.LocalName == "s")
                 {
                     ctObj.Items.Add(CT_String.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.s);
@@ -1840,18 +1840,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            if (!this.containsSemiMixedTypes)
+            if(!this.containsSemiMixedTypes)
                 XmlHelper.WriteAttribute(sw, "containsSemiMixedTypes", this.containsSemiMixedTypes);
-            if (!this.containsNonDate)
+            if(!this.containsNonDate)
                 XmlHelper.WriteAttribute(sw, "containsNonDate", this.containsNonDate);
             XmlHelper.WriteAttribute(sw, "containsDate", this.containsDate, false);
-            if (!this.containsString)
+            if(!this.containsString)
                 XmlHelper.WriteAttribute(sw, "containsString", this.containsString);
             XmlHelper.WriteAttribute(sw, "containsBlank", this.containsBlank, false);
             XmlHelper.WriteAttribute(sw, "containsMixedTypes", this.containsMixedTypes, false);
             XmlHelper.WriteAttribute(sw, "containsNumber", this.containsNumber, false);
             XmlHelper.WriteAttribute(sw, "containsInteger", this.containsInteger, false);
-            if (this.containsNumber)
+            if(this.containsNumber)
             {
                 XmlHelper.WriteAttribute(sw, "minValue", this.minValue, true);
                 XmlHelper.WriteAttribute(sw, "maxValue", this.maxValue, true);
@@ -1867,7 +1867,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "count", this.count);
             XmlHelper.WriteAttribute(sw, "longText", this.longText, false);
 
-            if (this.Items == null || this.Items.Count == 0)
+            if(this.Items == null || this.Items.Count == 0)
             {
                 sw.Write("/>");
             }
@@ -1875,21 +1875,21 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             {
                 sw.Write('>');
 
-                if (this.Items != null && this.Items.Count > 0)
+                if(this.Items != null && this.Items.Count > 0)
                 {
-                    foreach (object o in this.Items)
+                    foreach(object o in this.Items)
                     {
-                        if (o is CT_Number number)
+                        if(o is CT_Number number)
                             number.Write(sw, "n");
-                        else if (o is CT_Boolean b)
+                        else if(o is CT_Boolean b)
                             b.Write(sw, "b");
-                        else if (o is CT_DateTime time)
+                        else if(o is CT_DateTime time)
                             time.Write(sw, "d");
-                        else if (o is CT_Error error)
+                        else if(o is CT_Error error)
                             error.Write(sw, "e");
-                        else if (o is CT_Missing missing)
+                        else if(o is CT_Missing missing)
                             missing.Write(sw, "m");
-                        else if (o is CT_String ctString)
+                        else if(o is CT_String ctString)
                             ctString.Write(sw, "s");
                     }
                 }
@@ -2226,51 +2226,51 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             }
         }
     }
-    
-    
-    
-    
+
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CacheField
     {
         public static CT_CacheField Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CacheField ctObj = new CT_CacheField();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
             ctObj.caption = XmlHelper.ReadString(node.Attributes["caption"]);
             ctObj.propertyName = XmlHelper.ReadString(node.Attributes["propertyName"]);
-            if (node.Attributes["serverField"] != null)
+            if(node.Attributes["serverField"] != null)
                 ctObj.serverField = XmlHelper.ReadBool(node.Attributes["serverField"]);
-            if (node.Attributes["uniqueList"] != null)
+            if(node.Attributes["uniqueList"] != null)
                 ctObj.uniqueList = XmlHelper.ReadBool(node.Attributes["uniqueList"]);
-            if (node.Attributes["numFmtId"] != null)
+            if(node.Attributes["numFmtId"] != null)
                 ctObj.numFmtId = XmlHelper.ReadUInt(node.Attributes["numFmtId"]);
             ctObj.formula = XmlHelper.ReadString(node.Attributes["formula"]);
-            if (node.Attributes["sqlType"] != null)
+            if(node.Attributes["sqlType"] != null)
                 ctObj.sqlType = XmlHelper.ReadInt(node.Attributes["sqlType"]);
-            if (node.Attributes["hierarchy"] != null)
+            if(node.Attributes["hierarchy"] != null)
                 ctObj.hierarchy = XmlHelper.ReadInt(node.Attributes["hierarchy"]);
-            if (node.Attributes["level"] != null)
+            if(node.Attributes["level"] != null)
                 ctObj.level = XmlHelper.ReadUInt(node.Attributes["level"]);
-            if (node.Attributes["databaseField"] != null)
+            if(node.Attributes["databaseField"] != null)
                 ctObj.databaseField = XmlHelper.ReadBool(node.Attributes["databaseField"]);
-            if (node.Attributes["mappingCount"] != null)
+            if(node.Attributes["mappingCount"] != null)
                 ctObj.mappingCount = XmlHelper.ReadUInt(node.Attributes["mappingCount"]);
-            if (node.Attributes["memberPropertyField"] != null)
+            if(node.Attributes["memberPropertyField"] != null)
                 ctObj.memberPropertyField = XmlHelper.ReadBool(node.Attributes["memberPropertyField"]);
             ctObj.mpMap = new List<CT_X>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "sharedItems")
+                if(childNode.LocalName == "sharedItems")
                     ctObj.sharedItems = CT_SharedItems.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fieldGroup")
+                else if(childNode.LocalName == "fieldGroup")
                     ctObj.fieldGroup = CT_FieldGroup.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mpMap")
+                else if(childNode.LocalName == "mpMap")
                     ctObj.mpMap.Add(CT_X.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -2285,19 +2285,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "caption", this.caption);
             XmlHelper.WriteAttribute(sw, "propertyName", this.propertyName);
             XmlHelper.WriteAttribute(sw, "serverField", this.serverField, false);
-            if (!this.uniqueList)
+            if(!this.uniqueList)
                 XmlHelper.WriteAttribute(sw, "uniqueList", this.uniqueList);
             XmlHelper.WriteAttribute(sw, "numFmtId", this.numFmtId, true);
             XmlHelper.WriteAttribute(sw, "formula", this.formula);
             XmlHelper.WriteAttribute(sw, "sqlType", this.sqlType);
             XmlHelper.WriteAttribute(sw, "hierarchy", this.hierarchy);
             XmlHelper.WriteAttribute(sw, "level", this.level);
-            if (!this.databaseField)
+            if(!this.databaseField)
                 XmlHelper.WriteAttribute(sw, "databaseField", this.databaseField);
             XmlHelper.WriteAttribute(sw, "mappingCount", this.mappingCount);
             XmlHelper.WriteAttribute(sw, "memberPropertyField", this.memberPropertyField, false);
 
-            if (this.sharedItems == null
+            if(this.sharedItems == null
                 && this.fieldGroup == null
                 && this.extLst == null
                 && (this.mpMap == null || this.mpMap.Count == 0))
@@ -2307,15 +2307,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             else
             {
                 sw.Write('>');
-                if (this.sharedItems != null)
+                if(this.sharedItems != null)
                     this.sharedItems.Write(sw, "sharedItems");
-                if (this.fieldGroup != null)
+                if(this.fieldGroup != null)
                     this.fieldGroup.Write(sw, "fieldGroup");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
-                if (this.mpMap != null && this.mpMap.Count > 0)
+                if(this.mpMap != null && this.mpMap.Count > 0)
                 {
-                    foreach (CT_X x in this.mpMap)
+                    foreach(CT_X x in this.mpMap)
                     {
                         x.Write(sw, "mpMap");
                     }
@@ -2372,7 +2372,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.uniqueListField = true;
             this.sqlTypeField = 0;
             this.hierarchyField = 0;
-            this.levelField = ((uint)(0));
+            this.levelField = ((uint) (0));
             this.databaseFieldField = true;
             this.memberPropertyFieldField = false;
         }
@@ -2638,24 +2638,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CacheHierarchies
     {
         public static CT_CacheHierarchies Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CacheHierarchies ctObj = new CT_CacheHierarchies();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.cacheHierarchy = new List<CT_CacheHierarchy>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cacheHierarchy")
+                if(childNode.LocalName == "cacheHierarchy")
                     ctObj.cacheHierarchy.Add(CT_CacheHierarchy.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -2668,16 +2668,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.cacheHierarchy == null || this.cacheHierarchy.Count == 0)
+            if(this.cacheHierarchy == null || this.cacheHierarchy.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.cacheHierarchy != null && this.cacheHierarchy.Count > 0)
+                if(this.cacheHierarchy != null && this.cacheHierarchy.Count > 0)
                 {
-                    foreach (CT_CacheHierarchy x in this.cacheHierarchy)
+                    foreach(CT_CacheHierarchy x in this.cacheHierarchy)
                     {
                         x.Write(sw, "cacheHierarchy");
                     }
@@ -2737,31 +2737,31 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Boolean
     {
         public static CT_Boolean Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Boolean ctObj = new CT_Boolean();
-            if (node.Attributes["v"] != null)
+            if(node.Attributes["v"] != null)
                 ctObj.v = XmlHelper.ReadBool(node.Attributes["v"]);
-            if (node.Attributes["u"] != null)
+            if(node.Attributes["u"] != null)
                 ctObj.u = XmlHelper.ReadBool(node.Attributes["u"]);
-            if (node.Attributes["f"] != null)
+            if(node.Attributes["f"] != null)
                 ctObj.f = XmlHelper.ReadBool(node.Attributes["f"]);
             ctObj.c = XmlHelper.ReadString(node.Attributes["c"]);
-            if (node.Attributes["cp"] != null)
+            if(node.Attributes["cp"] != null)
                 ctObj.cp = XmlHelper.ReadUInt(node.Attributes["cp"]);
             ctObj.x = new List<CT_X>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "x")
+                if(childNode.LocalName == "x")
                     ctObj.x.Add(CT_X.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -2778,16 +2778,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "c", this.c, false);
             XmlHelper.WriteAttribute(sw, "cp", this.cp, false);
 
-            if (this.x == null || this.x.Count == 0)
+            if(this.x == null || this.x.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.x != null && this.x.Count > 0)
+                if(this.x != null && this.x.Count > 0)
                 {
-                    foreach (CT_X x in this.x)
+                    foreach(CT_X x in this.x)
                     {
                         x.Write(sw, "x");
                     }
@@ -2937,9 +2937,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_X
@@ -2968,10 +2968,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_X Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_X ctObj = new CT_X();
-            if (node.Attributes["v"] != null)
+            if(node.Attributes["v"] != null)
                 ctObj.v = XmlHelper.ReadInt(node.Attributes["v"]);
             return ctObj;
         }
@@ -2986,31 +2986,31 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_DateTime
     {
         public static CT_DateTime Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DateTime ctObj = new CT_DateTime();
-            if (node.Attributes["v"] != null)
-                ctObj.v = XmlHelper.ReadDateTime(node.Attributes["v"]); 
-            if (node.Attributes["u"] != null)
+            if(node.Attributes["v"] != null)
+                ctObj.v = XmlHelper.ReadDateTime(node.Attributes["v"]);
+            if(node.Attributes["u"] != null)
                 ctObj.u = XmlHelper.ReadBool(node.Attributes["u"]);
-            if (node.Attributes["f"] != null)
+            if(node.Attributes["f"] != null)
                 ctObj.f = XmlHelper.ReadBool(node.Attributes["f"]);
             ctObj.c = XmlHelper.ReadString(node.Attributes["c"]);
-            if (node.Attributes["cp"] != null)
+            if(node.Attributes["cp"] != null)
                 ctObj.cp = XmlHelper.ReadUInt(node.Attributes["cp"]);
             ctObj.x = new List<CT_X>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "x")
+                if(childNode.LocalName == "x")
                     ctObj.x.Add(CT_X.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -3027,16 +3027,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "c", this.c, false);
             XmlHelper.WriteAttribute(sw, "cp", this.cp, false);
 
-            if (this.x == null || this.x.Count == 0)
+            if(this.x == null || this.x.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.x != null && this.x.Count > 0)
+                if(this.x != null && this.x.Count > 0)
                 {
-                    foreach (CT_X x in this.x)
+                    foreach(CT_X x in this.x)
                     {
                         x.Write(sw, "x");
                     }
@@ -3186,9 +3186,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Error
@@ -3480,35 +3480,35 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Error Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Error ctObj = new CT_Error();
             ctObj.v = XmlHelper.ReadString(node.Attributes["v"]);
-            if (node.Attributes["u"] != null)
+            if(node.Attributes["u"] != null)
                 ctObj.u = XmlHelper.ReadBool(node.Attributes["u"]);
-            if (node.Attributes["f"] != null)
+            if(node.Attributes["f"] != null)
                 ctObj.f = XmlHelper.ReadBool(node.Attributes["f"]);
             ctObj.c = XmlHelper.ReadString(node.Attributes["c"]);
-            if (node.Attributes["cp"] != null)
+            if(node.Attributes["cp"] != null)
                 ctObj.cp = XmlHelper.ReadUInt(node.Attributes["cp"]);
-            if (node.Attributes["in"] != null)
+            if(node.Attributes["in"] != null)
                 ctObj.@in = XmlHelper.ReadUInt(node.Attributes["in"]);
             ctObj.bc = XmlHelper.ReadBytes(node.Attributes["bc"]);
             ctObj.fc = XmlHelper.ReadBytes(node.Attributes["fc"]);
-            if (node.Attributes["i"] != null)
+            if(node.Attributes["i"] != null)
                 ctObj.i = XmlHelper.ReadBool(node.Attributes["i"]);
-            if (node.Attributes["un"] != null)
+            if(node.Attributes["un"] != null)
                 ctObj.un = XmlHelper.ReadBool(node.Attributes["un"]);
-            if (node.Attributes["st"] != null)
+            if(node.Attributes["st"] != null)
                 ctObj.st = XmlHelper.ReadBool(node.Attributes["st"]);
-            if (node.Attributes["b"] != null)
+            if(node.Attributes["b"] != null)
                 ctObj.b = XmlHelper.ReadBool(node.Attributes["b"]);
             ctObj.x = new List<CT_X>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tpls")
+                if(childNode.LocalName == "tpls")
                     ctObj.tpls = CT_Tuples.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "x")
+                else if(childNode.LocalName == "x")
                     ctObj.x.Add(CT_X.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -3532,18 +3532,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "st", this.st, false);
             XmlHelper.WriteAttribute(sw, "b", this.b, false);
 
-            if ((this.tpls == null || this.tpls.tpl.Count == 0) && (this.x == null || this.x.Count == 0))
+            if((this.tpls == null || this.tpls.tpl.Count == 0) && (this.x == null || this.x.Count == 0))
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.tpls != null)
+                if(this.tpls != null)
                     this.tpls.Write(sw, "tpls");
-                if (this.x != null && this.x.Count > 0)
+                if(this.x != null && this.x.Count > 0)
                 {
-                    foreach (CT_X x in this.x)
+                    foreach(CT_X x in this.x)
                     {
                         x.Write(sw, "x");
                     }
@@ -3553,9 +3553,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Tuples
@@ -3613,15 +3613,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Tuples Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Tuples ctObj = new CT_Tuples();
-            if (node.Attributes["c"] != null)
+            if(node.Attributes["c"] != null)
                 ctObj.c = XmlHelper.ReadUInt(node.Attributes["c"]);
             ctObj.tpl = new List<CT_Tuple>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tpl")
+                if(childNode.LocalName == "tpl")
                     ctObj.tpl.Add(CT_Tuple.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -3634,16 +3634,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "c", this.c);
 
-            if (this.tpl == null || this.tpl.Count == 0)
+            if(this.tpl == null || this.tpl.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.tpl != null && this.tpl.Count > 0)
+                if(this.tpl != null && this.tpl.Count > 0)
                 {
-                    foreach (CT_Tuple x in this.tpl)
+                    foreach(CT_Tuple x in this.tpl)
                     {
                         x.Write(sw, "tpl");
                     }
@@ -3654,9 +3654,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Tuple
@@ -3739,14 +3739,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Tuple Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Tuple ctObj = new CT_Tuple();
-            if (node.Attributes["fld"] != null)
+            if(node.Attributes["fld"] != null)
                 ctObj.fld = XmlHelper.ReadUInt(node.Attributes["fld"]);
-            if (node.Attributes["hier"] != null)
+            if(node.Attributes["hier"] != null)
                 ctObj.hier = XmlHelper.ReadUInt(node.Attributes["hier"]);
-            if (node.Attributes["item"] != null)
+            if(node.Attributes["item"] != null)
                 ctObj.item = XmlHelper.ReadUInt(node.Attributes["item"]);
             return ctObj;
         }
@@ -4043,35 +4043,35 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Missing Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Missing ctObj = new CT_Missing();
-            if (node.Attributes["u"] != null)
+            if(node.Attributes["u"] != null)
                 ctObj.u = XmlHelper.ReadBool(node.Attributes["u"]);
-            if (node.Attributes["f"] != null)
+            if(node.Attributes["f"] != null)
                 ctObj.f = XmlHelper.ReadBool(node.Attributes["f"]);
             ctObj.c = XmlHelper.ReadString(node.Attributes["c"]);
-            if (node.Attributes["cp"] != null)
+            if(node.Attributes["cp"] != null)
                 ctObj.cp = XmlHelper.ReadUInt(node.Attributes["cp"]);
-            if (node.Attributes["in"] != null)
+            if(node.Attributes["in"] != null)
                 ctObj.@in = XmlHelper.ReadUInt(node.Attributes["in"]);
             ctObj.bc = XmlHelper.ReadBytes(node.Attributes["bc"]);
             ctObj.fc = XmlHelper.ReadBytes(node.Attributes["fc"]);
-            if (node.Attributes["i"] != null)
+            if(node.Attributes["i"] != null)
                 ctObj.i = XmlHelper.ReadBool(node.Attributes["i"]);
-            if (node.Attributes["un"] != null)
+            if(node.Attributes["un"] != null)
                 ctObj.un = XmlHelper.ReadBool(node.Attributes["un"]);
-            if (node.Attributes["st"] != null)
+            if(node.Attributes["st"] != null)
                 ctObj.st = XmlHelper.ReadBool(node.Attributes["st"]);
-            if (node.Attributes["b"] != null)
+            if(node.Attributes["b"] != null)
                 ctObj.b = XmlHelper.ReadBool(node.Attributes["b"]);
             ctObj.tpls = new List<CT_Tuples>();
             ctObj.x = new List<CT_X>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tpls")
+                if(childNode.LocalName == "tpls")
                     ctObj.tpls.Add(CT_Tuples.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "x")
+                else if(childNode.LocalName == "x")
                     ctObj.x.Add(CT_X.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -4094,23 +4094,23 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "st", this.st, false);
             XmlHelper.WriteAttribute(sw, "b", this.b, false);
 
-            if ((this.tpls == null || this.tpls.Count == 0) && (this.x == null || this.x.Count == 0))
+            if((this.tpls == null || this.tpls.Count == 0) && (this.x == null || this.x.Count == 0))
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.tpls != null && this.tpls.Count > 0)
+                if(this.tpls != null && this.tpls.Count > 0)
                 {
-                    foreach (CT_Tuples x in this.tpls)
+                    foreach(CT_Tuples x in this.tpls)
                     {
                         x.Write(sw, "tpls");
                     }
                 }
-                if (this.x != null && this.x.Count > 0)
+                if(this.x != null && this.x.Count > 0)
                 {
-                    foreach (CT_X x in this.x)
+                    foreach(CT_X x in this.x)
                     {
                         x.Write(sw, "x");
                     }
@@ -4121,9 +4121,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Number
@@ -4415,37 +4415,37 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Number Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Number ctObj = new CT_Number();
-            if (node.Attributes["v"] != null)
+            if(node.Attributes["v"] != null)
                 ctObj.v = XmlHelper.ReadDouble(node.Attributes["v"]);
-            if (node.Attributes["u"] != null)
+            if(node.Attributes["u"] != null)
                 ctObj.u = XmlHelper.ReadBool(node.Attributes["u"]);
-            if (node.Attributes["f"] != null)
+            if(node.Attributes["f"] != null)
                 ctObj.f = XmlHelper.ReadBool(node.Attributes["f"]);
             ctObj.c = XmlHelper.ReadString(node.Attributes["c"]);
-            if (node.Attributes["cp"] != null)
+            if(node.Attributes["cp"] != null)
                 ctObj.cp = XmlHelper.ReadUInt(node.Attributes["cp"]);
-            if (node.Attributes["in"] != null)
+            if(node.Attributes["in"] != null)
                 ctObj.@in = XmlHelper.ReadUInt(node.Attributes["in"]);
             ctObj.bc = XmlHelper.ReadBytes(node.Attributes["bc"]);
             ctObj.fc = XmlHelper.ReadBytes(node.Attributes["fc"]);
-            if (node.Attributes["i"] != null)
+            if(node.Attributes["i"] != null)
                 ctObj.i = XmlHelper.ReadBool(node.Attributes["i"]);
-            if (node.Attributes["un"] != null)
+            if(node.Attributes["un"] != null)
                 ctObj.un = XmlHelper.ReadBool(node.Attributes["un"]);
-            if (node.Attributes["st"] != null)
+            if(node.Attributes["st"] != null)
                 ctObj.st = XmlHelper.ReadBool(node.Attributes["st"]);
-            if (node.Attributes["b"] != null)
+            if(node.Attributes["b"] != null)
                 ctObj.b = XmlHelper.ReadBool(node.Attributes["b"]);
             ctObj.tpls = new List<CT_Tuples>();
             ctObj.x = new List<CT_X>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tpls")
+                if(childNode.LocalName == "tpls")
                     ctObj.tpls.Add(CT_Tuples.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "x")
+                else if(childNode.LocalName == "x")
                     ctObj.x.Add(CT_X.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -4467,23 +4467,23 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "st", this.st, false);
             XmlHelper.WriteAttribute(sw, "b", this.b, false);
 
-            if ((this.tpls == null || this.tpls.Count == 0) && (this.x == null || this.x.Count == 0))
+            if((this.tpls == null || this.tpls.Count == 0) && (this.x == null || this.x.Count == 0))
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.tpls != null && this.tpls.Count > 0)
+                if(this.tpls != null && this.tpls.Count > 0)
                 {
-                    foreach (CT_Tuples x in this.tpls)
+                    foreach(CT_Tuples x in this.tpls)
                     {
                         x.Write(sw, "tpls");
                     }
                 }
-                if (this.x != null && this.x.Count > 0)
+                if(this.x != null && this.x.Count > 0)
                 {
-                    foreach (CT_X x in this.x)
+                    foreach(CT_X x in this.x)
                     {
                         x.Write(sw, "x");
                     }
@@ -4784,36 +4784,36 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_String Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_String ctObj = new CT_String();
             ctObj.v = XmlHelper.ReadString(node.Attributes["v"]);
-            if (node.Attributes["u"] != null)
+            if(node.Attributes["u"] != null)
                 ctObj.u = XmlHelper.ReadBool(node.Attributes["u"]);
-            if (node.Attributes["f"] != null)
+            if(node.Attributes["f"] != null)
                 ctObj.f = XmlHelper.ReadBool(node.Attributes["f"]);
             ctObj.c = XmlHelper.ReadString(node.Attributes["c"]);
-            if (node.Attributes["cp"] != null)
+            if(node.Attributes["cp"] != null)
                 ctObj.cp = XmlHelper.ReadUInt(node.Attributes["cp"]);
-            if (node.Attributes["in"] != null)
+            if(node.Attributes["in"] != null)
                 ctObj.@in = XmlHelper.ReadUInt(node.Attributes["in"]);
             ctObj.bc = XmlHelper.ReadBytes(node.Attributes["bc"]);
             ctObj.fc = XmlHelper.ReadBytes(node.Attributes["fc"]);
-            if (node.Attributes["i"] != null)
+            if(node.Attributes["i"] != null)
                 ctObj.i = XmlHelper.ReadBool(node.Attributes["i"]);
-            if (node.Attributes["un"] != null)
+            if(node.Attributes["un"] != null)
                 ctObj.un = XmlHelper.ReadBool(node.Attributes["un"]);
-            if (node.Attributes["st"] != null)
+            if(node.Attributes["st"] != null)
                 ctObj.st = XmlHelper.ReadBool(node.Attributes["st"]);
-            if (node.Attributes["b"] != null)
+            if(node.Attributes["b"] != null)
                 ctObj.b = XmlHelper.ReadBool(node.Attributes["b"]);
             ctObj.tpls = new List<CT_Tuples>();
             ctObj.x = new List<CT_X>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tpls")
+                if(childNode.LocalName == "tpls")
                     ctObj.tpls.Add(CT_Tuples.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "x")
+                else if(childNode.LocalName == "x")
                     ctObj.x.Add(CT_X.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -4837,23 +4837,23 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "st", this.st, false);
             XmlHelper.WriteAttribute(sw, "b", this.b, false);
 
-            if ((this.tpls == null || this.tpls.Count == 0) && (this.x == null || this.x.Count == 0))
+            if((this.tpls == null || this.tpls.Count == 0) && (this.x == null || this.x.Count == 0))
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.tpls != null && this.tpls.Count > 0)
+                if(this.tpls != null && this.tpls.Count > 0)
                 {
-                    foreach (CT_Tuples x in this.tpls)
+                    foreach(CT_Tuples x in this.tpls)
                     {
                         x.Write(sw, "tpls");
                     }
                 }
-                if (this.x != null && this.x.Count > 0)
+                if(this.x != null && this.x.Count > 0)
                 {
-                    foreach (CT_X x in this.x)
+                    foreach(CT_X x in this.x)
                     {
                         x.Write(sw, "x");
                     }
@@ -4864,29 +4864,29 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_FieldGroup
     {
         public static CT_FieldGroup Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FieldGroup ctObj = new CT_FieldGroup();
-            if (node.Attributes["par"] != null)
+            if(node.Attributes["par"] != null)
                 ctObj.par = XmlHelper.ReadUInt(node.Attributes["par"]);
-            if (node.Attributes["base"] != null)
+            if(node.Attributes["base"] != null)
                 ctObj.@base = XmlHelper.ReadUInt(node.Attributes["base"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "rangePr")
+                if(childNode.LocalName == "rangePr")
                     ctObj.rangePr = CT_RangePr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "discretePr")
+                else if(childNode.LocalName == "discretePr")
                     ctObj.discretePr = CT_DiscretePr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "groupItems")
+                else if(childNode.LocalName == "groupItems")
                     ctObj.groupItems = CT_GroupItems.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -4900,18 +4900,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "par", this.par);
             XmlHelper.WriteAttribute(sw, "base", this.@base);
 
-            if (this.rangePr == null && this.discretePr == null && this.groupItems == null)
+            if(this.rangePr == null && this.discretePr == null && this.groupItems == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.rangePr != null)
+                if(this.rangePr != null)
                     this.rangePr.Write(sw, "rangePr");
-                if (this.discretePr != null)
+                if(this.discretePr != null)
                     this.discretePr.Write(sw, "discretePr");
-                if (this.groupItems != null)
+                if(this.groupItems != null)
                     this.groupItems.Write(sw, "groupItems");
                 sw.WriteEndElement(nodeName);
             }
@@ -5030,33 +5030,33 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_RangePr
     {
         public static CT_RangePr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_RangePr ctObj = new CT_RangePr();
-            if (node.Attributes["autoStart"] != null)
+            if(node.Attributes["autoStart"] != null)
                 ctObj.autoStart = XmlHelper.ReadBool(node.Attributes["autoStart"]);
-            if (node.Attributes["autoEnd"] != null)
+            if(node.Attributes["autoEnd"] != null)
                 ctObj.autoEnd = XmlHelper.ReadBool(node.Attributes["autoEnd"]);
-            if (node.Attributes["groupBy"] != null)
-                ctObj.groupBy = (ST_GroupBy)Enum.Parse(typeof(ST_GroupBy), node.Attributes["groupBy"].Value);
-            if (node.Attributes["startNum"] != null)
+            if(node.Attributes["groupBy"] != null)
+                ctObj.groupBy = (ST_GroupBy) Enum.Parse(typeof(ST_GroupBy), node.Attributes["groupBy"].Value);
+            if(node.Attributes["startNum"] != null)
                 ctObj.startNum = XmlHelper.ReadDouble(node.Attributes["startNum"]);
-            if (node.Attributes["endNum"] != null)
+            if(node.Attributes["endNum"] != null)
                 ctObj.endNum = XmlHelper.ReadDouble(node.Attributes["endNum"]);
-            if (node.Attributes["startDate"] != null)
+            if(node.Attributes["startDate"] != null)
                 ctObj.startDate = XmlHelper.ReadDateTime(node.Attributes["startDate"]);
-            if (node.Attributes["endDate"] != null)
+            if(node.Attributes["endDate"] != null)
                 ctObj.endDate = XmlHelper.ReadDateTime(node.Attributes["endDate"]);
-            if (node.Attributes["groupInterval"] != null)
+            if(node.Attributes["groupInterval"] != null)
                 ctObj.groupInterval = XmlHelper.ReadDouble(node.Attributes["groupInterval"]);
             return ctObj;
         }
@@ -5270,8 +5270,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = false)]
     public enum ST_GroupBy
@@ -5302,24 +5302,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         years,
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_DiscretePr
     {
         public static CT_DiscretePr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DiscretePr ctObj = new CT_DiscretePr();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.x = new List<CT_Index>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "x")
+                if(childNode.LocalName == "x")
                     ctObj.x.Add(CT_Index.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -5332,16 +5332,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.x == null || this.x.Count == 0)
+            if(this.x == null || this.x.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.x != null && this.x.Count > 0)
+                if(this.x != null && this.x.Count > 0)
                 {
-                    foreach (CT_Index x in this.x)
+                    foreach(CT_Index x in this.x)
                     {
                         x.Write(sw, "x");
                     }
@@ -5401,46 +5401,46 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_GroupItems
     {
         public static CT_GroupItems Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupItems ctObj = new CT_GroupItems();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "e")
+                if(childNode.LocalName == "e")
                 {
                     ctObj.Items.Add(CT_Error.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.e);
                 }
-                else if (childNode.LocalName == "b")
+                else if(childNode.LocalName == "b")
                 {
                     ctObj.Items.Add(CT_Boolean.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.b);
                 }
-                else if (childNode.LocalName == "d")
+                else if(childNode.LocalName == "d")
                 {
                     ctObj.Items.Add(CT_DateTime.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.d);
                 }
-                else if (childNode.LocalName == "n")
+                else if(childNode.LocalName == "n")
                 {
                     ctObj.Items.Add(CT_Number.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.n);
                 }
-                else if (childNode.LocalName == "m")
+                else if(childNode.LocalName == "m")
                 {
                     ctObj.Items.Add(CT_Missing.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.m);
                 }
-                else if (childNode.LocalName == "s")
+                else if(childNode.LocalName == "s")
                 {
                     ctObj.Items.Add(CT_String.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.s);
@@ -5452,26 +5452,26 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            if (this.Items == null || this.Items.Count == 0)
+            if(this.Items == null || this.Items.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                foreach (object o in this.Items)
+                foreach(object o in this.Items)
                 {
-                    if (o is CT_Error error)
+                    if(o is CT_Error error)
                         error.Write(sw, "e");
-                    else if (o is CT_Boolean b)
+                    else if(o is CT_Boolean b)
                         b.Write(sw, "b");
-                    else if (o is CT_DateTime time)
+                    else if(o is CT_DateTime time)
                         time.Write(sw, "d");
-                    else if (o is CT_Number number)
+                    else if(o is CT_Number number)
                         number.Write(sw, "n");
-                    else if (o is CT_Missing missing)
+                    else if(o is CT_Missing missing)
                         missing.Write(sw, "m");
-                    else if (o is CT_String ctString)
+                    else if(o is CT_String ctString)
                         ctString.Write(sw, "s");
                 }
                 sw.WriteEndElement(nodeName);
@@ -5534,24 +5534,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_FieldsUsage
     {
         public static CT_FieldsUsage Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FieldsUsage ctObj = new CT_FieldsUsage();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.fieldUsage = new List<CT_FieldUsage>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "fieldUsage")
+                if(childNode.LocalName == "fieldUsage")
                     ctObj.fieldUsage.Add(CT_FieldUsage.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -5564,16 +5564,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.fieldUsage == null || this.fieldUsage.Count == 0)
+            if(this.fieldUsage == null || this.fieldUsage.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.fieldUsage != null && this.fieldUsage.Count > 0)
+                if(this.fieldUsage != null && this.fieldUsage.Count > 0)
                 {
-                    foreach (CT_FieldUsage x in this.fieldUsage)
+                    foreach(CT_FieldUsage x in this.fieldUsage)
                     {
                         x.Write(sw, "fieldUsage");
                     }
@@ -5633,19 +5633,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_FieldUsage
     {
         public static CT_FieldUsage Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FieldUsage ctObj = new CT_FieldUsage();
-            if (node.Attributes["x"] != null)
+            if(node.Attributes["x"] != null)
                 ctObj.x = XmlHelper.ReadInt(node.Attributes["x"]);
             return ctObj;
         }
@@ -5675,24 +5675,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_GroupLevels
     {
         public static CT_GroupLevels Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupLevels ctObj = new CT_GroupLevels();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.groupLevel = new List<CT_GroupLevel>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "groupLevel")
+                if(childNode.LocalName == "groupLevel")
                     ctObj.groupLevel.Add(CT_GroupLevel.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -5705,16 +5705,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.groupLevel == null || this.groupLevel.Count == 0)
+            if(this.groupLevel == null || this.groupLevel.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.groupLevel != null && this.groupLevel.Count > 0)
+                if(this.groupLevel != null && this.groupLevel.Count > 0)
                 {
-                    foreach (CT_GroupLevel x in this.groupLevel)
+                    foreach(CT_GroupLevel x in this.groupLevel)
                     {
                         x.Write(sw, "groupLevel");
                     }
@@ -5774,29 +5774,29 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_GroupLevel
     {
         public static CT_GroupLevel Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupLevel ctObj = new CT_GroupLevel();
             ctObj.uniqueName = XmlHelper.ReadString(node.Attributes["uniqueName"]);
             ctObj.caption = XmlHelper.ReadString(node.Attributes["caption"]);
-            if (node.Attributes["user"] != null)
+            if(node.Attributes["user"] != null)
                 ctObj.user = XmlHelper.ReadBool(node.Attributes["user"]);
-            if (node.Attributes["customRollUp"] != null)
+            if(node.Attributes["customRollUp"] != null)
                 ctObj.customRollUp = XmlHelper.ReadBool(node.Attributes["customRollUp"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "groups")
+                if(childNode.LocalName == "groups")
                     ctObj.groups = CT_Groups.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -5812,16 +5812,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "user", this.user);
             XmlHelper.WriteAttribute(sw, "customRollUp", this.customRollUp);
 
-            if (this.groups == null && this.extLst == null)
+            if(this.groups == null && this.extLst == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.groups != null)
+                if(this.groups != null)
                     this.groups.Write(sw, "groups");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }
@@ -5928,24 +5928,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Groups
     {
         public static CT_Groups Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Groups ctObj = new CT_Groups();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.group = new List<CT_LevelGroup>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "group")
+                if(childNode.LocalName == "group")
                     ctObj.group.Add(CT_LevelGroup.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -5958,16 +5958,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.group == null || this.group.Count == 0)
+            if(this.group == null || this.group.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.group != null && this.group.Count > 0)
+                if(this.group != null && this.group.Count > 0)
                 {
-                    foreach (CT_LevelGroup x in this.group)
+                    foreach(CT_LevelGroup x in this.group)
                     {
                         x.Write(sw, "group");
                     }
@@ -6027,27 +6027,27 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_LevelGroup
     {
         public static CT_LevelGroup Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LevelGroup ctObj = new CT_LevelGroup();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
             ctObj.uniqueName = XmlHelper.ReadString(node.Attributes["uniqueName"]);
             ctObj.caption = XmlHelper.ReadString(node.Attributes["caption"]);
             ctObj.uniqueParent = XmlHelper.ReadString(node.Attributes["uniqueParent"]);
-            if (node.Attributes["id"] != null)
+            if(node.Attributes["id"] != null)
                 ctObj.id = XmlHelper.ReadInt(node.Attributes["id"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "groupMembers")
+                if(childNode.LocalName == "groupMembers")
                     ctObj.groupMembers = CT_GroupMembers.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -6064,14 +6064,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "uniqueParent", this.uniqueParent);
             XmlHelper.WriteAttribute(sw, "id", this.id);
 
-            if (this.groupMembers == null)
+            if(this.groupMembers == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.groupMembers != null)
+                if(this.groupMembers != null)
                     this.groupMembers.Write(sw, "groupMembers");
                 sw.WriteEndElement(nodeName);
             }
@@ -6188,24 +6188,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_GroupMembers
     {
         public static CT_GroupMembers Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupMembers ctObj = new CT_GroupMembers();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.groupMember = new List<CT_GroupMember>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "groupMember")
+                if(childNode.LocalName == "groupMember")
                     ctObj.groupMember.Add(CT_GroupMember.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -6218,16 +6218,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.groupMember == null || this.groupMember.Count == 0)
+            if(this.groupMember == null || this.groupMember.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.groupMember != null && this.groupMember.Count > 0)
+                if(this.groupMember != null && this.groupMember.Count > 0)
                 {
-                    foreach (CT_GroupMember x in this.groupMember)
+                    foreach(CT_GroupMember x in this.groupMember)
                     {
                         x.Write(sw, "groupMember");
                     }
@@ -6287,20 +6287,20 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_GroupMember
     {
         public static CT_GroupMember Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupMember ctObj = new CT_GroupMember();
             ctObj.uniqueName = XmlHelper.ReadString(node.Attributes["uniqueName"]);
-            if (node.Attributes["group"] != null)
+            if(node.Attributes["group"] != null)
                 ctObj.group = XmlHelper.ReadBool(node.Attributes["group"]);
             return ctObj;
         }
@@ -6351,35 +6351,35 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             }
         }
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CacheHierarchy
     {
         public static CT_CacheHierarchy Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CacheHierarchy ctObj = new CT_CacheHierarchy();
             ctObj.uniqueName = XmlHelper.ReadString(node.Attributes["uniqueName"]);
             ctObj.caption = XmlHelper.ReadString(node.Attributes["caption"]);
-            if (node.Attributes["measure"] != null)
+            if(node.Attributes["measure"] != null)
                 ctObj.measure = XmlHelper.ReadBool(node.Attributes["measure"]);
-            if (node.Attributes["set"] != null)
+            if(node.Attributes["set"] != null)
                 ctObj.set = XmlHelper.ReadBool(node.Attributes["set"]);
-            if (node.Attributes["parentSet"] != null)
+            if(node.Attributes["parentSet"] != null)
                 ctObj.parentSet = XmlHelper.ReadUInt(node.Attributes["parentSet"]);
-            if (node.Attributes["iconSet"] != null)
+            if(node.Attributes["iconSet"] != null)
                 ctObj.iconSet = XmlHelper.ReadInt(node.Attributes["iconSet"]);
-            if (node.Attributes["attribute"] != null)
+            if(node.Attributes["attribute"] != null)
                 ctObj.attribute = XmlHelper.ReadBool(node.Attributes["attribute"]);
-            if (node.Attributes["time"] != null)
+            if(node.Attributes["time"] != null)
                 ctObj.time = XmlHelper.ReadBool(node.Attributes["time"]);
-            if (node.Attributes["keyAttribute"] != null)
+            if(node.Attributes["keyAttribute"] != null)
                 ctObj.keyAttribute = XmlHelper.ReadBool(node.Attributes["keyAttribute"]);
             ctObj.defaultMemberUniqueName = XmlHelper.ReadString(node.Attributes["defaultMemberUniqueName"]);
             ctObj.allUniqueName = XmlHelper.ReadString(node.Attributes["allUniqueName"]);
@@ -6387,27 +6387,27 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.dimensionUniqueName = XmlHelper.ReadString(node.Attributes["dimensionUniqueName"]);
             ctObj.displayFolder = XmlHelper.ReadString(node.Attributes["displayFolder"]);
             ctObj.measureGroup = XmlHelper.ReadString(node.Attributes["measureGroup"]);
-            if (node.Attributes["measures"] != null)
+            if(node.Attributes["measures"] != null)
                 ctObj.measures = XmlHelper.ReadBool(node.Attributes["measures"]);
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
-            if (node.Attributes["oneField"] != null)
+            if(node.Attributes["oneField"] != null)
                 ctObj.oneField = XmlHelper.ReadBool(node.Attributes["oneField"]);
-            if (node.Attributes["memberValueDatatype"] != null)
+            if(node.Attributes["memberValueDatatype"] != null)
                 ctObj.memberValueDatatype = XmlHelper.ReadUShort(node.Attributes["memberValueDatatype"]);
-            if (node.Attributes["unbalanced"] != null)
+            if(node.Attributes["unbalanced"] != null)
                 ctObj.unbalanced = XmlHelper.ReadBool(node.Attributes["unbalanced"]);
-            if (node.Attributes["unbalancedGroup"] != null)
+            if(node.Attributes["unbalancedGroup"] != null)
                 ctObj.unbalancedGroup = XmlHelper.ReadBool(node.Attributes["unbalancedGroup"]);
-            if (node.Attributes["hidden"] != null)
+            if(node.Attributes["hidden"] != null)
                 ctObj.hidden = XmlHelper.ReadBool(node.Attributes["hidden"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "fieldsUsage")
+                if(childNode.LocalName == "fieldsUsage")
                     ctObj.fieldsUsage = CT_FieldsUsage.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "groupLevels")
+                else if(childNode.LocalName == "groupLevels")
                     ctObj.groupLevels = CT_GroupLevels.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -6441,18 +6441,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "unbalancedGroup", this.unbalancedGroup);
             XmlHelper.WriteAttribute(sw, "hidden", this.hidden);
 
-            if (this.fieldsUsage == null && this.groupLevels == null && this.extLst == null)
+            if(this.fieldsUsage == null && this.groupLevels == null && this.extLst == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.fieldsUsage != null)
+                if(this.fieldsUsage != null)
                     this.fieldsUsage.Write(sw, "fieldsUsage");
-                if (this.groupLevels != null)
+                if(this.groupLevels != null)
                     this.groupLevels.Write(sw, "groupLevels");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }
@@ -6919,24 +6919,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_PCDKPIs
     {
         public static CT_PCDKPIs Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PCDKPIs ctObj = new CT_PCDKPIs();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.kpi = new List<CT_PCDKPI>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "kpi")
+                if(childNode.LocalName == "kpi")
                     ctObj.kpi.Add(CT_PCDKPI.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -6948,16 +6948,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
-            if (this.kpi == null || this.kpi.Count == 0)
+            if(this.kpi == null || this.kpi.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.kpi != null && this.kpi.Count > 0)
+                if(this.kpi != null && this.kpi.Count > 0)
                 {
-                    foreach (CT_PCDKPI x in this.kpi)
+                    foreach(CT_PCDKPI x in this.kpi)
                     {
                         x.Write(sw, "kpi");
                     }
@@ -7017,16 +7017,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_PCDKPI
     {
         public static CT_PCDKPI Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PCDKPI ctObj = new CT_PCDKPI();
             ctObj.uniqueName = XmlHelper.ReadString(node.Attributes["uniqueName"]);
@@ -7228,29 +7228,29 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_TupleCache
     {
         public static CT_TupleCache Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TupleCache ctObj = new CT_TupleCache();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "entries")
+                if(childNode.LocalName == "entries")
                     ctObj.entries = CT_PCDSDTCEntries.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sets")
+                else if(childNode.LocalName == "sets")
                     ctObj.sets = CT_Sets.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "queryCache")
+                else if(childNode.LocalName == "queryCache")
                     ctObj.queryCache = CT_QueryCache.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "serverFormats")
+                else if(childNode.LocalName == "serverFormats")
                     ctObj.serverFormats = CT_ServerFormats.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -7261,7 +7261,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            if (this.entries == null
+            if(this.entries == null
                 && this.sets == null
                 && this.queryCache == null
                 && this.serverFormats == null
@@ -7272,15 +7272,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             else
             {
                 sw.Write('>');
-                if (this.entries != null)
+                if(this.entries != null)
                     this.entries.Write(sw, "entries");
-                if (this.sets != null)
+                if(this.sets != null)
                     this.sets.Write(sw, "sets");
-                if (this.queryCache != null)
+                if(this.queryCache != null)
                     this.queryCache.Write(sw, "queryCache");
-                if (this.serverFormats != null)
+                if(this.serverFormats != null)
                     this.serverFormats.Write(sw, "serverFormats");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }
@@ -7371,36 +7371,36 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_PCDSDTCEntries
     {
         public static CT_PCDSDTCEntries Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PCDSDTCEntries ctObj = new CT_PCDSDTCEntries();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "m")
+                if(childNode.LocalName == "m")
                 {
                     ctObj.Items.Add(CT_Missing.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.m);
                 }
-                else if (childNode.LocalName == "n")
+                else if(childNode.LocalName == "n")
                 {
                     ctObj.Items.Add(CT_Number.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.n);
                 }
-                else if (childNode.LocalName == "e")
+                else if(childNode.LocalName == "e")
                 {
                     ctObj.Items.Add(CT_Error.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.e);
                 }
-                else if (childNode.LocalName == "s")
+                else if(childNode.LocalName == "s")
                 {
                     ctObj.Items.Add(CT_String.Parse(childNode, namespaceManager));
                     //ctObj.ItemsElementName.Add(ItemsChoiceType1.s);
@@ -7412,22 +7412,22 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            if (this.Items == null || this.Items.Count == 0)
+            if(this.Items == null || this.Items.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                foreach (object o in this.Items)
+                foreach(object o in this.Items)
                 {
-                    if (o is CT_Missing missing)
+                    if(o is CT_Missing missing)
                         missing.Write(sw, "m");
-                    else if (o is CT_Number number)
+                    else if(o is CT_Number number)
                         number.Write(sw, "n");
-                    else if (o is CT_Error error)
+                    else if(o is CT_Error error)
                         error.Write(sw, "e");
-                    else if (o is CT_String ctString)
+                    else if(o is CT_String ctString)
                         ctString.Write(sw, "s");
                 }
                 sw.WriteEndElement(nodeName);
@@ -7488,24 +7488,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Sets
     {
         public static CT_Sets Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Sets ctObj = new CT_Sets();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.set = new List<CT_Set>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "set")
+                if(childNode.LocalName == "set")
                     ctObj.set.Add(CT_Set.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -7518,16 +7518,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.set == null || this.set.Count == 0)
+            if(this.set == null || this.set.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.set != null && this.set.Count > 0)
+                if(this.set != null && this.set.Count > 0)
                 {
-                    foreach (CT_Set x in this.set)
+                    foreach(CT_Set x in this.set)
                     {
                         x.Write(sw, "set");
                     }
@@ -7587,33 +7587,33 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Set
     {
         public static CT_Set Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Set ctObj = new CT_Set();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
-            if (node.Attributes["maxRank"] != null)
+            if(node.Attributes["maxRank"] != null)
                 ctObj.maxRank = XmlHelper.ReadInt(node.Attributes["maxRank"]);
             ctObj.setDefinition = XmlHelper.ReadString(node.Attributes["setDefinition"]);
-            if (node.Attributes["sortType"] != null)
-                ctObj.sortType = (ST_SortType)Enum.Parse(typeof(ST_SortType), node.Attributes["sortType"].Value);
-            if (node.Attributes["queryFailed"] != null)
+            if(node.Attributes["sortType"] != null)
+                ctObj.sortType = (ST_SortType) Enum.Parse(typeof(ST_SortType), node.Attributes["sortType"].Value);
+            if(node.Attributes["queryFailed"] != null)
                 ctObj.queryFailed = XmlHelper.ReadBool(node.Attributes["queryFailed"]);
             ctObj.tpls = new List<CT_Tuples>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "sortByTuple")
+                if(childNode.LocalName == "sortByTuple")
                     ctObj.sortByTuple = CT_Tuples.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tpls")
+                else if(childNode.LocalName == "tpls")
                     ctObj.tpls.Add(CT_Tuples.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -7630,18 +7630,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "sortType", this.sortType.ToString());
             XmlHelper.WriteAttribute(sw, "queryFailed", this.queryFailed);
 
-            if (this.sortByTuple == null && (this.tpls == null || this.tpls.Count == 0))
+            if(this.sortByTuple == null && (this.tpls == null || this.tpls.Count == 0))
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.sortByTuple != null)
+                if(this.sortByTuple != null)
                     this.sortByTuple.Write(sw, "sortByTuple");
-                if (this.tpls != null && this.tpls.Count > 0)
+                if(this.tpls != null && this.tpls.Count > 0)
                 {
-                    foreach (CT_Tuples x in this.tpls)
+                    foreach(CT_Tuples x in this.tpls)
                     {
                         x.Write(sw, "tpls");
                     }
@@ -7781,8 +7781,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = false)]
     public enum ST_SortType
@@ -7810,24 +7810,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         descendingNatural,
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_QueryCache
     {
         public static CT_QueryCache Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_QueryCache ctObj = new CT_QueryCache();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.query = new List<CT_Query>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "query")
+                if(childNode.LocalName == "query")
                     ctObj.query.Add(CT_Query.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -7839,16 +7839,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
-            if (this.query == null || this.query.Count == 0)
+            if(this.query == null || this.query.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.query != null && this.query.Count > 0)
+                if(this.query != null && this.query.Count > 0)
                 {
-                    foreach (CT_Query x in this.query)
+                    foreach(CT_Query x in this.query)
                     {
                         x.Write(sw, "query");
                     }
@@ -7908,22 +7908,22 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Query
     {
         public static CT_Query Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Query ctObj = new CT_Query();
             ctObj.mdx = XmlHelper.ReadString(node.Attributes["mdx"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tpls")
+                if(childNode.LocalName == "tpls")
                     ctObj.tpls = CT_Tuples.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -7935,14 +7935,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "mdx", this.mdx);
-            if (this.tpls == null)
+            if(this.tpls == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.tpls != null)
+                if(this.tpls != null)
                     this.tpls.Write(sw, "tpls");
                 sw.WriteEndElement(nodeName);
             }
@@ -7984,24 +7984,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_ServerFormats
     {
         public static CT_ServerFormats Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ServerFormats ctObj = new CT_ServerFormats();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.serverFormat = new List<CT_ServerFormat>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "serverFormat")
+                if(childNode.LocalName == "serverFormat")
                     ctObj.serverFormat.Add(CT_ServerFormat.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -8014,16 +8014,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.serverFormat == null || this.serverFormat.Count == 0)
+            if(this.serverFormat == null || this.serverFormat.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.serverFormat != null && this.serverFormat.Count > 0)
+                if(this.serverFormat != null && this.serverFormat.Count > 0)
                 {
-                    foreach (CT_ServerFormat x in this.serverFormat)
+                    foreach(CT_ServerFormat x in this.serverFormat)
                     {
                         x.Write(sw, "serverFormat");
                     }
@@ -8083,16 +8083,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_ServerFormat
     {
         public static CT_ServerFormat Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ServerFormat ctObj = new CT_ServerFormat();
             ctObj.culture = XmlHelper.ReadString(node.Attributes["culture"]);
@@ -8141,24 +8141,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CalculatedItems
     {
         public static CT_CalculatedItems Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CalculatedItems ctObj = new CT_CalculatedItems();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.calculatedItem = new List<CT_CalculatedItem>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "calculatedItem")
+                if(childNode.LocalName == "calculatedItem")
                     ctObj.calculatedItem.Add(CT_CalculatedItem.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -8170,16 +8170,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
-            if (this.calculatedItem == null || this.calculatedItem.Count == 0)
+            if(this.calculatedItem == null || this.calculatedItem.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.calculatedItem != null && this.calculatedItem.Count > 0)
+                if(this.calculatedItem != null && this.calculatedItem.Count > 0)
                 {
-                    foreach (CT_CalculatedItem x in this.calculatedItem)
+                    foreach(CT_CalculatedItem x in this.calculatedItem)
                     {
                         x.Write(sw, "calculatedItem");
                     }
@@ -8239,26 +8239,26 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CalculatedItem
     {
         public static CT_CalculatedItem Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CalculatedItem ctObj = new CT_CalculatedItem();
-            if (node.Attributes["field"] != null)
+            if(node.Attributes["field"] != null)
                 ctObj.field = XmlHelper.ReadUInt(node.Attributes["field"]);
             ctObj.formula = XmlHelper.ReadString(node.Attributes["formula"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "pivotArea")
+                if(childNode.LocalName == "pivotArea")
                     ctObj.pivotArea = CT_PivotArea.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -8271,16 +8271,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "field", this.field);
             XmlHelper.WriteAttribute(sw, "formula", this.formula);
-            if (this.pivotArea == null && this.extLst == null)
+            if(this.pivotArea == null && this.extLst == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.pivotArea != null)
+                if(this.pivotArea != null)
                     this.pivotArea.Write(sw, "pivotArea");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }
@@ -8368,24 +8368,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CalculatedMembers
     {
         public static CT_CalculatedMembers Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CalculatedMembers ctObj = new CT_CalculatedMembers();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.calculatedMember = new List<CT_CalculatedMember>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "calculatedMember")
+                if(childNode.LocalName == "calculatedMember")
                     ctObj.calculatedMember.Add(CT_CalculatedMember.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -8398,16 +8398,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.calculatedMember == null || this.calculatedMember.Count == 0)
+            if(this.calculatedMember == null || this.calculatedMember.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.calculatedMember != null && this.calculatedMember.Count > 0)
+                if(this.calculatedMember != null && this.calculatedMember.Count > 0)
                 {
-                    foreach (CT_CalculatedMember x in this.calculatedMember)
+                    foreach(CT_CalculatedMember x in this.calculatedMember)
                     {
                         x.Write(sw, "calculatedMember");
                     }
@@ -8467,16 +8467,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_CalculatedMember
     {
         public static CT_CalculatedMember Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CalculatedMember ctObj = new CT_CalculatedMember();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
@@ -8484,13 +8484,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.memberName = XmlHelper.ReadString(node.Attributes["memberName"]);
             ctObj.hierarchy = XmlHelper.ReadString(node.Attributes["hierarchy"]);
             ctObj.parent = XmlHelper.ReadString(node.Attributes["parent"]);
-            if (node.Attributes["solveOrder"] != null)
+            if(node.Attributes["solveOrder"] != null)
                 ctObj.solveOrder = XmlHelper.ReadInt(node.Attributes["solveOrder"]);
-            if (node.Attributes["set"] != null)
+            if(node.Attributes["set"] != null)
                 ctObj.set = XmlHelper.ReadBool(node.Attributes["set"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -8508,15 +8508,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "parent", this.parent);
             XmlHelper.WriteAttribute(sw, "solveOrder", this.solveOrder);
             XmlHelper.WriteAttribute(sw, "set", this.set);
-            
-            if (this.extLst == null)
+
+            if(this.extLst == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }
@@ -8652,24 +8652,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_Dimensions
     {
         public static CT_Dimensions Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Dimensions ctObj = new CT_Dimensions();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.dimension = new List<CT_PivotDimension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "dimension")
+                if(childNode.LocalName == "dimension")
                     ctObj.dimension.Add(CT_PivotDimension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -8681,16 +8681,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
-            if (this.dimension == null || this.dimension.Count == 0)
+            if(this.dimension == null || this.dimension.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.dimension != null && this.dimension.Count > 0)
+                if(this.dimension != null && this.dimension.Count > 0)
                 {
-                    foreach (CT_PivotDimension x in this.dimension)
+                    foreach(CT_PivotDimension x in this.dimension)
                     {
                         x.Write(sw, "dimension");
                     }
@@ -8750,19 +8750,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_PivotDimension
     {
         public static CT_PivotDimension Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PivotDimension ctObj = new CT_PivotDimension();
-            if (node.Attributes["measure"] != null)
+            if(node.Attributes["measure"] != null)
                 ctObj.measure = XmlHelper.ReadBool(node.Attributes["measure"]);
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
             ctObj.uniqueName = XmlHelper.ReadString(node.Attributes["uniqueName"]);
@@ -8849,24 +8849,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_MeasureGroups
     {
         public static CT_MeasureGroups Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MeasureGroups ctObj = new CT_MeasureGroups();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.measureGroup = new List<CT_MeasureGroup>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "measureGroup")
+                if(childNode.LocalName == "measureGroup")
                     ctObj.measureGroup.Add(CT_MeasureGroup.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -8878,16 +8878,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
-            if (this.measureGroup == null || this.measureGroup.Count == 0)
+            if(this.measureGroup == null || this.measureGroup.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.measureGroup != null && this.measureGroup.Count > 0)
+                if(this.measureGroup != null && this.measureGroup.Count > 0)
                 {
-                    foreach (CT_MeasureGroup x in this.measureGroup)
+                    foreach(CT_MeasureGroup x in this.measureGroup)
                     {
                         x.Write(sw, "measureGroup");
                     }
@@ -8947,16 +8947,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_MeasureGroup
     {
         public static CT_MeasureGroup Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MeasureGroup ctObj = new CT_MeasureGroup();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
@@ -9005,24 +9005,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_MeasureDimensionMaps
     {
         public static CT_MeasureDimensionMaps Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MeasureDimensionMaps ctObj = new CT_MeasureDimensionMaps();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.map = new List<CT_MeasureDimensionMap>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "map")
+                if(childNode.LocalName == "map")
                     ctObj.map.Add(CT_MeasureDimensionMap.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -9035,16 +9035,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
 
-            if (this.map == null || this.map.Count == 0)
+            if(this.map == null || this.map.Count == 0)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.map != null && this.map.Count > 0)
+                if(this.map != null && this.map.Count > 0)
                 {
-                    foreach (CT_MeasureDimensionMap x in this.map)
+                    foreach(CT_MeasureDimensionMap x in this.map)
                     {
                         x.Write(sw, "map");
                     }
@@ -9104,21 +9104,21 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
     }
 
-    
-    
-    
+
+
+
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
     public partial class CT_MeasureDimensionMap
     {
         public static CT_MeasureDimensionMap Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MeasureDimensionMap ctObj = new CT_MeasureDimensionMap();
-            if (node.Attributes["measureGroup"] != null)
+            if(node.Attributes["measureGroup"] != null)
                 ctObj.measureGroup = XmlHelper.ReadUInt(node.Attributes["measureGroup"]);
-            if (node.Attributes["dimension"] != null)
+            if(node.Attributes["dimension"] != null)
                 ctObj.dimension = XmlHelper.ReadUInt(node.Attributes["dimension"]);
             return ctObj;
         }

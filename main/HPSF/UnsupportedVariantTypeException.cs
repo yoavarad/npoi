@@ -27,8 +27,8 @@
 
 namespace NPOI.HPSF
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /// <summary>
     /// This exception is thrown if HPSF encounters a variant type that isn't

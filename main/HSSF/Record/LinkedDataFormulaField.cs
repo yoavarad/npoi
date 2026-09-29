@@ -19,12 +19,11 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using System.Text;
-
     using NPOI.SS.Formula.PTG;
+    using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Not implemented yet. May commit it anyway just so people can see
@@ -54,15 +53,15 @@ namespace NPOI.HSSF.Record
 
         public void toString(StringBuilder buffer)
         {
-            for (int k = 0; k < formulaTokens.Length; k++)
+            for(int k = 0; k < formulaTokens.Length; k++)
             {
                 buffer.Append("Formula ")
                         .Append(k)
                         .Append("=")
                         .Append(formulaTokens[k].ToString())
                         .Append("\n");
-                        //.Append(((Ptg)formulaTokens[k]).ToDebugString())
-                        //.Append("\n");
+                //.Append(((Ptg)formulaTokens[k]).ToDebugString())
+                //.Append("\n");
             }
         }
 
@@ -76,7 +75,7 @@ namespace NPOI.HSSF.Record
         public int SerializeField(int offset, byte[] data)
         {
             int size = Size;
-            LittleEndian.PutShort(data, offset, (short)(size - 2));
+            LittleEndian.PutShort(data, offset, (short) (size - 2));
             int pos = offset + 2;
             pos += Ptg.SerializePtgs(formulaTokens, data, pos);
             return size;
@@ -87,11 +86,11 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return (Ptg[])this.formulaTokens.Clone();
+                return (Ptg[]) this.formulaTokens.Clone();
             }
-            set 
+            set
             {
-                this.formulaTokens = (Ptg[])value.Clone();
+                this.formulaTokens = (Ptg[]) value.Clone();
             }
         }
 

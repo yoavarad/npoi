@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.Util;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
 
     /**
      * ReferencePtg - handles references (such as A1, A2, IA4)
@@ -42,7 +42,7 @@ namespace NPOI.SS.Formula.PTG
         }
 
         public RefPtg(int row, int column, bool isRowRelative, bool isColumnRelative)
-            :base(row, column, isRowRelative, isColumnRelative)
+            : base(row, column, isRowRelative, isColumnRelative)
         {
             Row = row;
             Column = column;
@@ -55,9 +55,9 @@ namespace NPOI.SS.Formula.PTG
         {
 
         }
-        public RefPtg(CellReference cr):base(cr)
+        public RefPtg(CellReference cr) : base(cr)
         {
-            
+
         }
         protected override byte Sid
         {

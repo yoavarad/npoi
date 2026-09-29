@@ -18,15 +18,16 @@
 namespace TestCases.SS.Formula.Functions
 {
 
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
-    using NPOI.HSSF.UserModel;
-    using System.Text;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.IO;
+    using System.Text;
+    using TestCases.HSSF;
 
     /**
      * Tests INDEX() as loaded from a Test data spreadsheet.<p/>
@@ -34,7 +35,7 @@ namespace TestCases.SS.Formula.Functions
      * @author Josh Micich
      */
     [TestFixture]
-    public class TestIndexFunctionFromSpreadsheet:BaseTestFunctionsFromSpreadsheet
+    public class TestIndexFunctionFromSpreadsheet : BaseTestFunctionsFromSpreadsheet
     {
         protected override string Filename
         {

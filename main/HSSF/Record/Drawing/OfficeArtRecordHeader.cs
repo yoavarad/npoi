@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,10 +14,10 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NPOI.Util;
 
 namespace NPOI.HSSF.Record.Drawing
 {
@@ -43,7 +43,7 @@ namespace NPOI.HSSF.Record.Drawing
         public OfficeArtRecordHeader(RecordInputStream ris)
         {
             field_1_recVer_Instance = ris.ReadShort();
-            field_2_recType = (ushort)ris.ReadUShort();
+            field_2_recType = (ushort) ris.ReadUShort();
             field_3_recLen = ris.ReadInt();
         }
         public int DataSize
@@ -94,4 +94,3 @@ namespace NPOI.HSSF.Record.Drawing
         }
     }
 }
-

@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * FontFormatting.java
@@ -25,11 +25,11 @@
 
 namespace NPOI.HSSF.Record.CF
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
 
@@ -43,8 +43,8 @@ namespace NPOI.HSSF.Record.CF
     {
         public BorderFormatting()
         {
-            field_13_border_styles1 = (short)0;
-            field_14_border_styles2 = (short)0;
+            field_13_border_styles1 = (short) 0;
+            field_14_border_styles2 = (short) 0;
         }
 
         /** Creates new FontFormatting */
@@ -81,62 +81,77 @@ namespace NPOI.HSSF.Record.CF
         /// <summary>
         /// Get the type of border to use for the left border of the cell
         /// </summary>
-        public BorderStyle BorderLeft {
-            get {
-                return (BorderStyle) bordLeftLineStyle.GetValue (field_13_border_styles1);
+        public BorderStyle BorderLeft
+        {
+            get
+            {
+                return (BorderStyle) bordLeftLineStyle.GetValue(field_13_border_styles1);
             }
-            set {
-                field_13_border_styles1 = bordLeftLineStyle.SetValue (field_13_border_styles1, (int) value);
+            set
+            {
+                field_13_border_styles1 = bordLeftLineStyle.SetValue(field_13_border_styles1, (int) value);
             }
         }
 
-          
+
         /// <summary>
         /// Get the type of border to use for the right border of the cell
         /// </summary>
-        public BorderStyle BorderRight {
-            get {
-                return (BorderStyle) bordRightLineStyle.GetValue (field_13_border_styles1);
+        public BorderStyle BorderRight
+        {
+            get
+            {
+                return (BorderStyle) bordRightLineStyle.GetValue(field_13_border_styles1);
             }
-            set {
-                field_13_border_styles1 = bordRightLineStyle.SetValue (field_13_border_styles1, (int) value);
+            set
+            {
+                field_13_border_styles1 = bordRightLineStyle.SetValue(field_13_border_styles1, (int) value);
             }
         }
 
         /// <summary>
         /// Get the type of border to use for the top border of the cell
         /// </summary>
-        public BorderStyle BorderTop {
-            get {
-                return (BorderStyle) bordTopLineStyle.GetValue (field_13_border_styles1);
+        public BorderStyle BorderTop
+        {
+            get
+            {
+                return (BorderStyle) bordTopLineStyle.GetValue(field_13_border_styles1);
             }
-            set {
-                field_13_border_styles1 = bordTopLineStyle.SetValue (field_13_border_styles1, (int) value);
+            set
+            {
+                field_13_border_styles1 = bordTopLineStyle.SetValue(field_13_border_styles1, (int) value);
             }
         }
 
-         
+
         /// <summary>
         /// Get the type of border to use for the bottom border of the cell
         /// </summary>
-        public BorderStyle BorderBottom {
-            get {
-                return (BorderStyle) bordBottomLineStyle.GetValue (field_13_border_styles1);
+        public BorderStyle BorderBottom
+        {
+            get
+            {
+                return (BorderStyle) bordBottomLineStyle.GetValue(field_13_border_styles1);
             }
-            set {
-                field_13_border_styles1 = bordBottomLineStyle.SetValue (field_13_border_styles1, (int) value);
+            set
+            {
+                field_13_border_styles1 = bordBottomLineStyle.SetValue(field_13_border_styles1, (int) value);
             }
         }
 
         /// <summary>
         ///  Get the type of border to use for the diagonal border of the cell
         /// </summary>
-        public BorderStyle BorderDiagonal {
-            get {
-                return (BorderStyle) bordDiagLineStyle.GetValue (field_14_border_styles2);
+        public BorderStyle BorderDiagonal
+        {
+            get
+            {
+                return (BorderStyle) bordDiagLineStyle.GetValue(field_14_border_styles2);
             }
-            set {
-                field_14_border_styles2 = bordDiagLineStyle.SetValue (field_14_border_styles2, (int) value);
+            set
+            {
+                field_14_border_styles2 = bordDiagLineStyle.SetValue(field_14_border_styles2, (int) value);
             }
         }
 
@@ -148,7 +163,7 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (short)bordLeftLineColor.GetValue(field_13_border_styles1);
+                return (short) bordLeftLineColor.GetValue(field_13_border_styles1);
             }
             set
             {
@@ -163,7 +178,7 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (short)bordRightLineColor.GetValue(field_13_border_styles1);
+                return (short) bordRightLineColor.GetValue(field_13_border_styles1);
             }
             set
             {
@@ -178,7 +193,7 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (short)bordTopLineColor.GetValue(field_14_border_styles2);
+                return (short) bordTopLineColor.GetValue(field_14_border_styles2);
             }
             set
             {
@@ -186,7 +201,7 @@ namespace NPOI.HSSF.Record.CF
             }
         }
 
-         
+
         /// <summary>
         /// Get the color to use for the bottom border
         /// </summary>
@@ -194,7 +209,7 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (short)bordBottomLineColor.GetValue(field_14_border_styles2);
+                return (short) bordBottomLineColor.GetValue(field_14_border_styles2);
             }
             set
             {
@@ -202,7 +217,7 @@ namespace NPOI.HSSF.Record.CF
             }
         }
 
-         
+
         /// <summary>
         /// Get the color to use for the diagonal border
         /// </summary>
@@ -210,7 +225,7 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (short)bordDiagLineColor.GetValue(field_14_border_styles2);
+                return (short) bordDiagLineColor.GetValue(field_14_border_styles2);
             }
             set
             {
@@ -231,7 +246,7 @@ namespace NPOI.HSSF.Record.CF
                 field_13_border_styles1 = bordBlTrtLineOnOff.SetBoolean(field_13_border_styles1, value);
             }
         }
-        
+
         /// <summary>
         /// true if backward diagonal Is on
         /// </summary>

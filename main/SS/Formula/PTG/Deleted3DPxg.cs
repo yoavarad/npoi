@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,12 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-
+    using Cysharp.Text;
     using NPOI.SS.UserModel;
-    using System.Text; 
-using Cysharp.Text;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -49,13 +48,13 @@ using Cysharp.Text;
             StringBuilder sb = new StringBuilder();
             sb.Append(GetType().Name);
             sb.Append(" [");
-            if (externalWorkbookNumber >= 0)
+            if(externalWorkbookNumber >= 0)
             {
                 sb.Append(" [");
                 sb.Append("workbook=").Append(ExternalWorkbookNumber);
                 sb.Append("] ");
             }
-            if (sheetName != null)
+            if(sheetName != null)
             {
                 SheetNameFormatter.AppendFormat(sb, sheetName);
             }
@@ -94,7 +93,7 @@ using Cysharp.Text;
                 sb.Append(externalWorkbookNumber);
                 sb.Append(']');
             }
-            if (sheetName != null)
+            if(sheetName != null)
             {
                 sb.Append(sheetName);
             }

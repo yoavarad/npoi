@@ -1,4 +1,4 @@
-﻿
+
 namespace NPOI.SS.UserModel
 {
     public enum BorderDiagonal

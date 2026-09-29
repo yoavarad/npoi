@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Util
 {
-    using System;
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * Various utility functions that make working with a region of cells easier.
@@ -46,7 +46,7 @@ namespace NPOI.SS.Util
             public CellPropertySetter(String propertyName, int value)
             {
                 _propertyName = propertyName;
-                _propertyValue = (short)value;
+                _propertyValue = (short) value;
             }
 
             public CellPropertySetter(String propertyName, BorderStyle value)
@@ -75,7 +75,7 @@ namespace NPOI.SS.Util
             int column = region.FirstColumn;
 
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_LEFT, border);
-            for (int i = rowStart; i <= rowEnd; i++)
+            for(int i = rowStart; i <= rowEnd; i++)
             {
                 cps.SetProperty(CellUtil.GetRow(i, sheet), column);
             }
@@ -95,7 +95,7 @@ namespace NPOI.SS.Util
             int column = region.FirstColumn;
 
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_LEFT, border);
-            for (int i = rowStart; i <= rowEnd; i++)
+            for(int i = rowStart; i <= rowEnd; i++)
             {
                 cps.SetProperty(CellUtil.GetRow(i, sheet), column);
             }
@@ -115,7 +115,7 @@ namespace NPOI.SS.Util
 
             CellPropertySetter cps = new CellPropertySetter(CellUtil.LEFT_BORDER_COLOR,
                     color);
-            for (int i = rowStart; i <= rowEnd; i++)
+            for(int i = rowStart; i <= rowEnd; i++)
             {
                 cps.SetProperty(CellUtil.GetRow(i, sheet), column);
             }
@@ -134,7 +134,7 @@ namespace NPOI.SS.Util
             int column = region.LastColumn;
 
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_RIGHT, border);
-            for (int i = rowStart; i <= rowEnd; i++)
+            for(int i = rowStart; i <= rowEnd; i++)
             {
                 cps.SetProperty(CellUtil.GetRow(i, sheet), column);
             }
@@ -153,7 +153,7 @@ namespace NPOI.SS.Util
             int column = region.LastColumn;
 
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_RIGHT, border);
-            for (int i = rowStart; i <= rowEnd; i++)
+            for(int i = rowStart; i <= rowEnd; i++)
             {
                 cps.SetProperty(CellUtil.GetRow(i, sheet), column);
             }
@@ -173,7 +173,7 @@ namespace NPOI.SS.Util
 
             CellPropertySetter cps = new CellPropertySetter(CellUtil.RIGHT_BORDER_COLOR,
                     color);
-            for (int i = rowStart; i <= rowEnd; i++)
+            for(int i = rowStart; i <= rowEnd; i++)
             {
                 cps.SetProperty(CellUtil.GetRow(i, sheet), column);
             }
@@ -193,7 +193,7 @@ namespace NPOI.SS.Util
             int rowIndex = region.LastRow;
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_BOTTOM, border);
             IRow row = CellUtil.GetRow(rowIndex, sheet);
-            for (int i = colStart; i <= colEnd; i++)
+            for(int i = colStart; i <= colEnd; i++)
             {
                 cps.SetProperty(row, i);
             }
@@ -212,7 +212,7 @@ namespace NPOI.SS.Util
             int rowIndex = region.LastRow;
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_BOTTOM, border);
             IRow row = CellUtil.GetRow(rowIndex, sheet);
-            for (int i = colStart; i <= colEnd; i++)
+            for(int i = colStart; i <= colEnd; i++)
             {
                 cps.SetProperty(row, i);
             }
@@ -232,7 +232,7 @@ namespace NPOI.SS.Util
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BOTTOM_BORDER_COLOR,
                     color);
             IRow row = CellUtil.GetRow(rowIndex, sheet);
-            for (int i = colStart; i <= colEnd; i++)
+            for(int i = colStart; i <= colEnd; i++)
             {
                 cps.SetProperty(row, i);
             }
@@ -252,7 +252,7 @@ namespace NPOI.SS.Util
             int rowIndex = region.FirstRow;
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_TOP, border);
             IRow row = CellUtil.GetRow(rowIndex, sheet);
-            for (int i = colStart; i <= colEnd; i++)
+            for(int i = colStart; i <= colEnd; i++)
             {
                 cps.SetProperty(row, i);
             }
@@ -271,7 +271,7 @@ namespace NPOI.SS.Util
             int rowIndex = region.FirstRow;
             CellPropertySetter cps = new CellPropertySetter(CellUtil.BORDER_TOP, border);
             IRow row = CellUtil.GetRow(rowIndex, sheet);
-            for (int i = colStart; i <= colEnd; i++)
+            for(int i = colStart; i <= colEnd; i++)
             {
                 cps.SetProperty(row, i);
             }
@@ -290,7 +290,7 @@ namespace NPOI.SS.Util
             int rowIndex = region.FirstRow;
             CellPropertySetter cps = new CellPropertySetter(CellUtil.TOP_BORDER_COLOR, color);
             IRow row = CellUtil.GetRow(rowIndex, sheet);
-            for (int i = colStart; i <= colEnd; i++)
+            for(int i = colStart; i <= colEnd; i++)
             {
                 cps.SetProperty(row, i);
             }

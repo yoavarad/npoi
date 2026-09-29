@@ -53,20 +53,24 @@ namespace NPOI.Util.Collections
 
     // a replacement for the StringTokenizer java class
     // it's more or less the same as the one in the GNU classpath
-    public class StringTokenizer {
+    public class StringTokenizer
+    {
         private int pos;
         private String str;
         private int len;
         private String delim;
         private bool retDelims;
 
-        public StringTokenizer(String str) : this(str, " \t\n\r\f", false) {
+        public StringTokenizer(String str) : this(str, " \t\n\r\f", false)
+        {
         }
 
-        public StringTokenizer(String str, String delim) : this(str, delim, false) {
+        public StringTokenizer(String str, String delim) : this(str, delim, false)
+        {
         }
 
-        public StringTokenizer(String str, String delim, bool retDelims) {
+        public StringTokenizer(String str, String delim, bool retDelims)
+        {
             len = str.Length;
             this.str = str;
             this.delim = delim;
@@ -74,21 +78,26 @@ namespace NPOI.Util.Collections
             this.pos = 0;
         }
 
-        public bool HasMoreTokens() {
-            if (! retDelims) {
-                while (pos < len && delim.Contains(str[pos]))
+        public bool HasMoreTokens()
+        {
+            if(!retDelims)
+            {
+                while(pos < len && delim.Contains(str[pos]))
                     pos++;
             }
             return pos < len;
         }
 
-        public String NextToken(String delim) {
+        public String NextToken(String delim)
+        {
             this.delim = delim;
             return NextToken();
         }
 
-        public String NextToken() {
-            if (pos < len && delim.Contains(str[pos])) {
+        public String NextToken()
+        {
+            if(pos < len && delim.Contains(str[pos]))
+            {
                 if(retDelims)
                 {
                     return str.Substring(pos++, 1);
@@ -97,7 +106,8 @@ namespace NPOI.Util.Collections
                 {
                 }
             }
-            if (pos < len) {
+            if(pos < len)
+            {
                 int start = pos;
                 while(++pos < len && delim.IndexOf(str[pos]) < 0)
                 {
@@ -108,28 +118,33 @@ namespace NPOI.Util.Collections
             throw new IndexOutOfRangeException();
         }
 
-        public int CountTokens() {
+        public int CountTokens()
+        {
             int count = 0;
             int delimiterCount = 0;
             bool tokenFound = false;
             int tmpPos = pos;
 
-            while (tmpPos < len) {
-                if (delim.Contains(str[tmpPos++])) {
-                    if (tokenFound) {
+            while(tmpPos < len)
+            {
+                if(delim.Contains(str[tmpPos++]))
+                {
+                    if(tokenFound)
+                    {
                         count++;
                         tokenFound = false;
                     }
                     delimiterCount++;
                 }
-                else {
+                else
+                {
                     tokenFound = true;
-                    while (tmpPos < len
+                    while(tmpPos < len
                         && delim.IndexOf(str[tmpPos]) < 0)
                         ++tmpPos;
                 }
             }
-            if (tokenFound)
+            if(tokenFound)
                 count++;
             return retDelims ? count + delimiterCount : count;
         }

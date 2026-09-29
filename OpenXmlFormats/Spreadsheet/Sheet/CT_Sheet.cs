@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
@@ -27,13 +27,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Sheet Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Sheet ctObj = new CT_Sheet();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
             ctObj.sheetId = XmlHelper.ReadUInt(node.Attributes["sheetId"]);
-            if (node.Attributes["state"] != null)
-                ctObj.state = (ST_SheetState)Enum.Parse(typeof(ST_SheetState), node.Attributes["state"].Value);
+            if(node.Attributes["state"] != null)
+                ctObj.state = (ST_SheetState) Enum.Parse(typeof(ST_SheetState), node.Attributes["state"].Value);
             ctObj.id = XmlHelper.ReadString(node.Attributes["id", PackageNamespaces.SCHEMA_RELATIONSHIPS]);
             return ctObj;
         }

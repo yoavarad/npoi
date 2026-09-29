@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -34,40 +34,40 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_RPrElt Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_RPrElt ctObj = new CT_RPrElt();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "rFont")
+                if(childNode.LocalName == "rFont")
                     ctObj.rFont = CT_FontName.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "charset")
+                else if(childNode.LocalName == "charset")
                     ctObj.charset = CT_IntProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "family")
+                else if(childNode.LocalName == "family")
                     ctObj.family = CT_IntProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "b")
+                else if(childNode.LocalName == "b")
                     ctObj.b = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "i")
+                else if(childNode.LocalName == "i")
                     ctObj.i = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "strike")
+                else if(childNode.LocalName == "strike")
                     ctObj.strike = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "outline")
+                else if(childNode.LocalName == "outline")
                     ctObj.outline = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shadow")
+                else if(childNode.LocalName == "shadow")
                     ctObj.shadow = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "condense")
+                else if(childNode.LocalName == "condense")
                     ctObj.condense = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extend")
+                else if(childNode.LocalName == "extend")
                     ctObj.extend = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "color")
+                else if(childNode.LocalName == "color")
                     ctObj.color = CT_Color.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sz")
+                else if(childNode.LocalName == "sz")
                     ctObj.sz = CT_FontSize.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "u")
+                else if(childNode.LocalName == "u")
                     ctObj.u = CT_UnderlineProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "vertAlign")
+                else if(childNode.LocalName == "vertAlign")
                     ctObj.vertAlign = CT_VerticalAlignFontProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "scheme")
+                else if(childNode.LocalName == "scheme")
                     ctObj.scheme = CT_FontScheme.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -79,35 +79,35 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.sz != null)
+            if(this.sz != null)
                 this.sz.Write(sw, "sz");
-            if (this.color != null)
+            if(this.color != null)
                 this.color.Write(sw, "color");
-            if (this.rFont != null)
+            if(this.rFont != null)
                 this.rFont.Write(sw, "rFont");
-            if (this.family != null)
+            if(this.family != null)
                 this.family.Write(sw, "family");
-            if (this.charset != null)
+            if(this.charset != null)
                 this.charset.Write(sw, "charset");
-            if (this.b != null)
+            if(this.b != null)
                 this.b.Write(sw, "b");
-            if (this.i != null)
+            if(this.i != null)
                 this.i.Write(sw, "i");
-            if (this.strike != null)
+            if(this.strike != null)
                 this.strike.Write(sw, "strike");
-            if (this.outline != null)
+            if(this.outline != null)
                 this.outline.Write(sw, "outline");
-            if (this.shadow != null)
+            if(this.shadow != null)
                 this.shadow.Write(sw, "shadow");
-            if (this.condense != null)
+            if(this.condense != null)
                 this.condense.Write(sw, "condense");
-            if (this.extend != null)
+            if(this.extend != null)
                 this.extend.Write(sw, "extend");
-            if (this.u != null)
+            if(this.u != null)
                 this.u.Write(sw, "u");
-            if (this.vertAlign != null)
+            if(this.vertAlign != null)
                 this.vertAlign.Write(sw, "vertAlign");
-            if (this.scheme != null)
+            if(this.scheme != null)
                 this.scheme.Write(sw, "scheme");
             sw.WriteEndElement(nodeName);
         }
@@ -137,7 +137,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_FontName GetRFontArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.rFontField;
         }
         #endregion rFont
@@ -165,7 +166,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_IntProperty GetCharsetArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.charsetField;
         }
         #endregion charset
@@ -197,7 +199,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         //}
         public CT_IntProperty GetFamilyArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.familyField;
         }
         #endregion family
@@ -229,7 +232,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetBArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.bField;
         }
         #endregion b
@@ -261,7 +265,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetIArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.iField;
         }
         #endregion i
@@ -293,7 +298,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetStrikeArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.strikeField;
         }
         #endregion strike
@@ -325,7 +331,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetOutlineArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.outlineField;
         }
         #endregion outline
@@ -353,7 +360,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetShadowArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.shadowField;
         }
         #endregion shadow
@@ -381,7 +389,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetCondenseArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.condenseField;
         }
         #endregion condense
@@ -409,7 +418,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetExtendArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.extendField;
         }
         #endregion extend
@@ -432,7 +442,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_Color GetColorArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.colorField;
         }
         public void SetColorArray(CT_Color[] array)
@@ -473,7 +484,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_FontSize GetSzArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.szField;
         }
         #endregion sz
@@ -505,7 +517,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_UnderlineProperty GetUArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.uField;
         }
         #endregion u
@@ -537,7 +550,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_VerticalAlignFontProperty GetVertAlignArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.vertAlignField;
         }
         #endregion vertAlign
@@ -565,7 +579,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_FontScheme GetSchemeArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.schemeField;
         }
         #endregion scheme

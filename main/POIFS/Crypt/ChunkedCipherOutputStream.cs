@@ -16,13 +16,13 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt
 {
-    using System;
-    using System.IO;
     using NPOI.POIFS.EventFileSystem;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
     using Org.BouncyCastle.Crypto;
-        using System.Security.Cryptography;
+    using System;
+    using System.IO;
+    using System.Security.Cryptography;
 
     public abstract class ChunkedCipherOutputStream : LittleEndianOutputStream
     {
@@ -95,7 +95,7 @@ namespace NPOI.POIFS.Crypt
 
         public override void Write(int b)
         {
-            Write(new byte[] { (byte)b });
+            Write(new byte[] { (byte) b });
         }
 
         public override void Write(byte[] b)
@@ -115,25 +115,25 @@ namespace NPOI.POIFS.Crypt
 
         private void WriteInternal(byte[] buffer, int offset, int count, bool writePlain)
         {
-            if (count == 0)
+            if(count == 0)
             {
                 return;
             }
 
-            if (count < 0 || buffer.Length < offset + count)
+            if(count < 0 || buffer.Length < offset + count)
             {
                 throw new IOException("not enough bytes in your input buffer");
             }
 
             int chunkMask = GetChunkMask();
-            while (count > 0)
+            while(count > 0)
             {
                 int posInChunk = (int)(_pos & chunkMask);
                 int spaceInChunk = _chunk.Length - posInChunk;
                 int nextLen = Math.Min(spaceInChunk, count);
 
                 Buffer.BlockCopy(buffer, offset, _chunk, posInChunk, nextLen);
-                if (writePlain)
+                if(writePlain)
                 {
                     _plainByteFlags.Set(posInChunk, posInChunk + nextLen);
                 }
@@ -143,7 +143,7 @@ namespace NPOI.POIFS.Crypt
                 offset += nextLen;
                 count -= nextLen;
 
-                if ((_pos & chunkMask) == 0)
+                if((_pos & chunkMask) == 0)
                 {
                     // chunk boundary reached
                     WriteChunk(continued: count > 0);
@@ -155,14 +155,14 @@ namespace NPOI.POIFS.Crypt
 
         protected void WriteChunk(bool continued)
         {
-            if (_pos == 0 || _totalPos == _written)
+            if(_pos == 0 || _totalPos == _written)
                 return;
 
             int posInChunk = (int)(_pos & GetChunkMask());
             int index = (int)(_pos >> _chunkBits);
 
             bool lastChunk;
-            if (posInChunk == 0)
+            if(posInChunk == 0)
             {
                 index--;
                 posInChunk = _chunk.Length;
@@ -180,9 +180,9 @@ namespace NPOI.POIFS.Crypt
                 long oldPos = _pos;
 
                 _pos = 0; // reset (streaming scenario)
-                if (_chunkSize == STREAMING)
+                if(_chunkSize == STREAMING)
                 {
-                    if (continued)
+                    if(continued)
                         doFinal = false;
                 }
                 else
@@ -193,7 +193,7 @@ namespace NPOI.POIFS.Crypt
 
                 ciLen = InvokeCipher(posInChunk, doFinal);
             }
-            catch (CryptographicException e)
+            catch(CryptographicException e)
             {
                 throw new IOException("Can't (re)initialize cipher.", e);
             }
@@ -212,7 +212,7 @@ namespace NPOI.POIFS.Crypt
             byte[] plain = _plainByteFlags.IsEmpty ? null : (byte[])_chunk.Clone();
 
             int ciLen;
-            if (doFinal)
+            if(doFinal)
             {
                 // Final block for this (sub)chunk: run DoFinal (may add/remove padding depending on mode)
                 // BouncyCastle allows in-place finalization when input == output.
@@ -223,12 +223,12 @@ namespace NPOI.POIFS.Crypt
                  * Original logic relied on (posInChunk == 0) meaning "full chunk" which is misleading.
                  * At this point a full chunk arrives here with posInChunk == _chunk.Length.
                  */
-                if (_cipher.Algorithm == CipherAlgorithm.rc4
+                if(_cipher.Algorithm == CipherAlgorithm.rc4
                     && _cipher.Algorithm.provider.cipherProviderName.ToUpperInvariant() == "IBMJCE")
                 {
                     int index = (int)(_pos >> _chunkBits);
                     bool lastChunk = (posInChunk != 0);
-                    if (posInChunk == 0)
+                    if(posInChunk == 0)
                     {
                         index--;
                         posInChunk = _chunk.Length;
@@ -244,10 +244,10 @@ namespace NPOI.POIFS.Crypt
                 ciLen = _cipher.Update(_chunk, 0, posInChunk, _chunk, 0);
             }
 
-            if (plain != null)
+            if(plain != null)
             {
                 int i = _plainByteFlags.NextSetBit(0);
-                while (i >= 0 && i < posInChunk)
+                while(i >= 0 && i < posInChunk)
                 {
                     _chunk[i] = plain[i];
                     i = _plainByteFlags.NextSetBit(i + 1);
@@ -267,7 +267,7 @@ namespace NPOI.POIFS.Crypt
 
         public override void Close()
         {
-            if (_isClosed)
+            if(_isClosed)
                 return;
             _isClosed = true;
 
@@ -275,18 +275,18 @@ namespace NPOI.POIFS.Crypt
             {
                 WriteChunk(continued: false);
 
-                if (fileOut != null)
+                if(fileOut != null)
                 {
                     //Ensure close the file so the file lock is released
                     out1.Close();
-                    
+
                     int oleStreamSize = (int)(fileOut.Length + LittleEndianConsts.LONG_SIZE);
-                    CalculateChecksum(fileOut, (int)_pos);
+                    CalculateChecksum(fileOut, (int) _pos);
                     dir.CreateDocument(Decryptor.DEFAULT_POIFS_ENTRY, oleStreamSize, new EncryptedPackageWriter(this));
                     CreateEncryptionInfoEntry(dir, fileOut);
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new IOException(e.Message);
             }
@@ -294,7 +294,7 @@ namespace NPOI.POIFS.Crypt
             {
                 base.Close();
                 // safe after disposting stream in base class
-                if (fileOut != null)
+                if(fileOut != null)
                     fileOut.Delete();
             }
         }
@@ -308,11 +308,11 @@ namespace NPOI.POIFS.Crypt
 
             public void Set(int fromInclusive, int toExclusive)
             {
-                if (fromInclusive < 0)
+                if(fromInclusive < 0)
                     fromInclusive = 0;
-                if (toExclusive > _bits.Length)
+                if(toExclusive > _bits.Length)
                     toExclusive = _bits.Length;
-                for (int i = fromInclusive; i < toExclusive; i++)
+                for(int i = fromInclusive; i < toExclusive; i++)
                     _bits[i] = true;
             }
 
@@ -322,8 +322,8 @@ namespace NPOI.POIFS.Crypt
             {
                 get
                 {
-                    for (int i = 0; i < _bits.Length; i++)
-                        if (_bits[i])
+                    for(int i = 0; i < _bits.Length; i++)
+                        if(_bits[i])
                             return false;
                     return true;
                 }
@@ -331,21 +331,24 @@ namespace NPOI.POIFS.Crypt
 
             public int NextSetBit(int fromIndex)
             {
-                for (int i = Math.Max(0, fromIndex); i < _bits.Length; i++)
-                    if (_bits[i])
+                for(int i = Math.Max(0, fromIndex); i < _bits.Length; i++)
+                    if(_bits[i])
                         return i;
                 return -1;
             }
         }
 
-        private sealed class EncryptedPackageWriter : POIFSWriterListener {
+        private sealed class EncryptedPackageWriter : POIFSWriterListener
+        {
             readonly ChunkedCipherOutputStream stream;
             public EncryptedPackageWriter(ChunkedCipherOutputStream stream)
             {
                 this.stream = stream;
             }
-            public void ProcessPOIFSWriterEvent(POIFSWriterEvent event1) {
-                try {
+            public void ProcessPOIFSWriterEvent(POIFSWriterEvent event1)
+            {
+                try
+                {
                     DocumentOutputStream os = event1.Stream;
                     byte[] buf = new byte[stream._chunkSize];
 
@@ -357,18 +360,20 @@ namespace NPOI.POIFS.Crypt
                     os.Write(buf, 0, LittleEndian.LONG_SIZE);
 
                     // Open existing file for READ (do not truncate)
-                    using (var fis = new FileStream(stream.fileOut.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using(var fis = new FileStream(stream.fileOut.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
                         int read;
-                        while ((read = fis.Read(buf, 0, buf.Length)) > 0)
+                        while((read = fis.Read(buf, 0, buf.Length)) > 0)
                         {
                             os.Write(buf, 0, read);
                         }
                     }
-                    
+
                     os.Close();
 
-                } catch (IOException e) {
+                }
+                catch(IOException e)
+                {
                     throw new EncryptedDocumentException(e);
                 }
             }

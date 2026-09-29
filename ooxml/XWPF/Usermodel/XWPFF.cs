@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.OpenXmlFormats.Shared;
+using System;
 
 namespace NPOI.XWPF.UserModel
 {
@@ -21,23 +21,23 @@ namespace NPOI.XWPF.UserModel
             this.f = f;
             this.parent = p;
 
-            if (f.fPr == null)
+            if(f.fPr == null)
             {
                 f.fPr = new CT_FPr();
             }
 
-            if (f.fPr.type == null)
+            if(f.fPr.type == null)
             {
                 f.fPr.type = new CT_FType();
             }
 
-            if (f.num == null)
+            if(f.num == null)
             {
                 f.num = new CT_OMathArg();
             }
             this.num = new XWPFOMathArg(f.num, this);
 
-            if (f.den == null)
+            if(f.den == null)
             {
                 f.den = new CT_OMathArg();
             }

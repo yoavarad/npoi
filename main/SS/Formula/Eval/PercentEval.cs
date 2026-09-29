@@ -38,11 +38,11 @@ namespace NPOI.SS.Formula.Eval
                 ValueEval ve = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 d0 = OperandResolver.CoerceValueToDouble(ve);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
-            if (d0 == 0.0)
+            if(d0 == 0.0)
             { // this '==' matches +0.0 and -0.0
                 return NumberEval.ZERO;
             }

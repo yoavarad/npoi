@@ -16,11 +16,11 @@
 ==================================================================== */
 namespace TestCases.SS.Formula.UDF
 {
-    using System;
-
     using NPOI.SS.Formula.Atp;
     using NPOI.SS.Formula.UDF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestAggregatingUDFFinder : BaseTestUDFFinder
@@ -40,7 +40,7 @@ namespace TestCases.SS.Formula.UDF
         [Test]
         public void Add()
         {
-            ((AggregatingUDFFinder)_instance).Add(AnalysisToolPak.instance);
+            ((AggregatingUDFFinder) _instance).Add(AnalysisToolPak.instance);
         }
     }
 

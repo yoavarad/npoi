@@ -16,11 +16,11 @@
 ==================================================================== */
 namespace NPOI.XSSF.UserModel
 {
-    using System;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using System;
     using System.IO;
     using System.Xml;
-    using NPOI.OpenXmlFormats.Spreadsheet;
 
 
     public class XSSFPivotCacheRecords : POIXMLDocumentPart
@@ -66,7 +66,7 @@ namespace NPOI.XSSF.UserModel
                 XmlDocument xmldoc = ConvertStreamToXml(is1);
                 ctPivotCacheRecords = CT_PivotCacheRecords.Parse(xmldoc.DocumentElement, NamespaceManager);
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }

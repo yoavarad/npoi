@@ -20,9 +20,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
 
@@ -47,20 +47,20 @@ namespace NPOI.HSSF.Record
         {
             _options = options;
         }
-        public ProtectionRev4Record(bool protect):this(0)
+        public ProtectionRev4Record(bool protect) : this(0)
         {
             Protect = protect;
         }
-       
+
         /**
          * Constructs a ProtectionRev4 record and Sets its fields appropriately.
          * @param in the RecordInputstream to Read the record from
          */
 
-        public ProtectionRev4Record(RecordInputStream in1):
+        public ProtectionRev4Record(RecordInputStream in1) :
             this(in1.ReadShort())
         {
-            
+
         }
 
         /**
@@ -73,7 +73,7 @@ namespace NPOI.HSSF.Record
             get { return protectedFlag.IsSet(_options); }
             set
             {
-                _options=(short)protectedFlag.SetBoolean(_options, value);
+                _options=(short) protectedFlag.SetBoolean(_options, value);
             }
         }
 
@@ -88,7 +88,7 @@ namespace NPOI.HSSF.Record
             return buffer.ToString();
         }
 
-        public override void Serialize(ILittleEndianOutput out1) 
+        public override void Serialize(ILittleEndianOutput out1)
         {
             out1.WriteShort(_options);
         }

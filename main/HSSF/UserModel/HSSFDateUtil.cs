@@ -24,11 +24,8 @@
  */
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
-
-
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * Contains methods for dealing with Excel dates.

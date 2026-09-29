@@ -19,8 +19,9 @@ namespace TestCases.SS.Formula.Functions
 {
 
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Tests for Excel function LEN()
@@ -34,21 +35,21 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invokeLen(ValueEval text)
         {
             ValueEval[] args = new ValueEval[] { text, };
-            return TextFunction.LEN.Evaluate(args, -1, (short)-1);
+            return TextFunction.LEN.Evaluate(args, -1, (short) -1);
         }
 
         private void ConfirmLen(ValueEval text, int expected)
         {
             ValueEval result = invokeLen(text);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, 0);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, 0);
         }
 
         private void ConfirmLen(ValueEval text, ErrorEval expectedError)
         {
             ValueEval result = invokeLen(text);
             ClassicAssert.AreEqual(typeof(ErrorEval), result.GetType());
-            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval) result).ErrorCode);
         }
         [Test]
         public void TestBasic()

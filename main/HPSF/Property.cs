@@ -20,7 +20,7 @@ namespace NPOI.HPSF
 {
 
 
-using Cysharp.Text;
+    using Cysharp.Text;
     using Microsoft.VisualBasic;
     using NPOI.HPSF.Wellknown;
     using NPOI.Util;
@@ -29,7 +29,7 @@ using Cysharp.Text;
     using System.Globalization;
     using System.IO;
     using System.Runtime.InteropServices;
-    using System.Text; 
+    using System.Text;
 
     /// <summary>
     /// <para>
@@ -72,7 +72,7 @@ using Cysharp.Text;
         /// <summary>
         /// Default codepage for <see cref="CodePageString"/>
         /// </summary>
-        public static readonly int DEFAULT_CODEPAGE = CodePageUtil.CP_WINDOWS_1252; 
+        public static readonly int DEFAULT_CODEPAGE = CodePageUtil.CP_WINDOWS_1252;
         /// <summary>
         /// The property's ID. */
         /// </summary>
@@ -188,18 +188,18 @@ using Cysharp.Text;
              * ID 0 is a special case since it specifies a dictionary of
              * property IDs and property names.
              */
-            if (id == 0) 
+            if(id == 0)
             {
                 throw new UnsupportedEncodingException("Dictionary not allowed here");
             }
 
             type = leis.ReadUInt();
 
-            try 
+            try
             {
                 _value = VariantSupport.Read(leis, length, (int) type, codepage);
             }
-            catch (UnsupportedVariantTypeException ex)
+            catch(UnsupportedVariantTypeException ex)
             {
                 VariantSupport.WriteUnsupportedTypeMessage(ex);
                 _value = ex.Value;
@@ -437,13 +437,13 @@ using Cysharp.Text;
             {
                 byte[] otherVal = (byte[]) pValue;
                 int len = unpaddedLength(thisVal);
-                if (len != unpaddedLength(otherVal))
+                if(len != unpaddedLength(otherVal))
                 {
                     return false;
                 }
-                for (int i=0; i<len; i++)
+                for(int i = 0; i<len; i++)
                 {
-                    if (thisVal[i] != otherVal[i])
+                    if(thisVal[i] != otherVal[i])
                     {
                         return false;
                     }
@@ -458,9 +458,11 @@ using Cysharp.Text;
         /// </summary>
         /// <param name="buf">the bytes</param>
         /// <returns>the truncated size with a maximum of 4 bytes shorter (3 bytes + trailing 0 of strings)</returns>
-        private static int unpaddedLength(byte[] buf) {
+        private static int unpaddedLength(byte[] buf)
+        {
             int len;
-            for (len = buf.Length; len > 0 && len > buf.Length-4 && buf[len-1] == 0; len--);
+            for(len = buf.Length; len > 0 && len > buf.Length-4 && buf[len-1] == 0; len--)
+                ;
             return len;
         }
         private static bool typesAreEqual(long t1, long t2)
@@ -493,7 +495,7 @@ using Cysharp.Text;
         /// @see Object#toString()
         public override String ToString()
         {
-           return ToString(Property.DEFAULT_CODEPAGE, null);
+            return ToString(Property.DEFAULT_CODEPAGE, null);
         }
 
         public string ToString(int codepage, PropertyIDMap idMap)
@@ -503,10 +505,12 @@ using Cysharp.Text;
             b.Append("id: ");
             b.Append(id);
             string idName = (idMap == null) ? null : idMap.Get(id)?.ToString();
-            if (idName == null) {
+            if(idName == null)
+            {
                 idName = PropertyIDMap.FallbackProperties[id];
             }
-            if (idName != null) {
+            if(idName != null)
+            {
                 b.Append(" (");
                 b.Append(idName);
                 b.Append(")");
@@ -518,33 +522,46 @@ using Cysharp.Text;
             b.Append(") ");
             object value = Value;
             b.Append(", value: ");
-            if (value is String) {
-                b.Append((String)value);
+            if(value is String)
+            {
+                b.Append((String) value);
                 b.Append("\n");
                 MemoryStream bos = new MemoryStream();
-                try {
+                try
+                {
                     Write(bos, codepage);
-                } catch (Exception e) {
+                }
+                catch(Exception e)
+                {
                     //LOG.log(POILogger.WARN, "can't serialize string", e);
                 }
-            
+
                 // skip length field
-                if(bos.Length > 2*LittleEndianConsts.INT_SIZE) {
+                if(bos.Length > 2*LittleEndianConsts.INT_SIZE)
+                {
                     string hex = HexDump.Dump(bos.ToArray(), -2*LittleEndianConsts.INT_SIZE, 2*LittleEndianConsts.INT_SIZE);
                     b.Append(hex);
                 }
-            } else if (value is byte[]) {
+            }
+            else if(value is byte[])
+            {
                 b.Append("\n");
                 byte[] bytes = (byte[])value;
-                if(bytes.Length > 0) {
+                if(bytes.Length > 0)
+                {
                     string hex = HexDump.Dump(bytes, 0L, 0);
                     b.Append(hex);
                 }
-            } else if (value is DateTime d) {
+            }
+            else if(value is DateTime d)
+            {
                 long filetime = Filetime.DateToFileTime(d);
-                if (Filetime.IsUndefined(d)) {
+                if(Filetime.IsUndefined(d))
+                {
                     b.Append("<undefined>");
-                } else if ((filetime >>> 32) == 0) {
+                }
+                else if((filetime >>> 32) == 0)
+                {
                     // if the upper dword isn't Set, we deal with time intervals
                     //long l = filetime*100;
                     //TimeUnit tu = TimeUnit.NANOSECONDS;
@@ -555,22 +572,29 @@ using Cysharp.Text;
                     //long sec = tu.ToSeconds(l);
                     //l -= TimeUnit.SECONDS.ToNanos(sec);
                     //long ms  = tu.ToMillis(l);
-                
+
                     //string str = String.format(Locale.ROOT, "%02d:%02d:%02d.%03d",hr,min,sec,ms);
                     TimeSpan ts = new TimeSpan(filetime);
                     string str = string.Format("{0:D2}:{0:D2}:{0:D2}.{0:D3}",ts.Hours,ts.Minutes,ts.Seconds, ts.Milliseconds);
                     b.Append(str);
-                } else {
+                }
+                else
+                {
                     // use ISO-8601 timestamp format
                     b.Append(d.ToString("u"));
                 }
-            } else if (type == Variant.VT_EMPTY || type == Variant.VT_NULL || value == null) {
+            }
+            else if(type == Variant.VT_EMPTY || type == Variant.VT_NULL || value == null)
+            {
                 b.Append("null");
-            } else {
+            }
+            else
+            {
                 b.Append(value.ToString());
-            
+
                 string decoded = decodeValueFromID();
-                if (decoded != null) {
+                if(decoded != null)
+                {
                     b.Append(" (");
                     b.Append(decoded);
                     b.Append(")");
@@ -583,7 +607,7 @@ using Cysharp.Text;
         {
             get
             {
-                if (ID == 0)
+                if(ID == 0)
                 {
                     return "dictionary";
                 }
@@ -592,14 +616,18 @@ using Cysharp.Text;
         }
         private string decodeValueFromID()
         {
-            try {
-                switch((int)ID) {
+            try
+            {
+                switch((int) ID)
+                {
                     case PropertyIDMap.PID_CODEPAGE:
-                        return CodePageUtil.CodepageToEncoding((int)Value);
+                        return CodePageUtil.CodepageToEncoding((int) Value);
                     case PropertyIDMap.PID_LOCALE:
-                        return LocaleUtil.GetLocaleFromLCID((int)Value);
+                        return LocaleUtil.GetLocaleFromLCID((int) Value);
                 }
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 //LOG.log(POILogger.WARN, "Can't decode id " + ID);
             }
             return null;
@@ -625,13 +653,13 @@ using Cysharp.Text;
             //{
             //    variantType = Variant.VT_LPWSTR;
             //}
-            if (variantType == Variant.VT_LPSTR && codepage != CodePageUtil.CP_UTF16) 
+            if(variantType == Variant.VT_LPSTR && codepage != CodePageUtil.CP_UTF16)
             {
                 String csStr = CodePageUtil.CodepageToEncoding(codepage > 0 ? codepage : Property.DEFAULT_CODEPAGE);
-                
+
                 //if (!Charset.forName(csStr).newEncoder().canEncode((String)_value))
-                
-                if(!CodePageUtil.CanEncode(csStr, (String)_value))
+
+                if(!CodePageUtil.CanEncode(csStr, (String) _value))
                 {
                     variantType = Variant.VT_LPWSTR;
                 }
@@ -643,4 +671,3 @@ using Cysharp.Text;
         }
     }
 }
-

@@ -16,10 +16,10 @@
 ==================================================================== */
 namespace TestCases.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.UserModel;
-    using System.IO;
+    using System;
     using System.Collections;
+    using System.IO;
 
     /**
      * Utility class to help Test code verify that generated files do not differ from proof copies in 
@@ -47,7 +47,7 @@ namespace TestCases.HSSF.UserModel
         public static int[] DiffStreams(Stream isA, Stream isB, int[] allowableDifferenceRegions)
         {
 
-            if ((allowableDifferenceRegions.Length % 2) != 0)
+            if((allowableDifferenceRegions.Length % 2) != 0)
             {
                 throw new ArgumentException("allowableDifferenceRegions Length is odd");
             }
@@ -58,7 +58,7 @@ namespace TestCases.HSSF.UserModel
                 result = DiffInternal(isA, isB, allowableDifferenceRegions);
                 success = true;
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
@@ -79,9 +79,9 @@ namespace TestCases.HSSF.UserModel
             {
                 is1.Close();
             }
-            catch (IOException)
+            catch(IOException)
             {
-                if (success)
+                if(success)
                 {
                     // this is a new error. ok to throw
                     throw;
@@ -95,24 +95,24 @@ namespace TestCases.HSSF.UserModel
         {
             int offset = 0;
             ArrayList temp = new ArrayList();
-            while (true)
+            while(true)
             {
                 int b = isA.ReadByte();
                 int b2 = isB.ReadByte();
-                if (b == -1)
+                if(b == -1)
                 {
                     // EOF
-                    if (b2 == -1)
+                    if(b2 == -1)
                     {
                         return ToPrimitiveIntArray(temp);
                     }
                     return new int[] { -1, offset, };
                 }
-                if (b2 == -1)
+                if(b2 == -1)
                 {
                     return new int[] { -1, offset, };
                 }
-                if (b != b2 && !IsIgnoredRegion(allowableDifferenceRegions, offset))
+                if(b != b2 && !IsIgnoredRegion(allowableDifferenceRegions, offset))
                 {
                     temp.Add(offset);
                 }
@@ -122,11 +122,11 @@ namespace TestCases.HSSF.UserModel
 
         private static bool IsIgnoredRegion(int[] allowableDifferenceRegions, int offset)
         {
-            for (int i = 0; i < allowableDifferenceRegions.Length; i += 2)
+            for(int i = 0; i < allowableDifferenceRegions.Length; i += 2)
             {
                 int start = allowableDifferenceRegions[i];
                 int end = start + allowableDifferenceRegions[i + 1];
-                if (start <= offset && offset < end)
+                if(start <= offset && offset < end)
                 {
                     return true;
                 }
@@ -137,15 +137,15 @@ namespace TestCases.HSSF.UserModel
         private static int[] ToPrimitiveIntArray(ArrayList temp)
         {
             int nItems = temp.Count;
-            if (nItems < 1)
+            if(nItems < 1)
             {
                 return null;
             }
-             
-             int[] boxInts = (int[])temp.ToArray(typeof(int));
+
+            int[] boxInts = (int[])temp.ToArray(typeof(int));
 
             int[] result = new int[nItems];
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
             {
                 result[i] = boxInts[i];
             }

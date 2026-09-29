@@ -18,12 +18,12 @@
 
 namespace NPOI.DDF
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
-    using System.Collections;
+    using Cysharp.Text;
     using NPOI.Util;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// This record is used whenever a escher record is encountered that
@@ -62,17 +62,17 @@ using Cysharp.Text;
              * July 09, 2010
              */
             int available = data.Length - (offset + 8);
-            if (bytesRemaining > available)
+            if(bytesRemaining > available)
             {
                 bytesRemaining = available;
             }
-            if (IsContainerRecord)
+            if(IsContainerRecord)
             {
                 int bytesWritten = 0;
                 _thedata = [];
                 offset += 8;
                 bytesWritten += 8;
-                while (bytesRemaining > 0)
+                while(bytesRemaining > 0)
                 {
                     EscherRecord child = recordFactory.CreateRecord(data, offset);
                     int childBytesWritten = child.FillFields(data, offset, recordFactory);
@@ -85,7 +85,8 @@ using Cysharp.Text;
             }
             else
             {
-                if (bytesRemaining < 0) {
+                if(bytesRemaining < 0)
+                {
                     bytesRemaining = 0;
                 }
                 _thedata = IOUtils.SafelyAllocate(bytesRemaining, MAX_RECORD_LENGTH);
@@ -109,7 +110,7 @@ using Cysharp.Text;
             LittleEndian.PutShort(data, offset, Options);
             LittleEndian.PutShort(data, offset + 2, RecordId);
             int remainingBytes = _thedata.Length;
-            for (IEnumerator iterator = ChildRecords.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = ChildRecords.GetEnumerator(); iterator.MoveNext();)
             {
                 EscherRecord r = (EscherRecord)iterator.Current;
                 remainingBytes += r.RecordSize;
@@ -117,7 +118,7 @@ using Cysharp.Text;
             LittleEndian.PutInt(data, offset + 4, remainingBytes);
             Array.Copy(_thedata, 0, data, offset + 8, _thedata.Length);
             int pos = offset + 8 + _thedata.Length;
-            for (IEnumerator iterator = ChildRecords.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = ChildRecords.GetEnumerator(); iterator.MoveNext();)
             {
                 EscherRecord r = (EscherRecord)iterator.Current;
                 pos += r.Serialize(pos, data);
@@ -161,7 +162,7 @@ using Cysharp.Text;
         public override object Clone()
         {
             UnknownEscherRecord uer = new UnknownEscherRecord();
-            uer._thedata = (byte[])this._thedata.Clone();
+            uer._thedata = (byte[]) this._thedata.Clone();
             uer.Options = (this.Options);
             uer.RecordId = (this.RecordId);
             return uer;
@@ -187,10 +188,10 @@ using Cysharp.Text;
             String nl = Environment.NewLine;
 
             using var children = ZString.CreateStringBuilder();
-            if (ChildRecords.Count > 0)
+            if(ChildRecords.Count > 0)
             {
                 children.Append("  children: " + nl);
-                for (IEnumerator iterator = ChildRecords.GetEnumerator(); iterator.MoveNext(); )
+                for(IEnumerator iterator = ChildRecords.GetEnumerator(); iterator.MoveNext();)
                 {
                     EscherRecord record = (EscherRecord)iterator.Current;
                     children.Append(record.ToString());
@@ -201,7 +202,7 @@ using Cysharp.Text;
             String theDumpHex = "";
             try
             {
-                if (_thedata.Length != 0)
+                if(_thedata.Length != 0)
                 {
                     theDumpHex = "  Extra Data(" + _thedata.Length + "):" + nl;
                     theDumpHex += HexDump.Dump(_thedata, 0, 0);
@@ -229,7 +230,7 @@ using Cysharp.Text;
                     .Append(tab).Append("\t").Append("<IsContainer>").Append(IsContainerRecord).Append("</IsContainer>\n")
                     .Append(tab).Append("\t").Append("<Numchildren>").Append(HexDump.ToHex(_childRecords.Count)).Append("</Numchildren>\n");
 
-            foreach (EscherRecord record in _childRecords)
+            foreach(EscherRecord record in _childRecords)
             {
                 builder.Append(record.ToXml(tab + "\t"));
             }

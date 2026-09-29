@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.Crypto
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Simple implementation of the alleged RC4 algorithm.
@@ -39,10 +39,10 @@ using Cysharp.Text;
         {
             int key_length = key.Length;
 
-            for (int i = 0; i < 256; i++)
-                _s[i] = (byte)i;
+            for(int i = 0; i < 256; i++)
+                _s[i] = (byte) i;
 
-            for (int i = 0, j = 0; i < 256; i++)
+            for(int i = 0, j = 0; i < 256; i++)
             {
                 byte temp;
 
@@ -71,17 +71,17 @@ using Cysharp.Text;
 
         public void Encrypt(byte[] in1)
         {
-            for (int i = 0; i < in1.Length; i++)
+            for(int i = 0; i < in1.Length; i++)
             {
-                in1[i] = (byte)(in1[i] ^ Output());
+                in1[i] = (byte) (in1[i] ^ Output());
             }
         }
         public void Encrypt(byte[] in1, int OffSet, int len)
         {
             int end = OffSet + len;
-            for (int i = OffSet; i < end; i++)
+            for(int i = OffSet; i < end; i++)
             {
-                in1[i] = (byte)(in1[i] ^ Output());
+                in1[i] = (byte) (in1[i] ^ Output());
             }
 
         }

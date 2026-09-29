@@ -24,16 +24,16 @@
  * Contributors:
  * 
  * ==============================================================*/
-        
-using System;
-using System.IO;
-using System.Collections;
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.POIFS.Storage;
 using NPOI.POIFS.Common;
-using NPOI.Util;
 using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
+using System.IO;
 using TestCases.Util;
 
 namespace TestCases.POIFS.Storage
@@ -67,9 +67,9 @@ namespace TestCases.POIFS.Storage
         {
             byte[] data = new byte[2560];
 
-            for (int j = 0; j < 2560; j++)
+            for(int j = 0; j < 2560; j++)
             {
-                data[j] = (byte)j;
+                data[j] = (byte) j;
             }
             new RawDataBlockList(new MemoryStream(data), POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS);
         }
@@ -95,7 +95,7 @@ namespace TestCases.POIFS.Storage
             POILogger logger = POILogFactory.GetLogger(
                     typeof(RawDataBlock)
             );
-            if (!(logger is DummyPOILogger dummyPoiLogger))
+            if(!(logger is DummyPOILogger dummyPoiLogger))
             {
                 // NET Core
                 Assert.Ignore("Logger configuration not working under NET Core");
@@ -106,13 +106,13 @@ namespace TestCases.POIFS.Storage
             ClassicAssert.AreEqual(0, dummyPoiLogger.logged.Count);
 
             // Test for various short sizes
-            for (int k = 2049; k < 2560; k++)
+            for(int k = 2049; k < 2560; k++)
             {
                 byte[] data = new byte[k];
 
-                for (int j = 0; j < k; j++)
+                for(int j = 0; j < k; j++)
                 {
-                    data[j] = (byte)j;
+                    data[j] = (byte) j;
                 }
 
                 // Check we logged the error

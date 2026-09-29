@@ -1,8 +1,9 @@
-﻿using NPOI.SS.UserModel;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.Util;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +28,7 @@ namespace TestCases.XSSF
             sheet.SetArrayFormula(formulaText, CellRangeAddress.ValueOf(cellRef));
             fe.EvaluateAll();
             FileInfo fi = TempFile.CreateTempFile("xlook", ".xlsx");
-            using (FileStream file = new FileStream(fi.FullName, FileMode.Open, FileAccess.ReadWrite))
+            using(FileStream file = new FileStream(fi.FullName, FileMode.Open, FileAccess.ReadWrite))
             {
                 wb.Write(file, false);
             }

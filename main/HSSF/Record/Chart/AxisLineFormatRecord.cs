@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     public enum AxisLineType
@@ -51,7 +51,7 @@ namespace NPOI.HSSF.Record.Chart
 
      * @author Glen Stampoultzis (glens at apache.org)
      *///
-    
+
     /// <summary>
     /// The AxisLine record specifies which part of the axis (section 2.2.3.6) is 
     /// specified by the LineFormat record (section 2.4.156) that follows.
@@ -137,7 +137,7 @@ namespace NPOI.HSSF.Record.Chart
          *        AXIS_TYPE_MINOR_GRID_LINE
          *        AXIS_TYPE_WALLS_OR_FLOOR
          *///
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -149,7 +149,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-
-
-

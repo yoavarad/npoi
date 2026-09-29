@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,16 +47,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_PatternFill Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PatternFill ctObj = new CT_PatternFill();
-            if (node.Attributes["patternType"] != null)
-                ctObj.patternType = (ST_PatternType)Enum.Parse(typeof(ST_PatternType), node.Attributes["patternType"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["patternType"] != null)
+                ctObj.patternType = (ST_PatternType) Enum.Parse(typeof(ST_PatternType), node.Attributes["patternType"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "fgColor")
+                if(childNode.LocalName == "fgColor")
                     ctObj.fgColor = CT_Color.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bgColor")
+                else if(childNode.LocalName == "bgColor")
                     ctObj.bgColor = CT_Color.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -69,16 +69,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             if(patternType!=null)
                 XmlHelper.WriteAttribute(sw, "patternType", this.patternType.ToString());
-            if (this.fgColor == null && this.bgColor == null)
+            if(this.fgColor == null && this.bgColor == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.fgColor != null)
+                if(this.fgColor != null)
                     this.fgColor.Write(sw, "fgColor");
-                if (this.bgColor != null)
+                if(this.bgColor != null)
                     this.bgColor.Write(sw, "bgColor");
                 sw.WriteEndElement(nodeName);
             }

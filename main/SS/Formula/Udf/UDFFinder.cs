@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.UDF
 {
-    using System;
     using NPOI.SS.Formula.Atp;
     using NPOI.SS.Formula.Functions;
+    using System;
 
     /**
      * Common interface for "Add-in" libraries and user defined function libraries.

@@ -18,7 +18,8 @@ namespace TestCases
 {
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class TestSheetProtection
@@ -29,7 +30,7 @@ namespace TestCases
         protected void SetUp()
         {
             XSSFWorkbook workbook = XSSFTestDataSamples.OpenSampleWorkbook("sheetProtection_not_protected.xlsx");
-            sheet = (XSSFSheet)workbook.GetSheetAt(0);
+            sheet = (XSSFSheet) workbook.GetSheetAt(0);
         }
 
         [Test]
@@ -52,7 +53,7 @@ namespace TestCases
             ClassicAssert.IsFalse(sheet.IsSelectUnlockedCellsLocked);
             ClassicAssert.IsFalse(sheet.IsSheetLocked);
 
-            sheet = (XSSFSheet)XSSFTestDataSamples.OpenSampleWorkbook("sheetProtection_allLocked.xlsx").GetSheetAt(0);
+            sheet = (XSSFSheet) XSSFTestDataSamples.OpenSampleWorkbook("sheetProtection_allLocked.xlsx").GetSheetAt(0);
 
             ClassicAssert.IsTrue(sheet.IsAutoFilterLocked);
             ClassicAssert.IsTrue(sheet.IsDeleteColumnsLocked);

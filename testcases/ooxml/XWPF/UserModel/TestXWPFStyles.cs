@@ -17,12 +17,13 @@
 
 namespace TestCases.XWPF.UserModel
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.Collections.Generic;
     using NPOI.OpenXmlFormats.Wordprocessing;
-    using TestCases.XWPF;
     using NPOI.XWPF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using TestCases.XWPF;
 
     [TestFixture]
     public class TestXWPFStyles
@@ -46,10 +47,10 @@ namespace TestCases.XWPF.UserModel
             style.HasSameName(style);
 
             List<XWPFStyle> usedStyleList = styles.GetUsedStyleList(style);
-            
+
             //ClassicAssert.AreEqual(usedStyleList, testUsedStyleList);
             ClassicAssert.AreEqual(usedStyleList.Count, testUsedStyleList.Count);
-            for (int i = 0; i < usedStyleList.Count; i++)
+            for(int i = 0; i < usedStyleList.Count; i++)
             {
                 ClassicAssert.AreEqual(usedStyleList[i], testUsedStyleList[i]);
             }
@@ -161,7 +162,7 @@ namespace TestCases.XWPF.UserModel
             ClassicAssert.AreEqual(7, doc.Paragraphs.Count);
 
             // Check the first three have no run styles, just default paragraph style
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 XWPFParagraph p = doc.Paragraphs[(i)];
                 ClassicAssert.AreEqual(null, p.Style);
@@ -177,7 +178,7 @@ namespace TestCases.XWPF.UserModel
 
             // On page two, has explicit styles, but on Runs not on
             //  the paragraph itself
-            for (int i = 4; i < 7; i++)
+            for(int i = 4; i < 7; i++)
             {
                 XWPFParagraph p = doc.Paragraphs[(i)];
                 ClassicAssert.AreEqual(null, p.Style);
@@ -229,7 +230,7 @@ namespace TestCases.XWPF.UserModel
                 ClassicAssert.IsFalse(styles.StyleExist("EmptyCellLayoutStyle"));
                 ClassicAssert.IsTrue(styles.StyleExist("BalloonText"));
             }
-            catch (NullReferenceException e)
+            catch(NullReferenceException e)
             {
                 Assert.Fail(e.ToString());
             }
@@ -250,6 +251,6 @@ namespace TestCases.XWPF.UserModel
                 ClassicAssert.AreEqual(11, docIn.GetStyles().GetStyles().Count);
                 ClassicAssert.IsNull(docIn.GetStyles().GetStyle("Standard"));
             }
-}
+        }
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NPOI.Util;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace TestCases.OpenXml4Net
 {
@@ -21,12 +21,12 @@ namespace TestCases.OpenXml4Net
         }
         public static String GetSampleFileName(String sampleFileName)
         {
-            return new FileInfo(Path.Combine(_samples.ResolvedDataDir,sampleFileName)).FullName;
+            return new FileInfo(Path.Combine(_samples.ResolvedDataDir, sampleFileName)).FullName;
         }
 
         public static FileInfo GetSampleFile(String sampleFileName)
         {
-            return new FileInfo(Path.Combine(_samples.ResolvedDataDir,sampleFileName));
+            return new FileInfo(Path.Combine(_samples.ResolvedDataDir, sampleFileName));
         }
 
         public static FileInfo GetOutputFile(String outputFileName)

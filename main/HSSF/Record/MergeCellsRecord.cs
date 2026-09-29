@@ -20,12 +20,11 @@
 namespace NPOI.HSSF.Record
 {
 
-    using System;
-    using System.Text;
-    using System.Collections;
-
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Text;
 
     /**
      * Title: Merged Cells Record
@@ -61,14 +60,14 @@ namespace NPOI.HSSF.Record
         public MergeCellsRecord(RecordInputStream in1)
         {
             int nRegions = in1.ReadUShort();
-    	    CellRangeAddress[] cras = new CellRangeAddress[nRegions];
-    	    for (int i = 0; i < nRegions; i++) 
+            CellRangeAddress[] cras = new CellRangeAddress[nRegions];
+            for(int i = 0; i < nRegions; i++)
             {
-			    cras[i] = new CellRangeAddress(in1);
-		    }
-    	    _numberOfRegions = nRegions;
-    	    _startIndex = 0;
-    	    _regions = cras;
+                cras[i] = new CellRangeAddress(in1);
+            }
+            _numberOfRegions = nRegions;
+            _startIndex = 0;
+            _regions = cras;
         }
 
         public IEnumerator GetEnumerator()
@@ -86,7 +85,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return (short)_numberOfRegions;
+                return (short) _numberOfRegions;
             }
             set
             {
@@ -117,12 +116,12 @@ namespace NPOI.HSSF.Record
         {
             int nItems = _numberOfRegions;
             out1.WriteShort(nItems);
-            for (int i = 0; i < _numberOfRegions; i++)
+            for(int i = 0; i < _numberOfRegions; i++)
             {
                 _regions[_startIndex + i].Serialize(out1);
             }
         }
-        
+
 
         public override String ToString()
         {
@@ -131,7 +130,7 @@ namespace NPOI.HSSF.Record
             retval.Append("[MERGEDCELLS]").Append("\n");
             retval.Append("     .numregions =").Append(NumAreas)
                 .Append("\n");
-            for (int k = 0; k < _numberOfRegions; k++)
+            for(int k = 0; k < _numberOfRegions; k++)
             {
                 CellRangeAddress region = _regions[_startIndex + k];
 
@@ -152,7 +151,7 @@ namespace NPOI.HSSF.Record
         {
             int nRegions = _numberOfRegions;
             CellRangeAddress[] clonedRegions = new CellRangeAddress[nRegions];
-            for (int i = 0; i < clonedRegions.Length; i++)
+            for(int i = 0; i < clonedRegions.Length; i++)
             {
                 clonedRegions[i] = _regions[_startIndex + i].Copy();
             }

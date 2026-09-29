@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.Model
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Test the low level formula parser functionality,
@@ -38,9 +39,9 @@ namespace TestCases.HSSF.Model
             HSSFWorkbook workbook = new HSSFWorkbook();
 
             ISheet s = workbook.CreateSheet("Foo");
-            s.CreateRow(0).CreateCell((short)0).SetCellValue(1.1);
-            s.CreateRow(1).CreateCell((short)0).SetCellValue(2.3);
-            s.CreateRow(2).CreateCell((short)2).SetCellValue(3.1);
+            s.CreateRow(0).CreateCell((short) 0).SetCellValue(1.1);
+            s.CreateRow(1).CreateCell((short) 0).SetCellValue(2.3);
+            s.CreateRow(2).CreateCell((short) 2).SetCellValue(3.1);
 
             IName name = workbook.CreateName();
             name.NameName = ("testName");
@@ -56,9 +57,9 @@ namespace TestCases.HSSF.Model
             name.RefersToFormula = ("A1:A2,C3");
             ConfirmParseFormula(workbook);
         }
-        	/**
-	 * Makes sure that a formula referring to the named range parses properly
-	 */
+        /**
+ * Makes sure that a formula referring to the named range parses properly
+ */
         private static void ConfirmParseFormula(HSSFWorkbook workbook)
         {
             Ptg[] ptgs = HSSFFormulaParser.Parse("SUM(testName)", workbook);
@@ -80,8 +81,8 @@ namespace TestCases.HSSF.Model
             cell.CellFormula = ("SUM(A32769:A32770)");
 
             // put some values in the cells to make the evaluation more interesting
-            sheet.CreateRow(32768).CreateCell((short)0).SetCellValue(31);
-            sheet.CreateRow(32769).CreateCell((short)0).SetCellValue(11);
+            sheet.CreateRow(32768).CreateCell((short) 0).SetCellValue(31);
+            sheet.CreateRow(32769).CreateCell((short) 0).SetCellValue(11);
 
             //HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(sheet, wb);
             HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(wb);
@@ -90,9 +91,9 @@ namespace TestCases.HSSF.Model
             {
                 result = fe.Evaluate(cell);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("Found reference to named range \"A\", but that named range wasn't defined!"))
+                if(e.Message.Equals("Found reference to named range \"A\", but that named range wasn't defined!"))
                 {
                     Assert.Fail("Identifed bug 44539");
                 }

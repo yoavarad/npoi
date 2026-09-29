@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,15 +17,16 @@
 
 namespace TestCases.XSSF.UserModel
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
 
 
     [TestFixture]
@@ -41,7 +42,7 @@ namespace TestCases.XSSF.UserModel
             // read the original sheet header order
             XSSFRow row = inputWorkbook.GetSheetAt(0).GetRow(0) as XSSFRow;
             List<string> headers = new List<string>();
-            foreach (ICell cell in row)
+            foreach(ICell cell in row)
             {
                 headers.Add(cell.StringCellValue);
             }
@@ -60,7 +61,7 @@ namespace TestCases.XSSF.UserModel
 
             ClassicAssert.AreEqual(headers.Count, ctTableColumnList.Count,
                     "number of headers in xml table should match number of header cells in worksheet");
-            for (int i = 0; i < headers.Count; i++)
+            for(int i = 0; i < headers.Count; i++)
             {
                 ClassicAssert.AreEqual(headers[i], ctTableColumnList[i].name,
                     "header name in xml table should match number of header cells in worksheet");
@@ -329,7 +330,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual("Column1", t.GetCTTable().tableColumns.GetTableColumnArray(0).name);
             ClassicAssert.AreEqual("Column2", t.GetCTTable().tableColumns.GetTableColumnArray(1).name);
 
-            wb.Close();        
+            wb.Close();
         }
 
         /// <summary>
@@ -384,7 +385,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual("12", t.GetCTTable().tableColumns.GetTableColumnArray(0).name);
             ClassicAssert.AreEqual("34.56", t.GetCTTable().tableColumns.GetTableColumnArray(1).name);
             ClassicAssert.AreEqual("ABCD", t.GetCTTable().tableColumns.GetTableColumnArray(2).name);
-            
+
             IOUtils.CloseQuietly(wb2);
         }
     }

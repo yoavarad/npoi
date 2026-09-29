@@ -18,11 +18,11 @@
  */
 namespace NPOI.XSSF.UserModel
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.OOXML.XSSF.UserModel;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * High level representation for Color Scale / Color Gradient Formatting 

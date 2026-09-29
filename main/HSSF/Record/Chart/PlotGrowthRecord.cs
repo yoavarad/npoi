@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -31,7 +31,7 @@ namespace NPOI.HSSF.Record.Chart
 
      * @author Glen Stampoultzis (glens at apache.org)
      */
-    public class PlotGrowthRecord: StandardRecord
+    public class PlotGrowthRecord : StandardRecord
     {
         public const short sid = 0x1064;
         private int field_1_horizontalScale;
@@ -124,7 +124,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_verticalScale;
             }
-            set 
+            set
             {
                 this.field_2_verticalScale = value;
             }
@@ -132,4 +132,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-

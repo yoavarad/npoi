@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
@@ -25,7 +25,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
     /// <summary>
     /// IVAXIS = Axis Begin [CatSerRange] AxcExt [CatLab] AXS [CRTMLFRT] End
     /// </summary>
-    public class IVAxisAggregate: ChartRecordAggregate
+    public class IVAxisAggregate : ChartRecordAggregate
     {
         private AxisRecord axis;
         private CatSerRangeRecord catSerRange;
@@ -41,17 +41,17 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         {
             this.axis = axis;
 
-            if (rs.PeekNextChartSid() == CatSerRangeRecord.sid)
-                catSerRange = (CatSerRangeRecord)rs.GetNext();
+            if(rs.PeekNextChartSid() == CatSerRangeRecord.sid)
+                catSerRange = (CatSerRangeRecord) rs.GetNext();
 
             Debug.Assert(rs.PeekNextChartSid() == AxcExtRecord.sid);
-            axcExt = (AxcExtRecord)rs.GetNext();
+            axcExt = (AxcExtRecord) rs.GetNext();
 
-            if (rs.PeekNextChartSid() == CatLabRecord.sid)
-                catLab = (CatLabRecord)rs.GetNext();
+            if(rs.PeekNextChartSid() == CatLabRecord.sid)
+                catLab = (CatLabRecord) rs.GetNext();
 
             axs = new AXSAggregate(rs, this);
-            while (rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
+            while(rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
                 crtmlfrtList.Add(new CrtMlFrtAggregate(rs, this));
 
             Record r = rs.GetNext();//EndRecord
@@ -63,18 +63,18 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(axis);
             rv.VisitRecord(BeginRecord.instance);
 
-            if (catSerRange != null)
+            if(catSerRange != null)
                 rv.VisitRecord(catSerRange);
 
             rv.VisitRecord(axcExt);
-            if (catLab != null)
+            if(catLab != null)
             {
                 WriteStartBlock(rv);
                 rv.VisitRecord(catLab);
             }
             axs.VisitContainedRecords(rv);
 
-            foreach (CrtMlFrtAggregate crtmlfrt in crtmlfrtList)
+            foreach(CrtMlFrtAggregate crtmlfrt in crtmlfrtList)
                 crtmlfrt.VisitContainedRecords(rv);
 
             WriteEndBlock(rv);

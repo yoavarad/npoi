@@ -15,11 +15,10 @@
  * limitations Under the License.
  */
 
+using NPOI.SS.Formula.Eval;
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
-
-using NPOI.Util;
-using NPOI.SS.Formula.Eval;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -38,7 +37,7 @@ namespace NPOI.SS.Formula.Functions
          */
         public static double Evaluate(double[] v)
         {
-            if (v.Length < 2)
+            if(v.Length < 2)
             {
                 throw new EvaluationException(ErrorEval.NA);
             }
@@ -46,25 +45,25 @@ namespace NPOI.SS.Formula.Functions
             // very naive impl, may need to be optimized
             int[] counts = new int[v.Length];
             Arrays.Fill(counts, 1);
-            for (int i = 0, iSize = v.Length; i < iSize; i++)
+            for(int i = 0, iSize = v.Length; i < iSize; i++)
             {
-                for (int j = i + 1, jSize = v.Length; j < jSize; j++)
+                for(int j = i + 1, jSize = v.Length; j < jSize; j++)
                 {
-                    if (v[i] == v[j])
+                    if(v[i] == v[j])
                         counts[i]++;
                 }
             }
             double maxv = 0;
             int maxc = 0;
-            for (int i = 0, iSize = counts.Length; i < iSize; i++)
+            for(int i = 0, iSize = counts.Length; i < iSize; i++)
             {
-                if (counts[i] > maxc)
+                if(counts[i] > maxc)
                 {
                     maxv = v[i];
                     maxc = counts[i];
                 }
             }
-            if (maxc > 1)
+            if(maxc > 1)
             {
                 return maxv;
             }
@@ -78,14 +77,14 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 List<double> temp = [];
-                for (int i = 0; i < args.Length; i++)
+                for(int i = 0; i < args.Length; i++)
                 {
                     CollectValues(args[i], temp);
                 }
                 double[] values = temp.ToArray();
                 result = Evaluate(values);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -94,13 +93,13 @@ namespace NPOI.SS.Formula.Functions
 
         private static void CollectValues(ValueEval arg, List<double> temp)
         {
-            if (arg is TwoDEval ae)
+            if(arg is TwoDEval ae)
             {
                 int width = ae.Width;
                 int height = ae.Height;
-                for (int rrIx = 0; rrIx < height; rrIx++)
+                for(int rrIx = 0; rrIx < height; rrIx++)
                 {
-                    for (int rcIx = 0; rcIx < width; rcIx++)
+                    for(int rcIx = 0; rcIx < width; rcIx++)
                     {
                         ValueEval ve1 = ae.GetValue(rrIx, rcIx);
                         CollectValue(ve1, temp, false);
@@ -108,11 +107,11 @@ namespace NPOI.SS.Formula.Functions
                 }
                 return;
             }
-            if (arg is RefEval re)
+            if(arg is RefEval re)
             {
                 int firstSheetIndex = re.FirstSheetIndex;
                 int lastSheetIndex = re.LastSheetIndex;
-                for (int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
+                for(int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
                 {
                     CollectValue(re.GetInnerValueEval(sIx), temp, true);
                 }
@@ -124,19 +123,19 @@ namespace NPOI.SS.Formula.Functions
 
         private static void CollectValue(ValueEval arg, List<double> temp, bool mustBeNumber)
         {
-            if (arg is ErrorEval eval)
+            if(arg is ErrorEval eval)
             {
                 throw new EvaluationException(eval);
             }
-            if (arg == BlankEval.instance || arg is BoolEval || arg is StringEval)
+            if(arg == BlankEval.instance || arg is BoolEval || arg is StringEval)
             {
-                if (mustBeNumber)
+                if(mustBeNumber)
                 {
                     throw EvaluationException.InvalidValue();
                 }
                 return;
             }
-            if (arg is NumberEval numberEval)
+            if(arg is NumberEval numberEval)
             {
                 temp.Add(numberEval.NumberValue);
                 return;

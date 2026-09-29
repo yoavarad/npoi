@@ -1,6 +1,6 @@
-﻿using System;
-using System.Text;
 using NPOI.Util;
+using System;
+using System.Text;
 
 
 namespace NPOI.HSSF.Record
@@ -23,7 +23,7 @@ namespace NPOI.HSSF.Record
 
         public FtCblsSubRecord(ILittleEndianInput in1, int size)
         {
-            if (size != ENCODED_SIZE)
+            if(size != ENCODED_SIZE)
             {
                 throw new RecordFormatException("Unexpected size (" + size + ")");
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -30,11 +30,11 @@ namespace NPOI.Util
      */
     public class CodePageUtil
     {
-        static CodePageUtil() 
+        static CodePageUtil()
         {
-            #if NETSTANDARD2_1 || NET6_0_OR_GREATER || NETSTANDARD2_0
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER || NETSTANDARD2_0
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            #endif
+#endif
         }
 
         /** <p>Codepage 037, a special case</p> */
@@ -220,7 +220,7 @@ namespace NPOI.Util
                 Encoding encoding = Encoding.GetEncoding(cp);
                 return encoding.GetBytes(string1);
             }
-            catch(Exception ex) when (ex is NotSupportedException || ex is ArgumentException)
+            catch(Exception ex) when(ex is NotSupportedException || ex is ArgumentException)
             {
                 throw new UnsupportedEncodingException("Codepage number may not be " + codepage);
             }
@@ -284,10 +284,10 @@ namespace NPOI.Util
          */
         public static String CodepageToEncoding(int codepage)
         {
-            if (codepage <= 0)
+            if(codepage <= 0)
                 throw new UnsupportedEncodingException("Codepage number may not be " + codepage);
 
-            switch (codepage)
+            switch(codepage)
             {
                 case CP_UTF16:
                     return "UTF-16";

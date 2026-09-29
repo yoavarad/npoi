@@ -17,11 +17,11 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF.Record;
     /**
      */
     [TestFixture]
@@ -29,7 +29,7 @@ namespace TestCases.HSSF.Record
     {
 
         private static byte[] data = new byte[] {
-			00, 00, // Font 0
+            00, 00, // Font 0
 			00, 00, // Format 0
 			unchecked((byte)(0xF5 - 256)), unchecked((byte)(0xFF - 256)), // Cell opts ...
 			0x20, 00, // Alignment 20
@@ -108,22 +108,22 @@ namespace TestCases.HSSF.Record
             //          .background= 41
 
             ExtendedFormatRecord record = new ExtendedFormatRecord();
-            record.FontIndex = (/*setter*/(short)0);
-            record.FormatIndex = (/*setter*/(short)0);
+            record.FontIndex = (/*setter*/(short) 0);
+            record.FormatIndex = (/*setter*/(short) 0);
 
             record.IsLocked = (/*setter*/true);
             record.IsHidden = (/*setter*/false);
-            record.XFType = (/*setter*/(short)1);
-            record.ParentIndex = (/*setter*/(short)0xfff);
+            record.XFType = (/*setter*/(short) 1);
+            record.ParentIndex = (/*setter*/(short) 0xfff);
 
-            record.VerticalAlignment = (/*setter*/(short)2);
+            record.VerticalAlignment = (/*setter*/(short) 2);
 
-            record.FillForeground = (/*setter*/(short)0x40);
-            record.FillBackground = (/*setter*/(short)0x41);
+            record.FillForeground = (/*setter*/(short) 0x40);
+            record.FillBackground = (/*setter*/(short) 0x41);
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
         [Test]
@@ -136,7 +136,7 @@ namespace TestCases.HSSF.Record
 
             byte[] recordBytes = other.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
 
@@ -145,18 +145,18 @@ namespace TestCases.HSSF.Record
         {
             ExtendedFormatRecord record = CreateEFR();
             ClassicAssert.AreEqual(0, record.Rotation);
-            record.Rotation = ((short)1);
+            record.Rotation = ((short) 1);
             ClassicAssert.AreEqual(1, record.Rotation);
-            record.Rotation = ((short)89);
+            record.Rotation = ((short) 89);
             ClassicAssert.AreEqual(89, record.Rotation);
-            record.Rotation = ((short)90);
+            record.Rotation = ((short) 90);
             ClassicAssert.AreEqual(90, record.Rotation);
             // internally values below zero are stored differently
-            record.Rotation = ((short)-1);
+            record.Rotation = ((short) -1);
             ClassicAssert.AreEqual(255, record.Rotation);
-            record.Rotation = ((short)-89);
+            record.Rotation = ((short) -89);
             ClassicAssert.AreEqual(-77, 90 - record.Rotation);
-            record.Rotation = ((short)-90);
+            record.Rotation = ((short) -90);
             ClassicAssert.AreEqual(-76, 90 - record.Rotation);
         }
     }

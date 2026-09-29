@@ -20,7 +20,8 @@ namespace TestCases.XWPF.UserModel
 
     using NPOI.OpenXmlFormats.Wordprocessing;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Linq;
 

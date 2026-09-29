@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /*
      * The font basis record stores various font metrics.
@@ -110,7 +110,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         protected override int DataSize
         {
-            get { return  2 + 2 + 2 + 2 + 2; }
+            get { return 2 + 2 + 2 + 2 + 2; }
         }
 
         public override short Sid
@@ -142,7 +142,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_xBasis;
             }
-            set 
+            set
             {
                 field_1_xBasis = value;
             }
@@ -157,7 +157,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_yBasis;
             }
-            set 
+            set
             {
                 field_2_yBasis = value;
             }
@@ -172,7 +172,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_3_heightBasis;
             }
-            set 
+            set
             {
                 this.field_3_heightBasis = value;
             }
@@ -187,7 +187,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_4_scale;
             }
-            set 
+            set
             {
                 field_4_scale = value;
             }
@@ -202,7 +202,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_5_indexToFontTable;
             }
-            set 
+            set
             {
                 this.field_5_indexToFontTable = value;
             }

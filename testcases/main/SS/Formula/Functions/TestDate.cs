@@ -15,10 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 namespace TestCases.SS.Formula.Functions
 {
 
@@ -87,7 +88,7 @@ namespace TestCases.SS.Formula.Functions
             cell11.CellFormula=(formulaText);
             Evaluator.ClearAllCachedResultValues();
             CellValue cv = Evaluator.Evaluate(cell11);
-            if (cv.CellType != CellType.Numeric)
+            if(cv.CellType != CellType.Numeric)
             {
                 throw new AssertionException("Wrong result type: " + cv.FormatAsString());
             }

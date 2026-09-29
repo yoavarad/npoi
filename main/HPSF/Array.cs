@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations Under the License.
 ==================================================================== */
 
-using System;
 using NPOI.Util;
+using System;
 
 namespace NPOI.HPSF
 {
@@ -106,18 +106,20 @@ namespace NPOI.HPSF
 
             _values = new TypedPropertyValue[numberOfScalars];
             int paddedType = (_header._type == Variant.VT_VARIANT) ? 0 : _header._type;
-            for ( int i = 0; i < numberOfScalars; i++ ) 
+            for(int i = 0; i < numberOfScalars; i++)
             {
                 TypedPropertyValue typedPropertyValue = new TypedPropertyValue(paddedType, null);
                 typedPropertyValue.Read(lei);
                 _values[i] = typedPropertyValue;
-                if (paddedType != 0) {
+                if(paddedType != 0)
+                {
                     TypedPropertyValue.SkipPadding(lei);
                 }
             }
         }
 
-        private TypedPropertyValue[] GetValues(){
+        private TypedPropertyValue[] GetValues()
+        {
             return _values;
         }
     }

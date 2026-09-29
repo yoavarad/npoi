@@ -17,9 +17,6 @@
 
 namespace TestCases.OpenXml4Net.OPC
 {
-    using System;
-    using System.IO;
-    using System.Xml;
     using NPOI;
     using NPOI.Openxml4Net.Exceptions;
     using NPOI.OpenXml4Net.OPC;
@@ -27,7 +24,11 @@ namespace TestCases.OpenXml4Net.OPC
     using NPOI.Util;
     using NPOI.XSSF;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Xml;
     using TestCases;
     using TestCases.OpenXml4Net;
 
@@ -80,7 +81,7 @@ namespace TestCases.OpenXml4Net.OPC
                 wb.Close();
                 Assert.Fail("Should catch exception due to entity expansion limitations");
             }
-            catch (POIXMLException e)
+            catch(POIXMLException e)
             {
                 assertEntityLimitReached(e);
             }
@@ -111,7 +112,7 @@ namespace TestCases.OpenXml4Net.OPC
                 wb.Close();
                 Assert.Fail("Should catch exception due to entity expansion limitations");
             }
-            catch (POIXMLException e)
+            catch(POIXMLException e)
             {
                 assertEntityLimitReached(e);
             }
@@ -136,7 +137,7 @@ namespace TestCases.OpenXml4Net.OPC
                 //    extractor.Close();
                 //}
             }
-            catch (POIXMLException e)
+            catch(POIXMLException e)
             {
                 assertEntityLimitReached(e);
             }
@@ -193,7 +194,7 @@ namespace TestCases.OpenXml4Net.OPC
                 //    extractor.Close();
                 //}
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 assertEntityLimitReached(e);
             }
@@ -217,9 +218,9 @@ namespace TestCases.OpenXml4Net.OPC
             FileInfo tmp = TempFile.CreateTempFile("poi-test-truncated-zip", "");
             // create a corrupted zip file by truncating a valid zip file to the first 100 bytes
             Stream os = new FileStream(tmp.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            for (int i = 0; i < 100; i++)
+            for(int i = 0; i < 100; i++)
             {
-                os.WriteByte((byte)is1.ReadByte());
+                os.WriteByte((byte) is1.ReadByte());
             }
             os.Flush();
             os.Close();
@@ -229,7 +230,7 @@ namespace TestCases.OpenXml4Net.OPC
             {
                 OPCPackage.Open(tmp, PackageAccess.READ);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 // expected: the zip file is invalid
                 // this test does not care if open() throws an exception or not.
@@ -260,7 +261,7 @@ namespace TestCases.OpenXml4Net.OPC
             Stream[] notValidS = new Stream[] {
                 files.OpenResourceAsStream("SampleSS.ods"), files.OpenResourceAsStream("SampleSS.txt")
         };
-            foreach (FileInfo notValid in notValidF)
+            foreach(FileInfo notValid in notValidF)
             {
                 ZipPackage pkg = new ZipPackage(notValid, PackageAccess.READ);
                 ClassicAssert.IsNotNull(pkg.ZipArchive);
@@ -270,16 +271,16 @@ namespace TestCases.OpenXml4Net.OPC
                     pkg.GetParts();
                     Assert.Fail("Shouldn't work");
                 }
-                catch (ODFNotOfficeXmlFileException)
+                catch(ODFNotOfficeXmlFileException)
                 {
                 }
-                catch (NotOfficeXmlFileException) { }
+                catch(NotOfficeXmlFileException) { }
                 pkg.Close();
 
                 ClassicAssert.IsNotNull(pkg.ZipArchive);
                 ClassicAssert.IsTrue(pkg.ZipArchive.IsClosed);
             }
-            foreach (InputStream notValid in notValidS)
+            foreach(InputStream notValid in notValidS)
             {
                 ZipPackage pkg = new ZipPackage(notValid, PackageAccess.READ);
                 ClassicAssert.IsNotNull(pkg.ZipArchive);
@@ -289,10 +290,10 @@ namespace TestCases.OpenXml4Net.OPC
                     pkg.GetParts();
                     Assert.Fail("Shouldn't work");
                 }
-                catch (ODFNotOfficeXmlFileException)
+                catch(ODFNotOfficeXmlFileException)
                 {
                 }
-                catch (NotOfficeXmlFileException) { }
+                catch(NotOfficeXmlFileException) { }
                 pkg.Close();
 
                 ClassicAssert.IsNotNull(pkg.ZipArchive);

@@ -85,7 +85,7 @@ namespace NPOI.XSSF.UserModel
         {
             return new AreaReference(reference, workbook.SpreadsheetVersion);
         }
-        
+
         /**
          * {@inheritDoc}
          */
@@ -96,4 +96,3 @@ namespace NPOI.XSSF.UserModel
     }
 
 }
-

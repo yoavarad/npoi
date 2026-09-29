@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,7 +51,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private string valueField;
         public static CT_DefinedName Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DefinedName ctObj = new CT_DefinedName();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
@@ -79,27 +79,27 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            XmlHelper.WriteAttribute(sw, "name", this.name,true);
+            XmlHelper.WriteAttribute(sw, "name", this.name, true);
             XmlHelper.WriteAttribute(sw, "comment", this.comment);
             XmlHelper.WriteAttribute(sw, "customMenu", this.customMenu);
             XmlHelper.WriteAttribute(sw, "description", this.description);
             XmlHelper.WriteAttribute(sw, "help", this.help);
             XmlHelper.WriteAttribute(sw, "statusBar", this.statusBar);
-            if (localSheetIdFieldSpecified)
+            if(localSheetIdFieldSpecified)
                 XmlHelper.WriteAttribute(sw, "localSheetId", this.localSheetId, true);
             if(hidden)
                 XmlHelper.WriteAttribute(sw, "hidden", this.hidden);
-            if (function)
+            if(function)
                 XmlHelper.WriteAttribute(sw, "function", this.function);
-            if (vbProcedure)
+            if(vbProcedure)
                 XmlHelper.WriteAttribute(sw, "vbProcedure", this.vbProcedure);
             if(xlm)
                 XmlHelper.WriteAttribute(sw, "xlm", this.xlm);
             XmlHelper.WriteAttribute(sw, "functionGroupId", this.functionGroupId);
             XmlHelper.WriteAttribute(sw, "shortcutKey", this.shortcutKey);
-            if (publishToServerField)
+            if(publishToServerField)
                 XmlHelper.WriteAttribute(sw, "publishToServer", this.publishToServer);
-            if (workbookParameterField)
+            if(workbookParameterField)
                 XmlHelper.WriteAttribute(sw, "workbookParameter", this.workbookParameter);
             sw.Write('>');
             sw.Write("<![CDATA[");
@@ -365,13 +365,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_DefinedNames Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DefinedNames ctObj = new CT_DefinedNames();
             ctObj.definedName = new List<CT_DefinedName>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "definedName")
+                if(childNode.LocalName == "definedName")
                     ctObj.definedName.Add(CT_DefinedName.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -383,9 +383,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.definedName != null)
+            if(this.definedName != null)
             {
-                foreach (CT_DefinedName x in this.definedName)
+                foreach(CT_DefinedName x in this.definedName)
                 {
                     x.Write(sw, "definedName");
                 }
@@ -395,7 +395,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_DefinedName AddNewDefinedName()
         {
-            if (this.definedNameField == null)
+            if(this.definedNameField == null)
                 this.definedNameField = new List<CT_DefinedName>();
             CT_DefinedName dn = new CT_DefinedName();
             this.definedNameField.Add(dn);

@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -76,8 +76,8 @@ namespace NPOI.HSSF.Record.Chart
             field_2_yAxisUpperLeft = in1.ReadInt();
             field_3_xSize = in1.ReadInt();
             field_4_ySize = in1.ReadInt();
-            field_5_type = (byte)in1.ReadByte();
-            field_6_spacing = (byte)in1.ReadByte();
+            field_5_type = (byte) in1.ReadByte();
+            field_6_spacing = (byte) in1.ReadByte();
             field_7_options = in1.ReadShort();
 
         }
@@ -176,7 +176,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_xAxisUpperLeft;
             }
-            set 
+            set
             {
                 field_1_xAxisUpperLeft = value;
             }
@@ -191,7 +191,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_yAxisUpperLeft;
             }
-            set 
+            set
             {
                 field_2_yAxisUpperLeft = value;
             }
@@ -282,7 +282,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsAutoXPositioning
         {
-            get{return autoXPositioning.IsSet(field_7_options);}
+            get { return autoXPositioning.IsSet(field_7_options); }
             set { field_7_options = autoXPositioning.SetShortBoolean(field_7_options, value); }
         }
 
@@ -292,8 +292,8 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsAutoYPositioning
         {
-            get{return autoYPositioning.IsSet(field_7_options);}
-            set{field_7_options = autoYPositioning.SetShortBoolean(field_7_options, value);}
+            get { return autoYPositioning.IsSet(field_7_options); }
+            set { field_7_options = autoYPositioning.SetShortBoolean(field_7_options, value); }
         }
 
         /**
@@ -313,7 +313,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsDataTable
         {
-            get{return dataTable.IsSet(field_7_options);}
+            get { return dataTable.IsSet(field_7_options); }
             set { field_7_options = dataTable.SetShortBoolean(field_7_options, value); }
         }
 

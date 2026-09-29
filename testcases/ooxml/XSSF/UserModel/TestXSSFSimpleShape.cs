@@ -16,11 +16,12 @@
 ==================================================================== */
 namespace TestCases.XSSF.UserModel
 {
-    using System;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.XSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
+    using System;
 
     [TestFixture]
     public class TestXSSFSimpleShape
@@ -50,7 +51,7 @@ namespace TestCases.XSSF.UserModel
                 ClassicAssert.IsNotNull(shape.GetEnumerator());
                 ClassicAssert.IsNotNull(XSSFSimpleShape.Prototype());
 
-                foreach (ListAutoNumber nr in Enum.GetValues(typeof(ListAutoNumber)))
+                foreach(ListAutoNumber nr in Enum.GetValues(typeof(ListAutoNumber)))
                 {
                     shape.TextParagraphs[(0)].SetBullet(nr);
                     ClassicAssert.IsNotNull(shape.Text);

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -31,16 +31,16 @@ namespace NPOI.SS.Formula.Functions
         public ValueEval ErrorOnEmptyList { get; set; } = ErrorEval.DIV_ZERO;
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 0)
+            if(args.Length == 0)
                 return ErrorEval.VALUE_INVALID;
 
             try
             {
                 var list = new List<double>();
 
-                foreach (var arg in args)
+                foreach(var arg in args)
                 {
-                    switch (arg)
+                    switch(arg)
                     {
                         case AreaEval ae:
                             ValueEvaluationHelper.GetArrayValues(ae, list);
@@ -48,7 +48,7 @@ namespace NPOI.SS.Formula.Functions
                         case NumericValueEval:
                         case RefEval:
                             var val = ValueEvaluationHelper.GetScalarValue(arg);
-                            if (val.HasValue)
+                            if(val.HasValue)
                                 list.Add(val.Value);
                             break;
                         default:
@@ -56,13 +56,13 @@ namespace NPOI.SS.Formula.Functions
                     }
                 }
 
-                if (!AllowEmptyList && list.Count == 0)
+                if(!AllowEmptyList && list.Count == 0)
                     return ErrorOnEmptyList;
 
                 var result = CalculateFromNumberList(list);
                 return result == 0.0 ? NumberEval.ZERO : new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

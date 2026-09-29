@@ -101,7 +101,7 @@ namespace TestCases.HSSF.Record.Crypto
             public void RollForward(int fromPosition, int toPosition)
             {
                 ClassicAssert.AreEqual(fromPosition, _bds.GetPosition());
-                for (int i = fromPosition; i < toPosition; i++)
+                for(int i = fromPosition; i < toPosition; i++)
                 {
                     _bds.ReadByte();
                 }
@@ -145,12 +145,12 @@ namespace TestCases.HSSF.Record.Crypto
 
             private void cmp(char[] exp, char[] act)
             {
-                if (Arrays.Equals(exp, act))
+                if(Arrays.Equals(exp, act))
                 {
                     return;
                 }
                 _errorsOccurred = true;
-                if (ONLY_LOG_ERRORS)
+                if(ONLY_LOG_ERRORS)
                 {
                     logErr(3, "Value mismatch " + new String(exp) + " - " + new String(act));
                     return;
@@ -164,12 +164,12 @@ namespace TestCases.HSSF.Record.Crypto
                 byte[] expData = HexRead.ReadFromString(expHexData);
                 byte[] actData = new byte[expData.Length];
                 _bds.ReadFully(actData);
-                if (Arrays.Equals(expData, actData))
+                if(Arrays.Equals(expData, actData))
                 {
                     return;
                 }
                 _errorsOccurred = true;
-                if (ONLY_LOG_ERRORS)
+                if(ONLY_LOG_ERRORS)
                 {
                     logErr(2, "Data mismatch " + HexDump.ToHex(expData) + " - "
                             + HexDump.ToHex(actData));
@@ -180,7 +180,7 @@ namespace TestCases.HSSF.Record.Crypto
 
             private static void logErr(int stackFrameCount, String msg)
             {
-               // StackTraceElement ste = new Exception().StackTrace[stackFrameCount];
+                // StackTraceElement ste = new Exception().StackTrace[stackFrameCount];
                 //System.err.Print("(" + ste.FileName + ":" + ste.LineNumber + ") ");
                 //System.err.Println(msg);
             }
@@ -207,7 +207,7 @@ namespace TestCases.HSSF.Record.Crypto
             st.ConfirmShort(0xD83E);
             st.RollForward(0x0802, 0x0BFC);
             st.ConfirmInt(0x25F280EB);
-            st.ConfirmInt(unchecked((int)0xB549E99B));
+            st.ConfirmInt(unchecked((int) 0xB549E99B));
             st.RollForward(0x0C04, 0x0FF8);
             st.ConfirmLong(0x6AA2D5F6B975D10CL);
             st.ConfirmLong(0x34248ADF7ED4F029L);
@@ -234,9 +234,9 @@ namespace TestCases.HSSF.Record.Crypto
             StreamTester st = CreateStreamTester(0x50, "BA AD F0 0D 00",  unchecked((int)0x96C66829));
 
             st.RollForward(0x0004, 0x03FC);
-            st.ConfirmLong(unchecked((long)0x885243283E2A5EEFL));
+            st.ConfirmLong(unchecked((long) 0x885243283E2A5EEFL));
             st.RollForward(0x0404, 0x07FE);
-            st.ConfirmInt( unchecked((int)0xD83E76CC));
+            st.ConfirmInt(unchecked((int) 0xD83E76CC));
             st.RollForward(0x0802, 0x0BFF);
             st.ConfirmShort(0x9B25);
             st.AssertNoErrors();
@@ -256,13 +256,13 @@ namespace TestCases.HSSF.Record.Crypto
             Biff8DecryptingStream bds = st.GetBDS();
             int hval = bds.ReadDataSize();   // unencrypted
             int nextInt = bds.ReadInt();
-            if (nextInt == unchecked((int)0x8F534029))
+            if(nextInt == unchecked((int) 0x8F534029))
             {
                 throw new AssertionException(
                         "Indentified bug in key alignment After call to ReadHeaderUshort()");
             }
             ClassicAssert.AreEqual(0x16885243, nextInt);
-            if (hval == 0x283E)
+            if(hval == 0x283E)
             {
                 throw new AssertionException("readHeaderUshort() incorrectly decrypted result");
             }

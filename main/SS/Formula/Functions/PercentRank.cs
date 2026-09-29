@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +19,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length < 2)
+            if(args.Length < 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -29,10 +29,10 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ev = OperandResolver.GetSingleValue(args[1], srcRowIndex, srcColumnIndex);
                 x = OperandResolver.CoerceValueToDouble(ev);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 ValueEval error = e.GetErrorEval();
-                if (error == ErrorEval.NUM_ERROR)
+                if(error == ErrorEval.NUM_ERROR)
                 {
                     return error;
                 }
@@ -43,9 +43,9 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 List<ValueEval> values = getValues(args[0], srcRowIndex, srcColumnIndex);
-                foreach (ValueEval ev in values)
+                foreach(ValueEval ev in values)
                 {
-                    if (ev is BlankEval || ev is MissingArgEval)
+                    if(ev is BlankEval || ev is MissingArgEval)
                     {
                         //skip
                     }
@@ -55,30 +55,30 @@ namespace NPOI.SS.Formula.Functions
                     }
                 }
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 ValueEval error = e.GetErrorEval();
-                if (error != ErrorEval.NA)
+                if(error != ErrorEval.NA)
                 {
                     return error;
                 }
                 return ErrorEval.NUM_ERROR;
             }
 
-            if (numbers.Count==0)
+            if(numbers.Count==0)
             {
                 return ErrorEval.NUM_ERROR;
             }
 
             int significance = 3;
-            if (args.Length > 2)
+            if(args.Length > 2)
             {
                 try
                 {
                     ValueEval ev = OperandResolver.GetSingleValue(args[2], srcRowIndex, srcColumnIndex);
                     significance = OperandResolver.CoerceValueToInt(ev);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
@@ -91,38 +91,44 @@ namespace NPOI.SS.Formula.Functions
         {
             double closestMatchBelow = Double.MinValue;
             double closestMatchAbove = Double.MaxValue;
-            if (recurse)
+            if(recurse)
             {
-                foreach (Double d in numbers)
+                foreach(Double d in numbers)
                 {
-                    if (d <= x && d > closestMatchBelow) closestMatchBelow = d;
-                    if (d > x && d < closestMatchAbove) closestMatchAbove = d;
+                    if(d <= x && d > closestMatchBelow)
+                        closestMatchBelow = d;
+                    if(d > x && d < closestMatchAbove)
+                        closestMatchAbove = d;
                 }
             }
-            if (!recurse || closestMatchBelow == x || closestMatchAbove == x)
+            if(!recurse || closestMatchBelow == x || closestMatchAbove == x)
             {
                 int lessThanCount = 0;
                 int greaterThanCount = 0;
-                foreach (Double d in numbers)
+                foreach(Double d in numbers)
                 {
-                    if (d < x) lessThanCount++;
-                    else if (d > x) greaterThanCount++;
+                    if(d < x)
+                        lessThanCount++;
+                    else if(d > x)
+                        greaterThanCount++;
                 }
-                if (greaterThanCount == numbers.Count|| lessThanCount == numbers.Count)
+                if(greaterThanCount == numbers.Count|| lessThanCount == numbers.Count)
                 {
                     return ErrorEval.NA;
                 }
                 var result = (double)lessThanCount / (double)(lessThanCount + greaterThanCount);
-                return new NumberEval(Math.Floor(result*Math.Pow(10,significance))/Math.Pow(10, significance));
+                return new NumberEval(Math.Floor(result*Math.Pow(10, significance))/Math.Pow(10, significance));
             }
             else
             {
                 ValueEval belowRank = calculateRank(numbers, closestMatchBelow, significance, false);
-                if (belowRank is not NumberEval below) {
+                if(belowRank is not NumberEval below)
+                {
                     return belowRank;
                 }
                 ValueEval aboveRank = calculateRank(numbers, closestMatchAbove, significance, false);
-                if (aboveRank is not NumberEval above) {
+                if(aboveRank is not NumberEval above)
+                {
                     return aboveRank;
                 }
 
@@ -130,18 +136,18 @@ namespace NPOI.SS.Formula.Functions
                 double pos = x - closestMatchBelow;
                 double rankDiff = above.NumberValue - below.NumberValue;
                 var result = below.NumberValue + (rankDiff * (pos / diff));
-                return new NumberEval(Math.Round(result,significance));
+                return new NumberEval(Math.Round(result, significance));
             }
         }
 
         private static List<ValueEval> getValues(ValueEval eval, int srcRowIndex, int srcColumnIndex)
         {
-            if (eval is AreaEval ae)
+            if(eval is AreaEval ae)
             {
                 List<ValueEval> list = new List<ValueEval>();
-                for (int r = ae.FirstRow; r <= ae.LastRow; r++)
+                for(int r = ae.FirstRow; r <= ae.LastRow; r++)
                 {
-                    for (int c = ae.FirstColumn; c <= ae.LastColumn; c++)
+                    for(int c = ae.FirstColumn; c <= ae.LastColumn; c++)
                     {
                         list.Add(OperandResolver.GetSingleValue(ae.GetAbsoluteValue(r, c), r, c));
                     }

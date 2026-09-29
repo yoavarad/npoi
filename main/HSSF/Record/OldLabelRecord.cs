@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
     using NPOI.Util;
+    using System;
     using System.Text;
 
     /**
@@ -45,9 +45,9 @@ namespace NPOI.HSSF.Record
         public OldLabelRecord(RecordInputStream in1)
             : base(in1, in1.Sid == biff2_sid)
         {
-            if (IsBiff2)
+            if(IsBiff2)
             {
-                field_4_string_len = (short)in1.ReadUByte();
+                field_4_string_len = (short) in1.ReadUByte();
             }
             else
             {
@@ -58,7 +58,7 @@ namespace NPOI.HSSF.Record
             field_5_bytes = IOUtils.SafelyAllocate(field_4_string_len, MAX_RECORD_LENGTH);
             in1.Read(field_5_bytes, 0, field_4_string_len);
 
-            if (in1.Remaining > 0)
+            if(in1.Remaining > 0)
             {
                 logger.Log(POILogger.INFO,
                         "LabelRecord data remains: " + in1.Remaining +

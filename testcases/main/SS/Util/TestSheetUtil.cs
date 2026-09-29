@@ -17,13 +17,12 @@
 
 namespace TestCases.SS.Util
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests SheetUtil.
@@ -75,7 +74,7 @@ namespace TestCases.SS.Util
             IWorkbook wb = new HSSFWorkbook();
 
             // cannot check on result because on some machines we get back false here!
-            SheetUtil.CanComputeColumnWidth(wb.GetFontAt((short)0));
+            SheetUtil.CanComputeColumnWidth(wb.GetFontAt((short) 0));
             wb.Close();
         }
         [Test]
@@ -164,7 +163,7 @@ namespace TestCases.SS.Util
             row.CreateCell(2);
 
             cell.SetCellValue("sometext");
-            
+
             ClassicAssert.IsTrue(SheetUtil.GetRowHeight(sheet, 0, true) > 0, "Having some height for a row with a cell with content");
             ClassicAssert.AreEqual(0.0, SheetUtil.GetRowHeight(sheet, 0, true, 1, 2)
                     , "Not having any height for row with empty cells");

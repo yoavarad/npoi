@@ -43,13 +43,13 @@ namespace NPOI.SS.Formula.Functions
             double r = 0;
             double m = 0;
             double s = 0;
-            for (int i = 0, iSize = v.Length; i < iSize; i++)
+            for(int i = 0, iSize = v.Length; i < iSize; i++)
             {
                 s += v[i];
             }
             m = s / v.Length;
             s = 0;
-            for (int i = 0, iSize = v.Length; i < iSize; i++)
+            for(int i = 0, iSize = v.Length; i < iSize; i++)
             {
                 s += Math.Abs(v[i] - m);
             }
@@ -60,7 +60,7 @@ namespace NPOI.SS.Formula.Functions
         public static double stdev(double[] v)
         {
             double r = double.NaN;
-            if (v != null && v.Length > 1)
+            if(v != null && v.Length > 1)
             {
                 r = Math.Sqrt(devsq(v) / (v.Length - 1));
             }
@@ -80,7 +80,7 @@ namespace NPOI.SS.Formula.Functions
         public static double var(double[] v)
         {
             double r = Double.NaN;
-            if (v != null && v.Length > 1)
+            if(v != null && v.Length > 1)
             {
                 r = devsq(v) / (v.Length - 1);
             }
@@ -90,7 +90,7 @@ namespace NPOI.SS.Formula.Functions
         public static double varp(double[] v)
         {
             double r = Double.NaN;
-            if (v != null && v.Length > 1)
+            if(v != null && v.Length > 1)
             {
                 r = devsq(v) / v.Length;
             }
@@ -107,22 +107,23 @@ namespace NPOI.SS.Formula.Functions
             double r = double.NaN;
 
             // very naive impl, may need to be optimized
-            if (v != null && v.Length > 1)
+            if(v != null && v.Length > 1)
             {
                 int[] Counts = new int[v.Length];
                 Arrays.Fill(Counts, 1);
-                for (int i = 0, iSize = v.Length; i < iSize; i++)
+                for(int i = 0, iSize = v.Length; i < iSize; i++)
                 {
-                    for (int j = i + 1, jSize = v.Length; j < jSize; j++)
+                    for(int j = i + 1, jSize = v.Length; j < jSize; j++)
                     {
-                        if (v[i] == v[j]) Counts[i]++;
+                        if(v[i] == v[j])
+                            Counts[i]++;
                     }
                 }
                 double maxv = 0;
                 int maxc = 0;
-                for (int i = 0, iSize = Counts.Length; i < iSize; i++)
+                for(int i = 0, iSize = Counts.Length; i < iSize; i++)
                 {
-                    if (Counts[i] > maxc)
+                    if(Counts[i] > maxc)
                     {
                         maxv = v[i];
                         maxc = Counts[i];
@@ -137,7 +138,7 @@ namespace NPOI.SS.Formula.Functions
         {
             double r = double.NaN;
 
-            if (v != null && v.Length >= 1)
+            if(v != null && v.Length >= 1)
             {
                 int n = v.Length;
                 Array.Sort(v);
@@ -153,18 +154,18 @@ namespace NPOI.SS.Formula.Functions
         public static double devsq(double[] v)
         {
             double r = double.NaN;
-            if (v != null && v.Length >= 1)
+            if(v != null && v.Length >= 1)
             {
                 double m = 0;
                 double s = 0;
                 int n = v.Length;
-                for (int i = 0; i < n; i++)
+                for(int i = 0; i < n; i++)
                 {
                     s += v[i];
                 }
                 m = s / n;
                 s = 0;
-                for (int i = 0; i < n; i++)
+                for(int i = 0; i < n; i++)
                 {
                     s += (v[i] - m) * (v[i] - m);
                 }
@@ -190,7 +191,7 @@ namespace NPOI.SS.Formula.Functions
         {
             double r = double.NaN;
             k--; // since arrays are 0-based
-            if (v != null && v.Length > k && k >= 0)
+            if(v != null && v.Length > k && k >= 0)
             {
                 Array.Sort(v);
                 r = v[v.Length - k - 1];
@@ -212,7 +213,7 @@ namespace NPOI.SS.Formula.Functions
         {
             double r = double.NaN;
             k--; // since arrays are 0-based
-            if (v != null && v.Length > k && k >= 0)
+            if(v != null && v.Length > k && k >= 0)
             {
                 Array.Sort(v);
                 r = v[k];

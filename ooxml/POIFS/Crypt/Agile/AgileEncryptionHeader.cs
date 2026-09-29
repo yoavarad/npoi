@@ -16,9 +16,9 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Agile
 {
-    using System;
     using NPOI.OpenXmlFormats.Encryption;
     using NPOI.POIFS.Crypt;
+    using System;
 
 
     public class AgileEncryptionHeader : EncryptionHeader
@@ -37,7 +37,7 @@ namespace NPOI.POIFS.Crypt.Agile
             try
             {
                 keyData = ed.GetEncryption().keyData;
-                if (keyData == null)
+                if(keyData == null)
                 {
                     throw new NullReferenceException("keyData not Set");
                 }
@@ -47,11 +47,11 @@ namespace NPOI.POIFS.Crypt.Agile
                 throw new EncryptedDocumentException("Unable to parse keyData");
             }
 
-            KeySize = ((int)keyData.keyBits);
+            KeySize = ((int) keyData.keyBits);
             Flags = (0);
             SizeExtra = (0);
             CspName = (null);
-            BlockSize = (int)(keyData.blockSize);
+            BlockSize = (int) (keyData.blockSize);
 
             int keyBits = (int)keyData.keyBits;
 
@@ -59,7 +59,7 @@ namespace NPOI.POIFS.Crypt.Agile
             CipherAlgorithm = (ca);
             CipherProvider = (ca.provider);
 
-            switch (keyData.cipherChaining)
+            switch(keyData.cipherChaining)
             {
                 case ST_CipherChaining.ChainingModeCBC:
                     ChainingMode = (ChainingMode.cbc);
@@ -76,7 +76,7 @@ namespace NPOI.POIFS.Crypt.Agile
             HashAlgorithm ha = HashAlgorithm.FromEcmaId(keyData.hashAlgorithm.ToString());
             HashAlgorithm = (ha);
 
-            if (HashAlgorithm.hashSize != hashSize)
+            if(HashAlgorithm.hashSize != hashSize)
             {
                 throw new EncryptedDocumentException("Unsupported hash algorithm: " +
                         keyData.hashAlgorithm + " @ " + hashSize + " bytes");
@@ -84,7 +84,7 @@ namespace NPOI.POIFS.Crypt.Agile
 
             int saltLength = (int)keyData.saltSize;
             SetKeySalt(keyData.saltValue);
-            if (KeySalt.Length != saltLength)
+            if(KeySalt.Length != saltLength)
             {
                 throw new EncryptedDocumentException("Invalid salt length");
             }
@@ -107,7 +107,7 @@ namespace NPOI.POIFS.Crypt.Agile
         // make method visible for this package
         protected void SetKeySalt(byte[] salt)
         {
-            if (salt == null || salt.Length != BlockSize)
+            if(salt == null || salt.Length != BlockSize)
             {
                 throw new EncryptedDocumentException("invalid verifier salt");
             }

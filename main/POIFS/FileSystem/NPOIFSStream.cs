@@ -19,10 +19,10 @@
 
 using NPOI.POIFS.Common;
 using NPOI.POIFS.FileSystem;
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.Util;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -106,7 +106,7 @@ namespace NPOI.POIFS.FileSystem
      */
         public IEnumerator<ByteBuffer> GetBlockIterator()
         {
-            if (startBlock == POIFSConstants.END_OF_CHAIN)
+            if(startBlock == POIFSConstants.END_OF_CHAIN)
             {
                 throw new InvalidOperationException(
                       "Can't read from a new stream before it has been written to"
@@ -130,7 +130,7 @@ namespace NPOI.POIFS.FileSystem
 
         public Stream GetOutputStream()
         {
-            if (outStream == null)
+            if(outStream == null)
             {
                 outStream = new StreamBlockByteBuffer(this);
             }
@@ -152,7 +152,7 @@ namespace NPOI.POIFS.FileSystem
         internal void Free(ChainLoopDetector loopDetector)
         {
             int nextBlock = startBlock;
-            while (nextBlock != POIFSConstants.END_OF_CHAIN)
+            while(nextBlock != POIFSConstants.END_OF_CHAIN)
             {
                 int thisBlock = nextBlock;
                 loopDetector.Claim(thisBlock);
@@ -186,13 +186,14 @@ namespace NPOI.POIFS.FileSystem
 
             protected void CreateBlockIfNeeded()
             {
-                if (buffer != null && buffer.HasRemaining()) return;
+                if(buffer != null && buffer.HasRemaining())
+                    return;
 
                 int thisBlock = nextBlock;
 
                 // Allocate a block if needed, otherwise figure
                 //  out what the next block will be
-                if (thisBlock == POIFSConstants.END_OF_CHAIN)
+                if(thisBlock == POIFSConstants.END_OF_CHAIN)
                 {
                     thisBlock = pStream.blockStore.GetFreeBlock();
                     loopDetector.Claim(thisBlock);
@@ -201,7 +202,7 @@ namespace NPOI.POIFS.FileSystem
                     nextBlock = POIFSConstants.END_OF_CHAIN;
 
                     // Mark the previous block as carrying on to us if needed
-                    if (prevBlock != POIFSConstants.END_OF_CHAIN)
+                    if(prevBlock != POIFSConstants.END_OF_CHAIN)
                     {
                         pStream.blockStore.SetNextBlock(prevBlock, thisBlock);
                     }
@@ -209,7 +210,7 @@ namespace NPOI.POIFS.FileSystem
 
                     // If we've just written the first block on a 
                     //  new stream, save the start block offset
-                    if (pStream.startBlock == POIFSConstants.END_OF_CHAIN)
+                    if(pStream.startBlock == POIFSConstants.END_OF_CHAIN)
                     {
                         pStream.startBlock = thisBlock;
                     }
@@ -228,18 +229,18 @@ namespace NPOI.POIFS.FileSystem
 
             public void Write(int b)
             {
-                oneByte[0] = (byte)(b & 0xFF);
+                oneByte[0] = (byte) (b & 0xFF);
                 base.Write(oneByte, 0, oneByte.Length);
             }
 
             public override void Write(byte[] b, int off, int len)
             {
-                if ((off < 0) || (off > b.Length) || (len < 0) ||
+                if((off < 0) || (off > b.Length) || (len < 0) ||
                         ((off + len) > b.Length) || ((off + len) < 0))
                 {
                     throw new IndexOutOfRangeException();
                 }
-                else if (len == 0)
+                else if(len == 0)
                 {
                     return;
                 }
@@ -251,7 +252,7 @@ namespace NPOI.POIFS.FileSystem
                     buffer.Write(b, off, writeBytes);
                     off += writeBytes;
                     len -= writeBytes;
-                } while (len > 0);
+                } while(len > 0);
             }
 
             public override void Close()
@@ -261,7 +262,7 @@ namespace NPOI.POIFS.FileSystem
                 toFree.Free(loopDetector);
 
                 // Mark the end of the stream
-                if (prevBlock != POIFSConstants.END_OF_CHAIN)
+                if(prevBlock != POIFSConstants.END_OF_CHAIN)
                 {
                     pStream.blockStore.SetNextBlock(prevBlock, POIFSConstants.END_OF_CHAIN);
                 }
@@ -285,7 +286,7 @@ namespace NPOI.POIFS.FileSystem
                 {
                     this.loopDetector = pStream.blockStore.GetChainLoopDetector();
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     //throw new System.RuntimeException(e);
                     throw new Exception(e.Message);
@@ -294,7 +295,7 @@ namespace NPOI.POIFS.FileSystem
 
             public bool HasNext()
             {
-                if (nextBlock == POIFSConstants.END_OF_CHAIN)
+                if(nextBlock == POIFSConstants.END_OF_CHAIN)
                 {
                     return false;
                 }
@@ -303,7 +304,7 @@ namespace NPOI.POIFS.FileSystem
 
             public ByteBuffer Next()
             {
-                if (nextBlock == POIFSConstants.END_OF_CHAIN)
+                if(nextBlock == POIFSConstants.END_OF_CHAIN)
                 {
                     throw new IndexOutOfRangeException("Can't read past the end of the stream");
                 }
@@ -316,7 +317,7 @@ namespace NPOI.POIFS.FileSystem
                     nextBlock = pStream.blockStore.GetNextBlock(nextBlock);
                     return data;
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new RuntimeException(e.Message);
                 }
@@ -345,7 +346,7 @@ namespace NPOI.POIFS.FileSystem
 
             bool System.Collections.IEnumerator.MoveNext()
             {
-                if (nextBlock == POIFSConstants.END_OF_CHAIN)
+                if(nextBlock == POIFSConstants.END_OF_CHAIN)
                 {
                     return false;
                 }
@@ -360,7 +361,7 @@ namespace NPOI.POIFS.FileSystem
 
                     return true;
                 }
-                catch (IOException)
+                catch(IOException)
                 {
                     return false;
                 }
@@ -373,7 +374,7 @@ namespace NPOI.POIFS.FileSystem
     }
 
     //public class StreamBlockByteBufferIterator : IEnumerator<byte[]>
-    
 
-    
+
+
 }

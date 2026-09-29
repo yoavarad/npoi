@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title: Sheet Tab Index Array Record
@@ -52,7 +52,7 @@ namespace NPOI.HSSF.Record
         public TabIdRecord(RecordInputStream in1)
         {
             _tabids = new short[in1.Remaining / 2];
-            for (int k = 0; k < _tabids.Length; k++)
+            for(int k = 0; k < _tabids.Length; k++)
             {
                 _tabids[k] = in1.ReadShort();
             }
@@ -65,7 +65,7 @@ namespace NPOI.HSSF.Record
 
         public void SetTabIdArray(short[] array)
         {
-            _tabids = (short[])array.Clone();
+            _tabids = (short[]) array.Clone();
         }
 
         /**
@@ -85,7 +85,7 @@ namespace NPOI.HSSF.Record
             buffer.Append("[TABID]\n");
             buffer.Append("    .elements        = ").Append(_tabids.Length)
                 .Append("\n");
-            for (int k = 0; k < _tabids.Length; k++)
+            for(int k = 0; k < _tabids.Length; k++)
             {
                 buffer.Append("    .element_" + k + "       = ")
                     .Append(_tabids[k]).Append("\n");
@@ -121,7 +121,7 @@ namespace NPOI.HSSF.Record
         {
             short[] tabids = _tabids;
 
-            for (int i = 0; i < tabids.Length; i++)
+            for(int i = 0; i < tabids.Length; i++)
             {
                 out1.WriteShort(tabids[i]);
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,17 +14,18 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
+using NPOI.DDF;
+using NPOI.HSSF.Record;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.HSSF.UserModel;
-using NPOI.DDF;
-using System.Reflection;
 using System.Diagnostics;
-using NPOI.HSSF.Record;
-using NPOI.SS.UserModel;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace TestCases.HSSF.UserModel
 {
@@ -59,7 +60,7 @@ namespace TestCases.HSSF.UserModel
             sh = wb.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
 
-            group = (HSSFShapeGroup)patriarch.Children[(0)];
+            group = (HSSFShapeGroup) patriarch.Children[(0)];
             ClassicAssert.AreEqual(group.X1, 1);
             ClassicAssert.AreEqual(group.Y1, 2);
             ClassicAssert.AreEqual(group.X2, 3);
@@ -117,9 +118,9 @@ namespace TestCases.HSSF.UserModel
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
             ClassicAssert.AreEqual(1, patriarch.Children.Count);
 
-            group1 = (HSSFShapeGroup)patriarch.Children[(0)];
+            group1 = (HSSFShapeGroup) patriarch.Children[(0)];
             ClassicAssert.AreEqual(1, group1.Children.Count);
-            textbox1 = (HSSFTextbox)group1.Children[(0)];
+            textbox1 = (HSSFTextbox) group1.Children[(0)];
             ClassicAssert.AreEqual("Hello, World!", textbox1.String.String);
 
             // modify anchor
@@ -142,15 +143,15 @@ namespace TestCases.HSSF.UserModel
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
             ClassicAssert.AreEqual(1, patriarch.Children.Count);
 
-            group1 = (HSSFShapeGroup)patriarch.Children[(0)];
+            group1 = (HSSFShapeGroup) patriarch.Children[(0)];
             ClassicAssert.AreEqual(2, group1.Children.Count);
-            textbox1 = (HSSFTextbox)group1.Children[(0)];
+            textbox1 = (HSSFTextbox) group1.Children[(0)];
             ClassicAssert.AreEqual("Hello, World! (modified)",
                     textbox1.String.String);
             ClassicAssert.AreEqual(new HSSFChildAnchor(200, 200, 400, 400),
                     textbox1.Anchor);
 
-            textbox2 = (HSSFTextbox)group1.Children[(1)];
+            textbox2 = (HSSFTextbox) group1.Children[(1)];
             ClassicAssert.AreEqual("Hello, World-2", textbox2.String.String);
             ClassicAssert.AreEqual(new HSSFChildAnchor(400, 400, 600, 600),
                     textbox2.Anchor);
@@ -158,9 +159,9 @@ namespace TestCases.HSSF.UserModel
             wb = HSSFTestDataSamples.WriteOutAndReadBack(wb);
             sheet = wb.GetSheetAt(0) as HSSFSheet;
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
-            group1 = (HSSFShapeGroup)patriarch.Children[(0)];
-            textbox1 = (HSSFTextbox)group1.Children[(0)];
-            textbox2 = (HSSFTextbox)group1.Children[(1)];
+            group1 = (HSSFShapeGroup) patriarch.Children[(0)];
+            textbox1 = (HSSFTextbox) group1.Children[(0)];
+            textbox2 = (HSSFTextbox) group1.Children[(1)];
             HSSFTextbox textbox3 = group1.CreateTextbox(new
                     HSSFChildAnchor(400, 200, 600, 400));
             HSSFRichTextString rt3 = new HSSFRichTextString("Hello, World-3");
@@ -189,7 +190,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(1, patriarch.Children.Count);
 
             ClassicAssert.IsTrue(patriarch.Children[0] is HSSFShapeGroup);
-            group = (HSSFShapeGroup)patriarch.Children[0];
+            group = (HSSFShapeGroup) patriarch.Children[0];
 
             ClassicAssert.AreEqual(group.Children.Count, 4);
 
@@ -213,7 +214,7 @@ namespace TestCases.HSSF.UserModel
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
             ClassicAssert.AreEqual(2, patriarch.Children.Count);
 
-            group = (HSSFShapeGroup)patriarch.Children[1];
+            group = (HSSFShapeGroup) patriarch.Children[1];
 
             ClassicAssert.AreEqual(group.Children.Count, 5);
 
@@ -235,7 +236,7 @@ namespace TestCases.HSSF.UserModel
             HSSFPatriarch patriarch = sheet.CreateDrawingPatriarch() as HSSFPatriarch;
 
             HSSFShapeGroup group = patriarch.CreateGroup(new HSSFClientAnchor());
-            ClassicAssert.AreSame(((EscherContainerRecord)group.GetEscherContainer().GetChild(0)).GetChildById(EscherSpgrRecord.RECORD_ID), 
+            ClassicAssert.AreSame(((EscherContainerRecord) group.GetEscherContainer().GetChild(0)).GetChildById(EscherSpgrRecord.RECORD_ID),
                 GetSpgrRecord(group));
         }
 
@@ -244,15 +245,15 @@ namespace TestCases.HSSF.UserModel
             FieldInfo spgrField = null;
             try
             {
-                spgrField = group.GetType().GetField("_spgrRecord",BindingFlags.NonPublic| BindingFlags.Instance);
+                spgrField = group.GetType().GetField("_spgrRecord", BindingFlags.NonPublic| BindingFlags.Instance);
                 //spgrField.SetAccessible(true);
-                return (EscherSpgrRecord)spgrField.GetValue(group);
+                return (EscherSpgrRecord) spgrField.GetValue(group);
             }
-            catch (NullReferenceException e)
+            catch(NullReferenceException e)
             {
                 Debug.Write(e.Message);
             }
-            catch (FieldAccessException e)
+            catch(FieldAccessException e)
             {
                 Debug.Write(e.Message);
             }
@@ -285,7 +286,7 @@ namespace TestCases.HSSF.UserModel
             sheet = wb.GetSheetAt(0) as HSSFSheet;
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
 
-            group = (HSSFShapeGroup)patriarch.Children[(0)];
+            group = (HSSFShapeGroup) patriarch.Children[(0)];
 
             ClassicAssert.AreEqual(agg.GetShapeToObjMapping().Count, 1);
             ClassicAssert.AreEqual(agg.TailRecords.Count, 0);

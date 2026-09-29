@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -61,7 +61,7 @@ namespace NPOI.XSSF.Binary
                 throw new XSSFBParseException("trying to read beyond data length:" +
                  "offset="+offset+", numBytes="+numBytes+", data.Length="+data.Length);
             }
-            
+
             sb.Append(Encoding.Unicode.GetString(data, offset, numBytes));
             numBytes+=4;
             return numBytes;
@@ -129,4 +129,3 @@ namespace NPOI.XSSF.Binary
         }
     }
 }
-

@@ -1,9 +1,9 @@
+using NPOI.OpenXml4Net.OPC;
 using NPOI.XWPF.UserModel;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using System;
 using System.IO;
-using NPOI.OpenXml4Net.OPC;
 
 
 namespace TestCases
@@ -11,7 +11,7 @@ namespace TestCases
     [TestFixture]
     public class TestIssue1353
     {
-        
+
         [Test]
         public void TestOutputHasNoRotWithShapeAttribute()
         {
@@ -42,34 +42,34 @@ namespace TestCases
             picStream.CopyTo(ms);
             ms.Position = 0;
             XWPFPicture pic = r.AddPicture(ms, (int) PictureType.PNG, picName, widthEmus, heightEmus);
-            
-            
+
+
             pic.GetCTPicture().spPr.xfrm.rot = -90 * 60000;
             using(FileStream outFs = new(outputPath, FileMode.Create, FileAccess.Write))
             {
                 doc.Write(outFs);
             }
             // check - Reopen the document and verify the XML content using XWPFDocument
-            using (FileStream checkFs = new(outputPath, FileMode.Open, FileAccess.Read))
+            using(FileStream checkFs = new(outputPath, FileMode.Open, FileAccess.Read))
             {
                 XWPFDocument checkDoc = new(checkFs);
                 OPCPackage package = checkDoc.Package;
-                
+
                 // Get the document.xml part by iterating through parts
                 PackagePart documentPart = null;
-                foreach (PackagePart part in package.GetParts())
+                foreach(PackagePart part in package.GetParts())
                 {
-                    if (part.PartName.Name.Equals("/word/document.xml", StringComparison.OrdinalIgnoreCase))
+                    if(part.PartName.Name.Equals("/word/document.xml", StringComparison.OrdinalIgnoreCase))
                     {
                         documentPart = part;
                         break;
                     }
                 }
-                
+
                 ClassicAssert.IsNotNull(documentPart, "document.xml not found");
-                
-                using (Stream stream = documentPart.GetInputStream())
-                using (StreamReader reader = new StreamReader(stream))
+
+                using(Stream stream = documentPart.GetInputStream())
+                using(StreamReader reader = new StreamReader(stream))
                 {
                     string xmlContent = reader.ReadToEnd();
                     ClassicAssert.IsFalse(xmlContent.Contains("rotWithShape"),

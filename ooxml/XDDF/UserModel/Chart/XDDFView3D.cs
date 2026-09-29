@@ -19,13 +19,13 @@ public class XDDFView3D
 
     public void SetXRotationAngle(int val)
     {
-        if (view3D.rotX != null)
+        if(view3D.rotX != null)
         {
-            view3D.rotX.val = (sbyte)val;
+            view3D.rotX.val = (sbyte) val;
         }
         else
         {
-            view3D.rotX = new CT_RotX { val = (sbyte)val };
+            view3D.rotX = new CT_RotX { val = (sbyte) val };
         }
     }
 
@@ -36,13 +36,13 @@ public class XDDFView3D
 
     public void SetYRotationAngle(int val)
     {
-        if (view3D.rotY != null)
+        if(view3D.rotY != null)
         {
-            view3D.rotY.val = (ushort)val;
+            view3D.rotY.val = (ushort) val;
         }
         else
         {
-            view3D.rotY = new CT_RotY { val = (ushort)val };
+            view3D.rotY = new CT_RotY { val = (ushort) val };
         }
     }
 
@@ -53,7 +53,7 @@ public class XDDFView3D
 
     public void SetRightAngleAxes(bool val)
     {
-        if (view3D.rAngAx != null)
+        if(view3D.rAngAx != null)
         {
             view3D.rAngAx.val = val ? 1 : 0;
         }
@@ -70,7 +70,7 @@ public class XDDFView3D
 
     public void SetPerspectiveAngle(byte val)
     {
-        if (view3D.perspective != null)
+        if(view3D.perspective != null)
         {
             view3D.perspective.val = val;
         }
@@ -87,13 +87,13 @@ public class XDDFView3D
 
     public void SetDepthPercent(int val)
     {
-        if (view3D.depthPercent != null)
+        if(view3D.depthPercent != null)
         {
-            view3D.depthPercent.val = (ushort)val;
+            view3D.depthPercent.val = (ushort) val;
         }
         else
         {
-            view3D.depthPercent = new CT_DepthPercent { val = (ushort)val };
+            view3D.depthPercent = new CT_DepthPercent { val = (ushort) val };
         }
     }
 
@@ -104,13 +104,13 @@ public class XDDFView3D
 
     public void SetHeightPercent(int val)
     {
-        if (view3D.hPercent != null)
+        if(view3D.hPercent != null)
         {
-            view3D.hPercent.val = (ushort)val;
+            view3D.hPercent.val = (ushort) val;
         }
         else
         {
-            view3D.hPercent = new CT_HPercent { val = (ushort)val };
+            view3D.hPercent = new CT_HPercent { val = (ushort) val };
         }
     }
 }

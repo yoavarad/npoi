@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Extended Format Record
@@ -324,7 +324,8 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public bool _123Prefix
         {
-            get{
+            get
+            {
                 return _123_prefix.IsSet(field_3_cell_options);
             }
             set
@@ -567,7 +568,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public bool IsIndentNotParentAlignment
         {
-            get{return _indent_not_parent_alignment.IsSet(field_5_indention_options);}
+            get { return _indent_not_parent_alignment.IsSet(field_5_indention_options); }
             set
             {
                 field_5_indention_options =
@@ -590,7 +591,7 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        
+
         /// <summary>
         /// Get whether or not to use the pattern in this XF instead of the parent XF.
         /// (foregrount/background)
@@ -640,7 +641,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short BorderLeft
         {
-           get{return _border_left.GetShortValue(field_6_border_options);}
+            get { return _border_left.GetShortValue(field_6_border_options); }
             set
             {
                 field_6_border_options =
@@ -654,7 +655,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short BorderRight
         {
-            get{return _border_right.GetShortValue(field_6_border_options);}
+            get { return _border_right.GetShortValue(field_6_border_options); }
             set
             {
                 field_6_border_options =
@@ -668,9 +669,10 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short BorderTop
         {
-            get{return _border_top.GetShortValue(field_6_border_options);}
-            set {
-                field_6_border_options =_border_top.SetShortValue(field_6_border_options, value); 
+            get { return _border_top.GetShortValue(field_6_border_options); }
+            set
+            {
+                field_6_border_options =_border_top.SetShortValue(field_6_border_options, value);
 
             }
         }
@@ -680,8 +682,9 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short BorderBottom
         {
-            get{return _border_bottom.GetShortValue(field_6_border_options);}
-            set {
+            get { return _border_bottom.GetShortValue(field_6_border_options); }
+            set
+            {
                 field_6_border_options =_border_bottom.SetShortValue(field_6_border_options, value);
             }
         }
@@ -691,7 +694,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short PaletteOptions
         {
-            get{return field_7_palette_options;}
+            get { return field_7_palette_options; }
             set { field_7_palette_options = value; }
         }
 
@@ -700,23 +703,28 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short LeftBorderPaletteIdx
         {
-            get{return _left_border_palette_idx
+            get
+            {
+                return _left_border_palette_idx
                 .GetShortValue(field_7_palette_options);
             }
-            set {
+            set
+            {
                 field_7_palette_options =
         _left_border_palette_idx.SetShortValue(field_7_palette_options,
                                                value);
             }
         }
 
-        
+
         /// <summary>
         /// Get the palette index for the right border color
         /// </summary>
         public short RightBorderPaletteIdx
         {
-            get{return _right_border_palette_idx
+            get
+            {
+                return _right_border_palette_idx
                 .GetShortValue(field_7_palette_options);
             }
             set
@@ -734,7 +742,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public int AdtlPaletteOptions
         {
-            get{return field_8_adtl_palette_options;}
+            get { return field_8_adtl_palette_options; }
             set { field_8_adtl_palette_options = value; }
         }
 
@@ -743,8 +751,11 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short TopBorderPaletteIdx
         {
-            get{return (short)_top_border_palette_idx
-                .GetValue(field_8_adtl_palette_options);}
+            get
+            {
+                return (short) _top_border_palette_idx
+                .GetValue(field_8_adtl_palette_options);
+            }
             set
             {
                 field_8_adtl_palette_options =
@@ -758,7 +769,9 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short BottomBorderPaletteIdx
         {
-            get{return (short)_bottom_border_palette_idx
+            get
+            {
+                return (short) _bottom_border_palette_idx
                 .GetValue(field_8_adtl_palette_options);
             }
             set
@@ -774,7 +787,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short AdtlDiagBorderPaletteIdx
         {
-            get{return (short)_adtl_diag_border_palette_idx.GetValue(field_8_adtl_palette_options);}
+            get { return (short) _adtl_diag_border_palette_idx.GetValue(field_8_adtl_palette_options); }
             set
             {
                 field_8_adtl_palette_options =
@@ -782,14 +795,17 @@ namespace NPOI.HSSF.Record
             }
         }
 
-         
+
         /// <summary>
         /// Get the diagonal border line style
         /// </summary>
         public short AdtlDiagLineStyle
         {
-            get{return (short)_adtl_diag_line_style
-                .GetValue(field_8_adtl_palette_options);}
+            get
+            {
+                return (short) _adtl_diag_line_style
+                .GetValue(field_8_adtl_palette_options);
+            }
             set
             {
                 field_8_adtl_palette_options =
@@ -814,8 +830,11 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short AdtlFillPattern
         {
-            get{return (short)_adtl_fill_pattern
-                .GetValue(field_8_adtl_palette_options);}
+            get
+            {
+                return (short) _adtl_fill_pattern
+                .GetValue(field_8_adtl_palette_options);
+            }
             set
             {
                 field_8_adtl_palette_options =
@@ -829,7 +848,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short FillPaletteOptions
         {
-            get{return field_9_fill_palette_options;}
+            get { return field_9_fill_palette_options; }
             set { field_9_fill_palette_options = value; }
         }
 
@@ -838,7 +857,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short FillForeground
         {
-            get{return _fill_foreground.GetShortValue(field_9_fill_palette_options);}
+            get { return _fill_foreground.GetShortValue(field_9_fill_palette_options); }
             set
             {
                 field_9_fill_palette_options =
@@ -852,7 +871,7 @@ namespace NPOI.HSSF.Record
         /// </summary>
         public short FillBackground
         {
-            get{return _fill_background.GetShortValue(field_9_fill_palette_options);}
+            get { return _fill_background.GetShortValue(field_9_fill_palette_options); }
             set
             {
                 field_9_fill_palette_options =
@@ -866,11 +885,11 @@ namespace NPOI.HSSF.Record
             StringBuilder buffer = new StringBuilder();
 
             buffer.Append("[EXTENDEDFORMAT]\n");
-            if (XFType == XF_STYLE)
+            if(XFType == XF_STYLE)
             {
                 buffer.Append(" STYLE_RECORD_TYPE\n");
             }
-            else if (XFType == XF_CELL)
+            else if(XFType == XF_CELL)
             {
                 buffer.Append(" CELL_RECORD_TYPE\n");
             }
@@ -1014,29 +1033,29 @@ namespace NPOI.HSSF.Record
          */
         public override bool Equals(Object obj)
         {
-            if (this == obj)
+            if(this == obj)
                 return true;
-            if (obj == null)
+            if(obj == null)
                 return false;
-            if (obj is ExtendedFormatRecord other)
+            if(obj is ExtendedFormatRecord other)
             {
-                if (field_1_font_index != other.field_1_font_index)
+                if(field_1_font_index != other.field_1_font_index)
                     return false;
-                if (field_2_format_index != other.field_2_format_index)
+                if(field_2_format_index != other.field_2_format_index)
                     return false;
-                if (field_3_cell_options != other.field_3_cell_options)
+                if(field_3_cell_options != other.field_3_cell_options)
                     return false;
-                if (field_4_alignment_options != other.field_4_alignment_options)
+                if(field_4_alignment_options != other.field_4_alignment_options)
                     return false;
-                if (field_5_indention_options != other.field_5_indention_options)
+                if(field_5_indention_options != other.field_5_indention_options)
                     return false;
-                if (field_6_border_options != other.field_6_border_options)
+                if(field_6_border_options != other.field_6_border_options)
                     return false;
-                if (field_7_palette_options != other.field_7_palette_options)
+                if(field_7_palette_options != other.field_7_palette_options)
                     return false;
-                if (field_8_adtl_palette_options != other.field_8_adtl_palette_options)
+                if(field_8_adtl_palette_options != other.field_8_adtl_palette_options)
                     return false;
-                if (field_9_fill_palette_options != other.field_9_fill_palette_options)
+                if(field_9_fill_palette_options != other.field_9_fill_palette_options)
                     return false;
                 return true;
             }

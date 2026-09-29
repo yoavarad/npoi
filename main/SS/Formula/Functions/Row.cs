@@ -33,11 +33,11 @@ namespace NPOI.SS.Formula.Functions
         {
             int rnum;
 
-            if (arg0 is AreaEval eval)
+            if(arg0 is AreaEval eval)
             {
                 rnum = eval.FirstRow;
             }
-            else if (arg0 is RefEval refEval)
+            else if(arg0 is RefEval refEval)
             {
                 rnum = refEval.Row;
             }
@@ -51,7 +51,7 @@ namespace NPOI.SS.Formula.Functions
         }
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 1:
                     return Evaluate(srcRowIndex, srcColumnIndex, args[0]);

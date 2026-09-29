@@ -16,9 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.Model
 {
-    using System;
-
     using NPOI.XWPF.UserModel;
+    using System;
 
     /**
      * Base decorator class for XWPFParagraph
@@ -43,7 +42,7 @@ namespace NPOI.XWPF.Model
         {
             get
             {
-                if (nextDecorator != null)
+                if(nextDecorator != null)
                 {
                     return nextDecorator.Text;
                 }

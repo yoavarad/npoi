@@ -27,10 +27,10 @@ namespace NPOI.SS.Formula.Functions
         public static Function instance = new DateFunc();
 
         private DateFunc()
-        { 
-            
+        {
+
         }
-        public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1,ValueEval arg2)
+        public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1, ValueEval arg2)
         {
             double result;
             try
@@ -38,10 +38,10 @@ namespace NPOI.SS.Formula.Functions
                 double d0 = NumericFunction.SingleOperandEvaluate(arg0, srcRowIndex, srcColumnIndex);
                 double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                 double d2 = NumericFunction.SingleOperandEvaluate(arg2, srcRowIndex, srcColumnIndex);
-                result = Evaluate(GetYear(d0), (int)d1, (int)d2);
+                result = Evaluate(GetYear(d0), (int) d1, (int) d2);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -55,12 +55,12 @@ namespace NPOI.SS.Formula.Functions
         public double Evaluate(int year, int month, int pDay)
         {
             // We don't support negative years yet
-            if (year < 0)
+            if(year < 0)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
             // Negative months are fairly easy
-            while (month <= 0)
+            while(month <= 0)
             {
                 year--;
                 month += 12;
@@ -69,7 +69,7 @@ namespace NPOI.SS.Formula.Functions
 
             // Excel has bugs around leap years in 1900, handle them
             // Special case for the non-existant 1900 leap year
-            if (year == 1900 && month == 2 && pDay == 29)
+            if(year == 1900 && month == 2 && pDay == 29)
             {
                 return 60.0;
             }
@@ -77,9 +77,9 @@ namespace NPOI.SS.Formula.Functions
             //  putting it past the leap year, adjust
             //see Microsoft KB214326 http://support.microsoft.com/kb/214326/en-us
             int day = pDay;
-            if (year == 1900)
+            if(year == 1900)
             {
-                if ((month == 1 && day >= 60) ||
+                if((month == 1 && day >= 60) ||
                     (month == 2 && day >= 30))
                 {
                     day--;
@@ -109,7 +109,7 @@ namespace NPOI.SS.Formula.Functions
         {
             int year = (int)d;
 
-            if (year < 0)
+            if(year < 0)
             {
                 return -1;
             }

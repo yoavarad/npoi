@@ -16,13 +16,14 @@
 ==================================================================== */
 namespace TestCases.XSSF.Streaming
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.XSSF.Streaming;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     //Add a new test fixture, set useMergedCells with true value.
     [TestFixture]
@@ -68,7 +69,7 @@ namespace TestCases.XSSF.Streaming
 
         private SXSSFSheet sheet;
         private SXSSFWorkbook workbook;
-        
+
         public bool useMergedCells;
 
         //public static ICollection<Object[]> data()
@@ -82,11 +83,11 @@ namespace TestCases.XSSF.Streaming
         [TearDown]
         public void TearDownSheetAndWorkbook()
         {
-            if (sheet != null)
+            if(sheet != null)
             {
                 sheet.Dispose();
             }
-            if (workbook != null)
+            if(workbook != null)
             {
                 workbook.Close();
             }
@@ -99,7 +100,7 @@ namespace TestCases.XSSF.Streaming
             sheet = workbook.CreateSheet() as SXSSFSheet;
             sheet.TrackAllColumnsForAutoSizing();
 
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 sheet.AutoSizeColumn(i, useMergedCells);
             }
@@ -201,7 +202,7 @@ namespace TestCases.XSSF.Streaming
             sheet.AutoSizeColumn(0, useMergedCells);
             sheet.AutoSizeColumn(1, useMergedCells);
 
-            if (useMergedCells)
+            if(useMergedCells)
             {
                 // With useMergedCells=true: A1 has LONG merged text evenly distributed across
                 // the colspan (A1:B1). The SXSSF tracker records LONG/2 for column A only
@@ -236,7 +237,7 @@ namespace TestCases.XSSF.Streaming
                 sheet.AutoSizeColumn(1, useMergedCells);
                 Assert.Fail("Should not be able to auto-size an untracked column");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -261,7 +262,7 @@ namespace TestCases.XSSF.Streaming
                 sheet.AutoSizeColumn(5, useMergedCells);
                 Assert.Fail("Should not be able to auto-size an untracked column");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -285,7 +286,7 @@ namespace TestCases.XSSF.Streaming
                 sheet.AutoSizeColumn(columns.First(), useMergedCells);
                 Assert.Fail("Should not be able to auto-size an untracked column");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -309,7 +310,7 @@ namespace TestCases.XSSF.Streaming
                 sheet.AutoSizeColumn(columns.First(), useMergedCells);
                 Assert.Fail("Should not be able to auto-size an untracked column");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -322,7 +323,7 @@ namespace TestCases.XSSF.Streaming
             sheet = workbook.CreateSheet() as SXSSFSheet;
 
             sheet.TrackColumnsForAutoSizing(columns);
-            foreach (int column in columns)
+            foreach(int column in columns)
             {
                 ClassicAssert.IsTrue(sheet.IsColumnTrackedForAutoSizing(column));
 
@@ -346,7 +347,7 @@ namespace TestCases.XSSF.Streaming
                 sheet.AutoSizeColumn(0, useMergedCells);
                 Assert.Fail("Should not be able to auto-size an implicitly untracked column");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -367,7 +368,7 @@ namespace TestCases.XSSF.Streaming
                 sheet.AutoSizeColumn(0, useMergedCells);
                 Assert.Fail("Should not be able to auto-size an explicitly untracked column");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -387,10 +388,10 @@ namespace TestCases.XSSF.Streaming
             IRow row = sheet.CreateRow(rowNumber);
             int cellIndex = 0;
             ICell firstCell = null;
-            foreach (String cellValue in cellValues)
+            foreach(String cellValue in cellValues)
             {
                 ICell cell = row.CreateCell(cellIndex++);
-                if (firstCell == null)
+                if(firstCell == null)
                 {
                     firstCell = cell;
                 }
@@ -409,4 +410,3 @@ namespace TestCases.XSSF.Streaming
         }
     }
 }
-

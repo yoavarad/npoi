@@ -26,7 +26,7 @@ namespace NPOI.SS.Formula.Functions
     }
     public class Mina : MinaMaxa
     {
-         protected internal override double Evaluate(double[] values)
+        protected internal override double Evaluate(double[] values)
         {
             return values.Length > 0 ? MathX.Min(values) : 0;
         }

@@ -16,10 +16,10 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Standard
 {
-    using System;
-    using NPOI.Util;
-    using System.Text;
     using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using System;
+    using System.Text;
 
     public class StandardEncryptionHeader : EncryptionHeader, EncryptionRecord
     {
@@ -31,7 +31,7 @@ namespace NPOI.POIFS.Crypt.Standard
             CipherAlgorithm = (CipherAlgorithm.FromEcmaId(is1.ReadInt()));
             HashAlgorithm = (HashAlgorithm.FromEcmaId(is1.ReadInt()));
             int keySize = is1.ReadInt();
-            if (keySize == 0)
+            if(keySize == 0)
             {
                 // for the sake of inheritance of the cryptoAPI classes
                 // see 2.3.5.1 RC4 CryptoAPI Encryption Header
@@ -48,33 +48,34 @@ namespace NPOI.POIFS.Crypt.Standard
             // In some cases, the salt value of the EncryptionVerifier is the next chunk of data
             if(is1 is RecordInputStream)
             {
-                ((RecordInputStream)is1).Mark(LittleEndianConsts.INT_SIZE + 1);
+                ((RecordInputStream) is1).Mark(LittleEndianConsts.INT_SIZE + 1);
             }
             else
             {
-                ((InputStream)is1).Mark(LittleEndianConsts.INT_SIZE + 1);
+                ((InputStream) is1).Mark(LittleEndianConsts.INT_SIZE + 1);
             }
             int CheckForSalt = is1.ReadInt();
-            if (is1 is RecordInputStream)
+            if(is1 is RecordInputStream)
             {
-                ((RecordInputStream)is1).Reset();
+                ((RecordInputStream) is1).Reset();
             }
             else
             {
-                ((InputStream)is1).Reset();
+                ((InputStream) is1).Reset();
             }
 
-            if (CheckForSalt == 16)
+            if(CheckForSalt == 16)
             {
                 CspName = ("");
             }
             else
             {
                 StringBuilder builder = new StringBuilder();
-                while (true)
+                while(true)
                 {
                     char c = (char)is1.ReadShort();
-                    if (c == 0) break;
+                    if(c == 0)
+                        break;
                     builder.Append(c);
                 }
                 CspName = (builder.ToString());
@@ -113,7 +114,8 @@ namespace NPOI.POIFS.Crypt.Standard
             bos.WriteInt(0); // reserved1
             bos.WriteInt(0); // reserved2
             String cspName = CspName;
-            if (cspName == null) cspName = CipherProvider.cipherProviderName;
+            if(cspName == null)
+                cspName = CipherProvider.cipherProviderName;
             bos.Write(StringUtil.GetToUnicodeLE(cspName));
             bos.WriteShort(0);
             int headerSize = bos.WriteIndex - startIdx - LittleEndianConsts.INT_SIZE;

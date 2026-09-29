@@ -20,7 +20,8 @@ namespace TestCases.POIFS.Macros
     using NPOI.POIFS.FileSystem;
     using NPOI.POIFS.Macros;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -49,7 +50,7 @@ namespace TestCases.POIFS.Macros
                     stream.Close();
                 }
             }
-            catch (IOException)
+            catch(IOException)
             {
                 //throw new Exception(e);
                 throw;
@@ -58,7 +59,7 @@ namespace TestCases.POIFS.Macros
             // Normalize line endings to \r\n to match what VBAMacroReader extracts from Office files
             String testMacroContents = Regex.Replace(Encoding.UTF8.GetString(bytes), @"\r?\n", "\r\n");
 
-            if (!testMacroContents.StartsWith("Sub "))
+            if(!testMacroContents.StartsWith("Sub "))
             {
                 throw new ArgumentException("Not a macro");
             }
@@ -75,7 +76,7 @@ namespace TestCases.POIFS.Macros
                 POIDataSamples.GetDocumentInstance(),
                 POIDataSamples.GetDiagramInstance()
         };
-            foreach (POIDataSamples sample in dataSamples)
+            foreach(POIDataSamples sample in dataSamples)
             {
                 _expectedMacroContents.Add(sample, ReadVBA(sample));
             }

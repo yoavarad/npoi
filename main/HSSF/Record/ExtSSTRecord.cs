@@ -19,13 +19,12 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.HSSF.Record.Cont;
     using NPOI.Util;
-
     using System;
     using System.Collections;
-    using System.Text;
-    using NPOI.HSSF.Record.Cont;
     using System.Collections.Generic;
+    using System.Text;
 
     /**
      * Title:        Extended Static String Table
@@ -68,12 +67,12 @@ namespace NPOI.HSSF.Record
             int nInfos = in1.Remaining / InfoSubRecord.ENCODED_SIZE;
             List<InfoSubRecord> lst = new List<InfoSubRecord>(nInfos);
 
-            while (in1.Available() > 0)
+            while(in1.Available() > 0)
             {
                 InfoSubRecord info = new InfoSubRecord(in1);
                 lst.Add(info);
 
-                if (in1.Available() == 0 && in1.HasNextRecord && in1.GetNextSid() == ContinueRecord.sid)
+                if(in1.Available() == 0 && in1.HasNextRecord && in1.GetNextSid() == ContinueRecord.sid)
                 {
                     in1.NextRecord();
                 }
@@ -106,7 +105,7 @@ namespace NPOI.HSSF.Record
                 .Append("\n");
             buffer.Append("    .numInfoRecords = ").Append(_sstInfos.Length)
                 .Append("\n");
-            for (int k = 0; k < _sstInfos.Length; k++)
+            for(int k = 0; k < _sstInfos.Length; k++)
             {
                 buffer.Append("    .inforecord     = ").Append(k).Append("\n");
                 buffer.Append("    .streampos      = ")
@@ -124,7 +123,7 @@ namespace NPOI.HSSF.Record
         protected override void Serialize(ContinuableRecordOutput out1)
         {
             out1.WriteShort(field_1_strings_per_bucket);
-            for (int k = 0; k < _sstInfos.Length; k++)
+            for(int k = 0; k < _sstInfos.Length; k++)
             {
                 _sstInfos[k].Serialize(out1);
             }
@@ -145,11 +144,11 @@ namespace NPOI.HSSF.Record
         public static int GetNumberOfInfoRecsForStrings(int numStrings)
         {
             int infoRecs = (numStrings / DEFAULT_BUCKET_SIZE);
-            if ((numStrings % DEFAULT_BUCKET_SIZE) != 0)
+            if((numStrings % DEFAULT_BUCKET_SIZE) != 0)
                 infoRecs++;
             //Excel seems to max out after 128 info records.
             //This Isnt really documented anywhere...
-            if (infoRecs > MAX_BUCKETS)
+            if(infoRecs > MAX_BUCKETS)
                 infoRecs = MAX_BUCKETS;
             return infoRecs;
         }
@@ -168,7 +167,7 @@ namespace NPOI.HSSF.Record
         public void SetBucketOffsets(int[] bucketAbsoluteOffsets, int[] bucketRelativeOffsets)
         {
             this._sstInfos = new InfoSubRecord[bucketAbsoluteOffsets.Length];
-            for (int i = 0; i < bucketAbsoluteOffsets.Length; i++)
+            for(int i = 0; i < bucketAbsoluteOffsets.Length; i++)
             {
                 _sstInfos[i] = new InfoSubRecord(bucketAbsoluteOffsets[i], bucketRelativeOffsets[i]);
             }

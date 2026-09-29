@@ -1,4 +1,4 @@
-﻿using ExtendedNumerics;
+using ExtendedNumerics;
 using System;
 using System.Collections;
 #if NET8_0_OR_GREATER
@@ -16,9 +16,9 @@ namespace NPOI.Util
 #else
             BitArray bitArray = new BitArray(BitConverter.GetBytes(i));
             int count = 0;
-            for (int idx = 0; idx < bitArray.Count; idx++)
+            for(int idx = 0; idx < bitArray.Count; idx++)
             {
-                if (bitArray.Get(idx))
+                if(bitArray.Get(idx))
                     count++;
             }
             return count;
@@ -39,13 +39,13 @@ namespace NPOI.Util
         private static readonly Type BigDecimalType = typeof(BigDecimal);
         public static bool IsNumber(object value)
         {
-            if (value == null)
+            if(value == null)
             {
                 return false;
             }
 
             Type objType = value.GetType();
-            if (objType.IsPrimitive || objType == DecimalType
+            if(objType.IsPrimitive || objType == DecimalType
                 || objType == BigDecimalType)
             {
                 return (objType != BoolType &&
@@ -58,7 +58,7 @@ namespace NPOI.Util
 
         public static bool IsNumber(Type objType)
         {
-            if (objType.IsPrimitive || objType == DecimalType)
+            if(objType.IsPrimitive || objType == DecimalType)
             {
                 return (objType != BoolType &&
                         objType != CharType &&
@@ -69,18 +69,26 @@ namespace NPOI.Util
         }
         public static bool IsInteger(object value)
         {
-            if (value == null)
+            if(value == null)
             {
                 return false;
             }
-            if (value is int) return true;
-            if (value is uint) return true;
-            if (value is long) return true;
-            if (value is ulong) return true;
-            if (value is sbyte) return true;
-            if (value is byte) return true;
-            if (value is short) return true;
-            if (value is ushort) return true;
+            if(value is int)
+                return true;
+            if(value is uint)
+                return true;
+            if(value is long)
+                return true;
+            if(value is ulong)
+                return true;
+            if(value is sbyte)
+                return true;
+            if(value is byte)
+                return true;
+            if(value is short)
+                return true;
+            if(value is ushort)
+                return true;
             return false;
         }
     }

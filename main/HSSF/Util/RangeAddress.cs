@@ -17,8 +17,8 @@
 
 
 using System;
-using System.Text;
 using System.Globalization;
+using System.Text;
 
 namespace NPOI.HSSF.Util
 {
@@ -69,12 +69,12 @@ namespace NPOI.HSSF.Util
             get
             {
                 String result = "";
-                if (m_sheetName != null)
+                if(m_sheetName != null)
                     result += m_sheetName + "!";
-                if (m_cellFrom != null)
+                if(m_cellFrom != null)
                 {
                     result += m_cellFrom;
-                    if (m_cellTo != null)
+                    if(m_cellTo != null)
                         result += ":" + m_cellTo;
                 }
                 return result;
@@ -95,10 +95,10 @@ namespace NPOI.HSSF.Util
             get
             {
                 String result = "";
-                if (m_cellFrom != null)
+                if(m_cellFrom != null)
                 {
                     result += m_cellFrom;
-                    if (m_cellTo != null)
+                    if(m_cellTo != null)
                         result += ":" + m_cellTo;
                 }
                 return result;
@@ -107,9 +107,9 @@ namespace NPOI.HSSF.Util
 
         public bool IsCellOk(String _cell)
         {
-            if (_cell != null)
+            if(_cell != null)
             {
-                if ((GetYPosition(_cell) != WRONG_POS) &&
+                if((GetYPosition(_cell) != WRONG_POS) &&
                 (GetXPosition(_cell) != WRONG_POS))
                     return true;
                 else
@@ -127,10 +127,10 @@ namespace NPOI.HSSF.Util
 
         private static bool intern_isSheetNameOk(String _sheetName, bool _canBeWaitSpace)
         {
-            for (int i = 0; i < _sheetName.Length; i++)
+            for(int i = 0; i < _sheetName.Length; i++)
             {
                 char ch = _sheetName[i];
-                if (!(Char.IsLetterOrDigit(ch) || (ch == '_') ||
+                if(!(Char.IsLetterOrDigit(ch) || (ch == '_') ||
                 _canBeWaitSpace && (ch == ' ')))
                 {
                     return false;
@@ -142,7 +142,7 @@ namespace NPOI.HSSF.Util
         public static bool IsSheetNameOk(String _sheetName)
         {
             bool res = false;
-            if (!string.IsNullOrEmpty(_sheetName))
+            if(!string.IsNullOrEmpty(_sheetName))
             {
                 res = intern_isSheetNameOk(_sheetName, true);
             }
@@ -172,11 +172,11 @@ namespace NPOI.HSSF.Util
         {
             get
             {
-                if (m_cellFrom != null && m_cellTo != null)
+                if(m_cellFrom != null && m_cellTo != null)
                 {
                     int toX = GetXPosition(m_cellTo);
                     int fromX = GetXPosition(m_cellFrom);
-                    if ((toX == WRONG_POS) || (fromX == WRONG_POS))
+                    if((toX == WRONG_POS) || (fromX == WRONG_POS))
                     {
                         return 0;
                     }
@@ -190,11 +190,11 @@ namespace NPOI.HSSF.Util
         {
             get
             {
-                if (m_cellFrom != null && m_cellTo != null)
+                if(m_cellFrom != null && m_cellTo != null)
                 {
                     int toY = GetYPosition(m_cellTo);
                     int fromY = GetYPosition(m_cellFrom);
-                    if ((toY == WRONG_POS) || (fromY == WRONG_POS))
+                    if((toY == WRONG_POS) || (fromY == WRONG_POS))
                     {
                         return 0;
                     }
@@ -206,7 +206,7 @@ namespace NPOI.HSSF.Util
 
         public void SetSize(int _width, int _height)
         {
-            if (m_cellFrom == null)
+            if(m_cellFrom == null)
                 m_cellFrom = "a1";
             int tlX, tlY; // fix warning CS0168 "never used": , rbX, rbY; //Tony Qu: not sure what's doing here
             tlX = GetXPosition(m_cellFrom);
@@ -219,7 +219,7 @@ namespace NPOI.HSSF.Util
         {
             get
             {
-                if (m_sheetName == null)
+                if(m_sheetName == null)
                     return false;
                 return true;
             }
@@ -237,7 +237,7 @@ namespace NPOI.HSSF.Util
         {
             get
             {
-                if (m_cellFrom == null)
+                if(m_cellFrom == null)
                     return false;
                 return true;
             }
@@ -255,7 +255,7 @@ namespace NPOI.HSSF.Util
             m_cellTo = urls[2];
 
             //What if range is one celled ?
-            if (m_cellTo == null)
+            if(m_cellTo == null)
             {
                 m_cellTo = m_cellFrom;
             }
@@ -270,12 +270,12 @@ namespace NPOI.HSSF.Util
         {
             String[] result = new String[3];
             int index = _url.IndexOf(':');
-            if (index >= 0)
+            if(index >= 0)
             {
                 String fromStr = _url.Substring(0, index);
                 String toStr = _url.Substring(index + 1);
                 index = fromStr.IndexOf('!');
-                if (index >= 0)
+                if(index >= 0)
                 {
                     result[0] = fromStr.Substring(0, index);
                     result[1] = fromStr.Substring(index + 1);
@@ -285,7 +285,7 @@ namespace NPOI.HSSF.Util
                     result[1] = fromStr;
                 }
                 index = toStr.IndexOf('!');
-                if (index >= 0)
+                if(index >= 0)
                 {
                     result[2] = toStr.Substring(index + 1);
                 }
@@ -297,7 +297,7 @@ namespace NPOI.HSSF.Util
             else
             {
                 index = _url.IndexOf('!');
-                if (index >= 0)
+                if(index >= 0)
                 {
                     result[0] = _url.Substring(0, index);
                     result[1] = _url.Substring(index + 1);
@@ -314,18 +314,18 @@ namespace NPOI.HSSF.Util
         {
             int result = WRONG_POS;
             _subrange = _subrange.Trim();
-            if (_subrange.Length != 0)
+            if(_subrange.Length != 0)
             {
                 String digitstr = GetDigitPart(_subrange);
                 try
                 {
                     result = int.Parse(digitstr, CultureInfo.InvariantCulture);
-                    if (result > MAX_HEIGHT)
+                    if(result > MAX_HEIGHT)
                     {
                         result = WRONG_POS;
                     }
                 }
-                catch (Exception)
+                catch(Exception)
                 {
 
                     result = WRONG_POS;
@@ -337,12 +337,12 @@ namespace NPOI.HSSF.Util
         private static bool IsLetter(String _str)
         {
             bool res = true;
-            if (!string.IsNullOrEmpty(_str))
+            if(!string.IsNullOrEmpty(_str))
             {
-                for (int i = 0; i < _str.Length; i++)
+                for(int i = 0; i < _str.Length; i++)
                 {
                     char ch = _str[i];
-                    if (!Char.IsLetter(ch))
+                    if(!Char.IsLetter(ch))
                     {
                         res = false;
                         break;
@@ -360,7 +360,7 @@ namespace NPOI.HSSF.Util
             String tmp = Filter(_subrange);
             tmp = this.GetCharPart(_subrange);
             // we will Process only 2 letters ranges
-            if (IsLetter(tmp) && ((tmp.Length == 2) || (tmp.Length == 1)))
+            if(IsLetter(tmp) && ((tmp.Length == 2) || (tmp.Length == 1)))
             {
                 result = Get26Sys(tmp);
             }
@@ -371,7 +371,7 @@ namespace NPOI.HSSF.Util
         {
             String result = "";
             int digitpos = GetFirstDigitPosition(_value);
-            if (digitpos >= 0)
+            if(digitpos >= 0)
             {
                 result = _value.Substring(digitpos);
             }
@@ -382,7 +382,7 @@ namespace NPOI.HSSF.Util
         {
             String result = "";
             int digitpos = GetFirstDigitPosition(_value);
-            if (digitpos >= 0)
+            if(digitpos >= 0)
             {
                 result = _value.Substring(0, digitpos);
             }
@@ -392,10 +392,10 @@ namespace NPOI.HSSF.Util
         private static String Filter(String _range)
         {
             String res = "";
-            for (int i = 0; i < _range.Length; i++)
+            for(int i = 0; i < _range.Length; i++)
             {
                 char ch = _range[i];
-                if (ch != '$')
+                if(ch != '$')
                 {
                     res = res + ch;
                 }
@@ -406,15 +406,15 @@ namespace NPOI.HSSF.Util
         private static int GetFirstDigitPosition(String _value)
         {
             int result = WRONG_POS;
-            if (_value != null && _value.Trim().Length == 0)
+            if(_value != null && _value.Trim().Length == 0)
             {
                 return result;
             }
             _value = _value.Trim();
             int Length = _value.Length;
-            for (int i = 0; i < Length; i++)
+            for(int i = 0; i < Length; i++)
             {
-                if (Char.IsDigit(_value[i]))
+                if(Char.IsDigit(_value[i]))
                 {
                     result = i;
                     break;
@@ -427,9 +427,9 @@ namespace NPOI.HSSF.Util
         {
             int sum = 0;
             int multiplier = 1;
-            if (!string.IsNullOrEmpty(_s))
+            if(!string.IsNullOrEmpty(_s))
             {
-                for (int i = _s.Length - 1; i >= 0; i--)
+                for(int i = _s.Length - 1; i >= 0; i--)
                 {
                     char ch = _s[i];
                     int val = (ch - 'A') + 1;
@@ -452,8 +452,8 @@ namespace NPOI.HSSF.Util
                 reminder = _num % 26;
                 int val = 65 + reminder;
                 _num = _num / 26;
-                s = (char)val + s; // reverce
-            } while (_num > 0);
+                s = (char) val + s; // reverce
+            } while(_num > 0);
             return s;
         }
 

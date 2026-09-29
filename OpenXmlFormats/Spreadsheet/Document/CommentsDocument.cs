@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -9,7 +9,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         CT_Comments comments = null;
 
         public CommentsDocument()
-        { 
+        {
         }
         public CommentsDocument(CT_Comments comments)
         {
@@ -31,7 +31,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 this.comments.Write(sw);
             }

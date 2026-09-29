@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Licensed to the Apache Software Foundation (ASF) Under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for Additional information regarding copyright ownership.
@@ -17,11 +17,11 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
+    using Cysharp.Text;
     using NPOI.SS.Formula.Eval;
-    using System.Text; 
-using Cysharp.Text;
+    using System;
     using System.Globalization;
+    using System.Text;
 
     /// <summary>
     /// Implementation of the PROPER function:
@@ -36,13 +36,13 @@ using Cysharp.Text;
 
             bool shouldMakeUppercase = true;
 
-            foreach (char ch in text.ToCharArray())
+            foreach(char ch in text.ToCharArray())
             {
 
                 // Note: we are using String.toUpperCase() here on purpose as it handles certain things
                 // better than Character.toUpperCase(), e.g. German "scharfes s" is translated
                 // to "SS" (i.e. two characters), if uppercased properly!
-                if (shouldMakeUppercase)
+                if(shouldMakeUppercase)
                 {
                     sb.Append(ch.ToString().ToUpper(CultureInfo.CurrentCulture));
                 }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,14 +14,13 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
+using NPOI.Util;
 using System;
 using System.Text;
 
-using NPOI.Util;
-
 namespace NPOI.HSSF.Record.Chart
 {
-    public class Chart3DBarShapeRecord:StandardRecord
+    public class Chart3DBarShapeRecord : StandardRecord
     {
         public const short sid = 4191;
 
@@ -29,14 +28,14 @@ namespace NPOI.HSSF.Record.Chart
         byte field_2_taper = 0;
 
         public Chart3DBarShapeRecord()
-        { 
-        
+        {
+
         }
 
         public Chart3DBarShapeRecord(RecordInputStream in1)
         {
-            field_1_riser = (byte)in1.ReadByte();
-            field_2_taper = (byte)in1.ReadByte();
+            field_1_riser = (byte) in1.ReadByte();
+            field_2_taper = (byte) in1.ReadByte();
         }
 
         public override string ToString()

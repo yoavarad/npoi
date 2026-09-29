@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Runtime.InteropServices;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
@@ -10,7 +7,9 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.PowerShell;
 using Nuke.Common.Utilities.Collections;
-
+using System;
+using System.Linq;
+using System.Runtime.InteropServices;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.PowerShell.PowerShellTasks;
 
@@ -187,7 +186,7 @@ partial class Build : NukeBuild
             });
         });
 
-    Target RemoveNpoiPackFromPackage => _ => 
+    Target RemoveNpoiPackFromPackage => _ =>
         _.DependsOn(Pack)
         .Executes(() =>
         {

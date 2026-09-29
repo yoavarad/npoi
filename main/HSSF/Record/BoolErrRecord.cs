@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * BoolErrRecord.java
@@ -25,10 +25,10 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.SS.UserModel;
 
     /**
      * Creates new BoolErrRecord. 
@@ -63,7 +63,7 @@ namespace NPOI.HSSF.Record
         public BoolErrRecord(RecordInputStream in1)
             : base(in1)
         {
-            switch (in1.Remaining)
+            switch(in1.Remaining)
             {
                 case 2:
                     _value = in1.ReadByte();
@@ -76,7 +76,7 @@ namespace NPOI.HSSF.Record
                             + in1.Remaining + ") for BOOLERR record.");
             }
             int flag = in1.ReadUByte();
-            switch (flag)
+            switch(flag)
             {
                 case 0:
                     _isError = false;
@@ -123,7 +123,7 @@ namespace NPOI.HSSF.Record
 
         public void SetValue(FormulaError value)
         {
-            switch ((FormulaErrorEnum)value.Code)
+            switch((FormulaErrorEnum) value.Code)
             {
                 case FormulaErrorEnum.NULL:
                 case FormulaErrorEnum.DIV_0:
@@ -138,7 +138,7 @@ namespace NPOI.HSSF.Record
                 default:
                     throw new ArgumentException("Error Value can only be 0,7,15,23,29,36 or 42. It cannot be " + value);
             }
-            
+
         }
 
         /**
@@ -160,7 +160,7 @@ namespace NPOI.HSSF.Record
 
         public byte ErrorValue
         {
-            get { return (byte)_value; }
+            get { return (byte) _value; }
         }
         /**
      * Indicates whether the call holds a boolean value
@@ -190,7 +190,7 @@ namespace NPOI.HSSF.Record
         }
         protected override void AppendValueText(StringBuilder buffer)
         {
-            if (IsBoolean)
+            if(IsBoolean)
             {
                 buffer.Append("    .boolValue   = ").Append(BooleanValue)
                     .Append("\n");

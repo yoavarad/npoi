@@ -15,18 +15,18 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.SS.Formula.Function;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NPOI.SS.Formula.Function;
 
 namespace NPOI.SS.Formula.Atp
 {
-    using System;
-    using System.Collections;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.UDF;
+    using System;
+    using System.Collections;
 
     public class NotImplemented : FreeRefFunction
     {
@@ -59,10 +59,11 @@ namespace NPOI.SS.Formula.Atp
             // functions that are available in Excel 2007+ have a prefix _xlfn.
             // if you save such a .xlsx workbook as .xls
             String prefix = "_xlfn.";
-            if (name.StartsWith(prefix)) name = name.Substring(prefix.Length);
+            if(name.StartsWith(prefix))
+                name = name.Substring(prefix.Length);
 
             string key = name.ToUpper();
-            if (_functionsByName.TryGetValue(key, out FreeRefFunction function))
+            if(_functionsByName.TryGetValue(key, out FreeRefFunction function))
                 return function;
 
             return null;
@@ -232,10 +233,10 @@ namespace NPOI.SS.Formula.Atp
         {
             AnalysisToolPak inst = (AnalysisToolPak)instance;
             List<String> lst = new List<String>();
-            foreach (KeyValuePair<String, FreeRefFunction> me in AnalysisToolPak._functionsByName)
+            foreach(KeyValuePair<String, FreeRefFunction> me in AnalysisToolPak._functionsByName)
             {
                 FreeRefFunction func = me.Value;
-                if (func != null && func is not NotImplemented)
+                if(func != null && func is not NotImplemented)
                 {
                     lst.Add(me.Key);
                 }
@@ -253,10 +254,10 @@ namespace NPOI.SS.Formula.Atp
         {
             AnalysisToolPak inst = (AnalysisToolPak)instance;
             List<String> lst = new List<String>();
-            foreach (KeyValuePair<String, FreeRefFunction> me in AnalysisToolPak._functionsByName)
+            foreach(KeyValuePair<String, FreeRefFunction> me in AnalysisToolPak._functionsByName)
             {
                 FreeRefFunction func = me.Value;
-                if (func != null && (func is NotImplemented))
+                if(func != null && (func is NotImplemented))
                 {
                     lst.Add(me.Key);
                 }
@@ -275,10 +276,10 @@ namespace NPOI.SS.Formula.Atp
         public static void RegisterFunction(String name, FreeRefFunction func)
         {
             AnalysisToolPak inst = (AnalysisToolPak)instance;
-            if (!IsATPFunction(name))
+            if(!IsATPFunction(name))
             {
                 FunctionMetadata metaData = FunctionMetadataRegistry.GetFunctionByName(name);
-                if (metaData != null)
+                if(metaData != null)
                 {
                     throw new ArgumentException(name + " is a built-in Excel function. " +
                             "Use FunctoinEval.RegisterFunction(String name, Function func) instead.");
@@ -289,7 +290,7 @@ namespace NPOI.SS.Formula.Atp
                 }
             }
             FreeRefFunction f = inst.FindFunction(name);
-            if (f != null && f is not NotImplemented)
+            if(f != null && f is not NotImplemented)
             {
                 throw new ArgumentException("POI already implememts " + name +
                         ". You cannot override POI's implementations of Excel functions");

@@ -154,7 +154,7 @@ namespace TestCases.XWPF.UserModel
             ClassicAssert.AreEqual(10, p.SpacingBefore);
 
             p.SpacingAfter = 100;
-            ClassicAssert.AreEqual(100, (int)spacing.after);
+            ClassicAssert.AreEqual(100, (int) spacing.after);
             p.SpacingBefore = 100;
             ClassicAssert.AreEqual(100, spacing.before);
 
@@ -190,7 +190,7 @@ namespace TestCases.XWPF.UserModel
             ClassicAssert.AreEqual(LineSpacingRule.ATLEAST, p.SpacingLineRule);
 
             p.SpacingAfter = 100;
-            ClassicAssert.AreEqual(100, (int)spacing.after);
+            ClassicAssert.AreEqual(100, (int) spacing.after);
         }
 
         [Test]
@@ -276,7 +276,7 @@ namespace TestCases.XWPF.UserModel
             ClassicAssert.AreEqual(0, paragraph.GetCTP().SizeOfBookmarkEndArray());
             CT_Bookmark ctBookmark = paragraph.GetCTP().GetBookmarkStartArray(0);
             ClassicAssert.AreEqual("poi", ctBookmark.name);
-            foreach (CT_Bookmark bookmark in paragraph.GetCTP().GetBookmarkStartList())
+            foreach(CT_Bookmark bookmark in paragraph.GetCTP().GetBookmarkStartList())
             {
                 ClassicAssert.AreEqual("poi", bookmark.name);
             }
@@ -617,7 +617,7 @@ namespace TestCases.XWPF.UserModel
             XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("58067.docx");
 
             StringBuilder str = new StringBuilder();
-            foreach (XWPFParagraph par in doc.Paragraphs)
+            foreach(XWPFParagraph par in doc.Paragraphs)
             {
                 str.Append(par.Text).Append("\n");
             }
@@ -630,7 +630,7 @@ namespace TestCases.XWPF.UserModel
             XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("61787.docx");
 
             StringBuilder str = new StringBuilder();
-            foreach (XWPFParagraph par in doc.Paragraphs)
+            foreach(XWPFParagraph par in doc.Paragraphs)
             {
                 str.Append(par.Text).Append("\n");
             }
@@ -644,7 +644,7 @@ namespace TestCases.XWPF.UserModel
             XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("61787-1.docx");
 
             StringBuilder str = new StringBuilder();
-            foreach (XWPFParagraph par in doc.Paragraphs)
+            foreach(XWPFParagraph par in doc.Paragraphs)
             {
                 str.Append(par.Text).Append("\n");
             }
@@ -717,74 +717,74 @@ namespace TestCases.XWPF.UserModel
         {
             XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("ComplexNumberedLists.docx");
             XWPFParagraph p;
-        
+
             p = doc.GetParagraphArray(0);
             ClassicAssert.AreEqual("This is a document with numbered lists", p.Text);
             ClassicAssert.AreEqual(null, p.GetNumID());
             ClassicAssert.AreEqual(null, p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(1);
             ClassicAssert.AreEqual("Entry #1", p.Text);
             ClassicAssert.AreEqual("1", p.GetNumID());
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(2);
             ClassicAssert.AreEqual("Entry #2, with children", p.Text);
             ClassicAssert.AreEqual("1", p.GetNumID());
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(3);
             ClassicAssert.AreEqual("2-a", p.Text);
             ClassicAssert.AreEqual("1", p.GetNumID());
             ClassicAssert.AreEqual("1", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(4);
             ClassicAssert.AreEqual("2-b", p.Text);
             ClassicAssert.AreEqual("1", p.GetNumID());
             ClassicAssert.AreEqual("1", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(5);
             ClassicAssert.AreEqual("2-c", p.Text);
             ClassicAssert.AreEqual("1", p.GetNumID());
             ClassicAssert.AreEqual("1", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(6);
             ClassicAssert.AreEqual("Entry #3", p.Text);
             ClassicAssert.AreEqual("1", p.GetNumID());
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(7);
             ClassicAssert.AreEqual("Entry #4", p.Text);
             ClassicAssert.AreEqual("1", p.GetNumID());
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             // New list
             p = doc.GetParagraphArray(8);
             ClassicAssert.AreEqual("Restarted to 1 from 5", p.Text);
             ClassicAssert.AreEqual("2", p.GetNumID());
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(9);
             ClassicAssert.AreEqual("Restarted @ 2", p.Text);
             ClassicAssert.AreEqual("2", p.GetNumID());
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             p = doc.GetParagraphArray(10);
             ClassicAssert.AreEqual("Restarted @ 3", p.Text);
             ClassicAssert.AreEqual("2", p.GetNumID());
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             // New list starting at 10
             p = doc.GetParagraphArray(11);
             ClassicAssert.AreEqual("Jump to new list at 10", p.Text);
@@ -792,7 +792,7 @@ namespace TestCases.XWPF.UserModel
             ClassicAssert.AreEqual("0", p.GetNumIlvl());
             // TODO Why isn't this seen as 10?
             ClassicAssert.AreEqual(null, p.GetNumStartOverride());
-        
+
             // TODO Shouldn't we use XWPFNumbering or similar here?
             // TODO Make it easier to change
         }

@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -156,7 +156,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public double MinimumAxisValue
         {
-            get{return field_1_minimumAxisValue;}
+            get { return field_1_minimumAxisValue; }
             set { this.field_1_minimumAxisValue = value; }
         }
 
@@ -165,7 +165,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public double MaximumAxisValue
         {
-            get{return field_2_maximumAxisValue;}
+            get { return field_2_maximumAxisValue; }
             set { this.field_2_maximumAxisValue = value; }
         }
 
@@ -184,7 +184,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public double MinorIncrement
         {
-            get{return field_4_minorIncrement;}
+            get { return field_4_minorIncrement; }
             set { this.field_4_minorIncrement = value; }
         }
 
@@ -206,7 +206,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public short Options
         {
-            get{return field_6_options;}
+            get { return field_6_options; }
             set { this.field_6_options = value; }
         }
 
@@ -249,7 +249,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsAutomaticMinor
         {
-            get{return automaticMinor.IsSet(field_6_options);}
+            get { return automaticMinor.IsSet(field_6_options); }
             set { field_6_options = automaticMinor.SetShortBoolean(field_6_options, value); }
         }
 
@@ -269,7 +269,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsLogarithmicScale
         {
-            get{return logarithmicScale.IsSet(field_6_options);}
+            get { return logarithmicScale.IsSet(field_6_options); }
             set { field_6_options = logarithmicScale.SetShortBoolean(field_6_options, value); }
         }
 
@@ -303,7 +303,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsReserved
         {
-            get{return reserved.IsSet(field_6_options);}
+            get { return reserved.IsSet(field_6_options); }
             set { field_6_options = reserved.SetShortBoolean(field_6_options, value); }
         }
 

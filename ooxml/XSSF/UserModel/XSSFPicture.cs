@@ -15,17 +15,17 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.IO;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Spreadsheet;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
-using NPOI.Util;
-using System.Xml;
 using NPOI.SS.Util;
+using NPOI.Util;
 using SkiaSharp;
+using System;
+using System.IO;
+using System.Xml;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -84,37 +84,37 @@ namespace NPOI.XSSF.UserModel
         internal static CT_Picture Prototype()
         {
 
-                CT_Picture pic = new CT_Picture();
-                CT_PictureNonVisual nvpr = pic.AddNewNvPicPr();
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualDrawingProps nvProps = nvpr.AddNewCNvPr();
-                nvProps.id = (1);
-                nvProps.name = ("Picture 1");
-                nvProps.descr = ("Picture");
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualPictureProperties nvPicProps = nvpr.AddNewCNvPicPr();
-                nvPicProps.AddNewPicLocks().noChangeAspect = true;
+            CT_Picture pic = new CT_Picture();
+            CT_PictureNonVisual nvpr = pic.AddNewNvPicPr();
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualDrawingProps nvProps = nvpr.AddNewCNvPr();
+            nvProps.id = (1);
+            nvProps.name = ("Picture 1");
+            nvProps.descr = ("Picture");
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualPictureProperties nvPicProps = nvpr.AddNewCNvPicPr();
+            nvPicProps.AddNewPicLocks().noChangeAspect = true;
 
 
 
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_BlipFillProperties blip = pic.AddNewBlipFill();
-                blip.AddNewBlip().embed = "";
-                blip.AddNewStretch().AddNewFillRect();
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_BlipFillProperties blip = pic.AddNewBlipFill();
+            blip.AddNewBlip().embed = "";
+            blip.AddNewStretch().AddNewFillRect();
 
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties sppr = pic.AddNewSpPr();
-                CT_Transform2D t2d = sppr.AddNewXfrm();
-                CT_PositiveSize2D ext = t2d.AddNewExt();
-                //should be original picture width and height expressed in EMUs
-                ext.cx = (0);
-                ext.cy = (0);
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties sppr = pic.AddNewSpPr();
+            CT_Transform2D t2d = sppr.AddNewXfrm();
+            CT_PositiveSize2D ext = t2d.AddNewExt();
+            //should be original picture width and height expressed in EMUs
+            ext.cx = (0);
+            ext.cy = (0);
 
-                CT_Point2D off = t2d.AddNewOff();
-                off.x=(0);
-                off.y=(0);
+            CT_Point2D off = t2d.AddNewOff();
+            off.x=(0);
+            off.y=(0);
 
-                CT_PresetGeometry2D prstGeom = sppr.AddNewPrstGeom();
-                prstGeom.prst = (ST_ShapeType.rect);
-                prstGeom.AddNewAvLst();
+            CT_PresetGeometry2D prstGeom = sppr.AddNewPrstGeom();
+            prstGeom.prst = (ST_ShapeType.rect);
+            prstGeom.AddNewAvLst();
 
-                prototype = pic;
+            prototype = pic;
             return prototype;
         }
 
@@ -122,8 +122,10 @@ namespace NPOI.XSSF.UserModel
          * Returns the picture id.
          * @return id of the picture
          */
-        public override uint ID {
-            get {
+        public override uint ID
+        {
+            get
+            {
                 return ctPicture.nvPicPr.cNvPr.id;
             }
         }
@@ -132,11 +134,14 @@ namespace NPOI.XSSF.UserModel
          * Returns the picture name.
          * @return name of the picture
          */
-        public override String Name {
-            get {
+        public override String Name
+        {
+            get
+            {
                 return ctPicture.nvPicPr.cNvPr.name;
             }
-            set {
+            set
+            {
                 ctPicture.nvPicPr.cNvPr.name = value;
             }
         }
@@ -276,7 +281,7 @@ namespace NPOI.XSSF.UserModel
                 //C# read the image that format defined by PictureType , maybe.
                 return ImageUtils.GetImageDimension(part.GetInputStream());
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 //return a "singulariry" if ImageIO failed to read the image
                 logger.Log(POILogger.WARN, e);
@@ -361,7 +366,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 String blipId = ctPicture.blipFill.blip.embed;
-                return (XSSFPictureData)GetDrawing().GetRelationById(blipId);
+                return (XSSFPictureData) GetDrawing().GetRelationById(blipId);
             }
         }
 
@@ -386,11 +391,10 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (XSSFSheet)this.GetDrawing().GetParent();
+                return (XSSFSheet) this.GetDrawing().GetParent();
             }
         }
 
         public override string ShapeName => ctPicture.nvPicPr.cNvPr.name;
     }
 }
-

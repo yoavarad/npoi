@@ -103,12 +103,12 @@ namespace NPOI.SS.UserModel
         {
             return _table;
         }
-            
+
         static BorderStyleEnum()
         {
-            foreach (BorderStyle c in Enum.GetValues(typeof(BorderStyle)))
+            foreach(BorderStyle c in Enum.GetValues(typeof(BorderStyle)))
             {
-                _table[(int)c] = c;
+                _table[(int) c] = c;
             }
         }
         public static BorderStyle ValueOf(short code)

@@ -17,12 +17,10 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    
-    using NPOI.Util;
-
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using System;
 
     /**
      * AreaErr - handles deleted cell area references.
@@ -48,9 +46,9 @@ namespace NPOI.SS.Formula.PTG
         }
         public override void Write(ILittleEndianOutput out1)
         {
-		    out1.WriteByte(sid + PtgClass);
-		    out1.WriteInt(unused1);
-		    out1.WriteInt(unused2);
+            out1.WriteByte(sid + PtgClass);
+            out1.WriteInt(unused1);
+            out1.WriteInt(unused2);
         }
 
         public override String ToFormulaString()

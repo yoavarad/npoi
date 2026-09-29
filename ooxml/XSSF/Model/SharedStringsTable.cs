@@ -18,18 +18,18 @@
 
 namespace NPOI.XSSF.Model
 {
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NPOI.XSSF.UserModel;
+    using OpenXmlFormats.Spreadsheet;
+    using System;
     using System.Buffers;
     using System.Collections.Generic;
     using System.Globalization;
-    using OpenXmlFormats.Spreadsheet;
-    using System;
     using System.IO;
-    using NPOI.OpenXml4Net.OPC;
-    using System.Xml;
-    using NPOI.Util;
-    using NPOI.XSSF.UserModel;
-    using NPOI.SS.UserModel;
     using System.Text;
+    using System.Xml;
 
     /**
      * Table of strings shared across all sheets in a workbook.
@@ -127,7 +127,7 @@ namespace NPOI.XSSF.Model
             try
             {
                 stream = part.GetInputStream();
-                if (stream == null || (stream.CanSeek && stream.Length == 0))
+                if(stream == null || (stream.CanSeek && stream.Length == 0))
                     return;
 
                 var settings = new XmlReaderSettings
@@ -141,13 +141,13 @@ namespace NPOI.XSSF.Model
                 using var reader = XmlReader.Create(stream, settings);
                 // Reading up to the first Element node is sufficient:
                 // DtdProcessing.Prohibit throws when <!DOCTYPE is encountered.
-                while (reader.Read())
+                while(reader.Read())
                 {
-                    if (reader.NodeType == XmlNodeType.Element)
+                    if(reader.NodeType == XmlNodeType.Element)
                         break;
                 }
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException("unable to parse shared strings table", e);
             }
@@ -160,14 +160,15 @@ namespace NPOI.XSSF.Model
 
         private void EnsureLoaded()
         {
-            if (_loaded) return;
+            if(_loaded)
+                return;
             _loaded = true;
-            if (_loadPart != null)
+            if(_loadPart != null)
             {
                 Stream stream = _loadPart.GetInputStream();
                 try
                 {
-                    if (stream == null || (stream.CanSeek && stream.Length == 0))
+                    if(stream == null || (stream.CanSeek && stream.Length == 0))
                     {
                         _sstDoc = new SstDocument();
                         _sstDoc.AddNewSst();
@@ -181,7 +182,7 @@ namespace NPOI.XSSF.Model
                             else
                                 ReadFromStreamViaXmlDocument(stream);
                         }
-                        catch (XmlException e)
+                        catch(XmlException e)
                         {
                             throw new IOException("unable to parse shared strings table", e);
                         }
@@ -204,12 +205,13 @@ namespace NPOI.XSSF.Model
         /// </summary>
         private void EnsureStmapBuilt()
         {
-            if (_stmapBuilt) return;
+            if(_stmapBuilt)
+                return;
             _stmapBuilt = true;
-            for (int i = 0; i < strings.Count; i++)
+            for(int i = 0; i < strings.Count; i++)
             {
                 string key = GetKey(strings[i]);
-                if (key != null && !stmap.ContainsKey(key))
+                if(key != null && !stmap.ContainsKey(key))
                     stmap[key] = i;
             }
         }
@@ -241,7 +243,7 @@ namespace NPOI.XSSF.Model
                 count = sst.count;
                 uniqueCount = sst.uniqueCount;
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException("unable to parse shared strings table", e);
             }
@@ -269,9 +271,9 @@ namespace NPOI.XSSF.Model
                 StringBuilder textBuf = null;
                 bool inSiT = false, inRT = false, inRPhT = false;
 
-                while (reader.Read())
+                while(reader.Read())
                 {
-                    switch (reader.NodeType)
+                    switch(reader.NodeType)
                     {
                         case XmlNodeType.Element:
                         {
@@ -279,21 +281,21 @@ namespace NPOI.XSSF.Model
                             bool isEmpty = reader.IsEmptyElement;
 
                             // rPr children are all self-closing attribute-only elements
-                            if (currentRPr != null && localName != "rPr")
+                            if(currentRPr != null && localName != "rPr")
                             {
                                 ParseRPrChild(reader, localName, currentRPr);
                                 break;
                             }
 
-                            switch (localName)
+                            switch(localName)
                             {
                                 case "sst":
                                 {
                                     string cStr = reader.GetAttribute("count");
-                                    if (cStr != null && int.TryParse(cStr, NumberStyles.None, CultureInfo.InvariantCulture, out int c))
+                                    if(cStr != null && int.TryParse(cStr, NumberStyles.None, CultureInfo.InvariantCulture, out int c))
                                         count = c;
                                     string ucStr = reader.GetAttribute("uniqueCount");
-                                    if (ucStr != null && int.TryParse(ucStr, NumberStyles.None, CultureInfo.InvariantCulture, out int uc))
+                                    if(ucStr != null && int.TryParse(ucStr, NumberStyles.None, CultureInfo.InvariantCulture, out int uc))
                                         uniqueCount = uc;
                                     break;
                                 }
@@ -301,51 +303,65 @@ namespace NPOI.XSSF.Model
                                     currentSi = new CT_Rst();
                                     break;
                                 case "t":
-                                    if (isEmpty)
+                                    if(isEmpty)
                                     {
-                                        if (currentR != null) currentR.t = string.Empty;
-                                        else if (currentRPh != null) currentRPh.t = string.Empty;
-                                        else if (currentSi != null) currentSi.t = string.Empty;
+                                        if(currentR != null)
+                                            currentR.t = string.Empty;
+                                        else if(currentRPh != null)
+                                            currentRPh.t = string.Empty;
+                                        else if(currentSi != null)
+                                            currentSi.t = string.Empty;
                                     }
                                     else
                                     {
                                         textBuf = new StringBuilder();
-                                        if (currentR != null) inRT = true;
-                                        else if (currentRPh != null) inRPhT = true;
-                                        else if (currentSi != null) inSiT = true;
+                                        if(currentR != null)
+                                            inRT = true;
+                                        else if(currentRPh != null)
+                                            inRPhT = true;
+                                        else if(currentSi != null)
+                                            inSiT = true;
                                     }
                                     break;
                                 case "r":
                                     currentR = new CT_RElt();
-                                    if (currentSi != null)
+                                    if(currentSi != null)
                                     {
-                                        if (currentSi.r == null) currentSi.r = new List<CT_RElt>();
+                                        if(currentSi.r == null)
+                                            currentSi.r = new List<CT_RElt>();
                                         currentSi.r.Add(currentR);
                                     }
-                                    if (isEmpty) currentR = null;
+                                    if(isEmpty)
+                                        currentR = null;
                                     break;
                                 case "rPr":
                                     currentRPr = new CT_RPrElt();
-                                    if (currentR != null) currentR.rPr = currentRPr;
-                                    if (isEmpty) currentRPr = null;
+                                    if(currentR != null)
+                                        currentR.rPr = currentRPr;
+                                    if(isEmpty)
+                                        currentRPr = null;
                                     break;
                                 case "rPh":
                                 {
                                     currentRPh = new CT_PhoneticRun();
                                     string sbStr = reader.GetAttribute("sb");
                                     string ebStr = reader.GetAttribute("eb");
-                                    if (sbStr != null && uint.TryParse(sbStr, out uint sbVal)) currentRPh.sb = sbVal;
-                                    if (ebStr != null && uint.TryParse(ebStr, out uint ebVal)) currentRPh.eb = ebVal;
-                                    if (currentSi != null)
+                                    if(sbStr != null && uint.TryParse(sbStr, out uint sbVal))
+                                        currentRPh.sb = sbVal;
+                                    if(ebStr != null && uint.TryParse(ebStr, out uint ebVal))
+                                        currentRPh.eb = ebVal;
+                                    if(currentSi != null)
                                     {
-                                        if (currentSi.rPh == null) currentSi.rPh = new List<CT_PhoneticRun>();
+                                        if(currentSi.rPh == null)
+                                            currentSi.rPh = new List<CT_PhoneticRun>();
                                         currentSi.rPh.Add(currentRPh);
                                     }
-                                    if (isEmpty) currentRPh = null;
+                                    if(isEmpty)
+                                        currentRPh = null;
                                     break;
                                 }
                                 case "phoneticPr":
-                                    if (currentSi != null)
+                                    if(currentSi != null)
                                         currentSi.phoneticPr = ParsePhoneticPrAttributes(reader);
                                     break;
                             }
@@ -355,20 +371,20 @@ namespace NPOI.XSSF.Model
                         case XmlNodeType.SignificantWhitespace:
                         case XmlNodeType.Whitespace:
                         {
-                            if ((inSiT || inRT || inRPhT) && textBuf != null)
+                            if((inSiT || inRT || inRPhT) && textBuf != null)
                             {
                                 int charsRead;
-                                while ((charsRead = reader.ReadValueChunk(readBuf, 0, readBuf.Length)) > 0)
+                                while((charsRead = reader.ReadValueChunk(readBuf, 0, readBuf.Length)) > 0)
                                     textBuf.Append(readBuf, 0, charsRead);
                             }
                             break;
                         }
                         case XmlNodeType.EndElement:
                         {
-                            switch (reader.LocalName)
+                            switch(reader.LocalName)
                             {
                                 case "si":
-                                    if (currentSi != null)
+                                    if(currentSi != null)
                                     {
                                         strings.Add(currentSi);
                                     }
@@ -378,9 +394,12 @@ namespace NPOI.XSSF.Model
                                 {
                                     string text = textBuf?.ToString() ?? string.Empty;
                                     textBuf = null;
-                                    if (inSiT && currentSi != null) { currentSi.t = text; inSiT = false; }
-                                    else if (inRT && currentR != null) { currentR.t = text; inRT = false; }
-                                    else if (inRPhT && currentRPh != null) { currentRPh.t = text; inRPhT = false; }
+                                    if(inSiT && currentSi != null)
+                                    { currentSi.t = text; inSiT = false; }
+                                    else if(inRT && currentR != null)
+                                    { currentR.t = text; inRT = false; }
+                                    else if(inRPhT && currentRPh != null)
+                                    { currentRPh.t = text; inRPhT = false; }
                                     break;
                                 }
                                 case "r":
@@ -408,7 +427,8 @@ namespace NPOI.XSSF.Model
         {
             var pr = new CT_PhoneticPr();
             string fontId = reader.GetAttribute("fontId");
-            if (fontId != null && uint.TryParse(fontId, out uint fid)) pr.fontId = fid;
+            if(fontId != null && uint.TryParse(fontId, out uint fid))
+                pr.fontId = fid;
             string type = reader.GetAttribute("type");
             if(type != null && Enum.TryParse(type, out ST_PhoneticType pt))
                 pr.type = pt;
@@ -419,17 +439,17 @@ namespace NPOI.XSSF.Model
                 pr.alignment = pa;
             else
                 pr.alignment = ST_PhoneticAlignment.left;
-                return pr;
+            return pr;
         }
 
         private static void ParseRPrChild(XmlReader reader, string localName, CT_RPrElt rPr)
         {
-            switch (localName)
+            switch(localName)
             {
                 case "sz":
                 {
                     string val = reader.GetAttribute("val");
-                    if (val != null && double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out double sz))
+                    if(val != null && double.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out double sz))
                         rPr.sz = new CT_FontSize { val = sz };
                     break;
                 }
@@ -439,20 +459,21 @@ namespace NPOI.XSSF.Model
                 case "rFont":
                 {
                     string val = reader.GetAttribute("val");
-                    if (val != null) rPr.rFont = new CT_FontName { val = val };
+                    if(val != null)
+                        rPr.rFont = new CT_FontName { val = val };
                     break;
                 }
                 case "family":
                 {
                     string val = reader.GetAttribute("val");
-                    if (val != null && int.TryParse(val, out int fam))
+                    if(val != null && int.TryParse(val, out int fam))
                         rPr.family = new CT_IntProperty { val = fam };
                     break;
                 }
                 case "charset":
                 {
                     string val = reader.GetAttribute("val");
-                    if (val != null && int.TryParse(val, out int cs))
+                    if(val != null && int.TryParse(val, out int cs))
                         rPr.charset = new CT_IntProperty { val = cs };
                     break;
                 }
@@ -480,21 +501,21 @@ namespace NPOI.XSSF.Model
                 case "u":
                 {
                     string val = reader.GetAttribute("val") ?? "single";
-                    if (Enum.TryParse(val, out ST_UnderlineValues uv))
+                    if(Enum.TryParse(val, out ST_UnderlineValues uv))
                         rPr.u = new CT_UnderlineProperty { val = uv };
                     break;
                 }
                 case "vertAlign":
                 {
                     string val = reader.GetAttribute("val");
-                    if (val != null && Enum.TryParse(val, out ST_VerticalAlignRun va))
+                    if(val != null && Enum.TryParse(val, out ST_VerticalAlignRun va))
                         rPr.vertAlign = new CT_VerticalAlignFontProperty { val = va };
                     break;
                 }
                 case "scheme":
                 {
                     string val = reader.GetAttribute("val");
-                    if (val != null && Enum.TryParse(val, out ST_FontScheme fs))
+                    if(val != null && Enum.TryParse(val, out ST_FontScheme fs))
                         rPr.scheme = new CT_FontScheme { val = fs };
                     break;
                 }
@@ -513,22 +534,25 @@ namespace NPOI.XSSF.Model
         {
             var color = new CT_Color();
             string auto = reader.GetAttribute("auto");
-            if (auto != null)
+            if(auto != null)
                 color.auto = auto != "0" && !auto.Equals("false", StringComparison.OrdinalIgnoreCase);
             string indexed = reader.GetAttribute("indexed");
-            if (indexed != null && uint.TryParse(indexed, out uint idx)) color.indexed = idx;
+            if(indexed != null && uint.TryParse(indexed, out uint idx))
+                color.indexed = idx;
             string rgb = reader.GetAttribute("rgb");
-            if (rgb != null && rgb.Length >= 2)
+            if(rgb != null && rgb.Length >= 2)
             {
                 byte[] bytes = new byte[rgb.Length / 2];
-                for (int i = 0; i < bytes.Length; i++)
+                for(int i = 0; i < bytes.Length; i++)
                     bytes[i] = Convert.ToByte(rgb.Substring(i * 2, 2), 16);
                 color.rgb = bytes;
             }
             string theme = reader.GetAttribute("theme");
-            if (theme != null && uint.TryParse(theme, out uint th)) color.theme = th;
+            if(theme != null && uint.TryParse(theme, out uint th))
+                color.theme = th;
             string tint = reader.GetAttribute("tint");
-            if (tint != null && double.TryParse(tint, NumberStyles.Any, CultureInfo.InvariantCulture, out double t)) color.tint = t;
+            if(tint != null && double.TryParse(tint, NumberStyles.Any, CultureInfo.InvariantCulture, out double t))
+                color.tint = t;
             return color;
         }
 
@@ -609,7 +633,7 @@ namespace NPOI.XSSF.Model
             EnsureStmapBuilt();
             String s = GetKey(st);
             count++;
-            if (stmap.TryGetValue(s, out int entry))
+            if(stmap.TryGetValue(s, out int entry))
             {
                 return entry;
             }
@@ -639,7 +663,8 @@ namespace NPOI.XSSF.Model
          */
         public int AddSharedStringItem(IRichTextString str)
         {
-            if(!(str is XSSFRichTextString)){
+            if(!(str is XSSFRichTextString))
+            {
                 throw new ArgumentException("Only XSSFRichTextString argument is supported");
             }
             return AddEntry(((XSSFRichTextString) str).GetCTRst());
@@ -689,7 +714,7 @@ namespace NPOI.XSSF.Model
         public void WriteTo(Stream out1)
         {
             EnsureLoaded();
-            if (UseDirectWrite)
+            if(UseDirectWrite)
             {
                 var sw = new StreamWriter(out1, Encoding.UTF8);
                 sw.Write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?><sst xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"");
@@ -698,7 +723,7 @@ namespace NPOI.XSSF.Model
                 sw.Write("\" uniqueCount=\"");
                 sw.Write(uniqueCount);
                 sw.Write("\">");
-                foreach (CT_Rst si in strings)
+                foreach(CT_Rst si in strings)
                     si.Write(sw, "si");
                 sw.Write("</sst>");
                 sw.Flush();
@@ -706,14 +731,14 @@ namespace NPOI.XSSF.Model
             else
             {
                 // Legacy path: rebuild sst.si from strings, then delegate to _sstDoc.Save()
-                if (_sstDoc == null)
+                if(_sstDoc == null)
                 {
                     _sstDoc = new SstDocument();
                     _sstDoc.AddNewSst();
                 }
                 CT_Sst sst = _sstDoc.GetSst();
                 sst.si.Clear();
-                foreach (CT_Rst s in strings)
+                foreach(CT_Rst s in strings)
                     sst.si.Add(s);
                 sst.count = count;
                 sst.uniqueCount = uniqueCount;
@@ -733,7 +758,7 @@ namespace NPOI.XSSF.Model
         /// </summary>
         protected internal override void PrepareForCommit()
         {
-            if (_dirty)
+            if(_dirty)
                 base.PrepareForCommit();
         }
 
@@ -743,7 +768,8 @@ namespace NPOI.XSSF.Model
         /// </summary>
         protected internal override void Commit()
         {
-            if (!_dirty) return;
+            if(!_dirty)
+                return;
             PackagePart part = GetPackagePart();
             Stream out1 = part.GetOutputStream();
             WriteTo(out1);
@@ -751,9 +777,3 @@ namespace NPOI.XSSF.Model
         }
     }
 }
-
-
-
-
-
-

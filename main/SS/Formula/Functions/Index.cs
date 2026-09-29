@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
     using System.Diagnostics;
 
     /**
@@ -62,9 +62,9 @@ namespace NPOI.SS.Formula.Functions
             {
                 int rowIx = ResolveIndexArg(arg1, srcRowIndex, srcColumnIndex);
 
-                if (!reference.IsColumn)
+                if(!reference.IsColumn)
                 {
-                    if (!reference.IsRow)
+                    if(!reference.IsRow)
                     {
                         // always an error with 2-D area refs
                         // Note - the type of error changes if the pRowArg is negative
@@ -78,7 +78,7 @@ namespace NPOI.SS.Formula.Functions
 
                 return GetValueFromArea(reference, rowIx, columnIx);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -107,7 +107,7 @@ namespace NPOI.SS.Formula.Functions
                 int rowIx = ResolveIndexArg(arg1, srcRowIndex, srcColumnIndex);
                 return GetValueFromArea(reference, rowIx, columnIx);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -126,12 +126,12 @@ namespace NPOI.SS.Formula.Functions
         private static TwoDEval ConvertFirstArg(ValueEval arg0)
         {
             ValueEval firstArg = arg0;
-            if (firstArg is RefEval eval)
+            if(firstArg is RefEval eval)
             {
                 // Convert to area ref for simpler code in getValueFromArea()
                 return eval.Offset(0, 0, 0, 0);
             }
-            if ((firstArg is TwoDEval arg))
+            if((firstArg is TwoDEval arg))
             {
                 return arg;
             }
@@ -144,7 +144,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 2:
                     return Evaluate(srcRowIndex, srcColumnIndex, args[0], args[1]);
@@ -162,10 +162,10 @@ namespace NPOI.SS.Formula.Functions
 
             TwoDEval result = ae;
 
-            if (pRowIx != 0)
+            if(pRowIx != 0)
             {
                 // Slightly irregular logic for bounds checking errors
-                if (pRowIx > ae.Height)
+                if(pRowIx > ae.Height)
                 {
                     // high bounds check fail gives #REF! if arg was explicitly passed
                     throw new EvaluationException(ErrorEval.REF_INVALID);
@@ -173,10 +173,10 @@ namespace NPOI.SS.Formula.Functions
                 result = result.GetRow(pRowIx - 1);
             }
 
-            if (pColumnIx != 0)
+            if(pColumnIx != 0)
             {
                 // Slightly irregular logic for bounds checking errors
-                if (pColumnIx > ae.Width)
+                if(pColumnIx > ae.Width)
                 {
                     // high bounds check fail gives #REF! if arg was explicitly passed
                     throw new EvaluationException(ErrorEval.REF_INVALID);
@@ -204,9 +204,9 @@ namespace NPOI.SS.Formula.Functions
 
             // when the area ref Is a single row or a single column,
             // there are special rules for conversion of rowIx and columnIx
-            if (ae.IsRow)
+            if(ae.IsRow)
             {
-                if (ae.IsColumn)
+                if(ae.IsColumn)
                 {
                     // single cell ref
                     rowIx = rowArgWasEmpty ? 0 : pRowIx - 1;
@@ -214,7 +214,7 @@ namespace NPOI.SS.Formula.Functions
                 }
                 else
                 {
-                    if (colArgWasPassed)
+                    if(colArgWasPassed)
                     {
                         rowIx = rowArgWasEmpty ? 0 : pRowIx - 1;
                         columnIx = pColumnIx - 1;
@@ -229,9 +229,9 @@ namespace NPOI.SS.Formula.Functions
                     }
                 }
             }
-            else if (ae.IsColumn)
+            else if(ae.IsColumn)
             {
-                if (rowArgWasEmpty)
+                if(rowArgWasEmpty)
                 {
                     rowIx = srcRowIx - ae.FirstRow;
                 }
@@ -239,7 +239,7 @@ namespace NPOI.SS.Formula.Functions
                 {
                     rowIx = pRowIx - 1;
                 }
-                if (colArgWasEmpty)
+                if(colArgWasEmpty)
                 {
                     columnIx = 0;
                 }
@@ -251,7 +251,7 @@ namespace NPOI.SS.Formula.Functions
             else
             {
                 // ae Is an area (not single row or column)
-                if (!colArgWasPassed)
+                if(!colArgWasPassed)
                 {
                     // always an error with 2-D area refs
                     // Note - the type of error Changes if the pRowArg is negative
@@ -259,7 +259,7 @@ namespace NPOI.SS.Formula.Functions
                 }
                 // Normal case - area ref Is 2-D, and both index args were provided
                 // if either arg Is missing (or blank) the logic is similar to OperandResolver.getSingleValue()
-                if (rowArgWasEmpty)
+                if(rowArgWasEmpty)
                 {
                     rowIx = srcRowIx - ae.FirstRow;
                 }
@@ -267,7 +267,7 @@ namespace NPOI.SS.Formula.Functions
                 {
                     rowIx = pRowIx - 1;
                 }
-                if (colArgWasEmpty)
+                if(colArgWasEmpty)
                 {
                     columnIx = srcColIx - ae.FirstColumn;
                 }
@@ -280,12 +280,12 @@ namespace NPOI.SS.Formula.Functions
             int width = ae.Width;
             int height = ae.Height;
             // Slightly irregular logic for bounds checking errors
-            if (!rowArgWasEmpty && rowIx >= height || !colArgWasEmpty && columnIx >= width)
+            if(!rowArgWasEmpty && rowIx >= height || !colArgWasEmpty && columnIx >= width)
             {
                 // high bounds check fail gives #REF! if arg was explicitly passed
                 throw new EvaluationException(ErrorEval.REF_INVALID);
             }
-            if (rowIx < 0 || columnIx < 0 || rowIx >= height || columnIx >= width)
+            if(rowIx < 0 || columnIx < 0 || rowIx >= height || columnIx >= width)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
@@ -302,16 +302,16 @@ namespace NPOI.SS.Formula.Functions
         {
 
             ValueEval ev = OperandResolver.GetSingleValue(arg, srcCellRow, srcCellCol);
-            if (ev == MissingArgEval.instance)
+            if(ev == MissingArgEval.instance)
             {
                 return 0;
             }
-            if (ev == BlankEval.instance)
+            if(ev == BlankEval.instance)
             {
                 return 0;
             }
             int result = OperandResolver.CoerceValueToInt(ev);
-            if (result < 0)
+            if(result < 0)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }

@@ -21,7 +21,8 @@ namespace TestCases.SS.UserModel
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
     using System.IO;
@@ -51,7 +52,7 @@ namespace TestCases.SS.UserModel
             wb.CreateSheet("Sheet1");
             wb.CreateSheet("Sheet2");
             int i = 0;
-            foreach (ISheet sh in wb)
+            foreach(ISheet sh in wb)
             {
                 ClassicAssert.AreEqual("Sheet" + i, sh.SheetName);
                 i++;
@@ -140,7 +141,7 @@ namespace TestCases.SS.UserModel
                 wb.GetSheetAt(0);
                 Assert.Fail("should have thrown exceptiuon due to invalid sheet index");
             }
-            catch (ArgumentException ex)
+            catch(ArgumentException ex)
             {
                 // expected during successful Test
                 // no negative index in the range message
@@ -156,7 +157,7 @@ namespace TestCases.SS.UserModel
             //fetching sheets by name is case-insensitive
             ISheet originalSheet = wb.CreateSheet("Sheet3");
             ISheet fetchedSheet = wb.GetSheet("sheet3");
-            if (fetchedSheet == null)
+            if(fetchedSheet == null)
             {
                 Assert.Fail("Identified bug 44892");
             }
@@ -168,7 +169,7 @@ namespace TestCases.SS.UserModel
                 wb.CreateSheet("sHeeT3");
                 Assert.Fail("should have thrown exceptiuon due to duplicate sheet name");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // expected during successful Test
                 ClassicAssert.AreEqual("The workbook already contains a sheet named 'sHeeT3'", e.Message);
@@ -178,14 +179,14 @@ namespace TestCases.SS.UserModel
             String[] invalidNames = {"", "Sheet/", "Sheet\\",
                 "Sheet?", "Sheet*", "Sheet[", "Sheet]", "'Sheet'",
                 "My:Sheet"};
-            foreach (String sheetName in invalidNames)
+            foreach(String sheetName in invalidNames)
             {
                 try
                 {
                     wb.CreateSheet(sheetName);
                     Assert.Fail("should have thrown exception due to invalid sheet name: " + sheetName);
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                     // expected during successful Test
                 }
@@ -202,7 +203,7 @@ namespace TestCases.SS.UserModel
                 wb.SetSheetName(1, "[I'm invalid]");
                 Assert.Fail("should have thrown exceptiuon due to invalid sheet name");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected during successful Test
             }
@@ -213,7 +214,7 @@ namespace TestCases.SS.UserModel
                 wb.CreateSheet(null);
                 Assert.Fail("should have thrown exceptiuon due to invalid sheet name");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected during successful Test
             }
@@ -224,7 +225,7 @@ namespace TestCases.SS.UserModel
 
                 Assert.Fail("should have thrown exceptiuon due to invalid sheet name");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected during successful Test
             }
@@ -268,18 +269,18 @@ namespace TestCases.SS.UserModel
                 ISheet sh1 = wb1.CreateSheet(sheetName1);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException ex)
+            catch(ArgumentException ex)
             {
                 ClassicAssert.IsTrue(ex.Message.StartsWith("sheetName 'My very long sheet name which is longer than 31 chars' is invalid"));
             }
             try
             {
-                 wb1.CreateSheet("test");
+                wb1.CreateSheet("test");
                 // now via wb.SetSheetName
                 wb1.SetSheetName(0, sheetName1);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException ex)
+            catch(ArgumentException ex)
             {
                 ClassicAssert.IsTrue(ex.Message.StartsWith("sheetName 'My very long sheet name which is longer than 31 chars' is invalid"));
             }
@@ -802,7 +803,7 @@ namespace TestCases.SS.UserModel
 
             ISheet sheet = wb.GetSheetAt(0);
 
-            for (int rownum = 1; rownum <= 40; rownum++)
+            for(int rownum = 1; rownum <= 40; rownum++)
             {
                 ICell cellA = sheet.GetRow(1).GetCell(0);
                 ICell cellB = sheet.GetRow(1).GetCell(1);
@@ -813,7 +814,7 @@ namespace TestCases.SS.UserModel
             wb.SetSheetName(0, "Renamed by POI");
             Evaluator.ClearAllCachedResultValues();
 
-            for (int rownum = 1; rownum <= 40; rownum++)
+            for(int rownum = 1; rownum <= 40; rownum++)
             {
                 ICell cellA = sheet.GetRow(1).GetCell(0);
                 ICell cellB = sheet.GetRow(1).GetCell(1);
@@ -826,26 +827,26 @@ namespace TestCases.SS.UserModel
         protected void assertSheetOrder(IWorkbook wb, params String[] sheets)
         {
             StringBuilder sheetNames = new StringBuilder();
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 sheetNames.Append(wb.GetSheetAt(i).SheetName).Append(",");
             }
             ClassicAssert.AreEqual(sheets.Length, wb.NumberOfSheets, "Had: " + sheetNames.ToString());
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 ClassicAssert.AreEqual(sheets[i], wb.GetSheetAt(i).SheetName, "Had: " + sheetNames.ToString());
             }
         }
 
 
-        
+
 
         [Test]
         public void Test58499()
         {
             IWorkbook workbook = _testDataProvider.CreateWorkbook();
             ISheet sheet = workbook.CreateSheet();
-            for (int i = 0; i < 900; i++)
+            for(int i = 0; i < 900; i++)
             {
                 IRow r = sheet.CreateRow(i);
                 ICell c = r.CreateCell(0);
@@ -876,7 +877,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.AreEqual(b.ActiveSheetIndex, 0);
                 ClassicAssert.AreEqual(b.FirstVisibleTab, 0);
             }
-            catch (NullReferenceException)
+            catch(NullReferenceException)
             {
                 Assert.Fail("WindowOneRecord in Workbook is probably not initialized");
             }
@@ -899,7 +900,8 @@ namespace TestCases.SS.UserModel
             wb.Close();
         }
 
-        protected static void assertCloseDoesNotModifyFile(String filename, IWorkbook wb) {
+        protected static void assertCloseDoesNotModifyFile(String filename, IWorkbook wb)
+        {
             byte[] before = HSSFTestDataSamples.GetTestDataFileContent(filename);
             wb.Close();
             byte[] after = HSSFTestDataSamples.GetTestDataFileContent(filename);
@@ -959,7 +961,7 @@ namespace TestCases.SS.UserModel
                 wb.CreateSheet("Sheet1");
                 Assert.Fail("Should Assert.Fail if we add the same sheet twice");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("already contains a sheet named 'Sheet1'"), e.Message);
             }
@@ -1011,7 +1013,7 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(1114425, anchor.Dx2); //HSSF: 171
 
             bool WriteOut = false;
-            if (WriteOut)
+            if(WriteOut)
             {
                 string ext = "." + _testDataProvider.StandardFileNameExtension;
                 string prefix = wb.GetType().Name + "-CreateDrawing";

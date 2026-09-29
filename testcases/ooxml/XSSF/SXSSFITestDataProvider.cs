@@ -19,13 +19,13 @@
 
 namespace NPOI.XSSF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
     using NPOI.SS;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.Streaming;
     using NPOI.XSSF.UserModel;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
     using TestCases;
     using TestCases.SS;
 
@@ -58,7 +58,7 @@ namespace NPOI.XSSF
             // wb is usually an SXSSFWorkbook, but must also work on an XSSFWorkbook
             // since workbooks must be able to be written out and read back
             // several times in succession
-            if (!(wb is SXSSFWorkbook || wb is XSSFWorkbook))
+            if(!(wb is SXSSFWorkbook || wb is XSSFWorkbook))
             {
                 throw new ArgumentException("Expected an instance of XSSFWorkbook or SXSSFWorkbook");
             }
@@ -74,7 +74,7 @@ namespace NPOI.XSSF
                     }
                 }
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new Exception(e.Message, e);
             }
@@ -96,12 +96,12 @@ namespace NPOI.XSSF
         }
         public void TrackAllColumnsForAutosizing(ISheet sheet)
         {
-            ((SXSSFSheet)sheet).TrackAllColumnsForAutoSizing();
+            ((SXSSFSheet) sheet).TrackAllColumnsForAutoSizing();
         }
         //************ End SXSSF-specific methods ***************//
         public IFormulaEvaluator CreateFormulaEvaluator(IWorkbook wb)
         {
-            return new XSSFFormulaEvaluator(((SXSSFWorkbook)wb).XssfWorkbook);
+            return new XSSFFormulaEvaluator(((SXSSFWorkbook) wb).XssfWorkbook);
         }
 
         public byte[] GetTestDataFileContent(String fileName)
@@ -125,7 +125,7 @@ namespace NPOI.XSSF
         public bool Cleanup()
         {
             bool ok = true;
-            for (int i = 0; i < instances.Count; i++)
+            for(int i = 0; i < instances.Count; i++)
             {
                 SXSSFWorkbook wb = instances[(i)];
                 ok = ok && wb.Dispose();

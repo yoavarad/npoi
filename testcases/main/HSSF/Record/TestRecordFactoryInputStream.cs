@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Crypto;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link RecordFactoryInputStream}
@@ -80,10 +81,10 @@ namespace TestCases.HSSF.Record
                 rfis = CreateRFIS(dataWrongDefault);
                 throw new AssertionException("Expected password mismatch error");
             }
-            catch (EncryptedDocumentException e)
+            catch(EncryptedDocumentException e)
             {
                 // expected during successful Test
-                if (!e.Message.Equals("Default password is invalid for salt/verifier/verifierHash"))
+                if(!e.Message.Equals("Default password is invalid for salt/verifier/verifierHash"))
                 {
                     throw e;
                 }
@@ -125,10 +126,10 @@ namespace TestCases.HSSF.Record
                 rfis = CreateRFIS(dataWrongDefault);
                 throw new AssertionException("Expected password mismatch error");
             }
-            catch (EncryptedDocumentException e)
+            catch(EncryptedDocumentException e)
             {
                 // expected during successful Test
-                if (!e.Message.Equals("Supplied password is invalid for salt/verifier/verifierHash"))
+                if(!e.Message.Equals("Supplied password is invalid for salt/verifier/verifierHash"))
                 {
                     throw e;
                 }

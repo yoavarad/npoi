@@ -17,9 +17,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -49,7 +49,7 @@ namespace NPOI.HSSF.Record
 
         public DVALRecord()
         {
-            field_cbo_id = unchecked((int)0xFFFFFFFF);
+            field_cbo_id = unchecked((int) 0xFFFFFFFF);
             field_5_dv_no = 0x00000000;
         }
 
@@ -87,7 +87,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_2_horiz_pos;
             }
-            set 
+            set
             {
                 this.field_2_horiz_pos = value;
             }
@@ -102,7 +102,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_3_vert_pos;
             }
-            set 
+            set
             {
                 this.field_3_vert_pos = value;
             }
@@ -117,7 +117,7 @@ namespace NPOI.HSSF.Record
             {
                 return this.field_cbo_id;
             }
-            set 
+            set
             {
                 this.field_cbo_id = value;
             }
@@ -132,7 +132,7 @@ namespace NPOI.HSSF.Record
             {
                 return this.field_5_dv_no;
             }
-            set 
+            set
             {
                 this.field_5_dv_no = value;
             }
@@ -155,11 +155,11 @@ namespace NPOI.HSSF.Record
 
         public override void Serialize(ILittleEndianOutput out1)
         {
-		    out1.WriteShort(Options);
-		    out1.WriteInt(HorizontalPos);
-		    out1.WriteInt(VerticalPos);
-		    out1.WriteInt(ObjectID);
-		    out1.WriteInt(DVRecNo);
+            out1.WriteShort(Options);
+            out1.WriteInt(HorizontalPos);
+            out1.WriteInt(VerticalPos);
+            out1.WriteInt(ObjectID);
+            out1.WriteInt(DVRecNo);
         }
 
         protected override int DataSize

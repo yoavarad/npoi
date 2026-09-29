@@ -51,11 +51,14 @@ namespace NPOI.SS.UserModel
 
         public static FontScheme ValueOf(int value)
         {
-            switch (value)
+            switch(value)
             {
-                case 1: return NONE;
-                case 2: return MAJOR;
-                case 3: return MINOR;
+                case 1:
+                    return NONE;
+                case 2:
+                    return MAJOR;
+                case 3:
+                    return MINOR;
             }
             return NONE;
         }

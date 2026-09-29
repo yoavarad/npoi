@@ -27,16 +27,15 @@
 
 
 
-using System;
-using System.Collections;
-using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
 using NPOI.POIFS.FileSystem;
 using NPOI.POIFS.Properties;
 using NPOI.POIFS.Storage;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 /**
 * Class to Test DirectoryNode functionality
 *
@@ -85,7 +84,7 @@ namespace TestCases.POIFS.FileSystem
             int count = 0;
             IEnumerator<Entry> iter = node.Entries;
 
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 count++;
             }
@@ -103,7 +102,7 @@ namespace TestCases.POIFS.FileSystem
                 node.GetEntry("foo");
                 Assert.Fail("Should have caught FileNotFoundException");
             }
-            catch (FileNotFoundException )
+            catch(FileNotFoundException)
             {
 
                 // as expected
@@ -142,7 +141,7 @@ namespace TestCases.POIFS.FileSystem
             int count = 0;
             IEnumerator<Entry> iter = node.Entries;
 
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 count++;
                 //iter.Current;
@@ -165,7 +164,7 @@ namespace TestCases.POIFS.FileSystem
                 node.GetEntry("child3");
                 Assert.Fail("Should have caught FileNotFoundException");
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
 
                 // as expected

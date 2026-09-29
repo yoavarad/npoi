@@ -27,9 +27,9 @@
 
 namespace NPOI.HPSF
 {
+    using NPOI.Util;
     using System;
     using System.IO;
-    using NPOI.Util;
 
     /// <summary>
     /// Class for writing little-endian data and more.

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.Model;
 using System;
@@ -30,7 +30,8 @@ namespace NPOI.OOXML.XSSF.UserModel
         public bool IsShowColumnStripes
         {
             get { return columnStripes; }
-            set {
+            set
+            {
                 this.columnStripes = value;
                 styleInfo.showColumnStripes=value;
             }
@@ -39,7 +40,8 @@ namespace NPOI.OOXML.XSSF.UserModel
         public bool IsShowRowStripes
         {
             get { return rowStripes; }
-            set {
+            set
+            {
                 this.rowStripes = value;
                 styleInfo.showRowStripes = value;
             }
@@ -58,7 +60,8 @@ namespace NPOI.OOXML.XSSF.UserModel
         public bool IsShowLastColumn
         {
             get { return lastColumn; }
-            set {
+            set
+            {
                 this.lastColumn = value;
                 styleInfo.showLastColumn = value;
             }
@@ -67,7 +70,8 @@ namespace NPOI.OOXML.XSSF.UserModel
         public string Name
         {
             get { return style.Name; }
-            set {
+            set
+            {
                 styleInfo.name = value;
                 style = stylesTable.GetTableStyle(value);
             }

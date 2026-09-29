@@ -18,10 +18,11 @@
 namespace TestCases.HSSF.Record
 {
 
-    using System;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the NoteRecord
@@ -61,10 +62,10 @@ namespace TestCases.HSSF.Record
             NoteRecord record = new NoteRecord();
             ClassicAssert.AreEqual(NoteRecord.sid, record.Sid);
 
-            record.Row = ((short)6);
-            record.Column = ((short)1);
+            record.Row = ((short) 6);
+            record.Column = ((short) 1);
             record.Flags = (NoteRecord.NOTE_VISIBLE);
-            record.ShapeId = ((short)1026);
+            record.ShapeId = ((short) 1026);
             record.Author = ("Apache Software Foundation");
 
             byte[] ser = record.Serialize();
@@ -75,10 +76,10 @@ namespace TestCases.HSSF.Record
         {
             NoteRecord record = new NoteRecord();
 
-            record.Row = ((short)1);
-            record.Column = ((short)2);
+            record.Row = ((short) 1);
+            record.Column = ((short) 2);
             record.Flags = (NoteRecord.NOTE_VISIBLE);
-            record.ShapeId = ((short)1026);
+            record.ShapeId = ((short) 1026);
             record.Author = ("Apache Software Foundation");
 
             NoteRecord cloned = (NoteRecord)record.Clone();
@@ -106,7 +107,7 @@ namespace TestCases.HSSF.Record
                     );
             RecordInputStream in1 = TestcaseRecordInputStream.Create(NoteRecord.sid, data);
             NoteRecord nr = new NoteRecord(in1);
-            if ("\u00A2\u0030\u00D1\u0030\u00C3".Equals(nr.Author))
+            if("\u00A2\u0030\u00D1\u0030\u00C3".Equals(nr.Author))
             {
                 throw new AssertionException("Identified bug in reading note with unicode author");
             }

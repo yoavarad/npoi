@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -19,8 +19,8 @@
 
 namespace NPOI.XDDF.UserModel.Chart
 {
-    using NPOI.XDDF.UserModel.Text;
     using NPOI.OpenXmlFormats.Dml.Chart;
+    using NPOI.XDDF.UserModel.Text;
     /// <summary>
     /// </summary>
     /// <remarks>

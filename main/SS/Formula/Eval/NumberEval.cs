@@ -20,9 +20,9 @@
  */
 namespace NPOI.SS.Formula.Eval
 {
-    using System;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
+    using System;
     using System.Globalization;
     using System.Text;
 
@@ -41,11 +41,11 @@ namespace NPOI.SS.Formula.Eval
 
         public NumberEval(Ptg ptg)
         {
-            if (ptg is IntPtg intPtg)
+            if(ptg is IntPtg intPtg)
             {
                 this._value = intPtg.Value;
             }
-            else if (ptg is NumberPtg numberPtg)
+            else if(ptg is NumberPtg numberPtg)
             {
                 this._value = numberPtg.Value;
             }
@@ -65,7 +65,7 @@ namespace NPOI.SS.Formula.Eval
         {
             get
             {// TODO: limit to 15 decimal places
-                if (_stringValue == null)
+                if(_stringValue == null)
                     //MakeString();
                     _stringValue = NumberToTextConverter.ToText(_value);
                 return _stringValue;
@@ -74,10 +74,10 @@ namespace NPOI.SS.Formula.Eval
 
         protected void MakeString()
         {
-            if (!double.IsNaN(_value))
+            if(!double.IsNaN(_value))
             {
                 double lvalue = Math.Round(_value);
-                if (lvalue == _value)
+                if(lvalue == _value)
                 {
                     _stringValue = lvalue.ToString(CultureInfo.CurrentCulture);
                 }

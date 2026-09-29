@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -32,7 +32,7 @@ namespace NPOI.Util
 {
     using System;
     using System.IO;
-    
+
     /// <summary>
     /// CRC Verification
     /// </summary>
@@ -51,12 +51,12 @@ namespace NPOI.Util
             ulong dwCrc;
             crc32Table = new ulong[256];
             int i, j;
-            for (i = 0; i < 256; i++)
+            for(i = 0; i < 256; i++)
             {
-                dwCrc = (ulong)i;
-                for (j = 8; j > 0; j--)
+                dwCrc = (ulong) i;
+                for(j = 8; j > 0; j--)
                 {
-                    if ((dwCrc & 1) == 1)
+                    if((dwCrc & 1) == 1)
                         dwCrc = (dwCrc >> 1) ^ ulPolynomial;
                     else
                         dwCrc >>= 1;
@@ -74,8 +74,8 @@ namespace NPOI.Util
         {
             ulong ulCRC = 0xffffffff;
             ulong len;
-            len = (ulong)buffer.Length;
-            for (ulong buffptr = 0; buffptr < len; buffptr++)
+            len = (ulong) buffer.Length;
+            for(ulong buffptr = 0; buffptr < len; buffptr++)
             {
                 ulong tabPtr = ulCRC & 0xFF;
                 tabPtr = tabPtr ^ buffer[buffptr];
@@ -104,12 +104,12 @@ namespace NPOI.Util
         /// <returns></returns>
         public long FileCRC(string sInputFilename)
         {
-            using (FileStream inFile = new System.IO.FileStream(sInputFilename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+            using(FileStream inFile = new System.IO.FileStream(sInputFilename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
                 byte[] bInput = new byte[inFile.Length];
                 inFile.Read(bInput, 0, bInput.Length);
 
-                return (long)ByteCRC(ref bInput);
+                return (long) ByteCRC(ref bInput);
             }
         }
 
@@ -124,7 +124,7 @@ namespace NPOI.Util
             inFile.Read(bInput, 0, bInput.Length);
             inFile.Close();
 
-            return (long)ByteCRC(ref bInput);
+            return (long) ByteCRC(ref bInput);
         }
 
         public ulong Value { get; set; }

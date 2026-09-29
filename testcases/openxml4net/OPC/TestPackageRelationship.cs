@@ -1,14 +1,15 @@
-﻿
-using System;
-using System.IO;
+
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXml4Net.OPC.Internal;
 using NPOI.XWPF.UserModel;
+using System;
+using System.IO;
 using TestCases.OpenXml4Net;
 
 namespace TestCases.OPC
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class TestPackageRelationship
@@ -19,11 +20,11 @@ namespace TestCases.OPC
             FileInfo targetFile = OpenXml4NetTestDataSamples.GetOutputFile("TestOpenPackageTMP.docx");
 
             FileInfo inputFile = OpenXml4NetTestDataSamples.GetSampleFile("TestOpenPackageINPUT.docx");
-            
-            
+
+
             // Copy the input file in the output directory
             FileHelper.CopyFile(inputFile.FullName, targetFile.FullName);
-            
+
 
             // Create a namespace
             OPCPackage pkg = OPCPackage.OpenOrCreate(targetFile.FullName);
@@ -34,7 +35,7 @@ namespace TestCases.OPC
 
             var hashCode = relationShip.GetHashCode();
             ClassicAssert.NotZero(hashCode);
-            
+
             pkg.Close();
             File.Delete(targetFile.FullName);
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace TestCases.SS.UserModel
 {
-    using NPOI.Util;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.Globalization;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System.Globalization;
 
     [TestFixture]
     public class TestExcelStyleDateFormatter
@@ -75,21 +76,21 @@ namespace TestCases.SS.UserModel
             // We have to Set up dates as well.
             List<DateTime> testDates = new();
             Array.ForEach(dates, (s) => testDates.Add(DateTime.Parse(s)));
-            
+
 
             // Let's iterate over the test Setup.
-            foreach (CultureInfo locale in testMap.Keys)
+            foreach(CultureInfo locale in testMap.Keys)
             {
                 //System.err.Println("Locale: " + locale);
                 ExcelStyleDateFormatter formatter = new ExcelStyleDateFormatter(EXCEL_DATE_FORMAT, locale.DateTimeFormat);
-                for (int i = 0; i < 12; i++)
+                for(int i = 0; i < 12; i++)
                 {
                     // Call the method to be tested!
                     String result =
                             formatter.Format(testDates[i],
                                     new StringBuilder(),
                                     locale).ToString();
-                                    //new FieldPosition(java.text.DateFormat.MONTH_FIELD)).ToString();
+                    //new FieldPosition(java.text.DateFormat.MONTH_FIELD)).ToString();
                     //System.err.Println(result +  " - " + GetUnicode(result[0]));
                     ClassicAssert.AreEqual(GetUnicode(testMap[locale][i]), GetUnicode(result[0]),
                         "current culture:"+ locale.ToString() + ", date="+ testDates[i]);

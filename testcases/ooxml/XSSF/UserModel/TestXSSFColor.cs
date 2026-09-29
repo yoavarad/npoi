@@ -20,7 +20,8 @@ namespace TestCases.XSSF.UserModel
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class TestXSSFColor
@@ -107,9 +108,9 @@ namespace TestCases.XSSF.UserModel
             // 255 * (1 + tint) = 165 truncated
             // or (byte) -91 (which is 165 - 256)
             ClassicAssert.AreEqual(3, rgb3.GetRgbWithTint().Length);
-            ClassicAssert.AreEqual(-91, (sbyte)rgb3.GetRgbWithTint()[0]);
-            ClassicAssert.AreEqual(-91, (sbyte)rgb3.GetRgbWithTint()[1]);
-            ClassicAssert.AreEqual(-91, (sbyte)rgb3.GetRgbWithTint()[2]);
+            ClassicAssert.AreEqual(-91, (sbyte) rgb3.GetRgbWithTint()[0]);
+            ClassicAssert.AreEqual(-91, (sbyte) rgb3.GetRgbWithTint()[1]);
+            ClassicAssert.AreEqual(-91, (sbyte) rgb3.GetRgbWithTint()[2]);
 
             // Set the colour to black, will Get translated internally
             // (Excel stores 3 colour white and black wrong!)

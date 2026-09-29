@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.Util;
     using NPOI.SS.Formula.Function;
+    using NPOI.Util;
+    using System;
 
 
     /**
@@ -61,7 +61,7 @@ namespace NPOI.SS.Formula.PTG
         private static FuncVarPtg Create(int numArgs, int functionIndex)
         {
             FunctionMetadata fm = FunctionMetadataRegistry.GetFunctionByIndex(functionIndex);
-            if (fm == null)
+            if(fm == null)
             {
                 // Happens only as a result of a call to FormulaParser.parse(), with a non-built-in function name
                 return new FuncVarPtg(functionIndex, Ptg.CLASS_VALUE, new byte[] { Ptg.CLASS_VALUE }, numArgs);

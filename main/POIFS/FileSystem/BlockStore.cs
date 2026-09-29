@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -18,9 +18,9 @@
 
 namespace NPOI.POIFS.FileSystem
 {
-    using System;
     using NPOI.POIFS.Storage;
     using NPOI.Util;
+    using System;
 
     /// <summary>
     /// This abstract class describes a way to read, store, chain
@@ -109,7 +109,7 @@ namespace NPOI.POIFS.FileSystem
             this.blockStore = blockStore;
             int blkSize = blockStore.GetBlockStoreBlockSize();
             int numBlocks = (int)(rawSize / blkSize);
-            if ((rawSize % blkSize) != 0)
+            if((rawSize % blkSize) != 0)
             {
                 numBlocks++;
             }
@@ -118,7 +118,7 @@ namespace NPOI.POIFS.FileSystem
 
         public void Claim(int offset)
         {
-            if (offset >= used_blocks.Length)
+            if(offset >= used_blocks.Length)
             {
                 // They're writing, and have had new blocks requested
                 //  for the write to proceed. That means they're into
@@ -127,7 +127,7 @@ namespace NPOI.POIFS.FileSystem
             }
 
             // Claiming an existing block, ensure there's no loop
-            if (used_blocks[offset])
+            if(used_blocks[offset])
             {
                 throw new InvalidOperationException(
                       "Potential loop detected - Block " + offset +

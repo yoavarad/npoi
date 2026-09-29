@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.XSSF.UserModel.Helpers;
 using System;
 using System.Collections.Generic;
@@ -24,13 +24,15 @@ namespace NPOI.XSSF.UserModel
         {
             return table;
         }
-        public long Id { 
-            get {
+        public long Id
+        {
+            get
+            {
                 return ctTableColumn.id;
             }
-            set 
+            set
             {
-                ctTableColumn.id = (uint)value;
+                ctTableColumn.id = (uint) value;
             }
         }
         public string Name
@@ -40,10 +42,10 @@ namespace NPOI.XSSF.UserModel
         }
         public XSSFXmlColumnPr GetXmlColumnPr()
         {
-            if (xmlColumnPr == null)
+            if(xmlColumnPr == null)
             {
                 CT_XmlColumnPr ctXmlColumnPr = ctTableColumn.xmlColumnPr;
-                if (ctXmlColumnPr != null)
+                if(ctXmlColumnPr != null)
                 {
                     xmlColumnPr = new XSSFXmlColumnPr(this, ctXmlColumnPr);
                 }

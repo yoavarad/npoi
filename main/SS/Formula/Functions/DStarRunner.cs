@@ -17,12 +17,12 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using System.Text.RegularExpressions;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text.RegularExpressions;
 
     /**
      * This class performs a D* calculation. It takes an {@link IDStarAlgorithm} object and
@@ -57,7 +57,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length == 3)
+            if(args.Length == 3)
             {
                 return Evaluate(srcRowIndex, srcColumnIndex, args[0], args[1], args[2]);
             }
@@ -71,7 +71,7 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval database, ValueEval filterColumn, ValueEval conditionDatabase)
         {
             // Input Processing and error Checks.
-            if (database is not AreaEval db || conditionDatabase is not AreaEval cdb)
+            if(database is not AreaEval db || conditionDatabase is not AreaEval cdb)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -124,7 +124,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 filterColumn = OperandResolver.GetSingleValue(filterColumn, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -140,41 +140,41 @@ namespace NPOI.SS.Formula.Functions
                 else
                     fc = GetColumnForName(filterColumn, db);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            if (fc == -1 && !algorithm.AllowEmptyMatchField)
+            if(fc == -1 && !algorithm.AllowEmptyMatchField)
             { // column not found
                 return ErrorEval.VALUE_INVALID;
             }
 
-            
+
 
             // Iterate over all db entries.
             int height = db.Height;
-            for (int row = 1; row < height; ++row)
+            for(int row = 1; row < height; ++row)
             {
                 bool matches = true;
                 try
                 {
                     matches = FullFillsConditions(db, row, cdb);
                 }
-                catch (EvaluationException)
+                catch(EvaluationException)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 // Filter each entry.
-                if (matches)
+                if(matches)
                 {
                     ValueEval currentValueEval = ResolveReference(db, row, fc);
-                    if(fc < 0 && algorithm.AllowEmptyMatchField && currentValueEval is not NumericValueEval) 
+                    if(fc < 0 && algorithm.AllowEmptyMatchField && currentValueEval is not NumericValueEval)
                     {
                         currentValueEval = NumberEval.ZERO;
                     }
                     // Pass the match to the algorithm and conditionally abort the search.
                     bool shouldContinue = algorithm.ProcessMatch(currentValueEval);
-                    if (!shouldContinue)
+                    if(!shouldContinue)
                     {
                         break;
                     }
@@ -221,19 +221,19 @@ namespace NPOI.SS.Formula.Functions
         {
             int resultColumn = -1;
             int width = db.Width;
-            for (int column = 0; column < width; ++column)
+            for(int column = 0; column < width; ++column)
             {
                 ValueEval columnNameValueEval = ResolveReference(db, 0, column);
-                if (columnNameValueEval is BlankEval)
+                if(columnNameValueEval is BlankEval)
                 {
                     continue;
                 }
-                if (columnNameValueEval is ErrorEval)
+                if(columnNameValueEval is ErrorEval)
                 {
                     continue;
                 }
                 String columnName = OperandResolver.CoerceValueToString(columnNameValueEval);
-                if (name.Equals(columnName, StringComparison.OrdinalIgnoreCase))
+                if(name.Equals(columnName, StringComparison.OrdinalIgnoreCase))
                 {
                     resultColumn = column;
                     break;
@@ -258,12 +258,12 @@ namespace NPOI.SS.Formula.Functions
             // Each row is made up of cells where each cell is a condition,
             // all have to match, so they are ANDed.
             int height = cdb.Height;
-            for (int conditionRow = 1; conditionRow < height; ++conditionRow)
+            for(int conditionRow = 1; conditionRow < height; ++conditionRow)
             {
                 bool matches = true;
                 int width = cdb.Width;
-                for (int column = 0; column < width; ++column)  // columns are ANDed
-                { 
+                for(int column = 0; column < width; ++column)  // columns are ANDed
+                {
                     // Whether the condition column matches a database column, if not it's a
                     // special column that accepts formulas.
                     bool columnCondition = true;
@@ -273,26 +273,26 @@ namespace NPOI.SS.Formula.Functions
                     condition = ResolveReference(cdb, conditionRow, column);
 
                     // If the condition is empty it matches.
-                    if (condition is BlankEval)
+                    if(condition is BlankEval)
                         continue;
                     // The column in the DB to apply the condition to.
                     ValueEval targetHeader = ResolveReference(cdb, 0, column);
 
-                    if (targetHeader is not StringValueEval)
+                    if(targetHeader is not StringValueEval)
                     {
                         throw new EvaluationException(ErrorEval.VALUE_INVALID);
                     }
-                        
-                    if (GetColumnForName(targetHeader, db) == -1)
+
+                    if(GetColumnForName(targetHeader, db) == -1)
                         // No column found, it's again a special column that accepts formulas.
                         columnCondition = false;
 
-                    if (columnCondition == true)
+                    if(columnCondition == true)
                     { // normal column condition
                         // Should not throw, Checked above.
                         ValueEval value = ResolveReference(db, row, GetColumnForName(targetHeader, db));
-                        if (!testNormalCondition(value, condition))
-                        { 
+                        if(!testNormalCondition(value, condition))
+                        {
                             matches = false;
                             break;
                         }
@@ -300,7 +300,7 @@ namespace NPOI.SS.Formula.Functions
                     else
                     { // It's a special formula condition.
                       // TODO: Check whether the condition cell contains a formula and return #VALUE! if it doesn't.
-                        if (string.IsNullOrEmpty(OperandResolver.CoerceValueToString(condition)))
+                        if(string.IsNullOrEmpty(OperandResolver.CoerceValueToString(condition)))
                         {
                             throw new EvaluationException(ErrorEval.VALUE_INVALID);
                         }
@@ -308,7 +308,7 @@ namespace NPOI.SS.Formula.Functions
                                 "D* function with formula conditions");
                     }
                 }
-                if (matches == true)
+                if(matches == true)
                 {
                     return true;
                 }
@@ -326,10 +326,11 @@ namespace NPOI.SS.Formula.Functions
          */
         private static bool testNormalCondition(ValueEval value, ValueEval condition)
         {
-            if (condition is StringEval eval) {
+            if(condition is StringEval eval)
+            {
                 String conditionString = eval.StringValue;
 
-                if (conditionString.StartsWith('<'))
+                if(conditionString.StartsWith('<'))
                 { // It's a </<= condition.
                     String number = conditionString.Substring(1);
                     if(number.StartsWith('='))
@@ -355,10 +356,10 @@ namespace NPOI.SS.Formula.Functions
                         return testNumericCondition(value, Operator.smallerThan, number);
                     }
                 }
-                else if (conditionString.StartsWith('>'))
+                else if(conditionString.StartsWith('>'))
                 { // It's a >/>= condition.
                     String number = conditionString.Substring(1);
-                    if (number.StartsWith('='))
+                    if(number.StartsWith('='))
                     {
                         number = number.Substring(1);
                         return testNumericCondition(value, Operator.largerEqualThan, number);
@@ -368,17 +369,17 @@ namespace NPOI.SS.Formula.Functions
                         return testNumericCondition(value, Operator.largerThan, number);
                     }
                 }
-                else if (conditionString.StartsWith('='))
+                else if(conditionString.StartsWith('='))
                 { // It's a = condition.
                     String stringOrNumber = conditionString.Substring(1);
 
-                    if (string.IsNullOrEmpty(stringOrNumber))
+                    if(string.IsNullOrEmpty(stringOrNumber))
                     {
                         return value is BlankEval;
                     }
                     // Distinguish between string and number.
                     bool itsANumber = IsNumber(stringOrNumber);
-                    if (itsANumber)
+                    if(itsANumber)
                     {
                         return testNumericCondition(value, Operator.equal, stringOrNumber);
                     }
@@ -389,7 +390,7 @@ namespace NPOI.SS.Formula.Functions
                 }
                 else
                 { // It's a text starts-with condition.
-                    if (string.IsNullOrEmpty(conditionString))
+                    if(string.IsNullOrEmpty(conditionString))
                     {
                         return value is StringEval;
                     }
@@ -410,28 +411,33 @@ namespace NPOI.SS.Formula.Functions
                     }
                 }
             }
-            else if (condition is NumericValueEval valueEval) {
+            else if(condition is NumericValueEval valueEval)
+            {
                 double conditionNumber = valueEval.NumberValue;
                 Double? valueNumber = GetNumberFromValueEval(value);
-                if (valueNumber == null)
+                if(valueNumber == null)
                 {
                     return false;
                 }
 
                 return conditionNumber == valueNumber;
             }
-            else if (condition is ErrorEval errorEval) {
-                if (value is ErrorEval eval1) {
+            else if(condition is ErrorEval errorEval)
+            {
+                if(value is ErrorEval eval1)
+                {
                     return errorEval.ErrorCode == eval1.ErrorCode;
                 }
-                else {
+                else
+                {
                     return false;
                 }
             }
-            else {
+            else
+            {
                 return false;
             }
-            
+
         }
 
         /**
@@ -446,7 +452,7 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval valueEval, Operator op, String condition)
         {
             // Construct double from ValueEval.
-            if (valueEval is not NumericValueEval eval)
+            if(valueEval is not NumericValueEval eval)
                 return false;
             double value = eval.NumberValue;
 
@@ -457,20 +463,20 @@ namespace NPOI.SS.Formula.Functions
                 int intValue = Int32.Parse(condition);
                 conditionValue = intValue;
             }
-            catch (FormatException)
+            catch(FormatException)
             { // It's not an int.
                 try
                 {
                     conditionValue = Double.Parse(condition);
                 }
-                catch (FormatException)
+                catch(FormatException)
                 { // It's not a double.
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
             }
 
             int result = NumberComparer.Compare(value, conditionValue);
-            switch (op)
+            switch(op)
             {
                 case Operator.largerThan:
                     return result > 0;
@@ -512,18 +518,18 @@ namespace NPOI.SS.Formula.Functions
 
         private static Double? GetNumberFromValueEval(ValueEval value)
         {
-            if (value is NumericValueEval eval)
+            if(value is NumericValueEval eval)
             {
                 return eval.NumberValue;
             }
-            else if (value is StringValueEval valueEval)
+            else if(value is StringValueEval valueEval)
             {
                 String stringValue = valueEval.StringValue;
                 try
                 {
                     return Double.Parse(stringValue);
                 }
-                catch (FormatException)
+                catch(FormatException)
                 {
                     return null;
                 }
@@ -547,7 +553,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 return OperandResolver.GetSingleValue(db.GetValue(dbRow, dbCol), db.FirstRow + dbRow, db.FirstColumn + dbCol);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

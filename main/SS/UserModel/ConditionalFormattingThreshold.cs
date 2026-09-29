@@ -30,7 +30,8 @@ namespace NPOI.SS.UserModel
      *  formatting rule, eg which values Get a Green Traffic Light
      *  icon and which Yellow or Red.</p>
      */
-    public interface IConditionalFormattingThreshold {
+    public interface IConditionalFormattingThreshold
+    {
 
 
 
@@ -120,7 +121,7 @@ namespace NPOI.SS.UserModel
         }
         public override bool Equals(object obj)
         {
-            if (obj == null || obj is not RangeType other)
+            if(obj == null || obj is not RangeType other)
             {
                 return false;
             }
@@ -139,16 +140,18 @@ namespace NPOI.SS.UserModel
         }
         public static RangeType ByName(string name)
         {
-            foreach (RangeType t in Values())
+            foreach(RangeType t in Values())
             {
-                if (t.name.Equals(name)) return t;
+                if(t.name.Equals(name))
+                    return t;
             }
             return null;
         }
 
         private RangeType(int id, string name)
         {
-            this.id = id; this.name = name;
+            this.id = id;
+            this.name = name;
         }
     }
 }

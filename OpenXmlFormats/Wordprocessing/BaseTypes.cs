@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,10 +26,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_OnOff Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_OnOff ctObj = new CT_OnOff();
-            if (node.Attributes["w:val"] != null)
+            if(node.Attributes["w:val"] != null)
             {
                 ctObj.valField = XmlHelper.ReadBool(node.Attributes["w:val"]);
             }
@@ -46,7 +46,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             //if true, don't render val attribute
-            if (!this.valField)
+            if(!this.valField)
                 XmlHelper.WriteAttribute(sw, "w:val", this.valField, true);
             sw.Write("/>");
         }
@@ -132,7 +132,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_LongHexNumber Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LongHexNumber ctObj = new CT_LongHexNumber();
             ctObj.val = XmlHelper.ReadBytes(node.Attributes["w:val"]);
@@ -178,7 +178,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private byte[] valField;
         public static CT_ShortHexNumber Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ShortHexNumber ctObj = new CT_ShortHexNumber();
             ctObj.val = XmlHelper.ReadBytes(node.Attributes["w:val"]);
@@ -248,7 +248,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_DecimalNumber Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DecimalNumber ctObj = new CT_DecimalNumber();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
@@ -296,7 +296,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ulong valField;
         public static CT_TwipsMeasure Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TwipsMeasure ctObj = new CT_TwipsMeasure();
             ctObj.val = XmlHelper.ReadULong(node.Attributes["w:val"]);
@@ -340,7 +340,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_SignedTwipsMeasure Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SignedTwipsMeasure ctObj = new CT_SignedTwipsMeasure();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
@@ -414,7 +414,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_HpsMeasure Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_HpsMeasure ctObj = new CT_HpsMeasure();
             ctObj.val = XmlHelper.ReadULong(node.Attributes["w:val"]);
@@ -459,7 +459,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_SignedHpsMeasure Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SignedHpsMeasure ctObj = new CT_SignedHpsMeasure();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
@@ -521,7 +521,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_MacroName Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MacroName ctObj = new CT_MacroName();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
@@ -546,7 +546,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_String Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_String ctObj = new CT_String();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
@@ -591,7 +591,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_Lang Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Lang ctObj = new CT_Lang();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);

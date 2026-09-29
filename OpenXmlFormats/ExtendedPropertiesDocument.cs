@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -56,7 +56,7 @@ namespace NPOI.OpenXmlFormats
 
         public override string ToString()
         {
-            using (StringWriter stringWriter = new StringWriter())
+            using(StringWriter stringWriter = new StringWriter())
             {
                 serializer.Serialize(stringWriter, _props);
                 return stringWriter.ToString();

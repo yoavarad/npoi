@@ -17,16 +17,17 @@
 
 namespace TestCases.HSSF.Model
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.UDF;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF.UserModel;
-    using NPOI.HSSF.Model;
 
     /**
      * Unit test for the Workbook class.
@@ -97,7 +98,7 @@ namespace TestCases.HSSF.Model
         }
         private class FreeRefFunction1 : FreeRefFunction
         {
-            #region FreeRefFunction ��Ա
+            #region FreeRefFunction ³ÉÔ±
 
             public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
             {

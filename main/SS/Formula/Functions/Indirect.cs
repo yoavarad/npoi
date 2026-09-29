@@ -17,13 +17,12 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using NPOI.SS.Formula.Eval;
-    
     using NPOI.SS.Formula;
-    using System.Text;
+    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Text;
 
     /**
      * Implementation for Excel function INDIRECT<p/>
@@ -53,7 +52,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length < 1)
+            if(args.Length < 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -65,7 +64,7 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve = OperandResolver.GetSingleValue(args[0], ec.RowIndex, ec
                         .ColumnIndex);
                 text = OperandResolver.CoerceValueToString(ve);
-                switch (args.Length)
+                switch(args.Length)
                 {
                     case 1:
                         isA1style = true;
@@ -77,7 +76,7 @@ namespace NPOI.SS.Formula.Functions
                         return ErrorEval.VALUE_INVALID;
                 }
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -89,13 +88,13 @@ namespace NPOI.SS.Formula.Functions
         {
             ValueEval ve = OperandResolver.GetSingleValue(arg, ec.RowIndex, ec.ColumnIndex);
 
-            if (ve == BlankEval.instance || ve == MissingArgEval.instance)
+            if(ve == BlankEval.instance || ve == MissingArgEval.instance)
             {
                 return false;
             }
             // numeric quantities follow standard bool conversion rules
             // for strings, only "TRUE" and "FALSE" (case insensitive) are valid
-            return (bool)OperandResolver.CoerceValueToBoolean(ve, false);
+            return (bool) OperandResolver.CoerceValueToBoolean(ve, false);
         }
 
         private static ValueEval EvaluateIndirect(OperationEvaluationContext ec, String text,
@@ -109,7 +108,7 @@ namespace NPOI.SS.Formula.Functions
             String workbookName;
             String sheetName;
             String refText; // whitespace around this Gets Trimmed OK
-            if (plingPos < 0)
+            if(plingPos < 0)
             {
                 workbookName = null;
                 sheetName = null;
@@ -118,7 +117,7 @@ namespace NPOI.SS.Formula.Functions
             else
             {
                 String[] parts = ParseWorkbookAndSheetName(text.Substring(0, plingPos));
-                if (parts == null)
+                if(parts == null)
                 {
                     return ErrorEval.REF_INVALID;
                 }
@@ -129,14 +128,14 @@ namespace NPOI.SS.Formula.Functions
 
             String refStrPart1;
             String refStrPart2;
-            if (Table.IsStructuredReference.IsMatch(refText))
+            if(Table.IsStructuredReference.IsMatch(refText))
             { // The argument is structured reference
                 Area3DPxg areaPtg = null;
                 try
                 {
-                    areaPtg = FormulaParser.ParseStructuredReference(refText, (IFormulaParsingWorkbook)ec.GetWorkbook(), ec.RowIndex);
+                    areaPtg = FormulaParser.ParseStructuredReference(refText, (IFormulaParsingWorkbook) ec.GetWorkbook(), ec.RowIndex);
                 }
-                catch (FormulaParseException)
+                catch(FormulaParseException)
                 {
                     return ErrorEval.REF_INVALID;
                 }
@@ -145,7 +144,7 @@ namespace NPOI.SS.Formula.Functions
             else
             { // The argumnet is regular reference
                 int colonPos = refText.IndexOf(':');
-                if (colonPos < 0)
+                if(colonPos < 0)
                 {
                     refStrPart1 = refText.Trim();
                     refStrPart2 = null;
@@ -167,43 +166,43 @@ namespace NPOI.SS.Formula.Functions
         private static String[] ParseWorkbookAndSheetName(string text)
         {
             int lastIx = text.Length - 1;
-            if (lastIx < 0)
+            if(lastIx < 0)
             {
                 return null;
             }
-            if (CanTrim(text))
+            if(CanTrim(text))
             {
                 return null;
             }
             char firstChar = text[0];
-            if (Char.IsWhiteSpace(firstChar))
+            if(Char.IsWhiteSpace(firstChar))
             {
                 return null;
             }
-            if (firstChar == '\'')
+            if(firstChar == '\'')
             {
                 // workbookName or sheetName needs quoting
                 // quotes go around both
-                if (text[lastIx] != '\'')
+                if(text[lastIx] != '\'')
                 {
                     return null;
                 }
                 firstChar = text[1];
-                if (Char.IsWhiteSpace(firstChar))
+                if(Char.IsWhiteSpace(firstChar))
                 {
                     return null;
                 }
                 String wbName;
                 int sheetStartPos;
-                if (firstChar == '[')
+                if(firstChar == '[')
                 {
                     int rbPos = text.ToString().LastIndexOf(']');
-                    if (rbPos < 0)
+                    if(rbPos < 0)
                     {
                         return null;
                     }
                     wbName = UnescapeString(text.Substring(2, rbPos - 2));
-                    if (wbName == null || CanTrim(wbName))
+                    if(wbName == null || CanTrim(wbName))
                     {
                         return null;
                     }
@@ -217,7 +216,7 @@ namespace NPOI.SS.Formula.Functions
 
                 // else - just sheet name
                 String sheetName = UnescapeString(text.Substring(sheetStartPos, lastIx - sheetStartPos));
-                if (sheetName == null)
+                if(sheetName == null)
                 { // note - when quoted, sheetName can
                     // start/end with whitespace
                     return null;
@@ -225,20 +224,20 @@ namespace NPOI.SS.Formula.Functions
                 return new String[] { wbName, sheetName, };
             }
 
-            if (firstChar == '[')
+            if(firstChar == '[')
             {
                 int rbPos = text.ToString().LastIndexOf(']');
-                if (rbPos < 0)
+                if(rbPos < 0)
                 {
                     return null;
                 }
                 string wbName = text.Substring(1, rbPos - 1);
-                if (CanTrim(wbName))
+                if(CanTrim(wbName))
                 {
                     return null;
                 }
                 string sheetName = text.Substring(rbPos + 1);
-                if (CanTrim(sheetName))
+                if(CanTrim(sheetName))
                 {
                     return null;
                 }
@@ -257,19 +256,19 @@ namespace NPOI.SS.Formula.Functions
             int len = text.Length;
             StringBuilder sb = new StringBuilder(len);
             int i = 0;
-            while (i < len)
+            while(i < len)
             {
                 char ch = text[i];
-                if (ch == '\'')
+                if(ch == '\'')
                 {
                     // every quote must be followed by another
                     i++;
-                    if (i >= len)
+                    if(i >= len)
                     {
                         return null;
                     }
                     ch = text[i];
-                    if (ch != '\'')
+                    if(ch != '\'')
                     {
                         return null;
                     }
@@ -283,15 +282,15 @@ namespace NPOI.SS.Formula.Functions
         private static bool CanTrim(string text)
         {
             int lastIx = text.Length - 1;
-            if (lastIx < 0)
+            if(lastIx < 0)
             {
                 return false;
             }
-            if (Char.IsWhiteSpace(text[0]))
+            if(Char.IsWhiteSpace(text[0]))
             {
                 return true;
             }
-            if (Char.IsWhiteSpace(text[lastIx]))
+            if(Char.IsWhiteSpace(text[lastIx]))
             {
                 return true;
             }

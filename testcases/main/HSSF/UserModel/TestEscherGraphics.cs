@@ -17,14 +17,13 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
+    using System;
+    using System.IO;
 
 
     /**
@@ -55,9 +54,9 @@ namespace TestCases.HSSF.UserModel
             workbook = new HSSFWorkbook();
 
             ISheet sheet = workbook.CreateSheet("Test");
-            patriarch = (HSSFPatriarch)sheet.CreateDrawingPatriarch();
-            escherGroupA = patriarch.CreateGroup(new HSSFClientAnchor(0, 0, 1022, 255, (short)0, 0, (short)0, 0));
-            escherGroupB = patriarch.CreateGroup(new HSSFClientAnchor(20, 30, 500, 200, (short)0, 0, (short)0, 0));
+            patriarch = (HSSFPatriarch) sheet.CreateDrawingPatriarch();
+            escherGroupA = patriarch.CreateGroup(new HSSFClientAnchor(0, 0, 1022, 255, (short) 0, 0, (short) 0, 0));
+            escherGroupB = patriarch.CreateGroup(new HSSFClientAnchor(20, 30, 500, 200, (short) 0, 0, (short) 0, 0));
             //        escherGroup = new HSSFShapeGroup(null, new HSSFChildAnchor());
             graphics = new EscherGraphics(this.escherGroupA, workbook, SKColors.Black, 1.0f);
 
@@ -135,9 +134,9 @@ namespace TestCases.HSSF.UserModel
             MemoryStream baos = new MemoryStream();
             workbook.Write(baos);
             workbook = new HSSFWorkbook(new MemoryStream(baos.ToArray()));
-            s = (HSSFSheet)workbook.GetSheetAt(0);
+            s = (HSSFSheet) workbook.GetSheetAt(0);
 
-            patriarch = (HSSFPatriarch)s.DrawingPatriarch;
+            patriarch = (HSSFPatriarch) s.DrawingPatriarch;
 
             ClassicAssert.IsNotNull(patriarch);
             ClassicAssert.AreEqual(10, patriarch.X1);
@@ -150,8 +149,8 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(patriarch.Children[0] is HSSFShapeGroup);
             ClassicAssert.IsTrue(patriarch.Children[1] is HSSFShapeGroup);
 
-            s1 = (HSSFShapeGroup)patriarch.Children[0];
-            s2 = (HSSFShapeGroup)patriarch.Children[1];
+            s1 = (HSSFShapeGroup) patriarch.Children[0];
+            s2 = (HSSFShapeGroup) patriarch.Children[1];
 
             ClassicAssert.AreEqual(0, s1.X1);
             ClassicAssert.AreEqual(0, s1.Y1);
@@ -176,8 +175,8 @@ namespace TestCases.HSSF.UserModel
             baos = new MemoryStream();
             workbook.Write(baos);
             workbook = new HSSFWorkbook(new MemoryStream(baos.ToArray()));
-            s = (HSSFSheet)workbook.GetSheetAt(0);
-            patriarch = (HSSFPatriarch)s.DrawingPatriarch;
+            s = (HSSFSheet) workbook.GetSheetAt(0);
+            patriarch = (HSSFPatriarch) s.DrawingPatriarch;
 
             ClassicAssert.IsNotNull(patriarch);
             ClassicAssert.AreEqual(10, patriarch.X1);
@@ -190,8 +189,8 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(patriarch.Children[0] is HSSFShapeGroup);
             ClassicAssert.IsTrue(patriarch.Children[1] is HSSFShapeGroup);
 
-            s1 = (HSSFShapeGroup)patriarch.Children[0];
-            s2 = (HSSFShapeGroup)patriarch.Children[1];
+            s1 = (HSSFShapeGroup) patriarch.Children[0];
+            s2 = (HSSFShapeGroup) patriarch.Children[1];
 
             ClassicAssert.AreEqual(0, s1.X1);
             ClassicAssert.AreEqual(0, s1.Y1);
@@ -218,8 +217,8 @@ namespace TestCases.HSSF.UserModel
             baos = new MemoryStream();
             workbook.Write(baos);
             workbook = new HSSFWorkbook(new MemoryStream(baos.ToArray()));
-            s =(HSSFSheet)workbook.GetSheetAt(0);
-            patriarch = (HSSFPatriarch)s.DrawingPatriarch;
+            s =(HSSFSheet) workbook.GetSheetAt(0);
+            patriarch = (HSSFPatriarch) s.DrawingPatriarch;
 
             ClassicAssert.IsNotNull(patriarch);
             ClassicAssert.AreEqual(10, patriarch.X1);
@@ -233,8 +232,8 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(patriarch.Children[0] is HSSFShapeGroup);
             ClassicAssert.IsTrue(patriarch.Children[1] is HSSFShapeGroup);
 
-            s1 = (HSSFShapeGroup)patriarch.Children[0];
-            s2 = (HSSFShapeGroup)patriarch.Children[1];
+            s1 = (HSSFShapeGroup) patriarch.Children[0];
+            s2 = (HSSFShapeGroup) patriarch.Children[1];
 
             ClassicAssert.AreEqual(2, s1.X1);
             ClassicAssert.AreEqual(3, s1.Y1);
@@ -270,9 +269,9 @@ namespace TestCases.HSSF.UserModel
             baos = new MemoryStream();
             workbook.Write(baos);
             workbook = new HSSFWorkbook(new MemoryStream(baos.ToArray()));
-            s = (HSSFSheet)workbook.GetSheetAt(0);
+            s = (HSSFSheet) workbook.GetSheetAt(0);
 
-            patriarch = (HSSFPatriarch)s.DrawingPatriarch;
+            patriarch = (HSSFPatriarch) s.DrawingPatriarch;
 
             ClassicAssert.IsNotNull(patriarch);
             ClassicAssert.AreEqual(10, patriarch.X1);
@@ -290,12 +289,12 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(patriarch.Children[0] is HSSFShapeGroup);
             ClassicAssert.IsTrue(patriarch.Children[1] is HSSFShapeGroup);
             ClassicAssert.IsTrue(patriarch.Children[2] is HSSFTextbox);
-    
 
-            s1 = (HSSFShapeGroup)patriarch.Children[0];
-            tbox1 = (HSSFTextbox)patriarch.Children[2];
 
-            s2 = (HSSFShapeGroup)patriarch.Children[1];
+            s1 = (HSSFShapeGroup) patriarch.Children[0];
+            tbox1 = (HSSFTextbox) patriarch.Children[2];
+
+            s2 = (HSSFShapeGroup) patriarch.Children[1];
 
             ClassicAssert.AreEqual(2, s1.X1);
             ClassicAssert.AreEqual(3, s1.Y1);

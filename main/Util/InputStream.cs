@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -148,40 +148,40 @@ namespace NPOI.Util
         /// <see cref="Read()"/>
         public override int Read(byte[] b, int off, int len)
         {
-            if (b == null)
+            if(b == null)
             {
                 throw new ArgumentNullException();
             }
-            else if (off < 0 || len < 0 || len > b.Length - off)
+            else if(off < 0 || len < 0 || len > b.Length - off)
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (len == 0)
+            else if(len == 0)
             {
                 return 0;
             }
 
             int c = Read();
-            if (c == -1)
+            if(c == -1)
             {
                 return 0;
             }
-            b[off] = (byte)c;
+            b[off] = (byte) c;
 
             int i = 1;
             try
             {
-                for (; i < len; i++)
+                for(; i < len; i++)
                 {
                     c = Read();
-                    if (c == -1)
+                    if(c == -1)
                     {
                         break;
                     }
-                    b[off + i] = (byte)c;
+                    b[off + i] = (byte) c;
                 }
             }
-            catch (IOException)
+            catch(IOException)
             {
             }
 
@@ -218,17 +218,17 @@ namespace NPOI.Util
             long remaining = n;
             int nr;
 
-            if (n <= 0)
+            if(n <= 0)
             {
                 return 0;
             }
 
             int size = (int)Math.Min(MAX_SKIP_BUFFER_SIZE, remaining);
             byte[] skipBuffer = new byte[size];
-            while (remaining > 0)
+            while(remaining > 0)
             {
-                nr = Read(skipBuffer, 0, (int)Math.Min(size, remaining));
-                if (nr < 0)
+                nr = Read(skipBuffer, 0, (int) Math.Min(size, remaining));
+                if(nr < 0)
                 {
                     break;
                 }

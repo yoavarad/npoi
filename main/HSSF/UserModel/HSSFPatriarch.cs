@@ -17,16 +17,16 @@
 
 namespace NPOI.HSSF.UserModel
 {
+    using NPOI.DDF;
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
+    using NPOI.POIFS.FileSystem;
+    using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NPOI.Util;
     using System;
     using System.Collections;
-    using NPOI.DDF;
-    using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using NPOI.SS.UserModel;
     using System.Collections.Generic;
-    using NPOI.HSSF.Model;
-    using NPOI.SS.Util;
-    using NPOI.POIFS.FileSystem;
     using System.IO;
 
     /// <summary>
@@ -61,7 +61,7 @@ namespace NPOI.HSSF.UserModel
             _mainSpgrContainer = _boundAggregate.GetEscherContainer().ChildContainers[0];
             EscherContainerRecord spContainer = (EscherContainerRecord)_boundAggregate.GetEscherContainer()
                     .ChildContainers[0].GetChild(0);
-            _spgrRecord = (EscherSpgrRecord)spContainer.GetChildById(EscherSpgrRecord.RECORD_ID);
+            _spgrRecord = (EscherSpgrRecord) spContainer.GetChildById(EscherSpgrRecord.RECORD_ID);
             BuildShapeTree();
         }
 
@@ -70,10 +70,10 @@ namespace NPOI.HSSF.UserModel
         {
             HSSFPatriarch newPatriarch = new HSSFPatriarch(sheet, new EscherAggregate(true));
             newPatriarch.AfterCreate();
-            foreach (HSSFShape shape in patriarch.Children)
+            foreach(HSSFShape shape in patriarch.Children)
             {
                 HSSFShape newShape;
-                if (shape is HSSFShapeGroup group)
+                if(shape is HSSFShapeGroup group)
                 {
                     newShape = group.CloneShape(newPatriarch);
                 }
@@ -98,10 +98,10 @@ namespace NPOI.HSSF.UserModel
              * contains coordinates of comments we iterate over
              */
             Hashtable coordinates = new Hashtable(tailRecords.Count);
-            foreach (NoteRecord rec in tailRecords.Values)
+            foreach(NoteRecord rec in tailRecords.Values)
             {
                 String noteRef = new CellReference(rec.Row, rec.Column, true, true).FormatAsString(); // A1-style notation
-                if (coordinates.Contains(noteRef))
+                if(coordinates.Contains(noteRef))
                 {
                     throw new InvalidOperationException("found multiple cell comments for cell " + noteRef);
                 }
@@ -119,7 +119,7 @@ namespace NPOI.HSSF.UserModel
         public bool RemoveShape(HSSFShape shape)
         {
             bool isRemoved = _mainSpgrContainer.RemoveChildRecord(shape.GetEscherContainer());
-            if (isRemoved)
+            if(isRemoved)
             {
                 shape.AfterRemove(this);
                 _shapes.Remove(shape);
@@ -197,7 +197,7 @@ namespace NPOI.HSSF.UserModel
         /// <returns>return newly created shape</returns>
         public IPicture CreatePicture(IClientAnchor anchor, int pictureIndex)
         {
-            return CreatePicture((HSSFClientAnchor)anchor, pictureIndex);
+            return CreatePicture((HSSFClientAnchor) anchor, pictureIndex);
         }
 
 
@@ -220,7 +220,7 @@ namespace NPOI.HSSF.UserModel
             // FtCf (pictFormat) 
             FtCfSubRecord ftCf = new FtCfSubRecord();
             HSSFPictureData pictData = Sheet.Workbook.GetAllPictures()[(pictureIndex - 1)] as HSSFPictureData;
-            switch ((PictureType)pictData.Format)
+            switch((PictureType) pictData.Format)
             {
                 case PictureType.WMF:
                 case PictureType.EMF:
@@ -255,10 +255,11 @@ namespace NPOI.HSSF.UserModel
             try
             {
                 DirectoryNode dn = (_sheet.Workbook as HSSFWorkbook).RootDirectory;
-                if (dn == null) throw new FileNotFoundException();
-                oleRoot = (DirectoryEntry)dn.GetEntry(entryName);
+                if(dn == null)
+                    throw new FileNotFoundException();
+                oleRoot = (DirectoryEntry) dn.GetEntry(entryName);
             }
-            catch (FileNotFoundException e)
+            catch(FileNotFoundException e)
             {
                 throw new InvalidOperationException("trying to add ole shape without actually Adding data first - use HSSFWorkbook.AddOlePackage first", e);
             }
@@ -340,17 +341,17 @@ namespace NPOI.HSSF.UserModel
         /// <returns>the newly created comment.</returns>
         public IComment CreateCellComment(IClientAnchor anchor)
         {
-            return CreateComment((HSSFAnchor)anchor);
+            return CreateComment((HSSFAnchor) anchor);
         }
 
         private static void SetFlipFlags(HSSFShape shape)
         {
             EscherSpRecord sp = (EscherSpRecord)shape.GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID);
-            if ((shape.Anchor as HSSFAnchor).IsHorizontallyFlipped)
+            if((shape.Anchor as HSSFAnchor).IsHorizontallyFlipped)
             {
                 sp.Flags = (sp.Flags | EscherSpRecord.FLAG_FLIPHORIZ);
             }
-            if ((shape.Anchor as HSSFAnchor).IsVerticallyFlipped)
+            if((shape.Anchor as HSSFAnchor).IsVerticallyFlipped)
             {
                 sp.Flags = (sp.Flags | EscherSpRecord.FLAG_FLIPVERT);
             }
@@ -396,7 +397,7 @@ namespace NPOI.HSSF.UserModel
             get
             {
                 int count = _shapes.Count;
-                for (IEnumerator iterator = _shapes.GetEnumerator(); iterator.MoveNext(); )
+                for(IEnumerator iterator = _shapes.GetEnumerator(); iterator.MoveNext();)
                 {
                     HSSFShape shape = (HSSFShape)iterator.Current;
                     count += shape.CountOfAllChildren;
@@ -423,7 +424,7 @@ namespace NPOI.HSSF.UserModel
         public void Clear()
         {
             List<HSSFShape> copy = new List<HSSFShape>(_shapes);
-            foreach (HSSFShape shape in copy)
+            foreach(HSSFShape shape in copy)
             {
                 RemoveShape(shape);
             }
@@ -454,21 +455,21 @@ namespace NPOI.HSSF.UserModel
             // We're looking for a EscherOptRecord
             EscherOptRecord optRecord = (EscherOptRecord)
                 _boundAggregate.FindFirstWithId(EscherOptRecord.RECORD_ID);
-            if (optRecord == null)
+            if(optRecord == null)
             {
                 // No opt record, can't have chart
                 return false;
             }
 
-            for (IEnumerator it = optRecord.EscherProperties.GetEnumerator(); it.MoveNext(); )
+            for(IEnumerator it = optRecord.EscherProperties.GetEnumerator(); it.MoveNext();)
             {
                 EscherProperty prop = (EscherProperty)it.Current;
-                if (prop.PropertyNumber == 896 && prop.IsComplex)
+                if(prop.PropertyNumber == 896 && prop.IsComplex)
                 {
                     EscherComplexProperty cp = (EscherComplexProperty)prop;
                     String str = StringUtil.GetFromUnicodeLE(cp.ComplexData);
                     //Console.Error.WriteLine(str);
-                    if (str.Equals("Chart 1\0"))
+                    if(str.Equals("Chart 1\0"))
                     {
                         return true;
                     }
@@ -538,7 +539,7 @@ namespace NPOI.HSSF.UserModel
          */
         public IClientAnchor CreateAnchor(int dx1, int dy1, int dx2, int dy2, int col1, int row1, int col2, int row2)
         {
-            return new HSSFClientAnchor(dx1, dy1, dx2, dy2, (short)col1, row1, (short)col2, row2);
+            return new HSSFClientAnchor(dx1, dy1, dx2, dy2, (short) col1, row1, (short) col2, row2);
         }
         /**
      * create shape tree from existing escher records tree
@@ -546,19 +547,19 @@ namespace NPOI.HSSF.UserModel
         public void BuildShapeTree()
         {
             EscherContainerRecord dgContainer = _boundAggregate.GetEscherContainer();
-            if (dgContainer == null)
+            if(dgContainer == null)
             {
                 return;
             }
             EscherContainerRecord spgrConrainer = dgContainer.ChildContainers[0];
             IList<EscherContainerRecord> spgrChildren = spgrConrainer.ChildContainers;
 
-            for (int i = 0; i < spgrChildren.Count; i++)
+            for(int i = 0; i < spgrChildren.Count; i++)
             {
                 EscherContainerRecord spContainer = spgrChildren[i];
-                if (i != 0)
+                if(i != 0)
                 {
-                    HSSFShapeFactory.CreateShapeTree(spContainer, _boundAggregate, this, ((HSSFWorkbook)_sheet.Workbook).RootDirectory);
+                    HSSFShapeFactory.CreateShapeTree(spContainer, _boundAggregate, this, ((HSSFWorkbook) _sheet.Workbook).RootDirectory);
                 }
             }
         }

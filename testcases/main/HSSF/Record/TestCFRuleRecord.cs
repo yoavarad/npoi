@@ -17,18 +17,19 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NUnit.Framework.Constraints;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.CF;
-    using NPOI.SS.Formula;
     using NPOI.HSSF.UserModel;
-    using NPOI.HSSF.Model;
     using NPOI.HSSF.Util;
-    using NPOI.Util;
-    using NPOI.SS.UserModel;
+    using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Constraints;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the TestCFRuleRecord
@@ -47,19 +48,19 @@ namespace TestCases.HSSF.Record
 
             CFRuleRecord rule1 = CFRuleRecord.Create((HSSFSheet)sheet, "7");
             ClassicAssert.AreEqual(CFRuleRecord.CONDITION_TYPE_FORMULA, rule1.ConditionType);
-            ClassicAssert.AreEqual((byte)ComparisonOperator.NoComparison, rule1.ComparisonOperation);
+            ClassicAssert.AreEqual((byte) ComparisonOperator.NoComparison, rule1.ComparisonOperation);
             ClassicAssert.IsNotNull(rule1.ParsedExpression1);
             ClassicAssert.AreSame(Ptg.EMPTY_PTG_ARRAY, rule1.ParsedExpression2);
 
             CFRuleRecord rule2 = CFRuleRecord.Create((HSSFSheet)sheet, (byte)ComparisonOperator.Between, "2", "5");
             ClassicAssert.AreEqual(CFRuleRecord.CONDITION_TYPE_CELL_VALUE_IS, rule2.ConditionType);
-            ClassicAssert.AreEqual((byte)ComparisonOperator.Between, rule2.ComparisonOperation);
+            ClassicAssert.AreEqual((byte) ComparisonOperator.Between, rule2.ComparisonOperation);
             ClassicAssert.IsNotNull(rule2.ParsedExpression1);
             ClassicAssert.IsNotNull(rule2.ParsedExpression2);
 
             CFRuleRecord rule3 = CFRuleRecord.Create((HSSFSheet)sheet, (byte)ComparisonOperator.Equal, null, null);
             ClassicAssert.AreEqual(CFRuleRecord.CONDITION_TYPE_CELL_VALUE_IS, rule3.ConditionType);
-            ClassicAssert.AreEqual((byte)ComparisonOperator.Equal, rule3.ComparisonOperation);
+            ClassicAssert.AreEqual((byte) ComparisonOperator.Equal, rule3.ComparisonOperation);
             ClassicAssert.AreSame(Ptg.EMPTY_PTG_ARRAY, rule3.ParsedExpression2);
             ClassicAssert.AreSame(Ptg.EMPTY_PTG_ARRAY, rule3.ParsedExpression2);
         }
@@ -87,7 +88,7 @@ namespace TestCases.HSSF.Record
             // Compare
             ClassicAssert.AreEqual(recordData.Length + 4, output.Length, "Output size"); //includes sid+recordlength
 
-            for (int i = 0; i < recordData.Length; i++)
+            for(int i = 0; i < recordData.Length; i++)
             {
                 ClassicAssert.AreEqual(recordData[i], output[i + 4], "CFRuleRecord doesn't match");
             }
@@ -110,7 +111,7 @@ namespace TestCases.HSSF.Record
             byte[] output = record.Serialize();
             // Compare
             ClassicAssert.AreEqual(recordData.Length + 4, output.Length, "Output size"); //includes sid+recordlength
-            for (int i = 0; i < recordData.Length; i++)
+            for(int i = 0; i < recordData.Length; i++)
             {
                 ClassicAssert.AreEqual(recordData[i], output[i + 4], "CFRule12Record doesn't match");
             }
@@ -122,9 +123,9 @@ namespace TestCases.HSSF.Record
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.CreateSheet() as HSSFSheet;
             CFRule12Record record = CFRule12Record.Create(sheet, IconSet.GREY_5_ARROWS);
-            record.MultiStateFormatting.Thresholds[1].Type = (byte)(RangeType.PERCENT.id);
+            record.MultiStateFormatting.Thresholds[1].Type = (byte) (RangeType.PERCENT.id);
             record.MultiStateFormatting.Thresholds[1].Value = (10d);
-            record.MultiStateFormatting.Thresholds[2].Type = (byte)(RangeType.NUMBER.id);
+            record.MultiStateFormatting.Thresholds[2].Type = (byte) (RangeType.NUMBER.id);
             record.MultiStateFormatting.Thresholds[2].Value = (-4d);
 
             // Check it 
@@ -146,7 +147,7 @@ namespace TestCases.HSSF.Record
             byte[] output = record.Serialize();
             // Compare
             ClassicAssert.AreEqual(recordData.Length + 4, output.Length, "Output size"); //includes sid+recordlength
-            for (int i = 0; i < recordData.Length; i++)
+            for(int i = 0; i < recordData.Length; i++)
             {
                 ClassicAssert.AreEqual(recordData[i], output[i + 4], "CFRule12Record doesn't match");
             }
@@ -156,7 +157,7 @@ namespace TestCases.HSSF.Record
         private void TestCFRuleRecord1(CFRuleRecord record)
         {
             testCFRuleBase(record);
-            
+
 
             ClassicAssert.IsFalse(record.IsLeftBorderModified);
             record.IsLeftBorderModified = (true);
@@ -326,7 +327,7 @@ namespace TestCases.HSSF.Record
             fontFormatting.IsFontCancellationModified = (true);
             ClassicAssert.IsTrue(fontFormatting.IsFontCancellationModified);
 
-            fontFormatting.FontColorIndex = ((short)10);
+            fontFormatting.FontColorIndex = ((short) 10);
             ClassicAssert.AreEqual(10, fontFormatting.FontColorIndex);
 
             fontFormatting.FontHeight = (100);
@@ -376,7 +377,8 @@ namespace TestCases.HSSF.Record
             ClassicAssert.IsTrue(fontFormatting.IsUnderlineTypeModified);
         }
         [Test]
-        public void TestWrite() {
+        public void TestWrite()
+        {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = (HSSFSheet)workbook.CreateSheet();
             CFRuleRecord rr = CFRuleRecord.Create(sheet, (byte)ComparisonOperator.Between, "5", "10");
@@ -391,42 +393,43 @@ namespace TestCases.HSSF.Record
             ClassicAssert.AreEqual(3, LittleEndian.GetShort(data, 8));
 
             int flags = LittleEndian.GetInt(data, 10);
-            ClassicAssert.AreEqual(0x00380000, flags & 0x00380000,"unused flags should be 111");
-            ClassicAssert.AreEqual(0, flags & 0x03C00000,"undocumented flags should be 0000"); // Otherwise Excel s unhappy
+            ClassicAssert.AreEqual(0x00380000, flags & 0x00380000, "unused flags should be 111");
+            ClassicAssert.AreEqual(0, flags & 0x03C00000, "undocumented flags should be 0000"); // Otherwise Excel s unhappy
             // check all remaining flag bits (some are not well understood yet)
             ClassicAssert.AreEqual(0x203FFFFF, flags);
         }
 
         private static byte[] DATA_REFN = {
         // formula extracted from bugzilla 45234 att 22141
-            1, 3, 
+            1, 3,
             9, // formula 1 length 
             0, 0, 0, unchecked((byte)-1), unchecked((byte)-1), 63, 32, 2, unchecked((byte)-128), 0, 0, 0, 5,
             // formula 1: "=B3=1" (formula is relative to B4)
             76, unchecked((byte)-1), unchecked((byte)-1), 0, unchecked((byte)-64), // tRefN(B1)
-            30, 1, 0,	
-            11,	
+            30, 1, 0,
+            11,
         };
 
         /**
          * tRefN and tAreaN tokens must be preserved when re-serializing conditional format formulas
          */
         [Test]
-        public void TestReserializeRefNTokens() 
+        public void TestReserializeRefNTokens()
         {
-            
+
             RecordInputStream is1 = TestcaseRecordInputStream.Create (CFRuleRecord.sid, DATA_REFN);
             CFRuleRecord rr = new CFRuleRecord(is1);
             Ptg[] ptgs = rr.ParsedExpression1;
             ClassicAssert.AreEqual(3, ptgs.Length);
-            if (ptgs[0] is RefPtg) {
+            if(ptgs[0] is RefPtg)
+            {
                 throw new AssertionException("Identified bug 45234");
             }
             ClassicAssert.AreEqual(typeof(RefNPtg), ptgs[0].GetType());
             RefNPtg refNPtg = (RefNPtg) ptgs[0];
             ClassicAssert.IsTrue(refNPtg.IsColRelative);
             ClassicAssert.IsTrue(refNPtg.IsRowRelative);
-                
+
             byte[] data = rr.Serialize();
 
             TestcaseRecordInputStream.ConfirmRecordEncoding(CFRuleRecord.sid, DATA_REFN, data);

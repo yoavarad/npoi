@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -18,8 +18,8 @@
 namespace NPOI.SS.Formula.Functions
 {
     using NPOI.SS.Formula.Eval;
-    using System;
     using NPOI.SS.Util;
+    using System;
     using System.Text;
     /**
      * Creates a text reference as text, given specified row and column numbers.
@@ -36,7 +36,7 @@ namespace NPOI.SS.Formula.Functions
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex,
                                   int srcColumnIndex)
         {
-            if (args.Length < 2 || args.Length > 5)
+            if(args.Length < 2 || args.Length > 5)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -48,15 +48,15 @@ namespace NPOI.SS.Formula.Functions
                 int col = (int)NumericFunction.SingleOperandEvaluate(args[1], srcRowIndex, srcColumnIndex);
 
                 int refType;
-                if (args.Length > 2 && args[2] != MissingArgEval.instance)
+                if(args.Length > 2 && args[2] != MissingArgEval.instance)
                 {
-                    refType = (int)NumericFunction.SingleOperandEvaluate(args[2], srcRowIndex, srcColumnIndex);
+                    refType = (int) NumericFunction.SingleOperandEvaluate(args[2], srcRowIndex, srcColumnIndex);
                 }
                 else
                 {
                     refType = REF_ABSOLUTE; // this is also the default if parameter is not given
                 }
-                switch (refType)
+                switch(refType)
                 {
                     case REF_ABSOLUTE:
                         pAbsRow = true;
@@ -79,7 +79,7 @@ namespace NPOI.SS.Formula.Functions
                 }
 
                 bool a1;
-                if (args.Length > 3)
+                if(args.Length > 3)
                 {
                     ValueEval ve = OperandResolver.GetSingleValue(args[3], srcRowIndex, srcColumnIndex);
                     // TODO R1C1 style is not yet supported
@@ -91,7 +91,7 @@ namespace NPOI.SS.Formula.Functions
                 }
 
                 String sheetName;
-                if (args.Length == 5)
+                if(args.Length == 5)
                 {
                     ValueEval ve = OperandResolver.GetSingleValue(args[4], srcRowIndex, srcColumnIndex);
                     sheetName = ve == MissingArgEval.instance ? null : OperandResolver.CoerceValueToString(ve);
@@ -103,7 +103,7 @@ namespace NPOI.SS.Formula.Functions
 
                 CellReference ref1 = new CellReference(row - 1, col - 1, pAbsRow, pAbsCol);
                 StringBuilder sb = new StringBuilder(32);
-                if (sheetName != null)
+                if(sheetName != null)
                 {
                     SheetNameFormatter.AppendFormat(sb, sheetName);
                     sb.Append('!');
@@ -113,7 +113,7 @@ namespace NPOI.SS.Formula.Functions
                 return new StringEval(sb.ToString());
 
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

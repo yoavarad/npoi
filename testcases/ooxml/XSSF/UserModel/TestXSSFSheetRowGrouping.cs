@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,11 +17,12 @@
 
 namespace TestCases.XSSF.UserModel
 {
-    using System;
     using NPOI.SS.UserModel;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestXSSFSheetRowGrouping
@@ -50,7 +51,7 @@ namespace TestCases.XSSF.UserModel
             ISheet sheet = p_wb.CreateSheet("sheet123");
             sheet.RowSumsBelow = (/*setter*/false);
             int i;
-            for (i = 0; i < ROWS_NUMBER; i++)
+            for(i = 0; i < ROWS_NUMBER; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 ICell cell = row.CreateCell(0);
@@ -58,12 +59,12 @@ namespace TestCases.XSSF.UserModel
             }
 
             i = 1;
-            while (i < ROWS_NUMBER)
+            while(i < ROWS_NUMBER)
             {
                 int end = i + (GROUP_SIZE - 2);
                 int start = i;                    // natural order
                 //            int start = end - 1;                // reverse order
-                while (start < end)
+                while(start < end)
                 {             // natural order
                     //                while (start >= i) {            // reverse order
                     sheet.GroupRow(start, end);
@@ -102,7 +103,7 @@ namespace TestCases.XSSF.UserModel
             ISheet sheet = wb.CreateSheet("sheet123");
             sheet.RowSumsBelow = (/*setter*/false);
             int i;
-            for (i = 0; i < ROWS_NUMBER; i++)
+            for(i = 0; i < ROWS_NUMBER; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 ICell cell = row.CreateCell(0);
@@ -110,11 +111,11 @@ namespace TestCases.XSSF.UserModel
             }
 
             i = 1;
-            while (i < ROWS_NUMBER)
+            while(i < ROWS_NUMBER)
             {
                 int end = i + (GROUP_SIZE - 2);
                 int start = i;                    // natural order
-                while (start < end)
+                while(start < end)
                 {             // natural order
                     sheet.GroupRow(start, end);
                     //o_groupsNumber++;
@@ -138,86 +139,86 @@ namespace TestCases.XSSF.UserModel
 
             // all expanded
             verifyGroupCollapsed(
-                // level1, level2, level3
+                    // level1, level2, level3
                     false, false, false,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false, false },
-                // hidden:
+                    // hidden:
                     new bool[] { false, false, false, false, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 1, 2, 3, 3, 3 }
                     );
 
 
             // Level 1 collapsed, others expanded, should only have 4 rows, all hidden: 
             verifyGroupCollapsed(
-                // level1, level2, level3
+                    // level1, level2, level3
                     true, false, false,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false, false },
-                // hidden:
+                    // hidden:
                     new bool[] { true, true, true, true, true },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 1, 2, 3, 3, 3 }
                     );
 
             // Level 1 and 2 collapsed, Level 3 expanded, 
             verifyGroupCollapsed(
-                // level1, level2, level3
+                    // level1, level2, level3
                     true, true, false,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false, true, false },
-                // hidden:
+                    // hidden:
                     new bool[] { true, true, true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 1, 2, 3, 3, 3, 0 }
                     );
 
             // Level 1 collapsed, Level 2 expanded, Level 3 collapsed 
             verifyGroupCollapsed(
-                // level1, level2, level3
+                    // level1, level2, level3
                     true, false, true,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false, false, true },
-                // hidden:
+                    // hidden:
                     new bool[] { true, true, true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 1, 2, 3, 3, 3, 0 }
                     );
 
             // Level 2 collapsed, others expanded:
             verifyGroupCollapsed(
-                // level1, level2, level3
+                    // level1, level2, level3
                     false, true, false,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false, false, false },
-                // hidden:
+                    // hidden:
                     new bool[] { false, true, true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 1, 2, 3, 3, 3, 0 }
                     );
 
             // Level 3 collapsed, others expanded 
             verifyGroupCollapsed(
-                // level1, level2, level3
+                    // level1, level2, level3
                     false, false, true,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false, false, true },
-                // hidden:
+                    // hidden:
                     new bool[] { false, false, true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 1, 2, 3, 3, 3, 0 }
                     );
 
             // All collapsed 
             verifyGroupCollapsed(
-                // level1, level2, level3
+                    // level1, level2, level3
                     true, true, true,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false, true, true },
-                // hidden:
+                    // hidden:
                     new bool[] { true, true, true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 1, 2, 3, 3, 3, 0 }
                     );
         }
@@ -229,7 +230,7 @@ namespace TestCases.XSSF.UserModel
             IWorkbook wb = new XSSFWorkbook();
             ISheet sheet = wb.CreateSheet("sheet123");
 
-            for (int i = 0; i < 4; i++)
+            for(int i = 0; i < 4; i++)
             {
                 sheet.CreateRow(i);
             }
@@ -254,47 +255,47 @@ namespace TestCases.XSSF.UserModel
 
             // all expanded
             verifyGroupCollapsedSpec(
-                // level3, level2, level1
+                    // level3, level2, level1
                     false, false, false,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, false },
-                // hidden:
+                    // hidden:
                     new bool[] { false, false, false, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 3, 3, 2, 1 }
                     );
 
 
             verifyGroupCollapsedSpec(
-                // level3, level2, level1
+                    // level3, level2, level1
                     false, false, true,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, false, true },
-                // hidden:
+                    // hidden:
                     new bool[] { true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 3, 3, 2, 1 }
                     );
 
             verifyGroupCollapsedSpec(
-                // level3, level2, level1
+                    // level3, level2, level1
                     false, true, false,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, true, false },
-                // hidden:
+                    // hidden:
                     new bool[] { true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 3, 3, 2, 1 }
                     );
 
             verifyGroupCollapsedSpec(
-                // level3, level2, level1
+                    // level3, level2, level1
                     false, true, true,
-                // collapsed:
+                    // collapsed:
                     new Boolean[] { false, false, true, true },
-                // hidden:
+                    // hidden:
                     new bool[] { true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 3, 3, 2, 1 }
                     );
         }
@@ -305,7 +306,7 @@ namespace TestCases.XSSF.UserModel
             IWorkbook wb = new XSSFWorkbook();
             ISheet sheet = wb.CreateSheet("sheet123");
 
-            for (int i = 5; i < 9; i++)
+            for(int i = 5; i < 9; i++)
             {
                 sheet.CreateRow(i);
             }
@@ -331,9 +332,9 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(collapsed.Length, sheet.LastRowNum - sheet.FirstRowNum + 1,
                 "Expected " + collapsed.Length + " rows with collapsed state, but had " + (sheet.LastRowNum - sheet.FirstRowNum + 1) + " rows ("
                     + sheet.FirstRowNum + "-" + sheet.LastRowNum + ")");
-            for (int i = sheet.FirstRowNum; i < sheet.LastRowNum; i++)
+            for(int i = sheet.FirstRowNum; i < sheet.LastRowNum; i++)
             {
-                if (i - sheet.FirstRowNum<0 || i - sheet.FirstRowNum>=collapsed.Length)
+                if(i - sheet.FirstRowNum<0 || i - sheet.FirstRowNum>=collapsed.Length)
                 {
                     continue;
                 }
@@ -358,9 +359,9 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(collapsed.Length, sheet.LastRowNum - sheet.FirstRowNum + 1,
                 "Expected " + collapsed.Length + " rows with collapsed state, but had " + (sheet.LastRowNum - sheet.FirstRowNum + 1) + " rows ("
                     + sheet.FirstRowNum + "-" + sheet.LastRowNum + ")");
-            for (int i = sheet.FirstRowNum; i < sheet.LastRowNum; i++)
+            for(int i = sheet.FirstRowNum; i < sheet.LastRowNum; i++)
             {
-                if (collapsed[i - sheet.FirstRowNum] == null)
+                if(collapsed[i - sheet.FirstRowNum] == null)
                 {
                     continue;
                 }
@@ -452,7 +453,7 @@ namespace TestCases.XSSF.UserModel
                     true, true, true, false, false, false, false, 
                     // 27-31
                     true, true, true, true, false },
-                // outlineLevel
+                    // outlineLevel
                     new int[] { 
                     // 0-4
                     3, 3, 2, 1, 0, 0, 0,

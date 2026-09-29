@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace NPOI.Util
 {
@@ -13,15 +13,15 @@ namespace NPOI.Util
 
         private ByteBuffer(int mark, int pos, int lim, int cap, byte[] buffer, int offset)
         {
-            if (cap < 0)
+            if(cap < 0)
                 throw new ArgumentException();
             this.capacity = cap;
 
             this.Limit = lim;
             this.Position = pos;
-            if (mark >= 0)
+            if(mark >= 0)
             {
-                if (mark > pos)
+                if(mark > pos)
                     throw new ArgumentException();
                 this.mark = mark;
             }
@@ -31,12 +31,12 @@ namespace NPOI.Util
         }
 
         public ByteBuffer(byte[] buffer, int off, int len)
-            :this(-1, off, off+len, buffer.Length, buffer, 0)
+            : this(-1, off, off+len, buffer.Length, buffer, 0)
         {
         }
 
         public ByteBuffer(int capacity, int limit)
-            :this(-1, 0, limit, capacity, new byte[capacity], 0)
+            : this(-1, 0, limit, capacity, new byte[capacity], 0)
         {
         }
 
@@ -50,10 +50,10 @@ namespace NPOI.Util
             get { return position; }
             set
             {
-                if (value < 0 || value > limit)
+                if(value < 0 || value > limit)
                     throw new ArgumentException();
                 position = value;
-                if (mark > position)
+                if(mark > position)
                     mark = -1;
             }
         }
@@ -63,13 +63,13 @@ namespace NPOI.Util
             get { return limit; }
             set
             {
-                if ((value > capacity) || (value < 0))
+                if((value > capacity) || (value < 0))
                     throw new ArgumentException();
                 limit = value;
 
-                if (position > limit)
+                if(position > limit)
                     position = limit;
-                if (mark > limit)
+                if(mark > limit)
                     mark = -1;
             }
         }
@@ -78,7 +78,8 @@ namespace NPOI.Util
         /// Returns the number of elements between the current position and the limit.
         /// </summary>
         /// <returns>The number of elements remaining in this buffer</returns>
-        public int Remaining() {
+        public int Remaining()
+        {
             return limit - position;
         }
 
@@ -86,14 +87,15 @@ namespace NPOI.Util
         /// Tells whether there are any elements between the current position and the limit.
         /// </summary>
         /// <returns>true if, and only if, there is at least one element remaining in this buffer</returns>
-        public bool HasRemaining() {
+        public bool HasRemaining()
+        {
             return position < limit;
         }
 
         //allocate
         public static ByteBuffer CreateBuffer(int capacity)
         {
-            if (capacity < 0)
+            if(capacity < 0)
                 throw new ArgumentException();
             return new ByteBuffer(capacity, capacity);
         }
@@ -105,7 +107,7 @@ namespace NPOI.Util
             {
                 return new ByteBuffer(buffer, offset, length);
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -129,14 +131,14 @@ namespace NPOI.Util
 
         protected int NextGetIndex()
         {
-            if (position >= limit)
+            if(position >= limit)
                 throw new IndexOutOfRangeException();
             return position++;
         }
 
         protected int NextGetIndex(int nb)
         {
-            if (limit - position < nb)
+            if(limit - position < nb)
                 throw new IndexOutOfRangeException();
             int p = position;
             position += nb;
@@ -167,7 +169,7 @@ namespace NPOI.Util
 
         protected int CheckIndex(int i, int nb)
         {
-            if ((i < 0) || (nb > limit - i))
+            if((i < 0) || (nb > limit - i))
                 throw new IndexOutOfRangeException();
             return i;
         }
@@ -185,8 +187,8 @@ namespace NPOI.Util
             }
             set
             {
-             //   buffer[Index(NextPutIndex(index))] = value;
-                if (index < 0 || index >= limit)
+                //   buffer[Index(NextPutIndex(index))] = value;
+                if(index < 0 || index >= limit)
                     throw new IndexOutOfRangeException();
                 buffer[Index(index)] = value;
             }
@@ -194,7 +196,7 @@ namespace NPOI.Util
 
         protected void CheckBounds(int off, int len, int size)
         {
-            if ((off | len | (off + len) | (size - (off + len))) < 0)
+            if((off | len | (off + len) | (size - (off + len))) < 0)
                 throw new IndexOutOfRangeException();
         }
 
@@ -207,7 +209,7 @@ namespace NPOI.Util
         public ByteBuffer Read(byte[] dst, int offset, int length)
         {
             CheckBounds(offset, length, dst.Length);
-            if (length > Remain)
+            if(length > Remain)
                 throw new ArgumentException();
 
             //for (int i = offset; i < offset + length; i++)
@@ -227,7 +229,7 @@ namespace NPOI.Util
         {
             CheckBounds(offset, length, src.Length);
 
-            if (length > Remain)
+            if(length > Remain)
                 throw new IndexOutOfRangeException();
 
             System.Array.Copy(src, offset, buffer, Index(this.Position), length);
@@ -239,14 +241,14 @@ namespace NPOI.Util
 
         public ByteBuffer Write(ByteBuffer src)
         {
-            if (src == this)
+            if(src == this)
                 throw new ArgumentException();
             int n = src.Remain;
 
-            if (n > this.Remain)
+            if(n > this.Remain)
                 throw new IndexOutOfRangeException();
 
-            for (int i = 0; i < n; i++)
+            for(int i = 0; i < n; i++)
                 Write(src.Read());
             return this;
         }
@@ -261,7 +263,7 @@ namespace NPOI.Util
         {
             get { return limit - position; }
         }
-        
+
         public byte[] Buffer
         {
             get { return buffer; }

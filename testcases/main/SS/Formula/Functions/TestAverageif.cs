@@ -17,11 +17,13 @@
 
 using NPOI.SS.Formula;
 
-namespace TestCases.SS.Formula.Functions {
+namespace TestCases.SS.Formula.Functions
+{
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Test cases for SUM
@@ -47,7 +49,7 @@ namespace TestCases.SS.Formula.Functions {
 
         private static void ConfirmDouble(double expected, ValueEval actualEval)
         {
-            if (!(actualEval is NumericValueEval))
+            if(!(actualEval is NumericValueEval))
             {
                 throw new AssertionException("Expected numeric result");
             }
@@ -55,7 +57,8 @@ namespace TestCases.SS.Formula.Functions {
             ClassicAssert.AreEqual(expected, nve.NumberValue, 0);
         }
 
-        private static void Confirm(double expectedResult, ValueEval[] args) {
+        private static void Confirm(double expectedResult, ValueEval[] args)
+        {
             ConfirmDouble(expectedResult, InvokeAverageif(args, EC));
         }
 
@@ -64,7 +67,8 @@ namespace TestCases.SS.Formula.Functions {
          *  https://support.office.com/en-us/article/averageif-function-faec8e2e-0dec-4308-af69-f5576d8ac642
          */
         [Test]
-        public void TestExample1() {
+        public void TestExample1()
+        {
             ValueEval[] b2b5 = new ValueEval[]
             {
                 new NumberEval(7000),
@@ -112,7 +116,7 @@ namespace TestCases.SS.Formula.Functions {
                 new StringEval(">250000"),
                 EvalFactory.CreateAreaEval("B2:B5", b2b5),
             };
-                Confirm(24500, args);
+            Confirm(24500, args);
         }
 
         /**
@@ -120,7 +124,8 @@ namespace TestCases.SS.Formula.Functions {
          *  https://support.office.com/en-us/article/averageif-function-faec8e2e-0dec-4308-af69-f5576d8ac642
          */
         [Test]
-        public void TestExample2() {
+        public void TestExample2()
+        {
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
 
             ValueEval[] b2b6 = new ValueEval[]

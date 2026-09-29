@@ -1,6 +1,6 @@
-﻿using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
+using System;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -22,12 +22,12 @@ namespace NPOI.SS.Formula.Functions
             {
                 resolved = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
 
-            if (resolved is StringEval)
+            if(resolved is StringEval)
                 return resolved;
 
             double s0;
@@ -37,7 +37,7 @@ namespace NPOI.SS.Formula.Functions
                 s0 = OperandResolver.CoerceValueToDouble(resolved);
                 s1 = TextFunction.EvaluateStringArg(arg1, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

@@ -17,14 +17,15 @@
 
 namespace TestCases.SS.Formula.Atp
 {
-    using System;
-    using System.Collections;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Atp;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
     using TestCases.HSSF;
 
 
@@ -57,12 +58,12 @@ namespace TestCases.SS.Formula.Atp
             int nFailures = 0;
             int nUnexpectedErrors = 0;
             IEnumerator rowIterator = sheet.GetRowEnumerator();
-            while (rowIterator.MoveNext())
+            while(rowIterator.MoveNext())
             {
                 IRow row = (IRow)rowIterator.Current;
 
                 ICell cell = row.GetCell(SS.YEARFRAC_FORMULA_COLUMN);
-                if (cell == null || cell.CellType != CellType.Formula)
+                if(cell == null || cell.CellType != CellType.Formula)
                 {
                     continue;
                 }
@@ -71,24 +72,24 @@ namespace TestCases.SS.Formula.Atp
                     ProcessRow(row, cell, formulaEvaluator);
                     nSuccess++;
                 }
-                catch (SystemException e)
+                catch(SystemException e)
                 {
                     nUnexpectedErrors++;
                     printshortStackTrace(System.Console.Error, e);
                 }
-                catch (AssertionException e)
+                catch(AssertionException e)
                 {
                     nFailures++;
                     printshortStackTrace(System.Console.Error, e);
                 }
             }
-            if (nUnexpectedErrors + nFailures > 0)
+            if(nUnexpectedErrors + nFailures > 0)
             {
                 String msg = nFailures + " failures(s) and " + nUnexpectedErrors
                     + " unexpected errors(s) occurred. See stderr for details";
                 throw new AssertionException(msg);
             }
-            if (nSuccess < 1)
+            if(nSuccess < 1)
             {
                 throw new Exception("No Test sample cases found");
             }
@@ -109,17 +110,17 @@ namespace TestCases.SS.Formula.Atp
             {
                 actualValue = YearFracCalculator.Calculate(startDate, endDate, basis);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw e;
             }
-            if (expectedValue != actualValue)
+            if(expectedValue != actualValue)
             {
                 throw new Exception("Direct calculate failed - row " + (row.RowNum + 1) +
                         "excepted value " + expectedValue.ToString() + "actual value " + actualValue.ToString());
             }
             actualValue = formulaEvaluator.Evaluate(cell).NumberValue;
-            if (expectedValue != actualValue)
+            if(expectedValue != actualValue)
             {
 
                 throw new Exception("Formula Evaluate failed - row " + (row.RowNum + 1) +
@@ -139,18 +140,18 @@ namespace TestCases.SS.Formula.Atp
         private static int GetIntCell(IRow row, int colIx)
         {
             double dVal = GetDoubleCell(row, colIx);
-            if (Math.Floor(dVal) != dVal)
+            if(Math.Floor(dVal) != dVal)
             {
                 throw new SystemException("Non integer value (" + dVal
-                        + ") cell found at column " + (char)('A' + colIx));
+                        + ") cell found at column " + (char) ('A' + colIx));
             }
-            return (int)dVal;
+            return (int) dVal;
         }
 
         private static double GetDoubleCell(IRow row, int colIx)
         {
             ICell cell = row.GetCell(colIx);
-            if (cell == null)
+            if(cell == null)
             {
                 throw new SystemException("No cell found at column " + colIx);
             }

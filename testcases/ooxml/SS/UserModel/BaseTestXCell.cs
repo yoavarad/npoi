@@ -17,10 +17,11 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.SS;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.SS;
 
     /**
      * Class for combined testing of XML-specific functionality of 
@@ -63,9 +64,9 @@ namespace TestCases.SS.UserModel
 
             //cell.SetCellValue((DateTime?)null);
             //cell.setCellValue((Date)null);
-            cell.SetCellValue((String)null);
-            cell.SetCellValue((IRichTextString)null);
-            cell.SetCellValue((String)null);
+            cell.SetCellValue((String) null);
+            cell.SetCellValue((IRichTextString) null);
+            cell.SetCellValue((String) null);
 
             wb.Close();
         }

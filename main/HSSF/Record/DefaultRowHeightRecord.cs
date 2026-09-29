@@ -55,10 +55,10 @@ namespace NPOI.HSSF.Record
             field_2_row_height = DEFAULT_ROW_HEIGHT;
         }
 
-       /// <summary>
-       /// Constructs a DefaultRowHeight record and Sets its fields appropriately.
-       /// </summary>
-       /// <param name="in1">the RecordInputstream to Read the record from</param>
+        /// <summary>
+        /// Constructs a DefaultRowHeight record and Sets its fields appropriately.
+        /// </summary>
+        /// <param name="in1">the RecordInputstream to Read the record from</param>
         public DefaultRowHeightRecord(RecordInputStream in1)
         {
             field_1_option_flags = in1.ReadShort();
@@ -90,7 +90,7 @@ namespace NPOI.HSSF.Record
         //{
         //    get { return isThickTopBorder.IsSet(field_1_option_flags); }
         //    set { field_1_option_flags = isThickTopBorder.SetShortBoolean(field_1_option_flags, value); }        
-        
+
         //}
         //public bool IsThickBottomBorder
         //{
@@ -104,12 +104,13 @@ namespace NPOI.HSSF.Record
         public short RowHeight
         {
             get { return field_2_row_height; }
-            set {
-                field_2_row_height = value; 
+            set
+            {
+                field_2_row_height = value;
             }
         }
 
-        
+
         public override String ToString()
         {
             StringBuilder buffer = new StringBuilder();

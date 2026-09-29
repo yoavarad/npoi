@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,11 +37,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_CellStyle()
         {
-           // this.extLstField = new CT_ExtensionList();
+            // this.extLstField = new CT_ExtensionList();
         }
         public static CT_CellStyle Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CellStyle ctObj = new CT_CellStyle();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
@@ -50,9 +50,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.iLevel = XmlHelper.ReadUInt(node.Attributes["iLevel"]);
             ctObj.hidden = XmlHelper.ReadBool(node.Attributes["hidden"]);
             ctObj.customBuiltin = XmlHelper.ReadBool(node.Attributes["customBuiltin"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -65,11 +65,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "name", this.name);
             XmlHelper.WriteAttribute(sw, "xfId", this.xfId, true);
-            XmlHelper.WriteAttribute(sw, "builtinId", this.builtinId,true);
+            XmlHelper.WriteAttribute(sw, "builtinId", this.builtinId, true);
             XmlHelper.WriteAttribute(sw, "iLevel", this.iLevel);
             XmlHelper.WriteAttribute(sw, "hidden", this.hidden, false);
             XmlHelper.WriteAttribute(sw, "customBuiltin", this.customBuiltin, false);
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
                 sw.Write('>');
                 this.extLst.Write(sw, "extLst");

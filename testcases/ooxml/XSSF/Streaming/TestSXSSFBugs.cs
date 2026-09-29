@@ -1,10 +1,11 @@
-﻿using NPOI.SS.UserModel;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.Streaming;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.IO;
 using TestCases.SS.UserModel;
 
@@ -19,9 +20,9 @@ namespace TestCases.XSSF.Streaming
 
         }
         // override some tests which do not work for SXSSF
-        [Ignore("cloneSheet() not implemented")]  public override void Bug18800() { /* cloneSheet() not implemented */ }
-        [Ignore("cloneSheet() not implemented")]  public override void Bug22720() { /* cloneSheet() not implemented */ }
-        [Ignore("Evaluation is not fully supported")]  public override void Bug47815() { /* Evaluation is not supported */ }
+        [Ignore("cloneSheet() not implemented")] public override void Bug18800() { /* cloneSheet() not implemented */ }
+        [Ignore("cloneSheet() not implemented")] public override void Bug22720() { /* cloneSheet() not implemented */ }
+        [Ignore("Evaluation is not fully supported")] public override void Bug47815() { /* Evaluation is not supported */ }
         [Ignore("Evaluation is not fully supported")] public override void Bug46729_testMaxFunctionArguments() { /* Evaluation is not supported */ }
         [Ignore("Reading data is not supported")] public override void Bug57798() { /* Reading data is not supported */ }
 
@@ -69,10 +70,10 @@ namespace TestCases.XSSF.Streaming
             {
                 base.bug60197_NamedRangesReferToCorrectSheetWhenSheetOrderIsChanged();
             }
-            catch (RuntimeException e)
+            catch(RuntimeException e)
             {
                 var cause = e.InnerException;
-                if (cause is IOException && cause.Message == "Stream closed")
+                if(cause is IOException && cause.Message == "Stream closed")
                 {
                     // expected on the second time that _testDataProvider.writeOutAndReadBack(SXSSFWorkbook) is called
                     // if the test makes it this far, then we know that XSSFName sheet indices are updated when sheet
@@ -88,7 +89,7 @@ namespace TestCases.XSSF.Streaming
         [Test]
         public void Test51037()
         {
-            using (SXSSFWorkbook wb = new SXSSFWorkbook())
+            using(SXSSFWorkbook wb = new SXSSFWorkbook())
             {
                 ICellStyle blueStyle = wb.CreateCellStyle();
                 blueStyle.FillForegroundColor = IndexedColors.Aqua.Index;
@@ -120,10 +121,10 @@ namespace TestCases.XSSF.Streaming
                 ClassicAssert.AreEqual(blueStyle.Index, r3.GetCell(4).CellStyle.Index);
                 ClassicAssert.AreEqual(pinkStyle.Index, r3.GetCell(6).CellStyle.Index);
 
-                using (MemoryStream bos = new MemoryStream())
+                using(MemoryStream bos = new MemoryStream())
                 {
                     wb.Write(bos);
-                    using (XSSFWorkbook wb2 = new XSSFWorkbook(new MemoryStream(bos.ToArray())))
+                    using(XSSFWorkbook wb2 = new XSSFWorkbook(new MemoryStream(bos.ToArray())))
                     {
                         XSSFSheet wb2Sheet = (XSSFSheet)wb2.GetSheetAt(0);
                         XSSFRow wb2R3 = (XSSFRow)wb2Sheet.GetRow(3);

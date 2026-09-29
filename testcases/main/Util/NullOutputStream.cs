@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -28,15 +28,15 @@ namespace TestCases.Util
         }
         public override bool CanRead
         {
-            get { return false;}
+            get { return false; }
         }
         public override bool CanSeek
         {
-            get { return true;}
+            get { return true; }
         }
         public override bool CanWrite
         {
-            get { return true;}
+            get { return true; }
         }
         private long _length;
         public override long Length
@@ -48,7 +48,7 @@ namespace TestCases.Util
 
         public override void Flush()
         {
-            
+
         }
 
         public override int Read(byte[] buffer, int offset, int count)

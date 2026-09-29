@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NPOI
 {
-    public class POIXMLException:Exception
+    public class POIXMLException : Exception
     {
         public POIXMLException()
             : base()
@@ -14,12 +14,12 @@ namespace NPOI
             : base(msg)
         { }
 
-        public POIXMLException(string msg,Exception ex)
-            : base(msg,ex)
+        public POIXMLException(string msg, Exception ex)
+            : base(msg, ex)
         { }
 
         public POIXMLException(Exception ex)
-            : base(string.Empty,ex)
+            : base(string.Empty, ex)
         { }
     }
 }

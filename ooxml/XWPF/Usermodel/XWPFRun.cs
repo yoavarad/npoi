@@ -27,7 +27,7 @@ namespace NPOI.XWPF.UserModel
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text; 
+    using System.Text;
     using System.Xml;
     using System.Xml.Linq;
     using System.Xml.Serialization;
@@ -145,8 +145,8 @@ namespace NPOI.XWPF.UserModel
                         charts.Add((XWPFChart) chart);
                     }
                 }
-            }   
-        
+            }
+
 
         }
 
@@ -159,7 +159,7 @@ namespace NPOI.XWPF.UserModel
         {
         }
 
-        private static void HandleCTPicturesAndCharts(object o, List<NPOI.OpenXmlFormats.Dml.Picture.CT_Picture> pictures, List<CT_RelId> chartsRels )
+        private static void HandleCTPicturesAndCharts(object o, List<NPOI.OpenXmlFormats.Dml.Picture.CT_Picture> pictures, List<CT_RelId> chartsRels)
         {
             if(o is CT_Drawing drawing)
             {

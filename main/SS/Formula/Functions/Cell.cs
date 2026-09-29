@@ -1,4 +1,4 @@
-﻿/*
+/*
 2020-03-20 Buzz Weetman
 Custom created because NPOI doesn't implement CELL.
 I am specifically fixing a case where it is used as CELL("col",W2)
@@ -66,7 +66,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length == 2)
+            if(args.Length == 2)
             {
                 return Evaluate(srcRowIndex, srcColumnIndex, args[0], args[1]);
             }

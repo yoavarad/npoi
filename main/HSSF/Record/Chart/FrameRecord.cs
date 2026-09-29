@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -124,7 +124,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_borderType;
             }
-            set 
+            set
             {
                 this.field_1_borderType = value;
             }
@@ -165,7 +165,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return autoPosition.IsSet(field_2_options);
             }
-            set 
+            set
             {
                 field_2_options = autoPosition.SetShortBoolean(field_2_options, value);
             }
@@ -174,4 +174,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-

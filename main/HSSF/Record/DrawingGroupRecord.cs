@@ -18,10 +18,10 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.DDF;
+    using NPOI.Util;
     using System;
     using System.Collections;
-    using NPOI.Util;
-    using NPOI.DDF;
 
     public class DrawingGroupRecord : AbstractEscherHolderRecord
     {
@@ -50,10 +50,10 @@ namespace NPOI.HSSF.Record
             get { return sid; }
         }
 
-        public override int Serialize(int offset, byte [] data)
+        public override int Serialize(int offset, byte[] data)
         {
             byte[] rawData = RawData;
-            if (EscherRecords.Count == 0 && rawData != null)
+            if(EscherRecords.Count == 0 && rawData != null)
             {
                 return WriteData(offset, data, rawData);
             }
@@ -61,7 +61,7 @@ namespace NPOI.HSSF.Record
             {
                 byte[] buffer = new byte[RawDataSize];
                 int pos = 0;
-                for (IEnumerator iterator = EscherRecords.GetEnumerator(); iterator.MoveNext(); )
+                for(IEnumerator iterator = EscherRecords.GetEnumerator(); iterator.MoveNext();)
                 {
                     EscherRecord r = (EscherRecord)iterator.Current;
                     pos += r.Serialize(pos, buffer, new NullEscherSerializationListener());
@@ -96,14 +96,14 @@ namespace NPOI.HSSF.Record
             {
                 IList escherRecords = EscherRecords;
                 byte[] rawData = RawData;
-                if (escherRecords.Count == 0 && rawData != null)
+                if(escherRecords.Count == 0 && rawData != null)
                 {
                     return rawData.Length;
                 }
                 else
                 {
                     int size = 0;
-                    for (IEnumerator iterator = escherRecords.GetEnumerator(); iterator.MoveNext(); )
+                    for(IEnumerator iterator = escherRecords.GetEnumerator(); iterator.MoveNext();)
                     {
                         EscherRecord r = (EscherRecord)iterator.Current;
                         size += r.RecordSize;
@@ -122,10 +122,10 @@ namespace NPOI.HSSF.Record
         {
             int writtenActualData = 0;
             int writtenRawData = 0;
-            while (writtenRawData < rawData.Length)
+            while(writtenRawData < rawData.Length)
             {
                 int segmentLength = Math.Min(rawData.Length - writtenRawData, MAX_DATA_SIZE);
-                if (writtenRawData / MAX_DATA_SIZE >= 2)
+                if(writtenRawData / MAX_DATA_SIZE >= 2)
                     WriteContinueHeader(data, offset, segmentLength);
                 else
                     WriteHeader(data, offset, segmentLength);
@@ -142,13 +142,13 @@ namespace NPOI.HSSF.Record
         private void WriteHeader(byte[] data, int offset, int sizeExcludingHeader)
         {
             LittleEndian.PutShort(data, 0 + offset, Sid);
-            LittleEndian.PutShort(data, 2 + offset, (short)sizeExcludingHeader);
+            LittleEndian.PutShort(data, 2 + offset, (short) sizeExcludingHeader);
         }
 
         private static void WriteContinueHeader(byte[] data, int offset, int sizeExcludingHeader)
         {
             LittleEndian.PutShort(data, 0 + offset, ContinueRecord.sid);
-            LittleEndian.PutShort(data, 2 + offset, (short)sizeExcludingHeader);
+            LittleEndian.PutShort(data, 2 + offset, (short) sizeExcludingHeader);
         }
     }
 }

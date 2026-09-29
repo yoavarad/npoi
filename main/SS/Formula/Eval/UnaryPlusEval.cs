@@ -26,9 +26,10 @@ namespace NPOI.SS.Formula.Eval
     {
 
         public static Function instance = new UnaryPlusEval();
-    	
-	    private UnaryPlusEval() {
-	    }
+
+        private UnaryPlusEval()
+        {
+        }
 
         public override ValueEval Evaluate(int srcCellRow, int srcCellCol, ValueEval arg0)
         {
@@ -36,11 +37,11 @@ namespace NPOI.SS.Formula.Eval
             try
             {
                 ValueEval ve = OperandResolver.GetSingleValue(arg0, srcCellRow, srcCellCol);
-                if (ve is BlankEval)
+                if(ve is BlankEval)
                 {
                     return NumberEval.ZERO;
                 }
-                if (ve is StringEval)
+                if(ve is StringEval)
                 {
                     // Note - asymmetric with UnaryMinus
                     // -"hello" Evaluates to #VALUE!
@@ -49,7 +50,7 @@ namespace NPOI.SS.Formula.Eval
                 }
                 d = OperandResolver.CoerceValueToDouble(ve);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Util
 {
-    using System;
     using NPOI.Util;
+    using System;
     public class MutableFPNumber
     {
 
@@ -71,28 +71,28 @@ namespace NPOI.SS.Util
         {
             int oldBitLen = _significand.BitLength();
             int sc = oldBitLen - C_64;
-            if (sc == 0)
+            if(sc == 0)
             {
                 return;
             }
-            if (sc < 0)
+            if(sc < 0)
             {
                 throw new InvalidOperationException("Not enough precision");
             }
             _binaryExponent += sc;
-            if (sc > 32)
+            if(sc > 32)
             {
                 int highShift = (sc - 1) & 0xFFFFE0;
                 _significand = _significand>>(highShift);
                 sc -= highShift;
                 oldBitLen -= highShift;
             }
-            if (sc < 1)
+            if(sc < 1)
             {
                 throw new InvalidOperationException();
             }
             _significand = Rounder.Round(_significand, sc);
-            if (_significand.BitLength() > oldBitLen)
+            if(_significand.BitLength() > oldBitLen)
             {
                 sc++;
                 _binaryExponent++;
@@ -128,7 +128,7 @@ namespace NPOI.SS.Util
         public void multiplyByPowerOfTen(int pow10)
         {
             TenPower tp = TenPower.GetInstance(Math.Abs(pow10));
-            if (pow10 < 0)
+            if(pow10 < 0)
             {
                 mulShift(tp._divisor, tp._divisorShift);
             }
@@ -144,7 +144,7 @@ namespace NPOI.SS.Util
             // check for too much precision
             int sc = (_significand.BitLength() - MIN_PRECISION) & unchecked((int)0xFFFFFFE0);
             // mask Makes multiples of 32 which optimises BigInt32.ShiftRight
-            if (sc > 0)
+            if(sc > 0)
             {
                 // no need to round because we have at least 8 bits of extra precision
                 _significand = _significand>>(sc);
@@ -160,7 +160,7 @@ namespace NPOI.SS.Util
             {
                 BigInteger[] bis = new BigInteger[33];
                 long acc = 1;
-                for (int i = 1; i < bis.Length; i++)
+                for(int i = 1; i < bis.Length; i++)
                 {
                     bis[i] = new BigInteger(acc);
                     acc <<= 1;
@@ -172,7 +172,7 @@ namespace NPOI.SS.Util
              */
             public static BigInteger Round(BigInteger bi, int nBits)
             {
-                if (nBits < 1)
+                if(nBits < 1)
                 {
                     return bi;
                 }
@@ -206,7 +206,7 @@ namespace NPOI.SS.Util
 
                 _divisorShift = -(bitsDueToFiveFactors + index + 80);
                 int sc = fivePowIndex.BitLength() - 68;
-                if (sc > 0)
+                if(sc > 0)
                 {
                     _multiplierShift = index + sc;
                     _multiplicand = fivePowIndex>>(sc);
@@ -221,7 +221,7 @@ namespace NPOI.SS.Util
             public static TenPower GetInstance(int index)
             {
                 TenPower result = _cache[index];
-                if (result == null)
+                if(result == null)
                 {
                     result = new TenPower(index);
                     _cache[index] = result;
@@ -236,4 +236,3 @@ namespace NPOI.SS.Util
         }
     }
 }
-

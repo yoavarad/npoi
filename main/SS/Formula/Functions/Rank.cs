@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -17,9 +17,9 @@
  * ====================================================================
  */
 
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
-using NPOI.SS.Formula.Eval;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -46,18 +46,18 @@ namespace NPOI.SS.Formula.Functions
             {
                 ValueEval ve = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 double result = OperandResolver.CoerceValueToDouble(ve);
-                if (Double.IsNaN(result) || Double.IsInfinity(result))
+                if(Double.IsNaN(result) || Double.IsInfinity(result))
                 {
                     throw new EvaluationException(ErrorEval.NUM_ERROR);
                 }
-                if (arg1 is RefListEval listEval)
+                if(arg1 is RefListEval listEval)
                 {
                     return eval(result, listEval, true);
                 }
                 AreaEval aeRange = ConvertRangeArg(arg1);
                 return eval(result, aeRange, true);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -69,31 +69,32 @@ namespace NPOI.SS.Formula.Functions
             {
                 ValueEval ve = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 double result = OperandResolver.CoerceValueToDouble(ve);
-                if (Double.IsNaN(result) || Double.IsInfinity(result))
+                if(Double.IsNaN(result) || Double.IsInfinity(result))
                 {
                     throw new EvaluationException(ErrorEval.NUM_ERROR);
                 }
                 bool order = false;
                 ve = OperandResolver.GetSingleValue(arg2, srcRowIndex, srcColumnIndex);
                 int order_value = OperandResolver.CoerceValueToInt(ve);
-                if (order_value == 0)
+                if(order_value == 0)
                 {
                     order = true;
                 }
-                else if (order_value == 1)
+                else if(order_value == 1)
                 {
                     order = false;
                 }
-                else throw new EvaluationException(ErrorEval.NUM_ERROR);
+                else
+                    throw new EvaluationException(ErrorEval.NUM_ERROR);
 
-                if (arg1 is RefListEval listEval)
+                if(arg1 is RefListEval listEval)
                 {
                     return eval(result, listEval, order);
                 }
                 AreaEval aeRange = ConvertRangeArg(arg1);
                 return eval(result, aeRange, order);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -104,13 +105,14 @@ namespace NPOI.SS.Formula.Functions
             int rank = 1;
             int height = aeRange.Height;
             int width = aeRange.Width;
-            for (int r = 0; r < height; r++)
+            for(int r = 0; r < height; r++)
             {
-                for (int c = 0; c < width; c++)
+                for(int c = 0; c < width; c++)
                 {
                     Double value = GetValue(aeRange, r, c);
-                    if (Double.IsNaN(value)) continue;
-                    if (descending_order && value > arg0 || !descending_order && value < arg0)
+                    if(Double.IsNaN(value))
+                        continue;
+                    if(descending_order && value > arg0 || !descending_order && value < arg0)
                     {
                         rank++;
                     }
@@ -124,16 +126,16 @@ namespace NPOI.SS.Formula.Functions
             int rank = 1;
 
             var list = aeRange.GetList();
-            for (int i = 0; i < list.Count; i++)
+            for(int i = 0; i < list.Count; i++)
             {
                 ValueEval ve = list[i];
                 if(ve is RefEval)
                 {
-                    list[i] = ((RefEval)ve).GetInnerValueEval(((RefEval)ve).FirstSheetIndex);
+                    list[i] = ((RefEval) ve).GetInnerValueEval(((RefEval) ve).FirstSheetIndex);
                 }
                 Double value;
                 ve = list[i];
-                if (ve is NumberEval numberEval)
+                if(ve is NumberEval numberEval)
                 {
                     value = numberEval.NumberValue;
                 }
@@ -142,7 +144,7 @@ namespace NPOI.SS.Formula.Functions
                     continue;
                 }
 
-                if (descending_order && value > arg0 || !descending_order && value < arg0)
+                if(descending_order && value > arg0 || !descending_order && value < arg0)
                 {
                     rank++;
                 }
@@ -154,7 +156,7 @@ namespace NPOI.SS.Formula.Functions
         private static Double GetValue(AreaEval aeRange, int relRowIndex, int relColIndex)
         {
             ValueEval addend = aeRange.GetRelativeValue(relRowIndex, relColIndex);
-            if (addend is NumberEval numberEval)
+            if(addend is NumberEval numberEval)
             {
                 return numberEval.NumberValue;
             }
@@ -164,11 +166,11 @@ namespace NPOI.SS.Formula.Functions
 
         private static AreaEval ConvertRangeArg(ValueEval eval)
         {
-            if (eval is AreaEval areaEval)
+            if(eval is AreaEval areaEval)
             {
                 return areaEval;
             }
-            if (eval is RefEval refEval)
+            if(eval is RefEval refEval)
             {
                 return refEval.Offset(0, 0, 0, 0);
             }

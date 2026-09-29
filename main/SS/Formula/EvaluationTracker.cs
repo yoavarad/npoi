@@ -15,10 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
-
-using NPOI.SS.Formula.Eval;
 
 namespace NPOI.SS.Formula
 {
@@ -62,11 +61,11 @@ namespace NPOI.SS.Formula
          */
         public bool StartEvaluate(FormulaCellCacheEntry cce)
         {
-            if (cce == null)
+            if(cce == null)
             {
                 throw new ArgumentException("cellLoc must not be null");
             }
-            if (_currentlyEvaluatingCells.Contains(cce))
+            if(_currentlyEvaluatingCells.Contains(cce))
             {
                 return false;
             }
@@ -79,7 +78,7 @@ namespace NPOI.SS.Formula
         {
 
             int nFrames = _evaluationFrames.Count;
-            if (nFrames < 1)
+            if(nFrames < 1)
             {
                 throw new InvalidOperationException("Call To endEvaluate without matching call To startEvaluate");
             }
@@ -102,14 +101,14 @@ namespace NPOI.SS.Formula
         {
 
             int nFrames = _evaluationFrames.Count;
-            if (nFrames < 1)
+            if(nFrames < 1)
             {
                 throw new InvalidOperationException("Call To endEvaluate without matching call To startEvaluate");
             }
 
             nFrames--;
             CellEvaluationFrame frame = (CellEvaluationFrame)_evaluationFrames[nFrames];
-            if (cce != frame.GetCCE())
+            if(cce != frame.GetCCE())
             {
                 throw new InvalidOperationException("Wrong cell specified. ");
             }
@@ -122,7 +121,7 @@ namespace NPOI.SS.Formula
         {
             // Tell the currently evaluating cell frame that it Has a dependency on the specified
             int prevFrameIndex = _evaluationFrames.Count - 1;
-            if (prevFrameIndex < 0)
+            if(prevFrameIndex < 0)
             {
                 // Top level frame, there is no 'cell' above this frame that is using the current cell
             }
@@ -138,14 +137,14 @@ namespace NPOI.SS.Formula
         {
             // Tell the currently evaluating cell frame that it Has a dependency on the specified
             int prevFrameIndex = _evaluationFrames.Count - 1;
-            if (prevFrameIndex < 0)
+            if(prevFrameIndex < 0)
             {
                 // Top level frame, there is no 'cell' above this frame that is using the current cell
             }
             else
             {
                 CellEvaluationFrame consumingFrame = (CellEvaluationFrame)_evaluationFrames[prevFrameIndex];
-                if (value == BlankEval.instance)
+                if(value == BlankEval.instance)
                 {
                     consumingFrame.AddUsedBlankCell(evalWorkbook, bookIndex, sheetIndex, rowIndex, columnIndex);
                 }

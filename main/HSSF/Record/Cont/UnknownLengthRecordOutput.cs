@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record.Cont
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
     /**
      * Allows the writing of BIFF records when the 'ushort size' header field is not known in advance.
      * When the client is finished writing data, it calls {@link #terminate()}, at which point this 
@@ -42,7 +42,7 @@ namespace NPOI.HSSF.Record.Cont
         {
             _originalOut = out1;
             out1.WriteShort(sid);
-            if (out1 is IDelayableLittleEndianOutput dleo)
+            if(out1 is IDelayableLittleEndianOutput dleo)
             {
                 // optimisation
                 _dataSizeOutput = dleo.CreateDelayedOutput(2);
@@ -71,7 +71,7 @@ namespace NPOI.HSSF.Record.Cont
         {
             get
             {
-                if (_out == null)
+                if(_out == null)
                 {
                     throw new InvalidOperationException("Record already terminated");
                 }
@@ -84,12 +84,12 @@ namespace NPOI.HSSF.Record.Cont
          */
         public void Terminate()
         {
-            if (_out == null)
+            if(_out == null)
             {
                 throw new InvalidOperationException("Record already terminated");
             }
             _dataSizeOutput.WriteShort(_size);
-            if (_byteBuffer != null)
+            if(_byteBuffer != null)
             {
                 _originalOut.Write(_byteBuffer, 0, _size);
                 _out = null;

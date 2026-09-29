@@ -18,11 +18,11 @@
  */
 namespace NPOI.XSSF.UserModel
 {
-    using System;
     using EnumsNET;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.Util;
+    using System;
 
     /**
      * High level representation for Icon / Multi-State Formatting 
@@ -56,7 +56,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_iconset.IsSetShowValue())
+                if(_iconset.IsSetShowValue())
                     return !_iconset.showValue;
                 return false;
             }
@@ -70,7 +70,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_iconset.reverse)
+                if(_iconset.reverse)
                     return _iconset.reverse;
                 return false;
             }
@@ -87,7 +87,7 @@ namespace NPOI.XSSF.UserModel
                 CT_Cfvo[] cfvos = _iconset.cfvo.ToArray();
                 XSSFConditionalFormattingThreshold[] t =
                         new XSSFConditionalFormattingThreshold[cfvos.Length];
-                for (int i = 0; i < cfvos.Length; i++)
+                for(int i = 0; i < cfvos.Length; i++)
                 {
                     t[i] = new XSSFConditionalFormattingThreshold(cfvos[i]);
                 }
@@ -96,9 +96,9 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Cfvo[] cfvos = new CT_Cfvo[value.Length];
-                for (int i = 0; i < value.Length; i++)
+                for(int i = 0; i < value.Length; i++)
                 {
-                    cfvos[i] = ((XSSFConditionalFormattingThreshold)value[i]).CTCfvo;
+                    cfvos[i] = ((XSSFConditionalFormattingThreshold) value[i]).CTCfvo;
                 }
                 _iconset.cfvo = new System.Collections.Generic.List<CT_Cfvo>(cfvos);
             }

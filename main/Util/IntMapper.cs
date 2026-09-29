@@ -91,7 +91,7 @@ namespace NPOI.Util
         /// <returns></returns>
         public int GetIndex(T o)
         {
-            if (!valueKeyMap.TryGetValue(o, out int index))
+            if(!valueKeyMap.TryGetValue(o, out int index))
                 return -1;
             return index;
             /*

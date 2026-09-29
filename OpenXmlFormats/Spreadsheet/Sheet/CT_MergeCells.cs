@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml;
 using NPOI.OpenXml4Net.Util;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
@@ -23,14 +22,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_MergeCells Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MergeCells ctObj = new CT_MergeCells();
             ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.mergeCell = new List<CT_MergeCell>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "mergeCell")
+                if(childNode.LocalName == "mergeCell")
                     ctObj.mergeCell.Add(CT_MergeCell.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -43,11 +42,12 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
             sw.Write('>');
-            if (this.mergeCell != null)
+            if(this.mergeCell != null)
             {
-                foreach (CT_MergeCell x in this.mergeCell)
+                foreach(CT_MergeCell x in this.mergeCell)
                 {
-                    if (x != null) {
+                    if(x != null)
+                    {
                         x.Write(sw, "mergeCell");
                     }
                 }

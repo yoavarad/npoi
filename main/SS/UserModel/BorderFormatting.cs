@@ -77,6 +77,6 @@ namespace NPOI.SS.UserModel
         /// <summary>
         /// Range internal borders. Only relevant for range styles, such as table formatting
         /// </summary>
-        IColor HorizontalBorderColorColor {  get; set; }
+        IColor HorizontalBorderColorColor { get; set; }
     }
 }

@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
 
@@ -107,7 +107,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_1_units;
             }
-            set 
+            set
             {
                 this.field_1_units = value;
             }
@@ -116,4 +116,3 @@ namespace NPOI.HSSF.Record
 
     }
 }
-

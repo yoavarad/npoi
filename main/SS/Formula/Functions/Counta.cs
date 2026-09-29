@@ -46,13 +46,13 @@ namespace NPOI.SS.Formula.Functions
         public ValueEval Evaluate(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
             int nArgs = args.Length;
-            if (nArgs < 1)
+            if(nArgs < 1)
             {
                 // too few arguments
                 return ErrorEval.VALUE_INVALID;
             }
 
-            if (nArgs > 30)
+            if(nArgs > 30)
             {
                 // too many arguments
                 return ErrorEval.VALUE_INVALID;
@@ -63,7 +63,7 @@ namespace NPOI.SS.Formula.Functions
             // Error values like #VALUE!, #REF!, #DIV/0!, #NAME? etc don't cause this COUNTA to return an error
             // in fact, they seem to Get Counted
 
-            for (int i = 0; i < nArgs; i++)
+            for(int i = 0; i < nArgs; i++)
             {
                 temp += CountUtils.CountArg(args[i], _predicate);
 
@@ -80,7 +80,7 @@ namespace NPOI.SS.Formula.Functions
                 // Error values like #VALUE!, #REF!, #DIV/0!, #NAME? etc don't cause this COUNTA to return an error
                 // in fact, they seem to get counted
 
-                if (valueEval == BlankEval.instance)
+                if(valueEval == BlankEval.instance)
                 {
                     return false;
                 }

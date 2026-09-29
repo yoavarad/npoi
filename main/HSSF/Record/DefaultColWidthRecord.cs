@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System.Text;
     using NPOI.Util;
     using System;
+    using System.Text;
 
 
     /**
@@ -69,7 +69,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_1_col_width;
             }
-            set 
+            set
             {
                 field_1_col_width = value;
             }

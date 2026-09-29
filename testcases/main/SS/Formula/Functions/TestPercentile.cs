@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -20,7 +20,8 @@ namespace TestCases.SS.Formula
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.Formula.Functions;
 
     /**
@@ -55,14 +56,14 @@ namespace TestCases.SS.Formula
             ValueEval result = invokePercentile(args, percentile);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
             double delta = 0.00000001;
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, delta);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, delta);
         }
 
         private void ConfirmPercentile(ValueEval percentile, ValueEval[] args, ErrorEval expectedError)
         {
             ValueEval result = invokePercentile(args, percentile);
             ClassicAssert.AreEqual(typeof(ErrorEval), result.GetType());
-            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval) result).ErrorCode);
         }
 
         [Test]

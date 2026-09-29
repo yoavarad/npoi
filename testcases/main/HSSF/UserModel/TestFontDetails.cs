@@ -17,10 +17,11 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using NPOI.Util.Collections;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.Util.Collections;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     /**
      * Tests the implementation of the FontDetails class.
      *

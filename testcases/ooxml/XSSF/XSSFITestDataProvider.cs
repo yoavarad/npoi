@@ -18,12 +18,12 @@
 namespace NPOI.XSSF
 {
 
-    using TestCases.SS;
-    using NPOI.XSSF.UserModel;
-    using System;
     using NPOI.SS;
     using NPOI.SS.UserModel;
+    using NPOI.XSSF.UserModel;
+    using System;
     using TestCases;
+    using TestCases.SS;
 
     /**
      * @author Yegor Kozlov
@@ -42,11 +42,11 @@ namespace NPOI.XSSF
         }
         public IWorkbook WriteOutAndReadBack(IWorkbook original)
         {
-            if (!(original is XSSFWorkbook))
+            if(!(original is XSSFWorkbook))
             {
                 throw new ArgumentException("Expected an instance of XSSFWorkbook, but had " + original.GetType().Name);
             }
-            return XSSFTestDataSamples.WriteOutAndReadBack((XSSFWorkbook)original);
+            return XSSFTestDataSamples.WriteOutAndReadBack((XSSFWorkbook) original);
         }
 
         public IWorkbook CreateWorkbook()
@@ -64,13 +64,13 @@ namespace NPOI.XSSF
         {
             return CreateWorkbook();
         }
-        
+
         public void TrackAllColumnsForAutosizing(ISheet sheet) { }
         //************ End SXSSF-specific methods ***************//
 
         public IFormulaEvaluator CreateFormulaEvaluator(IWorkbook wb)
         {
-            return new XSSFFormulaEvaluator((XSSFWorkbook)wb);
+            return new XSSFFormulaEvaluator((XSSFWorkbook) wb);
         }
 
         public byte[] GetTestDataFileContent(String fileName)
@@ -89,9 +89,6 @@ namespace NPOI.XSSF
             }
         }
 
-        
+
     }
 }
-
-
-

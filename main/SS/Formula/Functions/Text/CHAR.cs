@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.SS.Formula.Eval;
+using System;
 using System.Globalization;
 
 namespace NPOI.SS.Formula.Functions
@@ -12,17 +12,17 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 arg = TextFunction.EvaluateIntArg(arg0, srcRowIndex, srcColumnIndex);
-                if (arg < 0 || arg >= 256)
+                if(arg < 0 || arg >= 256)
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
 
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
-            return new StringEval(Convert.ToString((char)arg, CultureInfo.CurrentCulture));
+            return new StringEval(Convert.ToString((char) arg, CultureInfo.CurrentCulture));
         }
     }
 }

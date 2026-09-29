@@ -17,8 +17,8 @@
 
 namespace NPOI.POIFS.FileSystem
 {
-    using System.IO;
     using NPOI.Util;
+    using System.IO;
 
     /**
      * This class provides a wrapper over an OutputStream so that Document
@@ -62,7 +62,7 @@ namespace NPOI.POIFS.FileSystem
         public override void Write(int b)
         {
             LimitCheck(1);
-            _stream.WriteByte((byte)b);
+            _stream.WriteByte((byte) b);
         }
 
         /**
@@ -93,9 +93,9 @@ namespace NPOI.POIFS.FileSystem
             LimitCheck(len);
             _stream.Write(b, off, len);
         }
-       /// <summary>
+        /// <summary>
         /// Flushes this output stream and forces any buffered output bytes to be written out
-       /// </summary>
+        /// </summary>
         public override void Flush()
         {
             _stream.Flush();
@@ -126,7 +126,7 @@ namespace NPOI.POIFS.FileSystem
          */
         public void WriteFiller(int totalLimit, byte Fill)
         {
-            if (totalLimit > _written)
+            if(totalLimit > _written)
             {
                 byte[] Filler = new byte[totalLimit - _written];
 
@@ -137,7 +137,7 @@ namespace NPOI.POIFS.FileSystem
 
         private void LimitCheck(int toBeWritten)
         {
-            if ((_written + toBeWritten) > _limit)
+            if((_written + toBeWritten) > _limit)
             {
                 throw new IOException("tried to write too much data");
             }

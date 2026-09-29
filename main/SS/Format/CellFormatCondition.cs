@@ -141,14 +141,15 @@ namespace NPOI.SS.Format
          * @return A condition object for the given condition.
          */
         public static CellFormatCondition GetInstance(String opString,
-                String constStr) {
+                String constStr)
+        {
 
-            if (!TESTS.TryGetValue(opString, out int test))
+            if(!TESTS.TryGetValue(opString, out int test))
                 throw new ArgumentException("Unknown test: " + opString);
 
             double c = Double.Parse(constStr, CultureInfo.InvariantCulture);
 
-            switch (test)
+            switch(test)
             {
                 case LT:
                     return new LT_CellFormatCondition(c);

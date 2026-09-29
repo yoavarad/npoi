@@ -33,7 +33,7 @@ namespace NPOI.SS.Formula.Functions
     {
         protected static double singleOperandEvaluate(ValueEval arg, int srcRowIndex, int srcColumnIndex)
         {
-            if (arg == null)
+            if(arg == null)
             {
                 throw new ArgumentException("arg must not be null");
             }
@@ -44,7 +44,7 @@ namespace NPOI.SS.Formula.Functions
         }
         public static void checkValue(double result)
         {
-            if (Double.IsNaN(result) || Double.IsInfinity(result))
+            if(Double.IsNaN(result) || Double.IsInfinity(result))
             {
                 throw new EvaluationException(ErrorEval.NUM_ERROR);
             }
@@ -52,7 +52,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length != 1 && args.Length != 2)
+            if(args.Length != 1 && args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -63,11 +63,11 @@ namespace NPOI.SS.Formula.Functions
                 // second arg converts to int by truncating toward zero
                 int nPlaces = (int)d1;
 
-                if (nPlaces > 127)
+                if(nPlaces > 127)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
-                if (nPlaces < 0)
+                if(nPlaces < 0)
                 {
                     d1 = Math.Abs(d1);
                     double temp = val / Math.Pow(10, d1);
@@ -75,11 +75,11 @@ namespace NPOI.SS.Formula.Functions
                     val = temp* Math.Pow(10, d1);
                 }
                 StringBuilder decimalPlacesFormat = new StringBuilder();
-                if (nPlaces > 0)
+                if(nPlaces > 0)
                 {
                     decimalPlacesFormat.Append('.');
                 }
-                for (int i = 0; i < nPlaces; i++)
+                for(int i = 0; i < nPlaces; i++)
                 {
                     decimalPlacesFormat.Append('0');
                 }
@@ -91,7 +91,7 @@ namespace NPOI.SS.Formula.Functions
 
                 return new StringEval(df.Format(val));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

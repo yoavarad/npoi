@@ -20,13 +20,14 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.Record.Chart;
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using NPOI.HSSF.Record;
-    using NPOI.SS.Formula;
-    using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.SS.Formula.PTG;
 
     /**
      * Tests the serialization and deserialization of the LinkedDataRecord
@@ -191,16 +192,16 @@ namespace TestCases.HSSF.Record.Chart
             LinkedDataRecord record = new LinkedDataRecord();
             record.LinkType=(LinkedDataRecord.LINK_TYPE_VALUES);
             record.ReferenceType=(LinkedDataRecord.REFERENCE_TYPE_WORKSHEET);
-            record.Options=((short)0);
+            record.Options=((short) 0);
             record.IsCustomNumberFormat=(false);
-            record.IndexNumberFmtRecord=((short)0);
+            record.IndexNumberFmtRecord=((short) 0);
             Area3DPtg ptg = new Area3DPtg(0, 7936, 0, 0,
                 false, false, false, false, 0);
             record.FormulaOfLink = (new Ptg[] { ptg, });
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

@@ -15,12 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
-using System;
-
-using System.Collections.Generic;
 using ICSharpCode.SharpZipLib.Zip;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.IO;
 namespace TestCases.OpenXml4Net.OPC
 {
 
@@ -40,27 +40,27 @@ namespace TestCases.OpenXml4Net.OPC
                 Dictionary<String, MemoryStream> file2)
         {
             Dictionary<String, MemoryStream>.KeyCollection listFile1 = file1.Keys;
-            if (listFile1.Count == file2.Keys.Count)
+            if(listFile1.Count == file2.Keys.Count)
             {
-                for (Dictionary<String, MemoryStream>.KeyCollection.Enumerator iter = listFile1.GetEnumerator();
-                    iter.MoveNext(); )
+                for(Dictionary<String, MemoryStream>.KeyCollection.Enumerator iter = listFile1.GetEnumerator();
+                    iter.MoveNext();)
                 {
                     String fileName = (String)iter.Current;
                     // extract the contents for both
                     MemoryStream Contain2;
-                    if (file2.ContainsKey(fileName))
+                    if(file2.ContainsKey(fileName))
                         Contain2 = file2[fileName];
                     else
                         Contain2 = null;
 
                     MemoryStream Contain1;
-                    if (file1.ContainsKey(fileName))
+                    if(file1.ContainsKey(fileName))
                         Contain1 = file1[fileName];
                     else
                         Contain1 = null;
 
 
-                    if (Contain2 == null)
+                    if(Contain2 == null)
                     {
                         // file not found in archive 2
                         Assert.Fail(fileName + " not found in 2nd zip");
@@ -68,7 +68,7 @@ namespace TestCases.OpenXml4Net.OPC
                     }
                     // no need to check for Contain1. The key come from it
 
-                    if ((fileName.EndsWith(".xml")) || fileName.EndsWith(".rels"))
+                    if((fileName.EndsWith(".xml")) || fileName.EndsWith(".rels"))
                     {
                         // we have a xml file
                         // TODO
@@ -78,7 +78,7 @@ namespace TestCases.OpenXml4Net.OPC
                     else
                     {
                         // not xml, may be an image or other binary format
-                        if (Contain2.Length != Contain1.Length)
+                        if(Contain2.Length != Contain1.Length)
                         {
                             // not the same size
                             Assert.Fail(fileName
@@ -88,9 +88,9 @@ namespace TestCases.OpenXml4Net.OPC
                         }
                         byte[] array1 = Contain1.ToArray();
                         byte[] array2 = Contain2.ToArray();
-                        for (int i = 0; i < array1.Length; i++)
+                        for(int i = 0; i < array1.Length; i++)
                         {
-                            if (array1[i] != array2[i])
+                            if(array1[i] != array2[i])
                             {
                                 Assert.Fail(fileName + " differ at index:" + i);
                                 return false;
@@ -120,14 +120,14 @@ namespace TestCases.OpenXml4Net.OPC
             /* Open file to decompress */
             FileStream file_decompress = filename.OpenRead();
 
-            
+
             /* Open the file with the buffer */
             ZipInputStream zis = new ZipInputStream(file_decompress);
 
             /* Processing entries of the zip file */
             ZipEntry entree;
             int count;
-            while ((entree = zis.GetNextEntry()) != null)
+            while((entree = zis.GetNextEntry()) != null)
             {
 
                 /* Create a array for the current entry */
@@ -135,7 +135,7 @@ namespace TestCases.OpenXml4Net.OPC
                 zipContent.Add(entree.Name, byteArray);
 
                 /* copy in memory */
-                while ((count = zis.Read(data, 0, BUFFER_SIZE)) != 0)
+                while((count = zis.Read(data, 0, BUFFER_SIZE)) != 0)
                 {
                     byteArray.Write(data, 0, count);
                 }
@@ -174,14 +174,10 @@ namespace TestCases.OpenXml4Net.OPC
                 Dictionary<String, MemoryStream> file2 = decompress(actual);
                 Equals(file1, file2);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new AssertionException(e.ToString());
             }
         }
     }
 }
-
-
-
-

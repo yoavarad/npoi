@@ -24,15 +24,15 @@
  * Contributors:
  * 
  * ==============================================================*/
-using System;
-using System.IO;
-using System.Collections;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NPOI.POIFS.Common;
+using NPOI.POIFS.FileSystem;
 using NPOI.POIFS.Storage;
 using NPOI.Util;
-using NPOI.POIFS.FileSystem;
-using NPOI.POIFS.Common;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
+using System.IO;
 
 namespace TestCases.POIFS.Storage
 {
@@ -56,13 +56,13 @@ namespace TestCases.POIFS.Storage
             BlockListImpl list = new BlockListImpl();
 
             // verify that you can zap anything
-            for (int j = -2; j < 10; j++)
+            for(int j = -2; j < 10; j++)
             {
                 list.Zap(j);
             }
             RawDataBlock[] blocks = new RawDataBlock[5];
 
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 blocks[j] =
                     new RawDataBlock(new MemoryStream(new byte[512]));
@@ -70,20 +70,20 @@ namespace TestCases.POIFS.Storage
             ListManagedBlock[] tmp = (ListManagedBlock[])blocks;
 
             list.SetBlocks(tmp);
-            for (int j = -2; j < 10; j++)
+            for(int j = -2; j < 10; j++)
             {
                 list.Zap(j);
             }
 
             // verify that all blocks are gone
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 try
                 {
                     list.Remove(j);
                     Assert.Fail("removing item " + j + " should not have succeeded");
                 }
-                catch (IOException )
+                catch(IOException)
                 {
                 }
             }
@@ -101,16 +101,16 @@ namespace TestCases.POIFS.Storage
             RawDataBlock[] blocks = new RawDataBlock[5];
             byte[] data = new byte[512 * 5];
 
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
-                for (int k = j * 512; k < (j * 512) + 512; k++)
+                for(int k = j * 512; k < (j * 512) + 512; k++)
                 {
-                    data[k] = (byte)j;
+                    data[k] = (byte) j;
                 }
             }
             MemoryStream stream = new MemoryStream(data);
 
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 blocks[j] = new RawDataBlock(stream);
             }
@@ -118,41 +118,41 @@ namespace TestCases.POIFS.Storage
             list.SetBlocks(tmp);
 
             // verify that you can't Remove illegal indices
-            for (int j = -2; j < 10; j++)
+            for(int j = -2; j < 10; j++)
             {
-                if ((j < 0) || (j >= 5))
+                if((j < 0) || (j >= 5))
                 {
                     try
                     {
                         list.Remove(j);
                         Assert.Fail("removing item " + j + " should have Assert.Failed");
                     }
-                    catch (IOException )
+                    catch(IOException)
                     {
                     }
                 }
             }
 
             // verify we can safely and correctly Remove all blocks
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 byte[] outPut = list.Remove(j).Data;
 
-                for (int k = 0; k < 512; k++)
+                for(int k = 0; k < 512; k++)
                 {
                     ClassicAssert.AreEqual(data[(j * 512) + k], outPut[k], "testing block " + j + ", index " + k);
                 }
             }
 
             // verify that all blocks are gone
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 try
                 {
                     list.Remove(j);
                     Assert.Fail("removing item " + j + " should not have succeeded");
                 }
-                catch (IOException )
+                catch(IOException)
                 {
                 }
             }
@@ -175,7 +175,7 @@ namespace TestCases.POIFS.Storage
                 list.BAT = new BlockAllocationTableReader(POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS);
                 Assert.Fail("second attempt should have Assert.Failed");
             }
-            catch (IOException )
+            catch(IOException)
             {
             }
         }
@@ -249,13 +249,13 @@ namespace TestCases.POIFS.Storage
             // document 9: no screw ups; start block = 12;
             int index = 13;
 
-            for (; offset < 508; offset += LittleEndianConsts.INT_SIZE)
+            for(; offset < 508; offset += LittleEndianConsts.INT_SIZE)
             {
                 LittleEndian.PutInt(data, offset, index++);
             }
             LittleEndian.PutInt(data, offset, -2);
             raw_blocks.Add(new RawDataBlock(new MemoryStream(data)));
-            for (int j = raw_blocks.Count; j < 128; j++)
+            for(int j = raw_blocks.Count; j < 128; j++)
             {
                 raw_blocks.Add(
                     new RawDataBlock(new MemoryStream(new byte[0])));
@@ -277,14 +277,14 @@ namespace TestCases.POIFS.Storage
             0, 1, -1, -1, -1, -1, -1, -1, 116
         };
 
-            for (int j = 0; j < start_blocks.Length; j++)
+            for(int j = 0; j < start_blocks.Length; j++)
             {
                 try
                 {
                     ListManagedBlock[] dataBlocks =
                         list.FetchBlocks(start_blocks[j],-1);
 
-                    if (expected_Length[j] == -1)
+                    if(expected_Length[j] == -1)
                     {
                         Assert.Fail("document " + j + " should have Assert.Failed");
                     }
@@ -293,9 +293,9 @@ namespace TestCases.POIFS.Storage
                         ClassicAssert.AreEqual(expected_Length[j], dataBlocks.Length);
                     }
                 }
-                catch (IOException)
+                catch(IOException)
                 {
-                    if (expected_Length[j] == -1)
+                    if(expected_Length[j] == -1)
                     {
 
                         // no problem, we expected a Assert.Failure here

@@ -18,16 +18,16 @@
 namespace NPOI.HPSF
 {
 
+    using Cysharp.Text;
     //using TreeBidiMap;
     using NPOI.HPSF.Wellknown;
     using NPOI.Util;
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using System.IO;
+    using System.Linq;
     using System.Text;
-    using Cysharp.Text;
 
     /// <summary>
     /// Represents a section in a {@link PropertySet}.
@@ -131,10 +131,13 @@ namespace NPOI.HPSF
 
             // some input files have a invalid (padded?) offset, which need to be fixed
             // search for beginning of size field
-            if (src[offFix] == 0) {
-                for (int i=0; i<3 && src[offFix] == 0; i++,offFix++);
+            if(src[offFix] == 0)
+            {
+                for(int i = 0; i<3 && src[offFix] == 0; i++, offFix++)
+                    ;
                 // cross check with propertyCount field and the property list field
-                for (int i=0; i<3 && (src[offFix+3] != 0 || src[offFix+7] != 0 || src[offFix+11] != 0); i++,offFix--);
+                for(int i = 0; i<3 && (src[offFix+3] != 0 || src[offFix+7] != 0 || src[offFix+11] != 0); i++, offFix--)
+                    ;
             }
 
             this._offset = offFix;
@@ -189,14 +192,14 @@ namespace NPOI.HPSF
                 offset2Id.Add(off, id);
             }
 
-            long? cpOffset = offset2Id.ContainsValue((long)PropertyIDMap.PID_CODEPAGE) ? 
+            long? cpOffset = offset2Id.ContainsValue((long)PropertyIDMap.PID_CODEPAGE) ?
                 offset2Id.GetKey((long)PropertyIDMap.PID_CODEPAGE) : null;
             /* Look for the codepage. */
             int codepage = -1;
             if(cpOffset.HasValue)
             {
                 /* Read the property's value type. It must be VT_I2. */
-                leis.SetReadIndex((int)(this._offset + cpOffset.Value));
+                leis.SetReadIndex((int) (this._offset + cpOffset.Value));
                 long type = leis.ReadUInt();
 
                 if(type != Variant.VT_I2)
@@ -217,17 +220,17 @@ namespace NPOI.HPSF
             {
                 long off = me.Key;
                 long id = me.Value;
-                if (id == PropertyIDMap.PID_CODEPAGE)
+                if(id == PropertyIDMap.PID_CODEPAGE)
                 {
                     continue;
                 }
                 int pLen = propLen(offset2Id, off, size);
-                leis.SetReadIndex((int)(this._offset + off));
+                leis.SetReadIndex((int) (this._offset + off));
 
-                if (id == PropertyIDMap.PID_DICTIONARY)
+                if(id == PropertyIDMap.PID_DICTIONARY)
                 {
                     leis.Mark(100000);
-                    if (!ReadDictionary(leis, pLen, codepage))
+                    if(!ReadDictionary(leis, pLen, codepage))
                     {
                         // there was an error reading the dictionary, maybe because the pid (0) was used wrong
                         // try reading a property instead
@@ -235,10 +238,10 @@ namespace NPOI.HPSF
                         try
                         {
                             // fix id
-                            id = Math.Max((long)PropertyIDMap.PID_MAX, offset2Id.Inverse.LastKey())+1;
+                            id = Math.Max((long) PropertyIDMap.PID_MAX, offset2Id.Inverse.LastKey())+1;
                             SetProperty(new MutableProperty(id, leis, pLen, codepage));
                         }
-                        catch (RuntimeException e)
+                        catch(RuntimeException e)
                         {
                             //LOG.log(POILogger.INFO, "Dictionary fallback failed - ignoring property");
                         }
@@ -249,7 +252,7 @@ namespace NPOI.HPSF
                     SetProperty(new MutableProperty(id, leis, pLen, codepage));
                 }
             }
-            sectionBytes.Write(src, (int)_offset, size);
+            sectionBytes.Write(src, (int) _offset, size);
             padSectionBytes();
             /*
              * Extract the dictionary (if available).
@@ -567,7 +570,7 @@ namespace NPOI.HPSF
             get
             {
                 int size = (int)sectionBytes.Position;
-                if (size > 0)
+                if(size > 0)
                 {
                     return size;
                 }
@@ -575,11 +578,11 @@ namespace NPOI.HPSF
                 {
                     return CalcSize();
                 }
-                catch (HPSFRuntimeException ex)
+                catch(HPSFRuntimeException ex)
                 {
                     throw;
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     throw new HPSFRuntimeException(ex);
                 }
@@ -599,7 +602,7 @@ namespace NPOI.HPSF
             sectionBytes.Reset();
             Write(sectionBytes);
             padSectionBytes();
-            return (int)sectionBytes.Position;
+            return (int) sectionBytes.Position;
         }
 
         private void padSectionBytes()
@@ -720,10 +723,11 @@ namespace NPOI.HPSF
             propIds.Remove(0L);
             propIds.Remove(1L);
 
-            foreach (long id in propIds) {
+            foreach(long id in propIds)
+            {
                 properties.TryGetValue(id, out Property p1);
                 section.properties.TryGetValue(id, out Property p2);
-                if (p1 == null || p2 == null || !p1.Equals(p2))
+                if(p1 == null || p2 == null || !p1.Equals(p2))
                 {
                     return false;
                 }
@@ -808,16 +812,16 @@ namespace NPOI.HPSF
 
             /* Check whether we have already generated the bytes making out the
              * section. */
-            if (sectionBytes.Position > 0)
+            if(sectionBytes.Position > 0)
             {
-                out1.Write(sectionBytes.ToByteArray(), 0, (int)sectionBytes.Length);
-                return (int)sectionBytes.Position;
+                out1.Write(sectionBytes.ToByteArray(), 0, (int) sectionBytes.Length);
+                return (int) sectionBytes.Position;
             }
 
             /* Writing the section's dictionary it tricky. If there is a dictionary
              * (property 0) the codepage property (property 1) must be set, too. */
             int codepage = Codepage;
-            if (codepage == -1)
+            if(codepage == -1)
             {
                 //String msg =
                 //    "The codepage property is not set although a dictionary is present. "+
@@ -870,9 +874,9 @@ namespace NPOI.HPSF
                     position += WriteDictionary(propertyStream, codepage);
                 }
             }
-            
+
             /* Write the section: */
-            int streamLength = LittleEndianConsts.INT_SIZE * 2 + 
+            int streamLength = LittleEndianConsts.INT_SIZE * 2 +
                 (int)propertyListStream.Length + (int)propertyStream.Length;
 
             /* Write the section's length: */
@@ -913,7 +917,7 @@ namespace NPOI.HPSF
 
             long id = -1;
             bool isCorrupted = false;
-            for (int i = 0; i < nrEntries; i++)
+            for(int i = 0; i < nrEntries; i++)
             {
                 String errMsg =
                     "The property set's dictionary contains bogus data. "
@@ -933,29 +937,29 @@ namespace NPOI.HPSF
                 /* Read the string - Strip 0x00 characters from the end of the string. */
                 int cp = (codepage == -1) ? Property.DEFAULT_CODEPAGE : codepage;
                 int nrBytes = (int)((sLength-1) * (cp == CodePageUtil.CP_UNICODE ? 2 : 1));
-                if (nrBytes > 0xFFFFFF)
+                if(nrBytes > 0xFFFFFF)
                 {
                     //LOG.log(POILogger.WARN, errMsg);
                     isCorrupted = true;
                     break;
                 }
 
-                try 
+                try
                 {
                     byte[] buf = IOUtils.SafelyAllocate(nrBytes, MAX_RECORD_LENGTH);
                     leis.ReadFully(buf, 0, nrBytes);
                     String str = CodePageUtil.GetStringFromCodePage(buf, 0, nrBytes, cp);
 
                     int pad = 1;
-                    if (cp == CodePageUtil.CP_UNICODE)
+                    if(cp == CodePageUtil.CP_UNICODE)
                     {
                         pad = 2+((4 - ((nrBytes+2) & 0x3)) & 0x3);
                     }
                     leis.Skip(pad);
 
                     dic[id] = str;
-                } 
-                catch (RuntimeException ex)
+                }
+                catch(RuntimeException ex)
                 {
                     //LOG.log(POILogger.WARN, errMsg, ex);
                     isCorrupted = true;
@@ -1035,11 +1039,11 @@ namespace NPOI.HPSF
                 {
                     this.dictionary[kv.Key] = kv.Value;
                 }
-                
+
                 /* If the codepage property (ID 1) for the strings (keys and values)
                  * used in the dictionary is not yet defined, set it to ISO-8859-1. */
                 int cp = Codepage;
-                if (cp == -1)
+                if(cp == -1)
                 {
                     Codepage = Property.DEFAULT_CODEPAGE;
                 }
@@ -1102,7 +1106,7 @@ namespace NPOI.HPSF
             b.Append(Size);
             b.Append(", properties: [\n");
             int codepage = Codepage;
-            if (codepage == -1)
+            if(codepage == -1)
             {
                 codepage = Property.DEFAULT_CODEPAGE;
             }
@@ -1128,16 +1132,16 @@ namespace NPOI.HPSF
         /// <return>dictionary or <c>null</c> if the section does not have
         /// a dictionary.
         /// </return>
-        public Dictionary<long, String> Dictionary 
+        public Dictionary<long, String> Dictionary
         {
             get
             {
                 if(dictionary == null)
                 {
-                    dictionary = (Dictionary<long, String>)GetProperty(PropertyIDMap.PID_DICTIONARY);
+                    dictionary = (Dictionary<long, String>) GetProperty(PropertyIDMap.PID_DICTIONARY);
                 }
                 return dictionary;
-            }    
+            }
         }
 
         /// <summary>
@@ -1163,4 +1167,3 @@ namespace NPOI.HPSF
         }
     }
 }
-

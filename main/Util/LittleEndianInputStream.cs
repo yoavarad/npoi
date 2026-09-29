@@ -117,7 +117,7 @@ namespace NPOI.Util
 
         public override int ReadByte()
         {
-            return (byte)ReadUByte();
+            return (byte) ReadUByte();
         }
 
         public int ReadUByte()
@@ -127,11 +127,11 @@ namespace NPOI.Util
             {
                 CheckEOF(Read(buf), 1);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
-            
+
             return LittleEndian.GetUByte(buf);
         }
 
@@ -176,7 +176,7 @@ namespace NPOI.Util
 
         public short ReadShort()
         {
-            return (short)ReadUShort();
+            return (short) ReadUShort();
         }
 
         public int ReadUShort()
@@ -195,7 +195,7 @@ namespace NPOI.Util
 
         private static void CheckEOF(int actualBytes, int expectedBytes)
         {
-            if (expectedBytes != 0 && (actualBytes == -1 || actualBytes != expectedBytes))
+            if(expectedBytes != 0 && (actualBytes == -1 || actualBytes != expectedBytes))
             {
                 throw new RuntimeException("Unexpected end-of-file");
             }

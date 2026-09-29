@@ -1,12 +1,11 @@
-﻿using System;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC.Internal;
+using System;
 using System.Collections.Generic;
 using System.IO;
-
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXml4Net.OPC.Internal;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -63,14 +62,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Fill Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Fill ctObj = new CT_Fill();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "patternFill")
+                if(childNode.LocalName == "patternFill")
                     ctObj.patternFill = CT_PatternFill.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gradientFill")
+                else if(childNode.LocalName == "gradientFill")
                     ctObj.gradientFill = CT_GradientFill.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -82,9 +81,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.patternFill != null)
+            if(this.patternFill != null)
                 this.patternFill.Write(sw, "patternFill");
-            if (this.gradientFill != null)
+            if(this.gradientFill != null)
                 this.gradientFill.Write(sw, "gradientFill");
             sw.WriteEndElement(nodeName);
         }
@@ -95,7 +94,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public override string ToString()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using(MemoryStream ms = new MemoryStream())
             {
                 StreamWriter sw = new StreamWriter(ms);
                 this.Write(sw, "fill");

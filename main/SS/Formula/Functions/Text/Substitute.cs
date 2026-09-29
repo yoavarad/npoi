@@ -20,10 +20,10 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.SS.Formula.Eval;
+    using System;
+    using System.Text;
 
     /**
      * An implementation of the SUBSTITUTE function:
@@ -41,7 +41,7 @@ using Cysharp.Text;
          */
         public override ValueEval EvaluateFunc(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
-            if (args.Length < 3 || args.Length > 4)
+            if(args.Length < 3 || args.Length > 4)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -49,15 +49,15 @@ using Cysharp.Text;
             String oldStr = EvaluateStringArg(args[0], srcCellRow, srcCellCol);
             String searchStr = EvaluateStringArg(args[1], srcCellRow, srcCellCol);
             String newStr = EvaluateStringArg(args[2], srcCellRow, srcCellCol);
-            
+
 
             String result;
 
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 4:
                     int instanceNumber = EvaluateIntArg(args[3], srcCellRow, srcCellCol);
-                    if (instanceNumber < 1)
+                    if(instanceNumber < 1)
                     {
                         return ErrorEval.VALUE_INVALID;
                     }
@@ -76,7 +76,7 @@ using Cysharp.Text;
 
         private static String ReplaceAllOccurrences(String oldStr, String searchStr, String newStr)
         {
-            if (searchStr.Length < 1)
+            if(searchStr.Length < 1)
             {
                 return oldStr;
             }
@@ -84,10 +84,10 @@ using Cysharp.Text;
 
             int startIndex = 0;
             int nextMatch = -1;
-            while (true)
+            while(true)
             {
                 nextMatch = oldStr.IndexOf(searchStr, startIndex, StringComparison.CurrentCulture);
-                if (nextMatch < 0)
+                if(nextMatch < 0)
                 {
                     // store everything from end of last match to end of string
                     sb.Append(oldStr.Substring(startIndex));
@@ -102,23 +102,23 @@ using Cysharp.Text;
 
         private static String ReplaceOneOccurrence(String oldStr, String searchStr, String newStr, int instanceNumber)
         {
-            if (searchStr.Length < 1)
+            if(searchStr.Length < 1)
             {
                 return oldStr;
             }
             int startIndex = 0;
             int nextMatch = -1;
             int count = 0;
-            while (true)
+            while(true)
             {
                 nextMatch = oldStr.IndexOf(searchStr, startIndex, StringComparison.CurrentCulture);
-                if (nextMatch < 0)
+                if(nextMatch < 0)
                 {
                     // not enough occurrences found - leave unchanged
                     return oldStr;
                 }
                 count++;
-                if (count == instanceNumber)
+                if(count == instanceNumber)
                 {
                     StringBuilder sb = new StringBuilder(oldStr.Length + newStr.Length);
                     sb.Append(oldStr.Substring(0, nextMatch));

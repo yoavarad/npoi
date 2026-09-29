@@ -1,8 +1,8 @@
-﻿using System;
+using NPOI.OpenXmlFormats.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NPOI.OpenXmlFormats.Shared;
 
 namespace NPOI.XWPF.UserModel
 {
@@ -24,18 +24,18 @@ namespace NPOI.XWPF.UserModel
             this.parent = p;
 
             //TODO: Implement public radPr
-            if (rad.radPr == null)
+            if(rad.radPr == null)
             {
                 rad.radPr = new CT_RadPr();
             }
 
-            if (rad.deg == null)
+            if(rad.deg == null)
             {
                 rad.deg = new CT_OMathArg();
             }
             this.deg = new XWPFOMathArg(rad.deg, this);
 
-            if (rad.e == null)
+            if(rad.e == null)
             {
                 rad.e = new CT_OMathArg();
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,15 +14,16 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
+using NPOI.DDF;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NPOI.HSSF.UserModel;
-using NPOI.DDF;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using TestCases.HSSF.UserModel;
-using NPOI.SS.UserModel;
 
 namespace TestCases.HSSF.Model
 {
@@ -33,7 +34,7 @@ namespace TestCases.HSSF.Model
         public void TestDefaultValues()
         {
             HSSFClientAnchor clientAnchor = new HSSFClientAnchor();
-            ClassicAssert.AreEqual((int)clientAnchor.AnchorType, 0);
+            ClassicAssert.AreEqual((int) clientAnchor.AnchorType, 0);
             ClassicAssert.AreEqual(clientAnchor.Col1, 0);
             ClassicAssert.AreEqual(clientAnchor.Col2, 0);
             ClassicAssert.AreEqual(clientAnchor.Dx1, 0);
@@ -44,7 +45,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(clientAnchor.Row2, 0);
 
             clientAnchor = new HSSFClientAnchor(new EscherClientAnchorRecord());
-            ClassicAssert.AreEqual((int)clientAnchor.AnchorType, 0);
+            ClassicAssert.AreEqual((int) clientAnchor.AnchorType, 0);
             ClassicAssert.AreEqual(clientAnchor.Col1, 0);
             ClassicAssert.AreEqual(clientAnchor.Col2, 0);
             ClassicAssert.AreEqual(clientAnchor.Dx1, 0);
@@ -92,15 +93,15 @@ namespace TestCases.HSSF.Model
         {
             EscherContainerRecord container = new EscherContainerRecord();
             EscherClientAnchorRecord escher = new EscherClientAnchorRecord();
-            escher.Flag=((short)3);
-            escher.Col1=((short)11);
-            escher.Col2=((short)12);
-            escher.Row1=((short)13);
-            escher.Row2=((short)14);
-            escher.Dx1=((short)15);
-            escher.Dx2=((short)16);
-            escher.Dy1=((short)17);
-            escher.Dy2=((short)18);
+            escher.Flag=((short) 3);
+            escher.Col1=((short) 11);
+            escher.Col2=((short) 12);
+            escher.Row1=((short) 13);
+            escher.Row2=((short) 14);
+            escher.Dx1=((short) 15);
+            escher.Dx2=((short) 16);
+            escher.Dy1=((short) 17);
+            escher.Dy2=((short) 18);
             container.AddChildRecord(escher);
 
             HSSFClientAnchor anchor = (HSSFClientAnchor)HSSFAnchor.CreateAnchorFromEscher(container);
@@ -126,10 +127,10 @@ namespace TestCases.HSSF.Model
         {
             EscherContainerRecord container = new EscherContainerRecord();
             EscherChildAnchorRecord escher = new EscherChildAnchorRecord();
-            escher.Dx1=((short)15);
-            escher.Dx2=((short)16);
-            escher.Dy1=((short)17);
-            escher.Dy2=((short)18);
+            escher.Dx1=((short) 15);
+            escher.Dx2=((short) 16);
+            escher.Dy1=((short) 17);
+            escher.Dy2=((short) 18);
             container.AddChildRecord(escher);
 
             HSSFChildAnchor anchor = (HSSFChildAnchor)HSSFAnchor.CreateAnchorFromEscher(container);
@@ -150,7 +151,7 @@ namespace TestCases.HSSF.Model
 
             HSSFPatriarch drawing = sheet.CreateDrawingPatriarch() as HSSFPatriarch;
             HSSFClientAnchor anchor = new HSSFClientAnchor(10, 10, 200, 200, (short)2, 2, (short)15, 15);
-            anchor.AnchorType = (AnchorType)(2);
+            anchor.AnchorType = (AnchorType) (2);
 
             HSSFSimpleShape rectangle = drawing.CreateSimpleShape(anchor);
             rectangle.ShapeType = (HSSFSimpleShape.OBJECT_TYPE_RECTANGLE);
@@ -165,14 +166,14 @@ namespace TestCases.HSSF.Model
         public void TestClientAnchorFromEscher()
         {
             EscherClientAnchorRecord escher = new EscherClientAnchorRecord();
-            escher.Col1=((short)11);
-            escher.Col2=((short)12);
-            escher.Row1=((short)13);
-            escher.Row2=((short)14);
-            escher.Dx1=((short)15);
-            escher.Dx2=((short)16);
-            escher.Dy1=((short)17);
-            escher.Dy2=((short)18);
+            escher.Col1=((short) 11);
+            escher.Col2=((short) 12);
+            escher.Row1=((short) 13);
+            escher.Row2=((short) 14);
+            escher.Dx1=((short) 15);
+            escher.Dx2=((short) 16);
+            escher.Dy1=((short) 17);
+            escher.Dy2=((short) 18);
 
             HSSFClientAnchor anchor = new HSSFClientAnchor(escher);
             ClassicAssert.AreEqual(anchor.Col1, 11);
@@ -197,7 +198,7 @@ namespace TestCases.HSSF.Model
         {
             HSSFClientAnchor anchor = new HSSFClientAnchor();
             EscherClientAnchorRecord escher = (EscherClientAnchorRecord)HSSFTestHelper.GetEscherAnchor(anchor);
-            anchor.SetAnchor((short)11, 12, 13, 14, (short)15, 16, 17, 18);
+            anchor.SetAnchor((short) 11, 12, 13, 14, (short) 15, 16, 17, 18);
 
             ClassicAssert.AreEqual(anchor.Col1, 11);
             ClassicAssert.AreEqual(escher.Col1, 11);
@@ -245,10 +246,10 @@ namespace TestCases.HSSF.Model
         public void TestChildAnchorFromEscher()
         {
             EscherChildAnchorRecord escher = new EscherChildAnchorRecord();
-            escher.Dx1=((short)15);
-            escher.Dx2=((short)16);
-            escher.Dy1=((short)17);
-            escher.Dy2=((short)18);
+            escher.Dx1=((short) 15);
+            escher.Dx2=((short) 16);
+            escher.Dy1=((short) 17);
+            escher.Dy2=((short) 18);
 
             HSSFChildAnchor anchor = new HSSFChildAnchor(escher);
             ClassicAssert.AreEqual(anchor.Dx1, 15);
@@ -378,7 +379,7 @@ namespace TestCases.HSSF.Model
             clientAnchor2.Row2=(7);
             ClassicAssert.AreEqual(clientAnchor1, clientAnchor2);
 
-            clientAnchor2.AnchorType = (AnchorType)(3);
+            clientAnchor2.AnchorType = (AnchorType) (3);
             ClassicAssert.AreNotSame(clientAnchor1, clientAnchor2);
             clientAnchor2.AnchorType=(0);
             ClassicAssert.AreEqual(clientAnchor1, clientAnchor2);
@@ -433,7 +434,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(client.Row1, 3);
             ClassicAssert.AreEqual(client.Row2, 4);
 
-            client = new HSSFClientAnchor(1, 1, 1, 1, (short)5, 5, (short)6, 6);
+            client = new HSSFClientAnchor(1, 1, 1, 1, (short) 5, 5, (short) 6, 6);
             ClassicAssert.AreEqual(client.IsVerticallyFlipped, false);
             ClassicAssert.AreEqual(client.IsHorizontallyFlipped, false);
             ClassicAssert.AreEqual(client.Col1, 5);

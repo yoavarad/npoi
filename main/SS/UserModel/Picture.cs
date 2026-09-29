@@ -27,7 +27,7 @@ namespace NPOI.SS.UserModel
         Unknown = -1,
 
         None = 0,
-        
+
         /** Extended windows meta file */
         EMF = 2,
 
@@ -74,7 +74,7 @@ namespace NPOI.SS.UserModel
      *
      * @author Yegor Kozlov
      */
-    public interface IPicture: IShape
+    public interface IPicture : IShape
     {
 
         /**
@@ -83,7 +83,7 @@ namespace NPOI.SS.UserModel
          * @see #resize(double, double)
          */
         void Resize();
-        
+
         /**
          * Resize the image proportionally.
          *

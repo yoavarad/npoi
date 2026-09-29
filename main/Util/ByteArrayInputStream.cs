@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace NPOI.Util
@@ -33,7 +33,7 @@ namespace NPOI.Util
 
         public override int Read()
         {
-            lock (_lockObject)
+            lock(_lockObject)
             {
                 return (pos < count) ? (buf[pos++] & 0xff) : -1;
             }
@@ -41,29 +41,29 @@ namespace NPOI.Util
 
         public override int Read(byte[] b, int off, int len)
         {
-            lock (_lockObject)
+            lock(_lockObject)
             {
-                if (b == null)
+                if(b == null)
                 {
                     throw new NullReferenceException();
                 }
-                else if (off < 0 || len < 0 || len > b.Length - off)
+                else if(off < 0 || len < 0 || len > b.Length - off)
                 {
                     throw new IndexOutOfRangeException();
                 }
 
-                if (pos >= count)
+                if(pos >= count)
                 {
                     return 0;
                 }
 
                 int avail = count - pos;
-                if (len > avail)
+                if(len > avail)
                 {
                     len = avail;
                 }
 
-                if (len <= 0)
+                if(len <= 0)
                 {
                     return 0;
                 }
@@ -123,19 +123,19 @@ namespace NPOI.Util
 
         public override long Position
         {
-            get {  return this.pos; }
-            set { this.pos = (int)value; }
+            get { return this.pos; }
+            set { this.pos = (int) value; }
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            if (!this.CanSeek)
+            if(!this.CanSeek)
                 throw new NotSupportedException();
 
-            switch (origin)
+            switch(origin)
             {
                 case SeekOrigin.Begin:
-                    if (0L > offset)
+                    if(0L > offset)
                     {
                         throw new ArgumentOutOfRangeException(nameof(offset), "offset must be positive");
                     }

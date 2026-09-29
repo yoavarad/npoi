@@ -46,9 +46,9 @@ namespace NPOI.HPSF
         /// <summary>
         /// Initializes a new instance of the <see cref="NoSingleSectionException"/> class.
         /// </summary>
-        public NoSingleSectionException():base()
+        public NoSingleSectionException() : base()
         {
-            
+
         }
 
 
@@ -56,9 +56,9 @@ namespace NPOI.HPSF
         /// Initializes a new instance of the <see cref="NoSingleSectionException"/> class.
         /// </summary>
         /// <param name="msg">The exception's message string</param>
-        public NoSingleSectionException(String msg):base(msg)
+        public NoSingleSectionException(String msg) : base(msg)
         {
-            
+
         }
 
 
@@ -66,9 +66,9 @@ namespace NPOI.HPSF
         /// Initializes a new instance of the <see cref="NoSingleSectionException"/> class.
         /// </summary>
         /// <param name="reason">This exception's underlying reason</param>
-        public NoSingleSectionException(Exception reason):base(reason)
+        public NoSingleSectionException(Exception reason) : base(reason)
         {
-            
+
         }
 
 
@@ -77,9 +77,9 @@ namespace NPOI.HPSF
         /// </summary>
         /// <param name="msg">The exception's message string</param>
         /// <param name="reason">This exception's underlying reason</param>
-        public NoSingleSectionException(String msg, Exception reason):base(msg, reason)
+        public NoSingleSectionException(String msg, Exception reason) : base(msg, reason)
         {
-            
+
         }
 
     }

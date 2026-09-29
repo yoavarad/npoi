@@ -1,6 +1,6 @@
-﻿using System;
-using System.Text;
 using NPOI.Util;
+using System;
+using System.Text;
 
 namespace NPOI.HSSF.Record.Chart
 {
@@ -162,7 +162,7 @@ namespace NPOI.HSSF.Record.Chart
             record.YMode = this.YMode;
             return record;
         }
-        
+
         /// <summary>
         /// automatic layout type of the legend. 
         /// MUST be ignored when this record is in the sequence of records that conforms to the ATTACHEDLABEL rule. 
@@ -176,7 +176,7 @@ namespace NPOI.HSSF.Record.Chart
         public int AutoLayoutType
         {
             get { return autolayouttype.GetValue(field_6_option); }
-            set { field_6_option = autolayouttype.SetShortValue(field_6_option, (short)value); }
+            set { field_6_option = autolayouttype.SetShortValue(field_6_option, (short) value); }
         }
         /// <summary>
         /// specifies the checksum of the values in the order as follows,
@@ -191,32 +191,32 @@ namespace NPOI.HSSF.Record.Chart
         /// </summary>
         public CrtLayout12Mode XMode
         {
-            get { return (CrtLayout12Mode)field_7_wXMode; }
-            set { field_7_wXMode = (short)value; }
+            get { return (CrtLayout12Mode) field_7_wXMode; }
+            set { field_7_wXMode = (short) value; }
         }
         /// <summary>
         /// A CrtLayout12Mode structure that specifies the meaning of y.
         /// </summary>
         public CrtLayout12Mode YMode
         {
-            get { return (CrtLayout12Mode)field_8_wYMode; }
-            set { field_8_wYMode = (short)value; }
+            get { return (CrtLayout12Mode) field_8_wYMode; }
+            set { field_8_wYMode = (short) value; }
         }
         /// <summary>
         /// A CrtLayout12Mode structure that specifies the meaning of dx.
         /// </summary>
         public CrtLayout12Mode WidthMode
         {
-            get { return (CrtLayout12Mode)field_9_wWidthMode; }
-            set { field_9_wWidthMode = (short)value; }
+            get { return (CrtLayout12Mode) field_9_wWidthMode; }
+            set { field_9_wWidthMode = (short) value; }
         }
         /// <summary>
         /// A CrtLayout12Mode structure that specifies the meaning of dy.
         /// </summary>
         public CrtLayout12Mode HeightMode
         {
-            get { return (CrtLayout12Mode)field_10_wHeightMode; }
-            set { field_10_wHeightMode = (short)value; }
+            get { return (CrtLayout12Mode) field_10_wHeightMode; }
+            set { field_10_wHeightMode = (short) value; }
         }
         /// <summary>
         /// An Xnum (section 2.5.342) value that specifies a horizontal offset. The meaning is determined by wXMode.

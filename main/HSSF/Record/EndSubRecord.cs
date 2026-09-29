@@ -51,7 +51,7 @@ namespace NPOI.HSSF.Record
 
         public EndSubRecord(ILittleEndianInput in1, int size)
         {
-            if ((size & 0xFF) != ENCODED_SIZE)
+            if((size & 0xFF) != ENCODED_SIZE)
             { // mask out random crap in upper byte
                 throw new RecordFormatException("Unexpected size (" + size + ")");
             }

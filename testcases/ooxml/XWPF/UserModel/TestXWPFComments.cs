@@ -1,7 +1,8 @@
-﻿namespace TestCases.XWPF.UserModel
+namespace TestCases.XWPF.UserModel
 {
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection.Metadata;
@@ -13,7 +14,7 @@
         public void TestAddCommentsToDoc()
         {
             var cId = "0";
-            using (XWPFDocument docOut = new XWPFDocument())
+            using(XWPFDocument docOut = new XWPFDocument())
             {
                 ClassicAssert.IsNull(docOut.GetDocComments());
 
@@ -47,7 +48,7 @@
         [Test]
         public void TestReadComments()
         {
-            using (XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("testComment.docx"))
+            using(XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("testComment.docx"))
             {
                 XWPFComments docComments = doc.GetDocComments();
                 ClassicAssert.IsNotNull(docComments);

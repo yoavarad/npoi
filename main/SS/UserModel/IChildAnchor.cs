@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -34,7 +34,7 @@ namespace NPOI.SS.UserModel
         /// <summary>
         /// get or set y coordinate of the left up corner
         /// </summary>
-        int Dy1 {  get; set; }
+        int Dy1 { get; set; }
 
         /// <summary>
         /// get or set x coordinate of the right down corner

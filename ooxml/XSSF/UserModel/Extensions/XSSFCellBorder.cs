@@ -18,12 +18,12 @@
 namespace NPOI.XSSF.UserModel.Extensions
 {
 
-    using NPOI.OpenXmlFormats.Spreadsheet;
-    using System;
-    using NPOI.XSSF.UserModel;
-    using NPOI.XSSF.Model;
-    using NPOI.SS.UserModel;
     using NPOI.OOXML.XSSF.UserModel;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.SS.UserModel;
+    using NPOI.XSSF.Model;
+    using NPOI.XSSF.UserModel;
+    using System;
 
     /**
 * The enumeration value indicating the side being used for a cell border.
@@ -110,7 +110,7 @@ namespace NPOI.XSSF.UserModel.Extensions
         {
             CT_BorderPr ctborder = GetBorder(side);
             ST_BorderStyle? border = ctborder == null ? ST_BorderStyle.none : ctborder.style;
-            return (BorderStyle)border;
+            return (BorderStyle) border;
         }
 
         /**
@@ -122,7 +122,7 @@ namespace NPOI.XSSF.UserModel.Extensions
          */
         public void SetBorderStyle(BorderSide side, BorderStyle style)
         {
-            GetBorder(side, true).style = (ST_BorderStyle)Enum.GetValues(typeof(ST_BorderStyle)).GetValue((int)style + 1);
+            GetBorder(side, true).style = (ST_BorderStyle) Enum.GetValues(typeof(ST_BorderStyle)).GetValue((int) style + 1);
         }
 
         /**
@@ -135,10 +135,10 @@ namespace NPOI.XSSF.UserModel.Extensions
         {
             CT_BorderPr borderPr = GetBorder(side);
 
-            if (borderPr != null && borderPr.IsSetColor())
+            if(borderPr != null && borderPr.IsSetColor())
             {
                 XSSFColor clr = XSSFColor.From(borderPr.color, _indexedColorMap);
-                if (_theme != null)
+                if(_theme != null)
                 {
                     _theme.InheritFromThemeAsRequired(clr);
                 }
@@ -160,7 +160,8 @@ namespace NPOI.XSSF.UserModel.Extensions
         public void SetBorderColor(BorderSide side, XSSFColor color)
         {
             CT_BorderPr borderPr = GetBorder(side, true);
-            if (color == null) borderPr.UnsetColor();
+            if(color == null)
+                borderPr.UnsetColor();
             else
                 borderPr.color = color.GetCTColor();
         }
@@ -174,27 +175,32 @@ namespace NPOI.XSSF.UserModel.Extensions
         private CT_BorderPr GetBorder(BorderSide side, bool ensure)
         {
             CT_BorderPr borderPr;
-            switch (side)
+            switch(side)
             {
                 case BorderSide.TOP:
                     borderPr = border.top;
-                    if (ensure && borderPr == null) borderPr = border.AddNewTop();
+                    if(ensure && borderPr == null)
+                        borderPr = border.AddNewTop();
                     break;
                 case BorderSide.RIGHT:
                     borderPr = border.right;
-                    if (ensure && borderPr == null) borderPr = border.AddNewRight();
+                    if(ensure && borderPr == null)
+                        borderPr = border.AddNewRight();
                     break;
                 case BorderSide.BOTTOM:
                     borderPr = border.bottom;
-                    if (ensure && borderPr == null) borderPr = border.AddNewBottom();
+                    if(ensure && borderPr == null)
+                        borderPr = border.AddNewBottom();
                     break;
                 case BorderSide.LEFT:
                     borderPr = border.left;
-                    if (ensure && borderPr == null) borderPr = border.AddNewLeft();
+                    if(ensure && borderPr == null)
+                        borderPr = border.AddNewLeft();
                     break;
                 case BorderSide.DIAGONAL:
                     borderPr = border.diagonal;
-                    if (ensure && borderPr == null) borderPr = border.AddNewDiagonal();
+                    if(ensure && borderPr == null)
+                        borderPr = border.AddNewDiagonal();
                     break;
                 default:
                     throw new ArgumentException("No suitable side specified for the border");
@@ -210,12 +216,11 @@ namespace NPOI.XSSF.UserModel.Extensions
 
         public override bool Equals(Object o)
         {
-            if (o is not XSSFCellBorder cf) return false;
+            if(o is not XSSFCellBorder cf)
+                return false;
 
             //TODO: change the compare logic
             return border.ToString().Equals(cf.GetCTBorder().ToString());
         }
     }
 }
-
-

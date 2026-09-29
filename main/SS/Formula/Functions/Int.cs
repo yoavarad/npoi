@@ -31,7 +31,7 @@ namespace NPOI.SS.Formula.Functions
 
         public override double Evaluate(double d)
         {
-            return Math.Floor(d);            
+            return Math.Floor(d);
         }
 
     }

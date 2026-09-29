@@ -16,15 +16,15 @@
 ==================================================================== */
 namespace NPOI.XSSF.Model
 {
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NPOI.XSSF.UserModel;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
-    using NPOI.OpenXml4Net.OPC;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Util;
-    using NPOI.XSSF.UserModel;
-    using NPOI.OpenXmlFormats.Spreadsheet;
 
     public class CommentsTable : POIXMLDocumentPart
     {
@@ -69,7 +69,7 @@ namespace NPOI.XSSF.Model
                 comments = doc.GetComments();
 
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -108,7 +108,7 @@ namespace NPOI.XSSF.Model
          */
         public void ReferenceUpdated(CellAddress oldReference, CT_Comment comment)
         {
-            if (commentRefs != null)
+            if(commentRefs != null)
             {
                 commentRefs.Remove(oldReference);
                 commentRefs[new CellAddress(comment.@ref)] = comment;
@@ -122,7 +122,7 @@ namespace NPOI.XSSF.Model
 
         public String GetAuthor(long authorId)
         {
-            return comments.authors.GetAuthorArray((int)authorId);
+            return comments.authors.GetAuthorArray((int) authorId);
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace NPOI.XSSF.Model
         /// <returns>index of the author</returns>
         public int FindAuthor(String author)
         {
-            for (int i = 0; i < comments.authors.SizeOfAuthorArray(); i++)
+            for(int i = 0; i < comments.authors.SizeOfAuthorArray(); i++)
             {
-                if (comments.authors.GetAuthorArray(i).Equals(author))
+                if(comments.authors.GetAuthorArray(i).Equals(author))
                 {
                     return i;
                 }
@@ -175,7 +175,7 @@ namespace NPOI.XSSF.Model
          * @return CTComment xmlbean if comment exists, otherwise return null.
          * @
          */
-         [Obsolete("deprecated 2015-11-23 (circa POI 3.14beta1). Use {@link CommentsTable#getCTComment(CellAddress)} instead")]
+        [Obsolete("deprecated 2015-11-23 (circa POI 3.14beta1). Use {@link CommentsTable#getCTComment(CellAddress)} instead")]
         public CT_Comment GetCTComment(String ref1)
         {
             prepareCTCommentCache();
@@ -200,7 +200,7 @@ namespace NPOI.XSSF.Model
             PrepareCTCommentCache();
 
             // Return the comment, or null if not known
-            if (commentRefs.TryGetValue(cellRef, out CT_Comment comment))
+            if(commentRefs.TryGetValue(cellRef, out CT_Comment comment))
                 return comment;
             return null;
         }
@@ -215,7 +215,7 @@ namespace NPOI.XSSF.Model
             PrepareCTCommentCache();
             Dictionary<CellAddress, IComment> map = new Dictionary<CellAddress, IComment>();
 
-            foreach (KeyValuePair< CellAddress, CT_Comment> e in commentRefs)
+            foreach(KeyValuePair<CellAddress, CT_Comment> e in commentRefs)
             {
                 map.Add(e.Key, new XSSFComment(this, e.Value, null));
             }
@@ -231,10 +231,10 @@ namespace NPOI.XSSF.Model
         private void PrepareCTCommentCache()
         {
             // Create the cache if needed
-            if (commentRefs == null)
+            if(commentRefs == null)
             {
                 commentRefs = new Dictionary<CellAddress, CT_Comment>();
-                foreach (CT_Comment comment in comments.commentList.GetCommentArray())
+                foreach(CT_Comment comment in comments.commentList.GetCommentArray())
                 {
                     commentRefs.Add(new CellAddress(comment.@ref), comment);
                 }
@@ -263,9 +263,9 @@ namespace NPOI.XSSF.Model
         {
             CT_Comment ct = comments.commentList.AddNewComment();
             ct.@ref = ref1.FormatAsString();
-            ct.authorId = (uint)DEFAULT_AUTHOR_ID;
+            ct.authorId = (uint) DEFAULT_AUTHOR_ID;
 
-            if (commentRefs != null)
+            if(commentRefs != null)
             {
                 commentRefs.Add(ref1, ct);
             }
@@ -295,17 +295,17 @@ namespace NPOI.XSSF.Model
         {
             String stringRef = cellRef.FormatAsString();
             CT_CommentList lst = comments.commentList;
-            if (lst != null)
+            if(lst != null)
             {
                 CT_Comment[] commentArray = lst.GetCommentArray();
-                for (int i = 0; i < commentArray.Length; i++)
+                for(int i = 0; i < commentArray.Length; i++)
                 {
                     CT_Comment comment = commentArray[i];
-                    if (stringRef.Equals(comment.@ref))
+                    if(stringRef.Equals(comment.@ref))
                     {
                         lst.RemoveComment(i);
 
-                        if (commentRefs != null)
+                        if(commentRefs != null)
                         {
                             commentRefs.Remove(cellRef);
                         }
@@ -342,10 +342,10 @@ namespace NPOI.XSSF.Model
         private void prepareCTCommentCache()
         {
             // Create the cache if needed
-            if (commentRefs == null)
+            if(commentRefs == null)
             {
                 commentRefs = new Dictionary<CellAddress, CT_Comment>();
-                foreach (CT_Comment comment in comments.commentList.GetCommentArray())
+                foreach(CT_Comment comment in comments.commentList.GetCommentArray())
                 {
                     commentRefs.Add(new CellAddress(comment.@ref), comment);
                 }
@@ -354,6 +354,3 @@ namespace NPOI.XSSF.Model
     }
 
 }
-
-
-

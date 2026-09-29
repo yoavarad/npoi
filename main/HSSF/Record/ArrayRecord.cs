@@ -18,11 +18,11 @@
 namespace NPOI.HSSF.Record
 {
 
-    using System;
-    using System.Text;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * ARRAY (0x0221)<p/>
@@ -52,7 +52,7 @@ namespace NPOI.HSSF.Record
             int totalFormulaLen = in1.Available();
             _formula = NPOI.SS.Formula.Formula.Read(formulaTokenLen, in1, totalFormulaLen);
         }
-        public ArrayRecord(NPOI.SS.Formula.Formula formula, CellRangeAddress8Bit range):base(range)
+        public ArrayRecord(NPOI.SS.Formula.Formula formula, CellRangeAddress8Bit range) : base(range)
         {
             _options = 0; //YK: Excel 2007 leaves this field unset
             _field3notUsed = 0;
@@ -113,7 +113,7 @@ namespace NPOI.HSSF.Record
             sb.Append(" notUsed=").Append(HexDump.IntToHex(_field3notUsed)).Append("\n");
             sb.Append(" formula:").Append("\n");
             Ptg[] ptgs = _formula.Tokens;
-            for (int i = 0; i < ptgs.Length; i++)
+            for(int i = 0; i < ptgs.Length; i++)
             {
                 Ptg ptg = ptgs[i];
                 sb.Append(ptg.ToString()).Append(ptg.RVAType).Append("\n");

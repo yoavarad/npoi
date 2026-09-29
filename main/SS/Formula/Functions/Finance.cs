@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace NPOI.SS.Formula.Functions
 {
 
@@ -82,7 +82,8 @@ namespace NPOI.SS.Formula.Functions
         static public double IPMT(double r, int per, int nper, double pv, double fv, int type)
         {
             double ipmt = FV(r, per - 1, PMT(r, nper, pv, fv, type), pv, type) * r;
-            if (type == 1) ipmt /= (1 + r);
+            if(type == 1)
+                ipmt /= (1 + r);
             return ipmt;
         }
 

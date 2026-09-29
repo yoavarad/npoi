@@ -15,16 +15,17 @@
    limitations under the License.
 ==================================================================== */
 
-using TestCases.HSSF;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.Util;
 using NPOI.HSSF.Model;
-using TestCases.HSSF.UserModel;
 using NPOI.HSSF.Record;
 using NPOI.HSSF.Record.Aggregates;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using TestCases.HSSF;
+using TestCases.HSSF.UserModel;
 namespace TestCases.HSSF.Record.Aggregates
 {
 
@@ -50,7 +51,7 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 int copies = ps.Copies;
             }
-            catch (NullReferenceException)
+            catch(NullReferenceException)
             {
                 Assert.Fail("Identified bug 46548: PageSettingBlock missing PrintSetupRecord record");
             }
@@ -68,7 +69,7 @@ namespace TestCases.HSSF.Record.Aggregates
             int colIx = 6;
             NumberRecord nr = new NumberRecord();
             nr.Row = (rowIx);
-            nr.Column = ((short)colIx);
+            nr.Column = ((short) colIx);
             nr.Value = (3.0);
 
             NPOI.HSSF.Record.Record[] recs = {
@@ -92,9 +93,9 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 sheet = InternalSheet.CreateSheet(rs);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("two Page Settings Blocks found in the same sheet"))
+                if(e.Message.Equals("two Page Settings Blocks found in the same sheet"))
                 {
                     throw new AssertionException("Identified bug 46480");
                 }
@@ -118,7 +119,7 @@ namespace TestCases.HSSF.Record.Aggregates
             int colIx = 6;
             NumberRecord nr = new NumberRecord();
             nr.Row = (rowIx);
-            nr.Column = ((short)colIx);
+            nr.Column = ((short) colIx);
             nr.Value = (3.0);
 
             NPOI.HSSF.Record.Record[] recs = {
@@ -136,7 +137,7 @@ namespace TestCases.HSSF.Record.Aggregates
             RecordInspector.RecordCollector rv = new RecordInspector.RecordCollector();
             sheet.VisitContainedRecords(rv, 0);
             NPOI.HSSF.Record.Record[] outRecs = rv.Records;
-            if (outRecs[4] == EOFRecord.instance)
+            if(outRecs[4] == EOFRecord.instance)
             {
                 throw new AssertionException("Identified bug 46953 - EOF incorrectly Appended to PSB");
             }
@@ -183,9 +184,9 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 sheet = InternalSheet.CreateSheet(rs);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("two Page Settings Blocks found in the same sheet"))
+                if(e.Message.Equals("two Page Settings Blocks found in the same sheet"))
                 {
                     throw new AssertionException("Identified bug 47199a - failed to process late margings records");
                 }
@@ -233,9 +234,9 @@ namespace TestCases.HSSF.Record.Aggregates
                 new PageSettingsBlock(rs);
                 throw new AssertionException("Identified bug 47199b - duplicate PSB records should not be allowed");
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.Equals("Duplicate PageSettingsBlock record (sid=0x14)"))
+                if(e.Message.Equals("Duplicate PageSettingsBlock record (sid=0x14)"))
                 {
                     // expected during successful Test
                 }
@@ -272,7 +273,7 @@ namespace TestCases.HSSF.Record.Aggregates
             psb.VisitContainedRecords(rc);
             NPOI.HSSF.Record.Record[] outRecs = rc.Records;
 
-            if (outRecs.Length == 2)
+            if(outRecs.Length == 2)
             {
                 throw new AssertionException("PageSettingsBlock didn't add missing header/footer records");
             }
@@ -319,9 +320,9 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 psb = new PageSettingsBlock(rs);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if ("Duplicate PageSettingsBlock record (sid=0x4d)".Equals(e.Message))
+                if("Duplicate PageSettingsBlock record (sid=0x4d)".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 47415");
                 }
@@ -369,9 +370,9 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 sheet = InternalSheet.CreateSheet(rs);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("Duplicate PageSettingsBlock record (sid=0x89c)"))
+                if(e.Message.Equals("Duplicate PageSettingsBlock record (sid=0x89c)"))
                 {
                     throw new AssertionException("Identified bug 48026");
                 }
@@ -403,7 +404,7 @@ namespace TestCases.HSSF.Record.Aggregates
 
                 recs[11],  //EOFRecord
             };
-            for (int i = 0; i < expectedRecs.Length; i++)
+            for(int i = 0; i < expectedRecs.Length; i++)
             {
                 ClassicAssert.AreEqual(expectedRecs[i].GetType(), outRecs[i].GetType(), "Record mismatch at index " + i);
             }
@@ -421,4 +422,3 @@ namespace TestCases.HSSF.Record.Aggregates
 
     }
 }
-

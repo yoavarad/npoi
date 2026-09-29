@@ -52,11 +52,11 @@ namespace NPOI.HSSF.Record
             return buffer.ToString();
         }
 
-        
 
-        public override short Sid 
-        { 
-            get { return sid; } 
+
+        public override short Sid
+        {
+            get { return sid; }
         }
         public override void Serialize(ILittleEndianOutput out1)
         {

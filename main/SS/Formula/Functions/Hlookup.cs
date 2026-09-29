@@ -41,7 +41,7 @@ namespace NPOI.SS.Formula.Functions
         public ValueEval Evaluate(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
             ValueEval arg3 = null;
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 4:
                     arg3 = args[3]; // important: assumed array element Is never null
@@ -64,7 +64,7 @@ namespace NPOI.SS.Formula.Functions
                 LookupUtils.RowVector resultCol = CreateResultColumnVector(tableArray, rowIndex);
                 return resultCol.GetItem(colIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -78,7 +78,7 @@ namespace NPOI.SS.Formula.Functions
          */
         private static LookupUtils.RowVector CreateResultColumnVector(AreaEval tableArray, int rowIndex)
         {
-            if (rowIndex >= tableArray.Height)
+            if(rowIndex >= tableArray.Height)
             {
                 throw EvaluationException.InvalidRef();
             }

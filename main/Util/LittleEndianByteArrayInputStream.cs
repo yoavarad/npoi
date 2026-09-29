@@ -49,7 +49,8 @@ namespace NPOI.Util
 
         }
 
-        public int Read() {
+        public int Read()
+        {
             return (_ReadIndex < _endIndex) ? (_buf[_ReadIndex++] & 0xff) : -1;
         }
 
@@ -60,11 +61,13 @@ namespace NPOI.Util
         /// <remarks>
         /// The <c>readAheadLimit</c> for this class has no meaning.
         /// </remarks>
-        public void Mark(int readAheadLimit) {
+        public void Mark(int readAheadLimit)
+        {
             _mark = _ReadIndex;
         }
 
-        public void Reset() {
+        public void Reset()
+        {
             _ReadIndex = _mark;
         }
 
@@ -74,7 +77,7 @@ namespace NPOI.Util
         }
         private void CheckPosition(int i)
         {
-            if (i > _endIndex - _ReadIndex)
+            if(i > _endIndex - _ReadIndex)
             {
                 throw new RuntimeException("Buffer overrun");
             }
@@ -86,11 +89,12 @@ namespace NPOI.Util
         }
         public void SetReadIndex(int pos)
         {
-	       if (pos < 0 || pos >= _endIndex) {
-	            throw new ArgumentOutOfRangeException();
-	       }
-	       this._ReadIndex = pos;
-	    }
+            if(pos < 0 || pos >= _endIndex)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            this._ReadIndex = pos;
+        }
         public int ReadByte()
         {
             CheckPosition(1);
@@ -123,18 +127,18 @@ namespace NPOI.Util
             int b6 = _buf[i++] & 0xFF;
             int b7 = _buf[i++] & 0xFF;
             _ReadIndex = i;
-            return (((long)b7 << 56) +
-                    ((long)b6 << 48) +
-                    ((long)b5 << 40) +
-                    ((long)b4 << 32) +
-                    ((long)b3 << 24) +
+            return (((long) b7 << 56) +
+                    ((long) b6 << 48) +
+                    ((long) b5 << 40) +
+                    ((long) b4 << 32) +
+                    ((long) b3 << 24) +
                     (b2 << 16) +
                     (b1 << 8) +
                     (b0 << 0));
         }
         public short ReadShort()
         {
-            return (short)ReadUShort();
+            return (short) ReadUShort();
         }
         public int ReadUByte()
         {
@@ -151,8 +155,9 @@ namespace NPOI.Util
             _ReadIndex = i;
             return (b1 << 8) + (b0 << 0);
         }
-        public long ReadUInt() {
-	        return ReadInt() & 0x00FFFFFFFFL; 
+        public long ReadUInt()
+        {
+            return ReadInt() & 0x00FFFFFFFFL;
         }
         public void ReadFully(byte[] buf, int off, int len)
         {
@@ -172,11 +177,12 @@ namespace NPOI.Util
         internal long Skip(long n)
         {
             long k = count - _ReadIndex;
-            if (n < k) {
+            if(n < k)
+            {
                 k = n < 0 ? 0 : n;
             }
 
-            _ReadIndex += (int)k;
+            _ReadIndex += (int) k;
             return k;
         }
 

@@ -1,5 +1,6 @@
-﻿using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NPOI.SS.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 
 namespace TestCases.SS.Util

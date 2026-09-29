@@ -20,7 +20,7 @@ namespace NPOI.SS.Formula
 
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
-    
+
 
     /**
  * A (mostly) opaque interface To allow test clients To trace cache values
@@ -56,6 +56,6 @@ namespace NPOI.SS.Formula
          */
         void SortDependentCachedValues(ICacheEntry[] formulaCells);
         void OnClearDependentCachedValue(ICacheEntry formulaCell, int depth);
-        void OnChangeFromBlankValue(int sheetIndex, int rowIndex, int columnIndex,IEvaluationCell cell, ICacheEntry entry);
+        void OnChangeFromBlankValue(int sheetIndex, int rowIndex, int columnIndex, IEvaluationCell cell, ICacheEntry entry);
     }
 }

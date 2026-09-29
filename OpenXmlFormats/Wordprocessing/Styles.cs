@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,17 +29,17 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Styles Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Styles ctObj = new CT_Styles();
             ctObj.style = new List<CT_Style>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "docDefaults")
+                if(childNode.LocalName == "docDefaults")
                     ctObj.docDefaults = CT_DocDefaults.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "latentStyles")
+                else if(childNode.LocalName == "latentStyles")
                     ctObj.latentStyles = CT_LatentStyles.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "style")
+                else if(childNode.LocalName == "style")
                     ctObj.style.Add(CT_Style.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -53,13 +53,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.Write("<w:styles xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"");
             sw.Write(" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh\"");
             sw.Write('>');
-            if (this.docDefaults != null)
+            if(this.docDefaults != null)
                 this.docDefaults.Write(sw, "docDefaults");
-            if (this.latentStyles != null)
+            if(this.latentStyles != null)
                 this.latentStyles.Write(sw, "latentStyles");
-            if (this.style != null)
+            if(this.style != null)
             {
-                foreach (CT_Style x in this.style)
+                foreach(CT_Style x in this.style)
                 {
                     x.Write(sw, "style");
                 }
@@ -116,7 +116,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         public CT_Style AddNewStyle()
         {
             CT_Style s = new CT_Style();
-            if (styleField == null)
+            if(styleField == null)
                 styleField = new List<CT_Style>();
             styleField.Add(s);
             return s;
@@ -124,7 +124,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public void SetStyleArray(int pos, CT_Style cT_Style)
         {
-            lock (this)
+            lock(this)
             {
                 this.styleField[pos] = cT_Style;
             }
@@ -166,14 +166,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_DocDefaults Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DocDefaults ctObj = new CT_DocDefaults();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "rPrDefault")
+                if(childNode.LocalName == "rPrDefault")
                     ctObj.rPrDefault = CT_RPrDefault.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pPrDefault")
+                else if(childNode.LocalName == "pPrDefault")
                     ctObj.pPrDefault = CT_PPrDefault.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -185,9 +185,9 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.rPrDefault != null)
+            if(this.rPrDefault != null)
                 this.rPrDefault.Write(sw, "rPrDefault");
-            if (this.pPrDefault != null)
+            if(this.pPrDefault != null)
                 this.pPrDefault.Write(sw, "pPrDefault");
             sw.WriteEndW(nodeName);
         }
@@ -253,16 +253,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_RPrDefault()
         {
-            
+
         }
         public static CT_RPrDefault Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_RPrDefault ctObj = new CT_RPrDefault();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "rPr")
+                if(childNode.LocalName == "rPr")
                     ctObj.rPr = CT_RPr.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -274,7 +274,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.rPr != null)
+            if(this.rPr != null)
                 this.rPr.Write(sw, "rPr");
             sw.WriteEndW(nodeName);
         }
@@ -319,12 +319,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_PPrDefault Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PPrDefault ctObj = new CT_PPrDefault();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "pPr")
+                if(childNode.LocalName == "pPr")
                     ctObj.pPr = CT_PPr.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -336,7 +336,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.pPr != null)
+            if(this.pPr != null)
                 this.pPr.Write(sw, "pPr");
             sw.WriteEndW(nodeName);
         }
@@ -397,23 +397,23 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string countField;
         public static CT_LatentStyles Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LatentStyles ctObj = new CT_LatentStyles();
-            if (node.Attributes["w:defLockedState"] != null)
-                ctObj.defLockedState = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defLockedState"].Value,true);
+            if(node.Attributes["w:defLockedState"] != null)
+                ctObj.defLockedState = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defLockedState"].Value, true);
             ctObj.defUIPriority = XmlHelper.ReadString(node.Attributes["w:defUIPriority"]);
-            if (node.Attributes["w:defSemiHidden"] != null)
-                ctObj.defSemiHidden = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defSemiHidden"].Value,true);
-            if (node.Attributes["w:defUnhideWhenUsed"] != null)
-                ctObj.defUnhideWhenUsed = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defUnhideWhenUsed"].Value,true);
-            if (node.Attributes["w:defQFormat"] != null)
-                ctObj.defQFormat = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defQFormat"].Value,true);
+            if(node.Attributes["w:defSemiHidden"] != null)
+                ctObj.defSemiHidden = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defSemiHidden"].Value, true);
+            if(node.Attributes["w:defUnhideWhenUsed"] != null)
+                ctObj.defUnhideWhenUsed = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defUnhideWhenUsed"].Value, true);
+            if(node.Attributes["w:defQFormat"] != null)
+                ctObj.defQFormat = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:defQFormat"].Value, true);
             ctObj.count = XmlHelper.ReadString(node.Attributes["w:count"]);
             ctObj.lsdException = new List<CT_LsdException>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "lsdException")
+                if(childNode.LocalName == "lsdException")
                     ctObj.lsdException.Add(CT_LsdException.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -424,16 +424,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStartW(nodeName);
-            XmlHelper.WriteAttribute(sw, "w:defLockedState", this.defLockedState== ST_OnOff.off?"0":"1");
+            XmlHelper.WriteAttribute(sw, "w:defLockedState", this.defLockedState== ST_OnOff.off ? "0" : "1");
             XmlHelper.WriteAttribute(sw, "w:defUIPriority", this.defUIPriority);
             XmlHelper.WriteAttribute(sw, "w:defSemiHidden", this.defSemiHidden == ST_OnOff.off ? "0" : "1");
             XmlHelper.WriteAttribute(sw, "w:defUnhideWhenUsed", this.defUnhideWhenUsed == ST_OnOff.off ? "0" : "1");
             XmlHelper.WriteAttribute(sw, "w:defQFormat", this.defQFormat == ST_OnOff.off ? "0" : "1");
             XmlHelper.WriteAttribute(sw, "w:count", this.count);
             sw.Write('>');
-            if (this.lsdException != null)
+            if(this.lsdException != null)
             {
-                foreach (CT_LsdException x in this.lsdException)
+                foreach(CT_LsdException x in this.lsdException)
                 {
                     x.Write(sw, "lsdException");
                 }
@@ -592,7 +592,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         public CT_LsdException AddNewLsdException()
         {
             CT_LsdException lsd = new CT_LsdException();
-            if (this.lsdExceptionField == null)
+            if(this.lsdExceptionField == null)
                 this.lsdExceptionField = new List<CT_LsdException>();
             this.lsdExceptionField.Add(lsd);
             return lsd;
@@ -696,62 +696,62 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Style Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Style ctObj = new CT_Style();
-            if (node.Attributes["w:type"] != null)
-                ctObj.type = (ST_StyleType)Enum.Parse(typeof(ST_StyleType), node.Attributes["w:type"].Value);
+            if(node.Attributes["w:type"] != null)
+                ctObj.type = (ST_StyleType) Enum.Parse(typeof(ST_StyleType), node.Attributes["w:type"].Value);
             ctObj.styleId = XmlHelper.ReadString(node.Attributes["w:styleId"]);
-            if (node.Attributes["w:default"] != null)
-                ctObj.@default = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:default"].Value,true);
-            if (node.Attributes["w:customStyle"] != null)
-                ctObj.customStyle = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:customStyle"].Value,true);
+            if(node.Attributes["w:default"] != null)
+                ctObj.@default = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:default"].Value, true);
+            if(node.Attributes["w:customStyle"] != null)
+                ctObj.customStyle = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:customStyle"].Value, true);
             ctObj.tblStylePr = new List<CT_TblStylePr>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "name")
+                if(childNode.LocalName == "name")
                     ctObj.name = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "aliases")
+                else if(childNode.LocalName == "aliases")
                     ctObj.aliases = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "basedOn")
+                else if(childNode.LocalName == "basedOn")
                     ctObj.basedOn = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "next")
+                else if(childNode.LocalName == "next")
                     ctObj.next = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "link")
+                else if(childNode.LocalName == "link")
                     ctObj.link = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "autoRedefine")
+                else if(childNode.LocalName == "autoRedefine")
                     ctObj.autoRedefine = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hidden")
+                else if(childNode.LocalName == "hidden")
                     ctObj.hidden = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "uiPriority")
+                else if(childNode.LocalName == "uiPriority")
                     ctObj.uiPriority = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "semiHidden")
+                else if(childNode.LocalName == "semiHidden")
                     ctObj.semiHidden = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "unhideWhenUsed")
+                else if(childNode.LocalName == "unhideWhenUsed")
                     ctObj.unhideWhenUsed = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "qFormat")
+                else if(childNode.LocalName == "qFormat")
                     ctObj.qFormat = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "locked")
+                else if(childNode.LocalName == "locked")
                     ctObj.locked = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "personal")
+                else if(childNode.LocalName == "personal")
                     ctObj.personal = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "personalCompose")
+                else if(childNode.LocalName == "personalCompose")
                     ctObj.personalCompose = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "personalReply")
+                else if(childNode.LocalName == "personalReply")
                     ctObj.personalReply = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "rsid")
+                else if(childNode.LocalName == "rsid")
                     ctObj.rsid = CT_LongHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pPr")
+                else if(childNode.LocalName == "pPr")
                     ctObj.pPr = CT_PPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "rPr")
+                else if(childNode.LocalName == "rPr")
                     ctObj.rPr = CT_RPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblPr")
+                else if(childNode.LocalName == "tblPr")
                     ctObj.tblPr = CT_TblPrBase.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "trPr")
+                else if(childNode.LocalName == "trPr")
                     ctObj.trPr = CT_TrPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcPr")
+                else if(childNode.LocalName == "tcPr")
                     ctObj.tcPr = CT_TcPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblStylePr")
+                else if(childNode.LocalName == "tblStylePr")
                     ctObj.tblStylePr.Add(CT_TblStylePr.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -765,55 +765,55 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:type", this.type.ToString());
             if(this.@default!= ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:default", "1");
-            if (this.customStyle == ST_OnOff.on)
+            if(this.customStyle == ST_OnOff.on)
                 XmlHelper.WriteAttribute(sw, "w:customStyle", "1");
             XmlHelper.WriteAttribute(sw, "w:styleId", this.styleId);
             sw.Write('>');
-            if (this.name != null)
+            if(this.name != null)
                 this.name.Write(sw, "name");
-            if (this.aliases != null)
+            if(this.aliases != null)
                 this.aliases.Write(sw, "aliases");
-            if (this.basedOn != null)
+            if(this.basedOn != null)
                 this.basedOn.Write(sw, "basedOn");
-            if (this.next != null)
+            if(this.next != null)
                 this.next.Write(sw, "next");
-            if (this.link != null)
+            if(this.link != null)
                 this.link.Write(sw, "link");
-            if (this.autoRedefine != null)
+            if(this.autoRedefine != null)
                 this.autoRedefine.Write(sw, "autoRedefine");
-            if (this.hidden != null)
+            if(this.hidden != null)
                 this.hidden.Write(sw, "hidden");
-            if (this.uiPriority != null)
+            if(this.uiPriority != null)
                 this.uiPriority.Write(sw, "uiPriority");
-            if (this.semiHidden != null)
+            if(this.semiHidden != null)
                 this.semiHidden.Write(sw, "semiHidden");
-            if (this.unhideWhenUsed != null)
+            if(this.unhideWhenUsed != null)
                 this.unhideWhenUsed.Write(sw, "unhideWhenUsed");
-            if (this.qFormat != null)
+            if(this.qFormat != null)
                 this.qFormat.Write(sw, "qFormat");
-            if (this.locked != null)
+            if(this.locked != null)
                 this.locked.Write(sw, "locked");
-            if (this.personal != null)
+            if(this.personal != null)
                 this.personal.Write(sw, "personal");
-            if (this.personalCompose != null)
+            if(this.personalCompose != null)
                 this.personalCompose.Write(sw, "personalCompose");
-            if (this.personalReply != null)
+            if(this.personalReply != null)
                 this.personalReply.Write(sw, "personalReply");
-            if (this.rsid != null)
+            if(this.rsid != null)
                 this.rsid.Write(sw, "rsid");
-            if (this.pPr != null)
+            if(this.pPr != null)
                 this.pPr.Write(sw, "pPr");
-            if (this.rPr != null)
+            if(this.rPr != null)
                 this.rPr.Write(sw, "rPr");
-            if (this.tblPr != null)
+            if(this.tblPr != null)
                 this.tblPr.Write(sw, "tblPr");
-            if (this.trPr != null)
+            if(this.trPr != null)
                 this.trPr.Write(sw, "trPr");
-            if (this.tcPr != null)
+            if(this.tcPr != null)
                 this.tcPr.Write(sw, "tcPr");
-            if (this.tblStylePr != null)
+            if(this.tblStylePr != null)
             {
-                foreach (CT_TblStylePr x in this.tblStylePr)
+                foreach(CT_TblStylePr x in this.tblStylePr)
                 {
                     x.Write(sw, "tblStylePr");
                 }
@@ -1211,11 +1211,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_Em Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Em ctObj = new CT_Em();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_Em)Enum.Parse(typeof(ST_Em), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_Em) Enum.Parse(typeof(ST_Em), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -1255,11 +1255,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_VerticalJc Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_VerticalJc ctObj = new CT_VerticalJc();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_VerticalJc)Enum.Parse(typeof(ST_VerticalJc), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_VerticalJc) Enum.Parse(typeof(ST_VerticalJc), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -1365,19 +1365,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Shd Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Shd ctObj = new CT_Shd();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_Shd)Enum.Parse(typeof(ST_Shd), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_Shd) Enum.Parse(typeof(ST_Shd), node.Attributes["w:val"].Value);
             ctObj.color = XmlHelper.ReadString(node.Attributes["w:color"]);
-            if (node.Attributes["w:themeColor"] != null)
-                ctObj.themeColor = (ST_ThemeColor)Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
+            if(node.Attributes["w:themeColor"] != null)
+                ctObj.themeColor = (ST_ThemeColor) Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
             ctObj.themeTint = XmlHelper.ReadBytes(node.Attributes["w:themeTint"]);
             ctObj.themeShade = XmlHelper.ReadBytes(node.Attributes["w:themeShade"]);
             ctObj.fill = XmlHelper.ReadString(node.Attributes["w:fill"]);
-            if (node.Attributes["w:themeFill"] != null)
-                ctObj.themeFill = (ST_ThemeColor)Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeFill"].Value);
+            if(node.Attributes["w:themeFill"] != null)
+                ctObj.themeFill = (ST_ThemeColor) Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeFill"].Value);
             ctObj.themeFillTint = XmlHelper.ReadBytes(node.Attributes["w:themeFillTint"]);
             ctObj.themeFillShade = XmlHelper.ReadBytes(node.Attributes["w:themeFillShade"]);
             return ctObj;
@@ -1553,118 +1553,118 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Shd
     {
 
-    
+
         nil,
 
-    
+
         clear,
 
-    
+
         solid,
 
-    
+
         horzStripe,
 
-    
+
         vertStripe,
 
-    
+
         reverseDiagStripe,
 
-    
+
         diagStripe,
 
-    
+
         horzCross,
 
-    
+
         diagCross,
 
-    
+
         thinHorzStripe,
 
-    
+
         thinVertStripe,
 
-    
+
         thinReverseDiagStripe,
 
-    
+
         thinDiagStripe,
 
-    
+
         thinHorzCross,
 
-    
+
         thinDiagCross,
 
-    
+
         pct5,
 
-    
+
         pct10,
 
-    
+
         pct12,
 
-    
+
         pct15,
 
-    
+
         pct20,
 
-    
+
         pct25,
 
-    
+
         pct30,
 
-    
+
         pct35,
 
-    
+
         pct37,
 
-    
+
         pct40,
 
-    
+
         pct45,
 
-    
+
         pct50,
 
-    
+
         pct55,
 
-    
+
         pct60,
 
-    
+
         pct62,
 
-    
+
         pct65,
 
-    
+
         pct70,
 
-    
+
         pct75,
 
-    
+
         pct80,
 
-    
+
         pct85,
 
-    
+
         pct87,
 
-    
+
         pct90,
 
-    
+
         pct95,
     }
 
@@ -1690,7 +1690,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_TextScale Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TextScale ctObj = new CT_TextScale();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
@@ -1736,11 +1736,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_Highlight Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Highlight ctObj = new CT_Highlight();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_HighlightColor)Enum.Parse(typeof(ST_HighlightColor), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_HighlightColor) Enum.Parse(typeof(ST_HighlightColor), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -1798,12 +1798,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Color Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Color ctObj = new CT_Color();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
-            if (node.Attributes["w:themeColor"] != null)
-                ctObj.themeColor = (ST_ThemeColor)Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
+            if(node.Attributes["w:themeColor"] != null)
+                ctObj.themeColor = (ST_ThemeColor) Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
             ctObj.themeTint = XmlHelper.ReadBytes(node.Attributes["w:themeTint"]);
             ctObj.themeShade = XmlHelper.ReadBytes(node.Attributes["w:themeShade"]);
             return ctObj;
@@ -1927,14 +1927,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Underline Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Underline ctObj = new CT_Underline();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_Underline)Enum.Parse(typeof(ST_Underline), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_Underline) Enum.Parse(typeof(ST_Underline), node.Attributes["w:val"].Value);
             ctObj.color = XmlHelper.ReadString(node.Attributes["w:color"]);
-            if (node.Attributes["w:themeColor"] != null)
-                ctObj.themeColor = (ST_ThemeColor)Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
+            if(node.Attributes["w:themeColor"] != null)
+                ctObj.themeColor = (ST_ThemeColor) Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
             ctObj.themeTint = XmlHelper.ReadBytes(node.Attributes["w:themeTint"]);
             ctObj.themeShade = XmlHelper.ReadBytes(node.Attributes["w:themeShade"]);
             return ctObj;
@@ -2167,11 +2167,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_TextEffect Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TextEffect ctObj = new CT_TextEffect();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_TextEffect)Enum.Parse(typeof(ST_TextEffect), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_TextEffect) Enum.Parse(typeof(ST_TextEffect), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -2284,24 +2284,24 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Border Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Border ctObj = new CT_Border();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_Border)Enum.Parse(typeof(ST_Border), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_Border) Enum.Parse(typeof(ST_Border), node.Attributes["w:val"].Value);
             ctObj.color = XmlHelper.ReadString(node.Attributes["w:color"]);
-            if (node.Attributes["w:themeColor"] != null)
-                ctObj.themeColor = (ST_ThemeColor)Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
+            if(node.Attributes["w:themeColor"] != null)
+                ctObj.themeColor = (ST_ThemeColor) Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
             ctObj.themeTint = XmlHelper.ReadBytes(node.Attributes["w:themeTint"]);
             ctObj.themeShade = XmlHelper.ReadBytes(node.Attributes["w:themeShade"]);
             if(node.Attributes["w:sz"]!=null)
                 ctObj.sz = XmlHelper.ReadULong(node.Attributes["w:sz"]);
             if(node.Attributes["w:space"]!=null)
                 ctObj.space = XmlHelper.ReadULong(node.Attributes["w:space"]);
-            if (node.Attributes["w:shadow"] != null)
-                ctObj.shadow = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:shadow"].Value,true);
-            if (node.Attributes["w:frame"] != null)
-                ctObj.frame = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:frame"].Value,true);
+            if(node.Attributes["w:shadow"] != null)
+                ctObj.shadow = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:shadow"].Value, true);
+            if(node.Attributes["w:frame"] != null)
+                ctObj.frame = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:frame"].Value, true);
             return ctObj;
         }
 
@@ -2311,10 +2311,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:val", this.val.ToString());
-            if (this.sz != null)
-                XmlHelper.WriteAttribute(sw, "w:sz", (ulong)this.sz, true);
-           if (this.space != null)
-               XmlHelper.WriteAttribute(sw, "w:space", (ulong)this.space, true);
+            if(this.sz != null)
+                XmlHelper.WriteAttribute(sw, "w:sz", (ulong) this.sz, true);
+            if(this.space != null)
+                XmlHelper.WriteAttribute(sw, "w:space", (ulong) this.space, true);
             XmlHelper.WriteAttribute(sw, "w:color", this.color);
             if(this.themeColor!= ST_ThemeColor.none)
                 XmlHelper.WriteAttribute(sw, "w:themeColor", this.themeColor.ToString());
@@ -2322,7 +2322,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:themeShade", this.themeShade);
             if(this.shadow!= ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:shadow", this.shadow.ToString());
-            if (this.frame != ST_OnOff.off)
+            if(this.frame != ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:frame", this.frame.ToString());
             sw.Write("/>");
         }
@@ -3104,7 +3104,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         /// Maple Leaf Art Border
         /// </summary>
         mapleLeaf,
-        
+
         /// <summary>
         /// Muffin Art Border
         /// </summary>

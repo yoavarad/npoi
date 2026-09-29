@@ -18,11 +18,11 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Collections;
-    using System.Text;
-    using NPOI.Util;
     using System.Collections.Generic;
+    using System.Text;
 
 
     /**
@@ -95,7 +95,7 @@ namespace NPOI.HSSF.Record
             _breaks = new List<Break>(nBreaks + 2);
             _breakMap = new Hashtable();
 
-            for (int k = 0; k < nBreaks; k++)
+            for(int k = 0; k < nBreaks; k++)
             {
                 Break br = new Break(in1);
                 _breaks.Add(br);
@@ -132,7 +132,7 @@ namespace NPOI.HSSF.Record
         {
             int nBreaks = _breaks.Count;
             out1.WriteShort(nBreaks);
-            for (int i = 0; i < nBreaks; i++)
+            for(int i = 0; i < nBreaks; i++)
             {
                 _breaks[i].Serialize(out1);
             }
@@ -164,7 +164,7 @@ namespace NPOI.HSSF.Record
             String mainLabel;
             String subLabel;
 
-            if (Sid == HorizontalPageBreakRecord.sid)
+            if(Sid == HorizontalPageBreakRecord.sid)
             {
                 label = "HORIZONTALPAGEBREAK";
                 mainLabel = "row";
@@ -181,7 +181,7 @@ namespace NPOI.HSSF.Record
             retval.Append("     .Sid        =").Append(Sid).Append("\n");
             retval.Append("     .num_breaks =").Append(NumBreaks).Append("\n");
             IEnumerator iterator = GetBreaksEnumerator();
-            for (int k = 0; k < NumBreaks; k++)
+            for(int k = 0; k < NumBreaks; k++)
             {
                 Break region = (Break)iterator.Current;
 
@@ -209,7 +209,7 @@ namespace NPOI.HSSF.Record
             //}
             int key = (int)main;
             Break region = (Break)_breakMap[key];
-            if (region != null)
+            if(region != null)
             {
                 region.main = main;
                 region.subFrom = subFrom;
@@ -237,9 +237,10 @@ namespace NPOI.HSSF.Record
 
         public override int RecordSize
         {
-            get {
+            get
+            {
                 int nBreaks = _breaks.Count;
-                if (!IS_EMPTY_RECORD_WRITTEN && nBreaks < 1)
+                if(!IS_EMPTY_RECORD_WRITTEN && nBreaks < 1)
                 {
                     return 0;
                 }
@@ -270,17 +271,17 @@ namespace NPOI.HSSF.Record
             //if (_breakMap == null)
             //    return null;
             //int rowKey = (int)main;
-            return (Break)_breakMap[main];
+            return (Break) _breakMap[main];
         }
         public int[] GetBreaks()
         {
             int count = NumBreaks;
-            if (count < 1)
+            if(count < 1)
             {
                 return EMPTY_INT_ARRAY;
             }
             int[] result = new int[count];
-            for (int i = 0; i < count; i++)
+            for(int i = 0; i < count; i++)
             {
                 Break breakItem = _breaks[i];
                 result[i] = breakItem.main;

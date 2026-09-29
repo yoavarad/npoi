@@ -17,8 +17,8 @@
 
 namespace NPOI.DDF
 {
-    using System;
     using NPOI.Util;
+    using System;
     using System.Diagnostics;
     public class SysIndexSource
     {
@@ -66,7 +66,7 @@ namespace NPOI.DDF
     {
         internal static SysIndexProcedure[] Values()
         {
-            return new SysIndexProcedure[] { 
+            return new SysIndexProcedure[] {
                 SysIndexProcedure.DARKEN_COLOR,
                 SysIndexProcedure.LIGHTEN_COLOR,
                 SysIndexProcedure.ADD_GRAY_LEVEL,
@@ -200,7 +200,7 @@ namespace NPOI.DDF
             Debug.Assert(len == 4 || len == 6);
 
             int offset = start;
-            if (len == 6)
+            if(len == 6)
             {
                 opid = LittleEndian.GetUShort(source, offset);
                 offset += 2;
@@ -273,11 +273,13 @@ namespace NPOI.DDF
          */
         public SysIndexSource GetSysIndexSource()
         {
-            if (!HasSysIndexFlag()) return null;
+            if(!HasSysIndexFlag())
+                return null;
             int val = FLAG_RED.GetValue(colorRef);
-            foreach (SysIndexSource sis in SysIndexSource.Values())
+            foreach(SysIndexSource sis in SysIndexSource.Values())
             {
-                if (sis.value == val) return sis;
+                if(sis.value == val)
+                    return sis;
             }
             return null;
         }
@@ -288,12 +290,15 @@ namespace NPOI.DDF
          */
         public SysIndexProcedure GetSysIndexProcedure()
         {
-            if (!HasSysIndexFlag()) return null;
+            if(!HasSysIndexFlag())
+                return null;
             int val = FLAG_RED.GetValue(colorRef);
-            foreach (SysIndexProcedure sip in SysIndexProcedure.Values())
+            foreach(SysIndexProcedure sip in SysIndexProcedure.Values())
             {
-                if (sip == SysIndexProcedure.INVERT_AFTER || sip == SysIndexProcedure.INVERT_HIGHBIT_AFTER) continue;
-                if (sip.mask.IsSet(val)) return sip;
+                if(sip == SysIndexProcedure.INVERT_AFTER || sip == SysIndexProcedure.INVERT_HIGHBIT_AFTER)
+                    continue;
+                if(sip.mask.IsSet(val))
+                    return sip;
             }
             return null;
         }
@@ -304,10 +309,13 @@ namespace NPOI.DDF
          */
         public int GetSysIndexInvert()
         {
-            if (!HasSysIndexFlag()) return 0;
+            if(!HasSysIndexFlag())
+                return 0;
             int val = FLAG_GREEN.GetValue(colorRef);
-            if ((SysIndexProcedure.INVERT_AFTER.mask.IsSet(val))) return 1;
-            if ((SysIndexProcedure.INVERT_HIGHBIT_AFTER.mask.IsSet(val))) return 2;
+            if((SysIndexProcedure.INVERT_AFTER.mask.IsSet(val)))
+                return 1;
+            if((SysIndexProcedure.INVERT_HIGHBIT_AFTER.mask.IsSet(val)))
+                return 2;
             return 0;
         }
 
@@ -318,7 +326,8 @@ namespace NPOI.DDF
          */
         public int GetSchemeIndex()
         {
-            if (!HasSchemeIndexFlag()) return -1;
+            if(!HasSchemeIndexFlag())
+                return -1;
             return FLAG_RED.GetValue(colorRef);
         }
 
@@ -327,9 +336,10 @@ namespace NPOI.DDF
          */
         public int GetPaletteIndex()
         {
-            if (!HasPaletteIndexFlag()) return -1;
+            if(!HasPaletteIndexFlag())
+                return -1;
             return (FLAG_GREEN.GetValue(colorRef) << 8) & FLAG_RED.GetValue(colorRef);
         }
     }
-    
+
 }

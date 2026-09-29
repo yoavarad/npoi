@@ -16,10 +16,9 @@
 ==================================================================== */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * Implementation for Excel Bin2Dec() function.<p/>
@@ -62,7 +61,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(numberVE, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -70,19 +69,19 @@ namespace NPOI.SS.Formula.Functions
             Double number = OperandResolver.ParseDouble(strText1);
 
             //If this number argument is non numeric, this function returns the #VALUE! error value.
-            if (double.IsNaN(number))
+            if(double.IsNaN(number))
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
             //If number < -512 or if number > 512, this function returns the #NUM! error value.
-            if (number< MinValue || number > MaxValue)
+            if(number< MinValue || number > MaxValue)
             {
                 return ErrorEval.NUM_ERROR;
             }
 
             int placesNumber;
-            if (number < 0 || placesVE == null)
+            if(number < 0 || placesVE == null)
             {
                 placesNumber = DEFAULT_PLACES_VALUE;
             }
@@ -93,7 +92,7 @@ namespace NPOI.SS.Formula.Functions
                 {
                     placesValueEval = OperandResolver.GetSingleValue(placesVE, srcRowIndex, srcColumnIndex);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
@@ -101,27 +100,27 @@ namespace NPOI.SS.Formula.Functions
                 Double placesNumberDouble = OperandResolver.ParseDouble(placesStr);
 
                 //non numeric value
-                if (double.IsNaN( placesNumberDouble))
+                if(double.IsNaN(placesNumberDouble))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
 
                 //If this argument Contains a decimal value, this function ignores the numbers to the right side of the decimal point.
-                placesNumber = (int)Math.Floor(placesNumberDouble);
+                placesNumber = (int) Math.Floor(placesNumberDouble);
 
-                if (placesNumber < 0 || placesNumber == 0)
+                if(placesNumber < 0 || placesNumber == 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
             }
             String binary = Convert.ToString((int)Math.Floor(number), 2);
 
-            if (binary.Length > DEFAULT_PLACES_VALUE)
+            if(binary.Length > DEFAULT_PLACES_VALUE)
             {
                 binary = binary.Substring(binary.Length - DEFAULT_PLACES_VALUE);
             }
             //If DEC2BIN requires more than places characters, it returns the #NUM! error value.
-            if (binary.Length > placesNumber)
+            if(binary.Length > placesNumber)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -136,11 +135,11 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 1)
+            if(args.Length == 1)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0]);
             }
-            if (args.Length == 2)
+            if(args.Length == 2)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1]);
             }

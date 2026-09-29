@@ -1,12 +1,11 @@
-﻿using System;
+using Cysharp.Text;
+using NPOI.OpenXml4Net.Util;
+using System;
 using System.Collections.Generic;
 using System.IO;
-
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Cysharp.Text;
-using NPOI.OpenXml4Net.Util;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -30,7 +29,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.rPhField = o.rPhField;
             this.phoneticPrField = o.phoneticPrField;
         }
-      
+
 
 
 
@@ -38,28 +37,28 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.t != null)
+            if(this.t != null)
             {
                 //TODO: diff has-space case and no-space case
                 sw.Write("<t xml:space=\"preserve\">");
                 sw.Write(XmlHelper.ExcelEncodeString(XmlHelper.EncodeXml(t)));
                 sw.Write("</t>");
             }
-            if (this.r != null)
+            if(this.r != null)
             {
-                foreach (CT_RElt x in this.r)
+                foreach(CT_RElt x in this.r)
                 {
                     x.Write(sw, "r");
                 }
             }
-            if (this.rPh != null)
+            if(this.rPh != null)
             {
-                foreach (CT_PhoneticRun x in this.rPh)
+                foreach(CT_PhoneticRun x in this.rPh)
                 {
                     x.Write(sw, "rPh");
                 }
             }
-            if (this.phoneticPr != null)
+            if(this.phoneticPr != null)
                 this.phoneticPr.Write(sw, "phoneticPr");
             sw.WriteEndElement(nodeName);
         }
@@ -108,66 +107,67 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         [XmlIgnore]
         public string XmlText
         {
-            get {
+            get
+            {
                 StringBuilder sb = new StringBuilder();
-                using (StringWriter sw = new StringWriter(sb))
+                using(StringWriter sw = new StringWriter(sb))
                 {
-                    if (rField != null && rField.Count > 0)
+                    if(rField != null && rField.Count > 0)
                     {
 
-                        foreach (CT_RElt r in rField)
+                        foreach(CT_RElt r in rField)
                         {
                             sw.Write("<r>");
-                            if (r.rPr != null)
+                            if(r.rPr != null)
                             {
                                 sw.Write("<rPr>");
-                                if (r.rPr.b != null && r.rPr.b.val)
+                                if(r.rPr.b != null && r.rPr.b.val)
                                 {
                                     sw.Write("<b/>");
                                 }
-                                if (r.rPr.i != null && r.rPr.i.val)
+                                if(r.rPr.i != null && r.rPr.i.val)
                                 {
                                     sw.Write("<i/>");
                                 }
-                                if (r.rPr.u != null)
+                                if(r.rPr.u != null)
                                 {
                                     sw.Write("<u val=\"" + r.rPr.u.val + "\"/>");
                                 }
-                                if (r.rPr.color != null && r.rPr.color.theme > 0)
+                                if(r.rPr.color != null && r.rPr.color.theme > 0)
                                 {
                                     sw.Write("<color theme=\"" + r.rPr.color.theme + "\"/>");
                                 }
-                                if (r.rPr.color != null && r.rPr.color.rgbSpecified)
+                                if(r.rPr.color != null && r.rPr.color.rgbSpecified)
                                 {
                                     sw.Write("<color rgb=\"" + BitConverter.ToString(r.rPr.color.rgb).Replace("-", string.Empty) + "\"/>");
                                 }
-                                if (r.rPr.rFont != null)
+                                if(r.rPr.rFont != null)
                                 {
                                     sw.Write("<rFont val=\"" + r.rPr.rFont.val + "\"/>");
                                 }
-                                if (r.rPr.family != null)
+                                if(r.rPr.family != null)
                                 {
                                     sw.Write("<family val=\"" + r.rPr.family.val + "\"/>");
                                 }
-                                if (r.rPr.charset != null)
+                                if(r.rPr.charset != null)
                                 {
                                     sw.Write("<charset val=\"" + r.rPr.charset.val + "\"/>");
                                 }
-                                if (r.rPr.scheme != null)
+                                if(r.rPr.scheme != null)
                                 {
                                     sw.Write("<scheme val=\"" + r.rPr.scheme.val + "\"/>");
                                 }
-                                if (r.rPr.sz != null)
+                                if(r.rPr.sz != null)
                                 {
                                     sw.Write("<sz val=\"" + r.rPr.sz.val + "\"/>");
                                 }
-                                if (r.rPr.vertAlign != null)
+                                if(r.rPr.vertAlign != null)
                                 {
                                     sw.Write("<vertAlign val=\"" + r.rPr.vertAlign.val + "\"/>");
                                 }
                                 sw.Write("</rPr>");
                             }
-                            if (r.t != null)
+                            if(r.t != null)
                             {
                                 sw.Write("<t");
                                 if(r.t.Contains(' ')||r.t.Contains('\n'))
@@ -180,10 +180,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                         }
                     }
 
-                    if (this.t != null)
+                    if(this.t != null)
                     {
                         sw.Write("<t");
-                        if (t.Contains(' ') || t.Contains('\n'))
+                        if(t.Contains(' ') || t.Contains('\n'))
                             sw.Write(" xml:space=\"preserve\"");
                         sw.Write('>');
                         sw.Write(XmlHelper.EncodeXml(this.t));
@@ -191,13 +191,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                     }
                     xmltext = sb.ToString();
                 }
-                return xmltext; 
+                return xmltext;
             }
             set { xmltext = value; }
         }
         public CT_RElt AddNewR()
         {
-            if (null == rField) { rField = new List<CT_RElt>(); }
+            if(null == rField)
+            { rField = new List<CT_RElt>(); }
             CT_RElt r = new CT_RElt();
             this.rField.Add(r);
             return r;
@@ -249,15 +250,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             CT_Rst ctObj = new CT_Rst();
             ctObj.r = new List<CT_RElt>();
             ctObj.rPh = new List<CT_PhoneticRun>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "phoneticPr")
+                if(childNode.LocalName == "phoneticPr")
                     ctObj.phoneticPr = CT_PhoneticPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "r")
+                else if(childNode.LocalName == "r")
                     ctObj.r.Add(CT_RElt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "rPh")
+                else if(childNode.LocalName == "rPh")
                     ctObj.rPh.Add(CT_PhoneticRun.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "t")
+                else if(childNode.LocalName == "t")
                     ctObj.t = childNode.InnerText.Replace("\r", "");
             }
             return ctObj;

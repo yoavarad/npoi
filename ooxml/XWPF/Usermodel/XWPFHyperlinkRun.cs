@@ -16,8 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * A run of text with a Hyperlink applied to it.
@@ -54,7 +54,7 @@ namespace NPOI.XWPF.UserModel
             get { return hyperlink.id; }
             set { hyperlink.id = (value); }
         }
-        
+
         /**
          * If this Hyperlink is an external reference hyperlink,
          *  return the object for it.
@@ -62,7 +62,7 @@ namespace NPOI.XWPF.UserModel
         public XWPFHyperlink GetHyperlink(XWPFDocument document)
         {
             String id = HyperlinkId;
-            if (id == null)
+            if(id == null)
                 return null;
 
             return document.GetHyperlinkByID(id);

@@ -17,11 +17,10 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System;
-
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
+    using System;
 
 
     /**

@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
 
@@ -33,8 +33,8 @@ namespace NPOI.HSSF.Record
 
      * @author Glen Stampoultzis (glens at apache.org)
      */
-    public enum CommonObjectType:short
-    { 
+    public enum CommonObjectType : short
+    {
         Group = 0,
         Line = 1,
         Rectangle = 2,
@@ -97,7 +97,7 @@ namespace NPOI.HSSF.Record
 
         public CommonObjectDataSubRecord(ILittleEndianInput in1, int size)
         {
-            if (size != 18)
+            if(size != 18)
             {
                 throw new RecordFormatException("Expected size 18 but got (" + size + ")");
             }
@@ -116,7 +116,7 @@ namespace NPOI.HSSF.Record
 
             buffer.Append("[ftCmo]\n");
             buffer.Append("    .objectType           = ")
-                .Append("0x").Append(HexDump.ToHex((short)ObjectType))
+                .Append("0x").Append(HexDump.ToHex((short) ObjectType))
                 .Append(" (").Append(ObjectType).Append(" )");
             buffer.Append(Environment.NewLine);
             buffer.Append("    .objectId             = ")
@@ -166,7 +166,7 @@ namespace NPOI.HSSF.Record
          */
         public override int DataSize
         {
-            get { return  2 + 2 + 2 + 4 + 4 + 4; }
+            get { return 2 + 2 + 2 + 4 + 4 + 4; }
         }
 
         public override short Sid
@@ -195,9 +195,9 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return (CommonObjectType)field_1_objectType;
+                return (CommonObjectType) field_1_objectType;
             }
-            set { this.field_1_objectType = (short)value; }
+            set { this.field_1_objectType = (short) value; }
         }
         /**
          * Get the object id field for the CommonObjectData record.

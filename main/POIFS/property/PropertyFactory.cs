@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,10 +25,9 @@
  * 
  * ==============================================================*/
 
-using System.Collections.Generic;
-
-using NPOI.POIFS.Storage;
 using NPOI.POIFS.Common;
+using NPOI.POIFS.Storage;
+using System.Collections.Generic;
 
 namespace NPOI.POIFS.Properties
 {
@@ -44,11 +43,11 @@ namespace NPOI.POIFS.Properties
         /// <param name="blocks">The blocks to be converted</param>
         /// <returns>the converted List of Property objects. May contain
         /// nulls, but will not be null</returns>
-        public static List<Property> ConvertToProperties(ListManagedBlock [] blocks)
+        public static List<Property> ConvertToProperties(ListManagedBlock[] blocks)
         {
             List<Property> properties = new List<Property>();
 
-            for (int j = 0; j < blocks.Length; j++)
+            for(int j = 0; j < blocks.Length; j++)
             {
                 byte[] data = blocks[j].Data;
                 ConvertToProperties(data, properties);
@@ -60,27 +59,27 @@ namespace NPOI.POIFS.Properties
         public static void ConvertToProperties(byte[] data, List<Property> properties)
         {
             int property_count = data.Length / POIFSConstants.PROPERTY_SIZE;
-                int    offset         = 0;
+            int    offset         = 0;
 
-                for (int k = 0; k < property_count; k++)
+            for(int k = 0; k < property_count; k++)
+            {
+                switch(data[offset + PropertyConstants.PROPERTY_TYPE_OFFSET])
                 {
-                switch (data[offset + PropertyConstants.PROPERTY_TYPE_OFFSET])
-                    {
                     case PropertyConstants.DIRECTORY_TYPE:
                         properties.Add(new DirectoryProperty(properties.Count, data, offset));
-                            break;
+                        break;
                     case PropertyConstants.DOCUMENT_TYPE:
                         properties.Add(new DocumentProperty(properties.Count, data, offset));
-                            break;
+                        break;
                     case PropertyConstants.ROOT_TYPE:
                         properties.Add(new RootProperty(properties.Count, data, offset));
-                            break;
+                        break;
                     default:
-                            properties.Add(null);
-                            break;
-                    }
-                    offset += POIFSConstants.PROPERTY_SIZE;
+                        properties.Add(null);
+                        break;
                 }
+                offset += POIFSConstants.PROPERTY_SIZE;
+            }
         }
     }
 }

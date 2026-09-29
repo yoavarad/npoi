@@ -59,7 +59,7 @@ namespace NPOI.SS.Formula.Function
         }
         public int MaxParams
         {
-            get{return _maxParams;}
+            get { return _maxParams; }
         }
         public bool HasFixedArgsLength
         {
@@ -71,7 +71,7 @@ namespace NPOI.SS.Formula.Function
         }
         public byte[] ParameterClassCodes
         {
-            get { return (byte[])_parameterClassCodes.Clone(); }
+            get { return (byte[]) _parameterClassCodes.Clone(); }
         }
         public bool HasUnlimitedVarags
         {

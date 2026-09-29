@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
-using NPOI.Util;
 using NPOI.SS.Formula.PTG;
+using NPOI.Util;
+using System;
 using System.Globalization;
+using System.Text;
 
 namespace NPOI.HSSF.Record
 {
@@ -73,32 +73,32 @@ namespace NPOI.HSSF.Record
         {
 
         }
-    /**
-     * @param in the stream to read data from
-     * @param cbFContinued the seconf short in the record header
-     * @param cmoOt the Containing Obj's {@link CommonObjectDataSubRecord#field_1_objectType}
-     */
+        /**
+         * @param in the stream to read data from
+         * @param cbFContinued the seconf short in the record header
+         * @param cmoOt the Containing Obj's {@link CommonObjectDataSubRecord#field_1_objectType}
+         */
         public LbsDataSubRecord(ILittleEndianInput in1, int cbFContinued, int cmoOt)
         {
             _cbFContinued = cbFContinued;
 
             int encodedTokenLen = in1.ReadUShort();
-            if (encodedTokenLen > 0)
+            if(encodedTokenLen > 0)
             {
                 int formulaSize = in1.ReadUShort();
                 _unknownPreFormulaInt = in1.ReadInt();
 
                 Ptg[] ptgs = Ptg.ReadTokens(formulaSize, in1);
-                if (ptgs.Length != 1)
+                if(ptgs.Length != 1)
                 {
                     throw new RecordFormatException("Read " + ptgs.Length
                             + " tokens but expected exactly 1");
                 }
                 _linkPtg = ptgs[0];
-                switch (encodedTokenLen - formulaSize - 6)
+                switch(encodedTokenLen - formulaSize - 6)
                 {
                     case 1:
-                        _unknownPostFormulaByte = (byte)in1.ReadByte();
+                        _unknownPostFormulaByte = (byte) in1.ReadByte();
                         break;
                     case 0:
                         _unknownPostFormulaByte = null;
@@ -115,17 +115,17 @@ namespace NPOI.HSSF.Record
 
             // From [MS-XLS].pdf 2.5.147 FtLbsData:
             // This field MUST exist if and only if the Containing Obj?s cmo.ot is equal to 0x14.
-            if (cmoOt == 0x14)
+            if(cmoOt == 0x14)
             {
                 _dropData = new LbsDropData(in1);
             }
 
             // From [MS-XLS].pdf 2.5.147 FtLbsData:
             // This array MUST exist if and only if the fValidPlex flag (0x2) is set
-            if ((_flags & 0x2) != 0)
+            if((_flags & 0x2) != 0)
             {
                 _rgLines = new String[_cLines];
-                for (int i = 0; i < _cLines; i++)
+                for(int i = 0; i < _cLines; i++)
                 {
                     _rgLines[i] = StringUtil.ReadUnicodeString(in1);
                 }
@@ -136,10 +136,10 @@ namespace NPOI.HSSF.Record
 
             // From [MS-XLS].pdf 2.5.147 FtLbsData:
             // This array MUST exist if and only if the wListType field is not equal to 0.
-            if (((_flags >> 4) & 0x2) != 0)
+            if(((_flags >> 4) & 0x2) != 0)
             {
                 _bsels = new bool[_cLines];
-                for (int i = 0; i < _cLines; i++)
+                for(int i = 0; i < _cLines; i++)
                 {
                     _bsels[i] = in1.ReadByte() == 1;
                 }
@@ -186,30 +186,30 @@ namespace NPOI.HSSF.Record
                 int result = 2; // 2 Initial shorts
 
                 // optional link formula
-                if (_linkPtg != null)
+                if(_linkPtg != null)
                 {
                     result += 2; // encoded Ptg size
                     result += 4; // unknown int
                     result += _linkPtg.Size;
-                    if (_unknownPostFormulaByte != null)
+                    if(_unknownPostFormulaByte != null)
                     {
                         result += 1;
                     }
                 }
 
                 result += 4 * 2; // 4 shorts
-                if (_dropData != null)
+                if(_dropData != null)
                 {
                     result += _dropData.DataSize;
                 }
-                if (_rgLines != null)
+                if(_rgLines != null)
                 {
-                    foreach (String str in _rgLines)
+                    foreach(String str in _rgLines)
                     {
                         result += StringUtil.GetEncodedSize(str);
                     }
                 }
-                if (_bsels != null)
+                if(_bsels != null)
                 {
                     result += _bsels.Length;
                 }
@@ -220,7 +220,7 @@ namespace NPOI.HSSF.Record
         {
             out1.WriteShort(sid);
             out1.WriteShort(_cbFContinued); // note - this is *not* the size
-            if (_linkPtg == null)
+            if(_linkPtg == null)
             {
                 out1.WriteShort(0);
             }
@@ -228,7 +228,7 @@ namespace NPOI.HSSF.Record
             {
                 int formulaSize = _linkPtg.Size;
                 int linkSize = formulaSize + 6;
-                if (_unknownPostFormulaByte != null)
+                if(_unknownPostFormulaByte != null)
                 {
                     linkSize++;
                 }
@@ -236,7 +236,7 @@ namespace NPOI.HSSF.Record
                 out1.WriteShort(formulaSize);
                 out1.WriteInt(_unknownPreFormulaInt);
                 _linkPtg.Write(out1);
-                if (_unknownPostFormulaByte != null)
+                if(_unknownPostFormulaByte != null)
                 {
                     out1.WriteByte(Convert.ToByte(_unknownPostFormulaByte, CultureInfo.InvariantCulture));
                 }
@@ -246,22 +246,22 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(_flags);
             out1.WriteShort(_idEdit);
 
-            if (_dropData != null)
+            if(_dropData != null)
             {
                 _dropData.Serialize(out1);
             }
 
-            if (_rgLines != null)
+            if(_rgLines != null)
             {
-                foreach (String str in _rgLines)
+                foreach(String str in _rgLines)
                 {
                     StringUtil.WriteUnicodeString(out1, str);
                 }
             }
 
-            if (_bsels != null)
+            if(_bsels != null)
             {
-                foreach (bool val in _bsels)
+                foreach(bool val in _bsels)
                 {
                     out1.WriteByte(val ? 1 : 0);
                 }
@@ -271,8 +271,7 @@ namespace NPOI.HSSF.Record
         {
             LittleEndianByteArrayInputStream in1 = new(formulaRawBytes);
             byte ptgSid = (byte)in1.ReadByte();
-            return ptgSid switch
-            {
+            return ptgSid switch {
                 AreaPtg.sid => new AreaPtg(in1),
                 Area3DPtg.sid => new Area3DPtg(in1),
                 RefPtg.sid => new RefPtg(in1),
@@ -291,13 +290,14 @@ namespace NPOI.HSSF.Record
             sb.Append("[ftLbsData]\n");
             sb.Append("    .unknownshort1 =").Append(HexDump.ShortToHex(_cbFContinued)).Append("\n");
             sb.Append("    .formula        = ").Append('\n');
-            if (_linkPtg != null)
+            if(_linkPtg != null)
                 sb.Append(_linkPtg.ToString()).Append(_linkPtg.RVAType).Append('\n');
             sb.Append("    .nEntryCount   =").Append(HexDump.ShortToHex(_cLines)).Append("\n");
             sb.Append("    .selEntryIx    =").Append(HexDump.ShortToHex(_iSel)).Append("\n");
             sb.Append("    .style         =").Append(HexDump.ShortToHex(_flags)).Append("\n");
             sb.Append("    .unknownshort10=").Append(HexDump.ShortToHex(_idEdit)).Append("\n");
-            if (_dropData != null) sb.Append('\n').Append(_dropData.ToString());
+            if(_dropData != null)
+                sb.Append('\n').Append(_dropData.ToString());
             sb.Append("[/ftLbsData]\n");
             return sb.ToString();
         }
@@ -322,11 +322,12 @@ namespace NPOI.HSSF.Record
             return lbs;
         }
     }
- 
-        /**
-     * This structure specifies properties of the dropdown list control
-     */
-    public class LbsDropData {
+
+    /**
+ * This structure specifies properties of the dropdown list control
+ */
+    public class LbsDropData
+    {
 
         /**
  * Combo dropdown control
@@ -372,17 +373,20 @@ namespace NPOI.HSSF.Record
             _unused = 0;
         }
 
-        public LbsDropData(ILittleEndianInput in1){
+        public LbsDropData(ILittleEndianInput in1)
+        {
             _wStyle = in1.ReadUShort();
             _cLine = in1.ReadUShort();
             _dxMin = in1.ReadUShort();
             _str = StringUtil.ReadUnicodeString(in1);
-            if(StringUtil.GetEncodedSize(_str) % 2 != 0){
-                _unused = (byte)in1.ReadByte();
+            if(StringUtil.GetEncodedSize(_str) % 2 != 0)
+            {
+                _unused = (byte) in1.ReadByte();
             }
         }
 
-        public void Serialize(ILittleEndianOutput out1) {
+        public void Serialize(ILittleEndianOutput out1)
+        {
             out1.WriteShort(_wStyle);
             out1.WriteShort(_cLine);
             out1.WriteShort(_dxMin);
@@ -401,7 +405,8 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        public override String ToString(){
+        public override String ToString()
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append("[LbsDropData]\n");
             sb.Append("  ._wStyle:  ").Append(_wStyle).Append('\n');

@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        FILESHARING
@@ -52,17 +52,17 @@ namespace NPOI.HSSF.Record
 
             int nameLen = in1.ReadShort();
 
-            if (nameLen > 0)
+            if(nameLen > 0)
             {
                 // TODO - Current examples(3) from junits only have zero Length username. 
-                field_3_username_unicode_options = (byte)in1.ReadByte();
+                field_3_username_unicode_options = (byte) in1.ReadByte();
                 field_3_username_value = in1.ReadCompressedUnicode(nameLen);
-                
-                if (field_3_username_value == null)
+
+                if(field_3_username_value == null)
                 {
-                   // In some cases the user name can be null after reading from
-                   // the input stream so we make sure this has a value
-                   field_3_username_value = "";
+                    // In some cases the user name can be null after reading from
+                    // the input stream so we make sure this has a value
+                    field_3_username_value = "";
                 }
             }
             else
@@ -129,7 +129,7 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(ReadOnly);
             out1.WriteShort(Password);
             out1.WriteShort(field_3_username_value.Length);
-            if (field_3_username_value.Length > 0)
+            if(field_3_username_value.Length > 0)
             {
                 out1.WriteByte(field_3_username_unicode_options);
                 StringUtil.PutCompressedUnicode(Username, out1);
@@ -141,7 +141,7 @@ namespace NPOI.HSSF.Record
             get
             {
                 int nameLen = field_3_username_value.Length;
-                if (nameLen < 1)
+                if(nameLen < 1)
                 {
                     return 6;
                 }

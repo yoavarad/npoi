@@ -32,7 +32,7 @@ namespace NPOI.SS.UserModel
         /// get or set then comparison operator for this constraint
         /// </summary>
         int Operator { get; set; }
-        
+
         /// <summary>
         /// If validation type is {@link ValidationType#LIST} 
         /// and <code>formula1</code> was comma-separated literal values rather than a range or named range,
@@ -53,7 +53,7 @@ namespace NPOI.SS.UserModel
         string Formula2 { get; set; }
 
 
-        
+
     }
     /**
          * ValidationType enum
@@ -82,7 +82,7 @@ namespace NPOI.SS.UserModel
      */
     public static class OperatorType
     {
-       
+
         public const int BETWEEN = 0x00;
         public const int NOT_BETWEEN = 0x01;
         public const int EQUAL = 0x02;
@@ -97,21 +97,21 @@ namespace NPOI.SS.UserModel
         /* package */
         public static void ValidateSecondArg(int comparisonOperator, String paramValue)
         {
-            switch (comparisonOperator)
+            switch(comparisonOperator)
             {
                 case BETWEEN:
-                    if (paramValue == null)
+                    if(paramValue == null)
                     {
                         throw new ArgumentException("expr2 must be supplied for 'between' comparisons");
                     }
                     break;
                 case NOT_BETWEEN:
-                    if (paramValue == null)
+                    if(paramValue == null)
                     {
                         throw new ArgumentException("expr2 must be supplied for 'between' comparisons");
                     }
                     break;
-                // all other operators don't need second arg
+                    // all other operators don't need second arg
             }
         }
     }

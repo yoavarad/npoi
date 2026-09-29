@@ -15,9 +15,8 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
-
 using NPOI.HSSF.Model;
+using System.Collections.Generic;
 
 namespace NPOI.HSSF.Record.Aggregates
 {
@@ -38,9 +37,9 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public DataValidityTable(RecordStream rs)
         {
-            _headerRec = (DVALRecord)rs.GetNext();
+            _headerRec = (DVALRecord) rs.GetNext();
             List<DVRecord> temp = new();
-            while (rs.PeekNextClass() == typeof(DVRecord))
+            while(rs.PeekNextClass() == typeof(DVRecord))
             {
                 temp.Add((DVRecord) rs.GetNext());
             }
@@ -55,14 +54,14 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public override void VisitContainedRecords(RecordVisitor rv)
         {
-            if (_validationList.Count == 0)
+            if(_validationList.Count == 0)
             {
                 return;
             }
             rv.VisitRecord(_headerRec);
-            for (int i = 0; i < _validationList.Count; i++)
+            for(int i = 0; i < _validationList.Count; i++)
             {
-                rv.VisitRecord((Record)_validationList[i]);
+                rv.VisitRecord((Record) _validationList[i]);
             }
         }
 

@@ -15,12 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using NPOI.SS.Formula.Eval;
 
 namespace NPOI.SS.Formula
 {
@@ -65,7 +64,7 @@ namespace NPOI.SS.Formula
         private CellCacheEntry[] GetSensitiveInputCells()
         {
             int nItems = _sensitiveInputCells.Count;
-            if (nItems < 1)
+            if(nItems < 1)
             {
                 return CellCacheEntry.EMPTY_ARRAY;
             }
@@ -73,7 +72,7 @@ namespace NPOI.SS.Formula
         }
         public void AddUsedBlankCell(IEvaluationWorkbook evalWorkbook, int bookIndex, int sheetIndex, int rowIndex, int columnIndex)
         {
-            if (_usedBlankCellGroup == null)
+            if(_usedBlankCellGroup == null)
             {
                 _usedBlankCellGroup = new FormulaUsedBlankCellSet();
             }

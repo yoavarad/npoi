@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
     /**
  * Common interface for the matching criteria.
  */
@@ -51,10 +51,10 @@ namespace NPOI.SS.Formula.Functions
             int result = 0;
             int firstSheetIndex = refEval.FirstSheetIndex;
             int lastSheetIndex = refEval.LastSheetIndex;
-            for (int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
+            for(int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
             {
                 ValueEval ve = refEval.GetInnerValueEval(sIx);
-                if (criteriaPredicate.Matches(ve))
+                if(criteriaPredicate.Matches(ve))
                 {
                     result++;
                 }
@@ -63,19 +63,19 @@ namespace NPOI.SS.Formula.Functions
         }
         public static int CountArg(ValueEval eval, IMatchPredicate criteriaPredicate)
         {
-            if (eval == null)
+            if(eval == null)
             {
                 throw new ArgumentException("eval must not be null");
             }
-            if (eval is ThreeDEval dEval)
+            if(eval is ThreeDEval dEval)
             {
                 return CountUtils.CountMatchingCellsInArea(dEval, criteriaPredicate);
             }
-            if (eval is TwoDEval)
+            if(eval is TwoDEval)
             {
                 throw new ArgumentException("Count requires 3D Evals, 2D ones aren't supported");
             }
-            if (eval is RefEval refEval)
+            if(eval is RefEval refEval)
             {
                 return CountUtils.CountMatchingCellsInRef(refEval, criteriaPredicate);
             }
@@ -89,22 +89,23 @@ namespace NPOI.SS.Formula.Functions
             int result = 0;
             int firstSheetIndex = areaEval.FirstSheetIndex;
             int lastSheetIndex = areaEval.LastSheetIndex;
-            for (int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
+            for(int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
             {
                 int height = areaEval.Height;
                 int width = areaEval.Width;
-                for (int rrIx = 0; rrIx < height; rrIx++)
+                for(int rrIx = 0; rrIx < height; rrIx++)
                 {
-                    for (int rcIx = 0; rcIx < width; rcIx++)
+                    for(int rcIx = 0; rcIx < width; rcIx++)
                     {
                         ValueEval ve = areaEval.GetValue(sIx, rrIx, rcIx);
 
-                        if (criteriaPredicate is I_MatchAreaPredicate areaPredicate)
+                        if(criteriaPredicate is I_MatchAreaPredicate areaPredicate)
                         {
-                            if (!areaPredicate.Matches(areaEval, rrIx, rcIx)) continue;
+                            if(!areaPredicate.Matches(areaEval, rrIx, rcIx))
+                                continue;
                         }
 
-                        if (criteriaPredicate.Matches(ve))
+                        if(criteriaPredicate.Matches(ve))
                         {
                             result++;
                         }

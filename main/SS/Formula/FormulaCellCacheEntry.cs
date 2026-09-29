@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula
 {
+    using NPOI.SS.Formula.Eval;
     using System.Collections;
     using System.Collections.Generic;
-    using NPOI.SS.Formula.Eval;
 
 
     /**
@@ -47,9 +47,9 @@ namespace NPOI.SS.Formula
         {
             get
             {
-                if (_sensitiveInputCells != null)
+                if(_sensitiveInputCells != null)
                 {
-                    if (_sensitiveInputCells.Length > 0)
+                    if(_sensitiveInputCells.Length > 0)
                     {
                         return true;
                     }
@@ -62,14 +62,14 @@ namespace NPOI.SS.Formula
         {
             // need To tell all cells that were previously used, but no longer are, 
             // that they are not consumed by this cell any more
-            if (sensitiveInputCells == null)
+            if(sensitiveInputCells == null)
             {
                 _sensitiveInputCells = null;
                 ChangeConsumingCells(CellCacheEntry.EMPTY_ARRAY);
             }
             else
             {
-                _sensitiveInputCells = (CellCacheEntry[])sensitiveInputCells.Clone();
+                _sensitiveInputCells = (CellCacheEntry[]) sensitiveInputCells.Clone();
                 ChangeConsumingCells(_sensitiveInputCells);
             }
         }
@@ -77,9 +77,9 @@ namespace NPOI.SS.Formula
         public void ClearFormulaEntry()
         {
             CellCacheEntry[] usedCells = _sensitiveInputCells;
-            if (usedCells != null)
+            if(usedCells != null)
             {
-                for (int i = usedCells.Length - 1; i >= 0; i--)
+                for(int i = usedCells.Length - 1; i >= 0; i--)
                 {
                     usedCells[i].ClearConsumingCell(this);
                 }
@@ -93,22 +93,22 @@ namespace NPOI.SS.Formula
 
             CellCacheEntry[] prevUsedCells = _sensitiveInputCells;
             int nUsed = usedCells.Length;
-            for (int i = 0; i < nUsed; i++)
+            for(int i = 0; i < nUsed; i++)
             {
                 usedCells[i].AddConsumingCell(this);
             }
-            if (prevUsedCells == null)
+            if(prevUsedCells == null)
             {
                 return;
             }
             int nPrevUsed = prevUsedCells.Length;
-            if (nPrevUsed < 1)
+            if(nPrevUsed < 1)
             {
                 return;
             }
-            
+
             HashSet<CellCacheEntry> usedSet;
-            if (nUsed < 1)
+            if(nUsed < 1)
             {
                 usedSet = new HashSet<CellCacheEntry>();
             }
@@ -121,16 +121,16 @@ namespace NPOI.SS.Formula
                 usedSet = new HashSet<CellCacheEntry>();
 #endif
 
-                for (int i = 0; i < nUsed; i++)
+                for(int i = 0; i < nUsed; i++)
                 {
                     usedSet.Add(usedCells[i]);
                 }
             }
 
-            for (int i = 0; i < nPrevUsed; i++)
+            for(int i = 0; i < nPrevUsed; i++)
             {
                 CellCacheEntry prevUsed = prevUsedCells[i];
-                if (!usedSet.Contains(prevUsed))
+                if(!usedSet.Contains(prevUsed))
                 {
                     // previously was used by cellLoc, but not anymore
                     prevUsed.ClearConsumingCell(this);
@@ -147,9 +147,9 @@ namespace NPOI.SS.Formula
 
         public void NotifyUpdatedBlankCell(BookSheetKey bsk, int rowIndex, int columnIndex, IEvaluationListener evaluationListener)
         {
-            if (_usedBlankCellGroup != null)
+            if(_usedBlankCellGroup != null)
             {
-                if (_usedBlankCellGroup.ContainsCell(bsk, rowIndex, columnIndex))
+                if(_usedBlankCellGroup.ContainsCell(bsk, rowIndex, columnIndex))
                 {
                     ClearFormulaEntry();
                     RecurseClearCachedFormulaResults(evaluationListener);

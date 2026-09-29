@@ -18,12 +18,7 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Text; 
     using Cysharp.Text;
-    using System.Text.RegularExpressions;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Constant;
     using NPOI.SS.Formula.Function;
@@ -31,6 +26,11 @@ namespace NPOI.SS.Formula
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Specific exception thrown when a supplied formula does not Parse properly.
@@ -155,10 +155,11 @@ namespace NPOI.SS.Formula
         public static Area3DPxg ParseStructuredReference(String tableText, IFormulaParsingWorkbook workbook, int rowIndex)
         {
             Ptg[] arr = FormulaParser.Parse(tableText, workbook, 0, 0, rowIndex);
-            if (arr.Length != 1 || arr[0] is not Area3DPxg ) {
+            if(arr.Length != 1 || arr[0] is not Area3DPxg)
+            {
                 throw new InvalidOperationException("Illegal structured reference");
             }
-            return (Area3DPxg)arr[0];
+            return (Area3DPxg) arr[0];
         }
 
         /** Read New Character From Input Stream */
@@ -166,9 +167,9 @@ namespace NPOI.SS.Formula
         {
             // The intersection operator is a space.  We track whether the run of 
             // whitespace preceeding "look" counts as an intersection operator.  
-            if (IsWhite(look))
+            if(IsWhite(look))
             {
-                if (look == ' ')
+                if(look == ' ')
                 {
                     _inIntersection = true;
                 }
@@ -178,11 +179,11 @@ namespace NPOI.SS.Formula
                 _inIntersection = false;
             }
             // Check To see if we've walked off the end of the string.
-            if (_pointer > _formulaLength)
+            if(_pointer > _formulaLength)
             {
                 throw new Exception("too far");
             }
-            if (_pointer < _formulaLength)
+            if(_pointer < _formulaLength)
             {
                 look = _formulaString.CodePointAt(_pointer);
             }
@@ -190,7 +191,7 @@ namespace NPOI.SS.Formula
             {
                 // Just return if so and reset 'look' To something To keep
                 // SkipWhitespace from spinning
-                look = (char)0;
+                look = (char) 0;
                 _inIntersection = false;
             }
             _pointer+= StringUtil.CharCount(look);
@@ -202,7 +203,7 @@ namespace NPOI.SS.Formula
         {
             String msg;
 
-            if (look == '=' && _formulaString.Substring(0, _pointer - 1).Trim().Length < 1)
+            if(look == '=' && _formulaString.Substring(0, _pointer - 1).Trim().Length < 1)
             {
                 msg = "The specified formula '" + _formulaString
                     + "' starts with an equals sign which is not allowed.";
@@ -253,7 +254,7 @@ namespace NPOI.SS.Formula
         /** Skip Over Leading White Space */
         private void SkipWhite()
         {
-            while (IsWhite(look))
+            while(IsWhite(look))
             {
                 GetChar();
             }
@@ -266,7 +267,7 @@ namespace NPOI.SS.Formula
          */
         private void Match(int x)
         {
-            if (look != x)
+            if(look != x)
             {
                 throw expected("'" + x + "'");
             }
@@ -274,7 +275,7 @@ namespace NPOI.SS.Formula
         }
         private String ParseUnquotedIdentifier()
         {
-            if (look == '\'')
+            if(look == '\'')
             {
                 throw expected("unquoted identifier");
             }
@@ -286,7 +287,7 @@ namespace NPOI.SS.Formula
                 sb.Append(char.ConvertFromUtf32(look));
                 GetChar();
             }
-            if (sb.Length < 1)
+            if(sb.Length < 1)
             {
                 return null;
             }
@@ -298,7 +299,7 @@ namespace NPOI.SS.Formula
         {
             StringBuilder value = new StringBuilder();
 
-            while (IsDigit(look))
+            while(IsDigit(look))
             {
                 value.Append(char.ConvertFromUtf32(look));
                 GetChar();
@@ -310,7 +311,7 @@ namespace NPOI.SS.Formula
         {
             ParseNode result = ParseRangeable();
             bool hasRange = false;
-            while (look == ':')
+            while(look == ':')
             {
                 int pos = _pointer;
                 GetChar();
@@ -327,7 +328,7 @@ namespace NPOI.SS.Formula
                 result = new ParseNode(RangePtg.instance, children);
                 hasRange = true;
             }
-            if (hasRange)
+            if(hasRange)
             {
                 return AugmentWithMemPtg(result);
             }
@@ -336,7 +337,7 @@ namespace NPOI.SS.Formula
         private static ParseNode AugmentWithMemPtg(ParseNode root)
         {
             Ptg memPtg;
-            if (NeedsMemFunc(root))
+            if(NeedsMemFunc(root))
             {
                 memPtg = new MemFuncPtg(root.EncodedSize);
             }
@@ -355,36 +356,36 @@ namespace NPOI.SS.Formula
         private static bool NeedsMemFunc(ParseNode root)
         {
             Ptg token = root.GetToken();
-            if (token is AbstractFunctionPtg)
+            if(token is AbstractFunctionPtg)
             {
                 return true;
             }
-            if (token is IExternSheetReferenceToken)
+            if(token is IExternSheetReferenceToken)
             { // 3D refs
                 return true;
             }
-            if (token is NamePtg || token is NameXPtg)
+            if(token is NamePtg || token is NameXPtg)
             { // 3D refs
                 return true;
             }
 
-            if (token is OperationPtg || token is ParenthesisPtg)
+            if(token is OperationPtg || token is ParenthesisPtg)
             {
                 // expect RangePtg, but perhaps also UnionPtg, IntersectionPtg etc
-                foreach (ParseNode child in root.GetChildren())
+                foreach(ParseNode child in root.GetChildren())
                 {
-                    if (NeedsMemFunc(child))
+                    if(NeedsMemFunc(child))
                     {
                         return true;
                     }
                 }
                 return false;
             }
-            if (token is OperandPtg)
+            if(token is OperandPtg)
             {
                 return false;
             }
-            if (token is OperationPtg)
+            if(token is OperationPtg)
             {
                 return true;
             }
@@ -398,17 +399,17 @@ namespace NPOI.SS.Formula
          */
         private static bool IsValidDefinedNameChar(int ch)
         {
-            if (IsLetterOrDigit(ch))
+            if(IsLetterOrDigit(ch))
             {
                 return true;
             }
             // the sheet naming rules are vague on whether unicode characters are allowed
             // assume they're allowed.
-            if (ch > 128)
+            if(ch > 128)
             {
                 return true;
             }
-            switch (ch)
+            switch(ch)
             {
                 case '.':
                 case '_':
@@ -424,7 +425,7 @@ namespace NPOI.SS.Formula
          */
         private static void CheckValidRangeOperand(String sideName, int currentParsePosition, ParseNode pn)
         {
-            if (!IsValidRangeOperand(pn))
+            if(!IsValidRangeOperand(pn))
             {
                 throw new FormulaParseException("The " + sideName
                         + " of the range operator ':' at position "
@@ -439,38 +440,38 @@ namespace NPOI.SS.Formula
         {
             Ptg tkn = a.GetToken();
             // Note - order is important for these instance-of checks
-            if (tkn is OperandPtg)
+            if(tkn is OperandPtg)
             {
                 // notably cell refs and area refs
                 return true;
             }
 
             // next 2 are special cases of OperationPtg
-            if (tkn is AbstractFunctionPtg afp)
+            if(tkn is AbstractFunctionPtg afp)
             {
                 byte returnClass = afp.DefaultOperandClass;
                 //CLASS_VALUE was added as valid to support example 6 in
                 //https://support.microsoft.com/en-us/office/xlookup-function-b7fd680e-6d10-43e6-84f9-88eae8bf5929
                 return Ptg.CLASS_REF == returnClass || Ptg.CLASS_VALUE == returnClass;
             }
-            if (tkn is ValueOperatorPtg)
+            if(tkn is ValueOperatorPtg)
             {
                 return false;
             }
-            if (tkn is OperationPtg)
+            if(tkn is OperationPtg)
             {
                 return true;
             }
 
             // one special case of ControlPtg
-            if (tkn is ParenthesisPtg)
+            if(tkn is ParenthesisPtg)
             {
                 // parenthesis Ptg should have only one child
                 return IsValidRangeOperand(a.GetChildren()[0]);
             }
 
             // one special case of ScalarConstantPtg
-            if (tkn == ErrPtg.REF_INVALID)
+            if(tkn == ErrPtg.REF_INVALID)
             {
                 return true;
             }
@@ -513,7 +514,7 @@ namespace NPOI.SS.Formula
             SkipWhite();
             int savePointer = _pointer;
             SheetIdentifier sheetIden = ParseSheetName();
-            if (sheetIden == null)
+            if(sheetIden == null)
             {
                 ResetPointer(savePointer);
             }
@@ -525,11 +526,11 @@ namespace NPOI.SS.Formula
 
             SimpleRangePart part1 = ParseSimpleRangePart();
 
-            if (part1 == null)
+            if(part1 == null)
             {
-                if (sheetIden != null)
+                if(sheetIden != null)
                 {
-                    if (look == '#')
+                    if(look == '#')
                     {  // error ref like MySheet!#REF!
                         return new ParseNode(ErrPtg.ValueOf(ParseErrorLiteral()));
                     }
@@ -537,13 +538,13 @@ namespace NPOI.SS.Formula
                     {
                         // Is it a named range?
                         String name = ParseAsName();
-                        if (name.Length == 0)
+                        if(name.Length == 0)
                         {
                             throw new FormulaParseException("Cell reference or Named Range "
                                     + "expected after sheet name at index " + _pointer + ".");
                         }
                         Ptg nameXPtg = _book.GetNameXPtg(name, sheetIden);
-                        if (nameXPtg == null)
+                        if(nameXPtg == null)
                         {
                             throw new FormulaParseException("Specified name '" + name +
                                     "' for sheet " + sheetIden.AsFormulaString() + " not found");
@@ -559,33 +560,33 @@ namespace NPOI.SS.Formula
 
 
             bool whiteAfterPart1 = IsWhite(look);
-            if (whiteAfterPart1)
+            if(whiteAfterPart1)
             {
                 SkipWhite();
             }
 
-            if (look == ':')
+            if(look == ':')
             {
                 int colonPos = _pointer;
                 GetChar();
                 SkipWhite();
                 SimpleRangePart part2 = ParseSimpleRangePart();
-                if (part2 != null && !part1.IsCompatibleForArea(part2))
+                if(part2 != null && !part1.IsCompatibleForArea(part2))
                 {
                     // second part is not compatible with an area ref e.g. S!A1:S!B2
                     // where S might be a sheet name (that looks like a column name)
 
                     part2 = null;
                 }
-                if (part2 == null)
+                if(part2 == null)
                 {
                     // second part is not compatible with an area ref e.g. A1:OFFSET(B2, 1, 2)
                     // reset and let caller use explicit range operator
                     ResetPointer(colonPos);
-                    if (!part1.IsCell)
+                    if(!part1.IsCell)
                     {
                         String prefix;
-                        if (sheetIden == null)
+                        if(sheetIden == null)
                         {
                             prefix = "";
                         }
@@ -600,11 +601,11 @@ namespace NPOI.SS.Formula
                 return CreateAreaRefParseNode(sheetIden, part1, part2);
             }
 
-            if (look == '.')
+            if(look == '.')
             {
                 GetChar();
                 int dotCount = 1;
-                while (look == '.')
+                while(look == '.')
                 {
                     dotCount++;
                     GetChar();
@@ -614,9 +615,9 @@ namespace NPOI.SS.Formula
                 SkipWhite();
                 SimpleRangePart part2 = ParseSimpleRangePart();
                 String part1And2 = _formulaString.Substring(savePointer - 1, _pointer - savePointer);
-                if (part2 == null)
+                if(part2 == null)
                 {
-                    if (sheetIden != null)
+                    if(sheetIden != null)
                     {
                         throw new FormulaParseException("Complete area reference expected after sheet name at index "
                                 + _pointer + ".");
@@ -625,9 +626,9 @@ namespace NPOI.SS.Formula
                 }
 
 
-                if (whiteAfterPart1 || whiteBeforePart2)
+                if(whiteAfterPart1 || whiteBeforePart2)
                 {
-                    if (part1.IsRowOrColumn || part2.IsRowOrColumn)
+                    if(part1.IsRowOrColumn || part2.IsRowOrColumn)
                     {
                         // "A .. B" not valid syntax for "A:B"
                         // and there's no other valid expression that fits this grammar
@@ -637,15 +638,15 @@ namespace NPOI.SS.Formula
                     return CreateAreaRefParseNode(sheetIden, part1, part2);
                 }
 
-                if (dotCount == 1 && part1.IsRow && part2.IsRow)
+                if(dotCount == 1 && part1.IsRow && part2.IsRow)
                 {
                     // actually, this is looking more like a number
                     return ParseNonRange(savePointer);
                 }
 
-                if (part1.IsRowOrColumn || part2.IsRowOrColumn)
+                if(part1.IsRowOrColumn || part2.IsRowOrColumn)
                 {
-                    if (dotCount != 2)
+                    if(dotCount != 2)
                     {
                         throw new FormulaParseException("Dotted range (full row or column) expression '" + part1And2
                                 + "' must have exactly 2 dots.");
@@ -653,11 +654,11 @@ namespace NPOI.SS.Formula
                 }
                 return CreateAreaRefParseNode(sheetIden, part1, part2);
             }
-            if (part1.IsCell && IsValidCellReference(part1.Rep))
+            if(part1.IsCell && IsValidCellReference(part1.Rep))
             {
                 return CreateAreaRefParseNode(sheetIden, part1, null);
             }
-            if (sheetIden != null)
+            if(sheetIden != null)
             {
                 throw new FormulaParseException("Second part of cell reference expected after sheet name at index "
                         + _pointer + ".");
@@ -701,12 +702,12 @@ namespace NPOI.SS.Formula
         private ParseNode ParseStructuredReference(String tableName)
         {
 
-            if (!(_ssVersion.Equals(SpreadsheetVersion.EXCEL2007)))
+            if(!(_ssVersion.Equals(SpreadsheetVersion.EXCEL2007)))
             {
                 throw new FormulaParseException("Strctured references work only on XSSF (Excel 2007)!");
             }
             ITable tbl = _book.GetTable(tableName);
-            if (tbl == null)
+            if(tbl == null)
             {
                 throw new FormulaParseException("Illegal table name: '" + tableName + "'");
             }
@@ -729,32 +730,32 @@ namespace NPOI.SS.Formula
             bool isAllSpec = false;
             int nSpecQuantifiers = 0; // The number of special quantifiers
             int savePtr1;
-            while (true)
+            while(true)
             {
                 savePtr1 = _pointer;
                 String specName = ParseAsSpecialQuantifier();
-                if (specName == null)
+                if(specName == null)
                 {
                     ResetPointer(savePtr1);
                     break;
                 }
-                if (specName.Equals(specAll))
+                if(specName.Equals(specAll))
                 {
                     isAllSpec = true;
                 }
-                else if (specName.Equals(specData))
+                else if(specName.Equals(specData))
                 {
                     isDataSpec = true;
                 }
-                else if (specName.Equals(specHeaders))
+                else if(specName.Equals(specHeaders))
                 {
                     isHeadersSpec = true;
                 }
-                else if (specName.Equals(specThisRow))
+                else if(specName.Equals(specThisRow))
                 {
                     isThisRowSpec = true;
                 }
-                else if (specName.Equals(specTotals))
+                else if(specName.Equals(specTotals))
                 {
                     isTotalsSpec = true;
                 }
@@ -763,7 +764,7 @@ namespace NPOI.SS.Formula
                     throw new FormulaParseException("Unknown special quantifier " + specName);
                 }
                 nSpecQuantifiers++;
-                if (look == ',')
+                if(look == ',')
                 {
                     GetChar();
                 }
@@ -774,7 +775,7 @@ namespace NPOI.SS.Formula
             }
             bool isThisRow = false;
             SkipWhite();
-            if (look == '@')
+            if(look == '@')
             {
                 isThisRow = true;
                 GetChar();
@@ -785,35 +786,35 @@ namespace NPOI.SS.Formula
             int nColQuantifiers = 0;
             savePtr1 = _pointer;
             startColumnName = ParseAsColumnQuantifier();
-            if (startColumnName == null)
+            if(startColumnName == null)
             {
                 ResetPointer(savePtr1);
             }
             else
             {
                 nColQuantifiers++;
-                if (look == ',')
+                if(look == ',')
                 {
                     throw new FormulaParseException("The formula " + _formulaString + "is illegal: you should not use ',' with column quantifiers");
                 }
-                else if (look == ':')
+                else if(look == ':')
                 {
                     GetChar();
                     endColumnName = ParseAsColumnQuantifier();
                     nColQuantifiers++;
-                    if (endColumnName == null)
+                    if(endColumnName == null)
                     {
                         throw new FormulaParseException("The formula " + _formulaString + "is illegal: the string after ':' must be column quantifier");
                     }
                 }
             }
 
-            if (nColQuantifiers == 0 && nSpecQuantifiers == 0)
+            if(nColQuantifiers == 0 && nSpecQuantifiers == 0)
             {
                 ResetPointer(savePtr0);
                 savePtr0 = _pointer;
                 startColumnName = ParseAsColumnQuantifier();
-                if (startColumnName != null)
+                if(startColumnName != null)
                 {
                     nColQuantifiers++;
                 }
@@ -821,25 +822,25 @@ namespace NPOI.SS.Formula
                 {
                     ResetPointer(savePtr0);
                     String name = ParseAsSpecialQuantifier();
-                    if (name != null)
+                    if(name != null)
                     {
-                        if (name.Equals(specAll))
+                        if(name.Equals(specAll))
                         {
                             isAllSpec = true;
                         }
-                        else if (name.Equals(specData))
+                        else if(name.Equals(specData))
                         {
                             isDataSpec = true;
                         }
-                        else if (name.Equals(specHeaders))
+                        else if(name.Equals(specHeaders))
                         {
                             isHeadersSpec = true;
                         }
-                        else if (name.Equals(specThisRow))
+                        else if(name.Equals(specThisRow))
                         {
                             isThisRowSpec = true;
                         }
-                        else if (name.Equals(specTotals))
+                        else if(name.Equals(specTotals))
                         {
                             isTotalsSpec = true;
                         }
@@ -863,14 +864,14 @@ namespace NPOI.SS.Formula
             // Done reading from input stream
             // Ok to return now
 
-            if (isTotalsSpec && tbl.TotalsRowCount == 0)
+            if(isTotalsSpec && tbl.TotalsRowCount == 0)
             {
                 return new ParseNode(ErrPtg.REF_INVALID);
             }
-            if ((isThisRow || isThisRowSpec) && (_rowIndex < startRow || endRow < _rowIndex))
+            if((isThisRow || isThisRowSpec) && (_rowIndex < startRow || endRow < _rowIndex))
             {
                 // structured reference is trying to reference a row above or below the table with [#This Row] or [@]
-                if (_rowIndex >= 0)
+                if(_rowIndex >= 0)
                 {
                     return new ParseNode(ErrPtg.VALUE_INVALID);
                 }
@@ -886,41 +887,41 @@ namespace NPOI.SS.Formula
             int actualEndRow = endRow;
             int actualStartCol = startCol;
             int actualEndCol = endCol;
-            if (nSpecQuantifiers > 0)
+            if(nSpecQuantifiers > 0)
             {
                 //Selecting rows
-                if (nSpecQuantifiers == 1 && isAllSpec)
+                if(nSpecQuantifiers == 1 && isAllSpec)
                 {
                     //do nothing
                 }
-                else if (isDataSpec && isHeadersSpec)
+                else if(isDataSpec && isHeadersSpec)
                 {
-                    if (tbl.TotalsRowCount > 0)
+                    if(tbl.TotalsRowCount > 0)
                     {
                         actualEndRow = endRow - 1;
                     }
                 }
-                else if (isDataSpec && isTotalsSpec)
+                else if(isDataSpec && isTotalsSpec)
                 {
                     actualStartRow = startRow + 1;
                 }
-                else if (nSpecQuantifiers == 1 && isDataSpec)
+                else if(nSpecQuantifiers == 1 && isDataSpec)
                 {
                     actualStartRow = startRow + 1;
-                    if (tbl.TotalsRowCount > 0)
+                    if(tbl.TotalsRowCount > 0)
                     {
                         actualEndRow = endRow - 1;
                     }
                 }
-                else if (nSpecQuantifiers == 1 && isHeadersSpec)
+                else if(nSpecQuantifiers == 1 && isHeadersSpec)
                 {
                     actualEndRow = actualStartRow;
                 }
-                else if (nSpecQuantifiers == 1 && isTotalsSpec)
+                else if(nSpecQuantifiers == 1 && isTotalsSpec)
                 {
                     actualStartRow = actualEndRow;
                 }
-                else if ((nSpecQuantifiers == 1 && isThisRowSpec) || isThisRow)
+                else if((nSpecQuantifiers == 1 && isThisRowSpec) || isThisRow)
                 {
                     actualStartRow = _rowIndex; //The rowNum is 0 based
                     actualEndRow = _rowIndex;
@@ -932,30 +933,30 @@ namespace NPOI.SS.Formula
             }
             else
             {
-                if (isThisRow)
-                { 
+                if(isThisRow)
+                {
                     // there is a @
                     actualStartRow = _rowIndex; //The rowNum is 0 based
                     actualEndRow = _rowIndex;
                 }
                 else
-                { 
+                {
                     // Really no special quantifiers
                     actualStartRow++;
-                    if (tbl.TotalsRowCount > 0)
+                    if(tbl.TotalsRowCount > 0)
                         actualEndRow--;
                 }
             }
             //Selecting cols
-            if (nColQuantifiers == 2)
+            if(nColQuantifiers == 2)
             {
-                if (startColumnName == null || endColumnName == null)
+                if(startColumnName == null || endColumnName == null)
                 {
                     throw new InvalidOperationException("Fatal error");
                 }
                 int startIdx = tbl.FindColumnIndex(startColumnName);
                 int endIdx = tbl.FindColumnIndex(endColumnName);
-                if (startIdx == -1 || endIdx == -1)
+                if(startIdx == -1 || endIdx == -1)
                 {
                     throw new FormulaParseException("One of the columns " + startColumnName + ", " + endColumnName + " doesn't exist in table " + tbl.Name);
                 }
@@ -963,14 +964,14 @@ namespace NPOI.SS.Formula
                 actualEndCol = startCol + endIdx;
 
             }
-            else if (nColQuantifiers == 1 && !isThisRow)
+            else if(nColQuantifiers == 1 && !isThisRow)
             {
-                if (startColumnName == null)
+                if(startColumnName == null)
                 {
                     throw new InvalidOperationException("Fatal error");
                 }
                 int idx = tbl.FindColumnIndex(startColumnName);
-                if (idx == -1)
+                if(idx == -1)
                 {
                     throw new FormulaParseException("The column " + startColumnName + " doesn't exist in table " + tbl.Name);
                 }
@@ -991,21 +992,21 @@ namespace NPOI.SS.Formula
         */
         private String ParseAsColumnQuantifier()
         {
-            if (look != '[')
+            if(look != '[')
             {
                 return null;
             }
             GetChar();
-            if (look == '#')
+            if(look == '#')
             {
                 return null;
             }
-            if (look == '@')
+            if(look == '@')
             {
                 GetChar();
             }
             StringBuilder name = new StringBuilder();
-            while (look != ']')
+            while(look != ']')
             {
                 name.Append(char.ConvertFromUtf32(look));
                 GetChar();
@@ -1020,18 +1021,18 @@ namespace NPOI.SS.Formula
          */
         private String ParseAsSpecialQuantifier()
         {
-            if (look != '[')
+            if(look != '[')
             {
                 return null;
             }
             GetChar();
-            if (look != '#')
+            if(look != '#')
             {
                 return null;
             }
             GetChar();
             String name = ParseAsName();
-            if (name.Equals("This"))
+            if(name.Equals("This"))
             {
                 name = name + ' ' + ParseAsName();
             }
@@ -1055,45 +1056,45 @@ namespace NPOI.SS.Formula
         {
             ResetPointer(savePointer);
 
-            if (IsDigit(look))
+            if(IsDigit(look))
             {
                 return new ParseNode(ParseNumber());
             }
-            if (look == '"')
+            if(look == '"')
             {
                 return new ParseNode(new StringPtg(ParseStringLiteral()));
             }
             // from now on we can only be dealing with non-quoted identifiers
             // which will either be named ranges or functions
             String name = ParseAsName();
-            if (look == '(')
+            if(look == '(')
             {
                 return Function(name);
             }
 
             //TODO Livshen's code
-            if (look == '[')
+            if(look == '[')
             {
                 return ParseStructuredReference(name);
             }
             //TODO End of Livshen's code
 
-            if (name.Equals("TRUE", StringComparison.OrdinalIgnoreCase) || name.Equals("FALSE", StringComparison.OrdinalIgnoreCase))
+            if(name.Equals("TRUE", StringComparison.OrdinalIgnoreCase) || name.Equals("FALSE", StringComparison.OrdinalIgnoreCase))
             {
                 return new ParseNode(new BoolPtg(name.ToUpper()));
             }
-            if (_book == null)
+            if(_book == null)
             {
                 // Only test cases omit the book (expecting it not to be needed)
                 throw new InvalidOperationException("Need book to evaluate name '" + name + "'");
             }
             IEvaluationName evalName = _book.GetName(name, _sheetIndex);
-            if (evalName == null)
+            if(evalName == null)
             {
                 throw new FormulaParseException("Specified named range '"
                         + name + "' does not exist in the current workbook.");
             }
-            if (evalName.IsRange)
+            if(evalName.IsRange)
             {
                 return new ParseNode(evalName.CreatePtg());
             }
@@ -1112,7 +1113,7 @@ namespace NPOI.SS.Formula
             {
                 throw expected("number, string, defined name, or data table");
             }
-            while (IsValidDefinedNameChar(look))
+            while(IsValidDefinedNameChar(look))
             {
                 sb.Append(char.ConvertFromUtf32(look));
                 GetChar();
@@ -1125,14 +1126,14 @@ namespace NPOI.SS.Formula
         private int GetSheetExtIx(SheetIdentifier sheetIden)
         {
             int extIx;
-            if (sheetIden == null)
+            if(sheetIden == null)
             {
                 extIx = int.MaxValue;
             }
             else
             {
                 String sName = sheetIden.SheetId.Name;
-                if (sheetIden.BookName == null)
+                if(sheetIden.BookName == null)
                 {
                     extIx = _book.GetExternalSheetIndex(sName);
                 }
@@ -1154,10 +1155,10 @@ namespace NPOI.SS.Formula
                 SimpleRangePart part2)
         {
             Ptg ptg;
-            if (part2 == null)
+            if(part2 == null)
             {
                 CellReference cr = part1.CellReference;
-                if (sheetIden == null)
+                if(sheetIden == null)
                 {
                     ptg = new RefPtg(cr);
                 }
@@ -1170,7 +1171,7 @@ namespace NPOI.SS.Formula
             {
                 AreaReference areaRef = CreateAreaRef(part1, part2);
 
-                if (sheetIden == null)
+                if(sheetIden == null)
                 {
                     ptg = new AreaPtg(areaRef);
                 }
@@ -1183,16 +1184,16 @@ namespace NPOI.SS.Formula
         }
         private static AreaReference CreateAreaRef(SimpleRangePart part1, SimpleRangePart part2)
         {
-            if (!part1.IsCompatibleForArea(part2))
+            if(!part1.IsCompatibleForArea(part2))
             {
                 throw new FormulaParseException("has incompatible parts: '"
                         + part1.Rep + "' and '" + part2.Rep + "'.");
             }
-            if (part1.IsRow)
+            if(part1.IsRow)
             {
                 return AreaReference.GetWholeRow(_ssVersion, part1.Rep, part2.Rep);
             }
-            if (part1.IsColumn)
+            if(part1.IsColumn)
             {
                 return AreaReference.GetWholeColumn(_ssVersion, part1.Rep, part2.Rep);
             }
@@ -1209,18 +1210,18 @@ namespace NPOI.SS.Formula
             int ptr = _pointer - 1; // TODO avoid StringIndexOutOfBounds
             bool hasDigits = false;
             bool hasLetters = false;
-            while (ptr < _formulaLength)
+            while(ptr < _formulaLength)
             {
                 char ch = _formulaString[ptr];
-                if (Char.IsDigit(ch))
+                if(Char.IsDigit(ch))
                 {
                     hasDigits = true;
                 }
-                else if (Char.IsLetter(ch))
+                else if(Char.IsLetter(ch))
                 {
                     hasLetters = true;
                 }
-                else if (ch == '$' || ch == '_')    //fix poi bug 49725
+                else if(ch == '$' || ch == '_')    //fix poi bug 49725
                 {
                     //do nothing
                 }
@@ -1230,38 +1231,38 @@ namespace NPOI.SS.Formula
                 }
                 ptr++;
             }
-            if (ptr <= _pointer - 1)
+            if(ptr <= _pointer - 1)
             {
                 return null;
             }
             ReadOnlySpan<char> rep = _formulaString.AsSpan(_pointer - 1, ptr - _pointer + 1);
 
-            if (!CellReferenceParser.TryParseCellReference(rep, out _, out var column, out _, out var row))
+            if(!CellReferenceParser.TryParseCellReference(rep, out _, out var column, out _, out var row))
             {
                 return null;
             }
             // Check range bounds against grid max
-            if (hasLetters && hasDigits)
+            if(hasLetters && hasDigits)
             {
-                if (!IsValidCellReference(rep))
+                if(!IsValidCellReference(rep))
                 {
                     return null;
                 }
             }
-            else if (hasLetters)
+            else if(hasLetters)
             {
-                if (!CellReference.IsColumnWithinRange(column, _ssVersion))
+                if(!CellReference.IsColumnWithinRange(column, _ssVersion))
                 {
                     return null;
                 }
             }
-            else if (hasDigits)
+            else if(hasDigits)
             {
-                if (!CellReferenceParser.TryParsePositiveInt32Fast(row, out int i))
+                if(!CellReferenceParser.TryParsePositiveInt32Fast(row, out int i))
                 {
                     return null;
                 }
-                if (i < 1 || i > _ssVersion.MaxRows)
+                if(i < 1 || i > _ssVersion.MaxRows)
                 {
                     return null;
                 }
@@ -1288,19 +1289,19 @@ namespace NPOI.SS.Formula
          */
         private static Ptg ReduceRangeExpression(Ptg ptgA, Ptg ptgB)
         {
-            if (ptgB is not RefPtg refB)
+            if(ptgB is not RefPtg refB)
             {
                 // only when second ref is simple 2-D ref can the range 
                 // expression be converted To an area ref
                 return null;
             }
 
-            if (ptgA is RefPtg a)
+            if(ptgA is RefPtg a)
             {
                 return new AreaPtg(a.Row, refB.Row, a.Column, refB.Column,
                         a.IsRowRelative, refB.IsRowRelative, a.IsColRelative, refB.IsColRelative);
             }
-            if (ptgA is Ref3DPtg refA)
+            if(ptgA is Ref3DPtg refA)
             {
                 return new Area3DPtg(refA.Row, refB.Row, refA.Column, refB.Column,
                         refA.IsRowRelative, refB.IsRowRelative, refA.IsColRelative, refB.IsColRelative,
@@ -1322,11 +1323,11 @@ namespace NPOI.SS.Formula
 
             public static PartType Get(bool hasLetters, bool hasDigits)
             {
-                if (hasLetters)
+                if(hasLetters)
                 {
                     return hasDigits ? PartType.Cell : PartType.Column;
                 }
-                if (!hasDigits)
+                if(!hasDigits)
                 {
                     throw new ArgumentException("must have either letters or numbers");
                 }
@@ -1363,7 +1364,7 @@ namespace NPOI.SS.Formula
             {
                 get
                 {
-                    if (_type != PartType.Cell)
+                    if(_type != PartType.Cell)
                     {
                         throw new InvalidOperationException("Not applicable to this type");
                     }
@@ -1420,7 +1421,7 @@ namespace NPOI.SS.Formula
             using var sb = ZString.CreateStringBuilder();
 
             GetChar();
-            while (look != ']')
+            while(look != ']')
             {
                 sb.Append(char.ConvertFromUtf32(look));
                 GetChar();
@@ -1436,7 +1437,7 @@ namespace NPOI.SS.Formula
         {
 
             String bookName;
-            if (look == '[')
+            if(look == '[')
             {
                 bookName = GetBookName();
             }
@@ -1445,10 +1446,10 @@ namespace NPOI.SS.Formula
                 bookName = null;
             }
 
-            if (look == '\'')
+            if(look == '\'')
             {
                 Match('\'');
-                if (look == '[')
+                if(look == '[')
                 {
                     bookName = GetBookName();
                 }
@@ -1456,11 +1457,11 @@ namespace NPOI.SS.Formula
                 using var sb = ZString.CreateStringBuilder();
 
                 bool done = look == '\'';
-                while (!done)
+                while(!done)
                 {
                     sb.Append(char.ConvertFromUtf32(look));
                     GetChar();
-                    if (look == '\'')
+                    if(look == '\'')
                     {
                         Match('\'');
                         done = look != '\'';
@@ -1470,13 +1471,13 @@ namespace NPOI.SS.Formula
                 NameIdentifier iden = new NameIdentifier(sb.ToString(), true);
                 // quoted identifier - can't concatenate anything more
                 SkipWhite();
-                if (look == '!')
+                if(look == '!')
                 {
                     GetChar();
                     return new SheetIdentifier(bookName, iden);
                 }
                 // See if it's a multi-sheet range, eg Sheet1:Sheet3!A1
-                if (look == ':')
+                if(look == ':')
                 {
                     return ParseSheetRange(bookName, iden);
                 }
@@ -1484,31 +1485,31 @@ namespace NPOI.SS.Formula
             }
 
             // unquoted sheet names must start with underscore or a letter
-            if (look == '_' || IsLetter(look))
+            if(look == '_' || IsLetter(look))
             {
                 using var sb = ZString.CreateStringBuilder();
                 // can concatenate idens with dots
-                while (FormulaParser.IsUnquotedSheetNameChar(look))
+                while(FormulaParser.IsUnquotedSheetNameChar(look))
                 {
                     sb.Append(char.ConvertFromUtf32(look));
                     GetChar();
                 }
                 NameIdentifier iden = new NameIdentifier(sb.ToString(), false);
                 SkipWhite();
-                if (look == '!')
+                if(look == '!')
                 {
                     GetChar();
                     return new SheetIdentifier(bookName, iden);
                 }
                 // See if it's a multi-sheet range, eg Sheet1:Sheet3!A1
-                if (look == ':')
+                if(look == ':')
                 {
                     return ParseSheetRange(bookName, iden);
                 }
                 return null;
             }
 
-            if (look == '!' && bookName != null)
+            if(look == '!' && bookName != null)
             {
                 // Raw book reference, without a sheet
                 GetChar();
@@ -1525,7 +1526,7 @@ namespace NPOI.SS.Formula
         {
             GetChar();
             SheetIdentifier sheet2 = ParseSheetName();
-            if (sheet2 != null)
+            if(sheet2 != null)
             {
                 return new SheetRangeIdentifier(bookname, sheet1Name, sheet2._sheetIdentifier);
             }
@@ -1536,17 +1537,17 @@ namespace NPOI.SS.Formula
           */
         private static bool IsUnquotedSheetNameChar(int ch)
         {
-            if (IsLetterOrDigit(ch))
+            if(IsLetterOrDigit(ch))
             {
                 return true;
             }
             // the sheet naming rules are vague on whether unicode characters are allowed
             // assume they're allowed.
-            if (ch > 128)
+            if(ch > 128)
             {
                 return true;
             }
-            switch (ch)
+            switch(ch)
             {
                 case '.': // dot is OK
                 case '_': // underscore is OK
@@ -1557,7 +1558,7 @@ namespace NPOI.SS.Formula
         private void ResetPointer(int ptr)
         {
             _pointer = ptr;
-            if (_pointer <= _formulaLength)
+            if(_pointer <= _formulaLength)
             {
                 look = _formulaString.CodePointAt(_pointer - StringUtil.CharCount(look));
             }
@@ -1565,7 +1566,7 @@ namespace NPOI.SS.Formula
             {
                 // Just return if so and reset 'look' to something to keep
                 // SkipWhitespace from spinning
-                look = (char)0;
+                look = (char) 0;
             }
         }
 
@@ -1578,7 +1579,7 @@ namespace NPOI.SS.Formula
         {
             //check range bounds against grid max
             bool result = CellReference.ClassifyCellReference(str, _ssVersion) == NameType.Cell;
-            if (result)
+            if(result)
             {
                 /*
                  * Check if the argument is a function. Certain names can be either a cell reference or a function name
@@ -1588,7 +1589,7 @@ namespace NPOI.SS.Formula
                  * In (a) LOG10 is a name of a built-in function. In (b) LOG10 is a cell reference
                  */
                 bool isFunc = FunctionMetadataRegistry.GetFunctionByName(str.ToString().ToUpper()) != null;
-                if (isFunc)
+                if(isFunc)
                 {
                     int savePointer = _pointer;
                     ResetPointer(_pointer + str.Length);
@@ -1615,12 +1616,12 @@ namespace NPOI.SS.Formula
         private ParseNode Function(String name)
         {
             Ptg nameToken = null;
-            if (!AbstractFunctionPtg.IsBuiltInFunctionName(name))
+            if(!AbstractFunctionPtg.IsBuiltInFunctionName(name))
             {
                 // user defined Function
                 // in the Token tree, the name is more or less the first argument
 
-                if (_book == null)
+                if(_book == null)
                 {
                     // Only test cases omit the book (expecting it not to be needed)
                     throw new InvalidOperationException("Need book to evaluate name '" + name + "'");
@@ -1628,9 +1629,9 @@ namespace NPOI.SS.Formula
 
                 // Check to see if name is a named range in the workbook
                 IEvaluationName hName = _book.GetName(name, _sheetIndex);
-                if (hName != null)
+                if(hName != null)
                 {
-                    if (!hName.IsFunctionName)
+                    if(!hName.IsFunctionName)
                     {
                         throw new FormulaParseException("Attempt to use name '" + name
                                 + "' as a function, but defined name in workbook does not refer to a function");
@@ -1644,7 +1645,7 @@ namespace NPOI.SS.Formula
                 {
                     // Check if name is an external names table
                     nameToken = _book.GetNameXPtg(name, null);
-                    if (nameToken == null)
+                    if(nameToken == null)
                     {
                         // name is not an internal or external name
                         //if (log.check(POILogger.WARN))
@@ -1653,9 +1654,9 @@ namespace NPOI.SS.Formula
                         //            "FormulaParser.function: Name '" + name + "' is completely unknown in the current workbook.");
                         //}
                         // name is probably the name of an unregistered User-Defined Function
-                        switch (_book.GetSpreadsheetVersion().Name)
+                        switch(_book.GetSpreadsheetVersion().Name)
                         {
-                            case  "EXCEL97":
+                            case "EXCEL97":
                                 // HSSFWorkbooks require a name to be added to Workbook defined names table
                                 AddName(name);
                                 hName = _book.GetName(name, _sheetIndex);
@@ -1701,9 +1702,9 @@ namespace NPOI.SS.Formula
 
             FunctionMetadata fm = FunctionMetadataRegistry.GetFunctionByName(name.ToUpper());
             int numArgs = args.Length;
-            if (fm == null)
+            if(fm == null)
             {
-                if (namePtg == null)
+                if(namePtg == null)
                 {
                     throw new InvalidOperationException("NamePtg must be supplied for external Functions");
                 }
@@ -1711,27 +1712,28 @@ namespace NPOI.SS.Formula
                 ParseNode[] allArgs = new ParseNode[numArgs + 1];
                 allArgs[0] = new ParseNode(namePtg);
                 System.Array.Copy(args, 0, allArgs, 1, numArgs);
-                return new ParseNode(FuncVarPtg.Create(name, (byte)(numArgs + 1)), allArgs);
+                return new ParseNode(FuncVarPtg.Create(name, (byte) (numArgs + 1)), allArgs);
             }
 
-            if (namePtg != null)
+            if(namePtg != null)
             {
                 throw new InvalidOperationException("NamePtg no applicable To internal Functions");
             }
             bool IsVarArgs = !fm.HasFixedArgsLength;
             int funcIx = fm.Index;
-        if (funcIx == FunctionMetadataRegistry.FUNCTION_INDEX_SUM && args.Length == 1) {
-            // Excel encodes the sum of a single argument as tAttrSum
-            // POI does the same for consistency, but this is not critical
-            return new ParseNode(AttrPtg.GetSumSingle(), args);
-            // The code below would encode tFuncVar(SUM) which seems to do no harm
-        }
+            if(funcIx == FunctionMetadataRegistry.FUNCTION_INDEX_SUM && args.Length == 1)
+            {
+                // Excel encodes the sum of a single argument as tAttrSum
+                // POI does the same for consistency, but this is not critical
+                return new ParseNode(AttrPtg.GetSumSingle(), args);
+                // The code below would encode tFuncVar(SUM) which seems to do no harm
+            }
             ValidateNumArgs(args.Length, fm);
 
             AbstractFunctionPtg retval;
-            if (IsVarArgs)
+            if(IsVarArgs)
             {
-                retval = FuncVarPtg.Create(name, (byte)numArgs);
+                retval = FuncVarPtg.Create(name, (byte) numArgs);
             }
             else
             {
@@ -1742,10 +1744,10 @@ namespace NPOI.SS.Formula
 
         private void ValidateNumArgs(int numArgs, FunctionMetadata fm)
         {
-            if (numArgs < fm.MinParams)
+            if(numArgs < fm.MinParams)
             {
                 String msg = "Too few arguments to function '" + fm.Name + "'. ";
-                if (fm.HasFixedArgsLength)
+                if(fm.HasFixedArgsLength)
                 {
                     msg += "Expected " + fm.MinParams;
                 }
@@ -1758,9 +1760,9 @@ namespace NPOI.SS.Formula
             }
             //the maximum number of arguments depends on the Excel version
             int maxArgs;
-            if (fm.HasUnlimitedVarags)
+            if(fm.HasUnlimitedVarags)
             {
-                if (_book != null)
+                if(_book != null)
                 {
                     maxArgs = _book.GetSpreadsheetVersion().MaxFunctionArgs;
                 }
@@ -1774,10 +1776,10 @@ namespace NPOI.SS.Formula
             {
                 maxArgs = fm.MaxParams;
             }
-            if (numArgs > maxArgs)
+            if(numArgs > maxArgs)
             {
                 String msg = "Too many arguments to function '" + fm.Name + "'. ";
-                if (fm.HasFixedArgsLength)
+                if(fm.HasFixedArgsLength)
                 {
                     msg += "Expected " + fm.MaxParams;
                 }
@@ -1801,24 +1803,24 @@ namespace NPOI.SS.Formula
             //average 2 args per Function
             List<ParseNode> temp = new List<ParseNode>(2);
             SkipWhite();
-            if (look == ')')
+            if(look == ')')
             {
                 return ParseNode.EMPTY_ARRAY;
             }
 
             bool missedPrevArg = true;
             int numArgs = 0;
-            while (true)
+            while(true)
             {
                 SkipWhite();
-                if (IsArgumentDelimiter(look))
+                if(IsArgumentDelimiter(look))
                 {
-                    if (missedPrevArg)
+                    if(missedPrevArg)
                     {
                         temp.Add(new ParseNode(MissingArgPtg.instance));
                         numArgs++;
                     }
-                    if (look == ')')
+                    if(look == ')')
                     {
                         break;
                     }
@@ -1830,7 +1832,7 @@ namespace NPOI.SS.Formula
                 numArgs++;
                 missedPrevArg = false;
                 SkipWhite();
-                if (!IsArgumentDelimiter(look))
+                if(!IsArgumentDelimiter(look))
                 {
                     throw expected("',' or ')'");
                 }
@@ -1843,10 +1845,10 @@ namespace NPOI.SS.Formula
         private ParseNode PowerFactor()
         {
             ParseNode result = PercentFactor();
-            while (true)
+            while(true)
             {
                 SkipWhite();
-                if (look != '^')
+                if(look != '^')
                 {
                     return result;
                 }
@@ -1859,10 +1861,10 @@ namespace NPOI.SS.Formula
         private ParseNode PercentFactor()
         {
             ParseNode result = ParseSimpleFactor();
-            while (true)
+            while(true)
             {
                 SkipWhite();
-                if (look != '%')
+                if(look != '%')
                 {
                     return result;
                 }
@@ -1879,7 +1881,7 @@ namespace NPOI.SS.Formula
         private ParseNode ParseSimpleFactor()
         {
             SkipWhite();
-            switch (look)
+            switch(look)
             {
                 case '#':
                     return new ParseNode(ErrPtg.ValueOf(ParseErrorLiteral()));
@@ -1904,11 +1906,11 @@ namespace NPOI.SS.Formula
             }
             // named ranges and tables can start with underscore or backslash
             // see https://support.office.com/en-us/article/Define-and-use-names-in-formulas-4d0f13ac-53b7-422e-afd2-abd7ff379c64?ui=en-US&rs=en-US&ad=US#bmsyntax_rules_for_names
-            if (IsAlpha(look) || IsDigit(look) || look == '\'' || look == '[' || look == '_' || look == '\\')
+            if(IsAlpha(look) || IsDigit(look) || look == '\'' || look == '[' || look == '_' || look == '\\')
             {
                 return ParseRangeExpression();
             }
-            if (look == '.')
+            if(look == '.')
             {
                 return new ParseNode(ParseNumber());
             }
@@ -1920,23 +1922,23 @@ namespace NPOI.SS.Formula
             bool numberFollows = IsDigit(look) || look == '.';
             ParseNode factor = PowerFactor();
 
-            if (numberFollows)
+            if(numberFollows)
             {
                 // + or - directly next to a number is parsed with the number
 
                 Ptg token = factor.GetToken();
-                if (token is NumberPtg ptg)
+                if(token is NumberPtg ptg)
                 {
-                    if (isPlus)
+                    if(isPlus)
                     {
                         return factor;
                     }
                     token = new NumberPtg(-ptg.Value);
                     return new ParseNode(token);
                 }
-                if (token is IntPtg intPtg)
+                if(token is IntPtg intPtg)
                 {
-                    if (isPlus)
+                    if(isPlus)
                     {
                         return factor;
                     }
@@ -1952,15 +1954,15 @@ namespace NPOI.SS.Formula
         private ParseNode ParseArray()
         {
             List<Object[]> rowsData = new List<Object[]>();
-            while (true)
+            while(true)
             {
                 Object[] singleRowData = ParseArrayRow();
                 rowsData.Add(singleRowData);
-                if (look == '}')
+                if(look == '}')
                 {
                     break;
                 }
-                if (look != ';')
+                if(look != ';')
                 {
                     throw expected("'}' or ';'");
                 }
@@ -1968,7 +1970,7 @@ namespace NPOI.SS.Formula
             }
             int nRows = rowsData.Count;
             Object[][] values2d = new Object[nRows][];
-            values2d = (Object[][])rowsData.ToArray();
+            values2d = (Object[][]) rowsData.ToArray();
             int nColumns = values2d[0].Length;
             CheckRowLengths(values2d, nColumns);
 
@@ -1977,10 +1979,10 @@ namespace NPOI.SS.Formula
 
         private static void CheckRowLengths(Object[][] values2d, int nColumns)
         {
-            for (int i = 0; i < values2d.Length; i++)
+            for(int i = 0; i < values2d.Length; i++)
             {
                 int rowLen = values2d[i].Length;
-                if (rowLen != nColumns)
+                if(rowLen != nColumns)
                 {
                     throw new FormulaParseException("Array row " + i + " Has length " + rowLen
                             + " but row 0 Has length " + nColumns);
@@ -1991,11 +1993,11 @@ namespace NPOI.SS.Formula
         private Object[] ParseArrayRow()
         {
             List<object> temp = new List<object>();
-            while (true)
+            while(true)
             {
                 temp.Add(ParseArrayItem());
                 SkipWhite();
-                switch (look)
+                switch(look)
                 {
                     case '}':
                     case ';':
@@ -2016,10 +2018,12 @@ namespace NPOI.SS.Formula
         private Object ParseArrayItem()
         {
             SkipWhite();
-            switch (look)
+            switch(look)
             {
-                case '"': return ParseStringLiteral();
-                case '#': return ErrorConstant.ValueOf(ParseErrorLiteral());
+                case '"':
+                    return ParseStringLiteral();
+                case '#':
+                    return ErrorConstant.ValueOf(ParseErrorLiteral());
                 case 'F':
                 case 'f':
                 case 'T':
@@ -2037,11 +2041,11 @@ namespace NPOI.SS.Formula
         private Boolean ParseBooleanLiteral()
         {
             String iden = ParseUnquotedIdentifier();
-            if ("TRUE".Equals(iden, StringComparison.OrdinalIgnoreCase))
+            if("TRUE".Equals(iden, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
-            if ("FALSE".Equals(iden, StringComparison.OrdinalIgnoreCase))
+            if("FALSE".Equals(iden, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
@@ -2051,11 +2055,11 @@ namespace NPOI.SS.Formula
         private static Double ConvertArrayNumber(Ptg ptg, bool isPositive)
         {
             double value;
-            if (ptg is IntPtg intPtg)
+            if(ptg is IntPtg intPtg)
             {
                 value = intPtg.Value;
             }
-            else if (ptg is NumberPtg numberPtg)
+            else if(ptg is NumberPtg numberPtg)
             {
                 value = numberPtg.Value;
             }
@@ -2063,7 +2067,7 @@ namespace NPOI.SS.Formula
             {
                 throw new Exception("Unexpected ptg (" + ptg.GetType().Name + ")");
             }
-            if (!isPositive)
+            if(!isPositive)
             {
                 value = -value;
             }
@@ -2076,36 +2080,36 @@ namespace NPOI.SS.Formula
             String exponent = null;
             String number1 = GetNum();
 
-            if (look == '.')
+            if(look == '.')
             {
                 GetChar();
                 number2 = GetNum();
             }
 
-            if (look == 'E')
+            if(look == 'E')
             {
                 GetChar();
 
                 String sign = "";
-                if (look == '+')
+                if(look == '+')
                 {
                     GetChar();
                 }
-                else if (look == '-')
+                else if(look == '-')
                 {
                     GetChar();
                     sign = "-";
                 }
 
                 String number = GetNum();
-                if (number == null)
+                if(number == null)
                 {
                     throw expected("int");
                 }
                 exponent = sign + number;
             }
 
-            if (number1 == null && number2 == null)
+            if(number1 == null && number2 == null)
             {
                 throw expected("int");
             }
@@ -2119,75 +2123,75 @@ namespace NPOI.SS.Formula
             Match('#');
             String part1 = ParseUnquotedIdentifier().ToUpper();
 
-            switch (part1[0])
+            switch(part1[0])
             {
                 case 'V':
+                {
+                    FormulaError fe = FormulaError.VALUE;
+                    if(part1.Equals(fe.Name))
                     {
-                        FormulaError fe = FormulaError.VALUE;
-                        if (part1.Equals(fe.Name))
-                        {
-                            Match('!');
-                            return fe.Code;
-                        }
-                        throw expected(fe.String);
+                        Match('!');
+                        return fe.Code;
                     }
+                    throw expected(fe.String);
+                }
                 case 'R':
+                {
+                    FormulaError fe = FormulaError.REF;
+                    if(part1.Equals(fe.Name))
                     {
-                        FormulaError fe = FormulaError.REF;
-                        if (part1.Equals(fe.Name))
-                        {
-                            Match('!');
-                            return fe.Code;
-                        }
-                        throw expected(fe.String);
+                        Match('!');
+                        return fe.Code;
                     }
+                    throw expected(fe.String);
+                }
                 case 'D':
+                {
+                    FormulaError fe = FormulaError.DIV0;
+                    if(part1.Equals("DIV"))
                     {
-                        FormulaError fe = FormulaError.DIV0;
-                        if (part1.Equals("DIV"))
-                        {
-                            Match('/');
-                            Match('0');
-                            Match('!');
-                            return fe.Code;
-                        }
-                        throw expected(fe.String);
+                        Match('/');
+                        Match('0');
+                        Match('!');
+                        return fe.Code;
                     }
+                    throw expected(fe.String);
+                }
                 case 'N':
+                {
+                    FormulaError fe = FormulaError.NAME;
+                    if(part1.Equals(fe.Name))
                     {
-                        FormulaError fe = FormulaError.NAME;
-                        if (part1.Equals(fe.Name))
-                        {
-                            // only one that ends in '?'
-                            Match('?');
-                            return fe.Code;
-                        }
-                        fe = FormulaError.NUM;
-                        if (part1.Equals(fe.Name))
-                        {
-                            Match('!');
-                            return fe.Code;
-                        }
-                        fe = FormulaError.NULL;
-                        if (part1.Equals(fe.Name))
-                        {
-                            Match('!');
-                            return fe.Code;
-                        }
-                        fe = FormulaError.NA;
-                        if (part1.Equals("N"))
-                        {
-                            Match('/');
-                            if (look != 'A' && look != 'a')
-                            {
-                                throw expected(fe.String);
-                            }
-                            Match(look);
-                            // Note - no '!' or '?' suffix
-                            return fe.Code;
-                        }
-                        throw expected("#NAME?, #NUM!, #NULL! or #N/A");
+                        // only one that ends in '?'
+                        Match('?');
+                        return fe.Code;
                     }
+                    fe = FormulaError.NUM;
+                    if(part1.Equals(fe.Name))
+                    {
+                        Match('!');
+                        return fe.Code;
+                    }
+                    fe = FormulaError.NULL;
+                    if(part1.Equals(fe.Name))
+                    {
+                        Match('!');
+                        return fe.Code;
+                    }
+                    fe = FormulaError.NA;
+                    if(part1.Equals("N"))
+                    {
+                        Match('/');
+                        if(look != 'A' && look != 'a')
+                        {
+                            throw expected(fe.String);
+                        }
+                        Match(look);
+                        // Note - no '!' or '?' suffix
+                        return fe.Code;
+                    }
+                    throw expected("#NAME?, #NUM!, #NULL! or #N/A");
+                }
             }
             throw expected("#VALUE!, #REF!, #DIV/0!, #NAME?, #NUM!, #NULL! or #N/A");
         }
@@ -2201,11 +2205,11 @@ namespace NPOI.SS.Formula
         {
             using var number = ZString.CreateStringBuilder();
 
-            if (number2 == null)
+            if(number2 == null)
             {
                 number.Append(number1);
 
-                if (exponent != null)
+                if(exponent != null)
                 {
                     number.Append('E');
                     number.Append(exponent);
@@ -2217,22 +2221,22 @@ namespace NPOI.SS.Formula
                 {
                     intVal = int.Parse(numberStr, CultureInfo.InvariantCulture);
                 }
-                catch (FormatException)
+                catch(FormatException)
                 {
                     return new NumberPtg(numberStr);
                 }
-                catch (OverflowException)
+                catch(OverflowException)
                 {
                     return new NumberPtg(numberStr);
                 }
-                if (IntPtg.IsInRange(intVal))
+                if(IntPtg.IsInRange(intVal))
                 {
                     return new IntPtg(intVal);
                 }
                 return new NumberPtg(numberStr);
             }
 
-            if (number1 != null)
+            if(number1 != null)
             {
                 number.Append(number1);
             }
@@ -2240,7 +2244,7 @@ namespace NPOI.SS.Formula
             number.Append('.');
             number.Append(number2);
 
-            if (exponent != null)
+            if(exponent != null)
             {
                 number.Append('E');
                 number.Append(exponent);
@@ -2255,12 +2259,12 @@ namespace NPOI.SS.Formula
             Match('"');
 
             using var Token = ZString.CreateStringBuilder();
-            while (true)
+            while(true)
             {
-                if (look == '"')
+                if(look == '"')
                 {
                     GetChar();
-                    if (look != '"')
+                    if(look != '"')
                     {
                         break;
                     }
@@ -2275,11 +2279,11 @@ namespace NPOI.SS.Formula
         private ParseNode Term()
         {
             ParseNode result = PowerFactor();
-            while (true)
+            while(true)
             {
                 SkipWhite();
                 Ptg operator1;
-                switch (look)
+                switch(look)
                 {
                     case '*':
                         Match('*');
@@ -2300,10 +2304,10 @@ namespace NPOI.SS.Formula
         private ParseNode ComparisonExpression()
         {
             ParseNode result = ConcatExpression();
-            while (true)
+            while(true)
             {
                 SkipWhite();
-                switch (look)
+                switch(look)
                 {
                     case '=':
                     case '>':
@@ -2319,23 +2323,23 @@ namespace NPOI.SS.Formula
 
         private ValueOperatorPtg GetComparisonToken()
         {
-            if (look == '=')
+            if(look == '=')
             {
                 Match(look);
                 return EqualPtg.instance;
             }
             bool IsGreater = look == '>';
             Match(look);
-            if (IsGreater)
+            if(IsGreater)
             {
-                if (look == '=')
+                if(look == '=')
                 {
                     Match('=');
                     return GreaterEqualPtg.instance;
                 }
                 return GreaterThanPtg.instance;
             }
-            switch (look)
+            switch(look)
             {
                 case '=':
                     Match('=');
@@ -2351,10 +2355,10 @@ namespace NPOI.SS.Formula
         private ParseNode ConcatExpression()
         {
             ParseNode result = AdditiveExpression();
-            while (true)
+            while(true)
             {
                 SkipWhite();
-                if (look != '&')
+                if(look != '&')
                 {
                     break; // finished with concat expression
                 }
@@ -2370,11 +2374,11 @@ namespace NPOI.SS.Formula
         private ParseNode AdditiveExpression()
         {
             ParseNode result = Term();
-            while (true)
+            while(true)
             {
                 SkipWhite();
                 Ptg operator1;
-                switch (look)
+                switch(look)
                 {
                     case '+':
                         Match('+');
@@ -2416,7 +2420,7 @@ namespace NPOI.SS.Formula
             GetChar();
             _rootNode = UnionExpression();
 
-            if (_pointer <= _formulaLength)
+            if(_pointer <= _formulaLength)
             {
                 String msg = "Unused input [" + _formulaString.Substring(_pointer - 1)
                     + "] after attempting to parse the formula [" + _formulaString + "]";
@@ -2427,10 +2431,10 @@ namespace NPOI.SS.Formula
         {
             ParseNode result = IntersectionExpression();
             bool hasUnions = false;
-            while (true)
+            while(true)
             {
                 SkipWhite();
-                switch (look)
+                switch(look)
                 {
                     case ',':
                         GetChar();
@@ -2439,7 +2443,7 @@ namespace NPOI.SS.Formula
                         result = new ParseNode(UnionPtg.instance, result, other);
                         continue;
                 }
-                if (hasUnions)
+                if(hasUnions)
                 {
                     return AugmentWithMemPtg(result);
                 }
@@ -2450,10 +2454,10 @@ namespace NPOI.SS.Formula
         {
             ParseNode result = ComparisonExpression();
             bool hasIntersections = false;
-            while (true)
+            while(true)
             {
                 SkipWhite();
-                if (_inIntersection)
+                if(_inIntersection)
                 {
                     int savePointer = _pointer;
                     // Don't getChar() as the space has already been eaten and recorded by SkipWhite().
@@ -2464,14 +2468,14 @@ namespace NPOI.SS.Formula
                         hasIntersections = true;
                         continue;
                     }
-                    catch (FormulaParseException)
+                    catch(FormulaParseException)
                     {
                         // if parsing for intersection fails we assume that we actually had an arbitrary
                         // whitespace and thus should simply skip this whitespace
                         ResetPointer(savePointer);
                     }
                 }
-                if (hasIntersections)
+                if(hasIntersections)
                 {
                     return AugmentWithMemPtg(result);
                 }

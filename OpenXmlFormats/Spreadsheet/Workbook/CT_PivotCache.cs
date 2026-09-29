@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
@@ -23,13 +23,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_PivotCaches Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PivotCaches ctObj = new CT_PivotCaches();
             ctObj.pivotCache = new List<CT_PivotCache>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "pivotCache")
+                if(childNode.LocalName == "pivotCache")
                     ctObj.pivotCache.Add(CT_PivotCache.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -41,9 +41,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.pivotCache != null)
+            if(this.pivotCache != null)
             {
-                foreach (CT_PivotCache x in this.pivotCache)
+                foreach(CT_PivotCache x in this.pivotCache)
                 {
                     x.Write(sw, "pivotCache");
                 }
@@ -65,7 +65,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_PivotCache AddNewPivotCache()
         {
-            if (this.pivotCacheField == null)
+            if(this.pivotCacheField == null)
                 this.pivotCacheField = new List<CT_PivotCache>();
             CT_PivotCache c = new CT_PivotCache();
             this.pivotCacheField.Add(c);
@@ -74,7 +74,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_PivotCache GetPivotCacheArray(int p)
         {
-            if (pivotCacheField == null || p < 0 || p >= pivotCacheField.Count)
+            if(pivotCacheField == null || p < 0 || p >= pivotCacheField.Count)
                 return null;
             return pivotCacheField[p];
         }
@@ -89,7 +89,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private string idField;
         public static CT_PivotCache Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PivotCache ctObj = new CT_PivotCache();
             ctObj.cacheId = XmlHelper.ReadUInt(node.Attributes["cacheId"]);

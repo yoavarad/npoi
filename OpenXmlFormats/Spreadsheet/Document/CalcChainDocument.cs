@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.IO;
 using System.Xml;
@@ -32,10 +32,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         public static CalcChainDocument Parse(XmlDocument xmlDoc, XmlNamespaceManager NameSpaceManager)
         {
             CalcChainDocument calcChainDoc = new CalcChainDocument();
-            foreach (XmlElement node in xmlDoc.SelectNodes("//d:c", NameSpaceManager))
+            foreach(XmlElement node in xmlDoc.SelectNodes("//d:c", NameSpaceManager))
             {
                 CT_CalcCell cc = new CT_CalcCell();
-                if (node.GetAttributeNode("i")!= null)
+                if(node.GetAttributeNode("i")!= null)
                 {
                     cc.i = XmlHelper.ReadInt(node.GetAttributeNode("i"));
                     cc.iSpecified = true;
@@ -54,27 +54,27 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             StreamWriter sw = new StreamWriter(stream);
             sw.Write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>");
             sw.Write("<calcChain xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\">");
-            foreach (CT_CalcCell cc in calcChain.c)
+            foreach(CT_CalcCell cc in calcChain.c)
             {
                 sw.Write("<c");
                 sw.WriteAttribute("r", cc.r);
 
-                if (cc.i > 0)
+                if(cc.i > 0)
                 {
                     sw.WriteAttribute("i", cc.i);
                 }
 
-                if (cc.s)
+                if(cc.s)
                 {
                     sw.WriteBooleanAttribute("s", cc.s);
                 }
 
-                if (cc.t)
+                if(cc.t)
                 {
                     sw.WriteBooleanAttribute("t", cc.t);
                 }
 
-                if (cc.l)
+                if(cc.l)
                 {
                     sw.WriteBooleanAttribute("l", cc.l);
                 }

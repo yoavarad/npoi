@@ -21,10 +21,11 @@
 namespace TestCases.HSSF.Record.Chart
 {
 
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the UnitsRecord
@@ -59,12 +60,12 @@ namespace TestCases.HSSF.Record.Chart
         public void TestStore()
         {
             UnitsRecord record = new UnitsRecord();
-            record.Units = ((short)0);
+            record.Units = ((short) 0);
 
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -38,9 +38,9 @@ namespace NPOI.Util
         public const int LONG_SIZE = 8;
         [Obsolete]
         public const int UINT_SIZE = 4;
-        
+
         [Obsolete]
         public const int ULONG_SIZE=8;
-        
+
     }
 }

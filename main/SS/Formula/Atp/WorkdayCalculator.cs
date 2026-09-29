@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
-using NPOI.SS.UserModel;
 namespace NPOI.SS.Formula.Atp
 {
     /**
@@ -68,7 +68,7 @@ namespace NPOI.SS.Formula.Atp
             int saturdaysPast = this.PastDaysOfWeek(start, end, DayOfWeek.Saturday);
             int sundaysPast = this.PastDaysOfWeek(start, end, DayOfWeek.Sunday);
             int nonWeekendHolidays = this.CalculateNonWeekendHolidays(start, end, holidays);
-            return (int)(end - start + 1) - saturdaysPast - sundaysPast - nonWeekendHolidays;
+            return (int) (end - start + 1) - saturdaysPast - sundaysPast - nonWeekendHolidays;
         }
 
         /**
@@ -87,11 +87,11 @@ namespace NPOI.SS.Formula.Atp
             int direction = workdays < 0 ? -1 : 1;
             DateTime endDate = startDate;
             double excelEndDate = DateUtil.GetExcelDate(endDate);
-            while (workdays != 0)
+            while(workdays != 0)
             {
                 endDate = endDate.AddDays(direction);
                 excelEndDate += direction;
-                if (endDate.DayOfWeek!= DayOfWeek.Saturday
+                if(endDate.DayOfWeek!= DayOfWeek.Saturday
                         && endDate.DayOfWeek != DayOfWeek.Sunday
                         && !IsHoliday(excelEndDate, holidays))
                 {
@@ -124,17 +124,17 @@ namespace NPOI.SS.Formula.Atp
         public DateTime CalculateWorkdays(double start, int workdays, int weekendType, double[] holidays)
         {
             List<int> weekendDays = new List<int>() { 7, 1 };
-            if (weekendTypeMap.TryGetValue(weekendType, out List<int> value))
+            if(weekendTypeMap.TryGetValue(weekendType, out List<int> value))
                 weekendDays= value;
             DateTime startDate = DateUtil.GetJavaDate(start);
             int direction = workdays < 0 ? -1 : 1;
             var endDate=startDate;
             double excelEndDate = DateUtil.GetExcelDate(endDate);
-            while (workdays != 0)
+            while(workdays != 0)
             {
                 endDate=endDate.AddDays(6*direction);
                 excelEndDate += direction;
-                if (!isWeekend(endDate, weekendDays) && !isHoliday(excelEndDate, holidays))
+                if(!isWeekend(endDate, weekendDays) && !isHoliday(excelEndDate, holidays))
                 {
                     workdays -= direction;
                 }
@@ -144,7 +144,7 @@ namespace NPOI.SS.Formula.Atp
 
         private static bool isWeekend(DateTime date, List<int> weekendDays)
         {
-            return weekendDays.Contains(((int)date.DayOfWeek) + 1);
+            return weekendDays.Contains(((int) date.DayOfWeek) + 1);
         }
 
         /**
@@ -154,9 +154,9 @@ namespace NPOI.SS.Formula.Atp
      */
         protected bool isHoliday(double aDate, double[] holidays)
         {
-            foreach (double holiday in holidays)
+            foreach(double holiday in holidays)
             {
-                if (Math.Round(holiday) == Math.Round(aDate))
+                if(Math.Round(holiday) == Math.Round(aDate))
                 {
                     return true;
                 }
@@ -180,10 +180,10 @@ namespace NPOI.SS.Formula.Atp
             int pastDaysOfWeek = 0;
             int startDay = (int)Math.Floor(start < end ? start : end);
             int endDay = (int)Math.Floor(end > start ? end : start);
-            for (; startDay <= endDay; startDay++)
+            for(; startDay <= endDay; startDay++)
             {
                 DateTime today = DateUtil.GetJavaDate(startDay);
-                if (today.DayOfWeek == dayOfWeek)
+                if(today.DayOfWeek == dayOfWeek)
                 {
                     pastDaysOfWeek++;
                 }
@@ -205,11 +205,11 @@ namespace NPOI.SS.Formula.Atp
             int nonWeekendHolidays = 0;
             double startDay = start < end ? start : end;
             double endDay = end > start ? end : start;
-            foreach (double holiday in holidays)
+            foreach(double holiday in holidays)
             {
-                if (WorkdayCalculator.IsInARange(startDay, endDay, holiday))
+                if(WorkdayCalculator.IsInARange(startDay, endDay, holiday))
                 {
-                    if (!IsWeekend(holiday))
+                    if(!IsWeekend(holiday))
                     {
                         nonWeekendHolidays++;
                     }
@@ -237,9 +237,9 @@ namespace NPOI.SS.Formula.Atp
 
         private static bool IsHoliday(double aDate, double[] holidays)
         {
-            foreach (double holiday in holidays)
+            foreach(double holiday in holidays)
             {
-                if (Math.Round(holiday) == Math.Round(aDate))
+                if(Math.Round(holiday) == Math.Round(aDate))
                 {
                     return true;
                 }

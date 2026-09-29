@@ -15,12 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System.Text;
 using NPOI.Util;
 using NPOI.XSSF.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
+using System.IO;
+using System.Text;
 
 namespace TestCases.XSSF.Util
 {
@@ -65,7 +66,7 @@ namespace TestCases.XSSF.Util
 
             // Vary the buffer size, so that we can end up with the br in the
             //  overflow or only part in the buffer
-            for (int i = 5; i < orig.Length; i++)
+            for(int i = 5; i < orig.Length; i++)
             {
                 EvilUnclosedBRFixingInputStream inp = new EvilUnclosedBRFixingInputStream(
                       new ByteArrayInputStream(orig)
@@ -73,11 +74,11 @@ namespace TestCases.XSSF.Util
 
                 MemoryStream bout = new MemoryStream();
                 bool going = true;
-                while (going)
+                while(going)
                 {
                     byte[] b = new byte[i];
                     int r = inp.Read(b);
-                    if (r > 0)
+                    if(r > 0)
                     {
                         bout.Write(b, 0, r);
                     }
@@ -94,4 +95,3 @@ namespace TestCases.XSSF.Util
         }
     }
 }
-

@@ -16,7 +16,8 @@
 ==================================================================== */
 
 using NPOI.XSSF;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using TestCases.SS.UserModel;
 namespace TestCases.XSSF.UserModel
 {
@@ -27,10 +28,9 @@ namespace TestCases.XSSF.UserModel
     [TestFixture]
     public class TestXSSFSheetAutosizeColumn : BaseTestSheetAutosizeColumn
     {
-        public TestXSSFSheetAutosizeColumn():base(XSSFITestDataProvider.instance)
+        public TestXSSFSheetAutosizeColumn() : base(XSSFITestDataProvider.instance)
         {
-            
+
         }
     }
 }
-

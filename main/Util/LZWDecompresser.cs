@@ -80,7 +80,7 @@ namespace NPOI.Util
          */
         public byte[] decompress(Stream src)
         {
-            using (MemoryStream res = new MemoryStream())
+            using(MemoryStream res = new MemoryStream())
             {
                 decompress(src, res);
                 return res.ToArray();
@@ -134,19 +134,19 @@ namespace NPOI.Util
             // How long a code sequence is, and where in the
             //  dictionary to start at
             int len, pntr;
-            
-            while ((flag = src.ReadByte()) != -1)
+
+            while((flag = src.ReadByte()) != -1)
             {
                 // Compare each bit in our flag byte in turn:
-                for (mask = 1; mask < 256; mask <<= 1)
+                for(mask = 1; mask < 256; mask <<= 1)
                 {
                     // Is this a new code (un-compressed), or
                     //  the use of existing codes (compressed)?
                     bool IsMaskSet = (flag & mask) > 0;
-                    if (IsMaskSet ^ maskMeansCompressed)
+                    if(IsMaskSet ^ maskMeansCompressed)
                     {
                         // Retrieve the un-compressed code
-                        if ((dataI = src.ReadByte()) != -1)
+                        if((dataI = src.ReadByte()) != -1)
                         {
                             // Save the byte into the dictionary
                             buffer[(pos & 4095)] = fromInt(dataI);
@@ -162,14 +162,15 @@ namespace NPOI.Util
                         // Grab the next 16 bits of data
                         dataIPt1 = src.ReadByte();
                         dataIPt2 = src.ReadByte();
-                        if (dataIPt1 == -1 || dataIPt2 == -1) break;
+                        if(dataIPt1 == -1 || dataIPt2 == -1)
+                            break;
 
                         // Build up how long the code sequence is, and
                         //  what position of the code to start at
                         // (The position is the usually the first 12 bits, 
                         //  and the length is usually the last 4 bits)
                         len = (dataIPt2 & 15) + codeLengthIncrease;
-                        if (positionIsBigEndian)
+                        if(positionIsBigEndian)
                         {
                             pntr = (dataIPt1 << 4) + (dataIPt2 >> 4);
                         }
@@ -182,7 +183,7 @@ namespace NPOI.Util
                         pntr = adjustDictionaryOffset(pntr);
 
                         // Loop over the codes, outputting what they correspond to
-                        for (int i = 0; i < len; i++)
+                        for(int i = 0; i < len; i++)
                         {
                             dataB[i] = buffer[(pntr + i) & 4095];
                             buffer[(pos + i) & 4095] = dataB[i];
@@ -203,8 +204,9 @@ namespace NPOI.Util
          */
         public static byte fromInt(int b)
         {
-            if (b < 128) return (byte)b;
-            return (byte)(b - 256);
+            if(b < 128)
+                return (byte) b;
+            return (byte) (b - 256);
         }
         /**
          * Given a java byte, turn it into an integer between 0
@@ -213,7 +215,7 @@ namespace NPOI.Util
          */
         public static int fromByte(byte b)
         {
-            if (b >= 0)
+            if(b >= 0)
             {
                 return b;
             }

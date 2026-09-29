@@ -18,11 +18,11 @@
 
 namespace NPOI.HSSF.Record.CF
 {
+    using NPOI.HSSF.Record;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using NPOI.SS.UserModel;
 
     /**
      * Font Formatting Block of the Conditional Formatting Rule Record.
@@ -76,7 +76,7 @@ namespace NPOI.HSSF.Record.CF
 
         public FontFormatting()
         {
-            
+
 
             FontHeight=-1;
             IsItalic=false;
@@ -84,9 +84,9 @@ namespace NPOI.HSSF.Record.CF
             IsOutlineOn=false;
             IsShadowOn=false;
             IsStruckout=false;
-            EscapementType=(FontSuperScript)0;
-            UnderlineType=(FontUnderlineType)0;
-            FontColorIndex=(short)-1;
+            EscapementType=(FontSuperScript) 0;
+            UnderlineType=(FontUnderlineType) 0;
+            FontColorIndex=(short) -1;
 
             IsFontStyleModified=false;
             IsFontOutlineModified=false;
@@ -106,7 +106,7 @@ namespace NPOI.HSSF.Record.CF
         /** Creates new FontFormatting */
         public FontFormatting(RecordInputStream in1)
         {
-            for (int i = 0; i < _rawData.Length; i++)
+            for(int i = 0; i < _rawData.Length; i++)
             {
                 _rawData[i] =(byte) in1.ReadByte();
             }
@@ -118,7 +118,7 @@ namespace NPOI.HSSF.Record.CF
         }
         private void SetShort(int offset, int value)
         {
-            LittleEndian.PutShort(_rawData, offset, (short)value);
+            LittleEndian.PutShort(_rawData, offset, (short) value);
         }
         private int GetInt(int offset)
         {
@@ -135,7 +135,7 @@ namespace NPOI.HSSF.Record.CF
             {
                 return _rawData;
             }
-            
+
         }
         public int DataLength
         {
@@ -143,7 +143,7 @@ namespace NPOI.HSSF.Record.CF
             {
                 return RAW_DATA_SIZE;
             }
-            
+
         }
         /**
          * Gets the height of the font in 1/20th point Units
@@ -152,7 +152,7 @@ namespace NPOI.HSSF.Record.CF
          */
         public int FontHeight
         {
-            get{return GetInt(OFFSET_FONT_HEIGHT);}
+            get { return GetInt(OFFSET_FONT_HEIGHT); }
             set { SetInt(OFFSET_FONT_HEIGHT, value); }
         }
 
@@ -235,8 +235,10 @@ namespace NPOI.HSSF.Record.CF
             set
             {
                 short bw = value;
-                if (bw < 100) { bw = 100; }
-                if (bw > 1000) { bw = 1000; }
+                if(bw < 100)
+                { bw = 100; }
+                if(bw > 1000)
+                { bw = 1000; }
                 SetShort(OFFSET_FONT_WEIGHT, bw);
             }
         }
@@ -266,9 +268,9 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (FontSuperScript)GetShort(OFFSET_ESCAPEMENT_TYPE);
+                return (FontSuperScript) GetShort(OFFSET_ESCAPEMENT_TYPE);
             }
-            set { SetShort(OFFSET_ESCAPEMENT_TYPE, (short)value); }
+            set { SetShort(OFFSET_ESCAPEMENT_TYPE, (short) value); }
         }
 
         /**
@@ -281,9 +283,9 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (FontUnderlineType)GetShort(OFFSET_UNDERLINE_TYPE);
+                return (FontUnderlineType) GetShort(OFFSET_UNDERLINE_TYPE);
             }
-            set { SetShort(OFFSET_UNDERLINE_TYPE, (short)value); }
+            set { SetShort(OFFSET_UNDERLINE_TYPE, (short) value); }
         }
 
 
@@ -292,7 +294,7 @@ namespace NPOI.HSSF.Record.CF
         {
             get
             {
-                return (short)GetInt(OFFSET_FONT_COLOR_INDEX);
+                return (short) GetInt(OFFSET_FONT_COLOR_INDEX);
             }
             set { SetInt(OFFSET_FONT_COLOR_INDEX, value); }
         }
@@ -359,7 +361,8 @@ namespace NPOI.HSSF.Record.CF
                 int underlineModified = GetInt(OFFSET_UNDERLINE_TYPE_MODIFIED);
                 return underlineModified == 0;
             }
-            set {
+            set
+            {
 
                 int value1 = value ? 0 : 1;
                 SetInt(OFFSET_UNDERLINE_TYPE_MODIFIED, value1);
@@ -387,7 +390,7 @@ namespace NPOI.HSSF.Record.CF
 
             buffer.Append("	.font height = ").Append(FontHeight).Append(" twips\n");
 
-            if (IsFontStyleModified)
+            if(IsFontStyleModified)
             {
                 buffer.Append("	.font posture = ").Append(IsItalic ? "Italic" : "Normal").Append("\n");
             }
@@ -396,7 +399,7 @@ namespace NPOI.HSSF.Record.CF
                 buffer.Append("	.font posture = ]not modified]").Append("\n");
             }
 
-            if (IsFontOutlineModified)
+            if(IsFontOutlineModified)
             {
                 buffer.Append("	.font outline = ").Append(IsOutlineOn).Append("\n");
             }
@@ -405,7 +408,7 @@ namespace NPOI.HSSF.Record.CF
                 buffer.Append("	.font outline Is not modified\n");
             }
 
-            if (IsFontShadowModified)
+            if(IsFontShadowModified)
             {
                 buffer.Append("	.font shadow = ").Append(IsShadowOn).Append("\n");
             }
@@ -414,7 +417,7 @@ namespace NPOI.HSSF.Record.CF
                 buffer.Append("	.font shadow Is not modified\n");
             }
 
-            if (IsFontCancellationModified)
+            if(IsFontCancellationModified)
             {
                 buffer.Append("	.font strikeout = ").Append(IsStruckout).Append("\n");
             }
@@ -423,7 +426,7 @@ namespace NPOI.HSSF.Record.CF
                 buffer.Append("	.font strikeout Is not modified\n");
             }
 
-            if (IsFontStyleModified)
+            if(IsFontStyleModified)
             {
                 buffer.Append("	.font weight = ").
                     Append(FontWeight).
@@ -437,7 +440,7 @@ namespace NPOI.HSSF.Record.CF
                 buffer.Append("	.font weight = ]not modified]").Append("\n");
             }
 
-            if (IsEscapementTypeModified)
+            if(IsEscapementTypeModified)
             {
                 buffer.Append("	.escapement type = ").Append(EscapementType).Append("\n");
             }
@@ -446,7 +449,7 @@ namespace NPOI.HSSF.Record.CF
                 buffer.Append("	.escapement type Is not modified\n");
             }
 
-            if (IsUnderlineTypeModified)
+            if(IsUnderlineTypeModified)
             {
                 buffer.Append("	.underline type = ").Append(UnderlineType).Append("\n");
             }

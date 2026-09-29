@@ -1,9 +1,9 @@
 
 namespace NPOI.XDDF.UserModel.Chart;
 
-using System.Collections.Generic;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Chart;
+using System.Collections.Generic;
 
 public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 {
@@ -12,9 +12,9 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
     public XDDFPie3DChartData(CT_Pie3DChart chart)
     {
         this.chart = chart;
-        if (chart.ser != null)
+        if(chart.ser != null)
         {
-            foreach (CT_PieSer series in chart.ser)
+            foreach(CT_PieSer series in chart.ser)
             {
                 this.series.Add(new Series(series, series.cat, series.val));
             }
@@ -23,7 +23,7 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
     public override void SetVaryColors(bool varyColors)
     {
-        if (chart.varyColors != null)
+        if(chart.varyColors != null)
         {
             chart.varyColors.val = varyColors ? 1 : 0;
         }
@@ -41,8 +41,8 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
         chart.ser.Add(ctSer);
         ctSer.cat = new CT_AxDataSource();
         ctSer.val = new CT_NumDataSource();
-        ctSer.idx = new CT_UnsignedInt { val = (uint)index };
-        ctSer.order = new CT_UnsignedInt { val = (uint)index };
+        ctSer.idx = new CT_UnsignedInt { val = (uint) index };
+        ctSer.order = new CT_UnsignedInt { val = (uint) index };
         Series added = new Series(ctSer, category, values);
         this.series.Add(added);
         return added;
@@ -68,7 +68,7 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
         protected override CT_SerTx GetSeriesText()
         {
-            if (series.tx != null)
+            if(series.tx != null)
             {
                 return series.tx;
             }
@@ -81,11 +81,11 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
         public override void SetShowLeaderLines(bool showLeaderLines)
         {
-            if (series.dLbls == null)
+            if(series.dLbls == null)
             {
                 series.dLbls = new CT_DLbls();
             }
-            if (series.dLbls.showLeaderLines != null)
+            if(series.dLbls.showLeaderLines != null)
             {
                 series.dLbls.showLeaderLines.val = showLeaderLines ? 1 : 0;
             }
@@ -97,7 +97,7 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
         public override XDDFShapeProperties GetShapeProperties()
         {
-            if (series.spPr != null)
+            if(series.spPr != null)
             {
                 return new XDDFShapeProperties(series.spPr);
             }
@@ -109,16 +109,16 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
         public override void SetShapeProperties(XDDFShapeProperties properties)
         {
-            if (properties == null)
+            if(properties == null)
             {
-                if (series.spPr != null)
+                if(series.spPr != null)
                 {
                     series.spPr = null;
                 }
             }
             else
             {
-                if (series.spPr != null)
+                if(series.spPr != null)
                 {
                     series.spPr = properties.GetXmlObject();
                 }
@@ -132,7 +132,7 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
         public long GetExplosion()
         {
-            if (series.explosion != null)
+            if(series.explosion != null)
             {
                 return series.explosion.val;
             }
@@ -144,13 +144,13 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
         public void SetExplosion(long explosion)
         {
-            if (series.explosion != null)
+            if(series.explosion != null)
             {
-                series.explosion.val = (uint)explosion;
+                series.explosion.val = (uint) explosion;
             }
             else
             {
-                series.explosion = new CT_UnsignedInt { val = (uint)explosion };
+                series.explosion = new CT_UnsignedInt { val = (uint) explosion };
             }
         }
 
@@ -166,12 +166,12 @@ public class XDDFPie3DChartData<T, V> : XDDFChartData<T, V>
 
         public void UpdateIdXVal(long val)
         {
-            series.idx.val = (uint)val;
+            series.idx.val = (uint) val;
         }
 
         public void UpdateOrderVal(long val)
         {
-            series.order.val = (uint)val;
+            series.order.val = (uint) val;
         }
     }
 }

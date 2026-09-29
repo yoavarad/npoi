@@ -17,13 +17,13 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record.CF;
     using NPOI.HSSF.Util;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the TestCFHeaderRecord
@@ -39,13 +39,13 @@ namespace TestCases.HSSF.Record
         {
             CFHeaderRecord record = new CFHeaderRecord();
             CellRangeAddress[] ranges = {
-			    new CellRangeAddress(0,0xFFFF,5,5),
-			    new CellRangeAddress(0,0xFFFF,6,6),
-			    new CellRangeAddress(0,1,0,1),
-			    new CellRangeAddress(0,1,2,3),
-			    new CellRangeAddress(2,3,0,1),
-			    new CellRangeAddress(2,3,2,3),
-		    };
+                new CellRangeAddress(0,0xFFFF,5,5),
+                new CellRangeAddress(0,0xFFFF,6,6),
+                new CellRangeAddress(0,1,0,1),
+                new CellRangeAddress(0,1,2,3),
+                new CellRangeAddress(2,3,0,1),
+                new CellRangeAddress(2,3,2,3),
+            };
             record.CellRanges = (ranges);
             ranges = record.CellRanges;
             ClassicAssert.AreEqual(6, ranges.Length);
@@ -106,38 +106,38 @@ namespace TestCases.HSSF.Record
         [Test]
         public void TestSerialization()
         {
-            byte[] recordData = 
-		    {
-			    (byte)0x03, (byte)0x00,
-			    (byte)0x01,	(byte)0x00,
+            byte[] recordData =
+            {
+                (byte)0x03, (byte)0x00,
+                (byte)0x01, (byte)0x00,
+
+                (byte)0x00, (byte)0x00,
+                (byte)0x03, (byte)0x00,
+                (byte)0x00, (byte)0x00,
+                (byte)0x03, (byte)0x00,
+
+                (byte)0x04, (byte)0x00, // nRegions
     			
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0x03,	(byte)0x00,
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0x03,	(byte)0x00,
-    			
-			    (byte)0x04,	(byte)0x00, // nRegions
-    			
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0x01,	(byte)0x00,
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0x01,	(byte)0x00,
-    			
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0x01,	(byte)0x00,
-			    (byte)0x02,	(byte)0x00,
-			    (byte)0x03,	(byte)0x00,
-    			
-			    (byte)0x02,	(byte)0x00,
-			    (byte)0x03,	(byte)0x00,
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0x01,	(byte)0x00,
-    			
-			    (byte)0x02,	(byte)0x00,
-			    (byte)0x03,	(byte)0x00,
-			    (byte)0x02,	(byte)0x00,
-			    (byte)0x03,	(byte)0x00,
-		    };
+			    (byte)0x00, (byte)0x00,
+                (byte)0x01, (byte)0x00,
+                (byte)0x00, (byte)0x00,
+                (byte)0x01, (byte)0x00,
+
+                (byte)0x00, (byte)0x00,
+                (byte)0x01, (byte)0x00,
+                (byte)0x02, (byte)0x00,
+                (byte)0x03, (byte)0x00,
+
+                (byte)0x02, (byte)0x00,
+                (byte)0x03, (byte)0x00,
+                (byte)0x00, (byte)0x00,
+                (byte)0x01, (byte)0x00,
+
+                (byte)0x02, (byte)0x00,
+                (byte)0x03, (byte)0x00,
+                (byte)0x02, (byte)0x00,
+                (byte)0x03, (byte)0x00,
+            };
 
             CFHeaderRecord record = new CFHeaderRecord(TestcaseRecordInputStream.Create(CFHeaderRecord.sid, recordData));
 
@@ -156,7 +156,7 @@ namespace TestCases.HSSF.Record
 
             ClassicAssert.AreEqual(recordData.Length + 4, output.Length, "Output size"); //includes sid+recordlength
 
-            for (int i = 0; i < recordData.Length; i++)
+            for(int i = 0; i < recordData.Length; i++)
             {
                 ClassicAssert.AreEqual(recordData[i], output[i + 4], "CFHeaderRecord doesn't match");
             }
@@ -165,40 +165,40 @@ namespace TestCases.HSSF.Record
         public void TestExtremeRows()
         {
             byte[] recordData = {
-			    (byte)0x13, (byte)0x00, // nFormats
-			    (byte)0x00,	(byte)0x00,
+                (byte)0x13, (byte)0x00, // nFormats
+			    (byte)0x00, (byte)0x00,
+
+                (byte)0x00, (byte)0x00,
+                (byte)0xFF, (byte)0xFF,
+                (byte)0x00, (byte)0x00,
+                (byte)0xFF, (byte)0x00,
+
+                (byte)0x03, (byte)0x00, // nRegions
     			
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0xFF,	(byte)0xFF,
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0xFF,	(byte)0x00,
-    			
-			    (byte)0x03,	(byte)0x00, // nRegions
-    			
-			    (byte)0x40,	(byte)0x9C,
-			    (byte)0x50,	(byte)0xC3,
-			    (byte)0x02,	(byte)0x00,
-			    (byte)0x02,	(byte)0x00,
-    			
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0xFF,	(byte)0xFF,
-			    (byte)0x05,	(byte)0x00,
-			    (byte)0x05,	(byte)0x00,
-    			
-			    (byte)0x07,	(byte)0x00,
-			    (byte)0x07,	(byte)0x00,
-			    (byte)0x00,	(byte)0x00,
-			    (byte)0xFF,	(byte)0x00,
-		    };
+			    (byte)0x40, (byte)0x9C,
+                (byte)0x50, (byte)0xC3,
+                (byte)0x02, (byte)0x00,
+                (byte)0x02, (byte)0x00,
+
+                (byte)0x00, (byte)0x00,
+                (byte)0xFF, (byte)0xFF,
+                (byte)0x05, (byte)0x00,
+                (byte)0x05, (byte)0x00,
+
+                (byte)0x07, (byte)0x00,
+                (byte)0x07, (byte)0x00,
+                (byte)0x00, (byte)0x00,
+                (byte)0xFF, (byte)0x00,
+            };
 
             CFHeaderRecord record;
             try
             {
                 record = new CFHeaderRecord(TestcaseRecordInputStream.Create(CFHeaderRecord.sid, recordData));
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if (e.Message.Equals("invalid cell range (-25536, 2, -15536, 2)"))
+                if(e.Message.Equals("invalid cell range (-25536, 2, -15536, 2)"))
                 {
                     throw new AssertionException("Identified bug 44739b");
                 }
@@ -218,7 +218,7 @@ namespace TestCases.HSSF.Record
 
             ClassicAssert.AreEqual(recordData.Length + 4, output.Length, "Output size"); //includes sid+recordlength
 
-            for (int i = 0; i < recordData.Length; i++)
+            for(int i = 0; i < recordData.Length; i++)
             {
                 ClassicAssert.AreEqual(recordData[i], output[i + 4], "CFHeaderRecord doesn't match");
             }

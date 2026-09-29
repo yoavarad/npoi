@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -96,7 +96,7 @@ namespace NPOI.SS.UserModel.Drawing
         }
         public static string GetFillStyleName(int optionId)
         {
-            if (fillStyle.TryGetValue(optionId, out string name))
+            if(fillStyle.TryGetValue(optionId, out string name))
                 return name;
             return "Unknown";
         }

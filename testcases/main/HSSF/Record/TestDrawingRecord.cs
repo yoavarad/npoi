@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.Record
 {
+    using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.Record;
-    using NPOI.Util;
 
     [TestFixture]
     public class TestDrawingRecord
@@ -41,14 +42,14 @@ namespace TestCases.HSSF.Record
             //main part
             DrawingRecord dg = new DrawingRecord();
             byte[] data1 = new byte[8224];
-            Arrays.Fill(data1, (byte)1);
+            Arrays.Fill(data1, (byte) 1);
             dg.SetData(data1);
             byte[] dataX = dg.Serialize();
             out1.Write(dataX, 0, dataX.Length);
 
             //continued part
             byte[] data2 = new byte[4048];
-            Arrays.Fill(data2, (byte)2);
+            Arrays.Fill(data2, (byte) 2);
             ContinueRecord cn = new ContinueRecord(data2);
             dataX = cn.Serialize();
             out1.Write(dataX, 0, dataX.Length);
@@ -58,8 +59,8 @@ namespace TestCases.HSSF.Record
             ClassicAssert.IsTrue(rec[0] is DrawingRecord);
             ClassicAssert.IsTrue(rec[1] is ContinueRecord);
 
-            ClassicAssert.IsTrue(Arrays.Equals(data1, ((DrawingRecord)rec[0]).RecordData));
-            ClassicAssert.IsTrue(Arrays.Equals(data2, ((ContinueRecord)rec[1]).Data));
+            ClassicAssert.IsTrue(Arrays.Equals(data1, ((DrawingRecord) rec[0]).RecordData));
+            ClassicAssert.IsTrue(Arrays.Equals(data2, ((ContinueRecord) rec[1]).Data));
 
         }
 

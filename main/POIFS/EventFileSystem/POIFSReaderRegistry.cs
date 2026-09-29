@@ -17,10 +17,9 @@
 ==================================================================== */
 
 
+using NPOI.POIFS.FileSystem;
 using System;
 using System.Collections;
-
-using NPOI.POIFS.FileSystem;
 
 namespace NPOI.POIFS.EventFileSystem
 {
@@ -74,14 +73,14 @@ namespace NPOI.POIFS.EventFileSystem
                               POIFSDocumentPath path,
                               String documentName)
         {
-            if (!omnivorousListeners.Contains(listener))
+            if(!omnivorousListeners.Contains(listener))
             {
 
                 // not an omnivorous listener (if it was, this method is a
                 // no-op)
                 ArrayList descriptors = (ArrayList)selectiveListeners[listener];
 
-                if (descriptors == null)
+                if(descriptors == null)
                 {
 
                     // this listener has not Registered before
@@ -91,7 +90,7 @@ namespace NPOI.POIFS.EventFileSystem
                 DocumentDescriptor descriptor = new DocumentDescriptor(path,
                                                     documentName);
 
-                if (descriptors.Add(descriptor) >= 0)
+                if(descriptors.Add(descriptor) >= 0)
                 {
 
                     // this listener wasn't alReady listening for this
@@ -100,7 +99,7 @@ namespace NPOI.POIFS.EventFileSystem
                     ArrayList listeners =
                         (ArrayList)chosenDocumentDescriptors[descriptor];
 
-                    if (listeners == null)
+                    if(listeners == null)
                     {
 
                         // nobody was listening for this document before
@@ -120,7 +119,7 @@ namespace NPOI.POIFS.EventFileSystem
 
         public void RegisterListener(POIFSReaderListener listener)
         {
-            if (!omnivorousListeners.Contains(listener))
+            if(!omnivorousListeners.Contains(listener))
             {
 
                 // wasn't alReady listening for everything, so drop
@@ -148,7 +147,7 @@ namespace NPOI.POIFS.EventFileSystem
                 (ArrayList)chosenDocumentDescriptors[new DocumentDescriptor(path,
                     name)];
 
-            if (selectiveListeners != null)
+            if(selectiveListeners != null)
             {
                 rval.AddRange(selectiveListeners);
             }
@@ -159,14 +158,14 @@ namespace NPOI.POIFS.EventFileSystem
         {
             ArrayList selectedDescriptors = (ArrayList)selectiveListeners[listener];
 
-            if (selectedDescriptors != null)
+            if(selectedDescriptors != null)
             {
                 selectiveListeners.Remove(listener);
                 IEnumerator iter = selectedDescriptors.GetEnumerator();
 
-                while (iter.MoveNext())
+                while(iter.MoveNext())
                 {
-                    DropDocument(listener, (DocumentDescriptor)iter.Current);
+                    DropDocument(listener, (DocumentDescriptor) iter.Current);
                 }
             }
         }
@@ -177,7 +176,7 @@ namespace NPOI.POIFS.EventFileSystem
             ArrayList listeners = (ArrayList)chosenDocumentDescriptors[descriptor];
 
             listeners.Remove(listener);
-            if (listeners.Count == 0)
+            if(listeners.Count == 0)
             {
                 chosenDocumentDescriptors.Remove(descriptor);
             }

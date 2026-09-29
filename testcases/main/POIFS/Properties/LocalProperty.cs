@@ -25,8 +25,8 @@
  * 
  * ==============================================================*/
 
-using System;
 using NPOI.POIFS.Properties;
+using System;
 
 namespace TestCases.POIFS.Properties
 {
@@ -36,7 +36,7 @@ namespace TestCases.POIFS.Properties
         /// Initializes a new instance of the <see cref="LocalProperty"/> class.
         /// </summary>
         /// <param name="index">The index.</param>
-        public LocalProperty(int index):base()
+        public LocalProperty(int index) : base()
         {
             this.Name="foo" + index;
             this.Index=index;

@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.DDF;
     using NPOI.HSSF.Record;
     using NPOI.SS.UserModel;
+    using System;
 
 
     /// <summary>
@@ -78,9 +78,9 @@ namespace NPOI.HSSF.UserModel
             EscherTextboxRecord escherTextbox = new EscherTextboxRecord();
 
             spContainer.RecordId = (EscherContainerRecord.SP_CONTAINER);
-            spContainer.Options = ((short)0x000F);
+            spContainer.Options = ((short) 0x000F);
             sp.RecordId = (EscherSpRecord.RECORD_ID);
-            sp.Options = ((short)((EscherAggregate.ST_TEXTBOX << 4) | 0x2));
+            sp.Options = ((short) ((EscherAggregate.ST_TEXTBOX << 4) | 0x2));
 
             sp.Flags = (EscherSpRecord.FLAG_HAVEANCHOR | EscherSpRecord.FLAG_HASSHAPETYPE);
             opt.RecordId = (EscherOptRecord.RECORD_ID);
@@ -104,9 +104,9 @@ namespace NPOI.HSSF.UserModel
 
             EscherRecord anchor = (Anchor as HSSFAnchor).GetEscherAnchor();
             clientData.RecordId = (EscherClientDataRecord.RECORD_ID);
-            clientData.Options = ((short)0x0000);
+            clientData.Options = ((short) 0x0000);
             escherTextbox.RecordId = (EscherTextboxRecord.RECORD_ID);
-            escherTextbox.Options = ((short)0x0000);
+            escherTextbox.Options = ((short) 0x0000);
 
             spContainer.AddChildRecord(sp);
             spContainer.AddChildRecord(opt);
@@ -121,7 +121,7 @@ namespace NPOI.HSSF.UserModel
         {
             EscherAggregate agg = patriarch.GetBoundAggregate();
             agg.AssociateShapeToObjRecord(GetEscherContainer().GetChildById(EscherClientDataRecord.RECORD_ID), GetObjRecord());
-            if (GetTextObjectRecord() != null)
+            if(GetTextObjectRecord() != null)
             {
                 agg.AssociateShapeToObjRecord(GetEscherContainer().GetChildById(EscherTextboxRecord.RECORD_ID), GetTextObjectRecord());
             }

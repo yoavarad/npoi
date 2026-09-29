@@ -16,17 +16,16 @@
 ==================================================================== */
 namespace NPOI.HPSF.Extractor
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
-    using System.IO;
-    using System.Collections;
-
+    using Cysharp.Text;
     using NPOI;
     using NPOI.HPSF;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using System;
+    using System.Collections;
     using System.Globalization;
+    using System.IO;
+    using System.Text;
 
     /// <summary>
     /// Extracts all of the HPSF properties, both

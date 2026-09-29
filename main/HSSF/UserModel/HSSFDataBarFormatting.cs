@@ -17,11 +17,10 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.CF;
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * High level representation for DataBar / Data-Bar Formatting 
@@ -60,7 +59,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                databarFormatting.PercentMin = (byte)value;
+                databarFormatting.PercentMin = (byte) value;
             }
         }
 
@@ -72,7 +71,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                databarFormatting.PercentMax = (byte)value;
+                databarFormatting.PercentMax = (byte) value;
             }
         }
 

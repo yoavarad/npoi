@@ -15,14 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Xml;
-using System.IO;
 using NPOI.OpenXml4Net.OPC;
-using NPOI.XSSF.UserModel.Helpers;
 using NPOI.OpenXmlFormats.Spreadsheet;
-using System.Collections.Generic;
 using NPOI.XSSF.UserModel;
+using NPOI.XSSF.UserModel.Helpers;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 
 namespace NPOI.XSSF.Model
 {
@@ -67,7 +67,7 @@ namespace NPOI.XSSF.Model
                 SingleXmlCellsDocument doc = SingleXmlCellsDocument.Parse(is1);
                 SingleXMLCells = doc.GetSingleXmlCells();
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -75,7 +75,7 @@ namespace NPOI.XSSF.Model
 
         public XSSFSheet GetXSSFSheet()
         {
-            return (XSSFSheet)GetParent();
+            return (XSSFSheet) GetParent();
         }
 
         protected void WriteTo(Stream out1)
@@ -107,7 +107,7 @@ namespace NPOI.XSSF.Model
         {
             List<XSSFSingleXmlCell> list = new List<XSSFSingleXmlCell>();
 
-            foreach (CT_SingleXmlCell SingleXmlCell in SingleXMLCells.singleXmlCell)
+            foreach(CT_SingleXmlCell SingleXmlCell in SingleXMLCells.singleXmlCell)
             {
                 list.Add(new XSSFSingleXmlCell(SingleXmlCell, this));
             }
@@ -115,9 +115,3 @@ namespace NPOI.XSSF.Model
         }
     }
 }
-
-
-
-
-
-

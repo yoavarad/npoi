@@ -18,19 +18,19 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using NPOI.DDF;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Util;
+    using NPOI.POIFS.Crypt;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Formula.UDF;
     using NPOI.SS.UserModel;
-    using System.Security;
-    using NPOI.POIFS.Crypt;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Security;
 
 
     /**
@@ -176,31 +176,31 @@ namespace NPOI.HSSF.Model
             retval.records.Records=records;
 
             int k;
-            for (k = 0; k < recs.Count; k++)
+            for(k = 0; k < recs.Count; k++)
             {
                 Record rec = (Record)recs[k];
 
-                if (rec.Sid == EOFRecord.sid)
+                if(rec.Sid == EOFRecord.sid)
                 {
                     records.Add(rec);
                     //if (log.Check(POILogger.DEBUG))
                     //    log.Log(DEBUG, "found workbook eof record at " + k);
                     break;
                 }
-                switch (rec.Sid)
+                switch(rec.Sid)
                 {
 
                     case BoundSheetRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found boundsheet record at " + k);
-                        retval.boundsheets.Add((BoundSheetRecord)rec);
+                        retval.boundsheets.Add((BoundSheetRecord) rec);
                         retval.records.Bspos = k;
                         break;
 
                     case SSTRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found sst record at " + k);
-                        retval.sst = (SSTRecord)rec;
+                        retval.sst = (SSTRecord) rec;
                         break;
 
                     case FontRecord.sid:
@@ -247,13 +247,13 @@ namespace NPOI.HSSF.Model
                     case FormatRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found format record at " + k);
-                        retval.formats.Add((FormatRecord)rec);
-                        retval.maxformatid = retval.maxformatid >= ((FormatRecord)rec).IndexCode ? retval.maxformatid : ((FormatRecord)rec).IndexCode;
+                        retval.formats.Add((FormatRecord) rec);
+                        retval.maxformatid = retval.maxformatid >= ((FormatRecord) rec).IndexCode ? retval.maxformatid : ((FormatRecord) rec).IndexCode;
                         break;
                     case DateWindow1904Record.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found datewindow1904 record at " + k);
-                        retval.uses1904datewindowing = ((DateWindow1904Record)rec).Windowing == 1;
+                        retval.uses1904datewindowing = ((DateWindow1904Record) rec).Windowing == 1;
                         break;
                     case PaletteRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
@@ -263,22 +263,22 @@ namespace NPOI.HSSF.Model
                     case WindowOneRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found WindowOneRecord at " + k);
-                        retval.windowOne = (WindowOneRecord)rec;
+                        retval.windowOne = (WindowOneRecord) rec;
                         break;
                     case WriteAccessRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found WriteAccess at " + k);
-                        retval.writeAccess = (WriteAccessRecord)rec;
+                        retval.writeAccess = (WriteAccessRecord) rec;
                         break;
                     case WriteProtectRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found WriteProtect at " + k);
-                        retval.writeProtect = (WriteProtectRecord)rec;
+                        retval.writeProtect = (WriteProtectRecord) rec;
                         break;
                     case FileSharingRecord.sid:
                         //if (log.Check(POILogger.DEBUG))
                         //    log.Log(DEBUG, "found FileSharing at " + k);
-                        retval.fileShare = (FileSharingRecord)rec;
+                        retval.fileShare = (FileSharingRecord) rec;
                         break;
                     case NameCommentRecord.sid:
                         NameCommentRecord ncr = (NameCommentRecord)rec;
@@ -286,7 +286,7 @@ namespace NPOI.HSSF.Model
                         break;
                     default:
                         //if (log.check(POILogger.DEBUG))
-                            //log.log(DEBUG, "ignoring record (sid=" + rec.getSid() + ") at " + k);
+                        //log.log(DEBUG, "ignoring record (sid=" + rec.getSid() + ") at " + k);
                         break;
                 }
                 records.Add(rec);
@@ -299,35 +299,35 @@ namespace NPOI.HSSF.Model
 
             // Look for other interesting values that
             //  follow the EOFRecord
-            for (; k < recs.Count; k++)
+            for(; k < recs.Count; k++)
             {
                 Record rec = (Record)recs[k];
-                switch (rec.Sid)
+                switch(rec.Sid)
                 {
                     case HyperlinkRecord.sid:
-                        retval.hyperlinks.Add((HyperlinkRecord)rec);
+                        retval.hyperlinks.Add((HyperlinkRecord) rec);
                         break;
                     default:
                         break;
                 }
             }
 
-            if (retval.windowOne == null)
+            if(retval.windowOne == null)
             {
-                retval.windowOne = (WindowOneRecord)CreateWindowOne();
+                retval.windowOne = (WindowOneRecord) CreateWindowOne();
             }
             //if (log.Check(POILogger.DEBUG))
             //    log.Log(DEBUG, "exit Create workbook from existing file function");
             return retval;
         }
-        
-    /** gets the name comment record
-     * @param nameRecord name record who's comment is required.
-     * @return name comment record or <code>null</code> if there isn't one for the given name.
-     */
+
+        /** gets the name comment record
+         * @param nameRecord name record who's comment is required.
+         * @return name comment record or <code>null</code> if there isn't one for the given name.
+         */
         public NameCommentRecord GetNameCommentRecord(NameRecord nameRecord)
         {
-            if (commentRecords.TryGetValue(nameRecord.NameText, out NameCommentRecord record))
+            if(commentRecords.TryGetValue(nameRecord.NameText, out NameCommentRecord record))
                 return record;
             else
                 return null;
@@ -361,7 +361,7 @@ namespace NPOI.HSSF.Model
             records.Add(CreatePassword());
             records.Add(CreateProtectionRev4());
             records.Add(CreatePasswordRev4());
-            retval.windowOne = (WindowOneRecord)CreateWindowOne();
+            retval.windowOne = (WindowOneRecord) CreateWindowOne();
             records.Add(retval.windowOne);
             records.Add(CreateBackup());
             retval.records.Backuppos=records.Count - 1;
@@ -378,29 +378,29 @@ namespace NPOI.HSSF.Model
             retval.numfonts = 4;
 
             // Set up format records
-            for (int i = 0; i <= 7; i++)
+            for(int i = 0; i <= 7; i++)
             {
                 Record rec = CreateFormat(i);
-                retval.maxformatid = retval.maxformatid >= ((FormatRecord)rec).IndexCode ? retval.maxformatid : ((FormatRecord)rec).IndexCode;
-                formats.Add((FormatRecord)rec);
+                retval.maxformatid = retval.maxformatid >= ((FormatRecord) rec).IndexCode ? retval.maxformatid : ((FormatRecord) rec).IndexCode;
+                formats.Add((FormatRecord) rec);
                 records.Add(rec);
             }
             retval.formats = formats;
 
-            for (int k = 0; k < 21; k++)
+            for(int k = 0; k < 21; k++)
             {
                 records.Add(CreateExtendedFormat(k));
                 retval.numxfs++;
             }
             retval.records.Xfpos=records.Count - 1;
-            for (int k = 0; k < 6; k++)
+            for(int k = 0; k < 6; k++)
             {
                 records.Add(CreateStyle(k));
             }
             records.Add(CreateUseSelFS());
 
             int nBoundSheets = 1; // now just do 1
-            for (int k = 0; k < nBoundSheets; k++)
+            for(int k = 0; k < nBoundSheets; k++)
             {
                 BoundSheetRecord bsr =
                         (BoundSheetRecord)CreateBoundSheet(k);
@@ -412,7 +412,7 @@ namespace NPOI.HSSF.Model
             //        retval.records.supbookpos = retval.records.bspos + 1;
             //        retval.records.namepos = retval.records.supbookpos + 2;
             records.Add(CreateCountry());
-            for (int k = 0; k < nBoundSheets; k++)
+            for(int k = 0; k < nBoundSheets; k++)
             {
                 retval.OrCreateLinkTable.CheckExternSheet(k);
             }
@@ -441,7 +441,7 @@ namespace NPOI.HSSF.Model
         public ExternalName GetExternalName(int externSheetIndex, int externNameIndex)
         {
             String nameName = linkTable.ResolveNameXText(externSheetIndex, externNameIndex, this);
-            if (nameName == null)
+            if(nameName == null)
             {
                 return null;
             }
@@ -480,11 +480,11 @@ namespace NPOI.HSSF.Model
         {
             int index = idx;
 
-            if (index > 4)
+            if(index > 4)
             {
                 index -= 1;   // adjust for "There is no 4"
             }
-            if (index > (numfonts - 1))
+            if(index > (numfonts - 1))
             {
                 throw new IndexOutOfRangeException(
                 "There are only " + numfonts
@@ -514,18 +514,18 @@ namespace NPOI.HSSF.Model
             return rec;
         }
 
-            /**
-     * Check if the cloned sheet has drawings. If yes, then allocate a new drawing group ID and
-     * re-generate shape IDs
-     *
-     * @param sheet the cloned sheet
-     */
+        /**
+ * Check if the cloned sheet has drawings. If yes, then allocate a new drawing group ID and
+ * re-generate shape IDs
+ *
+ * @param sheet the cloned sheet
+ */
         public void CloneDrawings(InternalSheet sheet)
         {
 
             FindDrawingGroup();
 
-            if (drawingManager == null)
+            if(drawingManager == null)
             {
                 //this workbook does not have drawings
                 return;
@@ -533,11 +533,11 @@ namespace NPOI.HSSF.Model
 
             //check if the cloned sheet has drawings
             int aggLoc = sheet.AggregateDrawingRecords(drawingManager, false);
-            if (aggLoc != -1)
+            if(aggLoc != -1)
             {
                 EscherAggregate agg = (EscherAggregate)sheet.FindFirstRecordBySid(EscherAggregate.sid);
                 EscherContainerRecord escherContainer = agg.GetEscherContainer();
-                if (escherContainer == null)
+                if(escherContainer == null)
                 {
                     return;
                 }
@@ -550,27 +550,27 @@ namespace NPOI.HSSF.Model
                 dgg.DrawingsSaved = dgg.DrawingsSaved + 1;
 
                 EscherDgRecord dg = null;
-                for (IEnumerator it = escherContainer.ChildRecords.GetEnumerator(); it.MoveNext(); )
+                for(IEnumerator it = escherContainer.ChildRecords.GetEnumerator(); it.MoveNext();)
                 {
                     Object er = it.Current;
-                    if (er is EscherDgRecord record)
+                    if(er is EscherDgRecord record)
                     {
                         dg = record;
                         //update id of the drawing in the cloned sheet
-                        dg.Options = ((short)(dgId << 4));
+                        dg.Options = ((short) (dgId << 4));
                     }
-                    else if (er is EscherContainerRecord cp)
+                    else if(er is EscherContainerRecord cp)
                     {
                         //recursively find shape records and re-generate shapeId
                         ArrayList spRecords = new ArrayList();
-                        for (IEnumerator spIt = cp.ChildRecords.GetEnumerator(); spIt.MoveNext(); )
+                        for(IEnumerator spIt = cp.ChildRecords.GetEnumerator(); spIt.MoveNext();)
                         {
                             EscherContainerRecord shapeContainer = (EscherContainerRecord)spIt.Current;
 
-                            foreach (EscherRecord shapeChildRecord in shapeContainer.ChildRecords)
+                            foreach(EscherRecord shapeChildRecord in shapeContainer.ChildRecords)
                             {
                                 int recordId = shapeChildRecord.RecordId;
-                                if (recordId == EscherSpRecord.RECORD_ID)
+                                if(recordId == EscherSpRecord.RECORD_ID)
                                 {
                                     EscherSpRecord sp = (EscherSpRecord)shapeChildRecord;
                                     int shapeId = drawingManager.AllocateShapeId(dg);
@@ -578,12 +578,12 @@ namespace NPOI.HSSF.Model
                                     dg.NumShapes = (dg.NumShapes - 1);
                                     sp.ShapeId = (shapeId);
                                 }
-                                else if (recordId == EscherOptRecord.RECORD_ID)
+                                else if(recordId == EscherOptRecord.RECORD_ID)
                                 {
                                     EscherOptRecord opt = (EscherOptRecord)shapeChildRecord;
                                     EscherSimpleProperty prop = (EscherSimpleProperty)opt.Lookup(
                                             EscherProperties.BLIP__BLIPTODISPLAY);
-                                    if (prop != null)
+                                    if(prop != null)
                                     {
                                         int pictureIndex = prop.PropertyValue;
                                         // increment reference count for pictures
@@ -639,7 +639,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                return (BackupRecord)records[records.Backuppos];
+                return (BackupRecord) records[records.Backuppos];
             }
         }
 
@@ -675,23 +675,23 @@ namespace NPOI.HSSF.Model
         public bool ContainsSheetName(String name, int excludeSheetIdx)
         {
             String aName = name;
-            if (aName.Length > MAX_SENSITIVE_SHEET_NAME_LEN)
+            if(aName.Length > MAX_SENSITIVE_SHEET_NAME_LEN)
             {
                 aName = aName.Substring(0, MAX_SENSITIVE_SHEET_NAME_LEN);
             }
-            for (int i = 0; i < boundsheets.Count; i++)
+            for(int i = 0; i < boundsheets.Count; i++)
             {
                 BoundSheetRecord boundSheetRecord = GetBoundSheetRec(i);
-                if (excludeSheetIdx == i)
+                if(excludeSheetIdx == i)
                 {
                     continue;
                 }
                 String bName = boundSheetRecord.Sheetname;
-                if (bName.Length > MAX_SENSITIVE_SHEET_NAME_LEN)
+                if(bName.Length > MAX_SENSITIVE_SHEET_NAME_LEN)
                 {
                     bName = bName.Substring(0, MAX_SENSITIVE_SHEET_NAME_LEN);
                 }
-                if (aName.Equals(bName,StringComparison.OrdinalIgnoreCase))
+                if(aName.Equals(bName, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
@@ -832,11 +832,11 @@ namespace NPOI.HSSF.Model
         {
             int retval = -1;
 
-            for (int k = 0; k < boundsheets.Count; k++)
+            for(int k = 0; k < boundsheets.Count; k++)
             {
                 String sheet = GetSheetName(k);
 
-                if (sheet.Equals(name,StringComparison.OrdinalIgnoreCase))
+                if(sheet.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     retval = k;
                     break;
@@ -852,9 +852,9 @@ namespace NPOI.HSSF.Model
 
         private void CheckSheets(int sheetnum)
         {
-            if ((boundsheets.Count) <= sheetnum)
+            if((boundsheets.Count) <= sheetnum)
             {   // if we're short one Add another..
-                if ((boundsheets.Count + 1) <= sheetnum)
+                if((boundsheets.Count + 1) <= sheetnum)
                 {
                     throw new Exception("Sheet number out of bounds!");
                 }
@@ -883,7 +883,7 @@ namespace NPOI.HSSF.Model
 
         public void RemoveSheet(int sheetIndex)
         {
-            if (boundsheets.Count > sheetIndex)
+            if(boundsheets.Count > sheetIndex)
             {
                 records.Remove(records.Bspos - (boundsheets.Count - 1) + sheetIndex);
                 //            records.bspos--;
@@ -899,16 +899,16 @@ namespace NPOI.HSSF.Model
             //  excel will break. (Sheet index is either 0 for
             //  global, or 1 based index to sheet)
             int sheetNum1Based = sheetIndex + 1;
-            for (int i = 0; i < NumNames; i++)
+            for(int i = 0; i < NumNames; i++)
             {
                 NameRecord nr = GetNameRecord(i);
 
-                if (nr.SheetNumber == sheetNum1Based)
+                if(nr.SheetNumber == sheetNum1Based)
                 {
                     // Excel re-writes these to point to no sheet
                     nr.SheetNumber = (0);
                 }
-                else if (nr.SheetNumber > sheetNum1Based)
+                else if(nr.SheetNumber > sheetNum1Based)
                 {
                     // Bump down by one, so still points
                     //  at the same sheet
@@ -916,7 +916,7 @@ namespace NPOI.HSSF.Model
                     // also update the link-table as otherwise references might point at invalid sheets
                 }
             }
-            if (linkTable != null)
+            if(linkTable != null)
             {
                 // also tell the LinkTable about the removed sheet
                 //index hasn't change in the linktable
@@ -933,7 +933,7 @@ namespace NPOI.HSSF.Model
             // see bug 55982, quite a number of documents do not have a TabIdRecord and
             // thus there is no way to do the fixup here,
             // we use the same check on Tabpos as done in other places
-            if (records.Tabpos <= 0)
+            if(records.Tabpos <= 0)
             {
                 return;
             }
@@ -942,7 +942,7 @@ namespace NPOI.HSSF.Model
             int sz = tir.RecordSize;
             short[] tia = new short[boundsheets.Count];
 
-            for (short k = 0; k < tia.Length; k++)
+            for(short k = 0; k < tia.Length; k++)
             {
                 tia[k] = k;
             }
@@ -985,14 +985,14 @@ namespace NPOI.HSSF.Model
  */
         public int GetFontIndex(FontRecord font)
         {
-            for (int i = 0; i <= numfonts; i++)
+            for(int i = 0; i <= numfonts; i++)
             {
                 FontRecord thisFont =
                     (FontRecord)records[(records.Fontpos - (numfonts - 1)) + i];
-                if (thisFont == font)
+                if(thisFont == font)
                 {
                     // There is no 4!
-                    if (i > 3)
+                    if(i > 3)
                     {
                         return (i + 1);
                     }
@@ -1012,16 +1012,16 @@ namespace NPOI.HSSF.Model
             // Style records always follow after 
             //  the ExtendedFormat records
             bool done = false;
-            for (int i = records.Xfpos; i < records.Count &&
+            for(int i = records.Xfpos; i < records.Count &&
                     !done; i++)
             {
                 Record r = records[i];
-                if (r is ExtendedFormatRecord)
+                if(r is ExtendedFormatRecord)
                 {
                 }
-                else if (r is StyleRecord sr)
+                else if(r is StyleRecord sr)
                 {
-                    if (sr.XFIndex == xfIndex)
+                    if(sr.XFIndex == xfIndex)
                     {
                         return sr;
                     }
@@ -1053,7 +1053,7 @@ namespace NPOI.HSSF.Model
                     StyleRecord sr = (StyleRecord)r;
                     if(sr.XFIndex == oldXf)
                     {
-                        sr.XFIndex = (short)newXf;
+                        sr.XFIndex = (short) newXf;
                     }
                 }
             }
@@ -1106,7 +1106,7 @@ namespace NPOI.HSSF.Model
         {
             //if (log.Check(POILogger.DEBUG))
             //    log.Log(DEBUG, "Insert to sst string='", str);
-            if (sst == null)
+            if(sst == null)
             {
                 InsertSST();
             }
@@ -1120,7 +1120,7 @@ namespace NPOI.HSSF.Model
 
         public UnicodeString GetSSTString(int str)
         {
-            if (sst == null)
+            if(sst == null)
             {
                 InsertSST();
             }
@@ -1128,7 +1128,7 @@ namespace NPOI.HSSF.Model
 
             //if (log.Check(POILogger.DEBUG))
             //    log.Log(DEBUG, "Returning SST for index=", str,
-                    //" String= ", retval);
+            //" String= ", retval);
             return retval;
         }
 
@@ -1193,30 +1193,30 @@ namespace NPOI.HSSF.Model
             SSTRecord sst = null;
             int sstPos = 0;
             bool wroteBoundSheets = false;
-            for (int k = 0; k < records.Count; k++)
+            for(int k = 0; k < records.Count; k++)
             {
 
                 Record record = records[k];
                 // Let's skip RECALCID records, as they are only use for optimization
-                if (record.Sid != RecalcIdRecord.sid || ((RecalcIdRecord)record).IsNeeded)
+                if(record.Sid != RecalcIdRecord.sid || ((RecalcIdRecord) record).IsNeeded)
                 {
                     int len = 0;
-                    if (record is SSTRecord sstRecord)
+                    if(record is SSTRecord sstRecord)
                     {
                         sst = sstRecord;
                         sstPos = pos;
                     }
-                    if (record.Sid == ExtSSTRecord.sid && sst != null)
+                    if(record.Sid == ExtSSTRecord.sid && sst != null)
                     {
                         record = sst.CreateExtSSTRecord(sstPos + offset);
                     }
-                    if (record is BoundSheetRecord)
+                    if(record is BoundSheetRecord)
                     {
-                        if (!wroteBoundSheets)
+                        if(!wroteBoundSheets)
                         {
-                            for (int i = 0; i < boundsheets.Count; i++)
+                            for(int i = 0; i < boundsheets.Count; i++)
                             {
-                                len += ((BoundSheetRecord)boundsheets[i])
+                                len += ((BoundSheetRecord) boundsheets[i])
                                                  .Serialize(pos + offset + len, data);
                             }
                             wroteBoundSheets = true;
@@ -1246,10 +1246,10 @@ namespace NPOI.HSSF.Model
         {
             // Ensure we have enough tab IDs
             // Can be a few short if new sheets were added
-            if (records.Tabpos > 0)
+            if(records.Tabpos > 0)
             {
                 TabIdRecord tir = (TabIdRecord)records[(records.Tabpos)];
-                if (tir._tabids.Length < boundsheets.Count)
+                if(tir._tabids.Length < boundsheets.Count)
                 {
                     FixTabIdRecord();
                 }
@@ -1262,15 +1262,15 @@ namespace NPOI.HSSF.Model
                 int retval = 0;
 
                 SSTRecord sst = null;
-                for (int k = 0; k < records.Count; k++)
+                for(int k = 0; k < records.Count; k++)
                 {
                     Record record = records[k];
                     // Let's skip RECALCID records, as they are only use for optimization
-                    if (record.Sid != RecalcIdRecord.sid || ((RecalcIdRecord)record).IsNeeded)
+                    if(record.Sid != RecalcIdRecord.sid || ((RecalcIdRecord) record).IsNeeded)
                     {
-                        if (record is SSTRecord sstRecord)
+                        if(record is SSTRecord sstRecord)
                             sst = sstRecord;
-                        if (record.Sid == ExtSSTRecord.sid && sst != null)
+                        if(record.Sid == ExtSSTRecord.sid && sst != null)
                             retval += sst.CalcExtSSTRecordSize();
                         else
                             retval += record.RecordSize;
@@ -1291,12 +1291,12 @@ namespace NPOI.HSSF.Model
         {
             BOFRecord retval = new BOFRecord();
 
-            retval.Version=(short)0x600;
+            retval.Version=(short) 0x600;
             retval.Type = BOFRecordType.Workbook;
-            retval.Build=(short)0x10d3;
+            retval.Build=(short) 0x10d3;
 
             //        retval.Build=(short)0x0dbb;
-            retval.BuildYear=(short)1996;
+            retval.BuildYear=(short) 1996;
             retval.HistoryBitMask=0x41;   // was c1 before verify
             retval.RequiredVersion=0x6;
             return retval;
@@ -1329,8 +1329,8 @@ namespace NPOI.HSSF.Model
         {
             MMSRecord retval = new MMSRecord();
 
-            retval.AddMenuCount=((byte)0);
-            retval.DelMenuCount=((byte)0);
+            retval.AddMenuCount=((byte) 0);
+            retval.DelMenuCount=((byte) 0);
             return retval;
         }
 
@@ -1362,11 +1362,12 @@ namespace NPOI.HSSF.Model
             {
                 String username = (Environment.UserName);
                 // Google App engine returns null for user.name, see Bug 53974
-                if (string.IsNullOrEmpty(username)) username = defaultUserName;
+                if(string.IsNullOrEmpty(username))
+                    username = defaultUserName;
 
                 retval.Username = (username);
             }
-            catch (SecurityException)
+            catch(SecurityException)
             {
                 // AccessControlException can occur in a restricted context
                 // (client applet/jws application or restricted security server)
@@ -1425,8 +1426,7 @@ namespace NPOI.HSSF.Model
 
         private static FnGroupCountRecord CreateFnGroupCount()
         {
-            return new FnGroupCountRecord
-            {
+            return new FnGroupCountRecord {
                 Count = 14
             };
         }
@@ -1513,15 +1513,15 @@ namespace NPOI.HSSF.Model
         {
             WindowOneRecord retval = new WindowOneRecord();
 
-            retval.HorizontalHold=(short)0x168;
-            retval.VerticalHold=(short)0x10e;
-            retval.Width=(short)0x3a5c;
-            retval.Height=(short)0x23be;
-            retval.Options=(short)0x38;
-            retval.ActiveSheetIndex=(short)0x0;
-            retval.FirstVisibleTab = (short)0x0;
-            retval.NumSelectedTabs=(short)1;
-            retval.TabWidthRatio=(short)0x258;
+            retval.HorizontalHold=(short) 0x168;
+            retval.VerticalHold=(short) 0x10e;
+            retval.Width=(short) 0x3a5c;
+            retval.Height=(short) 0x23be;
+            retval.Options=(short) 0x38;
+            retval.ActiveSheetIndex=(short) 0x0;
+            retval.FirstVisibleTab = (short) 0x0;
+            retval.NumSelectedTabs=(short) 1;
+            retval.TabWidthRatio=(short) 0x258;
             return retval;
         }
 
@@ -1536,7 +1536,7 @@ namespace NPOI.HSSF.Model
         {
             BackupRecord retval = new BackupRecord();
 
-            retval.Backup=(short)0;   // by default DONT save backups of files...just loose data
+            retval.Backup=(short) 0;   // by default DONT save backups of files...just loose data
             return retval;
         }
 
@@ -1551,7 +1551,7 @@ namespace NPOI.HSSF.Model
         {
             HideObjRecord retval = new HideObjRecord();
 
-            retval.SetHideObj((short)0);   // by default Set hide object off
+            retval.SetHideObj((short) 0);   // by default Set hide object off
             return retval;
         }
 
@@ -1566,7 +1566,7 @@ namespace NPOI.HSSF.Model
         {
             DateWindow1904Record retval = new DateWindow1904Record();
 
-            retval.Windowing=((short)0);   // don't EVER use 1904 date windowing...tick tock..
+            retval.Windowing=((short) 0);   // don't EVER use 1904 date windowing...tick tock..
             return retval;
         }
 
@@ -1606,8 +1606,7 @@ namespace NPOI.HSSF.Model
 
         private static BookBoolRecord CreateBookBool()
         {
-            return new BookBoolRecord
-            {
+            return new BookBoolRecord {
                 SaveLinkValues = 0
             };
         }
@@ -1630,10 +1629,10 @@ namespace NPOI.HSSF.Model
         {
             FontRecord retval = new FontRecord();
 
-            retval.FontHeight=(short)0xc8;
-            retval.Attributes=(short)0x0;
-            retval.ColorPaletteIndex=(short)0x7fff;
-            retval.BoldWeight=(short)0x190;
+            retval.FontHeight=(short) 0xc8;
+            retval.Attributes=(short) 0x0;
+            retval.ColorPaletteIndex=(short) 0x7fff;
+            retval.BoldWeight=(short) 0x190;
             retval.FontName="Arial";
             return retval;
         }
@@ -1646,7 +1645,7 @@ namespace NPOI.HSSF.Model
         // * @see org.apache.poi.hssf.record.FormatRecord
         // * @see org.apache.poi.hssf.record.Record
         // */
-        
+
         //protected Record CreateFormat(int id)
         //{   // we'll need multiple editions for
         //    FormatRecord retval = new FormatRecord();   // the differnt formats
@@ -1724,322 +1723,322 @@ namespace NPOI.HSSF.Model
         {   // we'll need multiple editions
             ExtendedFormatRecord retval = new ExtendedFormatRecord();
 
-            switch (id)
+            switch(id)
             {
 
                 case 0:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=(short)0;
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=(short) 0;
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 1:
-                    retval.FontIndex=(short)1;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 1;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 2:
-                    retval.FontIndex=(short)1;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 1;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 3:
-                    retval.FontIndex=(short)2;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 2;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 4:
-                    retval.FontIndex=(short)2;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 2;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 5:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 6:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 7:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 8:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 9:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 10:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 11:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 12:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 13:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 14:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff400);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff400);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 // cell records
                 case 15:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0;
-                    retval.CellOptions=(short)0x1;
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=(short)0x0;
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0;
+                    retval.CellOptions=(short) 0x1;
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=(short) 0x0;
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 // style
                 case 16:
-                    retval.FontIndex=(short)1;
-                    retval.FormatIndex=(short)0x2b;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff800);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 1;
+                    retval.FormatIndex=(short) 0x2b;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff800);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 17:
-                    retval.FontIndex=(short)1;
-                    retval.FormatIndex=(short)0x29;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff800);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 1;
+                    retval.FormatIndex=(short) 0x29;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff800);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 18:
-                    retval.FontIndex=(short)1;
-                    retval.FormatIndex=(short)0x2c;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff800);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 1;
+                    retval.FormatIndex=(short) 0x2c;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff800);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 19:
-                    retval.FontIndex=(short)1;
-                    retval.FormatIndex=(short)0x2a;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff800);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 1;
+                    retval.FormatIndex=(short) 0x2a;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff800);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 20:
-                    retval.FontIndex=(short)1;
-                    retval.FormatIndex=(short)0x9;
-                    retval.CellOptions=unchecked((short)0xfffffff5);
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=unchecked((short)0xfffff800);
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 1;
+                    retval.FormatIndex=(short) 0x9;
+                    retval.CellOptions=unchecked((short) 0xfffffff5);
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=unchecked((short) 0xfffff800);
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 // Unused from this point down
                 case 21:
-                    retval.FontIndex=(short)5;
-                    retval.FormatIndex=(short)0x0;
-                    retval.CellOptions=(short)0x1;
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=(short)0x800;
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 5;
+                    retval.FormatIndex=(short) 0x0;
+                    retval.CellOptions=(short) 0x1;
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=(short) 0x800;
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 22:
-                    retval.FontIndex=(short)6;
-                    retval.FormatIndex=(short)0x0;
-                    retval.CellOptions=(short)0x1;
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=(short)0x5c00;
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 6;
+                    retval.FormatIndex=(short) 0x0;
+                    retval.CellOptions=(short) 0x1;
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=(short) 0x5c00;
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 23:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0x31;
-                    retval.CellOptions=(short)0x1;
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=(short)0x5c00;
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0x31;
+                    retval.CellOptions=(short) 0x1;
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=(short) 0x5c00;
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 24:
-                    retval.FontIndex=(short)0;
-                    retval.FormatIndex=(short)0x8;
-                    retval.CellOptions=(short)0x1;
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=(short)0x5c00;
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 0;
+                    retval.FormatIndex=(short) 0x8;
+                    retval.CellOptions=(short) 0x1;
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=(short) 0x5c00;
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
 
                 case 25:
-                    retval.FontIndex=(short)6;
-                    retval.FormatIndex=(short)0x8;
-                    retval.CellOptions=(short)0x1;
-                    retval.AlignmentOptions=(short)0x20;
-                    retval.IndentionOptions=(short)0x5c00;
-                    retval.BorderOptions=(short)0;
-                    retval.PaletteOptions=(short)0;
-                    retval.AdtlPaletteOptions=(short)0;
-                    retval.FillPaletteOptions=(short)0x20c0;
+                    retval.FontIndex=(short) 6;
+                    retval.FormatIndex=(short) 0x8;
+                    retval.CellOptions=(short) 0x1;
+                    retval.AlignmentOptions=(short) 0x20;
+                    retval.IndentionOptions=(short) 0x5c00;
+                    retval.BorderOptions=(short) 0;
+                    retval.PaletteOptions=(short) 0;
+                    retval.AdtlPaletteOptions=(short) 0;
+                    retval.FillPaletteOptions=(short) 0x20c0;
                     break;
                 default:
                     throw new InvalidOperationException("Unrecognized format id: " + id);
@@ -2056,15 +2055,15 @@ namespace NPOI.HSSF.Model
         {
             ExtendedFormatRecord retval = new ExtendedFormatRecord();
 
-            retval.FontIndex=(short)0;
-            retval.FormatIndex=(short)0x0;
-            retval.CellOptions=(short)0x1;
-            retval.AlignmentOptions=(short)0x20;
-            retval.IndentionOptions=(short)0;
-            retval.BorderOptions=(short)0;
-            retval.PaletteOptions=(short)0;
-            retval.AdtlPaletteOptions=(short)0;
-            retval.FillPaletteOptions=(short)0x20c0;
+            retval.FontIndex=(short) 0;
+            retval.FormatIndex=(short) 0x0;
+            retval.CellOptions=(short) 0x1;
+            retval.AlignmentOptions=(short) 0x20;
+            retval.IndentionOptions=(short) 0;
+            retval.BorderOptions=(short) 0;
+            retval.PaletteOptions=(short) 0;
+            retval.AdtlPaletteOptions=(short) 0;
+            retval.FillPaletteOptions=(short) 0x20c0;
             retval.TopBorderPaletteIdx=HSSFColor.Black.Index;
             retval.BottomBorderPaletteIdx=HSSFColor.Black.Index;
             retval.LeftBorderPaletteIdx=HSSFColor.Black.Index;
@@ -2077,31 +2076,37 @@ namespace NPOI.HSSF.Model
          *  Format index, and adds it onto the end of the
          *  records collection
          */
-        public StyleRecord CreateStyleRecord(int xfIndex) {
+        public StyleRecord CreateStyleRecord(int xfIndex)
+        {
             // Style records always follow after 
             //  the ExtendedFormat records
             StyleRecord newSR = new StyleRecord();
-            newSR.XFIndex = (short)xfIndex;
-            
+            newSR.XFIndex = (short) xfIndex;
+
             // Find the spot
             int addAt = -1;
-            for(int i=records.Xfpos; i<records.Count &&
-                    addAt == -1; i++) {
+            for(int i = records.Xfpos; i<records.Count &&
+                    addAt == -1; i++)
+            {
                 Record r = records[i];
                 if(r is ExtendedFormatRecord ||
-                        r is StyleRecord) {
+                        r is StyleRecord)
+                {
                     // Keep going
-                } else {
+                }
+                else
+                {
                     addAt = i;
                 }
             }
-            if(addAt == -1) {
+            if(addAt == -1)
+            {
                 throw new InvalidOperationException("No XF Records found!");
             }
             records.Add(addAt, newSR);
-            
+
             return newSR;
-      }
+        }
         /**
          * Creates a StyleRecord object
          * @param id        the number of the style record to Create (meaning its position in
@@ -2115,43 +2120,43 @@ namespace NPOI.HSSF.Model
         {   // we'll need multiple editions
             StyleRecord retval = new StyleRecord();
 
-            switch (id)
+            switch(id)
             {
 
                 case 0:
-                    retval.XFIndex = (unchecked((short)0xffff8010));
+                    retval.XFIndex = (unchecked((short) 0xffff8010));
                     retval.SetBuiltinStyle(3);
-                    retval.OutlineStyleLevel= (unchecked((byte)0xffffffff));
+                    retval.OutlineStyleLevel= (unchecked((byte) 0xffffffff));
                     break;
 
                 case 1:
-                    retval.XFIndex = (unchecked((short)0xffff8011));
+                    retval.XFIndex = (unchecked((short) 0xffff8011));
                     retval.SetBuiltinStyle(6);
-                    retval.OutlineStyleLevel= (unchecked((byte)0xffffffff));
+                    retval.OutlineStyleLevel= (unchecked((byte) 0xffffffff));
                     break;
 
                 case 2:
-                    retval.XFIndex = (unchecked((short)0xffff8012));
+                    retval.XFIndex = (unchecked((short) 0xffff8012));
                     retval.SetBuiltinStyle(4);
-                    retval.OutlineStyleLevel= (unchecked((byte)0xffffffff));
+                    retval.OutlineStyleLevel= (unchecked((byte) 0xffffffff));
                     break;
 
                 case 3:
-                    retval.XFIndex = (unchecked((short)0xffff8013));
+                    retval.XFIndex = (unchecked((short) 0xffff8013));
                     retval.SetBuiltinStyle(7);
-                    retval.OutlineStyleLevel= (unchecked((byte)0xffffffff));
+                    retval.OutlineStyleLevel= (unchecked((byte) 0xffffffff));
                     break;
 
                 case 4:
-                    retval.XFIndex = (unchecked((short)0xffff8000));
+                    retval.XFIndex = (unchecked((short) 0xffff8000));
                     retval.SetBuiltinStyle(0);
-                    retval.OutlineStyleLevel= (unchecked((byte)0xffffffff));
+                    retval.OutlineStyleLevel= (unchecked((byte) 0xffffffff));
                     break;
 
                 case 5:
-                    retval.XFIndex = (unchecked((short)0xffff8014));
+                    retval.XFIndex = (unchecked((short) 0xffff8014));
                     retval.SetBuiltinStyle(5);
-                    retval.OutlineStyleLevel= (unchecked((byte)0xffffffff));
+                    retval.OutlineStyleLevel= (unchecked((byte) 0xffffffff));
                     break;
                 default:
                     throw new InvalidOperationException("Unrecognized style id: " + id);
@@ -2191,7 +2196,7 @@ namespace NPOI.HSSF.Model
          */
 
         private static BoundSheetRecord CreateBoundSheet(int id)
-        {   
+        {
             return new BoundSheetRecord("Sheet" + (id + 1));
         }
 
@@ -2208,16 +2213,16 @@ namespace NPOI.HSSF.Model
             // what a novel idea, Create your own!
             CountryRecord retval = new CountryRecord();
 
-            retval.DefaultCountry=((short)1);
+            retval.DefaultCountry=((short) 1);
 
             // from Russia with love ;)
-            if (System.Threading.Thread.CurrentThread.CurrentCulture.Name.Equals("ru_RU"))
+            if(System.Threading.Thread.CurrentThread.CurrentCulture.Name.Equals("ru_RU"))
             {
-                retval.CurrentCountry=((short)7);
+                retval.CurrentCountry=((short) 7);
             }
             else
             {
-                retval.CurrentCountry=((short)1);
+                retval.CurrentCountry=((short) 1);
             }
 
             return retval;
@@ -2235,8 +2240,7 @@ namespace NPOI.HSSF.Model
 
         private static ExtSSTRecord CreateExtendedSST()
         {
-            return new ExtSSTRecord
-            {
+            return new ExtSSTRecord {
                 NumStringsPerBucket = 0x8
             };
         }
@@ -2255,9 +2259,9 @@ namespace NPOI.HSSF.Model
 
         private LinkTable GetOrCreateLinkTable()
         {
-            if (linkTable == null)
+            if(linkTable == null)
             {
-                linkTable = new LinkTable((short)NumSheets, records);
+                linkTable = new LinkTable((short) NumSheets, records);
             }
             return linkTable;
         }
@@ -2284,13 +2288,13 @@ namespace NPOI.HSSF.Model
         }
         private String FindSheetNameFromIndex(int internalSheetIndex)
         {
-            if (internalSheetIndex < 0)
+            if(internalSheetIndex < 0)
             {
                 // TODO - what does '-1' mean here?
                 //error Check, bail out gracefully!
                 return "";
             }
-            if (internalSheetIndex >= boundsheets.Count)
+            if(internalSheetIndex >= boundsheets.Count)
             {
                 // Not sure if this can ever happen (See bug 45798)
                 return ""; // Seems to be what excel would do in this case
@@ -2301,11 +2305,11 @@ namespace NPOI.HSSF.Model
         public ExternalSheet GetExternalSheet(int externSheetIndex)
         {
             String[] extNames = linkTable.GetExternalBookAndSheetName(externSheetIndex);
-            if (extNames == null)
+            if(extNames == null)
             {
                 return null;
             }
-            if (extNames.Length == 2)
+            if(extNames.Length == 2)
             {
                 return new ExternalSheet(extNames[0], extNames[1]);
             }
@@ -2356,7 +2360,7 @@ namespace NPOI.HSSF.Model
          */
         public short checkExternSheet(int firstSheetNumber, int lastSheetNumber)
         {
-            return (short)OrCreateLinkTable.CheckExternSheet(firstSheetNumber, lastSheetNumber);
+            return (short) OrCreateLinkTable.CheckExternSheet(firstSheetNumber, lastSheetNumber);
         }
 
         public int GetExternalSheetIndex(String workbookName, String sheetName)
@@ -2374,7 +2378,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (linkTable == null)
+                if(linkTable == null)
                 {
                     return 0;
                 }
@@ -2393,7 +2397,7 @@ namespace NPOI.HSSF.Model
             LinkTable lnk = OrCreateLinkTable;
             NameXPtg xptg = lnk.GetNameXPtg(name, sheetRefIndex);
 
-            if (xptg == null && udf.FindFunction(name) != null)
+            if(xptg == null && udf.FindFunction(name) != null)
             {
                 // the name was not found in the list of external names
                 // check if the Workbook's UDFFinder is aware about it and register the name if it is
@@ -2439,7 +2443,7 @@ namespace NPOI.HSSF.Model
          */
         public NameRecord CreateBuiltInName(byte builtInName, int index)
         {
-            if (index == -1 || index + 1 > short.MaxValue)
+            if(index == -1 || index + 1 > short.MaxValue)
                 throw new ArgumentException("Index is not valid [" + index + "]");
 
             NameRecord name = new NameRecord(builtInName, (short)(index));
@@ -2456,7 +2460,7 @@ namespace NPOI.HSSF.Model
         public void RemoveName(int namenum)
         {
 
-            if (linkTable.NumNames > namenum)
+            if(linkTable.NumNames > namenum)
             {
                 int idx = FindFirstRecordLocBySid(NameRecord.sid);
                 records.Remove(idx + namenum);
@@ -2471,11 +2475,11 @@ namespace NPOI.HSSF.Model
          */
         public void UpdateNameCommentRecordCache(NameCommentRecord commentRecord)
         {
-            if (commentRecords.ContainsValue(commentRecord))
+            if(commentRecords.ContainsValue(commentRecord))
             {
-                foreach (KeyValuePair<string, NameCommentRecord> entry in commentRecords)
+                foreach(KeyValuePair<string, NameCommentRecord> entry in commentRecords)
                 {
-                    if (entry.Value.Equals(commentRecord))
+                    if(entry.Value.Equals(commentRecord))
                     {
                         commentRecords.Remove(entry.Key);
                         break;
@@ -2493,18 +2497,18 @@ namespace NPOI.HSSF.Model
         public short GetFormat(String format, bool CreateIfNotFound)
         {
             IEnumerator iterator;
-            for (iterator = formats.GetEnumerator(); iterator.MoveNext(); )
+            for(iterator = formats.GetEnumerator(); iterator.MoveNext();)
             {
                 FormatRecord r = (FormatRecord)iterator.Current;
-                if (r.FormatString.Equals(format))
+                if(r.FormatString.Equals(format))
                 {
-                    return (short)r.IndexCode;
+                    return (short) r.IndexCode;
                 }
             }
 
-            if (CreateIfNotFound)
+            if(CreateIfNotFound)
             {
-                return (short)CreateFormat(format);
+                return (short) CreateFormat(format);
             }
 
             return -1;
@@ -2534,11 +2538,11 @@ namespace NPOI.HSSF.Model
             //        ++xfpos;	//These are to Ensure that positions are updated properly
             //        ++palettepos;
             //        ++bspos;
-            maxformatid = maxformatid >= (short)0xa4 ? (short)(maxformatid + 1) : (short)0xa4; //Starting value from M$ empiracle study.
+            maxformatid = maxformatid >= (short) 0xa4 ? (short) (maxformatid + 1) : (short) 0xa4; //Starting value from M$ empiracle study.
             FormatRecord rec = new FormatRecord(maxformatid, formatString);
 
             int pos = 0;
-            while (pos < records.Count && records[pos].Sid != FormatRecord.sid)
+            while(pos < records.Count && records[pos].Sid != FormatRecord.sid)
                 pos++;
             pos += formats.Count;
             formats.Add(rec);
@@ -2557,16 +2561,24 @@ namespace NPOI.HSSF.Model
             // the different formats
 
 
-            switch (id)
+            switch(id)
             {
-                case 0: return new FormatRecord(5, BuiltinFormats.GetBuiltinFormat(5));
-                case 1: return new FormatRecord(6, BuiltinFormats.GetBuiltinFormat(6));
-                case 2: return new FormatRecord(7, BuiltinFormats.GetBuiltinFormat(7));
-                case 3: return new FormatRecord(8, BuiltinFormats.GetBuiltinFormat(8));
-                case 4: return new FormatRecord(0x2a, BuiltinFormats.GetBuiltinFormat(0x2a));
-                case 5: return new FormatRecord(0x29, BuiltinFormats.GetBuiltinFormat(0x29));
-                case 6: return new FormatRecord(0x2c, BuiltinFormats.GetBuiltinFormat(0x2c));
-                case 7: return new FormatRecord(0x2b, BuiltinFormats.GetBuiltinFormat(0x2b));
+                case 0:
+                    return new FormatRecord(5, BuiltinFormats.GetBuiltinFormat(5));
+                case 1:
+                    return new FormatRecord(6, BuiltinFormats.GetBuiltinFormat(6));
+                case 2:
+                    return new FormatRecord(7, BuiltinFormats.GetBuiltinFormat(7));
+                case 3:
+                    return new FormatRecord(8, BuiltinFormats.GetBuiltinFormat(8));
+                case 4:
+                    return new FormatRecord(0x2a, BuiltinFormats.GetBuiltinFormat(0x2a));
+                case 5:
+                    return new FormatRecord(0x29, BuiltinFormats.GetBuiltinFormat(0x29));
+                case 6:
+                    return new FormatRecord(0x2c, BuiltinFormats.GetBuiltinFormat(0x2c));
+                case 7:
+                    return new FormatRecord(0x2b, BuiltinFormats.GetBuiltinFormat(0x2b));
             }
             throw new ArgumentException("Unexpected id " + id);
         }
@@ -2576,11 +2588,11 @@ namespace NPOI.HSSF.Model
          */
         public Record FindFirstRecordBySid(short sid)
         {
-            for (IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext();)
             {
                 Record record = (Record)iterator.Current;
 
-                if (record.Sid == sid)
+                if(record.Sid == sid)
                 {
                     return record;
                 }
@@ -2596,11 +2608,11 @@ namespace NPOI.HSSF.Model
         public int FindFirstRecordLocBySid(short sid)
         {
             int index = 0;
-            for (IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext();)
             {
                 Record record = (Record)iterator.Current;
 
-                if (record.Sid == sid)
+                if(record.Sid == sid)
                 {
                     return index;
                 }
@@ -2615,13 +2627,13 @@ namespace NPOI.HSSF.Model
         public Record FindNextRecordBySid(short sid, int pos)
         {
             int matches = 0;
-            for (IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext();)
             {
                 Record record = (Record)iterator.Current;
 
-                if (record.Sid == sid)
+                if(record.Sid == sid)
                 {
-                    if (matches++ == pos)
+                    if(matches++ == pos)
                         return record;
                 }
             }
@@ -2630,12 +2642,12 @@ namespace NPOI.HSSF.Model
 
         public IList Hyperlinks
         {
-            get{return hyperlinks;}
+            get { return hyperlinks; }
         }
 
         public IList Records
         {
-            get{return records.Records;}
+            get { return records.Records; }
         }
 
         //    public void InsertChartRecords( List chartRecords )
@@ -2670,14 +2682,15 @@ namespace NPOI.HSSF.Model
             {
                 PaletteRecord palette;
                 int palettePos = records.Palettepos;
-                if (palettePos != -1)
+                if(palettePos != -1)
                 {
                     Record rec = records[palettePos];
-                    if (rec is PaletteRecord record)
+                    if(rec is PaletteRecord record)
                     {
                         palette = record;
                     }
-                    else throw new Exception("InternalError: Expected PaletteRecord but got a '" + rec + "'");
+                    else
+                        throw new Exception("InternalError: Expected PaletteRecord but got a '" + rec + "'");
                 }
                 else
                 {
@@ -2695,7 +2708,7 @@ namespace NPOI.HSSF.Model
          */
         public DrawingManager2 FindDrawingGroup()
         {
-            if (drawingManager != null)
+            if(drawingManager != null)
             {
                 // We already have it!
                 return drawingManager;
@@ -2703,44 +2716,44 @@ namespace NPOI.HSSF.Model
 
             // Need to Find a DrawingGroupRecord that
             //  Contains a EscherDggRecord
-            for (IEnumerator rit = records.GetEnumerator(); rit.MoveNext(); )
+            for(IEnumerator rit = records.GetEnumerator(); rit.MoveNext();)
             {
                 Record r = (Record)rit.Current;
 
-                if (r is DrawingGroupRecord dg)
+                if(r is DrawingGroupRecord dg)
                 {
                     dg.ProcessChildRecords();
 
                     EscherContainerRecord cr =
                         dg.GetEscherContainer();
-                    if (cr == null)
+                    if(cr == null)
                     {
                         continue;
                     }
 
                     EscherDggRecord dgg = null;
                     EscherContainerRecord bStore = null;
-                    for (IEnumerator it = cr.ChildRecords.GetEnumerator(); it.MoveNext(); )
+                    for(IEnumerator it = cr.ChildRecords.GetEnumerator(); it.MoveNext();)
                     {
                         EscherRecord er = (EscherRecord)it.Current;
-                        if (er is EscherDggRecord record)
+                        if(er is EscherDggRecord record)
                         {
                             dgg = record;
                         }
-                        else if (er.RecordId == EscherContainerRecord.BSTORE_CONTAINER)
+                        else if(er.RecordId == EscherContainerRecord.BSTORE_CONTAINER)
                         {
-                            bStore = (EscherContainerRecord)er;
+                            bStore = (EscherContainerRecord) er;
                         }
                     }
 
-                    if (dgg != null)
+                    if(dgg != null)
                     {
                         drawingManager = new DrawingManager2(dgg);
-                        if (bStore != null)
+                        if(bStore != null)
                         {
-                            foreach (EscherRecord bs in bStore.ChildRecords)
+                            foreach(EscherRecord bs in bStore.ChildRecords)
                             {
-                                if (bs is EscherBSERecord record)
+                                if(bs is EscherBSERecord record)
                                     escherBSERecords.Add(record);
                             }
                         }
@@ -2753,34 +2766,34 @@ namespace NPOI.HSSF.Model
             int dgLoc = FindFirstRecordLocBySid(DrawingGroupRecord.sid);
 
             // If there is one, does it have a EscherDggRecord?
-            if (dgLoc != -1)
+            if(dgLoc != -1)
             {
                 DrawingGroupRecord dg =
                     (DrawingGroupRecord)records[dgLoc];
                 EscherDggRecord dgg = null;
                 EscherContainerRecord bStore = null;
 
-                for (IEnumerator it = dg.EscherRecords.GetEnumerator(); it.MoveNext(); )
+                for(IEnumerator it = dg.EscherRecords.GetEnumerator(); it.MoveNext();)
                 {
                     EscherRecord er = (EscherRecord)it.Current;
-                    if (er is EscherDggRecord record)
+                    if(er is EscherDggRecord record)
                     {
                         dgg = record;
                     }
-                    else if (er.RecordId == EscherContainerRecord.BSTORE_CONTAINER)
+                    else if(er.RecordId == EscherContainerRecord.BSTORE_CONTAINER)
                     {
-                        bStore = (EscherContainerRecord)er;
+                        bStore = (EscherContainerRecord) er;
                     }
                 }
 
-                if (dgg != null)
+                if(dgg != null)
                 {
                     drawingManager = new DrawingManager2(dgg);
-                    if (bStore != null)
+                    if(bStore != null)
                     {
-                        foreach (EscherRecord bs in bStore.ChildRecords)
+                        foreach(EscherRecord bs in bStore.ChildRecords)
                         {
-                            if (bs is EscherBSERecord record)
+                            if(bs is EscherBSERecord record)
                                 escherBSERecords.Add(record);
                         }
                     }
@@ -2795,54 +2808,54 @@ namespace NPOI.HSSF.Model
          */
         public void CreateDrawingGroup()
         {
-            if (drawingManager == null)
+            if(drawingManager == null)
             {
                 EscherContainerRecord dggContainer = new EscherContainerRecord();
                 EscherDggRecord dgg = new EscherDggRecord();
                 EscherOptRecord opt = new EscherOptRecord();
                 EscherSplitMenuColorsRecord splitMenuColors = new EscherSplitMenuColorsRecord();
 
-                dggContainer.RecordId=unchecked((short)0xF000);
-                dggContainer.Options=(short)0x000F;
+                dggContainer.RecordId=unchecked((short) 0xF000);
+                dggContainer.Options=(short) 0x000F;
                 dgg.RecordId=EscherDggRecord.RECORD_ID;
-                dgg.Options=(short)0x0000;
+                dgg.Options=(short) 0x0000;
                 dgg.ShapeIdMax=1024;
                 dgg.NumShapesSaved=0;
                 dgg.DrawingsSaved=0;
                 dgg.FileIdClusters= [];
                 drawingManager = new DrawingManager2(dgg);
                 EscherContainerRecord bstoreContainer = null;
-                if (escherBSERecords.Count > 0)
+                if(escherBSERecords.Count > 0)
                 {
                     bstoreContainer = new EscherContainerRecord();
                     bstoreContainer.RecordId=EscherContainerRecord.BSTORE_CONTAINER;
-                    bstoreContainer.Options=(short)((escherBSERecords.Count << 4) | 0xF);
-                    for (IEnumerator iterator = escherBSERecords.GetEnumerator(); iterator.MoveNext(); )
+                    bstoreContainer.Options=(short) ((escherBSERecords.Count << 4) | 0xF);
+                    for(IEnumerator iterator = escherBSERecords.GetEnumerator(); iterator.MoveNext();)
                     {
                         EscherRecord escherRecord = (EscherRecord)iterator.Current;
                         bstoreContainer.AddChildRecord(escherRecord);
                     }
                 }
-                opt.RecordId=unchecked((short)0xF00B);
-                opt.Options=(short)0x0033;
+                opt.RecordId=unchecked((short) 0xF00B);
+                opt.Options=(short) 0x0033;
                 opt.AddEscherProperty(new EscherBoolProperty(EscherProperties.TEXT__SIZE_TEXT_TO_FIT_SHAPE, 524296));
                 opt.AddEscherProperty(new EscherRGBProperty(EscherProperties.FILL__FILLCOLOR, 0x08000041));
                 opt.AddEscherProperty(new EscherRGBProperty(EscherProperties.LINESTYLE__COLOR, 134217792));
-                splitMenuColors.RecordId=unchecked((short)0xF11E);
-                splitMenuColors.Options=(short)0x0040;
+                splitMenuColors.RecordId=unchecked((short) 0xF11E);
+                splitMenuColors.Options=(short) 0x0040;
                 splitMenuColors.Color1=0x0800000D;
                 splitMenuColors.Color2=0x0800000C;
                 splitMenuColors.Color3=0x08000017;
                 splitMenuColors.Color4=0x100000F7;
 
                 dggContainer.AddChildRecord(dgg);
-                if (bstoreContainer != null)
+                if(bstoreContainer != null)
                     dggContainer.AddChildRecord(bstoreContainer);
                 dggContainer.AddChildRecord(opt);
                 dggContainer.AddChildRecord(splitMenuColors);
 
                 int dgLoc = FindFirstRecordLocBySid(DrawingGroupRecord.sid);
-                if (dgLoc == -1)
+                if(dgLoc == -1)
                 {
                     DrawingGroupRecord drawingGroup = new DrawingGroupRecord();
                     drawingGroup.AddEscherRecord(dggContainer);
@@ -2904,7 +2917,7 @@ namespace NPOI.HSSF.Model
         }
         public EscherBSERecord GetBSERecord(int pictureIndex)
         {
-            return (EscherBSERecord)escherBSERecords[pictureIndex - 1];
+            return (EscherBSERecord) escherBSERecords[pictureIndex - 1];
         }
 
         public int AddBSERecord(EscherBSERecord e)
@@ -2919,9 +2932,9 @@ namespace NPOI.HSSF.Model
 
             EscherContainerRecord dggContainer = (EscherContainerRecord)drawingGroup.GetEscherRecord(0);
             EscherContainerRecord bstoreContainer;
-            if (dggContainer.GetChild(1).RecordId == EscherContainerRecord.BSTORE_CONTAINER)
+            if(dggContainer.GetChild(1).RecordId == EscherContainerRecord.BSTORE_CONTAINER)
             {
-                bstoreContainer = (EscherContainerRecord)dggContainer.GetChild(1);
+                bstoreContainer = (EscherContainerRecord) dggContainer.GetChild(1);
             }
             else
             {
@@ -2932,9 +2945,9 @@ namespace NPOI.HSSF.Model
                 List<EscherRecord> childRecords = dggContainer.ChildRecords;
                 childRecords.Insert(1, bstoreContainer);
                 dggContainer.ChildRecords = (childRecords);
-                
+
             }
-            bstoreContainer.Options=(short)((escherBSERecords.Count << 4) | 0xF);
+            bstoreContainer.Options=(short) ((escherBSERecords.Count << 4) | 0xF);
 
             bstoreContainer.AddChildRecord(e);
 
@@ -2953,11 +2966,11 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (this.writeProtect == null)
+                if(this.writeProtect == null)
                 {
                     this.writeProtect = new WriteProtectRecord();
                     int i = 0;
-                    for (i = 0;
+                    for(i = 0;
                          i < records.Count && records[i] is not BOFRecord;
                          i++)
                     {
@@ -2972,11 +2985,11 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (this.writeAccess == null)
+                if(this.writeAccess == null)
                 {
-                    this.writeAccess = (WriteAccessRecord)CreateWriteAccess();
+                    this.writeAccess = (WriteAccessRecord) CreateWriteAccess();
                     int i = 0;
-                    for (i = 0;
+                    for(i = 0;
                          i < records.Count && records[i] is not InterfaceEndRecord;
                          i++)
                     {
@@ -2991,11 +3004,11 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (this.fileShare == null)
+                if(this.fileShare == null)
                 {
                     this.fileShare = new FileSharingRecord();
                     int i = 0;
-                    for (i = 0;
+                    for(i = 0;
                          i < records.Count && records[i] is not WriteAccessRecord;
                          i++)
                     {
@@ -3013,7 +3026,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (this.fileShare == null)
+                if(this.fileShare == null)
                 {
                     return false;
                 }
@@ -3031,9 +3044,9 @@ namespace NPOI.HSSF.Model
         {
             FileSharingRecord frec = FileSharing;
             WriteAccessRecord waccess = WriteAccess;
-            frec.ReadOnly=((short)1);
+            frec.ReadOnly=((short) 1);
             //frec.Password=(FileSharingRecord.HashPassword(password));
-            frec.Password = (short)CryptoFunctions.CreateXorVerifier1(password);
+            frec.Password = (short) CryptoFunctions.CreateXorVerifier1(password);
             frec.Username=(username);
             waccess.Username=(username);
         }
@@ -3065,16 +3078,16 @@ namespace NPOI.HSSF.Model
             // copy original formula but adjust 3D refs to the new external sheet index
             int newExtSheetIx = CheckExternSheet(newSheetIndex);
             Ptg[] ptgs = origNameRecord.NameDefinition;
-            for (int i = 0; i < ptgs.Length; i++)
+            for(int i = 0; i < ptgs.Length; i++)
             {
                 Ptg ptg = ptgs[i];
-                if (ptg is Area3DPtg area3DPtg)
+                if(ptg is Area3DPtg area3DPtg)
                 {
                     Area3DPtg a3p = (Area3DPtg)area3DPtg.Copy();
                     a3p.ExternSheetIndex = (newExtSheetIx);
                     ptgs[i] = a3p;
                 }
-                else if (ptg is Ref3DPtg ref3DPtg)
+                else if(ptg is Ref3DPtg ref3DPtg)
                 {
                     Ref3DPtg r3p = (Ref3DPtg)ref3DPtg.Copy();
                     r3p.ExternSheetIndex = (newExtSheetIx);
@@ -3092,11 +3105,11 @@ namespace NPOI.HSSF.Model
  */
         public void UpdateNamesAfterCellShift(FormulaShifter shifter)
         {
-            for (int i = 0; i < NumNames; ++i)
+            for(int i = 0; i < NumNames; ++i)
             {
                 NameRecord nr = GetNameRecord(i);
                 Ptg[] ptgs = nr.NameDefinition;
-                if (shifter.AdjustFormula(ptgs, nr.SheetNumber))
+                if(shifter.AdjustFormula(ptgs, nr.SheetNumber))
                 {
                     nr.NameDefinition = ptgs;
                 }
@@ -3112,7 +3125,7 @@ namespace NPOI.HSSF.Model
             get
             {
                 RecalcIdRecord record = (RecalcIdRecord)FindFirstRecordBySid(RecalcIdRecord.sid);
-                if (record == null)
+                if(record == null)
                 {
                     record = new RecalcIdRecord();
                     // typically goes after the Country record

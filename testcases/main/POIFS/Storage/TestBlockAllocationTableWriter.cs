@@ -24,17 +24,16 @@
  * Contributors:
  * 
  * ==============================================================*/
-        
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
+using NPOI.POIFS.Common;
 using NPOI.POIFS.Storage;
 using NPOI.Util;
-using NPOI.POIFS.Common;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 
 namespace TestCases.POIFS.Storage
@@ -70,7 +69,7 @@ namespace TestCases.POIFS.Storage
 
             int expectedIndex = 0;
 
-            for (int i = 0; i < blockSizes.Length; i++)
+            for(int i = 0; i < blockSizes.Length; i++)
             {
                 ClassicAssert.AreEqual(expectedIndex, table.AllocateSpace(blockSizes[i]));
                 expectedIndex += blockSizes[i];
@@ -137,7 +136,7 @@ namespace TestCases.POIFS.Storage
         {
             BlockAllocationTableWriter table = new BlockAllocationTableWriter(POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS);
 
-            for (int i = 1; i <= 22; i++)
+            for(int i = 1; i <= 22; i++)
                 table.AllocateSpace(i);
 
             table.CreateBlocks();
@@ -149,18 +148,18 @@ namespace TestCases.POIFS.Storage
             ClassicAssert.AreEqual(1024, output.Length);
             byte[] expected = new byte[1024];
 
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
             {
-                expected[i] = (byte)0xFF;
+                expected[i] = (byte) 0xFF;
             }
             int offset = 0;
             int blockIndex = 1;
 
-            for (int i = 1; i <= 22; i++)
+            for(int i = 1; i <= 22; i++)
             {
                 int limit = i - 1;
 
-                for (int j = 0; j < limit; j++)
+                for(int j = 0; j < limit; j++)
                 {
                     LittleEndian.PutInt(expected, offset, blockIndex++);
                     offset += LittleEndianConsts.INT_SIZE;
@@ -176,7 +175,7 @@ namespace TestCases.POIFS.Storage
             offset += LittleEndianConsts.INT_SIZE;
             LittleEndian.PutInt(expected, offset, POIFSConstants.END_OF_CHAIN);
 
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
                 ClassicAssert.AreEqual(expected[i], output[i], "At offset " + i);
         }
 

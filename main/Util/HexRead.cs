@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -26,9 +26,9 @@
  * ==============================================================*/
 
 using System;
-using System.Text;
-using System.IO;
 using System.Collections;
+using System.IO;
+using System.Text;
 
 namespace NPOI.Util
 {
@@ -41,12 +41,12 @@ namespace NPOI.Util
         /// <param name="filename">The filename to read</param>
         /// <returns>The bytes read from the file.</returns>
         /// <exception cref="IOException">If there was a problem while reading the file.</exception>
-        public static byte[] ReadData( String filename )
+        public static byte[] ReadData(String filename)
         {
             FileStream stream = new FileStream(filename,FileMode.Open,FileAccess.Read);
             try
             {
-                return ReadData( stream, -1 );
+                return ReadData(stream, -1);
             }
             finally
             {
@@ -61,17 +61,17 @@ namespace NPOI.Util
         /// <param name="stream">The stream.</param>
         /// <param name="section">The section.</param>
         /// <returns></returns>
-        public static byte[] ReadData(Stream stream, String section )
+        public static byte[] ReadData(Stream stream, String section)
         {
-        	
+
             try
             {
                 StringBuilder sectionText = new StringBuilder();
                 bool inSection = false;
                 int c = stream.ReadByte();
-                while ( c != -1 )
+                while(c != -1)
                 {
-                    switch ( c )
+                    switch(c)
                     {
                         case '[':
                             inSection = true;
@@ -83,14 +83,15 @@ namespace NPOI.Util
                             break;
                         case ']':
                             inSection = false;
-                            if (sectionText.ToString().Equals(section))
+                            if(sectionText.ToString().Equals(section))
                             {
                                 return ReadData(stream, '[');
                             }
                             sectionText = new StringBuilder();
                             break;
                         default:
-                            if ( inSection ) sectionText.Append( (char) c );
+                            if(inSection)
+                                sectionText.Append((char) c);
                             break;
                     }
                     c = stream.ReadByte();
@@ -100,7 +101,7 @@ namespace NPOI.Util
             {
                 stream.Close();
             }
-            throw new IOException( "Section '" + section + "' not found" );
+            throw new IOException("Section '" + section + "' not found");
         }
         /// <summary>
         /// Reads the data.
@@ -108,9 +109,9 @@ namespace NPOI.Util
         /// <param name="filename">The filename.</param>
         /// <param name="section">The section.</param>
         /// <returns></returns>
-        public static byte[] ReadData( String filename, String section )
+        public static byte[] ReadData(String filename, String section)
         {
-            using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            using(FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 return ReadData(stream, section);
             }
@@ -122,45 +123,45 @@ namespace NPOI.Util
         /// <param name="stream">The stream.</param>
         /// <param name="eofChar">The EOF char.</param>
         /// <returns></returns>
-        public static byte[] ReadData( Stream stream, int eofChar )
+        public static byte[] ReadData(Stream stream, int eofChar)
         {
             int characterCount = 0;
             byte b = (byte) 0;
             ArrayList bytes = new ArrayList();
             char a = (char)('a' - 10);
             char A = (char)('A' - 10);
-            while (true)
+            while(true)
             {
                 int count = stream.ReadByte();
                 int digitValue = -1;
-                if ('0' <= count && count <= '9')
+                if('0' <= count && count <= '9')
                 {
                     digitValue = count - '0';
                 }
-                else if ('A' <= count && count <= 'F')
+                else if('A' <= count && count <= 'F')
                 {
                     digitValue = count - A;
                 }
-                else if ('a' <= count && count <= 'f')
+                else if('a' <= count && count <= 'f')
                 {
                     digitValue = count - a;
                 }
-                else if ('#' == count)
+                else if('#' == count)
                 {
                     ReadToEOL(stream);
                 }
-                else if (-1 == count || eofChar == count)
+                else if(-1 == count || eofChar == count)
                 {
                     break;
                 }
                 // else: ignore the character
 
-                if (digitValue != -1)
+                if(digitValue != -1)
                 {
                     b <<= 4;
-                    b += (byte)digitValue;
+                    b += (byte) digitValue;
                     characterCount++;
-                    if (characterCount == 2)
+                    if(characterCount == 2)
                     {
                         bytes.Add(b);
                         characterCount = 0;
@@ -184,7 +185,7 @@ namespace NPOI.Util
         /// <returns></returns>
         public static byte[] ReadFromString(String data)
         {
-            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(data)))
+            using(MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(data)))
             {
                 return ReadData(ms, -1);
             }
@@ -194,10 +195,10 @@ namespace NPOI.Util
         /// Reads to EOL.
         /// </summary>
         /// <param name="stream">The stream.</param>
-        static private void ReadToEOL( Stream stream )
+        static private void ReadToEOL(Stream stream)
         {
             int c = stream.ReadByte();
-            while ( c != -1 && c != '\n' && c != '\r' )
+            while(c != -1 && c != '\n' && c != '\r')
             {
                 c = stream.ReadByte();
             }

@@ -17,11 +17,11 @@
 
 namespace NPOI.SS.UserModel
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using System;
     using System.Globalization;
+    using System.Text;
 
     /**
      * Mimics the 'data view' of a cell. This allows formula Evaluator
@@ -120,7 +120,7 @@ namespace NPOI.SS.UserModel
         {
             get
             {
-                return (sbyte)_errorCode;
+                return (sbyte) _errorCode;
             }
         }
         public override String ToString()
@@ -134,7 +134,7 @@ namespace NPOI.SS.UserModel
 
         public String FormatAsString()
         {
-            switch (_cellType)
+            switch(_cellType)
             {
                 case CellType.Numeric:
                     string result = _numberValue.ToString(CultureInfo.InvariantCulture);
@@ -152,4 +152,3 @@ namespace NPOI.SS.UserModel
         }
     }
 }
-

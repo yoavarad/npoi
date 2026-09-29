@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,24 +23,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Colors Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Colors ctObj = new CT_Colors();
-            
-            foreach (XmlNode childNode in node.ChildNodes)
+
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "indexedColors")
+                if(childNode.LocalName == "indexedColors")
                 {
                     ctObj.indexedColors = new List<CT_RgbColor>();
-                    foreach (XmlNode c2Node in childNode.ChildNodes)
+                    foreach(XmlNode c2Node in childNode.ChildNodes)
                     {
                         ctObj.indexedColors.Add(CT_RgbColor.Parse(c2Node, namespaceManager));
                     }
                 }
-                else if (childNode.LocalName == "mruColors")
+                else if(childNode.LocalName == "mruColors")
                 {
                     ctObj.mruColors = new List<CT_Color>();
-                    foreach (XmlNode c2Node in childNode.ChildNodes)
+                    foreach(XmlNode c2Node in childNode.ChildNodes)
                     {
                         ctObj.mruColors.Add(CT_Color.Parse(c2Node, namespaceManager));
                     }
@@ -55,19 +55,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.indexedColors != null)
+            if(this.indexedColors != null)
             {
                 sw.Write("<indexedColors>");
-                foreach (CT_RgbColor x in this.indexedColors)
+                foreach(CT_RgbColor x in this.indexedColors)
                 {
                     x.Write(sw, "rgbColor");
                 }
                 sw.Write("</indexedColors>");
             }
-            if (this.mruColors != null)
+            if(this.mruColors != null)
             {
                 sw.Write("<mruColors>");
-                foreach (CT_Color x in this.mruColors)
+                foreach(CT_Color x in this.mruColors)
                 {
                     x.Write(sw, "color");
                 }
@@ -126,10 +126,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     {
         public static CT_RgbColor Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_RgbColor ctObj = new CT_RgbColor();
-            if(node.Attributes["rgb"] != null) 
+            if(node.Attributes["rgb"] != null)
                 ctObj.rgbHex = node.Attributes["rgb"].Value;
             ctObj.rgb = XmlHelper.ReadBytes(node.Attributes["rgb"]);
             return ctObj;
@@ -191,7 +191,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return (bool)this.autoField;
+                return (bool) this.autoField;
             }
             set
             {
@@ -220,7 +220,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return (uint)this.indexedField;
+                return (uint) this.indexedField;
             }
             set
             {
@@ -283,7 +283,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public byte[] GetRgb()
         {
-            if (rgbField == null) return null;
+            if(rgbField == null)
+                return null;
             byte[] retVal = new byte[rgbField.Length];
             Array.Copy(rgbField, retVal, rgbField.Length);
             return retVal;
@@ -296,7 +297,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return (uint)this.themeField;
+                return (uint) this.themeField;
             }
             set
             {
@@ -349,7 +350,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Color Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Color ctObj = new CT_Color();
             ctObj.auto = XmlHelper.ReadBool(node.Attributes["auto"]);
@@ -368,12 +369,12 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            XmlHelper.WriteAttribute(sw, "auto", this.auto,false);
-            if (indexedSpecified)
+            XmlHelper.WriteAttribute(sw, "auto", this.auto, false);
+            if(indexedSpecified)
                 XmlHelper.WriteAttribute(sw, "indexed", this.indexed, true);
             if(rgbSpecified)
                 XmlHelper.WriteAttribute(sw, "rgb", this.rgb);
-            if (themeSpecified)
+            if(themeSpecified)
                 XmlHelper.WriteAttribute(sw, "theme", this.theme, true);
             if(tintSpecified)
                 XmlHelper.WriteAttribute(sw, "tint", this.tint);
@@ -399,7 +400,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             res.indexedField = this.indexedField;
             res.indexedSpecified = this.indexedSpecified;
 
-            res.rgbField = this.rgbField == null ? null : (byte[])this.rgbField.Clone(); // type ST_UnsignedIntHex is xsd:hexBinary restricted to length 4 (octets!? - see http://www.grokdoc.net/index.php/EOOXML_Objections_Clearinghouse)
+            res.rgbField = this.rgbField == null ? null : (byte[]) this.rgbField.Clone(); // type ST_UnsignedIntHex is xsd:hexBinary restricted to length 4 (octets!? - see http://www.grokdoc.net/index.php/EOOXML_Objections_Clearinghouse)
             res.rgbSpecified = this.rgbSpecified;
 
             res.themeField = this.themeField; // TODO change all the uses theme to use uint instead of signed integer variants

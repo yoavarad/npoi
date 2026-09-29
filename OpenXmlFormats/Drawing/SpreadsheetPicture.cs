@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -21,20 +21,20 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         private bool fPublishedField = false;
         public static CT_Picture Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Picture ctObj = new CT_Picture();
             ctObj.macro = XmlHelper.ReadString(node.Attributes["macro"]);
             ctObj.fPublished = XmlHelper.ReadBool(node.Attributes["fPublished"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "nvPicPr")
+                if(childNode.LocalName == "nvPicPr")
                     ctObj.nvPicPr = CT_PictureNonVisual.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "blipFill")
+                else if(childNode.LocalName == "blipFill")
                     ctObj.blipFill = CT_BlipFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "style")
+                else if(childNode.LocalName == "style")
                     ctObj.style = CT_ShapeStyle.Parse(childNode, namespaceManager);
             }
             ctObj.Node = node;
@@ -47,16 +47,16 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             XmlHelper.WriteAttribute(sw, "macro", this.macro);
-            if (this.fPublished)
+            if(this.fPublished)
                 XmlHelper.WriteAttribute(sw, "fPublished", this.fPublished);
             sw.Write('>');
-            if (this.nvPicPr != null)
+            if(this.nvPicPr != null)
                 this.nvPicPr.Write(sw, "nvPicPr");
-            if (this.blipFill != null)
+            if(this.blipFill != null)
                 this.blipFill.Write(sw, "blipFill");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.style != null)
+            if(this.style != null)
                 this.style.Write(sw, "style");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -168,7 +168,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
     // see same class in different name space in Picture.cs
     [Serializable]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing")]
-    public class CT_PictureNonVisual: XmlObject
+    public class CT_PictureNonVisual : XmlObject
     {
 
         private CT_NonVisualDrawingProps cNvPrField = new CT_NonVisualDrawingProps(); // 1..1
@@ -176,14 +176,14 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 
         public static CT_PictureNonVisual Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PictureNonVisual ctObj = new CT_PictureNonVisual();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cNvPr")
+                if(childNode.LocalName == "cNvPr")
                     ctObj.cNvPr = CT_NonVisualDrawingProps.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cNvPicPr")
+                else if(childNode.LocalName == "cNvPicPr")
                     ctObj.cNvPicPr = CT_NonVisualPictureProperties.Parse(childNode, namespaceManager);
             }
             ctObj.Node = node;
@@ -196,9 +196,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.cNvPr != null)
+            if(this.cNvPr != null)
                 this.cNvPr.Write(sw, "cNvPr");
-            if (this.cNvPicPr != null)
+            if(this.cNvPicPr != null)
                 this.cNvPicPr.Write(sw, "cNvPicPr");
             sw.WriteEndElement("xdr", nodeName);
         }

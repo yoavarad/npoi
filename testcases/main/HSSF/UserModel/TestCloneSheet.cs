@@ -23,7 +23,8 @@ namespace TestCases.HSSF.UserModel
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.UserModel;
 
     /**
@@ -83,7 +84,7 @@ namespace TestCases.HSSF.UserModel
 
             sp2.ShapeId = (1024);
             dg.LastMSOSPID = (1024);
-            dg.Instance =((short)0x1);
+            dg.Instance =((short) 0x1);
 
             ClassicAssert.AreEqual(agg1.Serialize().Length, agg2.Serialize().Length);
             ClassicAssert.AreEqual(agg1.ToXml(""), agg2.ToXml(""));

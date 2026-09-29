@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using NPOI.OpenXmlFormats.Shared;
-using System.IO;
-using System.Xml;
-using System.Collections;
 using NPOI.OpenXml4Net.Util;
-using System.Linq;
+using NPOI.OpenXmlFormats.Shared;
 using NPOI.Util;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Wordprocessing
 {
@@ -42,232 +42,232 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Tbl Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Tbl ctObj = new CT_Tbl();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "customXmlMoveToRangeEnd")
+                if(childNode.LocalName == "customXmlMoveToRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlMoveToRangeEnd);
                 }
-                else if (childNode.LocalName == "tblPr")
+                else if(childNode.LocalName == "tblPr")
                     ctObj.tblPr = CT_TblPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblGrid")
+                else if(childNode.LocalName == "tblGrid")
                     ctObj.tblGrid = CT_TblGrid.Parse(childNode, namespaceManager);
 
-                else if (childNode.LocalName == "moveToRangeEnd")
+                else if(childNode.LocalName == "moveToRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.moveToRangeEnd);
                 }
-                else if (childNode.LocalName == "moveToRangeStart")
+                else if(childNode.LocalName == "moveToRangeStart")
                 {
                     ctObj.Items.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.moveToRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeEnd")
+                else if(childNode.LocalName == "customXmlDelRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlDelRangeEnd);
                 }
-                else if (childNode.LocalName == "moveFromRangeStart")
+                else if(childNode.LocalName == "moveFromRangeStart")
                 {
                     ctObj.Items.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.moveFromRangeStart);
                 }
-                else if (childNode.LocalName == "bookmarkEnd")
+                else if(childNode.LocalName == "bookmarkEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.bookmarkEnd);
                 }
-                else if (childNode.LocalName == "bookmarkStart")
+                else if(childNode.LocalName == "bookmarkStart")
                 {
                     ctObj.Items.Add(CT_Bookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.bookmarkStart);
                 }
-                else if (childNode.LocalName == "commentRangeEnd")
+                else if(childNode.LocalName == "commentRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.commentRangeEnd);
                 }
-                else if (childNode.LocalName == "commentRangeStart")
+                else if(childNode.LocalName == "commentRangeStart")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.commentRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveToRangeStart")
+                else if(childNode.LocalName == "customXmlMoveToRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlMoveToRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeEnd")
+                else if(childNode.LocalName == "customXmlInsRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlInsRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeStart")
+                else if(childNode.LocalName == "customXmlInsRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlInsRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeStart")
+                else if(childNode.LocalName == "customXmlDelRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlDelRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeEnd")
+                else if(childNode.LocalName == "customXmlMoveFromRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlMoveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeStart")
+                else if(childNode.LocalName == "customXmlMoveFromRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.customXmlMoveFromRangeStart);
                 }
-                else if (childNode.LocalName == "moveFromRangeEnd")
+                else if(childNode.LocalName == "moveFromRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType30.moveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "sdt")
+                else if(childNode.LocalName == "sdt")
                 {
                     ctObj.Items1.Add(CT_SdtRow.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.sdt);
                 }
-                else if (childNode.LocalName == "customXml")
+                else if(childNode.LocalName == "customXml")
                 {
                     ctObj.Items1.Add(CT_CustomXmlRow.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXml);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeEnd")
+                else if(childNode.LocalName == "customXmlInsRangeEnd")
                 {
                     ctObj.Items1.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlInsRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeStart")
+                else if(childNode.LocalName == "customXmlInsRangeStart")
                 {
                     ctObj.Items1.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlInsRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeEnd")
+                else if(childNode.LocalName == "customXmlMoveFromRangeEnd")
                 {
                     ctObj.Items1.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlMoveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeStart")
+                else if(childNode.LocalName == "customXmlMoveFromRangeStart")
                 {
                     ctObj.Items1.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlMoveFromRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveToRangeEnd")
+                else if(childNode.LocalName == "customXmlMoveToRangeEnd")
                 {
                     ctObj.Items1.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlMoveToRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlMoveToRangeStart")
+                else if(childNode.LocalName == "customXmlMoveToRangeStart")
                 {
                     ctObj.Items1.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlMoveToRangeStart);
                 }
-                else if (childNode.LocalName == "del")
+                else if(childNode.LocalName == "del")
                 {
                     ctObj.Items1.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.del);
                 }
-                else if (childNode.LocalName == "ins")
+                else if(childNode.LocalName == "ins")
                 {
                     ctObj.Items1.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.ins);
                 }
-                else if (childNode.LocalName == "moveFrom")
+                else if(childNode.LocalName == "moveFrom")
                 {
                     ctObj.Items1.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.moveFrom);
                 }
-                else if (childNode.LocalName == "moveFromRangeEnd")
+                else if(childNode.LocalName == "moveFromRangeEnd")
                 {
                     ctObj.Items1.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.moveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "commentRangeStart")
+                else if(childNode.LocalName == "commentRangeStart")
                 {
                     ctObj.Items1.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.commentRangeStart);
                 }
-                else if (childNode.LocalName == "moveTo")
+                else if(childNode.LocalName == "moveTo")
                 {
                     ctObj.Items1.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.moveTo);
                 }
-                else if (childNode.LocalName == "moveToRangeEnd")
+                else if(childNode.LocalName == "moveToRangeEnd")
                 {
                     ctObj.Items1.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.moveToRangeEnd);
                 }
-                else if (childNode.LocalName == "moveToRangeStart")
+                else if(childNode.LocalName == "moveToRangeStart")
                 {
                     ctObj.Items1.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.moveToRangeStart);
                 }
-                else if (childNode.LocalName == "permEnd")
+                else if(childNode.LocalName == "permEnd")
                 {
                     ctObj.Items1.Add(CT_Perm.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.permEnd);
                 }
-                else if (childNode.LocalName == "permStart")
+                else if(childNode.LocalName == "permStart")
                 {
                     ctObj.Items1.Add(CT_PermStart.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.permStart);
                 }
-                else if (childNode.LocalName == "proofErr")
+                else if(childNode.LocalName == "proofErr")
                 {
                     ctObj.Items1.Add(CT_ProofErr.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.proofErr);
                 }
-                else if (childNode.LocalName == "oMath")
+                else if(childNode.LocalName == "oMath")
                 {
                     ctObj.Items1.Add(CT_OMath.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.oMath);
                 }
-                else if (childNode.LocalName == "tr")
+                else if(childNode.LocalName == "tr")
                 {
                     ctObj.Items1.Add(CT_Row.Parse(childNode, namespaceManager, ctObj));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.tr);
                 }
-                else if (childNode.LocalName == "moveFromRangeStart")
+                else if(childNode.LocalName == "moveFromRangeStart")
                 {
                     ctObj.Items1.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.moveFromRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeEnd")
+                else if(childNode.LocalName == "customXmlDelRangeEnd")
                 {
                     ctObj.Items1.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlDelRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeStart")
+                else if(childNode.LocalName == "customXmlDelRangeStart")
                 {
                     ctObj.Items1.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.customXmlDelRangeStart);
                 }
-                else if (childNode.LocalName == "oMathPara")
+                else if(childNode.LocalName == "oMathPara")
                 {
                     ctObj.Items1.Add(CT_OMathPara.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.oMathPara);
                 }
-                else if (childNode.LocalName == "bookmarkEnd")
+                else if(childNode.LocalName == "bookmarkEnd")
                 {
                     ctObj.Items1.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.bookmarkEnd);
                 }
-                else if (childNode.LocalName == "bookmarkStart")
+                else if(childNode.LocalName == "bookmarkStart")
                 {
                     ctObj.Items1.Add(CT_Bookmark.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.bookmarkStart);
                 }
-                else if (childNode.LocalName == "commentRangeEnd")
+                else if(childNode.LocalName == "commentRangeEnd")
                 {
                     ctObj.Items1.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.Items1ElementName.Add(Items1ChoiceType.commentRangeEnd);
@@ -280,103 +280,103 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            foreach (object o in this.Items)
+            foreach(object o in this.Items)
             {
-                if (o is CT_Markup markup)
+                if(o is CT_Markup markup)
                     markup.Write(sw, "customXmlMoveToRangeEnd");
 
-                else if (o is CT_MarkupRange range)
+                else if(o is CT_MarkupRange range)
                     range.Write(sw, "moveToRangeEnd");
-                else if (o is CT_MoveBookmark bookmark)
+                else if(o is CT_MoveBookmark bookmark)
                     bookmark.Write(sw, "moveToRangeStart");
-                else if (o is CT_Markup ctMarkup)
+                else if(o is CT_Markup ctMarkup)
                     ctMarkup.Write(sw, "customXmlDelRangeEnd");
-                else if (o is CT_MoveBookmark moveBookmark)
+                else if(o is CT_MoveBookmark moveBookmark)
                     moveBookmark.Write(sw, "moveFromRangeStart");
-                else if (o is CT_MarkupRange markupRange)
+                else if(o is CT_MarkupRange markupRange)
                     markupRange.Write(sw, "bookmarkEnd");
-                else if (o is CT_Bookmark ctBookmark)
+                else if(o is CT_Bookmark ctBookmark)
                     ctBookmark.Write(sw, "bookmarkStart");
-                else if (o is CT_MarkupRange ctMarkupRange)
+                else if(o is CT_MarkupRange ctMarkupRange)
                     ctMarkupRange.Write(sw, "commentRangeEnd");
-                else if (o is CT_MarkupRange range1)
+                else if(o is CT_MarkupRange range1)
                     range1.Write(sw, "commentRangeStart");
-                else if (o is CT_TrackChange change)
+                else if(o is CT_TrackChange change)
                     change.Write(sw, "customXmlMoveToRangeStart");
-                else if (o is CT_Markup markup1)
+                else if(o is CT_Markup markup1)
                     markup1.Write(sw, "customXmlInsRangeEnd");
-                else if (o is CT_TrackChange trackChange)
+                else if(o is CT_TrackChange trackChange)
                     trackChange.Write(sw, "customXmlInsRangeStart");
-                else if (o is CT_TrackChange ctTrackChange)
+                else if(o is CT_TrackChange ctTrackChange)
                     ctTrackChange.Write(sw, "customXmlDelRangeStart");
-                else if (o is CT_Markup ctMarkup1)
+                else if(o is CT_Markup ctMarkup1)
                     ctMarkup1.Write(sw, "customXmlMoveFromRangeEnd");
-                else if (o is CT_TrackChange change1)
+                else if(o is CT_TrackChange change1)
                     change1.Write(sw, "customXmlMoveFromRangeStart");
-                else if (o is CT_MarkupRange markupRange1)
+                else if(o is CT_MarkupRange markupRange1)
                     markupRange1.Write(sw, "moveFromRangeEnd");
             }
-            if (this.tblPr != null)
+            if(this.tblPr != null)
                 this.tblPr.Write(sw, "tblPr");
-            if (this.tblGrid != null)
+            if(this.tblGrid != null)
                 this.tblGrid.Write(sw, "tblGrid");
-            foreach (object o in this.Items1)
+            foreach(object o in this.Items1)
             {
-                if (o is CT_SdtRow row)
+                if(o is CT_SdtRow row)
                     row.Write(sw, "sdt");
-                else if (o is CT_CustomXmlRow xmlRow)
+                else if(o is CT_CustomXmlRow xmlRow)
                     xmlRow.Write(sw, "customXml");
-                else if (o is CT_Markup markup)
+                else if(o is CT_Markup markup)
                     markup.Write(sw, "customXmlInsRangeEnd");
-                else if (o is CT_TrackChange change)
+                else if(o is CT_TrackChange change)
                     change.Write(sw, "customXmlInsRangeStart");
-                else if (o is CT_Markup ctMarkup)
+                else if(o is CT_Markup ctMarkup)
                     ctMarkup.Write(sw, "customXmlMoveFromRangeEnd");
-                else if (o is CT_TrackChange trackChange)
+                else if(o is CT_TrackChange trackChange)
                     trackChange.Write(sw, "customXmlMoveFromRangeStart");
-                else if (o is CT_Markup markup1)
+                else if(o is CT_Markup markup1)
                     markup1.Write(sw, "customXmlMoveToRangeEnd");
-                else if (o is CT_TrackChange ctTrackChange)
+                else if(o is CT_TrackChange ctTrackChange)
                     ctTrackChange.Write(sw, "customXmlMoveToRangeStart");
-                else if (o is CT_RunTrackChange runTrackChange)
+                else if(o is CT_RunTrackChange runTrackChange)
                     runTrackChange.Write(sw, "del");
-                else if (o is CT_RunTrackChange ctRunTrackChange)
+                else if(o is CT_RunTrackChange ctRunTrackChange)
                     ctRunTrackChange.Write(sw, "ins");
-                else if (o is CT_RunTrackChange change1)
+                else if(o is CT_RunTrackChange change1)
                     change1.Write(sw, "moveFrom");
-                else if (o is CT_MarkupRange range)
+                else if(o is CT_MarkupRange range)
                     range.Write(sw, "moveFromRangeEnd");
-                else if (o is CT_MarkupRange markupRange)
+                else if(o is CT_MarkupRange markupRange)
                     markupRange.Write(sw, "commentRangeStart");
-                else if (o is CT_RunTrackChange trackChange1)
+                else if(o is CT_RunTrackChange trackChange1)
                     trackChange1.Write(sw, "moveTo");
-                else if (o is CT_MarkupRange ctMarkupRange)
+                else if(o is CT_MarkupRange ctMarkupRange)
                     ctMarkupRange.Write(sw, "moveToRangeEnd");
-                else if (o is CT_MoveBookmark bookmark)
+                else if(o is CT_MoveBookmark bookmark)
                     bookmark.Write(sw, "moveToRangeStart");
-                else if (o is CT_Perm perm)
+                else if(o is CT_Perm perm)
                     perm.Write(sw, "permEnd");
-                else if (o is CT_PermStart start)
+                else if(o is CT_PermStart start)
                     start.Write(sw, "permStart");
-                else if (o is CT_ProofErr err)
+                else if(o is CT_ProofErr err)
                     err.Write(sw, "proofErr");
-                else if (o is CT_OMath math)
+                else if(o is CT_OMath math)
                     math.Write(sw, "oMath");
-                else if (o is CT_Row ctRow)
+                else if(o is CT_Row ctRow)
                     ctRow.Write(sw, "tr");
-                else if (o is CT_MoveBookmark moveBookmark)
+                else if(o is CT_MoveBookmark moveBookmark)
                     moveBookmark.Write(sw, "moveFromRangeStart");
-                else if (o is CT_Markup ctMarkup1)
+                else if(o is CT_Markup ctMarkup1)
                     ctMarkup1.Write(sw, "customXmlDelRangeEnd");
-                else if (o is CT_TrackChange ctTrackChange1)
+                else if(o is CT_TrackChange ctTrackChange1)
                     ctTrackChange1.Write(sw, "customXmlDelRangeStart");
-                else if (o is CT_OMathPara para)
+                else if(o is CT_OMathPara para)
                     para.Write(sw, "oMathPara");
-                else if (o is CT_MarkupRange range1)
+                else if(o is CT_MarkupRange range1)
                     range1.Write(sw, "bookmarkEnd");
-                else if (o is CT_Bookmark ctBookmark)
+                else if(o is CT_Bookmark ctBookmark)
                     ctBookmark.Write(sw, "bookmarkStart");
-                else if (o is CT_MarkupRange markupRange1)
+                else if(o is CT_MarkupRange markupRange1)
                     markupRange1.Write(sw, "commentRangeEnd");
             }
             sw.WriteEndW(nodeName);
@@ -421,7 +421,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
             set
             {
-               this.itemsElementNameField = value;
+                this.itemsElementNameField = value;
             }
 
         }
@@ -541,7 +541,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_TblPr AddNewTblPr()
         {
-            if (this.tblPrField == null)
+            if(this.tblPrField == null)
                 this.tblPrField = new CT_TblPr();
             return this.tblPrField;
         }
@@ -555,7 +555,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             return GetItems1Array<CT_Row>(p, Items1ChoiceType.tr);
         }
-        
+
         public List<CT_Row> GetTrList()
         {
             return GetItems1List<CT_Row>(Items1ChoiceType.tr);
@@ -564,12 +564,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         private List<T> GetItems1List<T>(Items1ChoiceType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 List<T> list = new List<T>();
-                for (int i = 0; i < items1ElementNameField.Count; i++)
+                for(int i = 0; i < items1ElementNameField.Count; i++)
                 {
-                    if (items1ElementNameField[i] == type)
+                    if(items1ElementNameField[i] == type)
                         list.Add(items1Field[i] as T);
                 }
                 return list;
@@ -577,12 +577,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private int SizeOfItems1Array(Items1ChoiceType type)
         {
-            lock (this)
+            lock(this)
             {
                 int size = 0;
-                for (int i = 0; i < items1ElementNameField.Count; i++)
+                for(int i = 0; i < items1ElementNameField.Count; i++)
                 {
-                    if (items1ElementNameField[i] == type)
+                    if(items1ElementNameField[i] == type)
                         size++;
                 }
                 return size;
@@ -590,10 +590,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private T GetItems1Array<T>(int p, Items1ChoiceType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetItems1Index(type, p);
-                if (pos < 0 || pos >= this.items1Field.Count)
+                if(pos < 0 || pos >= this.items1Field.Count)
                     return null;
                 return items1Field[pos] as T;
             }
@@ -601,7 +601,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T InsertNewItems1<T>(Items1ChoiceType type, int p) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 int pos = GetItems1Index(type, p);
                 this.items1ElementNameField.Insert(pos, type);
@@ -612,7 +612,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T AddNewItems1<T>(Items1ChoiceType type) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 this.items1ElementNameField.Add(type);
                 this.items1Field.Add(t);
@@ -621,12 +621,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void SetItems1Array<T>(Items1ChoiceType type, int p, T obj) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetItems1Index(type, p);
-                if (pos < 0 || pos >= this.items1Field.Count)
+                if(pos < 0 || pos >= this.items1Field.Count)
                     return;
-                if (this.items1Field[pos] is T)
+                if(this.items1Field[pos] is T)
                     this.items1Field[pos] = obj;
                 else
                     throw new Exception(string.Format(@"object types are difference, itemsField[{0}] is {1}, and parameter obj is {2}",
@@ -637,11 +637,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             int index = -1;
             int pos = 0;
-            for (int i = 0; i < items1ElementNameField.Count; i++)
+            for(int i = 0; i < items1ElementNameField.Count; i++)
             {
-                if (items1ElementNameField[i] == type)
+                if(items1ElementNameField[i] == type)
                 {
-                    if (pos == p)
+                    if(pos == p)
                     {
                         //return itemsField[p] as T;
                         index = i;
@@ -652,16 +652,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
                 }
             }
             // Check if the position should be the last position when index cannot be find in for loop
-            if( index == -1&&pos == p)
+            if(index == -1&&pos == p)
                 index = items1Field.Count;
             return index;
         }
         private void RemoveItems1(Items1ChoiceType type, int p)
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetItems1Index(type, p);
-                if (pos < 0 || pos >= this.items1Field.Count)
+                if(pos < 0 || pos >= this.items1Field.Count)
                     return;
                 items1ElementNameField.RemoveAt(pos);
                 items1Field.RemoveAt(pos);
@@ -682,52 +682,52 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ItemsChoiceType30
     {
 
-    
+
         bookmarkEnd,
 
-    
+
         bookmarkStart,
 
-    
+
         commentRangeEnd,
 
-    
+
         commentRangeStart,
 
-    
+
         customXmlDelRangeEnd,
 
-    
+
         customXmlDelRangeStart,
 
-    
+
         customXmlInsRangeEnd,
 
-    
+
         customXmlInsRangeStart,
 
-    
+
         customXmlMoveFromRangeEnd,
 
-    
+
         customXmlMoveFromRangeStart,
 
-    
+
         customXmlMoveToRangeEnd,
 
-    
+
         customXmlMoveToRangeStart,
 
-    
+
         moveFromRangeEnd,
 
-    
+
         moveFromRangeStart,
 
-    
+
         moveToRangeEnd,
 
-    
+
         moveToRangeStart,
     }
     [Serializable]
@@ -744,14 +744,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static new CT_TblGridChange Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblGridChange ctObj = new CT_TblGridChange();
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
             ctObj.tblGrid = new List<CT_TblGridCol>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblGrid")
+                if(childNode.LocalName == "tblGrid")
                     ctObj.tblGrid.Add(CT_TblGridCol.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -764,9 +764,9 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "r:id", this.id);
             sw.Write('>');
-            if (this.tblGrid != null)
+            if(this.tblGrid != null)
             {
-                foreach (CT_TblGridCol x in this.tblGrid)
+                foreach(CT_TblGridCol x in this.tblGrid)
                 {
                     x.Write(sw, "tblGrid");
                 }
@@ -801,7 +801,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool wFieldSpecified;
         public static CT_TblGridCol Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblGridCol ctObj = new CT_TblGridCol();
             ctObj.w = XmlHelper.ReadULong(node.Attributes["w:w"]);
@@ -879,15 +879,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_TblGrid Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblGrid ctObj = new CT_TblGrid();
             ctObj.gridCol = new List<CT_TblGridCol>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblGridChange")
+                if(childNode.LocalName == "tblGridChange")
                     ctObj.tblGridChange = CT_TblGridChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gridCol")
+                else if(childNode.LocalName == "gridCol")
                     ctObj.gridCol.Add(CT_TblGridCol.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -899,11 +899,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.tblGridChange != null)
+            if(this.tblGridChange != null)
                 this.tblGridChange.Write(sw, "tblGridChange");
-            if (this.gridCol != null)
+            if(this.gridCol != null)
             {
-                foreach (CT_TblGridCol x in this.gridCol)
+                foreach(CT_TblGridCol x in this.gridCol)
                 {
                     x.Write(sw, "gridCol");
                 }
@@ -926,7 +926,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_TblGridCol AddNewGridCol()
         {
-            if (this.gridCol == null)
+            if(this.gridCol == null)
                 gridCol = new List<CT_TblGridCol>();
 
             CT_TblGridCol col=new CT_TblGridCol();
@@ -943,11 +943,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_TblOverlap Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblOverlap ctObj = new CT_TblOverlap();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_TblOverlap)Enum.Parse(typeof(ST_TblOverlap), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_TblOverlap) Enum.Parse(typeof(ST_TblOverlap), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -983,10 +983,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_TblOverlap
     {
 
-    
+
         never,
 
-    
+
         overlap,
     }
 
@@ -1005,12 +1005,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool typeFieldSpecified = true;
         public static CT_TblWidth Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblWidth ctObj = new CT_TblWidth();
             ctObj.w = XmlHelper.ReadString(node.Attributes["w:w"]);
-            if (node.Attributes["w:type"] != null)
-                ctObj.type = (ST_TblWidth)Enum.Parse(typeof(ST_TblWidth), node.Attributes["w:type"].Value);
+            if(node.Attributes["w:type"] != null)
+                ctObj.type = (ST_TblWidth) Enum.Parse(typeof(ST_TblWidth), node.Attributes["w:type"].Value);
             return ctObj;
         }
 
@@ -1070,16 +1070,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_TblWidth
     {
 
-    
+
         nil,
 
-    
+
         pct,
 
-    
+
         dxa,
 
-    
+
         auto,
     }
 
@@ -1092,15 +1092,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static new CT_TblPrChange Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblPrChange ctObj = new CT_TblPrChange();
             ctObj.author = XmlHelper.ReadString(node.Attributes["w:author"]);
             ctObj.date = XmlHelper.ReadString(node.Attributes["w:date"]);
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblPr")
+                if(childNode.LocalName == "tblPr")
                     ctObj.tblPr = CT_TblPrBase.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1115,7 +1115,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:date", this.date);
             XmlHelper.WriteAttribute(sw, "r:id", this.id);
             sw.Write('>');
-            if (this.tblPr != null)
+            if(this.tblPr != null)
                 this.tblPr.Write(sw, "tblPr");
             sw.WriteEndW(nodeName);
         }
@@ -1189,44 +1189,44 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_TblPrBase Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblPrBase ctObj = new CT_TblPrBase();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblStyle")
+                if(childNode.LocalName == "tblStyle")
                     ctObj.tblStyle = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblpPr")
+                else if(childNode.LocalName == "tblpPr")
                     ctObj.tblpPr = CT_TblPPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblOverlap")
+                else if(childNode.LocalName == "tblOverlap")
                     ctObj.tblOverlap = CT_TblOverlap.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bidiVisual")
+                else if(childNode.LocalName == "bidiVisual")
                     ctObj.bidiVisual = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblStyleRowBandSize")
+                else if(childNode.LocalName == "tblStyleRowBandSize")
                     ctObj.tblStyleRowBandSize = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblStyleColBandSize")
+                else if(childNode.LocalName == "tblStyleColBandSize")
                     ctObj.tblStyleColBandSize = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblW")
+                else if(childNode.LocalName == "tblW")
                     ctObj.tblW = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "jc")
+                else if(childNode.LocalName == "jc")
                     ctObj.jc = CT_Jc.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellSpacing")
+                else if(childNode.LocalName == "tblCellSpacing")
                     ctObj.tblCellSpacing = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblInd")
+                else if(childNode.LocalName == "tblInd")
                     ctObj.tblInd = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblBorders")
+                else if(childNode.LocalName == "tblBorders")
                     ctObj.tblBorders = CT_TblBorders.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shd")
+                else if(childNode.LocalName == "shd")
                     ctObj.shd = CT_Shd.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLayout")
+                else if(childNode.LocalName == "tblLayout")
                     ctObj.tblLayout = CT_TblLayoutType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellMar")
+                else if(childNode.LocalName == "tblCellMar")
                     ctObj.tblCellMar = CT_TblCellMar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLook")
+                else if(childNode.LocalName == "tblLook")
                     ctObj.tblLook = CT_ShortHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCaption")
+                else if(childNode.LocalName == "tblCaption")
                     ctObj.tblCaption = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblDescription")
+                else if(childNode.LocalName == "tblDescription")
                     ctObj.tblDescription = CT_String.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1238,39 +1238,39 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.tblStyle != null)
+            if(this.tblStyle != null)
                 this.tblStyle.Write(sw, "tblStyle");
-            if (this.tblpPr != null)
+            if(this.tblpPr != null)
                 this.tblpPr.Write(sw, "tblpPr");
-            if (this.tblOverlap != null)
+            if(this.tblOverlap != null)
                 this.tblOverlap.Write(sw, "tblOverlap");
-            if (this.bidiVisual != null)
+            if(this.bidiVisual != null)
                 this.bidiVisual.Write(sw, "bidiVisual");
-            if (this.tblStyleRowBandSize != null)
+            if(this.tblStyleRowBandSize != null)
                 this.tblStyleRowBandSize.Write(sw, "tblStyleRowBandSize");
-            if (this.tblStyleColBandSize != null)
+            if(this.tblStyleColBandSize != null)
                 this.tblStyleColBandSize.Write(sw, "tblStyleColBandSize");
-            if (this.tblW != null)
+            if(this.tblW != null)
                 this.tblW.Write(sw, "tblW");
-            if (this.jc != null)
+            if(this.jc != null)
                 this.jc.Write(sw, "jc");
-            if (this.tblCellSpacing != null)
+            if(this.tblCellSpacing != null)
                 this.tblCellSpacing.Write(sw, "tblCellSpacing");
-            if (this.tblInd != null)
+            if(this.tblInd != null)
                 this.tblInd.Write(sw, "tblInd");
-            if (this.tblBorders != null)
+            if(this.tblBorders != null)
                 this.tblBorders.Write(sw, "tblBorders");
-            if (this.shd != null)
+            if(this.shd != null)
                 this.shd.Write(sw, "shd");
-            if (this.tblLayout != null)
+            if(this.tblLayout != null)
                 this.tblLayout.Write(sw, "tblLayout");
-            if (this.tblCellMar != null)
+            if(this.tblCellMar != null)
                 this.tblCellMar.Write(sw, "tblCellMar");
-            if (this.tblLook != null)
+            if(this.tblLook != null)
                 this.tblLook.Write(sw, "tblLook");
-            if (this.tblCaption != null)
+            if(this.tblCaption != null)
                 this.tblCaption.Write(sw, "tblCaption");
-            if (this.tblDescription != null)
+            if(this.tblDescription != null)
                 this.tblDescription.Write(sw, "tblDescription");
             sw.WriteEndW(nodeName);
         }
@@ -1503,14 +1503,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_TblWidth AddNewTblW()
         {
-            if (this.tblWField == null)
+            if(this.tblWField == null)
                 this.tblWField = new CT_TblWidth();
             return this.tblWField;
         }
 
         public CT_TblBorders AddNewTblBorders()
         {
-            if (tblBordersField == null)
+            if(tblBordersField == null)
                 this.tblBordersField = new CT_TblBorders();
             return this.tblBordersField;
         }
@@ -1605,22 +1605,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_TblPPr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblPPr ctObj = new CT_TblPPr();
             ctObj.leftFromText = XmlHelper.ReadULong(node.Attributes["w:leftFromText"]);
             ctObj.rightFromText = XmlHelper.ReadULong(node.Attributes["w:rightFromText"]);
             ctObj.topFromText = XmlHelper.ReadULong(node.Attributes["w:topFromText"]);
             ctObj.bottomFromText = XmlHelper.ReadULong(node.Attributes["w:bottomFromText"]);
-            if (node.Attributes["w:vertAnchor"] != null)
-                ctObj.vertAnchor = (ST_VAnchor)Enum.Parse(typeof(ST_VAnchor), node.Attributes["w:vertAnchor"].Value);
-            if (node.Attributes["w:horzAnchor"] != null)
-                ctObj.horzAnchor = (ST_HAnchor)Enum.Parse(typeof(ST_HAnchor), node.Attributes["w:horzAnchor"].Value);
-            if (node.Attributes["w:tblpXSpec"] != null)
-                ctObj.tblpXSpec = (ST_XAlign)Enum.Parse(typeof(ST_XAlign), node.Attributes["w:tblpXSpec"].Value);
+            if(node.Attributes["w:vertAnchor"] != null)
+                ctObj.vertAnchor = (ST_VAnchor) Enum.Parse(typeof(ST_VAnchor), node.Attributes["w:vertAnchor"].Value);
+            if(node.Attributes["w:horzAnchor"] != null)
+                ctObj.horzAnchor = (ST_HAnchor) Enum.Parse(typeof(ST_HAnchor), node.Attributes["w:horzAnchor"].Value);
+            if(node.Attributes["w:tblpXSpec"] != null)
+                ctObj.tblpXSpec = (ST_XAlign) Enum.Parse(typeof(ST_XAlign), node.Attributes["w:tblpXSpec"].Value);
             ctObj.tblpX = XmlHelper.ReadString(node.Attributes["w:tblpX"]);
-            if (node.Attributes["w:tblpYSpec"] != null)
-                ctObj.tblpYSpec = (ST_YAlign)Enum.Parse(typeof(ST_YAlign), node.Attributes["w:tblpYSpec"].Value);
+            if(node.Attributes["w:tblpYSpec"] != null)
+                ctObj.tblpYSpec = (ST_YAlign) Enum.Parse(typeof(ST_YAlign), node.Attributes["w:tblpYSpec"].Value);
             ctObj.tblpY = XmlHelper.ReadString(node.Attributes["w:tblpY"]);
             return ctObj;
         }
@@ -1636,10 +1636,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:bottomFromText", this.bottomFromText);
             XmlHelper.WriteAttribute(sw, "w:vertAnchor", this.vertAnchor.ToString());
             XmlHelper.WriteAttribute(sw, "w:horzAnchor", this.horzAnchor.ToString());
-            if (this.tblpXSpecFieldSpecified)
+            if(this.tblpXSpecFieldSpecified)
                 XmlHelper.WriteAttribute(sw, "w:tblpXSpec", this.tblpXSpec.ToString());
             XmlHelper.WriteAttribute(sw, "w:tblpX", this.tblpX);
-            if (this.tblpYSpecFieldSpecified)
+            if(this.tblpYSpecFieldSpecified)
                 XmlHelper.WriteAttribute(sw, "w:tblpYSpec", this.tblpYSpec.ToString());
             XmlHelper.WriteAttribute(sw, "w:tblpY", this.tblpY);
             sw.Write('>');
@@ -1898,12 +1898,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Height Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Height ctObj = new CT_Height();
             ctObj.val = XmlHelper.ReadULong(node.Attributes["w:val"]);
-            if (node.Attributes["w:hRule"] != null)
-                ctObj.hRule = (ST_HeightRule)Enum.Parse(typeof(ST_HeightRule), node.Attributes["w:hRule"].Value);
+            if(node.Attributes["w:hRule"] != null)
+                ctObj.hRule = (ST_HeightRule) Enum.Parse(typeof(ST_HeightRule), node.Attributes["w:hRule"].Value);
             return ctObj;
         }
 
@@ -1951,40 +1951,40 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ItemsChoiceType2
     {
 
-    
+
         cantSplit,
 
-    
+
         cnfStyle,
 
-    
+
         divId,
 
-    
+
         gridAfter,
 
-    
+
         gridBefore,
 
-    
+
         hidden,
 
-    
+
         jc,
 
-    
+
         tblCellSpacing,
 
-    
+
         tblHeader,
 
-    
+
         trHeight,
 
-    
+
         wAfter,
 
-    
+
         wBefore,
     }
 
@@ -1999,19 +1999,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_TblPrExChange()
         {
-            
+
         }
         public static new CT_TblPrExChange Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblPrExChange ctObj = new CT_TblPrExChange();
             ctObj.author = XmlHelper.ReadString(node.Attributes["w:author"]);
             ctObj.date = XmlHelper.ReadString(node.Attributes["w:date"]);
             ctObj.id = XmlHelper.ReadString(node.Attributes["w:id"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblPrEx")
+                if(childNode.LocalName == "tblPrEx")
                     ctObj.tblPrEx = CT_TblPrExBase.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2026,7 +2026,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:date", this.date);
             XmlHelper.WriteAttribute(sw, "w:id", this.id);
             sw.Write('>');
-            if (this.tblPrEx != null)
+            if(this.tblPrEx != null)
                 this.tblPrEx.Write(sw, "tblPrEx");
             sw.WriteEndW(nodeName);
         }
@@ -2073,28 +2073,28 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_ShortHexNumber tblLookField;
         public static CT_TblPrExBase Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblPrExBase ctObj = new CT_TblPrExBase();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblW")
+                if(childNode.LocalName == "tblW")
                     ctObj.tblW = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "jc")
+                else if(childNode.LocalName == "jc")
                     ctObj.jc = CT_Jc.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellSpacing")
+                else if(childNode.LocalName == "tblCellSpacing")
                     ctObj.tblCellSpacing = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblInd")
+                else if(childNode.LocalName == "tblInd")
                     ctObj.tblInd = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblBorders")
+                else if(childNode.LocalName == "tblBorders")
                     ctObj.tblBorders = CT_TblBorders.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shd")
+                else if(childNode.LocalName == "shd")
                     ctObj.shd = CT_Shd.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLayout")
+                else if(childNode.LocalName == "tblLayout")
                     ctObj.tblLayout = CT_TblLayoutType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellMar")
+                else if(childNode.LocalName == "tblCellMar")
                     ctObj.tblCellMar = CT_TblCellMar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLook")
+                else if(childNode.LocalName == "tblLook")
                     ctObj.tblLook = CT_ShortHexNumber.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2106,23 +2106,23 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.tblW != null)
+            if(this.tblW != null)
                 this.tblW.Write(sw, "tblW");
-            if (this.jc != null)
+            if(this.jc != null)
                 this.jc.Write(sw, "jc");
-            if (this.tblCellSpacing != null)
+            if(this.tblCellSpacing != null)
                 this.tblCellSpacing.Write(sw, "tblCellSpacing");
-            if (this.tblInd != null)
+            if(this.tblInd != null)
                 this.tblInd.Write(sw, "tblInd");
-            if (this.tblBorders != null)
+            if(this.tblBorders != null)
                 this.tblBorders.Write(sw, "tblBorders");
-            if (this.shd != null)
+            if(this.shd != null)
                 this.shd.Write(sw, "shd");
-            if (this.tblLayout != null)
+            if(this.tblLayout != null)
                 this.tblLayout.Write(sw, "tblLayout");
-            if (this.tblCellMar != null)
+            if(this.tblCellMar != null)
                 this.tblCellMar.Write(sw, "tblCellMar");
-            if (this.tblLook != null)
+            if(this.tblLook != null)
                 this.tblLook.Write(sw, "tblLook");
             sw.WriteEndW(nodeName);
         }
@@ -2269,30 +2269,30 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_TblPrExChange tblPrExChangeField;
         public static new CT_TblPrEx Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblPrEx ctObj = new CT_TblPrEx();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblPrExChange")
+                if(childNode.LocalName == "tblPrExChange")
                     ctObj.tblPrExChange = CT_TblPrExChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblW")
+                else if(childNode.LocalName == "tblW")
                     ctObj.tblW = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "jc")
+                else if(childNode.LocalName == "jc")
                     ctObj.jc = CT_Jc.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellSpacing")
+                else if(childNode.LocalName == "tblCellSpacing")
                     ctObj.tblCellSpacing = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblInd")
+                else if(childNode.LocalName == "tblInd")
                     ctObj.tblInd = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblBorders")
+                else if(childNode.LocalName == "tblBorders")
                     ctObj.tblBorders = CT_TblBorders.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shd")
+                else if(childNode.LocalName == "shd")
                     ctObj.shd = CT_Shd.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLayout")
+                else if(childNode.LocalName == "tblLayout")
                     ctObj.tblLayout = CT_TblLayoutType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellMar")
+                else if(childNode.LocalName == "tblCellMar")
                     ctObj.tblCellMar = CT_TblCellMar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLook")
+                else if(childNode.LocalName == "tblLook")
                     ctObj.tblLook = CT_ShortHexNumber.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2304,25 +2304,25 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.tblPrExChange != null)
+            if(this.tblPrExChange != null)
                 this.tblPrExChange.Write(sw, "tblPrExChange");
-            if (this.tblW != null)
+            if(this.tblW != null)
                 this.tblW.Write(sw, "tblW");
-            if (this.jc != null)
+            if(this.jc != null)
                 this.jc.Write(sw, "jc");
-            if (this.tblCellSpacing != null)
+            if(this.tblCellSpacing != null)
                 this.tblCellSpacing.Write(sw, "tblCellSpacing");
-            if (this.tblInd != null)
+            if(this.tblInd != null)
                 this.tblInd.Write(sw, "tblInd");
-            if (this.tblBorders != null)
+            if(this.tblBorders != null)
                 this.tblBorders.Write(sw, "tblBorders");
-            if (this.shd != null)
+            if(this.shd != null)
                 this.shd.Write(sw, "shd");
-            if (this.tblLayout != null)
+            if(this.tblLayout != null)
                 this.tblLayout.Write(sw, "tblLayout");
-            if (this.tblCellMar != null)
+            if(this.tblCellMar != null)
                 this.tblCellMar.Write(sw, "tblCellMar");
-            if (this.tblLook != null)
+            if(this.tblLook != null)
                 this.tblLook.Write(sw, "tblLook");
             sw.WriteEndW(nodeName);
         }
@@ -2369,22 +2369,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_TblBorders Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblBorders ctObj = new CT_TblBorders();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "top")
+                if(childNode.LocalName == "top")
                     ctObj.top = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "left")
+                else if(childNode.LocalName == "left")
                     ctObj.left = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bottom")
+                else if(childNode.LocalName == "bottom")
                     ctObj.bottom = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "right")
+                else if(childNode.LocalName == "right")
                     ctObj.right = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "insideH")
+                else if(childNode.LocalName == "insideH")
                     ctObj.insideH = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "insideV")
+                else if(childNode.LocalName == "insideV")
                     ctObj.insideV = CT_Border.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2396,17 +2396,17 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.top != null)
+            if(this.top != null)
                 this.top.Write(sw, "top");
-            if (this.left != null)
+            if(this.left != null)
                 this.left.Write(sw, "left");
-            if (this.bottom != null)
+            if(this.bottom != null)
                 this.bottom.Write(sw, "bottom");
-            if (this.right != null)
+            if(this.right != null)
                 this.right.Write(sw, "right");
-            if (this.insideH != null)
+            if(this.insideH != null)
                 this.insideH.Write(sw, "insideH");
-            if (this.insideV != null)
+            if(this.insideV != null)
                 this.insideV.Write(sw, "insideV");
             sw.WriteEndW(nodeName);
         }
@@ -2491,42 +2491,42 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_Border AddNewBottom()
         {
-            if (this.bottomField == null)
+            if(this.bottomField == null)
                 this.bottomField = new CT_Border();
             return this.bottomField;
         }
 
         public CT_Border AddNewLeft()
         {
-            if (this.leftField == null)
+            if(this.leftField == null)
                 this.leftField = new CT_Border();
             return this.leftField;
         }
 
         public CT_Border AddNewRight()
         {
-            if (this.rightField == null)
+            if(this.rightField == null)
                 this.rightField = new CT_Border();
             return this.rightField;
         }
 
         public CT_Border AddNewTop()
         {
-            if (this.topField == null)
+            if(this.topField == null)
                 this.topField = new CT_Border();
             return this.topField;
         }
 
         public CT_Border AddNewInsideH()
         {
-            if (this.insideHField == null)
+            if(this.insideHField == null)
                 this.insideHField = new CT_Border();
             return this.insideHField;
         }
 
         public CT_Border AddNewInsideV()
         {
-            if (this.insideVField == null)
+            if(this.insideVField == null)
                 this.insideVField = new CT_Border();
             return this.insideVField;
         }
@@ -2555,11 +2555,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool typeFieldSpecified;
         public static CT_TblLayoutType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblLayoutType ctObj = new CT_TblLayoutType();
-            if (node.Attributes["w:type"] != null)
-                ctObj.type = (ST_TblLayoutType)Enum.Parse(typeof(ST_TblLayoutType), node.Attributes["w:type"].Value);
+            if(node.Attributes["w:type"] != null)
+                ctObj.type = (ST_TblLayoutType) Enum.Parse(typeof(ST_TblLayoutType), node.Attributes["w:type"].Value);
             return ctObj;
         }
 
@@ -2605,10 +2605,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_TblLayoutType
     {
 
-    
+
         @fixed,
 
-    
+
         autofit,
     }
 
@@ -2629,18 +2629,18 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_TblWidth rightField;
         public static CT_TblCellMar Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblCellMar ctObj = new CT_TblCellMar();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "top")
+                if(childNode.LocalName == "top")
                     ctObj.top = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "left")
+                else if(childNode.LocalName == "left")
                     ctObj.left = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bottom")
+                else if(childNode.LocalName == "bottom")
                     ctObj.bottom = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "right")
+                else if(childNode.LocalName == "right")
                     ctObj.right = CT_TblWidth.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2652,13 +2652,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.top != null)
+            if(this.top != null)
                 this.top.Write(sw, "top");
-            if (this.left != null)
+            if(this.left != null)
                 this.left.Write(sw, "left");
-            if (this.bottom != null)
+            if(this.bottom != null)
                 this.bottom.Write(sw, "bottom");
-            if (this.right != null)
+            if(this.right != null)
                 this.right.Write(sw, "right");
             sw.WriteEndW(nodeName);
         }
@@ -2781,46 +2781,46 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_TblPrChange tblPrChangeField;
         public static new CT_TblPr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TblPr ctObj = new CT_TblPr();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblPrChange")
+                if(childNode.LocalName == "tblPrChange")
                     ctObj.tblPrChange = CT_TblPrChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblStyle")
+                else if(childNode.LocalName == "tblStyle")
                     ctObj.tblStyle = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblpPr")
+                else if(childNode.LocalName == "tblpPr")
                     ctObj.tblpPr = CT_TblPPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblOverlap")
+                else if(childNode.LocalName == "tblOverlap")
                     ctObj.tblOverlap = CT_TblOverlap.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bidiVisual")
+                else if(childNode.LocalName == "bidiVisual")
                     ctObj.bidiVisual = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblStyleRowBandSize")
+                else if(childNode.LocalName == "tblStyleRowBandSize")
                     ctObj.tblStyleRowBandSize = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblStyleColBandSize")
+                else if(childNode.LocalName == "tblStyleColBandSize")
                     ctObj.tblStyleColBandSize = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblW")
+                else if(childNode.LocalName == "tblW")
                     ctObj.tblW = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "jc")
+                else if(childNode.LocalName == "jc")
                     ctObj.jc = CT_Jc.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellSpacing")
+                else if(childNode.LocalName == "tblCellSpacing")
                     ctObj.tblCellSpacing = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblInd")
+                else if(childNode.LocalName == "tblInd")
                     ctObj.tblInd = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblBorders")
+                else if(childNode.LocalName == "tblBorders")
                     ctObj.tblBorders = CT_TblBorders.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shd")
+                else if(childNode.LocalName == "shd")
                     ctObj.shd = CT_Shd.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLayout")
+                else if(childNode.LocalName == "tblLayout")
                     ctObj.tblLayout = CT_TblLayoutType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCellMar")
+                else if(childNode.LocalName == "tblCellMar")
                     ctObj.tblCellMar = CT_TblCellMar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblLook")
+                else if(childNode.LocalName == "tblLook")
                     ctObj.tblLook = CT_ShortHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblCaption")
+                else if(childNode.LocalName == "tblCaption")
                     ctObj.tblCaption = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tblDescription")
+                else if(childNode.LocalName == "tblDescription")
                     ctObj.tblDescription = CT_String.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2832,41 +2832,41 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.tblPrChange != null)
+            if(this.tblPrChange != null)
                 this.tblPrChange.Write(sw, "tblPrChange");
-            if (this.tblStyle != null)
+            if(this.tblStyle != null)
                 this.tblStyle.Write(sw, "tblStyle");
-            if (this.tblpPr != null)
+            if(this.tblpPr != null)
                 this.tblpPr.Write(sw, "tblpPr");
-            if (this.tblOverlap != null)
+            if(this.tblOverlap != null)
                 this.tblOverlap.Write(sw, "tblOverlap");
-            if (this.bidiVisual != null)
+            if(this.bidiVisual != null)
                 this.bidiVisual.Write(sw, "bidiVisual");
-            if (this.tblStyleRowBandSize != null)
+            if(this.tblStyleRowBandSize != null)
                 this.tblStyleRowBandSize.Write(sw, "tblStyleRowBandSize");
-            if (this.tblStyleColBandSize != null)
+            if(this.tblStyleColBandSize != null)
                 this.tblStyleColBandSize.Write(sw, "tblStyleColBandSize");
-            if (this.tblW != null)
+            if(this.tblW != null)
                 this.tblW.Write(sw, "tblW");
-            if (this.jc != null)
+            if(this.jc != null)
                 this.jc.Write(sw, "jc");
-            if (this.tblCellSpacing != null)
+            if(this.tblCellSpacing != null)
                 this.tblCellSpacing.Write(sw, "tblCellSpacing");
-            if (this.tblInd != null)
+            if(this.tblInd != null)
                 this.tblInd.Write(sw, "tblInd");
-            if (this.tblBorders != null)
+            if(this.tblBorders != null)
                 this.tblBorders.Write(sw, "tblBorders");
-            if (this.shd != null)
+            if(this.shd != null)
                 this.shd.Write(sw, "shd");
-            if (this.tblLayout != null)
+            if(this.tblLayout != null)
                 this.tblLayout.Write(sw, "tblLayout");
-            if (this.tblCellMar != null)
+            if(this.tblCellMar != null)
                 this.tblCellMar.Write(sw, "tblCellMar");
-            if (this.tblLook != null)
+            if(this.tblLook != null)
                 this.tblLook.Write(sw, "tblLook");
-            if (this.tblCaption != null)
+            if(this.tblCaption != null)
                 this.tblCaption.Write(sw, "tblCaption");
-            if (this.tblDescription != null)
+            if(this.tblDescription != null)
                 this.tblDescription.Write(sw, "tblDescription");
             sw.WriteEndW(nodeName);
         }
@@ -2930,19 +2930,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_TrPrChange()
         {
-            
+
         }
         public static new CT_TrPrChange Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TrPrChange ctObj = new CT_TrPrChange();
             ctObj.author = XmlHelper.ReadString(node.Attributes["w:author"]);
             ctObj.date = XmlHelper.ReadString(node.Attributes["w:date"]);
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "trPr")
+                if(childNode.LocalName == "trPr")
                     ctObj.trPr = CT_TrPrBase.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2957,7 +2957,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:date", this.date);
             XmlHelper.WriteAttribute(sw, "r:id", this.id);
             sw.Write('>');
-            if (this.trPr != null)
+            if(this.trPr != null)
                 this.trPr.Write(sw, "trPr");
             sw.WriteEndW(nodeName);
         }
@@ -2996,67 +2996,67 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_TrPrBase Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TrPrBase ctObj = new CT_TrPrBase();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "gridBefore")
+                if(childNode.LocalName == "gridBefore")
                 {
                     ctObj.Items.Add(CT_DecimalNumber.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.gridBefore);
                 }
-                else if (childNode.LocalName == "cantSplit")
+                else if(childNode.LocalName == "cantSplit")
                 {
                     ctObj.Items.Add(CT_OnOff.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.cantSplit);
                 }
-                else if (childNode.LocalName == "cnfStyle")
+                else if(childNode.LocalName == "cnfStyle")
                 {
                     ctObj.Items.Add(CT_Cnf.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.cnfStyle);
                 }
-                else if (childNode.LocalName == "divId")
+                else if(childNode.LocalName == "divId")
                 {
                     ctObj.Items.Add(CT_DecimalNumber.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.divId);
                 }
-                else if (childNode.LocalName == "gridAfter")
+                else if(childNode.LocalName == "gridAfter")
                 {
                     ctObj.Items.Add(CT_DecimalNumber.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.gridAfter);
                 }
-                else if (childNode.LocalName == "trHeight")
+                else if(childNode.LocalName == "trHeight")
                 {
                     ctObj.Items.Add(CT_Height.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.trHeight);
                 }
-                else if (childNode.LocalName == "hidden")
+                else if(childNode.LocalName == "hidden")
                 {
                     ctObj.Items.Add(CT_OnOff.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.hidden);
                 }
-                else if (childNode.LocalName == "tblCellSpacing")
+                else if(childNode.LocalName == "tblCellSpacing")
                 {
                     ctObj.Items.Add(CT_TblWidth.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.tblCellSpacing);
                 }
-                else if (childNode.LocalName == "tblHeader")
+                else if(childNode.LocalName == "tblHeader")
                 {
                     ctObj.Items.Add(CT_OnOff.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.tblHeader);
                 }
-                else if (childNode.LocalName == "jc")
+                else if(childNode.LocalName == "jc")
                 {
                     ctObj.Items.Add(CT_Jc.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.jc);
                 }
-                else if (childNode.LocalName == "wAfter")
+                else if(childNode.LocalName == "wAfter")
                 {
                     ctObj.Items.Add(CT_TblWidth.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.wAfter);
                 }
-                else if (childNode.LocalName == "wBefore")
+                else if(childNode.LocalName == "wBefore")
                 {
                     ctObj.Items.Add(CT_TblWidth.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.wBefore);
@@ -3069,43 +3069,43 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            for (int i = 0; i < this.Items.Count; i++)
+            for(int i = 0; i < this.Items.Count; i++)
             {
                 object o = this.Items[i];
-                if (o is CT_DecimalNumber number
+                if(o is CT_DecimalNumber number
                     && this.ItemsElementName[i] == ItemsChoiceType2.gridBefore)
                     number.Write(sw, "gridBefore");
-                else if (o is CT_OnOff off
+                else if(o is CT_OnOff off
                     && this.ItemsElementName[i] == ItemsChoiceType2.cantSplit)
                     off.Write(sw, "cantSplit");
-                else if (o is CT_Cnf cnf
+                else if(o is CT_Cnf cnf
                     && this.ItemsElementName[i] == ItemsChoiceType2.cnfStyle)
                     cnf.Write(sw, "cnfStyle");
-                else if (o is CT_DecimalNumber decimalNumber
+                else if(o is CT_DecimalNumber decimalNumber
                     && this.ItemsElementName[i] == ItemsChoiceType2.divId)
                     decimalNumber.Write(sw, "divId");
-                else if (o is CT_DecimalNumber ctDecimalNumber
+                else if(o is CT_DecimalNumber ctDecimalNumber
                     && this.ItemsElementName[i] == ItemsChoiceType2.gridAfter)
                     ctDecimalNumber.Write(sw, "gridAfter");
-                else if (o is CT_Height height
+                else if(o is CT_Height height
                     && this.ItemsElementName[i] == ItemsChoiceType2.trHeight)
                     height.Write(sw, "trHeight");
-                else if (o is CT_OnOff onOff
+                else if(o is CT_OnOff onOff
                     && this.ItemsElementName[i] == ItemsChoiceType2.hidden)
                     onOff.Write(sw, "hidden");
-                else if (o is CT_TblWidth width
+                else if(o is CT_TblWidth width
                     && this.ItemsElementName[i] == ItemsChoiceType2.tblCellSpacing)
                     width.Write(sw, "tblCellSpacing");
-                else if (o is CT_OnOff ctOnOff
+                else if(o is CT_OnOff ctOnOff
                     && this.ItemsElementName[i] == ItemsChoiceType2.tblHeader)
                     ctOnOff.Write(sw, "tblHeader");
-                else if (o is CT_Jc jc
+                else if(o is CT_Jc jc
                     && this.ItemsElementName[i] == ItemsChoiceType2.jc)
                     jc.Write(sw, "jc");
-                else if (o is CT_TblWidth tblWidth
+                else if(o is CT_TblWidth tblWidth
                     && this.ItemsElementName[i] == ItemsChoiceType2.wAfter)
                     tblWidth.Write(sw, "wAfter");
-                else if (o is CT_TblWidth ctTblWidth
+                else if(o is CT_TblWidth ctTblWidth
                     && this.ItemsElementName[i] == ItemsChoiceType2.wBefore)
                     ctTblWidth.Write(sw, "wBefore");
             }
@@ -3151,106 +3151,106 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
         }
 
-        public List<CT_OnOff        > GetCantSplitList     () { return GetObjectList<CT_OnOff        >(ItemsChoiceType2.cantSplit     ); }
-        public List<CT_Cnf          > GetCnfStyleList      () { return GetObjectList<CT_Cnf          >(ItemsChoiceType2.cnfStyle      ); }
-        public List<CT_DecimalNumber> GetDivIdList         () { return GetObjectList<CT_DecimalNumber>(ItemsChoiceType2.divId         ); }
-        public List<CT_DecimalNumber> GetGridAfterList     () { return GetObjectList<CT_DecimalNumber>(ItemsChoiceType2.gridAfter     ); }
-        public List<CT_DecimalNumber> GetGridBeforeList    () { return GetObjectList<CT_DecimalNumber>(ItemsChoiceType2.gridBefore    ); }
-        public List<CT_OnOff        > GetHiddenList        () { return GetObjectList<CT_OnOff        >(ItemsChoiceType2.hidden        ); }
-        public List<CT_Jc           > GetJcList            () { return GetObjectList<CT_Jc           >(ItemsChoiceType2.jc            ); }
-        public List<CT_TblWidth     > GetTblCellSpacingList() { return GetObjectList<CT_TblWidth     >(ItemsChoiceType2.tblCellSpacing); }
-        public List<CT_OnOff        > GetTblHeaderList     () { return GetObjectList<CT_OnOff        >(ItemsChoiceType2.tblHeader     ); }
-        public List<CT_Height       > GetTrHeightList      () { return GetObjectList<CT_Height       >(ItemsChoiceType2.trHeight      ); }
-        public List<CT_TblWidth     > GetWAfterList        () { return GetObjectList<CT_TblWidth     >(ItemsChoiceType2.wAfter        ); }
-        public List<CT_TblWidth     > GetWBeforeList       () { return GetObjectList<CT_TblWidth     >(ItemsChoiceType2.wBefore       ); }
+        public List<CT_OnOff> GetCantSplitList() { return GetObjectList<CT_OnOff>(ItemsChoiceType2.cantSplit); }
+        public List<CT_Cnf> GetCnfStyleList() { return GetObjectList<CT_Cnf>(ItemsChoiceType2.cnfStyle); }
+        public List<CT_DecimalNumber> GetDivIdList() { return GetObjectList<CT_DecimalNumber>(ItemsChoiceType2.divId); }
+        public List<CT_DecimalNumber> GetGridAfterList() { return GetObjectList<CT_DecimalNumber>(ItemsChoiceType2.gridAfter); }
+        public List<CT_DecimalNumber> GetGridBeforeList() { return GetObjectList<CT_DecimalNumber>(ItemsChoiceType2.gridBefore); }
+        public List<CT_OnOff> GetHiddenList() { return GetObjectList<CT_OnOff>(ItemsChoiceType2.hidden); }
+        public List<CT_Jc> GetJcList() { return GetObjectList<CT_Jc>(ItemsChoiceType2.jc); }
+        public List<CT_TblWidth> GetTblCellSpacingList() { return GetObjectList<CT_TblWidth>(ItemsChoiceType2.tblCellSpacing); }
+        public List<CT_OnOff> GetTblHeaderList() { return GetObjectList<CT_OnOff>(ItemsChoiceType2.tblHeader); }
+        public List<CT_Height> GetTrHeightList() { return GetObjectList<CT_Height>(ItemsChoiceType2.trHeight); }
+        public List<CT_TblWidth> GetWAfterList() { return GetObjectList<CT_TblWidth>(ItemsChoiceType2.wAfter); }
+        public List<CT_TblWidth> GetWBeforeList() { return GetObjectList<CT_TblWidth>(ItemsChoiceType2.wBefore); }
 
-        public int SizeOfCantSplitArray     () { return SizeOfArray(ItemsChoiceType2.cantSplit     ); }
-        public int SizeOfCnfStyleArray      () { return SizeOfArray(ItemsChoiceType2.cnfStyle      ); }
-        public int SizeOfDivIdArray         () { return SizeOfArray(ItemsChoiceType2.divId         ); }
-        public int SizeOfGridAfterArray     () { return SizeOfArray(ItemsChoiceType2.gridAfter     ); }
-        public int SizeOfGridBeforeArray    () { return SizeOfArray(ItemsChoiceType2.gridBefore    ); }
-        public int SizeOfHiddenArray        () { return SizeOfArray(ItemsChoiceType2.hidden        ); }
-        public int SizeOfJcArray            () { return SizeOfArray(ItemsChoiceType2.jc            ); }
+        public int SizeOfCantSplitArray() { return SizeOfArray(ItemsChoiceType2.cantSplit); }
+        public int SizeOfCnfStyleArray() { return SizeOfArray(ItemsChoiceType2.cnfStyle); }
+        public int SizeOfDivIdArray() { return SizeOfArray(ItemsChoiceType2.divId); }
+        public int SizeOfGridAfterArray() { return SizeOfArray(ItemsChoiceType2.gridAfter); }
+        public int SizeOfGridBeforeArray() { return SizeOfArray(ItemsChoiceType2.gridBefore); }
+        public int SizeOfHiddenArray() { return SizeOfArray(ItemsChoiceType2.hidden); }
+        public int SizeOfJcArray() { return SizeOfArray(ItemsChoiceType2.jc); }
         public int SizeOfTblCellSpacingArray() { return SizeOfArray(ItemsChoiceType2.tblCellSpacing); }
-        public int SizeOfTblHeaderArray     () { return SizeOfArray(ItemsChoiceType2.tblHeader     ); }
-        public int SizeOfTrHeightArray      () { return SizeOfArray(ItemsChoiceType2.trHeight      ); }
-        public int SizeOfWAfterArray        () { return SizeOfArray(ItemsChoiceType2.wAfter        ); }
-        public int SizeOfWBeforeArray       () { return SizeOfArray(ItemsChoiceType2.wBefore       ); }
+        public int SizeOfTblHeaderArray() { return SizeOfArray(ItemsChoiceType2.tblHeader); }
+        public int SizeOfTrHeightArray() { return SizeOfArray(ItemsChoiceType2.trHeight); }
+        public int SizeOfWAfterArray() { return SizeOfArray(ItemsChoiceType2.wAfter); }
+        public int SizeOfWBeforeArray() { return SizeOfArray(ItemsChoiceType2.wBefore); }
 
-        public CT_OnOff         GetCantSplitArray     (int p) { return GetObjectArray<CT_OnOff        >(p, ItemsChoiceType2.cantSplit     ); }
-        public CT_Cnf           GetCnfStyleArray      (int p) { return GetObjectArray<CT_Cnf          >(p, ItemsChoiceType2.cnfStyle      ); }
-        public CT_DecimalNumber GetDivIdArray         (int p) { return GetObjectArray<CT_DecimalNumber>(p, ItemsChoiceType2.divId         ); }
-        public CT_DecimalNumber GetGridAfterArray     (int p) { return GetObjectArray<CT_DecimalNumber>(p, ItemsChoiceType2.gridAfter     ); }
-        public CT_DecimalNumber GetGridBeforeArray    (int p) { return GetObjectArray<CT_DecimalNumber>(p, ItemsChoiceType2.gridBefore    ); }
-        public CT_OnOff         GetHiddenArray        (int p) { return GetObjectArray<CT_OnOff        >(p, ItemsChoiceType2.hidden        ); }
-        public CT_Jc            GetJcArray            (int p) { return GetObjectArray<CT_Jc           >(p, ItemsChoiceType2.jc            ); }
-        public CT_TblWidth      GetTblCellSpacingArray(int p) { return GetObjectArray<CT_TblWidth     >(p, ItemsChoiceType2.tblCellSpacing); }
-        public CT_OnOff         GetTblHeaderArray     (int p) { return GetObjectArray<CT_OnOff        >(p, ItemsChoiceType2.tblHeader     ); }
-        public CT_Height        GetTrHeightArray      (int p) { return GetObjectArray<CT_Height       >(p, ItemsChoiceType2.trHeight      ); }
-        public CT_TblWidth      GetWAfterArray        (int p) { return GetObjectArray<CT_TblWidth     >(p, ItemsChoiceType2.wAfter        ); }
-        public CT_TblWidth      GetWBeforeArray       (int p) { return GetObjectArray<CT_TblWidth     >(p, ItemsChoiceType2.wBefore       ); }
+        public CT_OnOff GetCantSplitArray(int p) { return GetObjectArray<CT_OnOff>(p, ItemsChoiceType2.cantSplit); }
+        public CT_Cnf GetCnfStyleArray(int p) { return GetObjectArray<CT_Cnf>(p, ItemsChoiceType2.cnfStyle); }
+        public CT_DecimalNumber GetDivIdArray(int p) { return GetObjectArray<CT_DecimalNumber>(p, ItemsChoiceType2.divId); }
+        public CT_DecimalNumber GetGridAfterArray(int p) { return GetObjectArray<CT_DecimalNumber>(p, ItemsChoiceType2.gridAfter); }
+        public CT_DecimalNumber GetGridBeforeArray(int p) { return GetObjectArray<CT_DecimalNumber>(p, ItemsChoiceType2.gridBefore); }
+        public CT_OnOff GetHiddenArray(int p) { return GetObjectArray<CT_OnOff>(p, ItemsChoiceType2.hidden); }
+        public CT_Jc GetJcArray(int p) { return GetObjectArray<CT_Jc>(p, ItemsChoiceType2.jc); }
+        public CT_TblWidth GetTblCellSpacingArray(int p) { return GetObjectArray<CT_TblWidth>(p, ItemsChoiceType2.tblCellSpacing); }
+        public CT_OnOff GetTblHeaderArray(int p) { return GetObjectArray<CT_OnOff>(p, ItemsChoiceType2.tblHeader); }
+        public CT_Height GetTrHeightArray(int p) { return GetObjectArray<CT_Height>(p, ItemsChoiceType2.trHeight); }
+        public CT_TblWidth GetWAfterArray(int p) { return GetObjectArray<CT_TblWidth>(p, ItemsChoiceType2.wAfter); }
+        public CT_TblWidth GetWBeforeArray(int p) { return GetObjectArray<CT_TblWidth>(p, ItemsChoiceType2.wBefore); }
 
-        public CT_OnOff         InsertNewNewCantSplit     (int p) { return InsertNewObject<CT_OnOff        >(ItemsChoiceType2.cantSplit     , p); }
-        public CT_Cnf           InsertNewNewCnfStyle      (int p) { return InsertNewObject<CT_Cnf          >(ItemsChoiceType2.cnfStyle      , p); }
-        public CT_DecimalNumber InsertNewNewDivId         (int p) { return InsertNewObject<CT_DecimalNumber>(ItemsChoiceType2.divId         , p); }
-        public CT_DecimalNumber InsertNewNewGridAfter     (int p) { return InsertNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridAfter     , p); }
-        public CT_DecimalNumber InsertNewNewGridBefore    (int p) { return InsertNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridBefore    , p); }
-        public CT_OnOff         InsertNewNewHidden        (int p) { return InsertNewObject<CT_OnOff        >(ItemsChoiceType2.hidden        , p); }
-        public CT_Jc            InsertNewNewJc            (int p) { return InsertNewObject<CT_Jc           >(ItemsChoiceType2.jc            , p); }
-        public CT_TblWidth      InsertNewNewTblCellSpacing(int p) { return InsertNewObject<CT_TblWidth     >(ItemsChoiceType2.tblCellSpacing, p); }
-        public CT_OnOff         InsertNewNewTblHeader     (int p) { return InsertNewObject<CT_OnOff        >(ItemsChoiceType2.tblHeader     , p); }
-        public CT_Height        InsertNewNewTrHeight      (int p) { return InsertNewObject<CT_Height       >(ItemsChoiceType2.trHeight      , p); }
-        public CT_TblWidth      InsertNewNewWAfter        (int p) { return InsertNewObject<CT_TblWidth     >(ItemsChoiceType2.wAfter        , p); }
-        public CT_TblWidth      InsertNewNewWBefore       (int p) { return InsertNewObject<CT_TblWidth     >(ItemsChoiceType2.wBefore       , p); }
+        public CT_OnOff InsertNewNewCantSplit(int p) { return InsertNewObject<CT_OnOff>(ItemsChoiceType2.cantSplit, p); }
+        public CT_Cnf InsertNewNewCnfStyle(int p) { return InsertNewObject<CT_Cnf>(ItemsChoiceType2.cnfStyle, p); }
+        public CT_DecimalNumber InsertNewNewDivId(int p) { return InsertNewObject<CT_DecimalNumber>(ItemsChoiceType2.divId, p); }
+        public CT_DecimalNumber InsertNewNewGridAfter(int p) { return InsertNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridAfter, p); }
+        public CT_DecimalNumber InsertNewNewGridBefore(int p) { return InsertNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridBefore, p); }
+        public CT_OnOff InsertNewNewHidden(int p) { return InsertNewObject<CT_OnOff>(ItemsChoiceType2.hidden, p); }
+        public CT_Jc InsertNewNewJc(int p) { return InsertNewObject<CT_Jc>(ItemsChoiceType2.jc, p); }
+        public CT_TblWidth InsertNewNewTblCellSpacing(int p) { return InsertNewObject<CT_TblWidth>(ItemsChoiceType2.tblCellSpacing, p); }
+        public CT_OnOff InsertNewNewTblHeader(int p) { return InsertNewObject<CT_OnOff>(ItemsChoiceType2.tblHeader, p); }
+        public CT_Height InsertNewNewTrHeight(int p) { return InsertNewObject<CT_Height>(ItemsChoiceType2.trHeight, p); }
+        public CT_TblWidth InsertNewNewWAfter(int p) { return InsertNewObject<CT_TblWidth>(ItemsChoiceType2.wAfter, p); }
+        public CT_TblWidth InsertNewNewWBefore(int p) { return InsertNewObject<CT_TblWidth>(ItemsChoiceType2.wBefore, p); }
 
-        public CT_OnOff         AddNewCantSplit     () { return AddNewObject<CT_OnOff        >(ItemsChoiceType2.cantSplit     ); }
-        public CT_Cnf           AddNewCnfStyle      () { return AddNewObject<CT_Cnf          >(ItemsChoiceType2.cnfStyle      ); }
-        public CT_DecimalNumber AddNewDivId         () { return AddNewObject<CT_DecimalNumber>(ItemsChoiceType2.divId         ); }
-        public CT_DecimalNumber AddNewGridAfter     () { return AddNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridAfter     ); }
-        public CT_DecimalNumber AddNewGridBefore    () { return AddNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridBefore    ); }
-        public CT_OnOff         AddNewHidden        () { return AddNewObject<CT_OnOff        >(ItemsChoiceType2.hidden        ); }
-        public CT_Jc            AddNewJc            () { return AddNewObject<CT_Jc           >(ItemsChoiceType2.jc            ); }
-        public CT_TblWidth      AddNewTblCellSpacing() { return AddNewObject<CT_TblWidth     >(ItemsChoiceType2.tblCellSpacing); }
-        public CT_OnOff         AddNewTblHeader     () { return AddNewObject<CT_OnOff        >(ItemsChoiceType2.tblHeader     ); }
-        public CT_Height        AddNewTrHeight      () { return AddNewObject<CT_Height       >(ItemsChoiceType2.trHeight      ); }
-        public CT_TblWidth      AddNewWAfter        () { return AddNewObject<CT_TblWidth     >(ItemsChoiceType2.wAfter        ); }
-        public CT_TblWidth      AddNewWBefore       () { return AddNewObject<CT_TblWidth     >(ItemsChoiceType2.wBefore       ); }
+        public CT_OnOff AddNewCantSplit() { return AddNewObject<CT_OnOff>(ItemsChoiceType2.cantSplit); }
+        public CT_Cnf AddNewCnfStyle() { return AddNewObject<CT_Cnf>(ItemsChoiceType2.cnfStyle); }
+        public CT_DecimalNumber AddNewDivId() { return AddNewObject<CT_DecimalNumber>(ItemsChoiceType2.divId); }
+        public CT_DecimalNumber AddNewGridAfter() { return AddNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridAfter); }
+        public CT_DecimalNumber AddNewGridBefore() { return AddNewObject<CT_DecimalNumber>(ItemsChoiceType2.gridBefore); }
+        public CT_OnOff AddNewHidden() { return AddNewObject<CT_OnOff>(ItemsChoiceType2.hidden); }
+        public CT_Jc AddNewJc() { return AddNewObject<CT_Jc>(ItemsChoiceType2.jc); }
+        public CT_TblWidth AddNewTblCellSpacing() { return AddNewObject<CT_TblWidth>(ItemsChoiceType2.tblCellSpacing); }
+        public CT_OnOff AddNewTblHeader() { return AddNewObject<CT_OnOff>(ItemsChoiceType2.tblHeader); }
+        public CT_Height AddNewTrHeight() { return AddNewObject<CT_Height>(ItemsChoiceType2.trHeight); }
+        public CT_TblWidth AddNewWAfter() { return AddNewObject<CT_TblWidth>(ItemsChoiceType2.wAfter); }
+        public CT_TblWidth AddNewWBefore() { return AddNewObject<CT_TblWidth>(ItemsChoiceType2.wBefore); }
 
-        public void SetCantSplit     (int p, CT_OnOff         obj) { SetObject(ItemsChoiceType2.cantSplit     , p, obj); }
-        public void SetCnfStyle      (int p, CT_Cnf           obj) { SetObject(ItemsChoiceType2.cnfStyle      , p, obj); }
-        public void SetDivId         (int p, CT_DecimalNumber obj) { SetObject(ItemsChoiceType2.divId         , p, obj); }
-        public void SetGridAfter     (int p, CT_DecimalNumber obj) { SetObject(ItemsChoiceType2.gridAfter     , p, obj); }
-        public void SetGridBefore    (int p, CT_DecimalNumber obj) { SetObject(ItemsChoiceType2.gridBefore    , p, obj); }
-        public void SetHidden        (int p, CT_OnOff         obj) { SetObject(ItemsChoiceType2.hidden        , p, obj); }
-        public void SetJc            (int p, CT_Jc            obj) { SetObject(ItemsChoiceType2.jc            , p, obj); }
-        public void SetTblCellSpacing(int p, CT_TblWidth      obj) { SetObject(ItemsChoiceType2.tblCellSpacing, p, obj); }
-        public void SetTblHeader     (int p, CT_OnOff         obj) { SetObject(ItemsChoiceType2.tblHeader     , p, obj); }
-        public void SetTrHeight      (int p, CT_Height        obj) { SetObject(ItemsChoiceType2.trHeight      , p, obj); }
-        public void SetWAfter        (int p, CT_TblWidth      obj) { SetObject(ItemsChoiceType2.wAfter        , p, obj); }
-        public void SetWBefore       (int p, CT_TblWidth      obj) { SetObject(ItemsChoiceType2.wBefore       , p, obj); }
+        public void SetCantSplit(int p, CT_OnOff obj) { SetObject(ItemsChoiceType2.cantSplit, p, obj); }
+        public void SetCnfStyle(int p, CT_Cnf obj) { SetObject(ItemsChoiceType2.cnfStyle, p, obj); }
+        public void SetDivId(int p, CT_DecimalNumber obj) { SetObject(ItemsChoiceType2.divId, p, obj); }
+        public void SetGridAfter(int p, CT_DecimalNumber obj) { SetObject(ItemsChoiceType2.gridAfter, p, obj); }
+        public void SetGridBefore(int p, CT_DecimalNumber obj) { SetObject(ItemsChoiceType2.gridBefore, p, obj); }
+        public void SetHidden(int p, CT_OnOff obj) { SetObject(ItemsChoiceType2.hidden, p, obj); }
+        public void SetJc(int p, CT_Jc obj) { SetObject(ItemsChoiceType2.jc, p, obj); }
+        public void SetTblCellSpacing(int p, CT_TblWidth obj) { SetObject(ItemsChoiceType2.tblCellSpacing, p, obj); }
+        public void SetTblHeader(int p, CT_OnOff obj) { SetObject(ItemsChoiceType2.tblHeader, p, obj); }
+        public void SetTrHeight(int p, CT_Height obj) { SetObject(ItemsChoiceType2.trHeight, p, obj); }
+        public void SetWAfter(int p, CT_TblWidth obj) { SetObject(ItemsChoiceType2.wAfter, p, obj); }
+        public void SetWBefore(int p, CT_TblWidth obj) { SetObject(ItemsChoiceType2.wBefore, p, obj); }
 
-        public void RemoveCantSplit     (int p) { RemoveObject(ItemsChoiceType2.cantSplit     , p); }
-        public void RemoveCnfStyle      (int p) { RemoveObject(ItemsChoiceType2.cnfStyle      , p); }
-        public void RemoveDivId         (int p) { RemoveObject(ItemsChoiceType2.divId         , p); }
-        public void RemoveGridAfter     (int p) { RemoveObject(ItemsChoiceType2.gridAfter     , p); }
-        public void RemoveGridBefore    (int p) { RemoveObject(ItemsChoiceType2.gridBefore    , p); }
-        public void RemoveHidden        (int p) { RemoveObject(ItemsChoiceType2.hidden        , p); }
-        public void RemoveJc            (int p) { RemoveObject(ItemsChoiceType2.jc            , p); }
+        public void RemoveCantSplit(int p) { RemoveObject(ItemsChoiceType2.cantSplit, p); }
+        public void RemoveCnfStyle(int p) { RemoveObject(ItemsChoiceType2.cnfStyle, p); }
+        public void RemoveDivId(int p) { RemoveObject(ItemsChoiceType2.divId, p); }
+        public void RemoveGridAfter(int p) { RemoveObject(ItemsChoiceType2.gridAfter, p); }
+        public void RemoveGridBefore(int p) { RemoveObject(ItemsChoiceType2.gridBefore, p); }
+        public void RemoveHidden(int p) { RemoveObject(ItemsChoiceType2.hidden, p); }
+        public void RemoveJc(int p) { RemoveObject(ItemsChoiceType2.jc, p); }
         public void RemoveTblCellSpacing(int p) { RemoveObject(ItemsChoiceType2.tblCellSpacing, p); }
-        public void RemoveTblHeader     (int p) { RemoveObject(ItemsChoiceType2.tblHeader     , p); }
-        public void RemoveTrHeight      (int p) { RemoveObject(ItemsChoiceType2.trHeight      , p); }
-        public void RemoveWAfter        (int p) { RemoveObject(ItemsChoiceType2.wAfter        , p); }
-        public void RemoveWBefore       (int p) { RemoveObject(ItemsChoiceType2.wBefore       , p); }
+        public void RemoveTblHeader(int p) { RemoveObject(ItemsChoiceType2.tblHeader, p); }
+        public void RemoveTrHeight(int p) { RemoveObject(ItemsChoiceType2.trHeight, p); }
+        public void RemoveWAfter(int p) { RemoveObject(ItemsChoiceType2.wAfter, p); }
+        public void RemoveWBefore(int p) { RemoveObject(ItemsChoiceType2.wBefore, p); }
 
         #region Generic methods for object operation
         private List<T> GetObjectList<T>(ItemsChoiceType2 type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 List<T> list = new List<T>();
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         list.Add(itemsField[i] as T);
                 }
                 return list;
@@ -3258,12 +3258,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private int SizeOfArray(ItemsChoiceType2 type)
         {
-            lock (this)
+            lock(this)
             {
                 int size = 0;
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         size++;
                 }
                 return size;
@@ -3271,10 +3271,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private T GetObjectArray<T>(int p, ItemsChoiceType2 type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return null;
                 return itemsField[pos] as T;
             }
@@ -3282,7 +3282,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T InsertNewObject<T>(ItemsChoiceType2 type, int p) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
                 this.itemsElementNameField.Insert(pos, type);
@@ -3293,7 +3293,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T AddNewObject<T>(ItemsChoiceType2 type) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 this.itemsElementNameField.Add(type);
                 this.itemsField.Add(t);
@@ -3302,12 +3302,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void SetObject<T>(ItemsChoiceType2 type, int p, T obj) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
-                if (this.itemsField[pos] is T)
+                if(this.itemsField[pos] is T)
                     this.itemsField[pos] = obj;
                 else
                     throw new Exception(string.Format(@"object types are difference, itemsField[{0}] is {1}, and parameter obj is {2}",
@@ -3318,11 +3318,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             int index = -1;
             int pos = 0;
-            for (int i = 0; i < itemsElementNameField.Count; i++)
+            for(int i = 0; i < itemsElementNameField.Count; i++)
             {
-                if (itemsElementNameField[i] == type)
+                if(itemsElementNameField[i] == type)
                 {
-                    if (pos == p)
+                    if(pos == p)
                     {
                         index = i;
                         break;
@@ -3335,10 +3335,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void RemoveObject(ItemsChoiceType2 type, int p)
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
                 itemsElementNameField.RemoveAt(pos);
                 itemsField.RemoveAt(pos);
@@ -3383,166 +3383,166 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Tc Parse(XmlNode node, XmlNamespaceManager namespaceManager, object parent)
         {
-            if (node == null)
+            if(node == null)
                 return null;
-                
+
             CT_Tc ctObj = new CT_Tc();
-            if (parent != null)
+            if(parent != null)
             {
                 ctObj.parent = parent;
             }
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "commentRangeEnd")
+                if(childNode.LocalName == "commentRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.commentRangeEnd);
                 }
-                else if (childNode.LocalName == "tcPr")
+                else if(childNode.LocalName == "tcPr")
                 {
                     ctObj.tcPr = CT_TcPr.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "oMath")
+                else if(childNode.LocalName == "oMath")
                 {
                     ctObj.Items.Add(CT_OMath.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.oMath);
                 }
-                else if (childNode.LocalName == "oMathPara")
+                else if(childNode.LocalName == "oMathPara")
                 {
                     ctObj.Items.Add(CT_OMathPara.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.oMathPara);
                 }
-                else if (childNode.LocalName == "altChunk")
+                else if(childNode.LocalName == "altChunk")
                 {
                     ctObj.Items.Add(CT_AltChunk.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.altChunk);
                 }
-                else if (childNode.LocalName == "bookmarkEnd")
+                else if(childNode.LocalName == "bookmarkEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.bookmarkEnd);
                 }
-                else if (childNode.LocalName == "bookmarkStart")
+                else if(childNode.LocalName == "bookmarkStart")
                 {
                     ctObj.Items.Add(CT_Bookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.bookmarkStart);
                 }
-                else if (childNode.LocalName == "moveFromRangeStart")
+                else if(childNode.LocalName == "moveFromRangeStart")
                 {
                     ctObj.Items.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.moveFromRangeStart);
                 }
-                else if (childNode.LocalName == "commentRangeStart")
+                else if(childNode.LocalName == "commentRangeStart")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.commentRangeStart);
                 }
-                else if (childNode.LocalName == "customXml")
+                else if(childNode.LocalName == "customXml")
                 {
                     ctObj.Items.Add(CT_CustomXmlBlock.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXml);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeEnd")
+                else if(childNode.LocalName == "customXmlDelRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlDelRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeStart")
+                else if(childNode.LocalName == "customXmlDelRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlDelRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeEnd")
+                else if(childNode.LocalName == "customXmlInsRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlInsRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeStart")
+                else if(childNode.LocalName == "customXmlInsRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlInsRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeEnd")
+                else if(childNode.LocalName == "customXmlMoveFromRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlMoveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeStart")
+                else if(childNode.LocalName == "customXmlMoveFromRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlMoveFromRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveToRangeEnd")
+                else if(childNode.LocalName == "customXmlMoveToRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlMoveToRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlMoveToRangeStart")
+                else if(childNode.LocalName == "customXmlMoveToRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.customXmlMoveToRangeStart);
                 }
-                else if (childNode.LocalName == "del")
+                else if(childNode.LocalName == "del")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.del);
                 }
-                else if (childNode.LocalName == "ins")
+                else if(childNode.LocalName == "ins")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.ins);
                 }
-                else if (childNode.LocalName == "moveFrom")
+                else if(childNode.LocalName == "moveFrom")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.moveFrom);
                 }
-                else if (childNode.LocalName == "moveFromRangeEnd")
+                else if(childNode.LocalName == "moveFromRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.moveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "sdt")
+                else if(childNode.LocalName == "sdt")
                 {
                     ctObj.Items.Add(CT_SdtBlock.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.sdt);
                 }
-                else if (childNode.LocalName == "moveTo")
+                else if(childNode.LocalName == "moveTo")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.moveTo);
                 }
-                else if (childNode.LocalName == "moveToRangeEnd")
+                else if(childNode.LocalName == "moveToRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.moveToRangeEnd);
                 }
-                else if (childNode.LocalName == "moveToRangeStart")
+                else if(childNode.LocalName == "moveToRangeStart")
                 {
                     ctObj.Items.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.moveToRangeStart);
                 }
-                else if (childNode.LocalName == "p")
+                else if(childNode.LocalName == "p")
                 {
                     ctObj.Items.Add(CT_P.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.p);
                 }
-                else if (childNode.LocalName == "permEnd")
+                else if(childNode.LocalName == "permEnd")
                 {
                     ctObj.Items.Add(CT_Perm.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.permEnd);
                 }
-                else if (childNode.LocalName == "proofErr")
+                else if(childNode.LocalName == "proofErr")
                 {
                     ctObj.Items.Add(CT_ProofErr.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.proofErr);
                 }
-                else if (childNode.LocalName == "permStart")
+                else if(childNode.LocalName == "permStart")
                 {
                     ctObj.Items.Add(CT_PermStart.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.permStart);
                 }
-                else if (childNode.LocalName == "tbl")
+                else if(childNode.LocalName == "tbl")
                 {
                     ctObj.Items.Add(CT_Tbl.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableCellType.tbl);
@@ -3556,68 +3556,68 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             sw.Write('>');
             if(this.tcPr!=null)
-                    this.tcPr.Write(sw, "tcPr");
-            foreach (object o in this.Items)
+                this.tcPr.Write(sw, "tcPr");
+            foreach(object o in this.Items)
             {
-                if (o is CT_MarkupRange range)
+                if(o is CT_MarkupRange range)
                     range.Write(sw, "commentRangeEnd");
-                else if (o is CT_OMath math)
+                else if(o is CT_OMath math)
                     math.Write(sw, "oMath");
-                else if (o is CT_OMathPara para)
+                else if(o is CT_OMathPara para)
                     para.Write(sw, "oMathPara");
-                else if (o is CT_AltChunk chunk)
+                else if(o is CT_AltChunk chunk)
                     chunk.Write(sw, "altChunk");
-                else if (o is CT_MarkupRange markupRange)
+                else if(o is CT_MarkupRange markupRange)
                     markupRange.Write(sw, "bookmarkEnd");
-                else if (o is CT_Bookmark bookmark)
+                else if(o is CT_Bookmark bookmark)
                     bookmark.Write(sw, "bookmarkStart");
-                else if (o is CT_MoveBookmark moveBookmark)
+                else if(o is CT_MoveBookmark moveBookmark)
                     moveBookmark.Write(sw, "moveFromRangeStart");
-                else if (o is CT_MarkupRange ctMarkupRange)
+                else if(o is CT_MarkupRange ctMarkupRange)
                     ctMarkupRange.Write(sw, "commentRangeStart");
-                else if (o is CT_CustomXmlBlock block)
+                else if(o is CT_CustomXmlBlock block)
                     block.Write(sw, "customXml");
-                else if (o is CT_Markup markup)
+                else if(o is CT_Markup markup)
                     markup.Write(sw, "customXmlDelRangeEnd");
-                else if (o is CT_TrackChange change)
+                else if(o is CT_TrackChange change)
                     change.Write(sw, "customXmlDelRangeStart");
-                else if (o is CT_Markup ctMarkup)
+                else if(o is CT_Markup ctMarkup)
                     ctMarkup.Write(sw, "customXmlInsRangeEnd");
-                else if (o is CT_TrackChange trackChange)
+                else if(o is CT_TrackChange trackChange)
                     trackChange.Write(sw, "customXmlInsRangeStart");
-                else if (o is CT_Markup markup1)
+                else if(o is CT_Markup markup1)
                     markup1.Write(sw, "customXmlMoveFromRangeEnd");
-                else if (o is CT_TrackChange ctTrackChange)
+                else if(o is CT_TrackChange ctTrackChange)
                     ctTrackChange.Write(sw, "customXmlMoveFromRangeStart");
-                else if (o is CT_Markup ctMarkup1)
+                else if(o is CT_Markup ctMarkup1)
                     ctMarkup1.Write(sw, "customXmlMoveToRangeEnd");
-                else if (o is CT_TrackChange change1)
+                else if(o is CT_TrackChange change1)
                     change1.Write(sw, "customXmlMoveToRangeStart");
-                else if (o is CT_RunTrackChange runTrackChange)
+                else if(o is CT_RunTrackChange runTrackChange)
                     runTrackChange.Write(sw, "del");
-                else if (o is CT_RunTrackChange ctRunTrackChange)
+                else if(o is CT_RunTrackChange ctRunTrackChange)
                     ctRunTrackChange.Write(sw, "ins");
-                else if (o is CT_RunTrackChange trackChange1)
+                else if(o is CT_RunTrackChange trackChange1)
                     trackChange1.Write(sw, "moveFrom");
-                else if (o is CT_MarkupRange range1)
+                else if(o is CT_MarkupRange range1)
                     range1.Write(sw, "moveFromRangeEnd");
-                else if (o is CT_SdtBlock sdtBlock)
+                else if(o is CT_SdtBlock sdtBlock)
                     sdtBlock.Write(sw, "sdt");
-                else if (o is CT_RunTrackChange runTrackChange1)
+                else if(o is CT_RunTrackChange runTrackChange1)
                     runTrackChange1.Write(sw, "moveTo");
-                else if (o is CT_MarkupRange markupRange1)
+                else if(o is CT_MarkupRange markupRange1)
                     markupRange1.Write(sw, "moveToRangeEnd");
-                else if (o is CT_MoveBookmark ctMoveBookmark)
+                else if(o is CT_MoveBookmark ctMoveBookmark)
                     ctMoveBookmark.Write(sw, "moveToRangeStart");
-                else if (o is CT_P p)
+                else if(o is CT_P p)
                     p.Write(sw, "p");
-                else if (o is CT_Perm perm)
+                else if(o is CT_Perm perm)
                     perm.Write(sw, "permEnd");
-                else if (o is CT_ProofErr err)
+                else if(o is CT_ProofErr err)
                     err.Write(sw, "proofErr");
-                else if (o is CT_PermStart start)
+                else if(o is CT_PermStart start)
                     start.Write(sw, "permStart");
-                else if (o is CT_Tbl tbl)
+                else if(o is CT_Tbl tbl)
                     tbl.Write(sw, "tbl");
             }
             sw.WriteEndW(nodeName);
@@ -3662,7 +3662,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
             set
             {
-                    this.itemsField = value;
+                this.itemsField = value;
             }
         }
 
@@ -3688,12 +3688,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         #region Generic methods for object operation
         private List<T> GetObjectList<T>(ItemsChoiceTableCellType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 List<T> list = new List<T>();
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         list.Add(itemsField[i] as T);
                 }
                 return list;
@@ -3701,12 +3701,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private int SizeOfArray(ItemsChoiceTableCellType type)
         {
-            lock (this)
+            lock(this)
             {
                 int size = 0;
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         size++;
                 }
                 return size;
@@ -3714,10 +3714,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private T GetObjectArray<T>(int p, ItemsChoiceTableCellType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return null;
                 return itemsField[pos] as T;
             }
@@ -3726,11 +3726,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             int index = -1;
             int pos = 0;
-            for (int i = 0; i < itemsElementNameField.Count; i++)
+            for(int i = 0; i < itemsElementNameField.Count; i++)
             {
-                if (itemsElementNameField[i] == type)
+                if(itemsElementNameField[i] == type)
                 {
-                    if (pos == p)
+                    if(pos == p)
                     {
                         index = i;
                         break;
@@ -3743,10 +3743,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void RemoveObject(ItemsChoiceTableCellType type, int p)
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
                 itemsElementNameField.RemoveAt(pos);
                 itemsField.RemoveAt(pos);
@@ -3754,12 +3754,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void SetObject<T>(ItemsChoiceTableCellType type, int p, T obj) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
-                if (this.itemsField[pos] is T)
+                if(this.itemsField[pos] is T)
                     this.itemsField[pos] = obj;
                 else
                     throw new Exception(string.Format(@"object types are difference, itemsField[{0}] is {1}, and parameter obj is {2}",
@@ -3770,7 +3770,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T AddNewObject<T>(ItemsChoiceTableCellType type) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 this.itemsElementNameField.Add(type);
                 this.itemsField.Add(t);
@@ -3842,96 +3842,96 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ItemsChoiceTableCellType
     {
 
-    
+
         [XmlEnum("http://schemas.openxmlformats.org/officeDocument/2006/math:oMath")]
         oMath,
 
-    
+
         [XmlEnum("http://schemas.openxmlformats.org/officeDocument/2006/math:oMathPara")]
         oMathPara,
 
-    
+
         altChunk,
 
-    
+
         bookmarkEnd,
 
-    
+
         bookmarkStart,
 
-    
+
         commentRangeEnd,
 
-    
+
         commentRangeStart,
 
-    
+
         customXml,
 
-    
+
         customXmlDelRangeEnd,
 
-    
+
         customXmlDelRangeStart,
 
-    
+
         customXmlInsRangeEnd,
 
-    
+
         customXmlInsRangeStart,
 
-    
+
         customXmlMoveFromRangeEnd,
 
-    
+
         customXmlMoveFromRangeStart,
 
-    
+
         customXmlMoveToRangeEnd,
 
-    
+
         customXmlMoveToRangeStart,
 
-    
+
         del,
 
-    
+
         ins,
 
-    
+
         moveFrom,
 
-    
+
         moveFromRangeEnd,
 
-    
+
         moveFromRangeStart,
 
-    
+
         moveTo,
 
-    
+
         moveToRangeEnd,
 
-    
+
         moveToRangeStart,
 
-    
+
         p,
 
-    
+
         permEnd,
 
-    
+
         permStart,
 
-    
+
         proofErr,
 
-    
+
         sdt,
 
-    
+
         tbl,
     }
 
@@ -3955,73 +3955,73 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static new CT_TrPr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TrPr ctObj = new CT_TrPr();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "ins")
+                if(childNode.LocalName == "ins")
                     ctObj.ins = CT_TrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "del")
+                else if(childNode.LocalName == "del")
                     ctObj.del = CT_TrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "trPrChange")
+                else if(childNode.LocalName == "trPrChange")
                     ctObj.trPrChange = CT_TrPrChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gridBefore")
+                else if(childNode.LocalName == "gridBefore")
                 {
                     ctObj.Items.Add(CT_DecimalNumber.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.gridBefore);
                 }
-                else if (childNode.LocalName == "cantSplit")
+                else if(childNode.LocalName == "cantSplit")
                 {
                     ctObj.Items.Add(CT_OnOff.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.cantSplit);
                 }
-                else if (childNode.LocalName == "cnfStyle")
+                else if(childNode.LocalName == "cnfStyle")
                 {
                     ctObj.Items.Add(CT_Cnf.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.cnfStyle);
                 }
-                else if (childNode.LocalName == "divId")
+                else if(childNode.LocalName == "divId")
                 {
                     ctObj.Items.Add(CT_DecimalNumber.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.divId);
                 }
-                else if (childNode.LocalName == "gridAfter")
+                else if(childNode.LocalName == "gridAfter")
                 {
                     ctObj.Items.Add(CT_DecimalNumber.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.gridAfter);
                 }
-                else if (childNode.LocalName == "trHeight")
+                else if(childNode.LocalName == "trHeight")
                 {
                     ctObj.Items.Add(CT_Height.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.trHeight);
                 }
-                else if (childNode.LocalName == "hidden")
+                else if(childNode.LocalName == "hidden")
                 {
                     ctObj.Items.Add(CT_OnOff.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.hidden);
                 }
-                else if (childNode.LocalName == "tblCellSpacing")
+                else if(childNode.LocalName == "tblCellSpacing")
                 {
                     ctObj.Items.Add(CT_TblWidth.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.tblCellSpacing);
                 }
-                else if (childNode.LocalName == "tblHeader")
+                else if(childNode.LocalName == "tblHeader")
                 {
                     ctObj.Items.Add(CT_OnOff.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.tblHeader);
                 }
-                else if (childNode.LocalName == "jc")
+                else if(childNode.LocalName == "jc")
                 {
                     ctObj.Items.Add(CT_Jc.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.jc);
                 }
-                else if (childNode.LocalName == "wAfter")
+                else if(childNode.LocalName == "wAfter")
                 {
                     ctObj.Items.Add(CT_TblWidth.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.wAfter);
                 }
-                else if (childNode.LocalName == "wBefore")
+                else if(childNode.LocalName == "wBefore")
                 {
                     ctObj.Items.Add(CT_TblWidth.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceType2.wBefore);
@@ -4036,49 +4036,49 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.ins != null)
+            if(this.ins != null)
                 this.ins.Write(sw, "ins");
-            if (this.del != null)
+            if(this.del != null)
                 this.del.Write(sw, "del");
-            if (this.trPrChange != null)
+            if(this.trPrChange != null)
                 this.trPrChange.Write(sw, "trPrChange");
-            for (int i=0;i<this.Items.Count;i++)
+            for(int i = 0; i<this.Items.Count; i++)
             {
                 object o = this.Items[i];
-                if (o is CT_DecimalNumber number 
+                if(o is CT_DecimalNumber number
                     &&this.ItemsElementName[i]== ItemsChoiceType2.gridBefore)
                     number.Write(sw, "gridBefore");
-                else if (o is CT_OnOff off
+                else if(o is CT_OnOff off
                     && this.ItemsElementName[i] == ItemsChoiceType2.cantSplit)
                     off.Write(sw, "cantSplit");
-                else if (o is CT_Cnf cnf
+                else if(o is CT_Cnf cnf
                     && this.ItemsElementName[i] == ItemsChoiceType2.cnfStyle)
                     cnf.Write(sw, "cnfStyle");
-                else if (o is CT_DecimalNumber decimalNumber
+                else if(o is CT_DecimalNumber decimalNumber
                     && this.ItemsElementName[i] == ItemsChoiceType2.divId)
                     decimalNumber.Write(sw, "divId");
-                else if (o is CT_DecimalNumber ctDecimalNumber
+                else if(o is CT_DecimalNumber ctDecimalNumber
                     && this.ItemsElementName[i] == ItemsChoiceType2.gridAfter)
                     ctDecimalNumber.Write(sw, "gridAfter");
-                else if (o is CT_Height height
+                else if(o is CT_Height height
                     && this.ItemsElementName[i] == ItemsChoiceType2.trHeight)
                     height.Write(sw, "trHeight");
-                else if (o is CT_OnOff onOff
+                else if(o is CT_OnOff onOff
                     && this.ItemsElementName[i] == ItemsChoiceType2.hidden)
                     onOff.Write(sw, "hidden");
-                else if (o is CT_TblWidth width
+                else if(o is CT_TblWidth width
                     && this.ItemsElementName[i] == ItemsChoiceType2.tblCellSpacing)
                     width.Write(sw, "tblCellSpacing");
-                else if (o is CT_OnOff ctOnOff
+                else if(o is CT_OnOff ctOnOff
                     && this.ItemsElementName[i] == ItemsChoiceType2.tblHeader)
                     ctOnOff.Write(sw, "tblHeader");
-                else if (o is CT_Jc jc
+                else if(o is CT_Jc jc
                     && this.ItemsElementName[i] == ItemsChoiceType2.jc)
                     jc.Write(sw, "jc");
-                else if (o is CT_TblWidth tblWidth
+                else if(o is CT_TblWidth tblWidth
                     && this.ItemsElementName[i] == ItemsChoiceType2.wAfter)
                     tblWidth.Write(sw, "wAfter");
-                else if (o is CT_TblWidth ctTblWidth
+                else if(o is CT_TblWidth ctTblWidth
                     && this.ItemsElementName[i] == ItemsChoiceType2.wBefore)
                     ctTblWidth.Write(sw, "wBefore");
             }
@@ -4134,15 +4134,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static new CT_TcPrChange Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TcPrChange ctObj = new CT_TcPrChange();
             ctObj.author = XmlHelper.ReadString(node.Attributes["w:author"]);
             ctObj.date = XmlHelper.ReadString(node.Attributes["w:date"]);
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tcPr")
+                if(childNode.LocalName == "tcPr")
                     ctObj.tcPr = CT_TcPrInner.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -4157,7 +4157,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:date", this.date);
             XmlHelper.WriteAttribute(sw, "r:id", this.id);
             sw.Write('>');
-            if (this.tcPr != null)
+            if(this.tcPr != null)
                 this.tcPr.Write(sw, "tcPr");
             sw.WriteEndW(nodeName);
         }
@@ -4166,7 +4166,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_TcPrChange()
         {
-            
+
         }
 
         [XmlElement(Order = 0)]
@@ -4204,42 +4204,42 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_TcPrInner Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TcPrInner ctObj = new CT_TcPrInner();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cellIns")
+                if(childNode.LocalName == "cellIns")
                     ctObj.cellIns = CT_TrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellDel")
+                else if(childNode.LocalName == "cellDel")
                     ctObj.cellDel = CT_TrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellMerge")
+                else if(childNode.LocalName == "cellMerge")
                     ctObj.cellMerge = CT_CellMergeTrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cnfStyle")
+                else if(childNode.LocalName == "cnfStyle")
                     ctObj.cnfStyle = CT_Cnf.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcW")
+                else if(childNode.LocalName == "tcW")
                     ctObj.tcW = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gridSpan")
+                else if(childNode.LocalName == "gridSpan")
                     ctObj.gridSpan = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hMerge")
+                else if(childNode.LocalName == "hMerge")
                     ctObj.hMerge = CT_HMerge.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "vMerge")
+                else if(childNode.LocalName == "vMerge")
                     ctObj.vMerge = CT_VMerge.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcBorders")
+                else if(childNode.LocalName == "tcBorders")
                     ctObj.tcBorders = CT_TcBorders.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shd")
+                else if(childNode.LocalName == "shd")
                     ctObj.shd = CT_Shd.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noWrap")
+                else if(childNode.LocalName == "noWrap")
                     ctObj.noWrap = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcMar")
+                else if(childNode.LocalName == "tcMar")
                     ctObj.tcMar = CT_TcMar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "textDirection")
+                else if(childNode.LocalName == "textDirection")
                     ctObj.textDirection = CT_TextDirection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcFitText")
+                else if(childNode.LocalName == "tcFitText")
                     ctObj.tcFitText = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "vAlign")
+                else if(childNode.LocalName == "vAlign")
                     ctObj.vAlign = CT_VerticalJc.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hideMark")
+                else if(childNode.LocalName == "hideMark")
                     ctObj.hideMark = CT_OnOff.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -4251,37 +4251,37 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.cellIns != null)
+            if(this.cellIns != null)
                 this.cellIns.Write(sw, "cellIns");
-            if (this.cellDel != null)
+            if(this.cellDel != null)
                 this.cellDel.Write(sw, "cellDel");
-            if (this.cellMerge != null)
+            if(this.cellMerge != null)
                 this.cellMerge.Write(sw, "cellMerge");
-            if (this.cnfStyle != null)
+            if(this.cnfStyle != null)
                 this.cnfStyle.Write(sw, "cnfStyle");
-            if (this.tcW != null)
+            if(this.tcW != null)
                 this.tcW.Write(sw, "tcW");
-            if (this.gridSpan != null)
+            if(this.gridSpan != null)
                 this.gridSpan.Write(sw, "gridSpan");
-            if (this.hMerge != null)
+            if(this.hMerge != null)
                 this.hMerge.Write(sw, "hMerge");
-            if (this.vMerge != null)
+            if(this.vMerge != null)
                 this.vMerge.Write(sw, "vMerge");
-            if (this.tcBorders != null)
+            if(this.tcBorders != null)
                 this.tcBorders.Write(sw, "tcBorders");
-            if (this.shd != null)
+            if(this.shd != null)
                 this.shd.Write(sw, "shd");
-            if (this.noWrap != null)
+            if(this.noWrap != null)
                 this.noWrap.Write(sw, "noWrap");
-            if (this.tcMar != null)
+            if(this.tcMar != null)
                 this.tcMar.Write(sw, "tcMar");
-            if (this.textDirection != null)
+            if(this.textDirection != null)
                 this.textDirection.Write(sw, "textDirection");
-            if (this.tcFitText != null)
+            if(this.tcFitText != null)
                 this.tcFitText.Write(sw, "tcFitText");
-            if (this.vAlign != null)
+            if(this.vAlign != null)
                 this.vAlign.Write(sw, "vAlign");
-            if (this.hideMark != null)
+            if(this.hideMark != null)
                 this.hideMark.Write(sw, "hideMark");
             sw.WriteEndW(nodeName);
         }
@@ -4343,13 +4343,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool vMergeOrigFieldSpecified;
         public static new CT_CellMergeTrackChange Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CellMergeTrackChange ctObj = new CT_CellMergeTrackChange();
-            if (node.Attributes["w:vMerge"] != null)
-                ctObj.vMerge = (ST_AnnotationVMerge)Enum.Parse(typeof(ST_AnnotationVMerge), node.Attributes["w:vMerge"].Value);
-            if (node.Attributes["w:vMergeOrig"] != null)
-                ctObj.vMergeOrig = (ST_AnnotationVMerge)Enum.Parse(typeof(ST_AnnotationVMerge), node.Attributes["w:vMergeOrig"].Value);
+            if(node.Attributes["w:vMerge"] != null)
+                ctObj.vMerge = (ST_AnnotationVMerge) Enum.Parse(typeof(ST_AnnotationVMerge), node.Attributes["w:vMerge"].Value);
+            if(node.Attributes["w:vMergeOrig"] != null)
+                ctObj.vMergeOrig = (ST_AnnotationVMerge) Enum.Parse(typeof(ST_AnnotationVMerge), node.Attributes["w:vMergeOrig"].Value);
             ctObj.author = XmlHelper.ReadString(node.Attributes["w:author"]);
             ctObj.date = XmlHelper.ReadString(node.Attributes["w:date"]);
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
@@ -4429,10 +4429,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_AnnotationVMerge
     {
 
-    
+
         cont,
 
-    
+
         rest,
     }
 
@@ -4462,26 +4462,26 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_Border tr2blField;
         public static CT_TcBorders Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TcBorders ctObj = new CT_TcBorders();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "top")
+                if(childNode.LocalName == "top")
                     ctObj.top = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "left")
+                else if(childNode.LocalName == "left")
                     ctObj.left = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bottom")
+                else if(childNode.LocalName == "bottom")
                     ctObj.bottom = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "right")
+                else if(childNode.LocalName == "right")
                     ctObj.right = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "insideH")
+                else if(childNode.LocalName == "insideH")
                     ctObj.insideH = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "insideV")
+                else if(childNode.LocalName == "insideV")
                     ctObj.insideV = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tl2br")
+                else if(childNode.LocalName == "tl2br")
                     ctObj.tl2br = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tr2bl")
+                else if(childNode.LocalName == "tr2bl")
                     ctObj.tr2bl = CT_Border.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -4493,21 +4493,21 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.top != null)
+            if(this.top != null)
                 this.top.Write(sw, "top");
-            if (this.left != null)
+            if(this.left != null)
                 this.left.Write(sw, "left");
-            if (this.bottom != null)
+            if(this.bottom != null)
                 this.bottom.Write(sw, "bottom");
-            if (this.right != null)
+            if(this.right != null)
                 this.right.Write(sw, "right");
-            if (this.insideH != null)
+            if(this.insideH != null)
                 this.insideH.Write(sw, "insideH");
-            if (this.insideV != null)
+            if(this.insideV != null)
                 this.insideV.Write(sw, "insideV");
-            if (this.tl2br != null)
+            if(this.tl2br != null)
                 this.tl2br.Write(sw, "tl2br");
-            if (this.tr2bl != null)
+            if(this.tr2bl != null)
                 this.tr2bl.Write(sw, "tr2bl");
             sw.WriteEndW(nodeName);
         }
@@ -4647,18 +4647,18 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_TcMar Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TcMar ctObj = new CT_TcMar();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "top")
+                if(childNode.LocalName == "top")
                     ctObj.top = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "left")
+                else if(childNode.LocalName == "left")
                     ctObj.left = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bottom")
+                else if(childNode.LocalName == "bottom")
                     ctObj.bottom = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "right")
+                else if(childNode.LocalName == "right")
                     ctObj.right = CT_TblWidth.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -4670,13 +4670,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.top != null)
+            if(this.top != null)
                 this.top.Write(sw, "top");
-            if (this.left != null)
+            if(this.left != null)
                 this.left.Write(sw, "left");
-            if (this.bottom != null)
+            if(this.bottom != null)
                 this.bottom.Write(sw, "bottom");
-            if (this.right != null)
+            if(this.right != null)
                 this.right.Write(sw, "right");
             sw.WriteEndW(nodeName);
         }
@@ -4745,44 +4745,44 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_TcPrChange tcPrChangeField;
         public static new CT_TcPr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TcPr ctObj = new CT_TcPr();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tcPrChange")
+                if(childNode.LocalName == "tcPrChange")
                     ctObj.tcPrChange = CT_TcPrChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellIns")
+                else if(childNode.LocalName == "cellIns")
                     ctObj.cellIns = CT_TrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellDel")
+                else if(childNode.LocalName == "cellDel")
                     ctObj.cellDel = CT_TrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellMerge")
+                else if(childNode.LocalName == "cellMerge")
                     ctObj.cellMerge = CT_CellMergeTrackChange.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cnfStyle")
+                else if(childNode.LocalName == "cnfStyle")
                     ctObj.cnfStyle = CT_Cnf.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcW")
+                else if(childNode.LocalName == "tcW")
                     ctObj.tcW = CT_TblWidth.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gridSpan")
+                else if(childNode.LocalName == "gridSpan")
                     ctObj.gridSpan = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hMerge")
+                else if(childNode.LocalName == "hMerge")
                     ctObj.hMerge = CT_HMerge.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "vMerge")
+                else if(childNode.LocalName == "vMerge")
                     ctObj.vMerge = CT_VMerge.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcBorders")
+                else if(childNode.LocalName == "tcBorders")
                     ctObj.tcBorders = CT_TcBorders.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shd")
+                else if(childNode.LocalName == "shd")
                     ctObj.shd = CT_Shd.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noWrap")
+                else if(childNode.LocalName == "noWrap")
                     ctObj.noWrap = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcMar")
+                else if(childNode.LocalName == "tcMar")
                     ctObj.tcMar = CT_TcMar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "textDirection")
+                else if(childNode.LocalName == "textDirection")
                     ctObj.textDirection = CT_TextDirection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tcFitText")
+                else if(childNode.LocalName == "tcFitText")
                     ctObj.tcFitText = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "vAlign")
+                else if(childNode.LocalName == "vAlign")
                     ctObj.vAlign = CT_VerticalJc.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hideMark")
+                else if(childNode.LocalName == "hideMark")
                     ctObj.hideMark = CT_OnOff.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -4798,39 +4798,39 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.tcPrChange != null)
+            if(this.tcPrChange != null)
                 this.tcPrChange.Write(sw, "tcPrChange");
-            if (this.cellIns != null)
+            if(this.cellIns != null)
                 this.cellIns.Write(sw, "cellIns");
-            if (this.cellDel != null)
+            if(this.cellDel != null)
                 this.cellDel.Write(sw, "cellDel");
-            if (this.cellMerge != null)
+            if(this.cellMerge != null)
                 this.cellMerge.Write(sw, "cellMerge");
-            if (this.cnfStyle != null)
+            if(this.cnfStyle != null)
                 this.cnfStyle.Write(sw, "cnfStyle");
-            if (this.tcW != null)
+            if(this.tcW != null)
                 this.tcW.Write(sw, "tcW");
-            if (this.gridSpan != null)
+            if(this.gridSpan != null)
                 this.gridSpan.Write(sw, "gridSpan");
-            if (this.hMerge != null)
+            if(this.hMerge != null)
                 this.hMerge.Write(sw, "hMerge");
-            if (this.vMerge != null)
+            if(this.vMerge != null)
                 this.vMerge.Write(sw, "vMerge");
-            if (this.tcBorders != null)
+            if(this.tcBorders != null)
                 this.tcBorders.Write(sw, "tcBorders");
-            if (this.shd != null)
+            if(this.shd != null)
                 this.shd.Write(sw, "shd");
-            if (this.noWrap != null)
+            if(this.noWrap != null)
                 this.noWrap.Write(sw, "noWrap");
-            if (this.tcMar != null)
+            if(this.tcMar != null)
                 this.tcMar.Write(sw, "tcMar");
-            if (this.textDirection != null)
+            if(this.textDirection != null)
                 this.textDirection.Write(sw, "textDirection");
-            if (this.tcFitText != null)
+            if(this.tcFitText != null)
                 this.tcFitText.Write(sw, "tcFitText");
-            if (this.vAlign != null)
+            if(this.vAlign != null)
                 this.vAlign.Write(sw, "vAlign");
-            if (this.hideMark != null)
+            if(this.hideMark != null)
                 this.hideMark.Write(sw, "hideMark");
             sw.WriteEndW(nodeName);
         }
@@ -4855,7 +4855,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
     }
 
-    
+
 
     [XmlInclude(typeof(CT_TcPrInner))]
     [XmlInclude(typeof(CT_TcPr))]
@@ -5117,11 +5117,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool valFieldSpecified;
         public static CT_HMerge Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_HMerge ctObj = new CT_HMerge();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_Merge)Enum.Parse(typeof(ST_Merge), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_Merge) Enum.Parse(typeof(ST_Merge), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -5168,10 +5168,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Merge
     {
 
-    
+
         @continue,
 
-    
+
         restart,
     }
 
@@ -5191,12 +5191,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool valFieldSpecified;
         public static CT_VMerge Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_VMerge ctObj = new CT_VMerge();
-            if (node.Attributes["w:val"] != null)
+            if(node.Attributes["w:val"] != null)
             {
-                ctObj.valField = (ST_Merge)Enum.Parse(typeof(ST_Merge), node.Attributes["w:val"].Value);
+                ctObj.valField = (ST_Merge) Enum.Parse(typeof(ST_Merge), node.Attributes["w:val"].Value);
                 ctObj.valFieldSpecified = true;
             }
             return ctObj;
@@ -5207,7 +5207,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStartW(nodeName);
-            if (valField != ST_Merge.@continue|| this.valFieldSpecified)
+            if(valField != ST_Merge.@continue|| this.valFieldSpecified)
             {
                 XmlHelper.WriteAttribute(sw, "w:val", this.valField.ToString());
             }
@@ -5241,7 +5241,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
     }
 
-    
+
     #endregion
     [Serializable]
 
@@ -5259,7 +5259,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool spaceFieldSpecified;
         public static CT_Column Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Column ctObj = new CT_Column();
             ctObj.w = XmlHelper.ReadULong(node.Attributes["w:w"]);
@@ -5361,19 +5361,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Columns Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Columns ctObj = new CT_Columns();
-            if (node.Attributes["w:equalWidth"] != null)
-                ctObj.equalWidth = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:equalWidth"].Value,true);
+            if(node.Attributes["w:equalWidth"] != null)
+                ctObj.equalWidth = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:equalWidth"].Value, true);
             ctObj.space = XmlHelper.ReadULong(node.Attributes["w:space"]);
             ctObj.num = XmlHelper.ReadString(node.Attributes["w:num"]);
-            if (node.Attributes["w:sep"] != null)
-                ctObj.sep = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:sep"].Value,true);
+            if(node.Attributes["w:sep"] != null)
+                ctObj.sep = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:sep"].Value, true);
             ctObj.col = new List<CT_Column>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "col")
+                if(childNode.LocalName == "col")
                     ctObj.col.Add(CT_Column.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -5390,15 +5390,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:num", this.num);
             if(this.sep!= ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:sep", this.sep.ToString());
-            if (this.col != null && this.col.Count > 0)
+            if(this.col != null && this.col.Count > 0)
             {
                 sw.Write('>');
-                foreach (CT_Column x in this.col)
+                foreach(CT_Column x in this.col)
                 {
                     x.Write(sw, "col");
                 }
                 sw.WriteEndW(nodeName);
-            } else
+            }
+            else
             {
                 sw.Write("/>");
             }
@@ -5511,7 +5512,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     }
 
 
-#region Table Row
+    #region Table Row
     [Serializable]
 
     [XmlType(Namespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main")]
@@ -5554,164 +5555,164 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Row Parse(XmlNode node, XmlNamespaceManager namespaceManager, object parent)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Row ctObj = new CT_Row();
             ctObj.XmlNode = node;
             ctObj.NamespaceManager = namespaceManager;
-            if (parent != null)
+            if(parent != null)
                 ctObj.parent = parent;
-            if (node.Attributes["w14:paraId"] != null)
+            if(node.Attributes["w14:paraId"] != null)
                 ctObj.paraIdField = XmlHelper.ReadBytes(node.Attributes["w14:paraId"]);
-            if (node.Attributes["w14:textId"] != null)
+            if(node.Attributes["w14:textId"] != null)
                 ctObj.textIdField = XmlHelper.ReadBytes(node.Attributes["w14:textId"]);
             ctObj.rsidRPr = XmlHelper.ReadBytes(node.Attributes["w:rsidRPr"]);
             ctObj.rsidR = XmlHelper.ReadBytes(node.Attributes["w:rsidR"]);
             ctObj.rsidDel = XmlHelper.ReadBytes(node.Attributes["w:rsidDel"]);
             ctObj.rsidTr = XmlHelper.ReadBytes(node.Attributes["w:rsidTr"]);
 
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tblPrEx")
+                if(childNode.LocalName == "tblPrEx")
                     ctObj.tblPrEx = CT_TblPrEx.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "trPr")
+                else if(childNode.LocalName == "trPr")
                     ctObj.trPr = CT_TrPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bookmarkStart")
+                else if(childNode.LocalName == "bookmarkStart")
                 {
                     ctObj.Items.Add(CT_Bookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.bookmarkStart);
                 }
-                else if (childNode.LocalName == "commentRangeEnd")
+                else if(childNode.LocalName == "commentRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.commentRangeEnd);
                 }
-                else if (childNode.LocalName == "commentRangeStart")
+                else if(childNode.LocalName == "commentRangeStart")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.commentRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeStart")
+                else if(childNode.LocalName == "customXmlInsRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlInsRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeStart")
+                else if(childNode.LocalName == "customXmlMoveFromRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlMoveFromRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlMoveToRangeEnd")
+                else if(childNode.LocalName == "customXmlMoveToRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlMoveToRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlMoveToRangeStart")
+                else if(childNode.LocalName == "customXmlMoveToRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlMoveToRangeStart);
                 }
-                else if (childNode.LocalName == "del")
+                else if(childNode.LocalName == "del")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.del);
                 }
-                else if (childNode.LocalName == "moveTo")
+                else if(childNode.LocalName == "moveTo")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.moveTo);
                 }
-                else if (childNode.LocalName == "oMath")
+                else if(childNode.LocalName == "oMath")
                 {
                     ctObj.Items.Add(CT_OMath.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.oMath);
                 }
-                else if (childNode.LocalName == "oMathPara")
+                else if(childNode.LocalName == "oMathPara")
                 {
                     ctObj.Items.Add(CT_OMathPara.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.oMathPara);
                 }
-                else if (childNode.LocalName == "bookmarkEnd")
+                else if(childNode.LocalName == "bookmarkEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.bookmarkEnd);
                 }
-                else if (childNode.LocalName == "customXml")
+                else if(childNode.LocalName == "customXml")
                 {
                     ctObj.Items.Add(CT_CustomXmlCell.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXml);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeStart")
+                else if(childNode.LocalName == "customXmlDelRangeStart")
                 {
                     ctObj.Items.Add(CT_TrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlDelRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlInsRangeEnd")
+                else if(childNode.LocalName == "customXmlInsRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlInsRangeEnd);
                 }
-                else if (childNode.LocalName == "customXmlMoveFromRangeEnd")
+                else if(childNode.LocalName == "customXmlMoveFromRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlMoveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "ins")
+                else if(childNode.LocalName == "ins")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.ins);
                 }
-                else if (childNode.LocalName == "moveFrom")
+                else if(childNode.LocalName == "moveFrom")
                 {
                     ctObj.Items.Add(CT_RunTrackChange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.moveFrom);
                 }
-                else if (childNode.LocalName == "moveFromRangeEnd")
+                else if(childNode.LocalName == "moveFromRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.moveFromRangeEnd);
                 }
-                else if (childNode.LocalName == "moveFromRangeStart")
+                else if(childNode.LocalName == "moveFromRangeStart")
                 {
                     ctObj.Items.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.moveFromRangeStart);
                 }
-                else if (childNode.LocalName == "customXmlDelRangeEnd")
+                else if(childNode.LocalName == "customXmlDelRangeEnd")
                 {
                     ctObj.Items.Add(CT_Markup.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.customXmlDelRangeEnd);
                 }
-                else if (childNode.LocalName == "moveToRangeEnd")
+                else if(childNode.LocalName == "moveToRangeEnd")
                 {
                     ctObj.Items.Add(CT_MarkupRange.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.moveToRangeEnd);
                 }
-                else if (childNode.LocalName == "moveToRangeStart")
+                else if(childNode.LocalName == "moveToRangeStart")
                 {
                     ctObj.Items.Add(CT_MoveBookmark.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.moveToRangeStart);
                 }
-                else if (childNode.LocalName == "permEnd")
+                else if(childNode.LocalName == "permEnd")
                 {
                     ctObj.Items.Add(CT_Perm.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.permEnd);
                 }
-                else if (childNode.LocalName == "permStart")
+                else if(childNode.LocalName == "permStart")
                 {
                     ctObj.Items.Add(CT_PermStart.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.permStart);
                 }
-                else if (childNode.LocalName == "proofErr")
+                else if(childNode.LocalName == "proofErr")
                 {
                     ctObj.Items.Add(CT_ProofErr.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.proofErr);
                 }
-                else if (childNode.LocalName == "sdt")
+                else if(childNode.LocalName == "sdt")
                 {
                     ctObj.Items.Add(CT_SdtCell.Parse(childNode, namespaceManager));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.sdt);
                 }
-                else if (childNode.LocalName == "tc")
+                else if(childNode.LocalName == "tc")
                 {
                     ctObj.Items.Add(CT_Tc.Parse(childNode, namespaceManager, ctObj));
                     ctObj.ItemsElementName.Add(ItemsChoiceTableRowType.tc);
@@ -5730,67 +5731,67 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:rsidDel", this.rsidDel);
             XmlHelper.WriteAttribute(sw, "w:rsidTr", this.rsidTr);
             sw.Write('>');
-            if (this.tblPrEx != null)
+            if(this.tblPrEx != null)
                 this.tblPrEx.Write(sw, "tblPrEx");
-            if (this.trPr != null)
+            if(this.trPr != null)
                 this.trPr.Write(sw, "trPr");
-            foreach (object o in this.Items)
+            foreach(object o in this.Items)
             {
-                if (o is CT_Bookmark bookmark)
+                if(o is CT_Bookmark bookmark)
                     bookmark.Write(sw, "bookmarkStart");
-                else if (o is CT_MarkupRange range)
+                else if(o is CT_MarkupRange range)
                     range.Write(sw, "commentRangeEnd");
-                else if (o is CT_MarkupRange markupRange)
+                else if(o is CT_MarkupRange markupRange)
                     markupRange.Write(sw, "commentRangeStart");
-                else if (o is CT_TrackChange change)
+                else if(o is CT_TrackChange change)
                     change.Write(sw, "customXmlInsRangeStart");
-                else if (o is CT_TrackChange trackChange)
+                else if(o is CT_TrackChange trackChange)
                     trackChange.Write(sw, "customXmlMoveFromRangeStart");
-                else if (o is CT_Markup markup)
+                else if(o is CT_Markup markup)
                     markup.Write(sw, "customXmlMoveToRangeEnd");
-                else if (o is CT_TrackChange ctTrackChange)
+                else if(o is CT_TrackChange ctTrackChange)
                     ctTrackChange.Write(sw, "customXmlMoveToRangeStart");
-                else if (o is CT_RunTrackChange runTrackChange)
+                else if(o is CT_RunTrackChange runTrackChange)
                     runTrackChange.Write(sw, "del");
-                else if (o is CT_RunTrackChange ctRunTrackChange)
+                else if(o is CT_RunTrackChange ctRunTrackChange)
                     ctRunTrackChange.Write(sw, "moveTo");
-                else if (o is CT_OMath math)
+                else if(o is CT_OMath math)
                     math.Write(sw, "oMath");
-                else if (o is CT_OMathPara para)
+                else if(o is CT_OMathPara para)
                     para.Write(sw, "oMathPara");
-                else if (o is CT_MarkupRange ctMarkupRange)
+                else if(o is CT_MarkupRange ctMarkupRange)
                     ctMarkupRange.Write(sw, "bookmarkEnd");
-                else if (o is CT_CustomXmlCell cell)
+                else if(o is CT_CustomXmlCell cell)
                     cell.Write(sw, "customXml");
-                else if (o is CT_TrackChange change1)
+                else if(o is CT_TrackChange change1)
                     change1.Write(sw, "customXmlDelRangeStart");
-                else if (o is CT_Markup ctMarkup)
+                else if(o is CT_Markup ctMarkup)
                     ctMarkup.Write(sw, "customXmlInsRangeEnd");
-                else if (o is CT_Markup markup1)
+                else if(o is CT_Markup markup1)
                     markup1.Write(sw, "customXmlMoveFromRangeEnd");
-                else if (o is CT_RunTrackChange trackChange1)
+                else if(o is CT_RunTrackChange trackChange1)
                     trackChange1.Write(sw, "ins");
-                else if (o is CT_RunTrackChange runTrackChange1)
+                else if(o is CT_RunTrackChange runTrackChange1)
                     runTrackChange1.Write(sw, "moveFrom");
-                else if (o is CT_MarkupRange range1)
+                else if(o is CT_MarkupRange range1)
                     range1.Write(sw, "moveFromRangeEnd");
-                else if (o is CT_MoveBookmark moveBookmark)
+                else if(o is CT_MoveBookmark moveBookmark)
                     moveBookmark.Write(sw, "moveFromRangeStart");
-                else if (o is CT_Markup ctMarkup1)
+                else if(o is CT_Markup ctMarkup1)
                     ctMarkup1.Write(sw, "customXmlDelRangeEnd");
-                else if (o is CT_MarkupRange markupRange1)
+                else if(o is CT_MarkupRange markupRange1)
                     markupRange1.Write(sw, "moveToRangeEnd");
-                else if (o is CT_MoveBookmark ctMoveBookmark)
+                else if(o is CT_MoveBookmark ctMoveBookmark)
                     ctMoveBookmark.Write(sw, "moveToRangeStart");
-                else if (o is CT_Perm perm)
+                else if(o is CT_Perm perm)
                     perm.Write(sw, "permEnd");
-                else if (o is CT_PermStart start)
+                else if(o is CT_PermStart start)
                     start.Write(sw, "permStart");
-                else if (o is CT_ProofErr err)
+                else if(o is CT_ProofErr err)
                     err.Write(sw, "proofErr");
-                else if (o is CT_SdtCell sdtCell)
+                else if(o is CT_SdtCell sdtCell)
                     sdtCell.Write(sw, "sdt");
-                else if (o is CT_Tc tc)
+                else if(o is CT_Tc tc)
                     tc.Write(sw, "tc");
             }
             sw.WriteEndW(nodeName);
@@ -5866,7 +5867,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
             set
             {
-               this.itemsField = value;
+                this.itemsField = value;
             }
         }
 
@@ -5880,7 +5881,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
             set
             {
-               this.itemsElementNameField = value;
+                this.itemsElementNameField = value;
             }
         }
 
@@ -5950,14 +5951,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public bool IsSetTrPr()
         {
-            if (this.trPrField == null)
+            if(this.trPrField == null)
                 return false;
             return this.trPrField.Items.Count > 0;
         }
 
         public CT_TrPr AddNewTrPr()
         {
-            if (this.trPrField == null)
+            if(this.trPrField == null)
                 this.trPrField = new CT_TrPr();
             return this.trPrField;
         }
@@ -5980,12 +5981,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         private List<T> GetObjectList<T>(ItemsChoiceTableRowType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 List<T> list = new List<T>();
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         list.Add(itemsField[i] as T);
                 }
                 return list;
@@ -5993,12 +5994,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private int SizeOfArray(ItemsChoiceTableRowType type)
         {
-            lock (this)
+            lock(this)
             {
                 int size = 0;
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         size++;
                 }
                 return size;
@@ -6006,10 +6007,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private T GetObjectArray<T>(int p, ItemsChoiceTableRowType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return null;
                 return itemsField[pos] as T;
             }
@@ -6017,7 +6018,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T InsertNewObject<T>(ItemsChoiceTableRowType type, int p) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
                 this.itemsElementNameField.Insert(pos, type);
@@ -6028,7 +6029,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T AddNewObject<T>(ItemsChoiceTableRowType type) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 this.itemsElementNameField.Add(type);
                 this.itemsField.Add(t);
@@ -6037,12 +6038,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void SetObject<T>(ItemsChoiceTableRowType type, int p, T obj) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
-                if (this.itemsField[pos] is T)
+                if(this.itemsField[pos] is T)
                     this.itemsField[pos] = obj;
                 else
                     throw new Exception(string.Format(@"object types are difference, itemsField[{0}] is {1}, and parameter obj is {2}",
@@ -6053,11 +6054,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             int index = -1;
             int pos = 0;
-            for (int i = 0; i < itemsElementNameField.Count; i++)
+            for(int i = 0; i < itemsElementNameField.Count; i++)
             {
-                if (itemsElementNameField[i] == type)
+                if(itemsElementNameField[i] == type)
                 {
-                    if (pos == p)
+                    if(pos == p)
                     {
                         index = i;
                         break;
@@ -6070,10 +6071,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void RemoveObject(ItemsChoiceTableRowType type, int p)
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
                 itemsElementNameField.RemoveAt(pos);
                 itemsField.RemoveAt(pos);
@@ -6088,92 +6089,92 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ItemsChoiceTableRowType
     {
 
-    
+
         [XmlEnum("http://schemas.openxmlformats.org/officeDocument/2006/math:oMath")]
         oMath,
 
-    
+
         [XmlEnum("http://schemas.openxmlformats.org/officeDocument/2006/math:oMathPara")]
         oMathPara,
 
-    
+
         bookmarkEnd,
 
-    
+
         bookmarkStart,
 
-    
+
         commentRangeEnd,
 
-    
+
         commentRangeStart,
 
-    
+
         customXml,
 
-    
+
         customXmlDelRangeEnd,
 
-    
+
         customXmlDelRangeStart,
 
-    
+
         customXmlInsRangeEnd,
 
-    
+
         customXmlInsRangeStart,
 
-    
+
         customXmlMoveFromRangeEnd,
 
-    
+
         customXmlMoveFromRangeStart,
 
-    
+
         customXmlMoveToRangeEnd,
 
-    
+
         customXmlMoveToRangeStart,
 
-    
+
         del,
 
-    
+
         ins,
 
-    
+
         moveFrom,
 
-    
+
         moveFromRangeEnd,
 
-    
+
         moveFromRangeStart,
 
-    
+
         moveTo,
 
-    
+
         moveToRangeEnd,
 
-    
+
         moveToRangeStart,
 
-    
+
         permEnd,
 
-    
+
         permStart,
 
-    
+
         proofErr,
 
-    
+
         sdt,
 
-    
+
         tc,
     }
 
-#endregion
+    #endregion
 }

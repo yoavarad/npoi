@@ -17,11 +17,11 @@
 
 namespace NPOI.HSSF.UserModel
 {
+    using NPOI.Util.Collections;
     using System;
     using System.Collections;
-    using System.IO;
     using System.Configuration;
-    using NPOI.Util.Collections;
+    using System.IO;
 
     /**
      * Allows the user to lookup the font metrics for a particular font without
@@ -35,7 +35,7 @@ namespace NPOI.HSSF.UserModel
     class StaticFontMetrics
     {
         private const String FONT_METRICS_PROPERTIES_FILE_NAME = "NPOI.Resources.font_metrics.properties";
-        
+
         /** The font metrics property file we're using */
         private static Properties fontMetricsProps;
         /** Our cache of font details we've alReady looked up */

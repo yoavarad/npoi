@@ -1,4 +1,4 @@
-﻿        
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -39,13 +39,13 @@ namespace NPOI.Util
     /// @author Glen Stampoultzis (glens at apache.org)
     /// @author Nicola Ken Barozzi (nicolaken at apache.org)
     /// </summary>
-    public class NullLogger:POILogger
+    public class NullLogger : POILogger
     {
         public override void Initialize(String cat)
         {
-           //do nothing
+            //do nothing
         }
-        
+
         /**
          * Log a message
          *
@@ -66,7 +66,7 @@ namespace NPOI.Util
 
         public override bool Check(int level)
         {
-           return false;
+            return false;
         }
 
         /**
@@ -79,7 +79,7 @@ namespace NPOI.Util
 
         public override void Log(int level, Object obj1, Object obj2)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -94,7 +94,7 @@ namespace NPOI.Util
         public override void Log(int level, Object obj1, Object obj2,
                         Object obj3)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -110,7 +110,7 @@ namespace NPOI.Util
         public override void Log(int level, Object obj1, Object obj2,
                         Object obj3, Object obj4)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -127,7 +127,7 @@ namespace NPOI.Util
         public override void Log(int level, Object obj1, Object obj2,
                         Object obj3, Object obj4, Object obj5)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -146,7 +146,7 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -166,7 +166,7 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6, Object obj7)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -187,7 +187,7 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6, Object obj7, Object obj8)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -201,7 +201,7 @@ namespace NPOI.Util
         public override void Log(int level, Object obj1,
                         Exception exception)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -216,7 +216,7 @@ namespace NPOI.Util
         public override void Log(int level, Object obj1, Object obj2,
                         Exception exception)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -232,7 +232,7 @@ namespace NPOI.Util
         public override void Log(int level, Object obj1, Object obj2,
                         Object obj3, Exception exception)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -250,7 +250,7 @@ namespace NPOI.Util
                         Object obj3, Object obj4,
                         Exception exception)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -269,7 +269,7 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Exception exception)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -289,7 +289,7 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6, Exception exception)
         {
-           //do nothing
+            //do nothing
         }
 
         /**
@@ -311,7 +311,7 @@ namespace NPOI.Util
                         Object obj6, Object obj7,
                         Exception exception)
         {
-          //do nothing
+            //do nothing
         }
 
         /**
@@ -334,7 +334,7 @@ namespace NPOI.Util
                         Object obj6, Object obj7, Object obj8,
                         Exception exception)
         {
-           //do nothing
+            //do nothing
         }
     }
 }

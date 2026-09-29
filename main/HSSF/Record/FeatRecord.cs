@@ -17,11 +17,11 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record.Common;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Title: Feat (Feature) Record
@@ -76,19 +76,19 @@ namespace NPOI.HSSF.Record
             futureHeader = new FtrHeader(in1);
 
             isf_sharedFeatureType = in1.ReadShort();
-            reserved1 = (byte)in1.ReadByte();
+            reserved1 = (byte) in1.ReadByte();
             reserved2 = in1.ReadInt();
             int cref = in1.ReadUShort();
             cbFeatData = in1.ReadInt();
             reserved3 = in1.ReadShort();
 
             cellRefs = new CellRangeAddress[cref];
-            for (int i = 0; i < cellRefs.Length; i++)
+            for(int i = 0; i < cellRefs.Length; i++)
             {
                 cellRefs[i] = new CellRangeAddress(in1);
             }
 
-            switch (isf_sharedFeatureType)
+            switch(isf_sharedFeatureType)
             {
                 case FeatHdrRecord.SHAREDFEATURES_ISFPROTECTION:
                     sharedFeature = new FeatProtection(in1);
@@ -122,12 +122,12 @@ namespace NPOI.HSSF.Record
 
             out1.WriteShort(isf_sharedFeatureType);
             out1.WriteByte(reserved1);
-            out1.WriteInt((int)reserved2);
+            out1.WriteInt((int) reserved2);
             out1.WriteShort(cellRefs.Length);
-            out1.WriteInt((int)cbFeatData);
+            out1.WriteInt((int) cbFeatData);
             out1.WriteShort(reserved3);
 
-            for (int i = 0; i < cellRefs.Length; i++)
+            for(int i = 0; i < cellRefs.Length; i++)
             {
                 cellRefs[i].Serialize(out1);
             }
@@ -177,7 +177,7 @@ namespace NPOI.HSSF.Record
                 this.cellRefs = value;
             }
         }
-        
+
 
         public SharedFeature SharedFeature
         {
@@ -189,20 +189,20 @@ namespace NPOI.HSSF.Record
             {
                 this.sharedFeature = value;
 
-                if (value is FeatProtection)
+                if(value is FeatProtection)
                 {
                     isf_sharedFeatureType = FeatHdrRecord.SHAREDFEATURES_ISFPROTECTION;
                 }
-                if (value is FeatFormulaErr2)
+                if(value is FeatFormulaErr2)
                 {
                     isf_sharedFeatureType = FeatHdrRecord.SHAREDFEATURES_ISFFEC2;
                 }
-                if (value is FeatSmartTag)
+                if(value is FeatSmartTag)
                 {
                     isf_sharedFeatureType = FeatHdrRecord.SHAREDFEATURES_ISFFACTOID;
                 }
 
-                if (isf_sharedFeatureType == FeatHdrRecord.SHAREDFEATURES_ISFFEC2)
+                if(isf_sharedFeatureType == FeatHdrRecord.SHAREDFEATURES_ISFFEC2)
                 {
                     cbFeatData = sharedFeature.DataSize;
                 }
@@ -212,7 +212,7 @@ namespace NPOI.HSSF.Record
                 }
             }
         }
-        
+
 
         //HACK: do a "cheat" Clone, see Record.java for more information
         public override Object Clone()

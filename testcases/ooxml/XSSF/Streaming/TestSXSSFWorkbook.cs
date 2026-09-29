@@ -28,7 +28,8 @@ namespace TestCases.XSSF.Streaming
     using NPOI.XSSF.Model;
     using NPOI.XSSF.Streaming;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
     using TestCases;
@@ -367,7 +368,7 @@ namespace TestCases.XSSF.Streaming
         {
             SXSSFWorkbook wb = new SXSSFWorkbook();
             ISheet sh = wb.CreateSheet("sheet1");
-            for (int i = 0; i < 1000; i++)
+            for(int i = 0; i < 1000; i++)
             {
                 IRow row = sh.CreateRow(i);
                 ICell cell = row.CreateCell(0);
@@ -640,13 +641,13 @@ namespace TestCases.XSSF.Streaming
             IWorkbook wb = XSSFTestDataSamples.OpenSampleWorkbook("56557.xlsx");
 
             // Using streaming XSSFWorkbook makes the output file invalid
-            wb = new SXSSFWorkbook((XSSFWorkbook)wb);
-        
+            wb = new SXSSFWorkbook((XSSFWorkbook) wb);
+
             // Should not throw POIXMLException: java.io.IOException: Unable to parse xml bean when reading back
             IWorkbook wbBack = XSSFTestDataSamples.WriteOutAndReadBack(wb);
             ClassicAssert.IsNotNull(wbBack);
             wbBack.Close();
-        
+
             wb.Close();
         }
     }

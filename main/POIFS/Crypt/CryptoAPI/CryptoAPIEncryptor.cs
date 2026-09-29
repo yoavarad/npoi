@@ -17,16 +17,15 @@
 
 namespace NPOI.POIFS.Crypt.CryptoAPI
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
     using NPOI.HPSF;
-
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.Standard;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
 
     public class CryptoAPIEncryptor : Encryptor
     {
@@ -69,7 +68,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 byte[] encryptedVerifierHash = cipher.DoFinal(calcVerifierHash);
                 ver.SetEncryptedVerifierHash(encryptedVerifierHash);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new EncryptedDocumentException("Password Confirmation failed", e);
             }
@@ -108,7 +107,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
          * @see <a href="http://msdn.microsoft.com/en-us/library/dd943321(v=office.12).aspx">2.3.5.4 RC4 CryptoAPI Encrypted Summary Stream</a>
          */
         public void SetSummaryEntries(DirectoryNode dir, string encryptedStream, NPOIFSFileSystem entries)
-        { 
+        {
             CipherByteArrayOutputStream bos = new CipherByteArrayOutputStream(this);
             byte[] buf = new byte[8];
 
@@ -116,15 +115,15 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
 
             var descList = new List<CryptoAPIDecryptor.StreamDescriptorEntry>();
             int block = 0;
-            foreach (Entry entry in entries.Root)
+            foreach(Entry entry in entries.Root)
             {
-                if (entry.IsDirectoryEntry)
+                if(entry.IsDirectoryEntry)
                 {
                     continue;
                 }
                 var descEntry = new CryptoAPIDecryptor.StreamDescriptorEntry();
                 descEntry.block = block;
-                descEntry.streamOffset = (int)bos.Length;
+                descEntry.streamOffset = (int) bos.Length;
                 descEntry.streamName = entry.Name;
                 descEntry.flags = CryptoAPIDecryptor.StreamDescriptorEntry.flagStream.SetValue(0, 1);
                 descEntry.reserved2 = 0;
@@ -134,7 +133,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 IOUtils.Copy(dis, bos);
                 dis.Close();
 
-                descEntry.streamSize =(int)( bos.Length - descEntry.streamOffset);
+                descEntry.streamSize =(int) (bos.Length - descEntry.streamOffset);
                 descList.Add(descEntry);
 
                 block++;
@@ -146,7 +145,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             LittleEndian.PutUInt(buf, 0, descList.Count);
             bos.Write(buf, 0, 4);
 
-            foreach (CryptoAPIDecryptor.StreamDescriptorEntry sde in descList)
+            foreach(CryptoAPIDecryptor.StreamDescriptorEntry sde in descList)
             {
                 LittleEndian.PutUInt(buf, 0, sde.streamOffset);
                 bos.Write(buf, 0, 4);
@@ -154,15 +153,15 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 bos.Write(buf, 0, 4);
                 LittleEndian.PutUShort(buf, 0, sde.block);
                 bos.Write(buf, 0, 2);
-                LittleEndian.PutUByte(buf, 0, (short)sde.streamName.Length);
+                LittleEndian.PutUByte(buf, 0, (short) sde.streamName.Length);
                 bos.Write(buf, 0, 1);
-                LittleEndian.PutUByte(buf, 0, (short)sde.flags);
+                LittleEndian.PutUByte(buf, 0, (short) sde.flags);
                 bos.Write(buf, 0, 1);
                 LittleEndian.PutUInt(buf, 0, sde.reserved2);
                 bos.Write(buf, 0, 4);
                 byte[] nameBytes = StringUtil.GetToUnicodeLE(sde.streamName);
                 bos.Write(nameBytes, 0, nameBytes.Length);
-                LittleEndian.PutShort(buf, 0, (short)0); // null-termination
+                LittleEndian.PutShort(buf, 0, (short) 0); // null-termination
                 bos.Write(buf, 0, 2);
             }
 
@@ -295,11 +294,11 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             {
                 try
                 {
-                    oneByte[0] = (byte)b;
+                    oneByte[0] = (byte) b;
                     cipher.Update(oneByte, 0, 1, oneByte, 0);
                     base.Write(oneByte);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     throw new EncryptedDocumentException(e);
                 }
@@ -312,7 +311,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                     cipher.Update(b, off, len, b, off);
                     base.Write(b, off, len);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     throw new EncryptedDocumentException(e);
                 }

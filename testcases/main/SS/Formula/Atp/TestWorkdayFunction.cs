@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,14 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Collections.Generic;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.Atp;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 namespace TestCases.SS.Formula.Atp
 {
@@ -166,7 +167,7 @@ namespace TestCases.SS.Formula.Atp
                 : this(0, 0, 0, holidays.Length - 1)
             {
                 this.holidays = new List<ValueEval>();
-                foreach (String holiday in holidays)
+                foreach(String holiday in holidays)
                 {
                     this.holidays.Add(new StringEval(holiday));
                 }

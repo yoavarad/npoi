@@ -16,9 +16,10 @@
 ==================================================================== */
 
 using NPOI.OpenXmlFormats.Spreadsheet;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System;
 using NPOI.XSSF.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 
 namespace TestCases.XSSF.Util
 {
@@ -68,13 +69,12 @@ namespace TestCases.XSSF.Util
             cols[1] = o2;
             cols[2] = o3;
             cols[3] = o4;
-            ClassicAssert.AreEqual((uint)80, cols[2].max);
-            ClassicAssert.AreEqual((uint)8, cols[3].max);
+            ClassicAssert.AreEqual((uint) 80, cols[2].max);
+            ClassicAssert.AreEqual((uint) 8, cols[3].max);
             Array.Sort(cols, comparator);
-            ClassicAssert.AreEqual((uint)12, cols[3].max);
-            ClassicAssert.AreEqual((uint)8, cols[1].max);
-            ClassicAssert.AreEqual((uint)80, cols[2].max);
+            ClassicAssert.AreEqual((uint) 12, cols[3].max);
+            ClassicAssert.AreEqual((uint) 8, cols[1].max);
+            ClassicAssert.AreEqual((uint) 80, cols[2].max);
         }
     }
 }
-

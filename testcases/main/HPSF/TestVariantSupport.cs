@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,8 +15,6 @@
    limitations Under the License.
 ==================================================================== */
 
-using System;
-using System.IO;
 using NPOI.HPSF;
 using NPOI.HPSF.Wellknown;
 using NPOI.HSSF.UserModel;
@@ -24,6 +22,8 @@ using NPOI.POIFS.FileSystem;
 using NPOI.Util;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System;
+using System.IO;
 
 namespace TestCases.HPSF
 {

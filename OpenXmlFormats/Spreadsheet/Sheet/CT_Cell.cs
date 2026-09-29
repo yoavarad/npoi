@@ -1,12 +1,11 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml;
-using NPOI.OpenXml4Net.Util;
 using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -37,25 +36,25 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Cell Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Cell ctObj = new CT_Cell();
             ctObj.r = XmlHelper.ReadString(node.Attributes["r"]);
             ctObj.sField = XmlHelper.ReadUInt(node.Attributes["s"]);
-            if (node.Attributes["t"] != null)
-                ctObj.t = (ST_CellType)Enum.Parse(typeof(ST_CellType), node.Attributes["t"].Value);
+            if(node.Attributes["t"] != null)
+                ctObj.t = (ST_CellType) Enum.Parse(typeof(ST_CellType), node.Attributes["t"].Value);
             ctObj.cm = XmlHelper.ReadUInt(node.Attributes["cm"]);
             ctObj.vm = XmlHelper.ReadUInt(node.Attributes["vm"]);
             ctObj.ph = XmlHelper.ReadBool(node.Attributes["ph"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "f")
+                if(childNode.LocalName == "f")
                     ctObj.f = CT_CellFormula.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "v")
+                else if(childNode.LocalName == "v")
                     ctObj.v = childNode.InnerText;
-                else if (childNode.LocalName == "is")
+                else if(childNode.LocalName == "is")
                     ctObj.@is = CT_Rst.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -69,12 +68,12 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "r", this.r);
             if(this.IsSetS())
                 XmlHelper.WriteAttribute(sw, "s", this.s, true);
-            if (this.t != ST_CellType.n)
+            if(this.t != ST_CellType.n)
                 XmlHelper.WriteAttribute(sw, "t", this.t.ToString());
             XmlHelper.WriteAttribute(sw, "cm", this.cm);
             XmlHelper.WriteAttribute(sw, "vm", this.vm);
             XmlHelper.WriteAttribute(sw, "ph", this.ph, false);
-            if (this.f == null
+            if(this.f == null
                 && this.v == null
                 && this.@is == null
                 && this.extLstField == null)
@@ -84,15 +83,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             else
             {
                 sw.Write('>');
-                if (this.f != null)
+                if(this.f != null)
                     this.f.Write(sw, "f");
-                if (!string.IsNullOrEmpty(this.v))
+                if(!string.IsNullOrEmpty(this.v))
                     sw.WriteElementAndContent("v", XmlHelper.EncodeXml(this.v));
                 else
                     sw.Write("<v/>");
-                if (this.@is != null)
+                if(this.@is != null)
                     this.@is.Write(sw, "is");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }
@@ -241,7 +240,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return null == sField ? 0 : (uint)this.sField;
+                return null == sField ? 0 : (uint) this.sField;
             }
             set
             {
@@ -254,7 +253,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return null == tField ? ST_CellType.n : (ST_CellType)this.tField;
+                return null == tField ? ST_CellType.n : (ST_CellType) this.tField;
             }
             set
             {
@@ -267,7 +266,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return null == cmField ? 0 : (uint)this.cmField;
+                return null == cmField ? 0 : (uint) this.cmField;
             }
             set
             {
@@ -280,7 +279,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return null == vmField ? 0 : (uint)this.vmField;
+                return null == vmField ? 0 : (uint) this.vmField;
             }
             set
             {
@@ -293,7 +292,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return null == phField ? false : (bool)this.phField;
+                return null == phField ? false : (bool) this.phField;
             }
             set
             {

@@ -20,7 +20,8 @@
 namespace TestCases.XSSF.Streaming
 {
     using NPOI.XSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.UserModel;
 
     /**

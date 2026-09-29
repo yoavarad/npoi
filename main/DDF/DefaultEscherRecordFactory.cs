@@ -18,10 +18,10 @@
 
 namespace NPOI.DDF
 {
-    using System;
-    using System.Reflection;
     using NPOI.Util;
+    using System;
     using System.Collections.Generic;
+    using System.Reflection;
 
     /// <summary>
     /// Generates escher records when provided the byte array containing those records.
@@ -31,10 +31,10 @@ namespace NPOI.DDF
     public class DefaultEscherRecordFactory : IEscherRecordFactory
     {
         private static readonly Type[] escherRecordClasses = {
-            
+
             typeof(EscherBSERecord), typeof(EscherOptRecord), typeof(EscherTertiaryOptRecord),
-            typeof(EscherClientAnchorRecord), 
-            typeof(EscherDgRecord), typeof(EscherSpgrRecord), typeof(EscherSpRecord), 
+            typeof(EscherClientAnchorRecord),
+            typeof(EscherDgRecord), typeof(EscherSpgrRecord), typeof(EscherSpRecord),
             typeof(EscherClientDataRecord), typeof(EscherDggRecord),
             typeof(EscherSplitMenuColorsRecord), typeof(EscherChildAnchorRecord), typeof(EscherTextboxRecord)
         };
@@ -65,23 +65,23 @@ namespace NPOI.DDF
             // However, EscherTextboxRecord are containers of records for the
             //  host application, not of other Escher records, so treat them
             //  differently
-            if (IsContainer(options, recordId))
+            if(IsContainer(options, recordId))
             {
                 EscherContainerRecord r = new EscherContainerRecord();
                 r.RecordId = recordId;
                 r.Options = options;
                 return r;
             }
-            if (recordId >= EscherBlipRecord.RECORD_ID_START && recordId <= EscherBlipRecord.RECORD_ID_END)
+            if(recordId >= EscherBlipRecord.RECORD_ID_START && recordId <= EscherBlipRecord.RECORD_ID_END)
             {
                 EscherBlipRecord r;
-                if (recordId == EscherBitmapBlip.RECORD_ID_DIB ||
+                if(recordId == EscherBitmapBlip.RECORD_ID_DIB ||
                         recordId == EscherBitmapBlip.RECORD_ID_JPEG ||
                         recordId == EscherBitmapBlip.RECORD_ID_PNG)
                 {
                     r = new EscherBitmapBlip();
                 }
-                else if (recordId == EscherMetafileBlip.RECORD_ID_EMF ||
+                else if(recordId == EscherMetafileBlip.RECORD_ID_EMF ||
                         recordId == EscherMetafileBlip.RECORD_ID_WMF ||
                         recordId == EscherMetafileBlip.RECORD_ID_PICT)
                 {
@@ -98,18 +98,18 @@ namespace NPOI.DDF
 
             //ConstructorInfo recordConstructor = (ConstructorInfo) recordsMap[header.RecordId];
             ConstructorInfo recordConstructor = null;
-            if (recordsMap.TryGetValue(recordId, out ConstructorInfo value))
+            if(recordsMap.TryGetValue(recordId, out ConstructorInfo value))
                 recordConstructor = value;
 
             EscherRecord escherRecord = null;
-            if (recordConstructor == null)
+            if(recordConstructor == null)
             {
                 return new UnknownEscherRecord();
             }
 
             try
             {
-                escherRecord = (EscherRecord)recordConstructor.Invoke([]);
+                escherRecord = (EscherRecord) recordConstructor.Invoke([]);
                 //escherRecord = (EscherRecord)Activator.CreateInstance(recordConstructor);
             }
             catch
@@ -134,14 +134,14 @@ namespace NPOI.DDF
             Dictionary<short, ConstructorInfo> result = new Dictionary<short, ConstructorInfo>();
             //ConstructorInfo constructor;
             Type[] EMPTY_CLASS_ARRAY = [];
-            for (int i = 0; i < records.Length; i++)
+            for(int i = 0; i < records.Length; i++)
             {
                 Type recordType = records[i];
                 short sid = 0;
 
                 try
                 {
-                    sid = (short)recordType.GetField("RECORD_ID").GetValue(null);
+                    sid = (short) recordType.GetField("RECORD_ID").GetValue(null);
                 }
                 catch
                 {
@@ -165,20 +165,20 @@ namespace NPOI.DDF
 
         public static bool IsContainer(short options, short recordId)
         {
-            if (recordId >= EscherContainerRecord.DGG_CONTAINER && recordId
+            if(recordId >= EscherContainerRecord.DGG_CONTAINER && recordId
                     <= EscherContainerRecord.SOLVER_CONTAINER)
             {
                 return true;
             }
             else
             {
-                if (recordId == EscherTextboxRecord.RECORD_ID)
+                if(recordId == EscherTextboxRecord.RECORD_ID)
                 {
                     return false;
                 }
                 else
                 {
-                    return (options & (short)0x000F) == (short)0x000F;
+                    return (options & (short) 0x000F) == (short) 0x000F;
                 }
             }
         }

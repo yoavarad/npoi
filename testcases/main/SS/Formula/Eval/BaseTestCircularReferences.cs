@@ -16,12 +16,13 @@
 ==================================================================== */
 namespace TestCases.SS.Formula.Eval
 {
-    using System;
+    using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.SS;
-    using NPOI.SS.Formula.Eval;
 
     /**
      * Common superclass for testing cases of circular references
@@ -51,7 +52,7 @@ namespace TestCases.SS.Formula.Eval
             {
                 return Evaluator.Evaluate(testCell);
             }
-            catch (StackOverflowException)
+            catch(StackOverflowException)
             {
                 throw new AssertFailedException("circular reference caused stack overflow error");
             }

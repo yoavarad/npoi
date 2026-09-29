@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
+using System.IO;
 
 namespace NPOI.POIFS.Crypt
 {
@@ -94,7 +94,7 @@ namespace NPOI.POIFS.Crypt
 
         public EncryptionInfo(ILittleEndianInput dis, EncryptionMode preferredEncryptionMode)
         {
-            if (preferredEncryptionMode == EncryptionMode.XOR)
+            if(preferredEncryptionMode == EncryptionMode.XOR)
             {
                 _versionMajor = EncryptionMode.XOR.VersionMajor;
                 _versionMinor = EncryptionMode.XOR.VersionMinor;
@@ -105,25 +105,25 @@ namespace NPOI.POIFS.Crypt
                 _versionMinor = dis.ReadShort();
             }
 
-            if (VersionMajor == EncryptionMode.XOR.VersionMajor
+            if(VersionMajor == EncryptionMode.XOR.VersionMajor
                && VersionMinor == EncryptionMode.XOR.VersionMinor)
             {
                 _encryptionMode = EncryptionMode.XOR;
                 _encryptionFlags = -1;
             }
 
-            else if (VersionMajor == EncryptionMode.BinaryRC4.VersionMajor
+            else if(VersionMajor == EncryptionMode.BinaryRC4.VersionMajor
                  && VersionMinor == EncryptionMode.BinaryRC4.VersionMinor)
             {
                 _encryptionMode = EncryptionMode.BinaryRC4;
                 _encryptionFlags = -1;
             }
-            else if (2 <= VersionMajor && VersionMajor <= 4 && VersionMinor == 2)
+            else if(2 <= VersionMajor && VersionMajor <= 4 && VersionMinor == 2)
             {
                 _encryptionFlags = dis.ReadInt();
                 _encryptionMode = (preferredEncryptionMode == EncryptionMode.CryptoAPI || !flagAES.IsSet(_encryptionFlags)) ? EncryptionMode.CryptoAPI : EncryptionMode.Standard;
             }
-            else if (VersionMajor == EncryptionMode.Agile.VersionMajor && VersionMinor == EncryptionMode.Agile.VersionMinor)
+            else if(VersionMajor == EncryptionMode.Agile.VersionMajor && VersionMinor == EncryptionMode.Agile.VersionMinor)
             {
                 _encryptionMode = EncryptionMode.Agile;
                 _encryptionFlags = dis.ReadInt();
@@ -145,7 +145,7 @@ namespace NPOI.POIFS.Crypt
             {
                 eib = GetBuilder(_encryptionMode);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new IOException(e.Message, e);
             }

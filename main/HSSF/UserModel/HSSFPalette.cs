@@ -17,12 +17,12 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /// <summary>
@@ -49,12 +49,12 @@ using Cysharp.Text;
         public HSSFColor GetColor(short index)
         {
             //Handle the special AUTOMATIC case
-            if (index == HSSFColor.Automatic.Index)
+            if(index == HSSFColor.Automatic.Index)
                 return HSSFColor.Automatic.GetInstance();
             else
             {
                 byte[] b = palette.GetColor(index);
-                if (b != null)
+                if(b != null)
                 {
                     return new CustomColor(index, b);
                 }
@@ -72,10 +72,10 @@ using Cysharp.Text;
         public HSSFColor FindColor(byte red, byte green, byte blue)
         {
             byte[] b = palette.GetColor(PaletteRecord.FIRST_COLOR_INDEX);
-            for (short i = (short)PaletteRecord.FIRST_COLOR_INDEX; b != null;
+            for(short i = (short) PaletteRecord.FIRST_COLOR_INDEX; b != null;
                 b = palette.GetColor(++i))
             {
-                if (b[0] == red && b[1] == green && b[2] == blue)
+                if(b[0] == red && b[1] == green && b[2] == blue)
                 {
                     return new CustomColor(i, b);
                 }
@@ -98,12 +98,12 @@ using Cysharp.Text;
             HSSFColor result = null;
             int minColorDistance = int.MaxValue;
             byte[] b = palette.GetColor(PaletteRecord.FIRST_COLOR_INDEX);
-            for (short i = (short)PaletteRecord.FIRST_COLOR_INDEX; b != null;
+            for(short i = (short) PaletteRecord.FIRST_COLOR_INDEX; b != null;
                 b = palette.GetColor(++i))
             {
                 int colorDistance = Math.Abs(red - b[0]) +
                     Math.Abs(green - b[1]) + Math.Abs(blue - b[2]);
-                if (colorDistance < minColorDistance)
+                if(colorDistance < minColorDistance)
                 {
                     minColorDistance = colorDistance;
                     result = GetColor(i);
@@ -135,9 +135,9 @@ using Cysharp.Text;
         {
             byte[] b = palette.GetColor(PaletteRecord.FIRST_COLOR_INDEX);
             short i;
-            for (i = (short)PaletteRecord.FIRST_COLOR_INDEX; i < PaletteRecord.STANDARD_PALETTE_SIZE + PaletteRecord.FIRST_COLOR_INDEX; b = palette.GetColor(++i))
+            for(i = (short) PaletteRecord.FIRST_COLOR_INDEX; i < PaletteRecord.STANDARD_PALETTE_SIZE + PaletteRecord.FIRST_COLOR_INDEX; b = palette.GetColor(++i))
             {
-                if (b == null)
+                if(b == null)
                 {
                     SetColorAtIndex(i, red, green, blue);
                     return GetColor(i);
@@ -161,9 +161,9 @@ using Cysharp.Text;
             /// </summary>
             /// <param name="byteOffset">The byte offset.</param>
             /// <param name="colors">The colors.</param>
-            public CustomColor(short byteOffset, byte[] colors): this(byteOffset, colors[0], colors[1], colors[2])
+            public CustomColor(short byteOffset, byte[] colors) : this(byteOffset, colors[0], colors[1], colors[2])
             {
-               
+
             }
 
             /// <summary>
@@ -199,12 +199,12 @@ using Cysharp.Text;
             /// <value></value>
             public override byte[] GetTriplet()
             {
-                    return new byte[]
-                    {
+                return new byte[]
+                {
                         (byte)(red   & 0xff),
                         (byte)(green & 0xff),
                         (byte)(blue  & 0xff)
-                    };
+                };
             }
 
             /// <summary>
@@ -231,7 +231,7 @@ using Cysharp.Text;
             private static String GetGnumericPart(byte color)
             {
                 String s;
-                if (color == 0)
+                if(color == 0)
                 {
                     s = "0";
                 }
@@ -240,7 +240,7 @@ using Cysharp.Text;
                     int c = color & 0xff; //as Unsigned
                     c = (c << 8) | c; //pad to 16-bit
                     s = StringUtil.ToHexString(c).ToUpper();
-                    while (s.Length < 4)
+                    while(s.Length < 4)
                     {
                         s = "0" + s;
                     }

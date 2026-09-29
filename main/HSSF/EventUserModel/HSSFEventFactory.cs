@@ -18,9 +18,9 @@
 
 namespace NPOI.HSSF.EventUserModel
 {
-    using System.IO;
-    using NPOI.POIFS.FileSystem;
     using NPOI.HSSF.Record;
+    using NPOI.POIFS.FileSystem;
+    using System.IO;
 
 
     /// <summary>
@@ -86,7 +86,7 @@ namespace NPOI.HSSF.EventUserModel
             {
                 GenericProcessEvents(req, new RecordInputStream(in1));
             }
-            catch (HSSFUserException)
+            catch(HSSFUserException)
             {/*If an HSSFUserException user exception Is thrown, ignore it.*/ }
         }
 
@@ -118,13 +118,14 @@ namespace NPOI.HSSF.EventUserModel
             HSSFRecordStream recordStream = new HSSFRecordStream(in1);
 
             // Process each record as they come in
-            while (going)
+            while(going)
             {
                 r = recordStream.NextRecord();
-                if (r != null)
+                if(r != null)
                 {
                     userCode = req.ProcessRecord(r);
-                    if (userCode != 0) break;
+                    if(userCode != 0)
+                        break;
                 }
                 else
                 {

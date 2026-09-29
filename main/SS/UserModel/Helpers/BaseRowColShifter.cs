@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula;
+using NPOI.SS.Formula;
 using NPOI.SS.Formula.PTG;
 using NPOI.SS.Util;
 using System;
@@ -52,16 +52,16 @@ namespace NPOI.SS.UserModel.Helpers
             AreaPtg aptg = new AreaPtg(cra.FirstRow, cra.LastRow, cra.FirstColumn, cra.LastColumn, false, false, false, false);
             Ptg[] ptgs = { aptg, };
 
-            if (!Shifter.AdjustFormula(ptgs, currentExternSheetIx))
+            if(!Shifter.AdjustFormula(ptgs, currentExternSheetIx))
             {
                 return cra;
             }
             Ptg ptg0 = ptgs[0];
-            if (ptg0 is AreaPtg bptg)
+            if(ptg0 is AreaPtg bptg)
             {
                 return new CellRangeAddress(bptg.FirstRow, bptg.LastRow, bptg.FirstColumn, bptg.LastColumn);
             }
-            if (ptg0 is AreaErrPtg)
+            if(ptg0 is AreaErrPtg)
             {
                 return null;
             }

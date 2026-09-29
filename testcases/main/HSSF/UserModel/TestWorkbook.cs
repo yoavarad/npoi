@@ -25,7 +25,8 @@ namespace TestCases.HSSF.UserModel
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
     using TestCases.HSSF;
@@ -71,17 +72,17 @@ namespace TestCases.HSSF.UserModel
         {
             HSSFWorkbook wb1 = new HSSFWorkbook();
             HSSFSheet s = wb1.CreateSheet() as HSSFSheet;
-            
-            for (int rownum = 0; rownum < 100; rownum++)
+
+            for(int rownum = 0; rownum < 100; rownum++)
             {
                 HSSFRow r = s.CreateRow(rownum) as HSSFRow;
 
-                for (int cellnum = 0; cellnum < 50; cellnum += 2)
+                for(int cellnum = 0; cellnum < 50; cellnum += 2)
                 {
                     HSSFCell c = r.CreateCell(cellnum) as HSSFCell;
                     c.SetCellValue(rownum * 10000 + cellnum
-                                   + (((double)rownum / 1000)
-                                      + ((double)cellnum / 10000)));
+                                   + (((double) rownum / 1000)
+                                      + ((double) cellnum / 10000)));
                     c = r.CreateCell(cellnum + 1) as HSSFCell;
                     c.SetCellValue(new HSSFRichTextString("TEST"));
                 }
@@ -115,26 +116,26 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb1 = new HSSFWorkbook();
             HSSFSheet s = wb1.CreateSheet() as HSSFSheet;
 
-            for (int rownum = 0; rownum < 100; rownum++)
+            for(int rownum = 0; rownum < 100; rownum++)
             {
                 HSSFRow r = s.CreateRow(rownum) as HSSFRow;
 
-                for (int cellnum = 0; cellnum < 50; cellnum += 2)
+                for(int cellnum = 0; cellnum < 50; cellnum += 2)
                 {
                     HSSFCell c = r.CreateCell(cellnum)as HSSFCell;
                     c.SetCellValue(rownum * 10000 + cellnum
-                                   + (((double)rownum / 1000)
-                                      + ((double)cellnum / 10000)));
+                                   + (((double) rownum / 1000)
+                                      + ((double) cellnum / 10000)));
                     c = r.CreateCell(cellnum + 1) as HSSFCell;
                     c.SetCellValue(new HSSFRichTextString("TEST"));
                 }
             }
-            for (int rownum = 0; rownum < 25; rownum++)
+            for(int rownum = 0; rownum < 25; rownum++)
             {
                 HSSFRow r = s.GetRow(rownum) as HSSFRow;
                 s.RemoveRow(r);
             }
-            for (int rownum = 75; rownum < 100; rownum++)
+            for(int rownum = 75; rownum < 100; rownum++)
             {
                 HSSFRow r = s.GetRow(rownum) as HSSFRow;
                 s.RemoveRow(r);
@@ -346,7 +347,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb1 = OpenSample("SimpleWithStyling.xls");
             ISheet sheet = wb1.GetSheetAt(0);
 
-            for (int k = 0; k < 4; k++)
+            for(int k = 0; k < 4; k++)
             {
                 ICell cell = sheet.GetRow(k).GetCell(0);
 
@@ -355,7 +356,7 @@ namespace TestCases.HSSF.UserModel
 
             HSSFWorkbook wb2 = HSSFTestDataSamples.WriteOutAndReadBack(wb1);
             sheet = wb2.GetSheetAt(0);
-            for (int k = 0; k < 4; k++)
+            for(int k = 0; k < 4; k++)
             {
                 ICell cell = sheet.GetRow(k).GetCell(0);
 
@@ -439,16 +440,16 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb1 = new HSSFWorkbook();
             ISheet s = wb1.CreateSheet();
 
-            for (int rownum = 0; rownum < 100; rownum++)
+            for(int rownum = 0; rownum < 100; rownum++)
             {
                 IRow r = s.CreateRow(rownum);
 
-                for (int cellnum = 0; cellnum < 50; cellnum += 2)
+                for(int cellnum = 0; cellnum < 50; cellnum += 2)
                 {
                     ICell c = r.CreateCell(cellnum);
                     c.SetCellValue(rownum * 10000 + cellnum
-                                   + (((double)rownum / 1000)
-                                      + ((double)cellnum / 10000)));
+                                   + (((double) rownum / 1000)
+                                      + ((double) cellnum / 10000)));
                     c = r.CreateCell(cellnum + 1);
                     c.SetCellValue(new HSSFRichTextString("TEST"));
                 }
@@ -513,7 +514,7 @@ namespace TestCases.HSSF.UserModel
             }
             public void VisitRecord(Record r)
             {
-                if (r is LabelSSTRecord)
+                if(r is LabelSSTRecord)
                 {
                     _count++;
                 }
@@ -549,7 +550,7 @@ namespace TestCases.HSSF.UserModel
             HSSFSheet sheet = wb1.CreateSheet() as HSSFSheet;
             HSSFRow row;
             HSSFCell cell;
-            for (int i = 32700; i < 32771; i++)
+            for(int i = 32700; i < 32771; i++)
             {
                 row = sheet.CreateRow(i) as HSSFRow;
                 cell = row.CreateCell(0) as HSSFCell;
@@ -579,7 +580,7 @@ namespace TestCases.HSSF.UserModel
             IRow row;
             ICell cell;
             int i, j;
-            for (i = 0, j = 32771; j > 0; i++, j--)
+            for(i = 0, j = 32771; j > 0; i++, j--)
             {
                 row = sheet.CreateRow(i);
                 cell = row.CreateCell(0);
@@ -657,14 +658,14 @@ namespace TestCases.HSSF.UserModel
                 sheet.RepeatingColumns = (cra);
                 Assert.Fail("invalid start index is ignored");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             try
             {
                 sheet.RepeatingRows = (cra);
                 Assert.Fail("invalid start index is ignored");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             sheet.RepeatingColumns = (null);
             sheet.RepeatingRows = (null);
@@ -679,16 +680,16 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb1 = new HSSFWorkbook();
             ISheet s = wb1.CreateSheet();
 
-            for (int rownum = 0; rownum < 100; rownum++)
+            for(int rownum = 0; rownum < 100; rownum++)
             {
                 IRow r = s.CreateRow(rownum);
 
-                for (int cellnum = 0; cellnum < 50; cellnum += 2)
+                for(int cellnum = 0; cellnum < 50; cellnum += 2)
                 {
                     ICell c = r.CreateCell(cellnum);
                     c.SetCellValue(rownum * 10000 + cellnum
-                                   + (((double)rownum / 1000)
-                                      + ((double)cellnum / 10000)));
+                                   + (((double) rownum / 1000)
+                                      + ((double) cellnum / 10000)));
                     c = r.CreateCell(cellnum + 1);
                     c.SetCellValue(new HSSFRichTextString("TEST"));
                 }
@@ -718,9 +719,9 @@ namespace TestCases.HSSF.UserModel
             ISheet sheet2 = wb1.CreateSheet("sheet2");
             ISheet sheet3 = wb1.CreateSheet("sheet3");
 
-            sheet1.CreateRow(0).CreateCell((short)0).SetCellValue("val1");
-            sheet2.CreateRow(0).CreateCell((short)0).SetCellValue("val2");
-            sheet3.CreateRow(0).CreateCell((short)0).SetCellValue("val3");
+            sheet1.CreateRow(0).CreateCell((short) 0).SetCellValue("val1");
+            sheet2.CreateRow(0).CreateCell((short) 0).SetCellValue("val2");
+            sheet3.CreateRow(0).CreateCell((short) 0).SetCellValue("val3");
 
             IName namedCell1 = wb1.CreateName();
             namedCell1.NameName = (/*setter*/"name1");

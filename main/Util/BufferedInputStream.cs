@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -40,7 +40,7 @@ namespace NPOI.Util
         public BufferedInputStream(InputStream input, int size)
             : base(input)
         {
-            if (size <= 0)
+            if(size <= 0)
             {
                 throw new ArgumentException("Buffer size <= 0");
             }
@@ -50,40 +50,48 @@ namespace NPOI.Util
         public override int Read(byte[] b, int off, int len)
         {
             //getBufIfOpen(); // Check for closed stream
-            if ((off | len | (off + len) | (b.Length - (off + len))) < 0) {
+            if((off | len | (off + len) | (b.Length - (off + len))) < 0)
+            {
                 throw new IndexOutOfRangeException();
-            } else if (len == 0) {
+            }
+            else if(len == 0)
+            {
                 return 0;
             }
 
             int n = 0;
-            for (;;) {
+            for(; ; )
+            {
                 int nread = Read1(b, off + n, len - n);
-                if (nread <= 0)
+                if(nread <= 0)
                     return (n == 0) ? nread : n;
                 n += nread;
-                if (n >= len)
+                if(n >= len)
                     return n;
                 // if not closed but no bytes available, return
                 InputStream input = this.input;
-                if (input != null && input.Available() <= 0)
+                if(input != null && input.Available() <= 0)
                     return n;
             }
         }
 
-        private int Read1(byte[] b, int off, int len) {
+        private int Read1(byte[] b, int off, int len)
+        {
             int avail = count - pos;
-            if (avail <= 0) {
+            if(avail <= 0)
+            {
                 /* If the requested length is at least as large as the buffer, and
                    if there is no mark/reset activity, do not bother to copy the
                    bytes into the local buffer.  In this way buffered streams will
                    cascade harmlessly. */
-                if (len >= buf.Length && markpos < 0) {
+                if(len >= buf.Length && markpos < 0)
+                {
                     return input.Read(b, off, len);
                 }
                 Fill();
                 avail = count - pos;
-                if (avail <= 0) return -1;
+                if(avail <= 0)
+                    return -1;
             }
             int cnt = (avail < len) ? avail : len;
             Array.Copy(buf, pos, b, off, cnt);
@@ -93,23 +101,30 @@ namespace NPOI.Util
         private void Fill()
         {
             byte[] buffer = buf;
-            if (markpos < 0)
+            if(markpos < 0)
                 pos = 0;            /* no mark: throw away the buffer */
-            else if (pos >= buffer.Length)  /* no room left in buffer */
-                if (markpos > 0) {  /* can throw away early part of the buffer */
+            else if(pos >= buffer.Length)  /* no room left in buffer */
+                if(markpos > 0)
+                {  /* can throw away early part of the buffer */
                     int sz = pos - markpos;
                     Array.Copy(buffer, markpos, buffer, 0, sz);
                     pos = sz;
                     markpos = 0;
-                } else if (buffer.Length >= marklimit) {
+                }
+                else if(buffer.Length >= marklimit)
+                {
                     markpos = -1;   /* buffer got too big, invalidate mark */
                     pos = 0;        /* drop buffer contents */
-                } else if (buffer.Length >= MAX_BUFFER_SIZE) {
+                }
+                else if(buffer.Length >= MAX_BUFFER_SIZE)
+                {
                     throw new OutOfMemoryException("Required array size too large");
-                } else {            /* grow buffer */
+                }
+                else
+                {            /* grow buffer */
                     int nsz = (pos <= MAX_BUFFER_SIZE - pos) ?
                             pos * 2 : MAX_BUFFER_SIZE;
-                    if (nsz > marklimit)
+                    if(nsz > marklimit)
                         nsz = marklimit;
                     byte[] nbuf = new byte[nsz];
                     Array.Copy(buffer, 0, nbuf, 0, pos);
@@ -126,7 +141,7 @@ namespace NPOI.Util
                 }
             count = pos;
             int n = input.Read(buffer, pos, buffer.Length - pos);
-            if (n > 0)
+            if(n > 0)
                 count = n + pos;
         }
 
@@ -137,19 +152,21 @@ namespace NPOI.Util
             return n > (int.MaxValue - avail) ? int.MaxValue : n + avail;
         }
 
-        public override void Mark(int readlimit) {
+        public override void Mark(int readlimit)
+        {
             marklimit = readlimit;
             markpos = pos;
         }
 
-        public override bool MarkSupported() {
+        public override bool MarkSupported()
+        {
             return true;
         }
 
         public override void Reset()
         {
             //getBufIfOpen(); // Cause exception if closed
-            if (markpos < 0)
+            if(markpos < 0)
                 throw new IOException("Resetting to invalid mark");
             pos = markpos;
         }

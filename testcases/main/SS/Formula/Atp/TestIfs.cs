@@ -14,14 +14,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.SS.UserModel;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.Util;
 
 namespace TestCases.SS.Formula.Atp
 {
@@ -38,29 +39,29 @@ namespace TestCases.SS.Formula.Atp
             ISheet sh = wb.CreateSheet();
             IRow row1 = sh.CreateRow(0);
 
-	        // Create cells
-	        row1.CreateCell(0, CellType.String);
+            // Create cells
+            row1.CreateCell(0, CellType.String);
 
-	        // Create references
-	        CellReference a1Ref = new CellReference("A1");
+            // Create references
+            CellReference a1Ref = new CellReference("A1");
 
-	        // Set values
-	        ICell cellA1 = sh.GetRow(a1Ref.Row).GetCell(a1Ref.Col);
+            // Set values
+            ICell cellA1 = sh.GetRow(a1Ref.Row).GetCell(a1Ref.Col);
 
-	        ICell cell1 = row1.CreateCell(1);
-	        cell1.CellFormula = "IFS(A1=\"A\", \"Value for A\", A1=\"B\",\"Value for B\")";
+            ICell cell1 = row1.CreateCell(1);
+            cell1.CellFormula = "IFS(A1=\"A\", \"Value for A\", A1=\"B\",\"Value for B\")";
 
-	        IFormulaEvaluator evaluator = wb.GetCreationHelper().CreateFormulaEvaluator();
+            IFormulaEvaluator evaluator = wb.GetCreationHelper().CreateFormulaEvaluator();
 
-	        cellA1.SetCellValue("A");
-	        ClassicAssert.AreEqual(CellType.String, evaluator.Evaluate(cell1).CellType, "Checks that the cell is numeric");
-	        ClassicAssert.AreEqual("Value for A", evaluator.Evaluate(cell1).StringValue, "IFS should return 'Value for B'");
+            cellA1.SetCellValue("A");
+            ClassicAssert.AreEqual(CellType.String, evaluator.Evaluate(cell1).CellType, "Checks that the cell is numeric");
+            ClassicAssert.AreEqual("Value for A", evaluator.Evaluate(cell1).StringValue, "IFS should return 'Value for B'");
 
-	        cellA1.SetCellValue("B");
-	        evaluator.ClearAllCachedResultValues();
+            cellA1.SetCellValue("B");
+            evaluator.ClearAllCachedResultValues();
 
             ClassicAssert.AreEqual(CellType.String, evaluator.Evaluate(cell1).CellType, "Checks that the cell is numeric");
-	        ClassicAssert.AreEqual("Value for B", evaluator.Evaluate(cell1).StringValue, "IFS should return 'Value for B'");
+            ClassicAssert.AreEqual("Value for B", evaluator.Evaluate(cell1).StringValue, "IFS should return 'Value for B'");
         }
     }
 }

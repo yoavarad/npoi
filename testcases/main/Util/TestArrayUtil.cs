@@ -1,9 +1,8 @@
-﻿using System;
-using System.Text;
-
 using NPOI.Util;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Text;
 
 namespace TestCases.Util
 {
@@ -43,9 +42,9 @@ namespace TestCases.Util
         {
             char[] a=new char[100];
             Arrays.Fill(a, 'a');
-            for (int i = 0; i < a.Length; i++)
+            for(int i = 0; i < a.Length; i++)
             {
-                if (a[i] != 'a')
+                if(a[i] != 'a')
                 {
                     Assert.Fail("incorrect default value");
                 }
@@ -57,9 +56,9 @@ namespace TestCases.Util
         {
             byte[] a = new byte[100];
             Arrays.Fill(a, 0x01);
-            for (int i = 0; i < a.Length; i++)
+            for(int i = 0; i < a.Length; i++)
             {
-                if (a[i] != 0x01)
+                if(a[i] != 0x01)
                 {
                     Assert.Fail("incorrect default value");
                 }
@@ -71,9 +70,9 @@ namespace TestCases.Util
         {
             int[] a = new int[100];
             Arrays.Fill(a, 5);
-            for (int i = 0; i < a.Length; i++)
+            for(int i = 0; i < a.Length; i++)
             {
-                if (a[i] != 5)
+                if(a[i] != 5)
                 {
                     Assert.Fail("incorrect default value");
                 }

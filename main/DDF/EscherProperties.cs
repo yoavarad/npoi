@@ -293,14 +293,14 @@ namespace NPOI.DDF
         public const short CALLOUT__DROPAUTO = 894;
         public const short CALLOUT__LENGTHSPECIFIED = 895;
 
-	    public const short GROUPSHAPE__SHAPENAME = 0x0380;
-	    public const short GROUPSHAPE__DESCRIPTION = 0x0381;
+        public const short GROUPSHAPE__SHAPENAME = 0x0380;
+        public const short GROUPSHAPE__DESCRIPTION = 0x0381;
         public const short GROUPSHAPE__HYPERLINK = 0x0382;
-	    public const short GROUPSHAPE__WRAPPOLYGONVERTICES = 0x0383;
-	    public const short GROUPSHAPE__WRAPDISTLEFT = 0x0384;
-	    public const short GROUPSHAPE__WRAPDISTTOP = 0x0385;
-	    public const short GROUPSHAPE__WRAPDISTRIGHT = 0x0386;
-	    public const short GROUPSHAPE__WRAPDISTBOTTOM = 0x0387;
+        public const short GROUPSHAPE__WRAPPOLYGONVERTICES = 0x0383;
+        public const short GROUPSHAPE__WRAPDISTLEFT = 0x0384;
+        public const short GROUPSHAPE__WRAPDISTTOP = 0x0385;
+        public const short GROUPSHAPE__WRAPDISTRIGHT = 0x0386;
+        public const short GROUPSHAPE__WRAPDISTBOTTOM = 0x0387;
         public const short GROUPSHAPE__REGROUPID = 0x0388;
         public const short GROUPSHAPE__UNUSED906 = 0x038A;
         public const short GROUPSHAPE__TOOLTIP = 0x038D;
@@ -325,13 +325,13 @@ namespace NPOI.DDF
         public const short GROUPSHAPE__METROBLOB = 0x03A9;
         public const short GROUPSHAPE__ZORDER = 0x03AA;
         public const short GROUPSHAPE__FLAGS = 0x03BF;
-	    public const short GROUPSHAPE__EDITEDWRAP = 953;
-	    public const short GROUPSHAPE__BEHINDDOCUMENT = 954;
-	    public const short GROUPSHAPE__ONDBLCLICKNOTIFY = 955;
-	    public const short GROUPSHAPE__ISBUTTON = 956;
-	    public const short GROUPSHAPE__1DADJUSTMENT = 957;
-	    public const short GROUPSHAPE__HIDDEN = 958;
-	    public const short GROUPSHAPE__PRINT = 959;
+        public const short GROUPSHAPE__EDITEDWRAP = 953;
+        public const short GROUPSHAPE__BEHINDDOCUMENT = 954;
+        public const short GROUPSHAPE__ONDBLCLICKNOTIFY = 955;
+        public const short GROUPSHAPE__ISBUTTON = 956;
+        public const short GROUPSHAPE__1DADJUSTMENT = 957;
+        public const short GROUPSHAPE__HIDDEN = 958;
+        public const short GROUPSHAPE__PRINT = 959;
         #endregion
 
         private static Hashtable properties;
@@ -341,7 +341,7 @@ namespace NPOI.DDF
         /// </summary>
         private static void InitProps()
         {
-            if (properties == null)
+            if(properties == null)
             {
                 properties = new Hashtable();
                 AddProp(TRANSFORM__ROTATION, GetData("transform.rotation"));
@@ -632,7 +632,7 @@ namespace NPOI.DDF
         /// <param name="data">The data.</param>
         private static void AddProp(int s, EscherPropertyMetaData data)
         {
-            properties[(short)s]= data;
+            properties[(short) s]= data;
         }
 
 
@@ -679,9 +679,7 @@ namespace NPOI.DDF
         {
             InitProps();
             EscherPropertyMetaData escherPropertyMetaData = (EscherPropertyMetaData)properties[propertyId];
-            return escherPropertyMetaData == null ? (byte)0 : escherPropertyMetaData.Type;
+            return escherPropertyMetaData == null ? (byte) 0 : escherPropertyMetaData.Type;
         }
     }
 }
-
-

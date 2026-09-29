@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Collections;
 using ICSharpCode.SharpZipLib.Zip;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.Util
 {
@@ -32,10 +32,10 @@ namespace NPOI.OpenXml4Net.Util
             bool going = true;
             //if(inp.Position != 0)
             //    inp.Position = 0;
-            while (going)
+            while(going)
             {
                 ZipEntry zipEntry = inp.GetNextEntry();
-                if (zipEntry == null)
+                if(zipEntry == null)
                 {
                     going = false;
                 }
@@ -129,14 +129,14 @@ namespace NPOI.OpenXml4Net.Util
 
                 long entrySize = entry.Size;
 
-                if (entrySize != -1)
+                if(entrySize != -1)
                 {
-                    if (entrySize >= Int32.MaxValue)
+                    if(entrySize >= Int32.MaxValue)
                     {
                         throw new IOException("ZIP entry size is too large");
                     }
 
-                    baos = new MemoryStream((int)entrySize);
+                    baos = new MemoryStream((int) entrySize);
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace NPOI.OpenXml4Net.Util
 
                 byte[] buffer = new byte[4096];
                 int read = 0;
-                while ((read = inp.Read(buffer, 0, buffer.Length)) > 0)
+                while((read = inp.Read(buffer, 0, buffer.Length)) > 0)
                 {
                     baos.Write(buffer, 0, read);
                 }

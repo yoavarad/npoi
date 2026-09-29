@@ -18,7 +18,8 @@ namespace TestCases.POIFS.Crypt
 {
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.FileSystem;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases;
 
     [TestFixture]

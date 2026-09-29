@@ -24,19 +24,18 @@
  * Contributors:
  * 
  * ==============================================================*/
-        
 
+
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.NIO;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.FileSystem;
-using NPOI.Util;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
-using NPOI.POIFS.NIO;
 
 namespace TestCases.POIFS.FileSystem
 {
@@ -61,10 +60,10 @@ namespace TestCases.POIFS.FileSystem
             int blocks = (_workbook_size + 511) / 512;
 
             _workbook_data = new byte[512 * blocks];
-            Arrays.Fill(_workbook_data, unchecked((byte)-1));
-            for (int j = 0; j < _workbook_size; j++)
+            Arrays.Fill(_workbook_data, unchecked((byte) -1));
+            for(int j = 0; j < _workbook_size; j++)
             {
-                _workbook_data[j] = (byte)(j * j);
+                _workbook_data[j] = (byte) (j * j);
             }
 
             // Create the Old POIFS Version
@@ -72,7 +71,7 @@ namespace TestCases.POIFS.FileSystem
             MemoryStream stream =
                 new MemoryStream(_workbook_data);
 
-            for (int j = 0; j < blocks; j++)
+            for(int j = 0; j < blocks; j++)
             {
                 rawBlocks[j] = new RawDataBlock(stream);
             }
@@ -82,7 +81,7 @@ namespace TestCases.POIFS.FileSystem
             _workbook_o = new DocumentNode(
                 document.DocumentProperty,
                 new DirectoryNode(
-                    new DirectoryProperty("Root Entry"), (POIFSFileSystem)null, null));
+                    new DirectoryProperty("Root Entry"), (POIFSFileSystem) null, null));
 
             // Now create the NPOIFS Version
             byte[] _workbook_data_only = new byte[_workbook_size];
@@ -91,13 +90,13 @@ namespace TestCases.POIFS.FileSystem
             NPOIFSFileSystem npoifs = new NPOIFSFileSystem();
             // Make it easy when debugging to see what isn't the doc
             byte[] minus1 = new byte[512];
-            Arrays.Fill(minus1, unchecked((byte)-1));
+            Arrays.Fill(minus1, unchecked((byte) -1));
             npoifs.GetBlockAt(-1).Write(minus1);
             npoifs.GetBlockAt(0).Write(minus1);
             npoifs.GetBlockAt(1).Write(minus1);
 
             // Create the NPOIFS document
-            _workbook_n = (DocumentNode)npoifs.CreateDocument(
+            _workbook_n = (DocumentNode) npoifs.CreateDocument(
                   new MemoryStream(_workbook_data_only),
                   "Workbook"
             );
@@ -144,7 +143,7 @@ namespace TestCases.POIFS.FileSystem
                 ostream.Available();
                 Assert.Fail("Should have caught IOException");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // as expected
             }
@@ -153,7 +152,7 @@ namespace TestCases.POIFS.FileSystem
                 nstream.Available();
                 Assert.Fail("Should have caught IOException");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // as expected
             }
@@ -174,11 +173,11 @@ namespace TestCases.POIFS.FileSystem
               new DocumentInputStream(_workbook_o),
               new NDocumentInputStream(_workbook_n)
         };
-            foreach (DocumentInputStream stream in streams)
+            foreach(DocumentInputStream stream in streams)
             {
                 // Read a fifth of it, and check all's correct
                 stream.Read(buffer);
-                for (int j = 0; j < buffer.Length; j++)
+                for(int j = 0; j < buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j], buffer[j], "Checking byte " + j);
                 }
@@ -192,7 +191,7 @@ namespace TestCases.POIFS.FileSystem
 
                 // Read part of a block
                 stream.Read(small_buffer);
-                for (int j = 0; j < small_buffer.Length; j++)
+                for(int j = 0; j < small_buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j], small_buffer[j], "Checking byte " + j);
                 }
@@ -201,7 +200,7 @@ namespace TestCases.POIFS.FileSystem
 
                 // Read the next part
                 stream.Read(small_buffer);
-                for (int j = 0; j < small_buffer.Length; j++)
+                for(int j = 0; j < small_buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j + small_buffer.Length], small_buffer[j], "Checking byte " + j);
                 }
@@ -213,7 +212,7 @@ namespace TestCases.POIFS.FileSystem
 
                 // Read 
                 stream.Read(small_buffer);
-                for (int j = 0; j < small_buffer.Length; j++)
+                for(int j = 0; j < small_buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j + small_buffer.Length], small_buffer[j], "Checking byte " + j);
                 }
@@ -221,25 +220,25 @@ namespace TestCases.POIFS.FileSystem
 
 
                 // Now read at various points
-                Arrays.Fill(small_buffer, (byte)0);
+                Arrays.Fill(small_buffer, (byte) 0);
                 stream.Read(small_buffer, 6, 8);
                 stream.Read(small_buffer, 100, 10);
                 stream.Read(small_buffer, 150, 12);
                 int pos = small_buffer.Length * 2;
-                for (int j = 0; j < small_buffer.Length; j++)
+                for(int j = 0; j < small_buffer.Length; j++)
                 {
                     byte exp = 0;
-                    if (j >= 6 && j < 6 + 8)
+                    if(j >= 6 && j < 6 + 8)
                     {
                         exp = _workbook_data[pos];
                         pos++;
                     }
-                    if (j >= 100 && j < 100 + 10)
+                    if(j >= 100 && j < 100 + 10)
                     {
                         exp = _workbook_data[pos];
                         pos++;
                     }
-                    if (j >= 150 && j < 150 + 12)
+                    if(j >= 150 && j < 150 + 12)
                     {
                         exp = _workbook_data[pos];
                         pos++;
@@ -253,12 +252,12 @@ namespace TestCases.POIFS.FileSystem
             streams = new DocumentInputStream[] {
               new DocumentInputStream(_workbook_o),
               new NDocumentInputStream(_workbook_n)        };
-            foreach (DocumentInputStream stream in streams)
+            foreach(DocumentInputStream stream in streams)
             {
                 // Read several blocks work
                 buffer = new byte[_workbook_size / 5];
                 stream.Read(buffer);
-                for (int j = 0; j < buffer.Length; j++)
+                for(int j = 0; j < buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j], buffer[j], "Checking byte " + j);
                 }
@@ -269,7 +268,7 @@ namespace TestCases.POIFS.FileSystem
                 ClassicAssert.AreEqual(_workbook_size, stream.Available());
 
                 stream.Read(buffer);
-                for (int j = 0; j < buffer.Length; j++)
+                for(int j = 0; j < buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j], buffer[j], "Checking byte " + j);
                 }
@@ -279,7 +278,7 @@ namespace TestCases.POIFS.FileSystem
                 stream.Read(buffer);
                 ClassicAssert.AreEqual(_workbook_size - (2 * buffer.Length),
                       stream.Available());
-                for (int j = buffer.Length; j < (2 * buffer.Length); j++)
+                for(int j = buffer.Length; j < (2 * buffer.Length); j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j], buffer[j - buffer.Length], "Checking byte " + j);
                 }
@@ -292,7 +291,7 @@ namespace TestCases.POIFS.FileSystem
                 stream.Read(buffer);
                 ClassicAssert.AreEqual(_workbook_size - (2 * buffer.Length),
                       stream.Available());
-                for (int j = buffer.Length; j < (2 * buffer.Length); j++)
+                for(int j = buffer.Length; j < (2 * buffer.Length); j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j], buffer[j - buffer.Length], "Checking byte " + j);
                 }
@@ -313,17 +312,17 @@ namespace TestCases.POIFS.FileSystem
              new DocumentInputStream(_workbook_o),
              new NDocumentInputStream(_workbook_n)
        };
-            foreach (DocumentInputStream stream in streams)
+            foreach(DocumentInputStream stream in streams)
             {
                 int remaining = _workbook_size;
 
                 // Try and read each byte in turn
-                for (int j = 0; j < _workbook_size; j++)
+                for(int j = 0; j < _workbook_size; j++)
                 {
                     int b = stream.Read();
                     ClassicAssert.IsTrue(b >= 0, "Checking sign of " + j);
                     ClassicAssert.AreEqual(_workbook_data[j],
-                          (byte)b, "validating byte " + j);
+                          (byte) b, "validating byte " + j);
                     remaining--;
                     ClassicAssert.AreEqual(
                           remaining, stream.Available(), "Checking remaining After Reading byte " + j);
@@ -339,7 +338,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Read();
                     Assert.Fail("Should have caught IOException");
                 }
-                catch (IOException)
+                catch(IOException)
                 {
                     // as expected
                 }
@@ -359,7 +358,7 @@ namespace TestCases.POIFS.FileSystem
              new DocumentInputStream(_workbook_o),
              new NDocumentInputStream(_workbook_n)
        };
-            foreach (DocumentInputStream stream in streams)
+            foreach(DocumentInputStream stream in streams)
             {
                 // Need to give a byte array to read
                 try
@@ -367,7 +366,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Read(null);
                     Assert.Fail("Should have caught NullPointerException");
                 }
-                catch (NullReferenceException)
+                catch(NullReferenceException)
                 {
                     // as expected
                 }
@@ -378,10 +377,10 @@ namespace TestCases.POIFS.FileSystem
                 byte[] buffer = new byte[_buffer_size];
                 int offset = 0;
 
-                while (stream.Available() >= buffer.Length)
+                while(stream.Available() >= buffer.Length)
                 {
                     ClassicAssert.AreEqual(_buffer_size, stream.Read(buffer));
-                    for (int j = 0; j < buffer.Length; j++)
+                    for(int j = 0; j < buffer.Length; j++)
                     {
                         ClassicAssert.AreEqual(
                               _workbook_data[offset], buffer[j], "in main loop, byte " + offset);
@@ -391,18 +390,18 @@ namespace TestCases.POIFS.FileSystem
                           stream.Available(), "offset " + offset);
                 }
                 ClassicAssert.AreEqual(_workbook_size % _buffer_size, stream.Available());
-                Arrays.Fill(buffer, (byte)0);
+                Arrays.Fill(buffer, (byte) 0);
                 int count = stream.Read(buffer);
 
                 ClassicAssert.AreEqual(_workbook_size % _buffer_size, count);
-                for (int j = 0; j < count; j++)
+                for(int j = 0; j < count; j++)
                 {
                     ClassicAssert.AreEqual(
                           _workbook_data[offset], buffer[j], "past main loop, byte " + offset);
                     offset++;
                 }
                 ClassicAssert.AreEqual(_workbook_size, offset);
-                for (int j = count; j < buffer.Length; j++)
+                for(int j = count; j < buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(0, buffer[j], "Checking remainder, byte " + j);
                 }
@@ -413,7 +412,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Read(buffer);
                     Assert.Fail("Should have caught IOException");
                 }
-                catch (IOException)
+                catch(IOException)
                 {
                     // as expected
                 }
@@ -433,14 +432,14 @@ namespace TestCases.POIFS.FileSystem
              new DocumentInputStream(_workbook_o),
              new NDocumentInputStream(_workbook_n)
        };
-            foreach (DocumentInputStream stream in streams)
+            foreach(DocumentInputStream stream in streams)
             {
                 try
                 {
                     stream.Read(null, 0, 1);
                     Assert.Fail("Should have caught NullPointerException");
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                     // as expected
                 }
@@ -451,7 +450,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Read(new byte[5], -4, 0);
                     Assert.Fail("Should have caught IndexOutOfBoundsException");
                 }
-                catch (IndexOutOfRangeException)
+                catch(IndexOutOfRangeException)
                 {
                     // as expected
                 }
@@ -460,7 +459,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Read(new byte[5], 0, -4);
                     Assert.Fail("Should have caught IndexOutOfBoundsException");
                 }
-                catch (IndexOutOfRangeException)
+                catch(IndexOutOfRangeException)
                 {
                     // as expected
                 }
@@ -469,7 +468,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Read(new byte[5], 0, 6);
                     Assert.Fail("Should have caught IndexOutOfBoundsException");
                 }
-                catch (IndexOutOfRangeException)
+                catch(IndexOutOfRangeException)
                 {
                     // as expected
                 }
@@ -480,21 +479,21 @@ namespace TestCases.POIFS.FileSystem
                 byte[] buffer = new byte[_workbook_size];
                 int offset = 0;
 
-                while (stream.Available() >= _buffer_size)
+                while(stream.Available() >= _buffer_size)
                 {
-                    Arrays.Fill(buffer, (byte)0);
+                    Arrays.Fill(buffer, (byte) 0);
                     ClassicAssert.AreEqual(_buffer_size,
                           stream.Read(buffer, offset, _buffer_size));
-                    for (int j = 0; j < offset; j++)
+                    for(int j = 0; j < offset; j++)
                     {
                         ClassicAssert.AreEqual(0, buffer[j], "Checking byte " + j);
                     }
-                    for (int j = offset; j < (offset + _buffer_size); j++)
+                    for(int j = offset; j < (offset + _buffer_size); j++)
                     {
                         ClassicAssert.AreEqual(_workbook_data[j],
                               buffer[j], "Checking byte " + j);
                     }
-                    for (int j = offset + _buffer_size; j < buffer.Length; j++)
+                    for(int j = offset + _buffer_size; j < buffer.Length; j++)
                     {
                         ClassicAssert.AreEqual(0, buffer[j], "Checking byte " + j);
                     }
@@ -503,22 +502,22 @@ namespace TestCases.POIFS.FileSystem
                           stream.Available(), "offset " + offset);
                 }
                 ClassicAssert.AreEqual(_workbook_size % _buffer_size, stream.Available());
-                Arrays.Fill(buffer, (byte)0);
+                Arrays.Fill(buffer, (byte) 0);
                 int count = stream.Read(buffer, offset,
                       _workbook_size % _buffer_size);
 
                 ClassicAssert.AreEqual(_workbook_size % _buffer_size, count);
-                for (int j = 0; j < offset; j++)
+                for(int j = 0; j < offset; j++)
                 {
                     ClassicAssert.AreEqual(0, buffer[j], "Checking byte " + j);
                 }
-                for (int j = offset; j < buffer.Length; j++)
+                for(int j = offset; j < buffer.Length; j++)
                 {
                     ClassicAssert.AreEqual(_workbook_data[j],
                           buffer[j], "Checking byte " + j);
                 }
                 ClassicAssert.AreEqual(_workbook_size, offset + count);
-                for (int j = count; j < offset; j++)
+                for(int j = count; j < offset; j++)
                 {
                     ClassicAssert.AreEqual(0, buffer[j], "byte " + j);
                 }
@@ -530,7 +529,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Read(buffer, 0, 1);
                     Assert.Fail("Should have caught IOException");
                 }
-                catch (IOException)
+                catch(IOException)
                 {
                     // as expected
                 }
@@ -549,12 +548,12 @@ namespace TestCases.POIFS.FileSystem
              new DocumentInputStream(_workbook_o),
              new NDocumentInputStream(_workbook_n)
        };
-            foreach (DocumentInputStream stream in streams)
+            foreach(DocumentInputStream stream in streams)
             {
                 ClassicAssert.AreEqual(_workbook_size, stream.Available());
                 int count = stream.Available();
 
-                while (stream.Available() >= _buffer_size)
+                while(stream.Available() >= _buffer_size)
                 {
                     ClassicAssert.AreEqual(_buffer_size, stream.Skip(_buffer_size));
                     count -= _buffer_size;
@@ -570,7 +569,7 @@ namespace TestCases.POIFS.FileSystem
                 stream.Reset();
                 ClassicAssert.AreEqual(_workbook_size, stream.Available());
                 ClassicAssert.AreEqual(_workbook_size,
-                      stream.Skip(2 + (long)Int32.MaxValue));
+                      stream.Skip(2 + (long) Int32.MaxValue));
                 ClassicAssert.AreEqual(0, stream.Available());
             }
         }
@@ -601,7 +600,7 @@ namespace TestCases.POIFS.FileSystem
                 ClassicAssert.AreEqual(null, opoifs.Root.NFileSystem);
 
                 // Check inside
-                foreach (DirectoryNode root in new DirectoryNode[] { opoifs.Root, npoifs.Root })
+                foreach(DirectoryNode root in new DirectoryNode[] { opoifs.Root, npoifs.Root })
                 {
                     // Top Level
                     Entry top = root.GetEntry("Contents");

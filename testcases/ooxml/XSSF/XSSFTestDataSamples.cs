@@ -15,19 +15,19 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.OpenXml4Net.OPC;
-using System;
-using NPOI.XSSF.UserModel;
-using System.IO;
-using NPOI.SS.UserModel;
-using NPOI.HSSF.UserModel;
-using NPOI.Util;
 using NPOI.HSSF;
-using TestCases.HSSF;
-using System.Diagnostics;
+using NPOI.HSSF.UserModel;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.SS.UserModel;
+using NPOI.Util;
+using NPOI.XSSF.Streaming;
+using NPOI.XSSF.UserModel;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using NPOI.XSSF.Streaming;
+using System;
+using System.Diagnostics;
+using System.IO;
+using TestCases.HSSF;
 
 namespace NPOI.XSSF
 {
@@ -67,20 +67,20 @@ namespace NPOI.XSSF
             IWorkbook result;
             try
             {
-                using (MemoryStream baos = new MemoryStream(8192))
+                using(MemoryStream baos = new MemoryStream(8192))
                 {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
                     wb.Write(baos, false);
                     sw.Stop();
                     Debug.WriteLine("XSSFWorkbook write time: " + sw.ElapsedMilliseconds + "ms");
-                    using (Stream is1 = new MemoryStream(baos.ToArray()))
+                    using(Stream is1 = new MemoryStream(baos.ToArray()))
                     {
-                        if (wb is HSSFWorkbook)
+                        if(wb is HSSFWorkbook)
                         {
                             result = new HSSFWorkbook(is1);
                         }
-                        else if (wb is XSSFWorkbook)
+                        else if(wb is XSSFWorkbook)
                         {
                             Stopwatch sw2 = new Stopwatch();
                             sw2.Start();
@@ -88,7 +88,7 @@ namespace NPOI.XSSF
                             sw2.Stop();
                             Debug.WriteLine("XSSFWorkbook parse time: " + sw2.ElapsedMilliseconds + "ms");
                         }
-                        else if (wb is SXSSFWorkbook)
+                        else if(wb is SXSSFWorkbook)
                         {
                             result = new SXSSFWorkbook(new XSSFWorkbook(is1));
                         }
@@ -100,7 +100,7 @@ namespace NPOI.XSSF
                     }
                 }
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -123,7 +123,7 @@ namespace NPOI.XSSF
             {
                 string filename = Path.Combine(TestContext.CurrentContext.TestDirectory, testName + ".xlsx");
 
-                if (File.Exists(filename))
+                if(File.Exists(filename))
                 {
                     File.Delete(filename);
                 }
@@ -146,7 +146,7 @@ namespace NPOI.XSSF
                     in1.Close();
                 }
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -180,7 +180,7 @@ namespace NPOI.XSSF
         {
             String testOutputDir = Environment.GetEnvironmentVariable(TEST_OUTPUT_DIR);
             FileInfo file;
-            if (testOutputDir != null)
+            if(testOutputDir != null)
             {
                 String testNameWithExtension = testName.EndsWith(".xlsx") ? testName : testName + ".xlsx";
                 file = new FileInfo(Path.Combine(testOutputDir, testNameWithExtension));
@@ -189,7 +189,7 @@ namespace NPOI.XSSF
             {
                 file = TempFile.CreateTempFile(testName, ".xlsx");
             }
-            if (file.Exists)
+            if(file.Exists)
             {
                 file.Delete();
             }
@@ -252,7 +252,7 @@ namespace NPOI.XSSF
                 wb.Close();
                 return file;
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -276,7 +276,7 @@ namespace NPOI.XSSF
                 wb.Close();
                 return out1;
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -368,7 +368,7 @@ namespace NPOI.XSSF
             {
                 result = ReadBack(WriteOut(wb));
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -389,7 +389,7 @@ namespace NPOI.XSSF
             {
                 result = ReadBack(WriteOutAndClose(wb));
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -410,7 +410,7 @@ namespace NPOI.XSSF
 
         public static R WriteOutAndReadBack<R>(R wb, String testName) where R : IWorkbook
         {
-            if (TestContext.Parameters[TEST_OUTPUT_DIR] == null)
+            if(TestContext.Parameters[TEST_OUTPUT_DIR] == null)
             {
                 return WriteOutAndReadBack(wb);
             }
@@ -422,7 +422,7 @@ namespace NPOI.XSSF
                     R r = (R)result;
                     return r;
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new RuntimeException(e);
                 }
@@ -432,4 +432,3 @@ namespace NPOI.XSSF
     }
 
 }
-

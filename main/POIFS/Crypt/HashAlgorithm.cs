@@ -75,27 +75,30 @@ namespace NPOI.POIFS.Crypt
 
         public static HashAlgorithm FromEcmaId(int ecmaId)
         {
-            foreach (HashAlgorithm ha in values)
+            foreach(HashAlgorithm ha in values)
             {
-                if (ha.ecmaId == ecmaId) return ha;
+                if(ha.ecmaId == ecmaId)
+                    return ha;
             }
             throw new EncryptedDocumentException("hash algorithm not found");
         }
 
         public static HashAlgorithm FromEcmaId(String ecmaString)
         {
-            foreach (HashAlgorithm ha in values)
+            foreach(HashAlgorithm ha in values)
             {
-                if (ha.ecmaString.Equals(ecmaString)) return ha;
+                if(ha.ecmaString.Equals(ecmaString))
+                    return ha;
             }
             throw new EncryptedDocumentException("hash algorithm not found");
         }
 
         public static HashAlgorithm FromString(String string1)
         {
-            foreach (HashAlgorithm ha in values)
+            foreach(HashAlgorithm ha in values)
             {
-                if (ha.ecmaString.Equals(string1, StringComparison.CurrentCultureIgnoreCase) || ha.jceId.Equals(string1, StringComparison.CurrentCultureIgnoreCase)) return ha;
+                if(ha.ecmaString.Equals(string1, StringComparison.CurrentCultureIgnoreCase) || ha.jceId.Equals(string1, StringComparison.CurrentCultureIgnoreCase))
+                    return ha;
             }
             throw new EncryptedDocumentException("hash algorithm not found");
         }

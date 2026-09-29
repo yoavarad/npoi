@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.EventUserModel
 {
+    using NPOI.HSSF.Record;
     using System;
     using System.Collections;
-    using NPOI.HSSF.Record;
 
 
     /// <summary>
@@ -57,9 +57,9 @@ namespace NPOI.HSSF.EventUserModel
             IList list = null;
             Object obj = records[sid];
 
-            if (obj != null)
+            if(obj != null)
             {
-                list = (IList)obj;
+                list = (IList) obj;
             }
             else
             {
@@ -83,7 +83,7 @@ namespace NPOI.HSSF.EventUserModel
         {
             short[] rectypes = RecordFactory.GetAllKnownRecordSIDs();
 
-            for (int k = 0; k < rectypes.Length; k++)
+            for(int k = 0; k < rectypes.Length; k++)
             {
                 AddListener(lsnr, rectypes[k]);
             }
@@ -101,17 +101,18 @@ namespace NPOI.HSSF.EventUserModel
             Object obj = records[rec.Sid];
             short userCode = 0;
 
-            if (obj != null)
+            if(obj != null)
             {
                 IList listeners = (IList)obj;
 
-                for (int k = 0; k < listeners.Count; k++)
+                for(int k = 0; k < listeners.Count; k++)
                 {
                     Object listenObj = listeners[k];
-                    if (listenObj is AbortableHSSFListener hssfListener)
+                    if(listenObj is AbortableHSSFListener hssfListener)
                     {
                         userCode = hssfListener.AbortableProcessRecord(rec);
-                        if (userCode != 0) break;
+                        if(userCode != 0)
+                            break;
                     }
                     else
                     {

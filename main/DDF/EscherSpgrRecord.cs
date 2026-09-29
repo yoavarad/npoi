@@ -20,8 +20,8 @@ using System.Text;
 
 namespace NPOI.DDF
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /// <summary>
     /// The spgr record defines information about a shape group.  Groups in escher
@@ -50,12 +50,17 @@ namespace NPOI.DDF
             int bytesRemaining = ReadHeader(data, offset);
             int pos = offset + 8;
             int size = 0;
-            field_1_rectX1 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_2_rectY1 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_3_rectX2 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_4_rectY2 = LittleEndian.GetInt(data, pos + size); size += 4;
+            field_1_rectX1 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_2_rectY1 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_3_rectX2 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_4_rectY2 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
             bytesRemaining -= size;
-            if (bytesRemaining != 0) throw new RecordFormatException("Expected no remaining bytes but got " + bytesRemaining);
+            if(bytesRemaining != 0)
+                throw new RecordFormatException("Expected no remaining bytes but got " + bytesRemaining);
             //        remainingData  =  new byte[bytesRemaining];
             //        Array.Copy( data, pos + size, remainingData, 0, bytesRemaining );
             return 8 + size + bytesRemaining;

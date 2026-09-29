@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,15 +17,16 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.UserModel;
     using NPOI.Util;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Text;
 
     [TestFixture]
     public class TestProper
@@ -80,10 +81,10 @@ namespace TestCases.SS.Formula.Functions
             // also test longer string
             StringBuilder builder = new StringBuilder("A");
             StringBuilder expected = new StringBuilder("A");
-            for (int i = 1; i < 254; i++)
+            for(int i = 1; i < 254; i++)
             {
-                builder.Append((char)(65 + (i % 26)));
-                expected.Append((char)(97 + (i % 26)));
+                builder.Append((char) (65 + (i % 26)));
+                expected.Append((char) (97 + (i % 26)));
             }
             Confirm("PROPER(\"" + builder.ToString() + "\")", expected.ToString());
         }
@@ -93,7 +94,7 @@ namespace TestCases.SS.Formula.Functions
             cell11.CellFormula = (/*setter*/formulaText);
             Evaluator.ClearAllCachedResultValues();
             CellValue cv = Evaluator.Evaluate(cell11);
-            if (cv.CellType != CellType.String)
+            if(cv.CellType != CellType.String)
             {
                 Assert.Fail("Wrong result type: " + cv.FormatAsString());
             }
@@ -127,10 +128,10 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval strArg = new StringEval("some longer text that needs a number of replacements to check for runtime of different implementations");
             long start = TimeUtil.CurrentMillis();
-            for (int i = 0; i < 300000; i++)
+            for(int i = 0; i < 300000; i++)
             {
                 ValueEval ret = TextFunction.PROPER.Evaluate(new ValueEval[] { strArg }, 0, 0);
-                ClassicAssert.AreEqual("Some Longer Text That Needs A Number Of Replacements To Check For Runtime Of Different Implementations", ((StringEval)ret).StringValue);
+                ClassicAssert.AreEqual("Some Longer Text That Needs A Number Of Replacements To Check For Runtime Of Different Implementations", ((StringEval) ret).StringValue);
             }
             // Took approx. 600ms on a decent Laptop in July 2016
             //System.out.println("Took: " + (System.currentTimeMillis() - start) + "ms");
@@ -139,7 +140,7 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval strArg = new StringEval(input);
             ValueEval ret = TextFunction.PROPER.Evaluate(new ValueEval[] { strArg }, 0, 0);
-            ClassicAssert.AreEqual(expected, ((StringEval)ret).StringValue);
+            ClassicAssert.AreEqual(expected, ((StringEval) ret).StringValue);
         }
 
     }

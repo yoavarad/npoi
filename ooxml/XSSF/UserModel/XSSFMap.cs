@@ -15,12 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.XSSF.UserModel.Helpers;
-using System.Collections.Generic;
-using NPOI.XSSF.Model;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.Model;
+using NPOI.XSSF.UserModel.Helpers;
+using System;
+using System.Collections.Generic;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -78,16 +78,16 @@ namespace NPOI.XSSF.UserModel
             List<XSSFSingleXmlCell> relatedSimpleXmlCells = new List<XSSFSingleXmlCell>();
 
             int sheetNumber = mapInfo.Workbook.NumberOfSheets;
-            for (int i = 0; i < sheetNumber; i++)
+            for(int i = 0; i < sheetNumber; i++)
             {
                 XSSFSheet sheet = (XSSFSheet)mapInfo.Workbook.GetSheetAt(i);
-                foreach (POIXMLDocumentPart p in sheet.GetRelations())
+                foreach(POIXMLDocumentPart p in sheet.GetRelations())
                 {
-                    if (p is SingleXmlCells singleXmlCells)
+                    if(p is SingleXmlCells singleXmlCells)
                     {
-                        foreach (XSSFSingleXmlCell cell in singleXmlCells.GetAllSimpleXmlCell())
+                        foreach(XSSFSingleXmlCell cell in singleXmlCells.GetAllSimpleXmlCell())
                         {
-                            if (cell.GetMapId() == ctMap.ID)
+                            if(cell.GetMapId() == ctMap.ID)
                             {
                                 relatedSimpleXmlCells.Add(cell);
                             }
@@ -105,14 +105,14 @@ namespace NPOI.XSSF.UserModel
         {
             List<XSSFTable> tables = new List<XSSFTable>();
 
-            foreach (ISheet sheet in mapInfo.Workbook)
+            foreach(ISheet sheet in mapInfo.Workbook)
             {
-                foreach (POIXMLDocumentPart.RelationPart rp in ((XSSFSheet)sheet).RelationParts)
+                foreach(POIXMLDocumentPart.RelationPart rp in ((XSSFSheet) sheet).RelationParts)
                 {
-                    if (rp.Relationship.RelationshipType.Equals(XSSFRelation.TABLE.Relation))
+                    if(rp.Relationship.RelationshipType.Equals(XSSFRelation.TABLE.Relation))
                     {
                         XSSFTable table = rp.DocumentPart as XSSFTable;
-                        if (table.MapsTo(ctMap.ID))
+                        if(table.MapsTo(ctMap.ID))
                         {
                             tables.Add(table);
                         }
@@ -123,5 +123,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-
-

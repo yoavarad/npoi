@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -138,12 +138,12 @@ namespace NPOI.HSSF.Record.Chart
          */
         protected override int DataSize
         {
-             get{ return 4 + 4 + 2 + 2 + 2 + 2; }
+            get { return 4 + 4 + 2 + 2 + 2 + 2; }
         }
 
         public override short Sid
         {
-             get{ return sid; }
+            get { return sid; }
         }
 
         public override Object Clone()
@@ -167,8 +167,8 @@ namespace NPOI.HSSF.Record.Chart
          */
         public int ForegroundColor
         {
-            get{return field_1_foregroundColor;}
-            set{this.field_1_foregroundColor = value;}
+            get { return field_1_foregroundColor; }
+            set { this.field_1_foregroundColor = value; }
         }
 
         /**
@@ -176,8 +176,8 @@ namespace NPOI.HSSF.Record.Chart
          */
         public int BackgroundColor
         {
-            get{return field_2_backgroundColor;}
-            set{this.field_2_backgroundColor=value;}
+            get { return field_2_backgroundColor; }
+            set { this.field_2_backgroundColor=value; }
         }
 
         /**
@@ -185,8 +185,8 @@ namespace NPOI.HSSF.Record.Chart
          */
         public short Pattern
         {
-            get{return field_3_pattern;}
-            set{this.field_3_pattern =value;}
+            get { return field_3_pattern; }
+            set { this.field_3_pattern =value; }
         }
 
         /**
@@ -194,8 +194,8 @@ namespace NPOI.HSSF.Record.Chart
          */
         public short FormatFlags
         {
-            get{return field_4_formatFlags;}
-            set{this.field_4_formatFlags =value;}
+            get { return field_4_formatFlags; }
+            set { this.field_4_formatFlags =value; }
         }
 
         /**
@@ -203,8 +203,8 @@ namespace NPOI.HSSF.Record.Chart
          */
         public short ForecolorIndex
         {
-            get{return field_5_forecolorIndex;}
-            set{this.field_5_forecolorIndex =value;}
+            get { return field_5_forecolorIndex; }
+            set { this.field_5_forecolorIndex =value; }
         }
 
         /**
@@ -212,8 +212,8 @@ namespace NPOI.HSSF.Record.Chart
          */
         public short BackcolorIndex
         {
-            get{return field_6_backcolorIndex;}
-            set{this.field_6_backcolorIndex =value;}
+            get { return field_6_backcolorIndex; }
+            set { this.field_6_backcolorIndex =value; }
         }
 
         /**
@@ -222,8 +222,9 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsAutomatic
         {
-            get{return automatic.IsSet(field_4_formatFlags);}
-            set{
+            get { return automatic.IsSet(field_4_formatFlags); }
+            set
+            {
                 field_4_formatFlags = automatic.SetShortBoolean(field_4_formatFlags, value);
             }
         }
@@ -234,14 +235,10 @@ namespace NPOI.HSSF.Record.Chart
          */
         public bool IsInvert
         {
-            get{return invert.IsSet(field_4_formatFlags);}
-            set{ field_4_formatFlags = invert.SetShortBoolean(field_4_formatFlags, value);}
+            get { return invert.IsSet(field_4_formatFlags); }
+            set { field_4_formatFlags = invert.SetShortBoolean(field_4_formatFlags, value); }
         }
 
 
     }
 }
-
-
-
-

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,12 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.IO;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.Util;
-using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 namespace TestCases.HSSF.Record
 {
     /**
@@ -51,7 +52,7 @@ namespace TestCases.HSSF.Record
             {
                 workbook.GetSheet(SHEET_NAME).AddValidationData(dataValidation);
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 Assert.Fail("Identified bug 53972, PLV record breaks addDataValidation()");
             }

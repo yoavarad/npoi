@@ -19,10 +19,11 @@ namespace TestCases.SS.Formula.Function
 {
 
     using NPOI.HSSF.Model;
-    using NPOI.SS.Formula.PTG;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     /**
      * Tests parsing of some built-in functions that were not properly
      * registered in POI as of bug #44675, #44733 (March/April 2008).
@@ -44,12 +45,12 @@ namespace TestCases.SS.Formula.Function
             Ptg ptgF = ptgs[ptgs.Length - 1];  // func is last RPN token in all these formulas
 
             // Check critical things in the Ptg array encoding.
-            if (!(ptgF is AbstractFunctionPtg))
+            if(!(ptgF is AbstractFunctionPtg))
             {
                 throw new Exception("function token missing");
             }
             AbstractFunctionPtg func = (AbstractFunctionPtg)ptgF;
-            if (func.FunctionIndex == 255)
+            if(func.FunctionIndex == 255)
             {
                 throw new AssertionException("Failed to recognise built-in function in formula '"
                         + formula + "'");

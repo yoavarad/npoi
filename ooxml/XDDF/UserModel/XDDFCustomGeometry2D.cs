@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -106,7 +106,7 @@ namespace NPOI.XDDF.UserModel
         {
             if(geometry.IsSetAhLst())
             {
-                return [.. geometry.ahLst.GetAhPolarList().Select(x=>new XDDFAdjustHandlePolar(x))];
+                return [.. geometry.ahLst.GetAhPolarList().Select(x => new XDDFAdjustHandlePolar(x))];
             }
             else
             {
@@ -156,7 +156,7 @@ namespace NPOI.XDDF.UserModel
         {
             if(geometry.IsSetAhLst())
             {
-                return [.. geometry.ahLst.GetAhXYList().Select(x=>new XDDFAdjustHandleXY(x))];
+                return [.. geometry.ahLst.GetAhXYList().Select(x => new XDDFAdjustHandleXY(x))];
             }
             else
             {
@@ -206,7 +206,7 @@ namespace NPOI.XDDF.UserModel
         {
             if(geometry.IsSetAvLst())
             {
-                return [.. geometry.avLst.gd.Select(x=> new XDDFGeometryGuide(x))];
+                return [.. geometry.avLst.gd.Select(x => new XDDFGeometryGuide(x))];
             }
             else
             {
@@ -256,7 +256,7 @@ namespace NPOI.XDDF.UserModel
         {
             if(geometry.IsSetCxnLst())
             {
-                return [.. geometry.cxnLst.cxn.Select(x=>new XDDFConnectionSite(x))];
+                return [.. geometry.cxnLst.cxn.Select(x => new XDDFConnectionSite(x))];
             }
             else
             {
@@ -306,7 +306,7 @@ namespace NPOI.XDDF.UserModel
         {
             if(geometry.IsSetGdLst())
             {
-                return [.. geometry.gdLst.gd.Select(x=>new XDDFGeometryGuide(x))];
+                return [.. geometry.gdLst.gd.Select(x => new XDDFGeometryGuide(x))];
             }
             else
             {
@@ -336,7 +336,7 @@ namespace NPOI.XDDF.UserModel
 
         public List<XDDFPath> GetPaths()
         {
-            return [.. geometry.pathLst.path.Select(x=>new XDDFPath(x))];
+            return [.. geometry.pathLst.path.Select(x => new XDDFPath(x))];
         }
     }
 }

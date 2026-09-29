@@ -17,12 +17,12 @@
 
 namespace NPOI.HSSF.UserModel
 {
+    using NPOI.HSSF.Util;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using SkiaSharp;
     using System;
     using System.Linq;
-    using NPOI.HSSF.Util;
-    using NPOI.Util;
-    using NPOI.SS.UserModel;
-    using SkiaSharp;
 
     /**
      * Translates Graphics calls into escher calls.  The translation Is lossy so
@@ -131,9 +131,9 @@ namespace NPOI.HSSF.UserModel
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
-                if (null != font)
+                if(null != font)
                 {
                     font = null;
                 }
@@ -150,13 +150,13 @@ namespace NPOI.HSSF.UserModel
 
         public void ClipRect(int x, int y, int width, int height)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "clipRect not supported");
         }
 
         public void CopyArea(int x, int y, int width, int height, int dx, int dy)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "copyArea not supported");
         }
 
@@ -170,7 +170,7 @@ namespace NPOI.HSSF.UserModel
         public void DrawArc(int x, int y, int width, int height,
                      int startAngle, int arcAngle)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "DrawArc not supported");
         }
 
@@ -179,7 +179,7 @@ namespace NPOI.HSSF.UserModel
                           int sx1, int sy1, int sx2, int sy2,
                           SKColor bgcolor)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "DrawImage not supported");
 
             throw new NotImplementedException();
@@ -191,7 +191,7 @@ namespace NPOI.HSSF.UserModel
                           int dx1, int dy1, int dx2, int dy2,
                           int sx1, int sy1, int sx2, int sy2)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "DrawImage not supported");
 
             throw new NotImplementedException();
@@ -258,7 +258,7 @@ namespace NPOI.HSSF.UserModel
         private static int[] AddToAll(int[] values, int amount)
         {
             int[] result = new int[values.Length];
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
                 result[i] = values[i] + amount;
             return result;
         }
@@ -275,26 +275,26 @@ namespace NPOI.HSSF.UserModel
 
         public void DrawPolyline(int[] xPoints, int[] yPoints, int nPoints)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "DrawPolyline not supported");
         }
 
         public void DrawRect(int x, int y, int width, int height)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "DrawRect not supported");
         }
 
         public void DrawRoundRect(int x, int y, int width, int height,
             int arcWidth, int arcHeight)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "DrawRoundRect not supported");
         }
 
         public void DrawString(String str, int x, int y)
         {
-            if (string.IsNullOrEmpty(str))
+            if(string.IsNullOrEmpty(str))
                 return;
             // Convert font size from pixels back to points for the HSSF font height
             float fontSizeInPoints = font.Size * 72f / dpi;
@@ -318,8 +318,8 @@ namespace NPOI.HSSF.UserModel
         {
             HSSFColor hssfColor = workbook.GetCustomPalette()
                     .FindColor((byte)foreground.Red, (byte)foreground.Green, (byte)foreground.Blue);
-            if (hssfColor == null)
-                hssfColor = workbook.GetCustomPalette().FindSimilarColor((byte)foreground.Red, (byte)foreground.Green, (byte)foreground.Blue);
+            if(hssfColor == null)
+                hssfColor = workbook.GetCustomPalette().FindSimilarColor((byte) foreground.Red, (byte) foreground.Green, (byte) foreground.Blue);
             bool bold = font.Typeface.FontStyle.Weight >= (int)SKFontStyleWeight.Bold;
             bool italic = font.Typeface.FontStyle.Slant != SKFontStyleSlant.Upright;
             // Convert pixel size back to points (multiply by 20 for Excel's half-point unit)
@@ -333,12 +333,12 @@ namespace NPOI.HSSF.UserModel
                         (short)NPOI.SS.UserModel.FontSuperScript.None,
                         (byte)NPOI.SS.UserModel.FontUnderlineType.None
                         );
-            if (hssfFont == null)
+            if(hssfFont == null)
             {
-                hssfFont = (HSSFFont)workbook.CreateFont();
+                hssfFont = (HSSFFont) workbook.CreateFont();
                 hssfFont.IsBold = bold;
                 hssfFont.Color = (hssfColor.Indexed);
-                hssfFont.FontHeight = ((short)(sizeInPoints * 20));
+                hssfFont.FontHeight = ((short) (sizeInPoints * 20));
                 hssfFont.FontName = font.Typeface.FamilyName;
                 hssfFont.IsItalic = (italic);
                 hssfFont.IsStrikeout = (false);
@@ -360,7 +360,7 @@ namespace NPOI.HSSF.UserModel
         public void FillArc(int x, int y, int width, int height,
                      int startAngle, int arcAngle)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "FillArc not supported");
         }
 
@@ -410,9 +410,9 @@ namespace NPOI.HSSF.UserModel
         private static int FindBiggest(int[] values)
         {
             int result = Int32.MinValue;
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
-                if (values[i] > result)
+                if(values[i] > result)
                     result = values[i];
             }
             return result;
@@ -421,9 +421,9 @@ namespace NPOI.HSSF.UserModel
         private static int FindSmallest(int[] values)
         {
             int result = Int32.MaxValue;
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
-                if (values[i] < result)
+                if(values[i] < result)
                     result = values[i];
             }
             return result;
@@ -441,7 +441,7 @@ namespace NPOI.HSSF.UserModel
         public void FillRoundRect(int x, int y, int width, int height,
                            int arcWidth, int arcHeight)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "FillRoundRect not supported");
         }
 
@@ -505,7 +505,7 @@ namespace NPOI.HSSF.UserModel
 
         public void SetPaintMode()
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "SetPaintMode not supported");
 
             throw new NotImplementedException();
@@ -513,7 +513,7 @@ namespace NPOI.HSSF.UserModel
 
         public void SetXORMode(SKColor color)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "SetXORMode not supported");
 
             throw new NotImplementedException();
@@ -521,7 +521,7 @@ namespace NPOI.HSSF.UserModel
 
         public void Translate(int x, int y)
         {
-            if (Logger.Check(POILogger.WARN))
+            if(Logger.Check(POILogger.WARN))
                 Logger.Log(POILogger.WARN, "translate not supported");
 
             throw new NotImplementedException();
@@ -533,7 +533,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return background;
             }
-            set 
+            set
             {
                 this.background = value;
             }
@@ -541,7 +541,7 @@ namespace NPOI.HSSF.UserModel
 
         HSSFShapeGroup GetEscherGraphics()
         {
-                return escherGroup;
+            return escherGroup;
 
         }
     }

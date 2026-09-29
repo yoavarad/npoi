@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -40,10 +40,10 @@ namespace NPOI.HSSF.Record
         //private short field_1_refreshall;
         private static BitField refreshFlag = BitFieldFactory.GetInstance(0x0001);
 
-    private int _options;
-    public RefreshAllRecord(int options)
-    {
-        _options = options;
+        private int _options;
+        public RefreshAllRecord(int options)
+        {
+            _options = options;
         }
 
         /**

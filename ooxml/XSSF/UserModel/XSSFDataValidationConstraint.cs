@@ -14,13 +14,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
+using NPOI.Util;
 using System;
 using System.Text;
-using NPOI.Util;
-using NPOI.OpenXmlFormats.Spreadsheet;
 using System.Text.RegularExpressions;
-using NPOI.OpenXml4Net.Util;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -46,7 +46,7 @@ namespace NPOI.XSSF.UserModel
 
         public XSSFDataValidationConstraint(String[] explicitListOfValues)
         {
-            if (explicitListOfValues == null || explicitListOfValues.Length == 0)
+            if(explicitListOfValues == null || explicitListOfValues.Length == 0)
             {
                 throw new ArgumentException("List validation with explicit values must specify at least one value");
             }
@@ -99,7 +99,7 @@ namespace NPOI.XSSF.UserModel
             //FIXME: Need to confirm if this is not a formula.
             // empirical testing shows Excel saves explicit lists surrounded by double quotes, 
             // range formula expressions can't start with quotes (I think - anyone have a creative counter example?)
-            if (ValidationType.LIST == validationType
+            if(ValidationType.LIST == validationType
                     && this.formula1 != null
                     && IsQuoted(this.formula1))
             {
@@ -113,18 +113,18 @@ namespace NPOI.XSSF.UserModel
             {
                 return explicitListOfValues;
             }
-            set 
+            set
             {
                 this.explicitListOfValues = value;
                 // for OOXML we need to set formula1 to the quoted csv list of values (doesn't appear documented, but that's where Excel puts its lists)
                 // further, Excel has no escaping for commas in explicit lists, so we don't need to worry about that.
-                if (explicitListOfValues != null && explicitListOfValues.Length > 0)
+                if(explicitListOfValues != null && explicitListOfValues.Length > 0)
                 {
                     StringBuilder builder = new StringBuilder(QUOTE);
-                    for (int i = 0; i < value.Length; i++)
+                    for(int i = 0; i < value.Length; i++)
                     {
                         String string1 = value[i];
-                        if (builder.Length > 1)
+                        if(builder.Length > 1)
                         {
                             builder.Append(LIST_SEPARATOR);
                         }
@@ -145,7 +145,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return formula1;
             }
-            set 
+            set
             {
                 this.formula1 = RemoveLeadingEquals(value);
             }
@@ -160,7 +160,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return formula2;
             }
-            set 
+            set
             {
                 this.formula2 = RemoveLeadingEquals(value);
             }
@@ -175,7 +175,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return operator1;
             }
-            set 
+            set
             {
                 this.operator1 = value;
             }
@@ -201,7 +201,7 @@ namespace NPOI.XSSF.UserModel
         private static String Unquote(string s)
         {
             // removes leading and trailing quotes from a quoted string
-            if (IsQuoted(s))
+            if(IsQuoted(s))
             {
                 return s.Substring(1, s.Length - 2);
             }
@@ -214,32 +214,32 @@ namespace NPOI.XSSF.UserModel
 
         public void Validate()
         {
-            if (validationType == ValidationType.ANY)
+            if(validationType == ValidationType.ANY)
             {
                 return;
             }
 
-            if (validationType == ValidationType.LIST)
+            if(validationType == ValidationType.LIST)
             {
-                if (IsFormulaEmpty(formula1))
+                if(IsFormulaEmpty(formula1))
                 {
                     throw new ArgumentException("A valid formula or a list of values must be specified for list validation.");
                 }
             }
             else
             {
-                if (IsFormulaEmpty(formula1))
+                if(IsFormulaEmpty(formula1))
                 {
                     throw new ArgumentException("Formula is not specified. Formula is required for all validation types except explicit list validation.");
                 }
 
-                if (validationType != ValidationType.FORMULA)
+                if(validationType != ValidationType.FORMULA)
                 {
-                    if (operator1 == -1)
+                    if(operator1 == -1)
                     {
                         throw new ArgumentException("This validation type requires an operator to be specified.");
                     }
-                    else if ((operator1 == OperatorType.BETWEEN || operator1 == OperatorType.NOT_BETWEEN) && IsFormulaEmpty(formula2))
+                    else if((operator1 == OperatorType.BETWEEN || operator1 == OperatorType.NOT_BETWEEN) && IsFormulaEmpty(formula2))
                     {
                         throw new ArgumentException("Between and not between comparisons require two formulae to be specified.");
                     }
@@ -255,14 +255,14 @@ namespace NPOI.XSSF.UserModel
             Enum ot = XSSFDataValidation.operatorTypeMappings[operator1];
             builder.Append(vt);
             builder.Append(' ');
-            if (validationType != ValidationType.ANY)
+            if(validationType != ValidationType.ANY)
             {
-                if (validationType != ValidationType.LIST
+                if(validationType != ValidationType.LIST
                     && validationType != ValidationType.FORMULA)
                 {
                     builder.Append(LIST_SEPARATOR).Append(ot).Append(", ");
                 }
-                if (validationType == ValidationType.LIST && explicitListOfValues != null)
+                if(validationType == ValidationType.LIST && explicitListOfValues != null)
                 {
                     builder.Append(QUOTE).Append(Arrays.AsList(explicitListOfValues)).Append(QUOTE).Append(' ');
                 }
@@ -270,7 +270,7 @@ namespace NPOI.XSSF.UserModel
                 {
                     builder.Append(QUOTE).Append(formula1).Append(QUOTE).Append(' ');
                 }
-                if (formula2 != null)
+                if(formula2 != null)
                 {
                     builder.Append(QUOTE).Append(formula2).Append(QUOTE).Append(' ');
                 }
@@ -279,4 +279,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-

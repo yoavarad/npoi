@@ -15,11 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.SS.UserModel;
-using System;
 using NPOI.HSSF.Record.CF;
 using NPOI.HSSF.Util;
+using NPOI.SS.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 namespace TestCases.SS.UserModel
 {
 
@@ -54,10 +55,10 @@ namespace TestCases.SS.UserModel
             ClassicAssert.IsTrue(font.IsBold);
             font.Underline = FontUnderlineType.Double;
             ClassicAssert.AreEqual(FontUnderlineType.Double, font.Underline);
-            font.FontHeightInPoints = ((short)15);
+            font.FontHeightInPoints = ((short) 15);
             ClassicAssert.AreEqual(15 * 20, font.FontHeight);
             ClassicAssert.AreEqual(15, font.FontHeightInPoints);
-            fontFind = workbook.FindFont(true, defaultColor, (short)(15 * 20), defaultName, false, false, FontSuperScript.None, FontUnderlineType.Double);
+            fontFind = workbook.FindFont(true, defaultColor, (short) (15 * 20), defaultName, false, false, FontSuperScript.None, FontUnderlineType.Double);
             ClassicAssert.IsNotNull(fontFind);
         }
         [Test]
@@ -77,7 +78,7 @@ namespace TestCases.SS.UserModel
             wb.CreateCellStyle().SetFont(f2);
 
             IFont f3 = wb.CreateFont();
-            f3.FontHeightInPoints = ((short)23);
+            f3.FontHeightInPoints = ((short) 23);
             short idx3 = f3.Index;
             wb.CreateCellStyle().SetFont(f3);
 
@@ -129,7 +130,7 @@ namespace TestCases.SS.UserModel
             // Now add an orphaned one
             IFont font2 = wb.CreateFont();
             font2.IsItalic = (true);
-            font2.FontHeightInPoints = (short)15;
+            font2.FontHeightInPoints = (short) 15;
             short font2Idx = font2.Index;
             wb.CreateCellStyle().SetFont(font2);
             ClassicAssert.AreEqual(num0 + 2, wb.NumberOfFonts);
@@ -170,13 +171,13 @@ namespace TestCases.SS.UserModel
             // Check that asking for the same font
             //  multiple times gives you the same thing.
             // Otherwise, our Tests wouldn't work!
-            ClassicAssert.AreSame(wb.GetFontAt((short)0), wb.GetFontAt((short)0));
+            ClassicAssert.AreSame(wb.GetFontAt((short) 0), wb.GetFontAt((short) 0));
 
             // Look for a new font we have
             //  yet to add
             ClassicAssert.IsNull(
                 wb.FindFont(
-                    true, (short)123, (short)(22 * 20),
+                    true, (short) 123, (short) (22 * 20),
                     "Thingy", false, true, FontSuperScript.Sub, FontUnderlineType.Double
                 )
             );
@@ -188,8 +189,8 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(nf, wb.GetFontAt(nfIdx));
 
             nf.IsBold = true;
-            nf.Color = (short)123;
-            nf.FontHeightInPoints = (short)22;
+            nf.Color = (short) 123;
+            nf.FontHeightInPoints = (short) 22;
             nf.FontName = ("Thingy");
             nf.IsItalic = (false);
             nf.IsStrikeout = (true);
@@ -200,18 +201,18 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(nf, wb.GetFontAt(nfIdx));
 
             ClassicAssert.AreEqual(wb.GetFontAt(nfIdx), wb.GetFontAt(nfIdx));
-            ClassicAssert.IsTrue(wb.GetFontAt((short)0) != wb.GetFontAt(nfIdx));
+            ClassicAssert.IsTrue(wb.GetFontAt((short) 0) != wb.GetFontAt(nfIdx));
 
             // Find it now
             ClassicAssert.IsNotNull(
                 wb.FindFont(
-                    true, (short)123, (short)(22 * 20),
+                    true, (short) 123, (short) (22 * 20),
                     "Thingy", false, true, FontSuperScript.Sub, FontUnderlineType.Double
                 )
             );
             ClassicAssert.AreSame(nf,
                    wb.FindFont(
-                       true, (short)123, (short)(22 * 20),
+                       true, (short) 123, (short) (22 * 20),
                        "Thingy", false, true, FontSuperScript.Sub, FontUnderlineType.Double
                    )
             );
@@ -219,6 +220,3 @@ namespace TestCases.SS.UserModel
     }
 
 }
-
-
-

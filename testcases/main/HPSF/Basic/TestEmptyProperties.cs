@@ -20,7 +20,7 @@ namespace TestCases.HPSF.Basic
     using NPOI.HPSF;
     using NPOI.Util;
     using NUnit.Framework;
-using NUnit.Framework.Legacy;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -56,7 +56,8 @@ using NUnit.Framework.Legacy;
         [SetUp]
         public void SetUp()
         {
-            Stream data = samples.OpenResourceAsStream(POI_FS);;
+            Stream data = samples.OpenResourceAsStream(POI_FS);
+            ;
             poiFiles = Util.ReadPOIFiles(data);
         }
         /**
@@ -67,7 +68,7 @@ using NUnit.Framework.Legacy;
         public void TestReadFiles()
         {
             String[] expected = POI_FILES;
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
                 ClassicAssert.AreEqual(poiFiles[i].GetName(), expected[i]);
         }
 
@@ -94,7 +95,7 @@ using NUnit.Framework.Legacy;
                 typeof(SummaryInformation),
                 typeof(NoPropertySetStreamException)
             };
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
             {
                 InputStream in1 = new ByteArrayInputStream(poiFiles[i].GetBytes());
                 Object o;
@@ -102,11 +103,11 @@ using NUnit.Framework.Legacy;
                 {
                     o = PropertySetFactory.Create(in1);
                 }
-                catch (NoPropertySetStreamException ex)
+                catch(NoPropertySetStreamException ex)
                 {
                     o = ex;
                 }
-                catch (MarkUnsupportedException ex)
+                catch(MarkUnsupportedException ex)
                 {
                     o = ex;
                 }

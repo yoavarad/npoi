@@ -1,9 +1,10 @@
-﻿using NPOI.HSSF.UserModel;
+using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -54,7 +55,7 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval result = invokeValue(number1, number2);
             ClassicAssert.IsTrue(result is NumberEval);
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, 0.00000000000001);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, 0.00000000000001);
         }
 
         private static void confirmInvalidError(String number1, String number2)

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -56,7 +56,7 @@ namespace NPOI.POIFS.Storage
         /// <param name="startBlock">the index of the first block in the stream</param>
         /// <param name="headerPropertiesStartBlock"></param>
         /// <returns>the stream as an array of correctly ordered blocks</returns>
-        ListManagedBlock[] FetchBlocks(int startBlock,int headerPropertiesStartBlock);
+        ListManagedBlock[] FetchBlocks(int startBlock, int headerPropertiesStartBlock);
 
         /// <summary>
         /// set the associated BlockAllocationTable

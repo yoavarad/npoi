@@ -27,7 +27,8 @@ namespace TestCases.POIFS.Crypt
 {
     using NPOI.OpenXml4Net.OPC;
     using NPOI.POIFS.Crypt.Dsig;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.Security.Cryptography.X509Certificates;
@@ -92,7 +93,7 @@ namespace TestCases.POIFS.Crypt
                 "hello-world-office-2010-technical-preview-unsigned.docx"
             };
 
-            foreach (String testFile in testFiles)
+            foreach(String testFile in testFiles)
             {
                 OPCPackage pkg = OPCPackage.Open(testdata.GetFileInfo(testFile), PackageAccess.READ);
                 SignatureConfig sic = new SignatureConfig();
@@ -100,9 +101,9 @@ namespace TestCases.POIFS.Crypt
                 SignatureInfo si = new SignatureInfo();
                 si.SetSignatureConfig(sic);
                 List<X509Certificate> result = new List<X509Certificate>();
-                foreach (SignatureInfo.SignaturePart sp in si.GetSignatureParts())
+                foreach(SignatureInfo.SignaturePart sp in si.GetSignatureParts())
                 {
-                    if (sp.Validate())
+                    if(sp.Validate())
                     {
                         result.Add(sp.GetSigner());
                     }
@@ -131,7 +132,7 @@ namespace TestCases.POIFS.Crypt
                 "signed.docx",
             };
 
-            foreach (String testFile in testFiles)
+            foreach(String testFile in testFiles)
             {
                 OPCPackage pkg = OPCPackage.Open(testdata.GetFileInfo(testFile), PackageAccess.READ);
                 try
@@ -141,9 +142,9 @@ namespace TestCases.POIFS.Crypt
                     SignatureInfo si = new SignatureInfo();
                     si.SetSignatureConfig(sic);
                     List<X509Certificate> result = new List<X509Certificate>();
-                    foreach (SignatureInfo.SignaturePart sp in si.GetSignatureParts())
+                    foreach(SignatureInfo.SignaturePart sp in si.GetSignatureParts())
                     {
-                        if (sp.Validate())
+                        if(sp.Validate())
                         {
                             result.Add(sp.GetSigner());
                         }
@@ -641,7 +642,7 @@ namespace TestCases.POIFS.Crypt
         private static FileInfo copy(FileInfo input)
         {
             String extension = input.Name.Replace(".*?(\\.[^.]+)?$", "$1");
-            if (extension == null || "".Equals(extension))
+            if(extension == null || "".Equals(extension))
                 extension = ".zip";
             FileInfo tmpFile = new FileInfo("build" + Path.DirectorySeparatorChar + "sigtest" + extension);
             throw new NotImplementedException();

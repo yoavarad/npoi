@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -18,7 +18,8 @@
  */
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.Collections.Generic;
 using System.IO;
 
@@ -44,7 +45,7 @@ namespace TestCases.SS.Formula.Functions
             var fldr = Path.Combine(TestContext.CurrentContext.TestDirectory, TestContext.Parameters["function"]);
             var file = Path.Combine(fldr, TestFileName);
 
-            using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using(var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 _workbook = new XSSFWorkbook(fs);
             }
@@ -62,19 +63,22 @@ namespace TestCases.SS.Formula.Functions
 
             var sheet = workbook.GetSheetAt(0);
 
-            for (var rowId = sheet.FirstRowNum; rowId <= sheet.LastRowNum; rowId++)
+            for(var rowId = sheet.FirstRowNum; rowId <= sheet.LastRowNum; rowId++)
             {
                 var row = sheet.GetRow(rowId);
-                if (row is null || row.FirstCellNum < 0)
+                if(row is null || row.FirstCellNum < 0)
                     continue;
 
-                for (var colId = row.FirstCellNum; colId <= row.LastCellNum; colId++)
+                for(var colId = row.FirstCellNum; colId <= row.LastCellNum; colId++)
                 {
                     var cell = row.GetCell(colId);
-                    if (cell is null) continue;
-                    if (cell.CellType != CellType.Formula) continue;
-                    if (cell.CachedFormulaResultType != CellType.Numeric
-                        && cell.CachedFormulaResultType != CellType.Error) continue;
+                    if(cell is null)
+                        continue;
+                    if(cell.CellType != CellType.Formula)
+                        continue;
+                    if(cell.CachedFormulaResultType != CellType.Numeric
+                        && cell.CachedFormulaResultType != CellType.Error)
+                        continue;
 
                     list[cell.Address.FormatAsString()] =
                         cell.CachedFormulaResultType == CellType.Numeric ?
@@ -97,9 +101,9 @@ namespace TestCases.SS.Formula.Functions
 
             Assert.Multiple(() =>
             {
-                foreach (var kv in evaluatedData)
+                foreach(var kv in evaluatedData)
                 {
-                    if (!originalData.TryGetValue(kv.Key, out var val))
+                    if(!originalData.TryGetValue(kv.Key, out var val))
                     {
                         Assert.Fail($"Spreadsheet structure changed! No {kv.Key} cell in the original spreadsheet.");
                         break;

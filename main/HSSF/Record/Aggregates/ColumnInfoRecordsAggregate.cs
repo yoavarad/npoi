@@ -18,12 +18,12 @@
 namespace NPOI.HSSF.Record.Aggregates
 {
 
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
     using System;
     using System.Collections;
-    using NPOI.HSSF.Record;
-    using NPOI.HSSF.Model;
-    using System.Globalization;
     using System.Collections.Generic;
+    using System.Globalization;
 
 
     /// <summary>
@@ -63,25 +63,25 @@ namespace NPOI.HSSF.Record.Aggregates
         /// Initializes a new instance of the <see cref="ColumnInfoRecordsAggregate"/> class.
         /// </summary>
         /// <param name="rs">The rs.</param>
-        public ColumnInfoRecordsAggregate(RecordStream rs): this()
+        public ColumnInfoRecordsAggregate(RecordStream rs) : this()
         {
             bool isInOrder = true;
             ColumnInfoRecord cirPrev = null;
-            while (rs.PeekNextClass() == typeof(ColumnInfoRecord))
+            while(rs.PeekNextClass() == typeof(ColumnInfoRecord))
             {
                 ColumnInfoRecord cir = (ColumnInfoRecord)rs.GetNext();
                 records.Add(cir);
-                if (cirPrev != null && CIRComparator.CompareColInfos(cirPrev, cir) > 0)
+                if(cirPrev != null && CIRComparator.CompareColInfos(cirPrev, cir) > 0)
                 {
                     isInOrder = false;
                 }
                 cirPrev = cir;
             }
-            if (records.Count < 1)
+            if(records.Count < 1)
             {
                 throw new InvalidOperationException("No column info records found");
             }
-            if (!isInOrder)
+            if(!isInOrder)
             {
                 records.Sort(CIRComparator.instance);
             }
@@ -111,8 +111,8 @@ namespace NPOI.HSSF.Record.Aggregates
             get
             {
                 int size = 0;
-                for (IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext(); )
-                    size += ((ColumnInfoRecord)iterator.Current).RecordSize;
+                for(IEnumerator iterator = records.GetEnumerator(); iterator.MoveNext();)
+                    size += ((ColumnInfoRecord) iterator.Current).RecordSize;
                 return size;
             }
         }
@@ -128,11 +128,11 @@ namespace NPOI.HSSF.Record.Aggregates
         public object Clone()
         {
             ColumnInfoRecordsAggregate rec = new ColumnInfoRecordsAggregate();
-            for (int k = 0; k < records.Count; k++)
+            for(int k = 0; k < records.Count; k++)
             {
                 ColumnInfoRecord ci = (ColumnInfoRecord)records[k];
-                ci = (ColumnInfoRecord)ci.Clone();
-                rec.records.Add(ci);    
+                ci = (ColumnInfoRecord) ci.Clone();
+                rec.records.Add(ci);
             }
             return rec;
         }
@@ -171,9 +171,9 @@ namespace NPOI.HSSF.Record.Aggregates
             IEnumerator itr = records.GetEnumerator();
             int pos = offset;
 
-            while (itr.MoveNext())
+            while(itr.MoveNext())
             {
-                pos += ((Record)itr.Current).Serialize(pos, data);
+                pos += ((Record) itr.Current).Serialize(pos, data);
             }
             return pos - offset;
         }
@@ -187,16 +187,16 @@ namespace NPOI.HSSF.Record.Aggregates
         public override void VisitContainedRecords(RecordVisitor rv)
         {
             int nItems = records.Count;
-            if (nItems < 1)
+            if(nItems < 1)
             {
                 return;
             }
             ColumnInfoRecord cirPrev = null;
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 ColumnInfoRecord cir = (ColumnInfoRecord)records[i];
                 rv.VisitRecord(cir);
-                if (cirPrev != null && CIRComparator.CompareColInfos(cirPrev, cir) > 0)
+                if(cirPrev != null && CIRComparator.CompareColInfos(cirPrev, cir) > 0)
                 {
                     // Excel probably wouldn't mind, but there is much logic in this class
                     // that assumes the column info records are kept in order
@@ -215,12 +215,12 @@ namespace NPOI.HSSF.Record.Aggregates
             // Find the start of the Group.
             ColumnInfoRecord columnInfo = (ColumnInfoRecord)records[idx];
             int level = columnInfo.OutlineLevel;
-            while (idx != 0)
+            while(idx != 0)
             {
                 ColumnInfoRecord prevColumnInfo = (ColumnInfoRecord)records[idx - 1];
-                if (columnInfo.FirstColumn - 1 == prevColumnInfo.LastColumn)
+                if(columnInfo.FirstColumn - 1 == prevColumnInfo.LastColumn)
                 {
-                    if (prevColumnInfo.OutlineLevel < level)
+                    if(prevColumnInfo.OutlineLevel < level)
                     {
                         break;
                     }
@@ -246,12 +246,12 @@ namespace NPOI.HSSF.Record.Aggregates
             // Find the end of the Group.
             ColumnInfoRecord columnInfo = (ColumnInfoRecord)records[idx];
             int level = columnInfo.OutlineLevel;
-            while (idx < records.Count - 1)
+            while(idx < records.Count - 1)
             {
                 ColumnInfoRecord nextColumnInfo = (ColumnInfoRecord)records[idx + 1];
-                if (columnInfo.LastColumn + 1 == nextColumnInfo.FirstColumn)
+                if(columnInfo.LastColumn + 1 == nextColumnInfo.FirstColumn)
                 {
-                    if (nextColumnInfo.OutlineLevel < level)
+                    if(nextColumnInfo.OutlineLevel < level)
                     {
                         break;
                     }
@@ -274,7 +274,7 @@ namespace NPOI.HSSF.Record.Aggregates
         /// <returns></returns>
         public ColumnInfoRecord GetColInfo(int idx)
         {
-            return (ColumnInfoRecord)records[idx];
+            return (ColumnInfoRecord) records[idx];
         }
 
         /// <summary>
@@ -288,12 +288,12 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             int endOfOutlineGroupIdx = FindEndOfColumnOutlineGroup(idx);
             int nextColInfoIx = endOfOutlineGroupIdx + 1;
-            if (nextColInfoIx >= records.Count)
+            if(nextColInfoIx >= records.Count)
             {
                 return false;
             }
             ColumnInfoRecord nextColInfo = GetColInfo(nextColInfoIx);
-            if (!GetColInfo(endOfOutlineGroupIdx).IsAdjacentBefore(nextColInfo))
+            if(!GetColInfo(endOfOutlineGroupIdx).IsAdjacentBefore(nextColInfo))
             {
                 return false;
             }
@@ -314,10 +314,10 @@ namespace NPOI.HSSF.Record.Aggregates
             int endLevel = 0;
             bool endHidden = false;
             int endOfOutlineGroupIdx = FindEndOfColumnOutlineGroup(idx);
-            if (endOfOutlineGroupIdx < records.Count)
+            if(endOfOutlineGroupIdx < records.Count)
             {
                 ColumnInfoRecord nextInfo = GetColInfo(endOfOutlineGroupIdx + 1);
-                if (GetColInfo(endOfOutlineGroupIdx).IsAdjacentBefore(nextInfo))
+                if(GetColInfo(endOfOutlineGroupIdx).IsAdjacentBefore(nextInfo))
                 {
                     endLevel = nextInfo.OutlineLevel;
                     endHidden = nextInfo.IsHidden;
@@ -327,16 +327,16 @@ namespace NPOI.HSSF.Record.Aggregates
             int startLevel = 0;
             bool startHidden = false;
             int startOfOutlineGroupIdx = FindStartOfColumnOutlineGroup(idx);
-            if (startOfOutlineGroupIdx > 0)
+            if(startOfOutlineGroupIdx > 0)
             {
                 ColumnInfoRecord prevInfo = GetColInfo(startOfOutlineGroupIdx - 1);
-                if (prevInfo.IsAdjacentBefore(GetColInfo(startOfOutlineGroupIdx)))
+                if(prevInfo.IsAdjacentBefore(GetColInfo(startOfOutlineGroupIdx)))
                 {
                     startLevel = prevInfo.OutlineLevel;
                     startHidden = prevInfo.IsHidden;
                 }
             }
-            if (endLevel > startLevel)
+            if(endLevel > startLevel)
             {
                 return endHidden;
             }
@@ -350,7 +350,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public void CollapseColumn(int columnNumber)
         {
             int idx = FindColInfoIdx(columnNumber, 0);
-            if (idx == -1)
+            if(idx == -1)
                 return;
 
             // Find the start of the group.
@@ -371,11 +371,11 @@ namespace NPOI.HSSF.Record.Aggregates
         public void ExpandColumn(int columnNumber)
         {
             int idx = FindColInfoIdx(columnNumber, 0);
-            if (idx == -1)
+            if(idx == -1)
                 return;
 
             // If it is already exapanded do nothing.
-            if (!IsColumnGroupCollapsed(idx))
+            if(!IsColumnGroupCollapsed(idx))
                 return;
 
             // Find the start of the Group.
@@ -393,11 +393,11 @@ namespace NPOI.HSSF.Record.Aggregates
             //   to look at the start and the end of the current Group to determine which
             //   is the enclosing Group
             // hidden bit only is altered for this outline level.  ie.  don't Uncollapse contained Groups
-            if (!IsColumnGroupHiddenByParent(idx))
+            if(!IsColumnGroupHiddenByParent(idx))
             {
-                for (int i = startIdx; i <= endIdx; i++)
+                for(int i = startIdx; i <= endIdx; i++)
                 {
-                    if (columnInfo.OutlineLevel == GetColInfo(i).OutlineLevel)
+                    if(columnInfo.OutlineLevel == GetColInfo(i).OutlineLevel)
                         GetColInfo(i).IsHidden = false;
                 }
             }
@@ -412,23 +412,23 @@ namespace NPOI.HSSF.Record.Aggregates
         private static void SetColumnInfoFields(ColumnInfoRecord ci, short? xfStyle, double? width,
                     int? level, Boolean? hidden, Boolean? collapsed)
         {
-            if (xfStyle != null)
+            if(xfStyle != null)
             {
                 ci.XFIndex = Convert.ToInt16(xfStyle, CultureInfo.InvariantCulture);
             }
-            if (width != null)
+            if(width != null)
             {
                 ci.ColumnWidth = Convert.ToInt32(width, CultureInfo.InvariantCulture);
             }
-            if (level != null)
+            if(level != null)
             {
-                ci.OutlineLevel = (short)level;
+                ci.OutlineLevel = (short) level;
             }
-            if (hidden != null)
+            if(hidden != null)
             {
                 ci.IsHidden = Convert.ToBoolean(hidden, CultureInfo.InvariantCulture);
             }
-            if (collapsed != null)
+            if(collapsed != null)
             {
                 ci.IsCollapsed = Convert.ToBoolean(collapsed, CultureInfo.InvariantCulture);
             }
@@ -441,23 +441,23 @@ namespace NPOI.HSSF.Record.Aggregates
         private void AttemptMergeColInfoRecords(int colInfoIx)
         {
             int nRecords = records.Count;
-            if (colInfoIx < 0 || colInfoIx >= nRecords)
+            if(colInfoIx < 0 || colInfoIx >= nRecords)
             {
                 throw new ArgumentException("colInfoIx " + colInfoIx
                         + " is out of range (0.." + (nRecords - 1) + ")");
             }
             ColumnInfoRecord currentCol = GetColInfo(colInfoIx);
             int nextIx = colInfoIx + 1;
-            if (nextIx < nRecords)
+            if(nextIx < nRecords)
             {
-                if (MergeColInfoRecords(currentCol, GetColInfo(nextIx)))
+                if(MergeColInfoRecords(currentCol, GetColInfo(nextIx)))
                 {
                     records.RemoveAt(nextIx);
                 }
             }
-            if (colInfoIx > 0)
+            if(colInfoIx > 0)
             {
-                if (MergeColInfoRecords(GetColInfo(colInfoIx - 1), currentCol))
+                if(MergeColInfoRecords(GetColInfo(colInfoIx - 1), currentCol))
                 {
                     records.RemoveAt(colInfoIx);
                 }
@@ -469,7 +469,7 @@ namespace NPOI.HSSF.Record.Aggregates
     */
         private static bool MergeColInfoRecords(ColumnInfoRecord ciA, ColumnInfoRecord ciB)
         {
-            if (ciA.IsAdjacentBefore(ciB) && ciA.FormatMatches(ciB))
+            if(ciA.IsAdjacentBefore(ciB) && ciA.FormatMatches(ciB))
             {
                 ciA.LastColumn = ciB.LastColumn;
                 return true;
@@ -488,17 +488,17 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             int idx = pIdx;
             ColumnInfoRecord columnInfo = GetColInfo(idx);
-            while (idx < records.Count)
+            while(idx < records.Count)
             {
                 columnInfo.IsHidden = (hidden);
-                if (idx + 1 < records.Count)
+                if(idx + 1 < records.Count)
                 {
                     ColumnInfoRecord nextColumnInfo = GetColInfo(idx + 1);
-                    if (!columnInfo.IsAdjacentBefore(nextColumnInfo))
+                    if(!columnInfo.IsAdjacentBefore(nextColumnInfo))
                     {
                         break;
                     }
-                    if (nextColumnInfo.OutlineLevel < level)
+                    if(nextColumnInfo.OutlineLevel < level)
                     {
                         break;
                     }
@@ -522,22 +522,22 @@ namespace NPOI.HSSF.Record.Aggregates
             ColumnInfoRecord ci = null;
             int k = 0;
 
-            for (k = 0; k < records.Count; k++)
+            for(k = 0; k < records.Count; k++)
             {
                 ColumnInfoRecord tci = (ColumnInfoRecord)records[k];
-                if (tci.ContainsColumn(targetColumnIx))
+                if(tci.ContainsColumn(targetColumnIx))
                 {
                     ci = tci;
                     break;
                 }
-                if (tci.FirstColumn > targetColumnIx)
+                if(tci.FirstColumn > targetColumnIx)
                 {
                     // call targetColumnIx infos after k are for later targetColumnIxs
                     break; // exit now so k will be the correct insert pos
                 }
             }
 
-            if (ci == null)
+            if(ci == null)
             {
                 // okay so there IsN'T a targetColumnIx info record that cover's this targetColumnIx so lets Create one!
                 ColumnInfoRecord nci = new ColumnInfoRecord();
@@ -556,12 +556,12 @@ namespace NPOI.HSSF.Record.Aggregates
             bool hiddenChanged = ci.IsHidden != hidden;
             bool collapsedChanged = ci.IsCollapsed != collapsed;
             bool targetColumnIxChanged = styleChanged || widthChanged || levelChanged || hiddenChanged || collapsedChanged;
-            if (!targetColumnIxChanged)
+            if(!targetColumnIxChanged)
             {
                 // do nothing...nothing Changed.
                 return;
             }
-            if ((ci.FirstColumn == targetColumnIx)
+            if((ci.FirstColumn == targetColumnIx)
                      && (ci.LastColumn == targetColumnIx))
             {                               // if its only for this cell then
                 // ColumnInfo ci for a single column, the target column
@@ -569,12 +569,12 @@ namespace NPOI.HSSF.Record.Aggregates
                 AttemptMergeColInfoRecords(k);
                 return;
             }
-            if ((ci.FirstColumn == targetColumnIx)
+            if((ci.FirstColumn == targetColumnIx)
                      || (ci.LastColumn == targetColumnIx))
             {
                 // The target column is at either end of the multi-column ColumnInfo ci
                 // we'll just divide the info and create a new one
-                if (ci.FirstColumn == targetColumnIx)
+                if(ci.FirstColumn == targetColumnIx)
                 {
                     ci.FirstColumn = targetColumnIx + 1;
                 }
@@ -618,7 +618,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private static ColumnInfoRecord CopyColInfo(ColumnInfoRecord ci)
         {
-            return (ColumnInfoRecord)ci.Clone();
+            return (ColumnInfoRecord) ci.Clone();
         }
 
         /**
@@ -628,7 +628,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             ci.XFIndex = (xfStyle);
             ci.ColumnWidth = (width);
-            ci.OutlineLevel = (short)level;
+            ci.OutlineLevel = (short) level;
             ci.IsHidden = (hidden);
             ci.IsCollapsed = (collapsed);
         }
@@ -640,12 +640,12 @@ namespace NPOI.HSSF.Record.Aggregates
         [Obsolete("Not found in poi")]
         public void CollapseColInfoRecords(int columnIdx)
         {
-            if (columnIdx == 0)
+            if(columnIdx == 0)
                 return;
             ColumnInfoRecord previousCol = (ColumnInfoRecord)records[columnIdx - 1];
             ColumnInfoRecord currentCol = (ColumnInfoRecord)records[columnIdx];
             bool adjacentColumns = previousCol.LastColumn == currentCol.FirstColumn - 1;
-            if (!adjacentColumns)
+            if(!adjacentColumns)
                 return;
 
             bool columnsMatch =
@@ -653,7 +653,7 @@ namespace NPOI.HSSF.Record.Aggregates
                     previousCol.Options == currentCol.Options &&
                     previousCol.ColumnWidth == currentCol.ColumnWidth;
 
-            if (columnsMatch)
+            if(columnsMatch)
             {
                 previousCol.LastColumn = currentCol.LastColumn;
                 records.RemoveAt(columnIdx);
@@ -670,14 +670,14 @@ namespace NPOI.HSSF.Record.Aggregates
         {
 
             int colInfoSearchStartIdx = 0; // optimization to speed up the search for col infos
-            for (int i = fromColumnIx; i <= toColumnIx; i++)
+            for(int i = fromColumnIx; i <= toColumnIx; i++)
             {
                 int level = 1;
                 int colInfoIdx = FindColInfoIdx(i, colInfoSearchStartIdx);
-                if (colInfoIdx != -1)
+                if(colInfoIdx != -1)
                 {
                     level = GetColInfo(colInfoIdx).OutlineLevel;
-                    if (indent)
+                    if(indent)
                     {
                         level++;
                     }
@@ -704,10 +704,10 @@ namespace NPOI.HSSF.Record.Aggregates
         public ColumnInfoRecord FindColumnInfo(int columnIndex)
         {
             int nInfos = records.Count;
-            for (int i = 0; i < nInfos; i++)
+            for(int i = 0; i < nInfos; i++)
             {
                 ColumnInfoRecord ci = GetColInfo(i);
-                if (ci.ContainsColumn(columnIndex))
+                if(ci.ContainsColumn(columnIndex))
                 {
                     return ci;
                 }
@@ -716,23 +716,23 @@ namespace NPOI.HSSF.Record.Aggregates
         }
         private int FindColInfoIdx(int columnIx, int fromColInfoIdx)
         {
-            if (columnIx < 0)
+            if(columnIx < 0)
             {
                 throw new ArgumentException("column parameter out of range: " + columnIx);
             }
-            if (fromColInfoIdx < 0)
+            if(fromColInfoIdx < 0)
             {
                 throw new ArgumentException("fromIdx parameter out of range: " + fromColInfoIdx);
             }
 
-            for (int k = fromColInfoIdx; k < records.Count; k++)
+            for(int k = fromColInfoIdx; k < records.Count; k++)
             {
                 ColumnInfoRecord ci = GetColInfo(k);
-                if (ci.ContainsColumn(columnIx))
+                if(ci.ContainsColumn(columnIx))
                 {
                     return k;
                 }
-                if (ci.FirstColumn > columnIx)
+                if(ci.FirstColumn > columnIx)
                 {
                     break;
                 }
@@ -749,7 +749,7 @@ namespace NPOI.HSSF.Record.Aggregates
             {
                 int result = 0;
                 int count = records.Count;
-                for (int i = 0; i < count; i++)
+                for(int i = 0; i < count; i++)
                 {
                     ColumnInfoRecord columnInfoRecord = GetColInfo(i);
                     result = Math.Max(columnInfoRecord.OutlineLevel, result);
@@ -761,7 +761,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public int GetOutlineLevel(int columnIndex)
         {
             ColumnInfoRecord ci = FindColumnInfo(columnIndex);
-            if (ci != null)
+            if(ci != null)
             {
                 return ci.OutlineLevel;
             }
@@ -790,7 +790,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
                 return minIndex;
             }
-            
+
         }
 
         public int MaxColumnIndex

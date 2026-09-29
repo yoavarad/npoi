@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,10 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.IO;
 using ICSharpCode.SharpZipLib.GZip;
 using NPOI.Util;
+using System;
+using System.IO;
 
 namespace TestCases.POIFS.Storage
 {
@@ -28,7 +28,7 @@ namespace TestCases.POIFS.Storage
         {
             MemoryStream baos = new MemoryStream(hexDataLines.Length * 32 + 32);
 
-            for (int i = 0; i < hexDataLines.Length; i++)
+            for(int i = 0; i < hexDataLines.Length; i++)
             {
                 byte[] lineData = HexRead.ReadFromString(hexDataLines[i]);
                 baos.Write(lineData, 0, lineData.Length);
@@ -39,11 +39,11 @@ namespace TestCases.POIFS.Storage
 
         public static void DumpData(byte[] data)
         {
-            int i = 0; 
+            int i = 0;
             Console.WriteLine("String[] hexDataLines = {");
             Console.Write("\t\"");
 
-            while (true)
+            while(true)
             {
                 char[] cc = HexDump.ByteToHex(data[i]);
                 Console.Write(cc[2]);
@@ -51,10 +51,10 @@ namespace TestCases.POIFS.Storage
 
                 i++;
 
-                if (i >= data.Length)
+                if(i >= data.Length)
                     break;
 
-                if (i % 32 == 0)
+                if(i % 32 == 0)
                 {
                     Console.WriteLine("\",");
                     Console.Write("\t\"");
@@ -73,13 +73,13 @@ namespace TestCases.POIFS.Storage
         {
             MemoryStream ms = new MemoryStream(hexDataLines.Length * 32 + 32);
 
-            for (int i = 0; i < hexDataLines.Length; i++)
+            for(int i = 0; i < hexDataLines.Length; i++)
             {
                 byte[] lineData = HexRead.ReadFromString(hexDataLines[i]);
                 ms.Write(lineData, 0, lineData.Length);
             }
 
-            if (!Array.Equals(expected, ms.ToArray()))
+            if(!Array.Equals(expected, ms.ToArray()))
             {
                 throw new System.Exception("different");
             }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -17,11 +17,13 @@
  * ====================================================================
  */
 
-namespace TestCases.SS.Formula.Functions {
+namespace TestCases.SS.Formula.Functions
+{
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Test cases for AVERAGEIFS()
@@ -40,7 +42,7 @@ namespace TestCases.SS.Formula.Functions {
 
         private static void ConfirmDouble(double expected, ValueEval actualEval)
         {
-            if (!(actualEval is NumericValueEval))
+            if(!(actualEval is NumericValueEval))
             {
                 throw new AssertionException("Expected numeric result");
             }

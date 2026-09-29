@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.Model;
 using System;
@@ -28,19 +28,21 @@ namespace NPOI.OOXML.XSSF.UserModel
             Style = stylesTable.GetTableStyle(pivotTableStyle.name);
         }
 
-        public bool IsShowColumnStripes 
+        public bool IsShowColumnStripes
         {
-            get { 
-                return _showColStripes; 
+            get
+            {
+                return _showColStripes;
             }
 
-            set {
+            set
+            {
                 _showColStripes = value;
                 _pivotStyle.showColStripes = value;
             }
         }
 
-        public bool IsShowRowStripes 
+        public bool IsShowRowStripes
         {
             get
             {

@@ -17,9 +17,8 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-
     using NPOI.SS.Util;
+    using System;
 
     /**
      * Conditional Formatting Header record CFHEADER (0x01B0).
@@ -55,7 +54,7 @@ namespace NPOI.HSSF.Record
 
         public override short Sid
         {
-            get{ return sid; }   
+            get { return sid; }
         }
 
         public override object Clone()

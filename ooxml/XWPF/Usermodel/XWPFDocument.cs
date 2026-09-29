@@ -18,19 +18,18 @@
 
 namespace NPOI.XWPF.UserModel
 {
+    using NPOI.OOXML.XWPF.Util;
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Wordprocessing;
+    using NPOI.POIFS.Crypt;
+    using NPOI.Util;
+    using NPOI.WP.UserModel;
+    using NPOI.XWPF.Model;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Xml;
-
-    using NPOI.Util;
-    using NPOI.OpenXml4Net.OPC;
-    using NPOI.OpenXmlFormats.Wordprocessing;
-    using NPOI.WP.UserModel;
-    using NPOI.XWPF.Model;
-    using NPOI.OOXML.XWPF.Util;
-    using NPOI.POIFS.Crypt;
 
     /**
      * <p>High(ish) level class for working with .docx files.</p>
@@ -311,7 +310,7 @@ namespace NPOI.XWPF.UserModel
         {
             ctDocument = new CT_Document();
             ctDocument.AddNewBody();
-            
+
             settings = (XWPFSettings) CreateRelationship(XWPFRelation.SETTINGS, XWPFFactory.GetInstance());
             ExtendedProperties expProps = GetProperties().ExtendedProperties;
             expProps.GetUnderlyingProperties().Application = (DOCUMENT_CREATOR);
@@ -2070,8 +2069,8 @@ namespace NPOI.XWPF.UserModel
             this.Close();
         }
         public XWPFChart CreateChart()
-        { 
-            return this.CreateChart(XWPFChart.DEFAULT_WIDTH,XWPFChart.DEFAULT_HEIGHT);
+        {
+            return this.CreateChart(XWPFChart.DEFAULT_WIDTH, XWPFChart.DEFAULT_HEIGHT);
         }
         public XWPFChart CreateChart(int width, int height)
         {

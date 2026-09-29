@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.Util;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
 
     /**
      * Specifies a rectangular area of cells A1:A4 for instance.
@@ -47,9 +47,9 @@ namespace NPOI.SS.Formula.PTG
         {
 
         }
-        public AreaPtg(AreaReference areaRef):base(areaRef)
+        public AreaPtg(AreaReference areaRef) : base(areaRef)
         {
-            
+
         }
         protected override byte Sid
         {

@@ -16,12 +16,11 @@
 ==================================================================== */
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
-    using NPOI.SS.Util;
     using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using System;
 
     /// <summary>
     /// HSSFConditionalFormatting class encapsulates all Settings of Conditional Formatting.
@@ -66,11 +65,11 @@ namespace NPOI.HSSF.UserModel
         /// <param name="cfAggregate">The cf aggregate.</param>
         public HSSFConditionalFormatting(HSSFSheet sheet, CFRecordsAggregate cfAggregate)
         {
-            if (sheet == null)
+            if(sheet == null)
             {
                 throw new ArgumentException("workbook must not be null");
             }
-            if (cfAggregate == null)
+            if(cfAggregate == null)
             {
                 throw new ArgumentException("cfAggregate must not be null");
             }
@@ -116,7 +115,7 @@ namespace NPOI.HSSF.UserModel
         }
         public void SetRule(int idx, IConditionalFormattingRule cfRule)
         {
-            SetRule(idx, (HSSFConditionalFormattingRule)cfRule);
+            SetRule(idx, (HSSFConditionalFormattingRule) cfRule);
         }
         /// <summary>
         /// Add a Conditional Formatting rule.
@@ -129,7 +128,7 @@ namespace NPOI.HSSF.UserModel
         }
         public void AddRule(IConditionalFormattingRule cfRule)
         {
-            AddRule((HSSFConditionalFormattingRule)cfRule);
+            AddRule((HSSFConditionalFormattingRule) cfRule);
         }
         /// <summary>
         /// Gets the Conditional Formatting rule at position idx

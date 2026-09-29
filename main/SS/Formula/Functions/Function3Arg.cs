@@ -33,4 +33,3 @@ namespace NPOI.SS.Formula.Functions
         ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1, ValueEval arg2);
     }
 }
-

@@ -19,11 +19,12 @@ namespace TestCases.SS.Formula.Function
 {
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.HSSF;
-    using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util;
 
     /**
      * Tests Reading from a sample spreadsheet some built-in functions that were not properly
@@ -43,7 +44,7 @@ namespace TestCases.SS.Formula.Function
 
         private static ISheet GetSheet()
         {
-            if (_sheet == null)
+            if(_sheet == null)
             {
                 HSSFWorkbook wb = HSSFTestDataSamples.OpenSampleWorkbook(SAMPLE_SPREADSHEET_FILE_NAME);
                 _sheet = wb.GetSheetAt(0);
@@ -59,17 +60,17 @@ namespace TestCases.SS.Formula.Function
             {
                 formula = GetCellFormula(0);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.StartsWith("Too few arguments"))
+                if(e.Message.StartsWith("Too few arguments"))
                 {
-                    if (e.Message.IndexOf("AttrPtg") > 0)
+                    if(e.Message.IndexOf("AttrPtg") > 0)
                     {
                         throw afe("tAttrVolatile not supported in FormulaParser.ToFormulaString");
                     }
                     throw afe("NOW() registered with 1 arg instead of 0");
                 }
-                if (e.Message.StartsWith("too much stuff"))
+                if(e.Message.StartsWith("too much stuff"))
                 {
                     throw afe("DATEDIF() not registered");
                 }
@@ -83,7 +84,7 @@ namespace TestCases.SS.Formula.Function
         {
 
             String formula = GetCellFormula(1);
-            if ("externalflag(1,1,1,1,1)".Equals(formula))
+            if("externalflag(1,1,1,1,1)".Equals(formula))
             {
                 throw afe("DDB() not registered");
             }
@@ -94,7 +95,7 @@ namespace TestCases.SS.Formula.Function
         {
 
             String formula = GetCellFormula(2);
-            if (formula.Equals("ARCTAN(1)"))
+            if(formula.Equals("ARCTAN(1)"))
             {
                 throw afe("func ix 18 registered as ARCTAN() instead of ATAN()");
             }
@@ -105,7 +106,7 @@ namespace TestCases.SS.Formula.Function
         {
 
             String formula = GetCellFormula(3);
-            if (formula.Equals("YEN(1)"))
+            if(formula.Equals("YEN(1)"))
             {
                 throw afe("func ix 204 registered as YEN() instead of USDOLLAR()");
             }
@@ -120,20 +121,20 @@ namespace TestCases.SS.Formula.Function
             {
                 formula = GetCellFormula(4);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.StartsWith("too much stuff"))
+                if(e.Message.StartsWith("too much stuff"))
                 {
                     throw afe("DBCS() not registered");
                 }
                 // some other unexpected error
                 throw e;
             }
-            catch (Exception)
+            catch(Exception)
             {
                 throw new AssertionException("found err- DBCS() registered with -1 args");
             }
-            if (formula.Equals("JIS(\"abc\")"))
+            if(formula.Equals("JIS(\"abc\")"))
             {
                 throw afe("func ix 215 registered as JIS() instead of DBCS()");
             }
@@ -147,9 +148,9 @@ namespace TestCases.SS.Formula.Function
             {
                 formula = GetCellFormula(5);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.StartsWith("too much stuff"))
+                if(e.Message.StartsWith("too much stuff"))
                 {
                     throw afe("ISNONTEXT() registered with wrong index");
                 }
@@ -173,9 +174,9 @@ namespace TestCases.SS.Formula.Function
             {
                 sheet = GetSheet();
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.Equals("Invalid built-in function index (189)"))
+                if(e.Message.Equals("Invalid built-in function index (189)"))
                 {
                     throw afe("DPRODUCT() registered with wrong index");
                 }
@@ -184,7 +185,7 @@ namespace TestCases.SS.Formula.Function
             }
             String result = sheet.GetRow(rowIx).GetCell(0).CellFormula;
 #if !HIDE_UNREACHABLE_CODE
-            if (false)
+            if(false)
             {
                 System.Console.Error.WriteLine(result);
             }

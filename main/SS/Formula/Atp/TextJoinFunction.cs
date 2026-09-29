@@ -1,9 +1,9 @@
-﻿using NPOI.SS.Formula.Eval;
+using Cysharp.Text;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
-using System.Text; 
-using Cysharp.Text;
+using System.Text;
 
 namespace NPOI.SS.Formula.Atp
 {
@@ -30,7 +30,7 @@ namespace NPOI.SS.Formula.Atp
 
             // Make sure we have at least one text value, and at most 252 text values, as documented at:
             // https://support.microsoft.com/en-us/office/textjoin-function-357b449a-ec91-49d0-80c3-0e8fc845691c?ui=en-us&rs=en-us&ad=us
-            if (args.Length < 3 || args.Length > 254)
+            if(args.Length < 3 || args.Length > 254)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -50,15 +50,15 @@ namespace NPOI.SS.Formula.Atp
                 // Get a list of string values for each text argument
                 List<string> textValues = new List<string>();
 
-                for (int i = 2; i < args.Length; i++)
+                for(int i = 2; i < args.Length; i++)
                 {
                     List<ValueEval> textArgs = GetValues(args[i], srcRowIndex, srcColumnIndex, false);
-                    foreach (ValueEval textArg in textArgs)
+                    foreach(ValueEval textArg in textArgs)
                     {
                         String textValue = OperandResolver.CoerceValueToString(textArg);
 
                         // If we're not ignoring empty values or if our value is not empty, add it to the list
-                        if (!ignoreEmpty || (textValue != null && textValue.Length > 0))
+                        if(!ignoreEmpty || (textValue != null && textValue.Length > 0))
                         {
                             textValues.Add(textValue);
                         }
@@ -66,11 +66,11 @@ namespace NPOI.SS.Formula.Atp
                 }
 
                 // Join the list of values with the specified delimiter and return
-                if (delimiterArgs.Count == 0)
+                if(delimiterArgs.Count == 0)
                 {
                     return new StringEval(String.Join("", textValues));
                 }
-                else if (delimiterArgs.Count == 1)
+                else if(delimiterArgs.Count == 1)
                 {
                     String delimiter = TextJoinFunction.LaxValueToString(delimiterArgs[0]);
                     return new StringEval(String.Join(delimiter, textValues));
@@ -80,7 +80,7 @@ namespace NPOI.SS.Formula.Atp
                     //https://support.microsoft.com/en-us/office/textjoin-function-357b449a-ec91-49d0-80c3-0e8fc845691c
                     //see example 3 to see why this is needed
                     List<string> delimiters = new List<string>();
-                    foreach (ValueEval delimiterArg in delimiterArgs)
+                    foreach(ValueEval delimiterArg in delimiterArgs)
                     {
                         delimiters.Add(TextJoinFunction.LaxValueToString(delimiterArg));
                     }
@@ -88,7 +88,7 @@ namespace NPOI.SS.Formula.Atp
 
                     for(int i = 0; i < textValues.Count; i++)
                     {
-                        if (i > 0)
+                        if(i > 0)
                         {
                             int delimiterIndex = (i - 1) % delimiters.Count;
                             sb.Append(delimiters[delimiterIndex]);
@@ -98,7 +98,7 @@ namespace NPOI.SS.Formula.Atp
                     return new StringEval(sb.ToString());
                 }
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -114,13 +114,13 @@ namespace NPOI.SS.Formula.Atp
         //this is why lastRowOnly is supported
         private static List<ValueEval> GetValues(ValueEval eval, int srcRowIndex, int srcColumnIndex, bool lastRowOnly)
         {
-            if (eval is AreaEval ae)
+            if(eval is AreaEval ae)
             {
                 List<ValueEval> list = new List<ValueEval>();
                 int startRow = lastRowOnly ? ae.LastRow : ae.FirstRow;
-                for (int r = startRow; r <= ae.LastRow; r++)
+                for(int r = startRow; r <= ae.LastRow; r++)
                 {
-                    for (int c = ae.FirstColumn; c <= ae.LastColumn; c++)
+                    for(int c = ae.FirstColumn; c <= ae.LastColumn; c++)
                     {
                         list.Add(OperandResolver.GetSingleValue(ae.GetAbsoluteValue(r, c), r, c));
                     }

@@ -18,9 +18,9 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /// <summary>
     /// A color property.
@@ -34,9 +34,9 @@ namespace NPOI.DDF
         /// </summary>
         /// <param name="propertyNumber">The property number.</param>
         /// <param name="rgbColor">Color of the RGB.</param>
-        public EscherRGBProperty(short propertyNumber, int rgbColor):base(propertyNumber, rgbColor)
+        public EscherRGBProperty(short propertyNumber, int rgbColor) : base(propertyNumber, rgbColor)
         {
-            
+
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace NPOI.DDF
         /// <value>The red.</value>
         public byte Red
         {
-            get { return (byte)(RgbColor & 0xFF); }
+            get { return (byte) (RgbColor & 0xFF); }
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace NPOI.DDF
         /// <value>The green.</value>
         public byte Green
         {
-            get{return (byte)((RgbColor >> 8) & 0xFF);}
+            get { return (byte) ((RgbColor >> 8) & 0xFF); }
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace NPOI.DDF
         /// <value>The blue.</value>
         public byte Blue
         {
-            get{return (byte)((RgbColor >> 16) & 0xFF);}
+            get { return (byte) ((RgbColor >> 16) & 0xFF); }
         }
         public override String ToXml(String tab)
         {

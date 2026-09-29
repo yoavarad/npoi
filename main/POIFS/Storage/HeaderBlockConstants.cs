@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -51,5 +51,5 @@ namespace NPOI.POIFS.Storage
         public const int _sbat_block_count_offset = 0x40;
         public const int _xbat_start_offset = 0x44;
         public const int _xbat_count_offset = 0x48;
-    } 
+    }
 }

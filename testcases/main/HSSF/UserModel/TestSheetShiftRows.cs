@@ -17,14 +17,14 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
     using NPOI.HSSF.UserModel;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
 
     /**
      * Tests row shifting capabilities.

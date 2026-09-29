@@ -17,9 +17,8 @@
 
 namespace NPOI.HSSF.Record.Common
 {
-    using System;
-
     using NPOI.Util;
+    using System;
 
     /**
      * Common Interface for all Shared Features

@@ -104,11 +104,11 @@ namespace NPOI.HSSF.Record.Cont
             int b5 = _in.ReadUByte();
             int b6 = _in.ReadUByte();
             int b7 = _in.ReadUByte();
-            return (((long)b7 << 56) +
-                    ((long)b6 << 48) +
-                    ((long)b5 << 40) +
-                    ((long)b4 << 32) +
-                    ((long)b3 << 24) +
+            return (((long) b7 << 56) +
+                    ((long) b6 << 48) +
+                    ((long) b5 << 40) +
+                    ((long) b4 << 32) +
+                    ((long) b3 << 24) +
                     (b2 << 16) +
                     (b1 << 8) +
                     (b0 << 0));

@@ -1,4 +1,4 @@
-﻿using NPOI.Util;
+using NPOI.Util;
 using NUnit.Framework;
 
 namespace TestCases.Util

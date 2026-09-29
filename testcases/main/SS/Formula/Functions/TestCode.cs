@@ -1,6 +1,7 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval result = invokeValue(number1);
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((StringEval)result).StringValue, msg);
+            ClassicAssert.AreEqual(expected, ((StringEval) result).StringValue, msg);
         }
 
         private static void confirmValueError(String msg, String number1, ErrorEval numError)

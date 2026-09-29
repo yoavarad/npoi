@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -30,11 +30,11 @@ using NPOI.POIFS.Storage;
 
 namespace NPOI.POIFS.Properties
 {
-    public class RootProperty:DirectoryProperty
+    public class RootProperty : DirectoryProperty
     {
         private const string NAME = "Root Entry";
 
-        public RootProperty():base(NAME)
+        public RootProperty() : base(NAME)
         {
             this.NodeColor=_NODE_BLACK;
             this.PropertyType=PropertyConstants.ROOT_TYPE;
@@ -47,10 +47,10 @@ namespace NPOI.POIFS.Properties
         /// <param name="index">index number</param>
         /// <param name="array">byte data</param>
         /// <param name="offset">offset into byte data</param>
-        public RootProperty(int index, byte [] array,
-                               int offset): base(index, array, offset)
+        public RootProperty(int index, byte[] array,
+                               int offset) : base(index, array, offset)
         {
-           
+
         }
 
         /// <summary>
@@ -59,7 +59,8 @@ namespace NPOI.POIFS.Properties
         /// <value>the size of the document, in bytes</value>
         public override int Size
         {
-            set{
+            set
+            {
                 base.Size=SmallDocumentBlock.CalcSize(value);
             }
         }

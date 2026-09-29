@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,14 +25,13 @@
  * 
  * ==============================================================*/
 
+using NPOI.HPSF;
+using NPOI.POIFS.EventFileSystem;
+using NPOI.Util;
+using NPOI.Util.Collections;
 using System;
 using System.Collections.Generic;
 using System.IO;
-
-using NPOI.Util;
-using NPOI.POIFS.EventFileSystem;
-using NPOI.Util.Collections;
-using NPOI.HPSF;
 
 
 namespace NPOI.POIFS.FileSystem
@@ -77,7 +76,7 @@ namespace NPOI.POIFS.FileSystem
         /// </summary>
         /// <value>number of immediately (no grandchildren etc.) contained
         /// Entry instances</value>
-        int EntryCount{get;}
+        int EntryCount { get; }
 
         /// <summary>
         /// get a specified Entry by name
@@ -130,6 +129,6 @@ namespace NPOI.POIFS.FileSystem
         /// </summary>
         /// <param name="name">entry name</param>
         /// <returns>true if have</returns>
-        bool HasEntry(String name );
+        bool HasEntry(String name);
     }
 }

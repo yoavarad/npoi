@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -81,7 +81,7 @@ namespace NPOI.XSSF.Streaming
         public virtual Stream CreateWriter(FileInfo fd)
         {
 
-            FileStream fos = new FileStream(fd.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite, 
+            FileStream fos = new FileStream(fd.FullName, FileMode.OpenOrCreate, FileAccess.ReadWrite,
                 FileShare.ReadWrite | FileShare.Delete, DefaultBufferSize);
             Stream outputStream;
             try
@@ -147,7 +147,7 @@ namespace NPOI.XSSF.Streaming
             {
                 return DecorateInputStream(fis);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 fis.Close();
                 throw;
@@ -172,7 +172,7 @@ namespace NPOI.XSSF.Streaming
         protected void FinalizeWriter()
         {
             TemporaryFileInfo.Delete();
-            if (File.Exists(TemporaryFileInfo.FullName))
+            if(File.Exists(TemporaryFileInfo.FullName))
             {
                 logger.Log(POILogger.ERROR, "Can't delete temporary encryption file: " + TemporaryFileInfo);
             }
@@ -187,18 +187,18 @@ namespace NPOI.XSSF.Streaming
         public void WriteRow(int rownum, SXSSFRow row)
         {
             BeginRow(rownum, row);
-            
-            using (var cells = row.AllCellsIterator())
+
+            using(var cells = row.AllCellsIterator())
             {
                 int columnIndex = 0;
-                while (cells.MoveNext())
+                while(cells.MoveNext())
                 {
                     WriteCell(columnIndex++, cells.Current);
                 }
                 EndRow();
             }
-            
-            if (LowestIndexOfFlushedRows == -1 || LowestIndexOfFlushedRows > rownum)
+
+            if(LowestIndexOfFlushedRows == -1 || LowestIndexOfFlushedRows > rownum)
             {
                 LowestIndexOfFlushedRows = rownum;
                 NumberOfFlushedRows++;
@@ -220,30 +220,30 @@ namespace NPOI.XSSF.Streaming
             _out.Write("<row");
             WriteAttribute("r", (rownum + 1).ToString());
 
-            if (row.HasCustomHeight())
+            if(row.HasCustomHeight())
             {
                 WriteAttribute("customHeight", "true");
                 WriteAttribute("ht", row.HeightInPoints.ToString(CultureInfo.InvariantCulture));
             }
-            if (row.ZeroHeight)
+            if(row.ZeroHeight)
             {
                 WriteAttribute("hidden", "true");
             }
-            if (row.IsFormatted)
+            if(row.IsFormatted)
             {
                 WriteAttribute("s", row.RowStyleIndex.ToString());
                 WriteAttribute("customFormat", "1");
             }
 
-            if (row.OutlineLevel != 0)
+            if(row.OutlineLevel != 0)
             {
                 WriteAttribute("outlineLevel", row.OutlineLevel.ToString());
             }
-            if (row.Hidden != null)
+            if(row.Hidden != null)
             {
                 WriteAttribute("hidden", (row.Hidden?? true) ? "1" : "0");
             }
-            if (row.Collapsed != null)
+            if(row.Collapsed != null)
             {
                 WriteAttribute("collapsed", (row.Collapsed ?? true) ? "1" : "0");
             }
@@ -260,7 +260,7 @@ namespace NPOI.XSSF.Streaming
 
         public void WriteCell(int columnIndex, ICell cell)
         {
-            if (cell == null)
+            if(cell == null)
             {
                 return;
             }
@@ -268,102 +268,102 @@ namespace NPOI.XSSF.Streaming
             _out.Write("<c");
             WriteAttribute("r", cellRef);
             ICellStyle cellStyle = cell.CellStyle;
-            if (cellStyle.Index != 0)
+            if(cellStyle.Index != 0)
             {
                 // need to convert the short to unsigned short as the indexes can be up to 64k
                 // ideally we would use int for this index, but that would need changes to some more 
                 // APIs
                 WriteAttribute("s", (cellStyle.Index & 0xffff).ToString());
             }
-            switch (cell.CellType)
+            switch(cell.CellType)
             {
                 case CellType.Blank:
-                    {
-                        _out.Write('>');
-                        break;
-                    }
+                {
+                    _out.Write('>');
+                    break;
+                }
                 case CellType.Formula:
+                {
+                    _out.Write("><f>");
+                    OutputQuotedString(cell.CellFormula);
+                    _out.Write("</f>");
+
+                    switch(cell.CachedFormulaResultType)
                     {
-                        _out.Write("><f>");
-                        OutputQuotedString(cell.CellFormula);
-                        _out.Write("</f>");
-
-                        switch (cell.CachedFormulaResultType)
-                        {
-                            case CellType.Numeric:
-                                double nval = cell.NumericCellValue;
-                                if (!Double.IsNaN(nval))
-                                {
-                                    _out.Write("<v>");
-                                    _out.Write(nval.ToString(CultureInfo.InvariantCulture));
-                                    _out.Write("</v>");
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    }
-                case CellType.String:
-                    {
-                        if (_sharedStringSource != null)
-                        {
-                            XSSFRichTextString rt = new XSSFRichTextString(cell.StringCellValue);
-                            int sRef = _sharedStringSource.AddEntry(rt.GetCTRst());
-
-                            WriteAttribute("t", ST_CellType.s.ToString());
-                            _out.Write("><v>");
-                            _out.Write(sRef.ToString());
-                            _out.Write("</v>");
-                        }
-                        else
-                        {
-                            WriteAttribute("t", "inlineStr");
-                            _out.Write("><is><t");
-
-                            if (HasLeadingTrailingSpaces(cell.StringCellValue))
+                        case CellType.Numeric:
+                            double nval = cell.NumericCellValue;
+                            if(!Double.IsNaN(nval))
                             {
-                                WriteAttribute("xml:space", "preserve");
+                                _out.Write("<v>");
+                                _out.Write(nval.ToString(CultureInfo.InvariantCulture));
+                                _out.Write("</v>");
                             }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                }
+                case CellType.String:
+                {
+                    if(_sharedStringSource != null)
+                    {
+                        XSSFRichTextString rt = new XSSFRichTextString(cell.StringCellValue);
+                        int sRef = _sharedStringSource.AddEntry(rt.GetCTRst());
 
-                            _out.Write(">");
+                        WriteAttribute("t", ST_CellType.s.ToString());
+                        _out.Write("><v>");
+                        _out.Write(sRef.ToString());
+                        _out.Write("</v>");
+                    }
+                    else
+                    {
+                        WriteAttribute("t", "inlineStr");
+                        _out.Write("><is><t");
 
-                            OutputQuotedString(cell.StringCellValue);
-
-                            _out.Write("</t></is>");
+                        if(HasLeadingTrailingSpaces(cell.StringCellValue))
+                        {
+                            WriteAttribute("xml:space", "preserve");
                         }
-                        break;
-                    }
-                case CellType.Numeric:
-                    {
-                        WriteAttribute("t", "n");
-                        _out.Write("><v>");
-                        _out.Write(cell.NumericCellValue.ToString(CultureInfo.InvariantCulture));
-                        _out.Write("</v>");
-                        break;
-                    }
-                case CellType.Boolean:
-                    {
-                        WriteAttribute("t", "b");
-                        _out.Write("><v>");
-                        _out.Write(cell.BooleanCellValue ? "1" : "0");
-                        _out.Write("</v>");
-                        break;
-                    }
-                case CellType.Error:
-                    {
-                        FormulaError error = FormulaError.ForInt(cell.ErrorCellValue);
 
-                        WriteAttribute("t", "e");
-                        _out.Write("><v>");
-                        _out.Write(error.String);
-                        _out.Write("</v>");
-                        break;
+                        _out.Write(">");
+
+                        OutputQuotedString(cell.StringCellValue);
+
+                        _out.Write("</t></is>");
                     }
+                    break;
+                }
+                case CellType.Numeric:
+                {
+                    WriteAttribute("t", "n");
+                    _out.Write("><v>");
+                    _out.Write(cell.NumericCellValue.ToString(CultureInfo.InvariantCulture));
+                    _out.Write("</v>");
+                    break;
+                }
+                case CellType.Boolean:
+                {
+                    WriteAttribute("t", "b");
+                    _out.Write("><v>");
+                    _out.Write(cell.BooleanCellValue ? "1" : "0");
+                    _out.Write("</v>");
+                    break;
+                }
+                case CellType.Error:
+                {
+                    FormulaError error = FormulaError.ForInt(cell.ErrorCellValue);
+
+                    WriteAttribute("t", "e");
+                    _out.Write("><v>");
+                    _out.Write(error.String);
+                    _out.Write("</v>");
+                    break;
+                }
                 default:
-                    {
-                        throw new InvalidOperationException("Invalid cell type: " + cell.CellType);
-                    }
+                {
+                    throw new InvalidOperationException("Invalid cell type: " + cell.CellType);
+                }
             }
             _out.Write("</c>");
         }
@@ -383,7 +383,7 @@ namespace NPOI.XSSF.Streaming
          */
         private static bool HasLeadingTrailingSpaces(string str)
         {
-            if (!string.IsNullOrEmpty(str))
+            if(!string.IsNullOrEmpty(str))
             {
                 char firstChar = str[0];
                 char lastChar = str[str.Length - 1];
@@ -395,7 +395,7 @@ namespace NPOI.XSSF.Streaming
         //Taken from jdk1.3/src/javax/swing/text/html/HTMLWriter.java
         internal void OutputQuotedString(string s)
         {
-            if (string.IsNullOrEmpty(s))
+            if(string.IsNullOrEmpty(s))
             {
                 return;
             }
@@ -403,10 +403,10 @@ namespace NPOI.XSSF.Streaming
             char[] chars = s.ToCharArray();
             int last = 0;
             int length = s.Length;
-            for (int counter = 0; counter < length; counter++)
+            for(int counter = 0; counter < length; counter++)
             {
                 char c = chars[counter];
-                switch (c)
+                switch(c)
                 {
                     case '<':
                         WriteLastChars(_out, chars, last, counter);
@@ -445,7 +445,7 @@ namespace NPOI.XSSF.Streaming
                         _out.Write("&#x9;");
                         last = counter + 1;
                         break;
-                    case (char)0xa0:
+                    case (char) 0xa0:
                         WriteLastChars(_out, chars, last, counter);
                         _out.Write("&#xa0;");
                         last = counter + 1;
@@ -453,19 +453,19 @@ namespace NPOI.XSSF.Streaming
                     default:
                         // YK: XmlBeans silently replaces all ISO control characters ( < 32) with question marks.
                         // the same rule applies to unicode surrogates and "not a character" symbols.
-                        if (ReplaceWithQuestionMark(c)) 
+                        if(ReplaceWithQuestionMark(c))
                         {
                             WriteLastChars(_out, chars, last, counter);
                             _out.Write('?');
                             last = counter + 1;
                         }
-                        else if (Char.IsHighSurrogate(c) || Char.IsLowSurrogate(c))
+                        else if(Char.IsHighSurrogate(c) || Char.IsLowSurrogate(c))
                         {
                             WriteLastChars(_out, chars, last, counter);
                             _out.Write(c);
                             last = counter + 1;
                         }
-                        else if (c > 127)
+                        else if(c > 127)
                         {
                             WriteLastChars(_out, chars, last, counter);
                             last = counter + 1;
@@ -478,17 +478,19 @@ namespace NPOI.XSSF.Streaming
                         break;
                 }
             }
-            if (last < length)
+            if(last < length)
             {
                 _out.Write(chars, last, length - last);
             }
         }
-        internal static bool ReplaceWithQuestionMark(char c) {
+        internal static bool ReplaceWithQuestionMark(char c)
+        {
             return c < ' ' || ('\uFFFE' <= c && c <= '\uFFFF');
         }
         private static void WriteLastChars(StreamWriter out1, char[] chars, int last, int counter)
         {
-            if (counter > last) {
+            if(counter > last)
+            {
                 out1.Write(chars, last, counter - last);
             }
         }
@@ -523,7 +525,7 @@ namespace NPOI.XSSF.Streaming
 
         public string TemporaryFilePath()
         {
-            if (TemporaryFileInfo != null)
+            if(TemporaryFileInfo != null)
             {
                 return TemporaryFileInfo.FullName;
             }

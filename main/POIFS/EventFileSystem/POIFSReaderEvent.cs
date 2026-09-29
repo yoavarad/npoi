@@ -15,20 +15,19 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-        
-using System;
 
 using NPOI.POIFS.FileSystem;
+using System;
 
 namespace NPOI.POIFS.EventFileSystem
 {
 
-/**
- * Class POIFSReaderEvent
- *
- * @author Marc Johnson (mjohnson at apache dot org)
- * @version %I%, %G%
- */
+    /**
+     * Class POIFSReaderEvent
+     *
+     * @author Marc Johnson (mjohnson at apache dot org)
+     * @version %I%, %G%
+     */
     public class POIFSReaderEvent
     {
         private DocumentInputStream stream;

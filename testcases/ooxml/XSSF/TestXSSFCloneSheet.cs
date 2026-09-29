@@ -17,13 +17,14 @@
 
 namespace TestCases.XSSF
 {
-    using System;
-    using System.IO;
     using NPOI.SS.UserModel;
     using NPOI.Util;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using TestCases.HSSF;
     using TestCases.SS.UserModel;
 
@@ -40,24 +41,30 @@ namespace TestCases.XSSF
         private XSSFWorkbook wb;
 
         [SetUp]
-        public void SetUp() {
+        public void SetUp()
+        {
             wb = new XSSFWorkbook();
             wb.CreateSheet(VALID_SHEET_NAME);
         }
 
         [Test]
-        public void TestCloneSheetIntStringValidName() {
+        public void TestCloneSheetIntStringValidName()
+        {
             ISheet cloned = wb.CloneSheet(0, OTHER_SHEET_NAME);
             ClassicAssert.AreEqual(OTHER_SHEET_NAME, cloned.SheetName);
             ClassicAssert.AreEqual(2, wb.NumberOfSheets);
         }
 
         [Test]
-        public void TestCloneSheetIntStringInvalidName() {
-            try {
+        public void TestCloneSheetIntStringInvalidName()
+        {
+            try
+            {
                 wb.CloneSheet(0, VALID_SHEET_NAME);
                 Assert.Fail("Should fail");
-            } catch (ArgumentException) {
+            }
+            catch(ArgumentException)
+            {
                 // expected here
             }
             ClassicAssert.AreEqual(1, wb.NumberOfSheets);

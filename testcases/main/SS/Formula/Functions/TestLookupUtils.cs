@@ -17,15 +17,15 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-    using NUnit.Framework;
-    using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.UDF;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests that whole-column references (e.g. A:A) used by lookup functions
@@ -54,10 +54,10 @@ namespace TestCases.SS.Formula.Functions
         [Test]
         public void ColumnVectorForWholeColumnRefIsClampedToSheetUsedRange()
         {
-            using (HSSFWorkbook wb = new HSSFWorkbook())
+            using(HSSFWorkbook wb = new HSSFWorkbook())
             {
                 ISheet dataSheet = wb.CreateSheet("Data");
-                for (int r = 0; r <= 4; r++)
+                for(int r = 0; r <= 4; r++)
                 {
                     dataSheet.CreateRow(r).CreateCell(0).SetCellValue(r);
                 }
@@ -87,7 +87,7 @@ namespace TestCases.SS.Formula.Functions
         [Test]
         public void XLookupOverWholeColumnStillFindsValuesWithinUsedRange()
         {
-            using (HSSFWorkbook wb = new HSSFWorkbook())
+            using(HSSFWorkbook wb = new HSSFWorkbook())
             {
                 ISheet dataSheet = wb.CreateSheet("Data");
                 SS.Util.Utils.AddRow(dataSheet, 0, "k0", "v0");

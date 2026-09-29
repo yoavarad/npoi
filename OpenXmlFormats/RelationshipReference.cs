@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
@@ -11,14 +11,15 @@ namespace NPOI.OpenXmlFormats
     {
         //string _id;
         public ST_RelationshipId()
-        { 
-            
+        {
+
         }
         public static string NamespaceURI
-        { 
-            get{
+        {
+            get
+            {
                 return "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
-           }
+            }
         }
 
     }

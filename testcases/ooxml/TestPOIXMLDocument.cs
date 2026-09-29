@@ -23,7 +23,8 @@ namespace TestCases.OOXML
     using NPOI.Util;
     using NPOI.XSSF.UserModel;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -35,7 +36,7 @@ namespace TestCases.OOXML
      * Test recursive read and write of OPC namespaces
      */
     [TestFixture]
-    public class TestPOIXMLDocument 
+    public class TestPOIXMLDocument
     {
 
         private class OPCParser : POIXMLDocument
@@ -84,13 +85,13 @@ namespace TestCases.OOXML
             ClassicAssert.AreEqual(part.GetPackageRelationship().TargetUri.ToString(), part.GetPackagePart().PartName.Name);
 
             context[part.GetPackagePart().PartName.Name] = part;
-            foreach (POIXMLDocumentPart p in part.GetRelations())
+            foreach(POIXMLDocumentPart p in part.GetRelations())
             {
                 ClassicAssert.IsNotNull(p.ToString());
                 String uri = p.GetPackagePart().PartName.URI.ToString();
                 ClassicAssert.AreEqual(uri, p.GetPackageRelationship().TargetUri.ToString());
 
-                if (!context.ContainsKey(uri))
+                if(!context.ContainsKey(uri))
                 {
                     Traverse(p, context);
                 }
@@ -123,12 +124,13 @@ namespace TestCases.OOXML
                 doc.Write(out1);
                 Assert.Fail("Should not be able to write to an output stream that has been closed.");
             }
-            catch (OpenXML4NetRuntimeException e) {
+            catch(OpenXML4NetRuntimeException e)
+            {
                 //OpenXml4NetRuntimeException
                 // FIXME: A better exception class (IOException?) and message should be raised
                 // indicating that the document could not be written because the output stream is closed.
                 // see {@link org.apache.poi.openxml4j.opc.ZipPackage#saveImpl(java.io.OutputStream)}
-                if (Regex.IsMatch(e.Message, "Fail to save: an error occurs while saving the package : Must support writing.+"))
+                if(Regex.IsMatch(e.Message, "Fail to save: an error occurs while saving the package : Must support writing.+"))
                 {
                     // expected
                 }
@@ -145,8 +147,9 @@ namespace TestCases.OOXML
                 doc.Write(new NullOutputStream());
                 Assert.Fail("Should not be able to write a document that has been closed.");
             }
-            catch (IOException e) {
-                if (e.Message.Equals("Cannot write data, document seems to have been closed already"))
+            catch(IOException e)
+            {
+                if(e.Message.Equals("Cannot write data, document seems to have been closed already"))
                 {
                     // expected
                 }
@@ -175,14 +178,14 @@ namespace TestCases.OOXML
                 List<PackagePart> l2 = pkg2.GetParts();
 
                 ClassicAssert.AreEqual(l1.Count, l2.Count);
-                for (int i = 0; i < l1.Count; i++)
+                for(int i = 0; i < l1.Count; i++)
                 {
                     PackagePart p1 = l1[i];
                     PackagePart p2 = l2[i];
 
                     ClassicAssert.AreEqual(p1.ContentType, p2.ContentType);
                     ClassicAssert.AreEqual(p1.HasRelationships, p2.HasRelationships);
-                    if (p1.HasRelationships)
+                    if(p1.HasRelationships)
                     {
                         ClassicAssert.AreEqual(p1.Relationships.Size, p2.Relationships.Size);
                     }
@@ -231,7 +234,7 @@ namespace TestCases.OOXML
             {
                 doc.Parse(new TestFactory());
 
-                foreach (POIXMLDocumentPart rel in doc.GetRelations())
+                foreach(POIXMLDocumentPart rel in doc.GetRelations())
                 {
                     //TODO finish me
                     ClassicAssert.IsNotNull(rel);
@@ -297,6 +300,3 @@ namespace TestCases.OOXML
         }
     }
 }
-
-
-

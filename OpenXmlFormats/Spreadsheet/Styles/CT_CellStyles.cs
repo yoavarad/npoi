@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -64,14 +64,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_CellStyles Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CellStyles ctObj = new CT_CellStyles();
             ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.cellStyle = new List<CT_CellStyle>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cellStyle")
+                if(childNode.LocalName == "cellStyle")
                     ctObj.cellStyle.Add(CT_CellStyle.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -84,9 +84,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
             sw.Write('>');
-            if (this.cellStyle != null)
+            if(this.cellStyle != null)
             {
-                foreach (CT_CellStyle x in this.cellStyle)
+                foreach(CT_CellStyle x in this.cellStyle)
                 {
                     x.Write(sw, "cellStyle");
                 }

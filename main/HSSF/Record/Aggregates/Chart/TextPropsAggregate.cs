@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 namespace NPOI.HSSF.Record.Aggregates.Chart
 {
     /// <summary>
@@ -31,16 +31,16 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public TextPropsAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_TEXTPROPS, container)
         {
-            if (rs.PeekNextChartSid() == TextPropsStreamRecord.sid)
-                textPropsStream = (TextPropsStreamRecord)rs.GetNext();
+            if(rs.PeekNextChartSid() == TextPropsStreamRecord.sid)
+                textPropsStream = (TextPropsStreamRecord) rs.GetNext();
             else
-                richTextStream = (RichTextStreamRecord)rs.GetNext();
+                richTextStream = (RichTextStreamRecord) rs.GetNext();
 
-            if (rs.PeekNextChartSid() == ContinueFrt12Record.sid)
+            if(rs.PeekNextChartSid() == ContinueFrt12Record.sid)
             {
-                while (rs.PeekNextChartSid() == ContinueFrt12Record.sid)
+                while(rs.PeekNextChartSid() == ContinueFrt12Record.sid)
                 {
-                    continues.Add((ContinueFrt12Record)rs.GetNext());
+                    continues.Add((ContinueFrt12Record) rs.GetNext());
                 }
             }
         }
@@ -49,9 +49,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             WriteStartBlock(rv);
             if(textPropsStream!=null)
                 rv.VisitRecord(textPropsStream);
-            if (richTextStream != null)
+            if(richTextStream != null)
                 rv.VisitRecord(richTextStream);
-            foreach (ContinueFrt12Record cr in continues)
+            foreach(ContinueFrt12Record cr in continues)
                 rv.VisitRecord(cr);
         }
     }

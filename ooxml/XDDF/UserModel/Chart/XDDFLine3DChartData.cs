@@ -1,9 +1,9 @@
 
 namespace NPOI.XDDF.UserModel.Chart;
 
-using System.Collections.Generic;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Chart;
+using System.Collections.Generic;
 
 public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 {
@@ -13,9 +13,9 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
             Dictionary<long, XDDFValueAxis> values)
     {
         this.chart = chart;
-        if (chart.ser != null)
+        if(chart.ser != null)
         {
-            foreach (CT_LineSer series in chart.ser)
+            foreach(CT_LineSer series in chart.ser)
             {
                 this.series.Add(new Series(series, series.cat, series.val));
             }
@@ -25,16 +25,17 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
     private void DefineAxes(Dictionary<long, XDDFChartAxis> categories, Dictionary<long, XDDFValueAxis> values)
     {
-        if (chart.axId == null || chart.axId.Count == 0)
+        if(chart.axId == null || chart.axId.Count == 0)
         {
-            if (chart.axId == null) chart.axId = [];
-            foreach (long id in categories.Keys)
+            if(chart.axId == null)
+                chart.axId = [];
+            foreach(long id in categories.Keys)
             {
-                chart.axId.Add(new CT_UnsignedInt { val = (uint)id });
+                chart.axId.Add(new CT_UnsignedInt { val = (uint) id });
             }
-            foreach (long id in values.Keys)
+            foreach(long id in values.Keys)
             {
-                chart.axId.Add(new CT_UnsignedInt { val = (uint)id });
+                chart.axId.Add(new CT_UnsignedInt { val = (uint) id });
             }
         }
         DefineAxis([.. chart.axId], categories, values);
@@ -42,7 +43,7 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
     public override void SetVaryColors(bool varyColors)
     {
-        if (chart.varyColors != null)
+        if(chart.varyColors != null)
         {
             chart.varyColors.val = varyColors ? 1 : 0;
         }
@@ -59,7 +60,7 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
     public void SetGrouping(Grouping grouping)
     {
-        if (chart.grouping != null)
+        if(chart.grouping != null)
         {
             chart.grouping.val = grouping.ToST_Grouping();
         }
@@ -77,8 +78,8 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
         chart.ser.Add(ctSer);
         ctSer.cat = new CT_AxDataSource();
         ctSer.val = new CT_NumDataSource();
-        ctSer.idx = new CT_UnsignedInt { val = (uint)index };
-        ctSer.order = new CT_UnsignedInt { val = (uint)index };
+        ctSer.idx = new CT_UnsignedInt { val = (uint) index };
+        ctSer.order = new CT_UnsignedInt { val = (uint) index };
         Series added = new Series(ctSer, category, values);
         this.series.Add(added);
         return added;
@@ -104,7 +105,7 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         protected override CT_SerTx GetSeriesText()
         {
-            if (series.tx != null)
+            if(series.tx != null)
             {
                 return series.tx;
             }
@@ -117,11 +118,11 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         public override void SetShowLeaderLines(bool showLeaderLines)
         {
-            if (series.dLbls == null)
+            if(series.dLbls == null)
             {
                 series.dLbls = new CT_DLbls();
             }
-            if (series.dLbls.showLeaderLines != null)
+            if(series.dLbls.showLeaderLines != null)
             {
                 series.dLbls.showLeaderLines.val = showLeaderLines ? 1 : 0;
             }
@@ -133,7 +134,7 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         public override XDDFShapeProperties GetShapeProperties()
         {
-            if (series.spPr != null)
+            if(series.spPr != null)
             {
                 return new XDDFShapeProperties(series.spPr);
             }
@@ -145,16 +146,16 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         public override void SetShapeProperties(XDDFShapeProperties properties)
         {
-            if (properties == null)
+            if(properties == null)
             {
-                if (series.spPr != null)
+                if(series.spPr != null)
                 {
                     series.spPr = null;
                 }
             }
             else
             {
-                if (series.spPr != null)
+                if(series.spPr != null)
                 {
                     series.spPr = properties.GetXmlObject();
                 }
@@ -168,7 +169,7 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         public bool? GetSmooth()
         {
-            if (series.smooth != null)
+            if(series.smooth != null)
             {
                 return series.smooth.val == 1;
             }
@@ -180,13 +181,13 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         public void SetSmooth(bool? smooth)
         {
-            if (!smooth.HasValue)
+            if(!smooth.HasValue)
             {
                 series.smooth = null;
             }
             else
             {
-                if (series.smooth != null)
+                if(series.smooth != null)
                 {
                     series.smooth.val = smooth.Value ? 1 : 0;
                 }
@@ -199,12 +200,12 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         public void SetMarkerSize(byte size)
         {
-            if (size < 2 || 72 < size)
+            if(size < 2 || 72 < size)
             {
                 throw new System.ArgumentException("Minimum inclusive: 2; Maximum inclusive: 72");
             }
             CT_Marker marker = GetMarker();
-            if (marker.size != null)
+            if(marker.size != null)
             {
                 marker.size.val = size;
             }
@@ -217,7 +218,7 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
         public void SetMarkerStyle(MarkerStyle style)
         {
             CT_Marker marker = GetMarker();
-            if (marker.symbol != null)
+            if(marker.symbol != null)
             {
                 marker.symbol.val = style.ToST_MarkerStyle();
             }
@@ -229,7 +230,7 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         private CT_Marker GetMarker()
         {
-            if (series.marker != null)
+            if(series.marker != null)
             {
                 return series.marker;
             }
@@ -252,12 +253,12 @@ public class XDDFLine3DChartData<T, V> : XDDFChartData<T, V>
 
         public void UpdateIdXVal(long val)
         {
-            series.idx.val = (uint)val;
+            series.idx.val = (uint) val;
         }
 
         public void UpdateOrderVal(long val)
         {
-            series.order.val = (uint)val;
+            series.order.val = (uint) val;
         }
     }
 }
