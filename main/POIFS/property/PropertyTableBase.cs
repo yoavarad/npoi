@@ -62,7 +62,7 @@ namespace NPOI.POIFS.Properties
         {
             int index = root.ChildIndex;
 
-            if(!Property.IsValidIndex(index))
+            if(!IsValidIndex(index))
                 return;
 
             Stack<Property> children = new Stack<Property>();
@@ -85,17 +85,23 @@ namespace NPOI.POIFS.Properties
                 }
 
                 index = property.PreviousChildIndex;
-                if(Property.IsValidIndex(index))
+                if(IsValidIndex(index))
                 {
                     children.Push(_properties[index]);
                 }
 
                 index = property.NextChildIndex;
-                if(Property.IsValidIndex(index))
+                if(IsValidIndex(index))
                 {
                     children.Push(_properties[index]);
                 }
             }
+        }
+
+        // Out of range indexes come from corrupt directories; skip them as Apache POI does
+        private bool IsValidIndex(int index)
+        {
+            return Property.IsValidIndex(index) && index >= 0 && index < _properties.Count;
         }
 
 

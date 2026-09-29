@@ -118,6 +118,11 @@ namespace NPOI.POIFS.FileSystem
 
         public void Claim(int offset)
         {
+            if(offset < 0)
+            {
+                // A special marker (free, FAT, DIFAT...) or garbage in the middle of a chain
+                throw new IndexOutOfRangeException("Invalid block index " + offset + " in chain");
+            }
             if(offset >= used_blocks.Length)
             {
                 // They're writing, and have had new blocks requested
