@@ -355,7 +355,7 @@ namespace TestCases.XWPF.UserModel
             {
                 doc.Close();
             }
-            catch(IOException e)
+            catch(IOException)
             {
                 ClassicAssert.Fail("Unable to close doc");
             }

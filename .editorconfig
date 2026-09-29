@@ -200,11 +200,6 @@ csharp_preserve_single_line_statements = false
 # Analysis rules
 dotnet_code_quality.api_surface = private, internal
 
-# Tests call Stream.Read with partial/invalid arguments on purpose; the CA2022 fix (ReadExactly)
-# changes behaviour and does not exist on net472, so dotnet format must not apply it (task #46).
-[testcases/**.cs]
-dotnet_diagnostic.CA2022.severity = none
-
 # Top-level-statement file: the whitespace formatter insists on a trailing newline, which fights
 # insert_final_newline = false and makes dotnet format --verify-no-changes fail either way.
 [benchmarks/NPOI.Benchmarks/Program.cs]

@@ -260,7 +260,7 @@ namespace TestCases.SS
                 AssertCloseDoesNotModifyFile(xls_prot[0], wb);
                 Assert.Fail("Shouldn't be able to open with the wrong password");
             }
-            catch(EncryptedDocumentException e) { }
+            catch(EncryptedDocumentException) { }
             try
             {
                 wb = WorkbookFactory.Create(
@@ -269,7 +269,7 @@ namespace TestCases.SS
                 AssertCloseDoesNotModifyFile(xlsx_prot[0], wb);
                 Assert.Fail("Shouldn't be able to open with the wrong password");
             }
-            catch(EncryptedDocumentException e) { }
+            catch(EncryptedDocumentException) { }
         }
 
         /**

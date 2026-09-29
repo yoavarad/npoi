@@ -379,7 +379,7 @@ namespace TestCases.XSSF.UserModel
 
                 wbBack.Close();
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 wb.Close();
             }

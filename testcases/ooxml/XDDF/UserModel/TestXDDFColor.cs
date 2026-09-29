@@ -32,8 +32,6 @@ namespace TestCases.XDDF.UserModel
     [TestFixture]
     public class TestXDDFColor
     {
-        private static string XMLNS = "xmlns:a=\"http://schemas.Openxmlformats.org/drawingml/2006/main\"/>";
-
         [Test]
         [Ignore("Need XSLF support")]
         public void TestSchemeColor()
