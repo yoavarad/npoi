@@ -275,10 +275,10 @@ namespace TestCases.XWPF.UserModel
             // assert the table is empty
             List<XWPFTableRow> rows = table.Rows;
             ClassicAssert.AreEqual(noRows, rows.Count, "Table has less rows than requested.");
-            foreach (XWPFTableRow xwpfRow in rows)
+            foreach(XWPFTableRow xwpfRow in rows)
             {
                 ClassicAssert.IsNotNull(xwpfRow);
-                for (int i = 0; i < 7; i++)
+                for(int i = 0; i < 7; i++)
                 {
                     XWPFTableCell xwpfCell = xwpfRow.GetCell(i);
                     ClassicAssert.IsNotNull(xwpfCell);
@@ -339,7 +339,7 @@ namespace TestCases.XWPF.UserModel
         }
 
         [Test]
-        public void TestSetGetTableAlignment() 
+        public void TestSetGetTableAlignment()
         {
             XWPFDocument doc = new XWPFDocument();
             XWPFTable tbl = doc.CreateTable(1, 1);
@@ -354,8 +354,8 @@ namespace TestCases.XWPF.UserModel
             try
             {
                 doc.Close();
-            } 
-            catch (IOException e)
+            }
+            catch(IOException e)
             {
                 ClassicAssert.Fail("Unable to close doc");
             }

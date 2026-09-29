@@ -17,16 +17,16 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-    using System.Text;
-    using System.IO;
     using NPOI.DDF;
-    using NPOI.Util;
-    using NPOI.SS.UserModel;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NPOI.Util;
     using SkiaSharp;
+    using System;
+    using System.IO;
+    using System.Text;
 
 
     /// <summary>
@@ -210,7 +210,8 @@ namespace NPOI.HSSF.UserModel
             {
                 using(SKBitmap img = SKBitmap.Decode(ms))
                 {
-                    if (img == null) return new SKSizeI();
+                    if(img == null)
+                        return new SKSizeI();
                     return new SKSizeI(img.Width, img.Height);
                 }
             }

@@ -18,11 +18,12 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using NPOI.SS.Formula.Eval;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * @author Josh Micich
@@ -38,7 +39,7 @@ namespace TestCases.SS.Formula.Functions
         }
         private static ValueEval invoke(ValueEval[] args)
         {
-            return FinanceFunction.PMT.Evaluate(args, -1, (short)-1);
+            return FinanceFunction.PMT.Evaluate(args, -1, (short) -1);
         }
         /**
          * Invocation when not expecting an error result
@@ -46,23 +47,23 @@ namespace TestCases.SS.Formula.Functions
         private static NumberEval invokeNormal(ValueEval[] args)
         {
             ValueEval ev = invoke(args);
-            if (ev is ErrorEval)
+            if(ev is ErrorEval)
             {
                 Assert.Fail("Normal Evaluation failed with error code: "
                         + ev.ToString());
             }
-            return (NumberEval)ev;
+            return (NumberEval) ev;
         }
 
         private static void Confirm(double expected, double rate, double nper, double pv, double fv, bool isBeginning)
         {
             ValueEval[] args = {
-				new NumberEval(rate),
-				new NumberEval(nper),
-				new NumberEval(pv),
-				new NumberEval(fv),
-				new NumberEval(isBeginning ? 1 : 0),
-		};
+                new NumberEval(rate),
+                new NumberEval(nper),
+                new NumberEval(pv),
+                new NumberEval(fv),
+                new NumberEval(isBeginning ? 1 : 0),
+        };
             Confirm(expected, invokeNormal(args));
         }
 
@@ -77,15 +78,15 @@ namespace TestCases.SS.Formula.Functions
         {
 
             ValueEval[] args = {
-				new NumberEval(0.005),
-				new NumberEval(24),
-				new NumberEval(1000),
-		};
+                new NumberEval(0.005),
+                new NumberEval(24),
+                new NumberEval(1000),
+        };
             ValueEval ev = invoke(args);
-            if (ev is ErrorEval)
+            if(ev is ErrorEval)
             {
                 ErrorEval err = (ErrorEval)ev;
-                if (err.ErrorCode == FormulaError.VALUE.Code)
+                if(err.ErrorCode == FormulaError.VALUE.Code)
                 {
                     Assert.Fail("Identified bug 44691");
                 }

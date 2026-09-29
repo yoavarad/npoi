@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula;
+using NPOI.SS.Formula;
 using NPOI.SS.Formula.PTG;
 using NPOI.SS.UserModel;
 using NPOI.Util;
@@ -24,15 +24,16 @@ namespace NPOI.HSSF.UserModel.Helpers
 
             //update formulas on other sheets
             IWorkbook wb = sheet.Workbook;
-            foreach (ISheet sh in wb)
+            foreach(ISheet sh in wb)
             {
-                if (sheet == sh) continue;
+                if(sheet == sh)
+                    continue;
                 UpdateSheetFormulas(sh, formulaShifter);
             }
         }
         public static void UpdateSheetFormulas(ISheet sh, FormulaShifter formulashifter)
         {
-            foreach (IRow r in sh)
+            foreach(IRow r in sh)
             {
                 HSSFRow row = (HSSFRow)r;
                 UpdateRowFormulas(row, formulashifter);
@@ -46,11 +47,11 @@ namespace NPOI.HSSF.UserModel.Helpers
         public static void UpdateRowFormulas(IRow row, FormulaShifter formulaShifter)
         {
             ISheet sheet = row.Sheet;
-            foreach (ICell c in row)
+            foreach(ICell c in row)
             {
                 HSSFCell cell = (HSSFCell)c;
                 String formula = cell.CellFormula;
-                if (formula.Length > 0)
+                if(formula.Length > 0)
                 {
                     String shiftedFormula = ShiftFormula(row, formula, formulaShifter);
                     cell.SetCellFormula(shiftedFormula);
@@ -76,7 +77,7 @@ namespace NPOI.HSSF.UserModel.Helpers
             {
                 Ptg[] ptgs = FormulaParser.Parse(formula, fpb, FormulaType.Cell, sheetIndex, rowIndex);
                 String shiftedFmla;
-                if (formulaShifter.AdjustFormula(ptgs, sheetIndex))
+                if(formulaShifter.AdjustFormula(ptgs, sheetIndex))
                 {
                     shiftedFmla = FormulaRenderer.ToFormulaString(fpb, ptgs);
                 }
@@ -86,10 +87,10 @@ namespace NPOI.HSSF.UserModel.Helpers
                 }
                 return shiftedFmla;
             }
-            catch (FormulaParseException fpe)
+            catch(FormulaParseException fpe)
             {
                 // Log, but don't change, rather than breaking
-                log.Log(POILogger.ERROR, "Error shifting formula on row "+row.RowNum.ToString(),fpe);
+                log.Log(POILogger.ERROR, "Error shifting formula on row "+row.RowNum.ToString(), fpe);
                 return formula;
             }
         }

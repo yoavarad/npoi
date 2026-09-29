@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,8 +24,8 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Text
 {
-    using NPOI.Util;
     using NPOI.OpenXmlFormats.Dml;
+    using NPOI.Util;
     public class XDDFNoAutoFit : IXDDFAutoFit
     {
         private CT_TextNoAutofit autofit;
@@ -44,9 +44,7 @@ namespace NPOI.XDDF.UserModel.Text
             return autofit;
         }
         public int FontScale => 100_000;
-        
+
         public int LineSpaceReduction => 0;
     }
 }
-
-

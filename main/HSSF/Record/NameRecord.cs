@@ -18,14 +18,13 @@
 namespace NPOI.HSSF.Record
 {
 
-    using System;
-    using System.Text;
-
-    using NPOI.Util;
     using NPOI.HSSF.Record;
-    using SSFormula=NPOI.SS.Formula;
     using NPOI.HSSF.Record.Cont;
     using NPOI.SS.Formula.PTG;
+    using NPOI.Util;
+    using System;
+    using System.Text;
+    using SSFormula = NPOI.SS.Formula;
 
     /**
      * Title:        Name Record (aka Named Range) 
@@ -38,19 +37,21 @@ namespace NPOI.HSSF.Record
      */
     public class NameRecord : ContinuableRecord
     {
-        private enum Option:short {
-		    OPT_HIDDEN_NAME =   0x0001,
-		    OPT_FUNCTION_NAME = 0x0002,
+        private enum Option : short
+        {
+            OPT_HIDDEN_NAME =   0x0001,
+            OPT_FUNCTION_NAME = 0x0002,
             OPT_COMMAND_NAME = 0x0004,
             OPT_MACRO = 0x0008,
             OPT_COMPLEX = 0x0010,
             OPT_BUILTIN = 0x0020,
             OPT_BINDATA = 0x1000,
-	    }
+        }
 
-        public static bool IsFormula(int optValue) {
-			return (optValue & 0x0F) == 0;
-		}
+        public static bool IsFormula(int optValue)
+        {
+            return (optValue & 0x0F) == 0;
+        }
 
         /**
          */
@@ -152,7 +153,8 @@ namespace NPOI.HSSF.Record
         }
         protected int DataSize
         {
-            get {
+            get
+            {
                 return 13   // 3 shorts + 7 bytes
                         + NameRawSize
                         + field_14_custom_menu_text.Length
@@ -172,32 +174,38 @@ namespace NPOI.HSSF.Record
             byte[] remainder = ris.ReadAllContinuedRemainder();
             LittleEndianByteArrayInputStream in1 = new LittleEndianByteArrayInputStream(remainder);
             field_1_option_flag                 = in1.ReadShort();
-		    field_2_keyboard_shortcut           = (byte)in1.ReadByte();
-		    int field_3_length_name_text        = in1.ReadByte();
-		    int field_4_length_name_definition  = in1.ReadShort();
-		    field_5_externSheetIndex_plus1      = in1.ReadShort();
-		    field_6_sheetNumber                 = in1.ReadUShort();
-		    int field_7_length_custom_menu      = in1.ReadUByte();
-		    int field_8_length_description_text = in1.ReadUByte();
-		    int field_9_length_help_topic_text  = in1.ReadUByte();
-		    int field_10_length_status_bar_text = in1.ReadUByte();
+            field_2_keyboard_shortcut           = (byte) in1.ReadByte();
+            int field_3_length_name_text        = in1.ReadByte();
+            int field_4_length_name_definition  = in1.ReadShort();
+            field_5_externSheetIndex_plus1      = in1.ReadShort();
+            field_6_sheetNumber                 = in1.ReadUShort();
+            int field_7_length_custom_menu      = in1.ReadUByte();
+            int field_8_length_description_text = in1.ReadUByte();
+            int field_9_length_help_topic_text  = in1.ReadUByte();
+            int field_10_length_status_bar_text = in1.ReadUByte();
 
-		    //store the name in byte form if it's a built-in name
-		    field_11_nameIsMultibyte = (in1.ReadByte() != 0);
-		    if (IsBuiltInName) {
-			    field_12_built_in_code = (byte)in1.ReadByte();
-		    } else {
-			    if (field_11_nameIsMultibyte) {
+            //store the name in byte form if it's a built-in name
+            field_11_nameIsMultibyte = (in1.ReadByte() != 0);
+            if(IsBuiltInName)
+            {
+                field_12_built_in_code = (byte) in1.ReadByte();
+            }
+            else
+            {
+                if(field_11_nameIsMultibyte)
+                {
                     field_12_name_text = StringUtil.ReadUnicodeLE(in1, field_3_length_name_text);
-			    } else {
+                }
+                else
+                {
                     field_12_name_text = StringUtil.ReadCompressedUnicode(in1, field_3_length_name_text);
-			    }
-		    }
-          int nBytesAvailable = in1.Available() - (field_7_length_custom_menu
-				+ field_8_length_description_text + field_9_length_help_topic_text + field_10_length_status_bar_text);
-		    field_13_name_definition = SSFormula.Formula.Read(field_4_length_name_definition, in1, nBytesAvailable);
+                }
+            }
+            int nBytesAvailable = in1.Available() - (field_7_length_custom_menu
+                + field_8_length_description_text + field_9_length_help_topic_text + field_10_length_status_bar_text);
+            field_13_name_definition = SSFormula.Formula.Read(field_4_length_name_definition, in1, nBytesAvailable);
 
-		    //Who says that this can only ever be compressed unicode???
+            //Who says that this can only ever be compressed unicode???
             field_14_custom_menu_text = StringUtil.ReadCompressedUnicode(in1, field_7_length_custom_menu);
             field_15_description_text = StringUtil.ReadCompressedUnicode(in1, field_8_length_description_text);
             field_16_help_topic_text = StringUtil.ReadCompressedUnicode(in1, field_9_length_help_topic_text);
@@ -215,7 +223,7 @@ namespace NPOI.HSSF.Record
         {
 
             field_12_built_in_code = builtin;
-            OptionFlag=(short)(field_1_option_flag | (short)Option.OPT_BUILTIN);
+            OptionFlag=(short) (field_1_option_flag | (short) Option.OPT_BUILTIN);
             field_6_sheetNumber = sheetNumber; //the extern sheets are set through references
         }
 
@@ -228,7 +236,7 @@ namespace NPOI.HSSF.Record
             get
             {
                 int masked = field_1_option_flag & 0x0fc0;
-                return (byte)(masked >> 4);
+                return (byte) (masked >> 4);
             }
         }
 
@@ -258,11 +266,11 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (IsBuiltInName)
+                if(IsBuiltInName)
                 {
                     return 1;
                 }
-                return (byte)field_12_name_text.Length;
+                return (byte) field_12_name_text.Length;
             }
         }
 
@@ -270,12 +278,12 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (IsBuiltInName)
+                if(IsBuiltInName)
                 {
                     return 1;
                 }
                 int nChars = field_12_name_text.Length;
-                if (field_11_nameIsMultibyte)
+                if(field_11_nameIsMultibyte)
                 {
                     return 2 * nChars;
                 }
@@ -291,13 +299,13 @@ namespace NPOI.HSSF.Record
 	 */
         public void SetFunction(bool function)
         {
-            if (function)
+            if(function)
             {
-                field_1_option_flag |= (short)Option.OPT_FUNCTION_NAME;
+                field_1_option_flag |= (short) Option.OPT_FUNCTION_NAME;
             }
             else
             {
-                field_1_option_flag &= (short)(~Option.OPT_FUNCTION_NAME);
+                field_1_option_flag &= (short) (~Option.OPT_FUNCTION_NAME);
             }
         }
         /**
@@ -315,16 +323,16 @@ namespace NPOI.HSSF.Record
          */
         public bool IsHiddenName
         {
-            get { return (field_1_option_flag & (short)Option.OPT_HIDDEN_NAME) != 0; }
-            set 
+            get { return (field_1_option_flag & (short) Option.OPT_HIDDEN_NAME) != 0; }
+            set
             {
-                if (value)
+                if(value)
                 {
-                    field_1_option_flag |= (short)Option.OPT_HIDDEN_NAME;
+                    field_1_option_flag |= (short) Option.OPT_HIDDEN_NAME;
                 }
                 else
                 {
-                    field_1_option_flag &= (short)(~Option.OPT_HIDDEN_NAME);
+                    field_1_option_flag &= (short) (~Option.OPT_HIDDEN_NAME);
                 }
             }
         }
@@ -335,16 +343,16 @@ namespace NPOI.HSSF.Record
          */
         public bool IsFunctionName
         {
-            get { return (field_1_option_flag & (short)Option.OPT_FUNCTION_NAME) != 0; }
+            get { return (field_1_option_flag & (short) Option.OPT_FUNCTION_NAME) != 0; }
             set
             {
-                if (value)
+                if(value)
                 {
-                    field_1_option_flag |= (short)Option.OPT_FUNCTION_NAME;
+                    field_1_option_flag |= (short) Option.OPT_FUNCTION_NAME;
                 }
                 else
                 {
-                    field_1_option_flag &= (~(short)Option.OPT_FUNCTION_NAME);
+                    field_1_option_flag &= (~(short) Option.OPT_FUNCTION_NAME);
                 }
             }
         }
@@ -354,7 +362,7 @@ namespace NPOI.HSSF.Record
          */
         public bool IsCommandName
         {
-            get { return (field_1_option_flag & (short)Option.OPT_COMMAND_NAME) != 0; }
+            get { return (field_1_option_flag & (short) Option.OPT_COMMAND_NAME) != 0; }
         }
 
         /**
@@ -362,7 +370,7 @@ namespace NPOI.HSSF.Record
          */
         public bool IsMacro
         {
-            get { return (field_1_option_flag & (short)Option.OPT_MACRO) != 0; }
+            get { return (field_1_option_flag & (short) Option.OPT_MACRO) != 0; }
         }
 
         /**
@@ -370,7 +378,7 @@ namespace NPOI.HSSF.Record
          */
         public bool IsComplexFunction
         {
-            get { return (field_1_option_flag & (short)Option.OPT_COMPLEX) != 0; }
+            get { return (field_1_option_flag & (short) Option.OPT_COMPLEX) != 0; }
         }
 
 
@@ -378,7 +386,7 @@ namespace NPOI.HSSF.Record
          */
         public bool IsBuiltInName
         {
-            get { return ((this.OptionFlag & (short)Option.OPT_BUILTIN) != 0); }
+            get { return ((this.OptionFlag & (short) Option.OPT_BUILTIN) != 0); }
         }
 
 
@@ -491,16 +499,16 @@ namespace NPOI.HSSF.Record
             out1.WriteByte(field_10_length_status_bar_text);
             out1.WriteByte(field_11_nameIsMultibyte ? 1 : 0);
 
-            if (IsBuiltInName)
+            if(IsBuiltInName)
             {
                 out1.WriteByte(field_12_built_in_code);
             }
             else
             {
                 String nameText = field_12_name_text;
-                if (field_11_nameIsMultibyte)
+                if(field_11_nameIsMultibyte)
                 {
-                    StringUtil.PutUnicodeLE(nameText,out1);
+                    StringUtil.PutUnicodeLE(nameText, out1);
                 }
                 else
                 {
@@ -510,7 +518,7 @@ namespace NPOI.HSSF.Record
             field_13_name_definition.SerializeTokens(out1);
             field_13_name_definition.SerializeArrayConstantData(out1);
 
-            StringUtil.PutCompressedUnicode(CustomMenuText,out1);
+            StringUtil.PutCompressedUnicode(CustomMenuText, out1);
             StringUtil.PutCompressedUnicode(DescriptionText, out1);
             StringUtil.PutCompressedUnicode(HelpTopicText, out1);
             StringUtil.PutCompressedUnicode(StatusBarText, out1);
@@ -524,20 +532,20 @@ namespace NPOI.HSSF.Record
             get
             {
                 Ptg[] tokens = field_13_name_definition.Tokens;
-                if (tokens.Length == 0)
+                if(tokens.Length == 0)
                 {
                     return 0;
                 }
 
                 Ptg ptg = tokens[0];
-                if (ptg.GetType() == typeof(Area3DPtg))
+                if(ptg.GetType() == typeof(Area3DPtg))
                 {
-                    return ((Area3DPtg)ptg).ExternSheetIndex;
+                    return ((Area3DPtg) ptg).ExternSheetIndex;
 
                 }
-                else if (ptg.GetType() == typeof(Ref3DPtg))
+                else if(ptg.GetType() == typeof(Ref3DPtg))
                 {
-                    return ((Ref3DPtg)ptg).ExternSheetIndex;
+                    return ((Ref3DPtg) ptg).ExternSheetIndex;
                 }
 
                 return 0;
@@ -640,7 +648,7 @@ namespace NPOI.HSSF.Record
                 .Append("\n");
             Ptg[] ptgs = field_13_name_definition.Tokens;
             buffer.AppendLine("    .Formula (nTokens=" + ptgs.Length + "):");
-            for (int i = 0; i < ptgs.Length; i++)
+            for(int i = 0; i < ptgs.Length; i++)
             {
                 Ptg ptg = ptgs[i];
                 buffer.Append("       " + ptg.ToString()).Append(ptg.RVAType).Append("\n");
@@ -664,22 +672,36 @@ namespace NPOI.HSSF.Record
          */
         protected String TranslateBuiltInName(byte name)
         {
-            switch (name)
+            switch(name)
             {
-                case NameRecord.BUILTIN_AUTO_ACTIVATE: return "Auto_Activate";
-                case NameRecord.BUILTIN_AUTO_CLOSE: return "Auto_Close";
-                case NameRecord.BUILTIN_AUTO_DEACTIVATE: return "Auto_Deactivate";
-                case NameRecord.BUILTIN_AUTO_OPEN: return "Auto_Open";
-                case NameRecord.BUILTIN_CONSOLIDATE_AREA: return "Consolidate_Area";
-                case NameRecord.BUILTIN_CRITERIA: return "Criteria";
-                case NameRecord.BUILTIN_DATABASE: return "Database";
-                case NameRecord.BUILTIN_DATA_FORM: return "Data_Form";
-                case NameRecord.BUILTIN_PRINT_AREA: return "Print_Area";
-                case NameRecord.BUILTIN_PRINT_TITLE: return "Print_Titles";
-                case NameRecord.BUILTIN_RECORDER: return "Recorder";
-                case NameRecord.BUILTIN_SHEET_TITLE: return "Sheet_Title";
-                case NameRecord.BUILTIN_FILTER_DB: return "_FilterDatabase";
-                case NameRecord.BUILTIN_EXTRACT: return "Extract";
+                case NameRecord.BUILTIN_AUTO_ACTIVATE:
+                    return "Auto_Activate";
+                case NameRecord.BUILTIN_AUTO_CLOSE:
+                    return "Auto_Close";
+                case NameRecord.BUILTIN_AUTO_DEACTIVATE:
+                    return "Auto_Deactivate";
+                case NameRecord.BUILTIN_AUTO_OPEN:
+                    return "Auto_Open";
+                case NameRecord.BUILTIN_CONSOLIDATE_AREA:
+                    return "Consolidate_Area";
+                case NameRecord.BUILTIN_CRITERIA:
+                    return "Criteria";
+                case NameRecord.BUILTIN_DATABASE:
+                    return "Database";
+                case NameRecord.BUILTIN_DATA_FORM:
+                    return "Data_Form";
+                case NameRecord.BUILTIN_PRINT_AREA:
+                    return "Print_Area";
+                case NameRecord.BUILTIN_PRINT_TITLE:
+                    return "Print_Titles";
+                case NameRecord.BUILTIN_RECORDER:
+                    return "Recorder";
+                case NameRecord.BUILTIN_SHEET_TITLE:
+                    return "Sheet_Title";
+                case NameRecord.BUILTIN_FILTER_DB:
+                    return "_FilterDatabase";
+                case NameRecord.BUILTIN_EXTRACT:
+                    return "Extract";
             }
 
             return "Unknown";

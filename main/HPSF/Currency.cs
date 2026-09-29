@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -23,10 +23,10 @@ namespace NPOI.HPSF
         private static readonly int SIZE = 8;
 
         private readonly byte[] _value = new byte[SIZE];
-    
-        internal Currency() {}
 
-        internal void Read( LittleEndianByteArrayInputStream lei )
+        internal Currency() { }
+
+        internal void Read(LittleEndianByteArrayInputStream lei)
         {
             lei.ReadFully(_value);
         }

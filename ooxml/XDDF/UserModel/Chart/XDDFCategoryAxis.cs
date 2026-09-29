@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,10 +24,10 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
+    using NPOI.OpenXmlFormats.Dml;
+    using NPOI.OpenXmlFormats.Dml.Chart;
     using NPOI.Util;
     using NPOI.XDDF.UserModel;
-    using NPOI.OpenXmlFormats.Dml.Chart;
-    using NPOI.OpenXmlFormats.Dml;
     public class XDDFCategoryAxis : XDDFChartAxis
     {
 
@@ -108,7 +108,7 @@ namespace NPOI.XDDF.UserModel.Chart
         }
         public override void CrossAxis(XDDFChartAxis axis)
         {
-            ctCatAx.crossAx.val = (uint)axis.Id;
+            ctCatAx.crossAx.val = (uint) axis.Id;
         }
         protected override CT_UnsignedInt GetCTAxId()
         {
@@ -173,7 +173,7 @@ namespace NPOI.XDDF.UserModel.Chart
         {
             long id = GetNextAxId(plotArea);
             ctCatAx = plotArea.AddNewCatAx();
-            ctCatAx.AddNewAxId().val = (uint)id;
+            ctCatAx.AddNewAxId().val = (uint) id;
             ctCatAx.AddNewAxPos();
             ctCatAx.AddNewScaling();
             ctCatAx.AddNewCrosses();
@@ -203,5 +203,3 @@ namespace NPOI.XDDF.UserModel.Chart
         }
     }
 }
-
-

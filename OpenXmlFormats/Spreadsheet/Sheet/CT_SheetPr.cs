@@ -1,12 +1,11 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
-using System.Text;
-using System.Xml.Serialization;
 using System.IO;
-using NPOI.OpenXml4Net.Util;
+using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -41,7 +40,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_SheetPr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SheetPr ctObj = new CT_SheetPr();
             ctObj.syncHorizontal = XmlHelper.ReadBool(node.Attributes["syncHorizontal"]);
@@ -53,13 +52,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.codeName = XmlHelper.ReadString(node.Attributes["codeName"]);
             ctObj.filterMode = XmlHelper.ReadBool(node.Attributes["filterMode"]);
             ctObj.enableFormatConditionsCalculation = XmlHelper.ReadBool(node.Attributes["enableFormatConditionsCalculation"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tabColor")
+                if(childNode.LocalName == "tabColor")
                     ctObj.tabColor = CT_Color.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "outlinePr")
+                else if(childNode.LocalName == "outlinePr")
                     ctObj.outlinePr = CT_OutlinePr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pageSetUpPr")
+                else if(childNode.LocalName == "pageSetUpPr")
                     ctObj.pageSetUpPr = CT_PageSetUpPr.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -77,14 +76,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "transitionEntry", this.transitionEntry, false);
             XmlHelper.WriteAttribute(sw, "published", this.published, false);
             XmlHelper.WriteAttribute(sw, "codeName", this.codeName);
-            XmlHelper.WriteAttribute(sw, "filterMode", this.filterMode,false);
+            XmlHelper.WriteAttribute(sw, "filterMode", this.filterMode, false);
             XmlHelper.WriteAttribute(sw, "enableFormatConditionsCalculation", this.enableFormatConditionsCalculation, false);
             sw.Write('>');
-            if (this.tabColor != null)
+            if(this.tabColor != null)
                 this.tabColor.Write(sw, "tabColor");
-            if (this.outlinePr != null)
+            if(this.outlinePr != null)
                 this.outlinePr.Write(sw, "outlinePr");
-            if (this.pageSetUpPr != null)
+            if(this.pageSetUpPr != null)
                 this.pageSetUpPr.Write(sw, "pageSetUpPr");
             sw.WriteEndElement(nodeName);
         }
@@ -115,15 +114,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             newPr.syncVerticalField = syncVerticalField;
             newPr.transitionEntryField = transitionEntryField;
             newPr.transitionEvaluationField = transitionEvaluationField;
-            if (outlinePrField != null)
+            if(outlinePrField != null)
             {
                 newPr.outlinePrField = outlinePrField.Clone();
             }
-            if (pageSetUpPrField != null)
+            if(pageSetUpPrField != null)
             {
                 newPr.pageSetUpPrField = pageSetUpPrField.Clone();
             }
-            if (tabColorField != null)
+            if(tabColorField != null)
             {
                 newPr.tabColorField = tabColorField.Copy();
             }

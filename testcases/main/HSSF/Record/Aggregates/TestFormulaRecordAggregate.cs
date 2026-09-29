@@ -23,15 +23,16 @@
 
 namespace TestCases.HSSF.Record.Aggregates
 {
-    using System;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util;
-    using NPOI.SS.Formula.PTG;
-    using NPOI.HSSF.Model;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      *
@@ -72,9 +73,9 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 fra = new FormulaRecordAggregate(fr, sr, svm);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if ("String record was  supplied but formula record flag is not  set".Equals(e.Message))
+                if("String record was  supplied but formula record flag is not  set".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 46213");
                 }
@@ -94,7 +95,7 @@ namespace TestCases.HSSF.Record.Aggregates
 
             FormulaRecord fr = new FormulaRecord();
             fr.Row=(rownum);
-            fr.Column=((short)colnum);
+            fr.Column=((short) colnum);
 
             FormulaRecordAggregate agg = new FormulaRecordAggregate(fr, null, SharedValueManager.CreateEmpty());
             Ptg[] ptgsForCell = { new ExpPtg(rownum, colnum) };

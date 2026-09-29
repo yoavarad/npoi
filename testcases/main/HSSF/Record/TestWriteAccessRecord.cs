@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NPOI.Util;
-    using TestCases.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF.Record;
 
 
     /**
@@ -61,9 +62,9 @@ namespace TestCases.HSSF.Record
             {
                 rec = new WriteAccessRecord(in1);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.Equals("Not enough data (0) to read requested (1) bytes"))
+                if(e.Message.Equals("Not enough data (0) to read requested (1) bytes"))
                 {
                     throw new AssertionException("Identified bug 47001a");
                 }

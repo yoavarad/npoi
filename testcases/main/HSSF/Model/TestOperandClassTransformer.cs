@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Model
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
-    using NPOI.HSSF.Model;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests specific formula examples in <tt>OperandClassTransformer</tt>.
@@ -78,7 +79,7 @@ namespace TestCases.HSSF.Model
         {
             String formula = "COUNT(A1*1)";
             Ptg[] ptgs = ParseFormula(formula);
-            if (ptgs[0].PtgClass == Ptg.CLASS_REF)
+            if(ptgs[0].PtgClass == Ptg.CLASS_REF)
             {
                 throw new AssertionException("Identified bug 45348");
             }
@@ -110,7 +111,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual("ROW", rowFunc.Name);
             ClassicAssert.AreEqual("SUMIF", sumifFunc.Name);
 
-            if (rowFunc.PtgClass == Ptg.CLASS_VALUE || sumifFunc.PtgClass == Ptg.CLASS_VALUE)
+            if(rowFunc.PtgClass == Ptg.CLASS_VALUE || sumifFunc.PtgClass == Ptg.CLASS_VALUE)
             {
                 throw new AssertionException("Identified bug 45041");
             }
@@ -136,11 +137,11 @@ namespace TestCases.HSSF.Model
         private void ConfirmTokenClass(Ptg[] ptgs, int i, byte operandClass)
         {
             Ptg ptg = ptgs[i];
-            if (ptg.IsBaseToken)
+            if(ptg.IsBaseToken)
             {
                 throw new AssertionException("ptg[" + i + "] is a base token");
             }
-            if (operandClass != ptg.PtgClass)
+            if(operandClass != ptg.PtgClass)
             {
                 throw new AssertionException("Wrong operand class for ptg ("
                         + ptg.ToString() + "). Expected " + GetOperandClassName(operandClass)
@@ -150,7 +151,7 @@ namespace TestCases.HSSF.Model
 
         private static String GetOperandClassName(byte ptgClass)
         {
-            switch (ptgClass)
+            switch(ptgClass)
             {
                 case Ptg.CLASS_REF:
                     return "R";

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.Util;
+using System;
 
 namespace NPOI.SS.Formula.Atp
 {
@@ -43,13 +43,13 @@ namespace NPOI.SS.Formula.Atp
         public static DateTime ParseDate(String strVal)
         {
             String[] parts = strVal.Split("-/".ToCharArray());// Pattern.compile("/").split(strVal);
-            if (parts.Length != 3)
+            if(parts.Length != 3)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
             String part2 = parts[2];
             int spacePos = part2.IndexOf(' ');
-            if (spacePos > 0)
+            if(spacePos > 0)
             {
                 // drop time portion if present
                 part2 = part2.Substring(0, spacePos);
@@ -63,24 +63,24 @@ namespace NPOI.SS.Formula.Atp
                 f1 = int.Parse(parts[1]);
                 f2 = int.Parse(part2);
             }
-            catch (FormatException)
+            catch(FormatException)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
-            if (f0 < 0 || f1 < 0 || f2 < 0 || (f0 > 12 && f1 > 12 && f2 > 12))
+            if(f0 < 0 || f1 < 0 || f2 < 0 || (f0 > 12 && f1 > 12 && f2 > 12))
             {
                 // easy to see this cannot be a valid date
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
 
-            if (f0 >= 1900 && f0 < 9999)
+            if(f0 >= 1900 && f0 < 9999)
             {
                 // when 4 digit value appears first, the format is YYYY/MM/DD, regardless of OS settings
                 return MakeDate(f0, f1, f2);
             }
 #if !HIDE_UNREACHABLE_CODE
             // otherwise the format seems to depend on OS settings (default date format)
-            if (false)
+            if(false)
             {
                 // MM/DD/YYYY is probably a good guess, if the in the US
                 return MakeDate(f2, f0, f1);
@@ -95,14 +95,14 @@ namespace NPOI.SS.Formula.Atp
          */
         private static DateTime MakeDate(int year, int month, int day)
         {
-            if (month < 1 || month > 12)
+            if(month < 1 || month > 12)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
             DateTime cal = new DateTime(year, month, 1, 0, 0, 0);
             //cal.set(Calendar.MILLISECOND, 0);
             int maxDay = cal.AddMonths(1).AddDays(-1).Day;
-            if (day < 1 || day > maxDay /*cal.GetActualMaximum(Calendar.DAY_OF_MONTH)*/)
+            if(day < 1 || day > maxDay /*cal.GetActualMaximum(Calendar.DAY_OF_MONTH)*/)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }

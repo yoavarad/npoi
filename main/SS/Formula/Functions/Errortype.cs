@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
+using System;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -59,7 +59,7 @@ namespace NPOI.SS.Formula.Functions
                 OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 return ErrorEval.NA;
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 int result = TranslateErrorCodeToErrorTypeValue(e.GetErrorEval().ErrorCode);
                 return new NumberEval(result);
@@ -68,7 +68,7 @@ namespace NPOI.SS.Formula.Functions
 
         private static int TranslateErrorCodeToErrorTypeValue(int errorCode)
         {
-            switch ((FormulaErrorEnum)errorCode)
+            switch((FormulaErrorEnum) errorCode)
             {
                 case FormulaErrorEnum.NULL:
                     return 1;

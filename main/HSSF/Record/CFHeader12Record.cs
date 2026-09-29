@@ -17,11 +17,10 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-
     using NPOI.HSSF.Record.Common;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
 
     /**
      * Conditional Formatting Header v12 record CFHEADER12 (0x0879),
@@ -104,7 +103,7 @@ namespace NPOI.HSSF.Record
         public override object Clone()
         {
             CFHeader12Record result = new CFHeader12Record();
-            result.futureHeader = (FtrHeader)futureHeader.Clone();
+            result.futureHeader = (FtrHeader) futureHeader.Clone();
             base.CopyTo(result);
             return result;
         }

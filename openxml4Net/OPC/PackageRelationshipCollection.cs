@@ -1,12 +1,11 @@
-﻿using System;
+using NPOI.OpenXml4Net.Exceptions;
+using NPOI.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.XPath;
-
-using NPOI.OpenXml4Net.Exceptions;
-using NPOI.Util;
 
 namespace NPOI.OpenXml4Net.OPC
 {
@@ -72,7 +71,7 @@ namespace NPOI.OpenXml4Net.OPC
 
             public int Compare(string x, string y)
             {
-                if (x.CompareTo(y) < 0)
+                if(x.CompareTo(y) < 0)
                 {
                     return -1;
                 }
@@ -98,9 +97,9 @@ namespace NPOI.OpenXml4Net.OPC
             : this()
         {
 
-            foreach (PackageRelationship rel in coll.relationshipsByID.Values)
+            foreach(PackageRelationship rel in coll.relationshipsByID.Values)
             {
-                if (filter == null || rel.RelationshipType.Equals(filter))
+                if(filter == null || rel.RelationshipType.Equals(filter))
                     AddRelationship(rel);
             }
         }
@@ -146,17 +145,17 @@ namespace NPOI.OpenXml4Net.OPC
         {
 
 
-            if (container == null)
+            if(container == null)
                 throw new ArgumentException("container needs to be specified");
 
             // Check if the specified part is not a relationship part
-            if (part != null && part.IsRelationshipPart)
+            if(part != null && part.IsRelationshipPart)
                 throw new ArgumentException("part");
 
             this.container = container;
             this.sourcePart = part;
             this.partName = GetRelationshipPartName(part);
-            if ((container.GetPackageAccess() != PackageAccess.WRITE)
+            if((container.GetPackageAccess() != PackageAccess.WRITE)
                     && container.ContainPart(this.partName))
             {
                 relationshipPart = container.GetPart(this.partName);
@@ -178,7 +177,7 @@ namespace NPOI.OpenXml4Net.OPC
         private static PackagePartName GetRelationshipPartName(PackagePart part)
         {
             PackagePartName partName;
-            if (part == null)
+            if(part == null)
             {
                 partName = PackagingUriHelper.PACKAGE_ROOT_PART_NAME;
             }
@@ -197,7 +196,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void AddRelationship(PackageRelationship relPart)
         {
-            if (relPart == null || string.IsNullOrEmpty(relPart.Id))
+            if(relPart == null || string.IsNullOrEmpty(relPart.Id))
             {
                 throw new ArgumentException("invalid relationship part/id");
             }
@@ -221,10 +220,10 @@ namespace NPOI.OpenXml4Net.OPC
         public PackageRelationship AddRelationship(Uri targetUri,
                 TargetMode targetMode, String relationshipType, String id)
         {
-            if (string.IsNullOrEmpty(id))
+            if(string.IsNullOrEmpty(id))
             {
                 // Generate a unique ID if id parameter is null.
-                if (nextRelationshipId == -1)
+                if(nextRelationshipId == -1)
                 {
                     nextRelationshipId = Size + 1;
                 }
@@ -233,13 +232,13 @@ namespace NPOI.OpenXml4Net.OPC
                 do
                 {
                     id = "rId" + nextRelationshipId++;
-                } while (relationshipsByID.ContainsKey(id));
+                } while(relationshipsByID.ContainsKey(id));
             }
 
             PackageRelationship rel = new PackageRelationship(container,
                     sourcePart, targetUri, targetMode, relationshipType, id);
             relationshipsByID[rel.Id] = rel;
-            if (targetMode == TargetMode.Internal
+            if(targetMode == TargetMode.Internal
                 && !internalRelationshipsByTargetName.ContainsKey(targetUri.OriginalString))
             {
                 internalRelationshipsByTargetName.Add(targetUri.OriginalString, rel);
@@ -260,9 +259,9 @@ namespace NPOI.OpenXml4Net.OPC
                 return;
             }
             PackageRelationship rel = relationshipsByID[id];
-            if (rel != null)
+            if(rel != null)
             {
-                relationshipsByID.Remove(rel.Id);                    
+                relationshipsByID.Remove(rel.Id);
                 internalRelationshipsByTargetName.RemoveAt(internalRelationshipsByTargetName.IndexOfValue(rel));
             }
         }
@@ -275,7 +274,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void RemoveRelationship(PackageRelationship rel)
         {
-            if (rel == null)
+            if(rel == null)
                 throw new ArgumentException("rel");
 
             relationshipsByID.Values.Remove(rel);
@@ -289,13 +288,13 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public PackageRelationship GetRelationship(int index)
         {
-            if (index < 0 || index > relationshipsByID.Values.Count)
+            if(index < 0 || index > relationshipsByID.Values.Count)
                 throw new ArgumentException("index");
 
             int i = 0;
-            foreach (PackageRelationship rel in relationshipsByID.Values)
+            foreach(PackageRelationship rel in relationshipsByID.Values)
             {
-                if (index == i++)
+                if(index == i++)
                     return rel;
             }
             return null;
@@ -313,9 +312,9 @@ namespace NPOI.OpenXml4Net.OPC
             if(id==null)
             {
                 throw new ArgumentException("Cannot read relationship, provided ID is empty: " + id +
-                    ", having relationships: " + relationshipsByID.Keys.Select(key=>string.Join(",", key)));
+                    ", having relationships: " + relationshipsByID.Keys.Select(key => string.Join(",", key)));
             }
-            if (!relationshipsByID.TryGetValue(id, out PackageRelationship byId))
+            if(!relationshipsByID.TryGetValue(id, out PackageRelationship byId))
                 return null;
             return byId;
         }
@@ -355,7 +354,7 @@ namespace NPOI.OpenXml4Net.OPC
 
                 XPathNodeIterator iterator = xpathnav.Select("//x:" + PackageRelationship.RELATIONSHIP_TAG_NAME, nsMgr);
 
-                while (iterator.MoveNext())
+                while(iterator.MoveNext())
                 {
                     // Relationship ID
                     String id = iterator.Current.GetAttribute(PackageRelationship.ID_ATTRIBUTE_NAME, xpathnav.NamespaceURI);
@@ -365,8 +364,8 @@ namespace NPOI.OpenXml4Net.OPC
 
                     /* Check OPC Compliance */
                     // Check Rule M4.1
-                    if (type.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
-                        if (!fCorePropertiesRelationship)
+                    if(type.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
+                        if(!fCorePropertiesRelationship)
                             fCorePropertiesRelationship = true;
                         else
                             throw new InvalidFormatException(
@@ -377,7 +376,7 @@ namespace NPOI.OpenXml4Net.OPC
                     // TargetMode (default value "Internal")
                     string targetModeAttr = iterator.Current.GetAttribute(PackageRelationship.TARGET_MODE_ATTRIBUTE_NAME, xpathnav.NamespaceURI);
                     TargetMode targetMode = TargetMode.Internal;
-                    if (targetModeAttr != string.Empty)
+                    if(targetModeAttr != string.Empty)
                     {
                         targetMode = targetModeAttr.ToLower()
                                 .Equals("internal") ? TargetMode.Internal
@@ -387,7 +386,8 @@ namespace NPOI.OpenXml4Net.OPC
                     // Target converted in URI
                     Uri target = PackagingUriHelper.ToUri("http://invalid.uri"); // dummy url
                     String value = iterator.Current.GetAttribute(
-                                PackageRelationship.TARGET_ATTRIBUTE_NAME, xpathnav.NamespaceURI); ;
+                                PackageRelationship.TARGET_ATTRIBUTE_NAME, xpathnav.NamespaceURI);
+                    ;
                     try
                     {
                         // when parsing of the given uri fails, we can either
@@ -396,7 +396,7 @@ namespace NPOI.OpenXml4Net.OPC
                         // package
                         target = PackagingUriHelper.ToUri(value);
                     }
-                    catch (UriFormatException e)
+                    catch(UriFormatException e)
                     {
                         logger.Log(POILogger.ERROR, "Cannot convert " + value
                                 + " in a valid relationship URI-> dummy-URI used", e);
@@ -404,7 +404,7 @@ namespace NPOI.OpenXml4Net.OPC
                     AddRelationship(target, targetMode, type, id);
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 logger.Log(POILogger.ERROR, e);
                 throw new InvalidFormatException(e.Message);
@@ -444,9 +444,9 @@ namespace NPOI.OpenXml4Net.OPC
         public IEnumerator<PackageRelationship> Iterator(String typeFilter)
         {
             List<PackageRelationship> retArr = new List<PackageRelationship>();
-            foreach (PackageRelationship rel in relationshipsByID.Values)
+            foreach(PackageRelationship rel in relationshipsByID.Values)
             {
-                if (rel.RelationshipType.Equals(typeFilter))
+                if(rel.RelationshipType.Equals(typeFilter))
                     retArr.Add(rel);
             }
             return retArr.GetEnumerator();
@@ -463,14 +463,14 @@ namespace NPOI.OpenXml4Net.OPC
         public PackageRelationship FindExistingInternalRelation(PackagePart packagePart)
         {
             var pn=packagePart.PartName.Name;
-            if (!internalRelationshipsByTargetName.TryGetValue(pn, out PackageRelationship relation))
+            if(!internalRelationshipsByTargetName.TryGetValue(pn, out PackageRelationship relation))
                 return null;
             return relation;
         }
         public override String ToString()
         {
             String str;
-            if (relationshipsByID == null)
+            if(relationshipsByID == null)
             {
                 str = "relationshipsByID=null";
             }
@@ -478,7 +478,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 str = relationshipsByID.Count + " relationship(s) = [";
             }
-            if ((relationshipPart != null) && (relationshipPart.PartName != null))
+            if((relationshipPart != null) && (relationshipPart.PartName != null))
             {
                 str = str + "," + relationshipPart.PartName;
             }
@@ -488,7 +488,7 @@ namespace NPOI.OpenXml4Net.OPC
             }
 
             // Source of this relationship
-            if ((sourcePart != null) && (sourcePart.PartName != null))
+            if((sourcePart != null) && (sourcePart.PartName != null))
             {
                 str = str + "," + sourcePart.PartName;
             }
@@ -496,7 +496,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 str = str + ",sourcePart=null";
             }
-            if (partName != null)
+            if(partName != null)
             {
                 str = str + "," + partName;
             }

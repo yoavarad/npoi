@@ -17,15 +17,15 @@
 namespace NPOI.XSSF.Model
 {
 
-    using System.Xml;
+    using NPOI.OOXML.XSSF.UserModel;
     using NPOI.OpenXml4Net.OPC;
-    using NPOI.XSSF.UserModel;
-    using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.OpenXmlFormats.Dml;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.XSSF.UserModel;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using NPOI.OOXML.XSSF.UserModel;
+    using System.Xml;
 
     /**
      * Class that represents theme of XLSX document. The theme includes specific
@@ -72,7 +72,7 @@ namespace NPOI.XSSF.Model
             {
                 theme = ThemeDocument.Parse(xmldoc, NamespaceManager);
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message, e);
             }
@@ -114,30 +114,55 @@ namespace NPOI.XSSF.Model
             CT_ColorScheme colorScheme = theme.GetTheme().themeElements.clrScheme;
             NPOI.OpenXmlFormats.Dml.CT_Color ctColor = null;
 
-            switch (idx)
+            switch(idx)
             {
-                case THEME_LT1: ctColor = colorScheme.lt1; break;
-                case THEME_DK1: ctColor = colorScheme.dk1; break;
-                case THEME_LT2: ctColor = colorScheme.lt2; break;
-                case THEME_DK2: ctColor = colorScheme.dk2; break;
-                case THEME_ACCENT1: ctColor = colorScheme.accent1; break;
-                case THEME_ACCENT2: ctColor = colorScheme.accent2; break;
-                case THEME_ACCENT3: ctColor = colorScheme.accent3; break;
-                case THEME_ACCENT4: ctColor = colorScheme.accent4; break;
-                case THEME_ACCENT5: ctColor = colorScheme.accent5; break;
-                case THEME_ACCENT6: ctColor = colorScheme.accent6; break;
-                case THEME_HLINK: ctColor = colorScheme.hlink; break;
-                case THEME_FOLHLINK: ctColor = colorScheme.folHlink; break;
-                default: return null;
+                case THEME_LT1:
+                    ctColor = colorScheme.lt1;
+                    break;
+                case THEME_DK1:
+                    ctColor = colorScheme.dk1;
+                    break;
+                case THEME_LT2:
+                    ctColor = colorScheme.lt2;
+                    break;
+                case THEME_DK2:
+                    ctColor = colorScheme.dk2;
+                    break;
+                case THEME_ACCENT1:
+                    ctColor = colorScheme.accent1;
+                    break;
+                case THEME_ACCENT2:
+                    ctColor = colorScheme.accent2;
+                    break;
+                case THEME_ACCENT3:
+                    ctColor = colorScheme.accent3;
+                    break;
+                case THEME_ACCENT4:
+                    ctColor = colorScheme.accent4;
+                    break;
+                case THEME_ACCENT5:
+                    ctColor = colorScheme.accent5;
+                    break;
+                case THEME_ACCENT6:
+                    ctColor = colorScheme.accent6;
+                    break;
+                case THEME_HLINK:
+                    ctColor = colorScheme.hlink;
+                    break;
+                case THEME_FOLHLINK:
+                    ctColor = colorScheme.folHlink;
+                    break;
+                default:
+                    return null;
             }
 
             byte[] rgb = null;
-            if (ctColor.IsSetSrgbClr())
+            if(ctColor.IsSetSrgbClr())
             {
                 // Color is a regular one
                 rgb = ctColor.srgbClr.val;
             }
-            else if (ctColor.IsSetSysClr())
+            else if(ctColor.IsSetSysClr())
             {
                 // Color is a tint of white or black
                 rgb = ctColor.sysClr.lastClr;
@@ -157,12 +182,12 @@ namespace NPOI.XSSF.Model
          */
         public void InheritFromThemeAsRequired(XSSFColor color)
         {
-            if (color == null)
+            if(color == null)
             {
                 // Nothing for us to do
                 return;
             }
-            if (!color.GetCTColor().themeSpecified)
+            if(!color.GetCTColor().themeSpecified)
             {
                 // No theme Set, nothing to do
                 return;
@@ -219,19 +244,17 @@ namespace NPOI.XSSF.Model
 
         public static ThemeElement ById(int idx)
         {
-            if (idx >= values.Count || idx < 0) return UNKNOWN;
+            if(idx >= values.Count || idx < 0)
+                return UNKNOWN;
             return values[idx];
         }
         private ThemeElement(int idx, String name)
         {
-            this.idx = idx; this.name = name;
+            this.idx = idx;
+            this.name = name;
             values.Add(idx, this);
         }
         public int idx;
         public String name;
-   }
+    }
 }
-
-
-
-

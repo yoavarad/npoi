@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,13 +27,13 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(textArg, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
             String text = OperandResolver.CoerceValueToString(veText1);
 
-            if (text.Length == 0)
+            if(text.Length == 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }

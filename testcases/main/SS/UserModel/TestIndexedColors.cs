@@ -18,7 +18,8 @@
 namespace TestCases.SS.UserModel
 {
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
 
     /**
@@ -31,14 +32,14 @@ namespace TestCases.SS.UserModel
         public void FromInt()
         {
             int[] illegalIndices = { -1, 65 };
-            foreach (int index in illegalIndices)
+            foreach(int index in illegalIndices)
             {
                 try
                 {
                     IndexedColors.FromInt(index);
                     Assert.Fail("Expected ArgumentException: " + index);
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                     // expected
                 }

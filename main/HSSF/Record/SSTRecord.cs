@@ -20,11 +20,11 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.HSSF.Record.Cont;
+    using NPOI.Util;
     using System;
     using System.Collections;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.HSSF.Record.Cont;
 
 
     /**
@@ -122,7 +122,7 @@ namespace NPOI.HSSF.Record
             int rval;
             int index = field_3_strings.GetIndex(ucs);
 
-            if (index != -1)
+            if(index != -1)
             {
                 rval = index;
             }
@@ -167,7 +167,7 @@ namespace NPOI.HSSF.Record
 
         public UnicodeString GetString(int id)
         {
-            return (UnicodeString)field_3_strings[id];
+            return (UnicodeString) field_3_strings[id];
         }
 
         public bool IsString16bit(int id)
@@ -191,7 +191,7 @@ namespace NPOI.HSSF.Record
                     .Append(StringUtil.ToHexString(NumStrings)).Append("\n");
             buffer.Append("    .uniquestrings  = ")
                     .Append(StringUtil.ToHexString(NumUniqueStrings)).Append("\n");
-            for (int k = 0; k < field_3_strings.Size; k++)
+            for(int k = 0; k < field_3_strings.Size; k++)
             {
                 UnicodeString s = (UnicodeString)field_3_strings[k];
                 buffer.Append("    .string_" + k + "      = ")
@@ -213,13 +213,13 @@ namespace NPOI.HSSF.Record
          * @return hashcode
          */
         public override int GetHashCode()
-    {
-        return field_2_num_unique_strings;
-    }
+        {
+            return field_2_num_unique_strings;
+        }
 
         public override bool Equals(Object o)
         {
-            if ((o == null) || (o.GetType() != this.GetType()))
+            if((o == null) || (o.GetType() != this.GetType()))
             {
                 return false;
             }
@@ -238,7 +238,7 @@ namespace NPOI.HSSF.Record
 
         public IEnumerator GetStrings()
         {
-            return field_3_strings.GetEnumerator(); 
+            return field_3_strings.GetEnumerator();
         }
 
         /**
@@ -258,12 +258,13 @@ namespace NPOI.HSSF.Record
          * @return size
          */
 
-    protected override void Serialize(ContinuableRecordOutput out1) {
-        SSTSerializer serializer = new SSTSerializer(field_3_strings, NumStrings, NumUniqueStrings );
-        serializer.Serialize(out1);
-        bucketAbsoluteOffsets = serializer.BucketAbsoluteOffsets;
-        bucketRelativeOffsets = serializer.BucketRelativeOffsets;
-    }
+        protected override void Serialize(ContinuableRecordOutput out1)
+        {
+            SSTSerializer serializer = new SSTSerializer(field_3_strings, NumStrings, NumUniqueStrings );
+            serializer.Serialize(out1);
+            bucketAbsoluteOffsets = serializer.BucketAbsoluteOffsets;
+            bucketRelativeOffsets = serializer.BucketRelativeOffsets;
+        }
 
         SSTDeserializer GetDeserializer()
         {
@@ -285,14 +286,14 @@ namespace NPOI.HSSF.Record
          */
         public ExtSSTRecord CreateExtSSTRecord(int sstOffset)
         {
-            if (bucketAbsoluteOffsets == null || bucketRelativeOffsets == null)
+            if(bucketAbsoluteOffsets == null || bucketRelativeOffsets == null)
                 throw new InvalidOperationException("SST record has not yet been Serialized.");
 
             ExtSSTRecord extSST = new ExtSSTRecord();
-            extSST.NumStringsPerBucket=((short)8);
+            extSST.NumStringsPerBucket=((short) 8);
             int[] absoluteOffsets = (int[])bucketAbsoluteOffsets.Clone();
             int[] relativeOffsets = (int[])bucketRelativeOffsets.Clone();
-            for (int i = 0; i < absoluteOffsets.Length; i++)
+            for(int i = 0; i < absoluteOffsets.Length; i++)
                 absoluteOffsets[i] += sstOffset;
             extSST.SetBucketOffsets(absoluteOffsets, relativeOffsets);
             return extSST;

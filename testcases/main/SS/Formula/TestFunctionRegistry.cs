@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -17,14 +17,15 @@
  * ====================================================================
  */
 
-using System;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.Atp;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 
 namespace TestCases.SS.Formula
 {
@@ -54,7 +55,7 @@ namespace TestCases.SS.Formula
                 cv = fe.Evaluate(cellA);
                 Assert.Fail("expectecd exception");
             }
-            catch (NotImplementedException)
+            catch(NotImplementedException)
             {
                 ;
             }
@@ -75,7 +76,7 @@ namespace TestCases.SS.Formula
                 cv = fe.Evaluate(cellB);
                 Assert.Fail("expectecd exception");
             }
-            catch (NotImplementedException)
+            catch(NotImplementedException)
             {
                 ;
             }
@@ -122,7 +123,7 @@ namespace TestCases.SS.Formula
                 FunctionEval.RegisterFunction("SUM", func);
                 Assert.Fail("expectecd exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("POI already implememts SUM" +
                         ". You cannot override POI's implementations of Excel functions", e.Message);
@@ -132,7 +133,7 @@ namespace TestCases.SS.Formula
                 FunctionEval.RegisterFunction("SUMXXX", func);
                 Assert.Fail("expectecd exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Unknown function: SUMXXX", e.Message);
             }
@@ -141,7 +142,7 @@ namespace TestCases.SS.Formula
                 FunctionEval.RegisterFunction("ISODD", func);
                 Assert.Fail("expectecd exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("ISODD is a function from the Excel Analysis Toolpack. " +
                         "Use AnalysisToolpack.RegisterFunction(String name, FreeRefFunction func) instead.", e.Message);
@@ -157,7 +158,7 @@ namespace TestCases.SS.Formula
                 AnalysisToolPak.RegisterFunction("ISODD", atpFunc);
                 Assert.Fail("expectecd exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("POI already implememts ISODD" +
                         ". You cannot override POI's implementations of Excel functions", e.Message);
@@ -167,7 +168,7 @@ namespace TestCases.SS.Formula
                 AnalysisToolPak.RegisterFunction("ISODDXXX", atpFunc);
                 Assert.Fail("expectecd exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("ISODDXXX is not a function from the Excel Analysis Toolpack.", e.Message);
             }
@@ -176,7 +177,7 @@ namespace TestCases.SS.Formula
                 AnalysisToolPak.RegisterFunction("SUM", atpFunc);
                 Assert.Fail("expectecd exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("SUM is a built-in Excel function. " +
                         "Use FunctoinEval.RegisterFunction(String name, Function func) instead.", e.Message);

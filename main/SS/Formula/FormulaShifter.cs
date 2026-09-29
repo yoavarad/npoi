@@ -15,11 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-
-using NPOI.SS.Formula.PTG;
-
 using Cysharp.Text;
+using NPOI.SS.Formula.PTG;
+using System;
 
 namespace NPOI.SS.Formula
 {
@@ -66,19 +64,19 @@ namespace NPOI.SS.Formula
         /// <param name="version"></param>
         /// <exception cref="ArgumentException"></exception>
         private FormulaShifter(
-            int externSheetIndex, 
-            string sheetName, 
-            int firstMovedIndex, 
-            int lastMovedIndex, 
+            int externSheetIndex,
+            string sheetName,
+            int firstMovedIndex,
+            int lastMovedIndex,
             int amountToMove,
             ShiftMode mode, SpreadsheetVersion version)
         {
-            if (amountToMove == 0)
+            if(amountToMove == 0)
             {
                 throw new ArgumentException("amountToMove must not be zero");
             }
 
-            if (firstMovedIndex > lastMovedIndex)
+            if(firstMovedIndex > lastMovedIndex)
             {
                 throw new ArgumentException("firstMovedIndex, lastMovedIndex " +
                     "out of order");
@@ -103,9 +101,9 @@ namespace NPOI.SS.Formula
         /// <param name="dstSheetIndex"></param>
         private FormulaShifter(int srcSheetIndex, int dstSheetIndex)
         {
-            _externSheetIndex = 
-                _firstMovedIndex = 
-                _lastMovedIndex = 
+            _externSheetIndex =
+                _firstMovedIndex =
+                _lastMovedIndex =
                 _amountToMove = -1;
             _sheetName = null;
             _version = null;
@@ -205,7 +203,7 @@ namespace NPOI.SS.Formula
         }
 
         public static FormulaShifter CreateForSheetShift(
-            int srcSheetIndex, 
+            int srcSheetIndex,
             int dstSheetIndex)
         {
             return new FormulaShifter(srcSheetIndex, dstSheetIndex);
@@ -232,10 +230,10 @@ namespace NPOI.SS.Formula
         public bool AdjustFormula(Ptg[] ptgs, int currentExternSheetIx)
         {
             bool refsWereChanged = false;
-            for (int i = 0; i < ptgs.Length; i++)
+            for(int i = 0; i < ptgs.Length; i++)
             {
                 Ptg newPtg = AdjustPtg(ptgs[i], currentExternSheetIx);
-                if (newPtg != null)
+                if(newPtg != null)
                 {
                     refsWereChanged = true;
                     ptgs[i] = newPtg;
@@ -248,7 +246,7 @@ namespace NPOI.SS.Formula
         private Ptg AdjustPtg(Ptg ptg, int currentExternSheetIx)
         {
             //return AdjustPtgDueToRowMove(ptg, currentExternSheetIx);
-            switch (_mode)
+            switch(_mode)
             {
                 case ShiftMode.RowMove:
                     return AdjustPtgDueToRowMove(ptg, currentExternSheetIx);
@@ -279,9 +277,9 @@ namespace NPOI.SS.Formula
         /// or null (if no Ptg change is needed)</returns>
         private Ptg AdjustPtgDueToRowMove(Ptg ptg, int currentExternSheetIx)
         {
-            if (ptg is RefPtg refPtg)
+            if(ptg is RefPtg refPtg)
             {
-                if (currentExternSheetIx != _externSheetIndex)
+                if(currentExternSheetIx != _externSheetIndex)
                 {
                     // local refs on other sheets are unaffected
                     return null;
@@ -290,9 +288,9 @@ namespace NPOI.SS.Formula
                 return RowMoveRefPtg(refPtg);
             }
 
-            if (ptg is Ref3DPtg rptg)
+            if(ptg is Ref3DPtg rptg)
             {
-                if (_externSheetIndex != rptg.ExternSheetIndex)
+                if(_externSheetIndex != rptg.ExternSheetIndex)
                 {
                     // only move 3D refs that refer to the sheet with
                     // cells being moved (currentExternSheetIx is irrelevant)
@@ -302,9 +300,9 @@ namespace NPOI.SS.Formula
                 return RowMoveRefPtg(rptg);
             }
 
-            if (ptg is Ref3DPxg rpxg)
+            if(ptg is Ref3DPxg rpxg)
             {
-                if (rpxg.ExternalWorkbookNumber > 0 ||
+                if(rpxg.ExternalWorkbookNumber > 0 ||
                        !_sheetName.Equals(rpxg.SheetName, StringComparison.OrdinalIgnoreCase))
                 {
                     // only move 3D refs that refer to the sheet with cells
@@ -315,9 +313,9 @@ namespace NPOI.SS.Formula
                 return RowMoveRefPtg(rpxg);
             }
 
-            if (ptg is Area2DPtgBase areaPtgBase)
+            if(ptg is Area2DPtgBase areaPtgBase)
             {
-                if (currentExternSheetIx != _externSheetIndex)
+                if(currentExternSheetIx != _externSheetIndex)
                 {
                     // local refs on other sheets are unaffected
                     return ptg;
@@ -326,9 +324,9 @@ namespace NPOI.SS.Formula
                 return RowMoveAreaPtg(areaPtgBase);
             }
 
-            if (ptg is Area3DPtg aptg)
+            if(ptg is Area3DPtg aptg)
             {
-                if (_externSheetIndex != aptg.ExternSheetIndex)
+                if(_externSheetIndex != aptg.ExternSheetIndex)
                 {
                     // only move 3D refs that refer to the sheet with cells
                     // being moved (currentExternSheetIx is irrelevant)
@@ -338,9 +336,9 @@ namespace NPOI.SS.Formula
                 return RowMoveAreaPtg(aptg);
             }
 
-            if (ptg is Area3DPxg apxg)
+            if(ptg is Area3DPxg apxg)
             {
-                if (apxg.ExternalWorkbookNumber > 0 ||
+                if(apxg.ExternalWorkbookNumber > 0 ||
                         !_sheetName.Equals(apxg.SheetName, StringComparison.OrdinalIgnoreCase))
                 {
                     // only move 3D refs that refer to the sheet with cells
@@ -364,9 +362,9 @@ namespace NPOI.SS.Formula
         /// or null (if no Ptg change is needed)</returns>
         private Ptg AdjustPtgDueToColumnMove(Ptg ptg, int currentExternSheetIx)
         {
-            if (ptg is RefPtg refPtg)
+            if(ptg is RefPtg refPtg)
             {
-                if (currentExternSheetIx != _externSheetIndex)
+                if(currentExternSheetIx != _externSheetIndex)
                 {
                     // local refs on other sheets are unaffected
                     return null;
@@ -375,9 +373,9 @@ namespace NPOI.SS.Formula
                 return ColumnMoveRefPtg(refPtg);
             }
 
-            if (ptg is Ref3DPtg rptg)
+            if(ptg is Ref3DPtg rptg)
             {
-                if (_externSheetIndex != rptg.ExternSheetIndex)
+                if(_externSheetIndex != rptg.ExternSheetIndex)
                 {
                     // only move 3D refs that refer to the sheet with
                     // cells being moved (currentExternSheetIx is irrelevant)
@@ -387,9 +385,9 @@ namespace NPOI.SS.Formula
                 return ColumnMoveRefPtg(rptg);
             }
 
-            if (ptg is Ref3DPxg rpxg)
+            if(ptg is Ref3DPxg rpxg)
             {
-                if (rpxg.ExternalWorkbookNumber > 0 ||
+                if(rpxg.ExternalWorkbookNumber > 0 ||
                        !_sheetName.Equals(rpxg.SheetName, StringComparison.OrdinalIgnoreCase))
                 {
                     // only move 3D refs that refer to the sheet with cells
@@ -400,9 +398,9 @@ namespace NPOI.SS.Formula
                 return ColumnMoveRefPtg(rpxg);
             }
 
-            if (ptg is Area2DPtgBase areaPtgBase)
+            if(ptg is Area2DPtgBase areaPtgBase)
             {
-                if (currentExternSheetIx != _externSheetIndex)
+                if(currentExternSheetIx != _externSheetIndex)
                 {
                     // local refs on other sheets are unaffected
                     return ptg;
@@ -411,9 +409,9 @@ namespace NPOI.SS.Formula
                 return ColumnMoveAreaPtg(areaPtgBase);
             }
 
-            if (ptg is Area3DPtg aptg)
+            if(ptg is Area3DPtg aptg)
             {
-                if (_externSheetIndex != aptg.ExternSheetIndex)
+                if(_externSheetIndex != aptg.ExternSheetIndex)
                 {
                     // only move 3D refs that refer to the sheet with cells
                     // being moved (currentExternSheetIx is irrelevant)
@@ -423,9 +421,9 @@ namespace NPOI.SS.Formula
                 return ColumnMoveAreaPtg(aptg);
             }
 
-            if (ptg is Area3DPxg apxg)
+            if(ptg is Area3DPxg apxg)
             {
-                if (apxg.ExternalWorkbookNumber > 0 ||
+                if(apxg.ExternalWorkbookNumber > 0 ||
                         !_sheetName.Equals(apxg.SheetName, StringComparison.OrdinalIgnoreCase))
                 {
                     // only move 3D refs that refer to the sheet with cells
@@ -458,32 +456,32 @@ namespace NPOI.SS.Formula
         /// </para></returns>
         private Ptg AdjustPtgDueToRowCopy(Ptg ptg)
         {
-            if (ptg is RefPtg refPtg)
+            if(ptg is RefPtg refPtg)
             {
                 return RowCopyRefPtg(refPtg);
             }
 
-            if (ptg is Ref3DPtg rptg)
+            if(ptg is Ref3DPtg rptg)
             {
                 return RowCopyRefPtg(rptg);
             }
 
-            if (ptg is Ref3DPxg rpxg)
+            if(ptg is Ref3DPxg rpxg)
             {
                 return RowCopyRefPtg(rpxg);
             }
 
-            if (ptg is Area2DPtgBase areaPtgBase)
+            if(ptg is Area2DPtgBase areaPtgBase)
             {
                 return RowCopyAreaPtg(areaPtgBase);
             }
 
-            if (ptg is Area3DPtg aptg)
+            if(ptg is Area3DPtg aptg)
             {
                 return RowCopyAreaPtg(aptg);
             }
 
-            if (ptg is Area3DPxg apxg)
+            if(ptg is Area3DPxg apxg)
             {
                 return RowCopyAreaPtg(apxg);
             }
@@ -508,32 +506,32 @@ namespace NPOI.SS.Formula
         /// </para></returns>
         private Ptg AdjustPtgDueToColumnCopy(Ptg ptg)
         {
-            if (ptg is RefPtg refPtg)
+            if(ptg is RefPtg refPtg)
             {
                 return ColumnCopyRefPtg(refPtg);
             }
 
-            if (ptg is Ref3DPtg rptg)
+            if(ptg is Ref3DPtg rptg)
             {
                 return ColumnCopyRefPtg(rptg);
             }
 
-            if (ptg is Ref3DPxg rpxg)
+            if(ptg is Ref3DPxg rpxg)
             {
                 return ColumnCopyRefPtg(rpxg);
             }
 
-            if (ptg is Area2DPtgBase areaPtgBase)
+            if(ptg is Area2DPtgBase areaPtgBase)
             {
                 return ColumnCopyAreaPtg(areaPtgBase);
             }
 
-            if (ptg is Area3DPtg aptg)
+            if(ptg is Area3DPtg aptg)
             {
                 return ColumnCopyAreaPtg(aptg);
             }
 
-            if (ptg is Area3DPxg apxg)
+            if(ptg is Area3DPxg apxg)
             {
                 return ColumnCopyAreaPtg(apxg);
             }
@@ -543,41 +541,41 @@ namespace NPOI.SS.Formula
 
         private Ref3DPtg AdjustPtgDueToSheetMove(Ptg ptg)
         {
-            if (ptg is Ref3DPtg refPtg)
+            if(ptg is Ref3DPtg refPtg)
             {
                 int oldSheetIndex = refPtg.ExternSheetIndex;
 
                 // we have to handle a few cases here
 
                 // 1. sheet is outside moved sheets, no change necessary
-                if (oldSheetIndex < _srcSheetIndex &&
+                if(oldSheetIndex < _srcSheetIndex &&
                         oldSheetIndex < _dstSheetIndex)
                 {
                     return null;
                 }
 
-                if (oldSheetIndex > _srcSheetIndex &&
+                if(oldSheetIndex > _srcSheetIndex &&
                         oldSheetIndex > _dstSheetIndex)
                 {
                     return null;
                 }
 
                 // 2. ptg refers to the moved sheet
-                if (oldSheetIndex == _srcSheetIndex)
+                if(oldSheetIndex == _srcSheetIndex)
                 {
                     refPtg.ExternSheetIndex = _dstSheetIndex;
                     return refPtg;
                 }
 
                 // 3. new index is lower than old one => sheets get moved up
-                if (_dstSheetIndex < _srcSheetIndex)
+                if(_dstSheetIndex < _srcSheetIndex)
                 {
                     refPtg.ExternSheetIndex = oldSheetIndex + 1;
                     return refPtg;
                 }
 
                 // 4. new index is higher than old one => sheets get moved down
-                if (_dstSheetIndex > _srcSheetIndex)
+                if(_dstSheetIndex > _srcSheetIndex)
                 {
                     refPtg.ExternSheetIndex = oldSheetIndex - 1;
                     return refPtg;
@@ -590,7 +588,7 @@ namespace NPOI.SS.Formula
         private Ptg RowMoveRefPtg(RefPtgBase rptg)
         {
             int refRow = rptg.Row;
-            if (_firstMovedIndex <= refRow && refRow <= _lastMovedIndex)
+            if(_firstMovedIndex <= refRow && refRow <= _lastMovedIndex)
             {
                 // Rows being moved completely enclose the ref. - move the area
                 // ref along with the rows regardless of destination
@@ -606,13 +604,13 @@ namespace NPOI.SS.Formula
             // ref is outside source rows
             // check for clashes with destination
 
-            if (destLastRowIndex < refRow || refRow < destFirstRowIndex)
+            if(destLastRowIndex < refRow || refRow < destFirstRowIndex)
             {
                 // destination rows are completely outside ref
                 return null;
             }
 
-            if (destFirstRowIndex <= refRow && refRow <= destLastRowIndex)
+            if(destFirstRowIndex <= refRow && refRow <= destLastRowIndex)
             {
                 // destination rows enclose the area (possibly exactly)
                 return CreateDeletedRef(rptg);
@@ -620,14 +618,14 @@ namespace NPOI.SS.Formula
 
             throw new InvalidOperationException(
                 "Situation not covered: (" + _firstMovedIndex + ", " +
-                        _lastMovedIndex + ", " + _amountToMove + ", " + 
+                        _lastMovedIndex + ", " + _amountToMove + ", " +
                         refRow + ", " + refRow + ")");
         }
 
         private Ptg ColumnMoveRefPtg(RefPtgBase rptg)
         {
             int refColumn = rptg.Column;
-            if (_firstMovedIndex <= refColumn && refColumn <= _lastMovedIndex)
+            if(_firstMovedIndex <= refColumn && refColumn <= _lastMovedIndex)
             {
                 // Columns being moved completely enclose the ref. - move the area
                 // ref along with the columns regardless of destination
@@ -643,13 +641,13 @@ namespace NPOI.SS.Formula
             // ref is outside source columns
             // check for clashes with destination
 
-            if (destLastColumnIndex < refColumn || refColumn < destFirstColumnIndex)
+            if(destLastColumnIndex < refColumn || refColumn < destFirstColumnIndex)
             {
                 // destination columns are completely outside ref
                 return null;
             }
 
-            if (destFirstColumnIndex <= refColumn && refColumn <= destLastColumnIndex)
+            if(destFirstColumnIndex <= refColumn && refColumn <= destLastColumnIndex)
             {
                 // destination columns enclose the area (possibly exactly)
                 return CreateDeletedRef(rptg);
@@ -665,7 +663,7 @@ namespace NPOI.SS.Formula
         {
             int aFirstRow = aptg.FirstRow;
             int aLastRow = aptg.LastRow;
-            if (_firstMovedIndex <= aFirstRow && aLastRow <= _lastMovedIndex)
+            if(_firstMovedIndex <= aFirstRow && aLastRow <= _lastMovedIndex)
             {
                 // Rows being moved completely enclose the area ref. - move the
                 // area ref along with the rows regardless of destination
@@ -679,20 +677,20 @@ namespace NPOI.SS.Formula
             int destFirstRowIndex = _firstMovedIndex + _amountToMove;
             int destLastRowIndex = _lastMovedIndex + _amountToMove;
 
-            if (aFirstRow < _firstMovedIndex && _lastMovedIndex < aLastRow)
+            if(aFirstRow < _firstMovedIndex && _lastMovedIndex < aLastRow)
             {
                 // Rows moved were originally *completely* within the area ref
 
                 // If the destination of the rows overlaps either the top
                 // or bottom of the area ref there will be a change
-                if (destFirstRowIndex < aFirstRow 
+                if(destFirstRowIndex < aFirstRow
                     && aFirstRow <= destLastRowIndex)
                 {
                     // truncate the top of the area by the moved rows
                     aptg.FirstRow = destLastRowIndex + 1;
                     return aptg;
                 }
-                else if (destFirstRowIndex <= aLastRow 
+                else if(destFirstRowIndex <= aLastRow
                     && aLastRow < destLastRowIndex)
                 {
                     // truncate the bottom of the area by the moved rows
@@ -704,25 +702,25 @@ namespace NPOI.SS.Formula
                 return null; // - no change to the area
             }
 
-            if (_firstMovedIndex <= aFirstRow && aFirstRow <= _lastMovedIndex)
+            if(_firstMovedIndex <= aFirstRow && aFirstRow <= _lastMovedIndex)
             {
                 // Rows moved include the first row of the area ref, but not
                 // the last row btw: (aLastRow > _lastMovedIndex)
-                if (_amountToMove < 0)
+                if(_amountToMove < 0)
                 {
                     // simple case - expand area by shifting top upward
                     aptg.FirstRow = aFirstRow + _amountToMove;
                     return aptg;
                 }
 
-                if (destFirstRowIndex > aLastRow)
+                if(destFirstRowIndex > aLastRow)
                 {
                     // in this case, excel ignores the row move
                     return null;
                 }
 
                 int newFirstRowIx = aFirstRow + _amountToMove;
-                if (destLastRowIndex < aLastRow)
+                if(destLastRowIndex < aLastRow)
                 {
                     // end of area is preserved (will remain exact same row)
                     // the top area row is moved simply
@@ -732,7 +730,7 @@ namespace NPOI.SS.Formula
                 // else - bottom area row has been replaced - both area top and
                 // bottom may move now
                 int areaRemainingTopRowIx = _lastMovedIndex + 1;
-                if (destFirstRowIndex > areaRemainingTopRowIx)
+                if(destFirstRowIndex > areaRemainingTopRowIx)
                 {
                     // old top row of area has moved deep within the area, and
                     // exposed a new top row
@@ -744,25 +742,25 @@ namespace NPOI.SS.Formula
                 return aptg;
             }
 
-            if (_firstMovedIndex <= aLastRow && aLastRow <= _lastMovedIndex)
+            if(_firstMovedIndex <= aLastRow && aLastRow <= _lastMovedIndex)
             {
                 // Rows moved include the last row of the area ref, but not the
                 // first. btw: (aFirstRow < _firstMovedIndex)
-                if (_amountToMove > 0)
+                if(_amountToMove > 0)
                 {
                     // simple case - expand area by shifting bottom downward
                     aptg.LastRow = aLastRow + _amountToMove;
                     return aptg;
                 }
 
-                if (destLastRowIndex < aFirstRow)
+                if(destLastRowIndex < aFirstRow)
                 {
                     // in this case, excel ignores the row move
                     return null;
                 }
 
                 int newLastRowIx = aLastRow + _amountToMove;
-                if (destFirstRowIndex > aFirstRow)
+                if(destFirstRowIndex > aFirstRow)
                 {
                     // top of area is preserved (will remain exact same row)
                     // the bottom area row is moved simply
@@ -772,7 +770,7 @@ namespace NPOI.SS.Formula
                 // else - top area row has been replaced - both area top and
                 // bottom may move now
                 int areaRemainingBottomRowIx = _firstMovedIndex - 1;
-                if (destLastRowIndex < areaRemainingBottomRowIx)
+                if(destLastRowIndex < areaRemainingBottomRowIx)
                 {
                     // old bottom row of area has moved up deep within the
                     // area, and exposed a new bottom row
@@ -786,26 +784,26 @@ namespace NPOI.SS.Formula
             // else source rows include none of the rows of the area ref
             // check for clashes with destination
 
-            if (destLastRowIndex < aFirstRow || aLastRow < destFirstRowIndex)
+            if(destLastRowIndex < aFirstRow || aLastRow < destFirstRowIndex)
             {
                 // destination rows are completely outside area ref
                 return null;
             }
 
-            if (destFirstRowIndex <= aFirstRow && aLastRow <= destLastRowIndex)
+            if(destFirstRowIndex <= aFirstRow && aLastRow <= destLastRowIndex)
             {
                 // destination rows enclose the area (possibly exactly)
                 return CreateDeletedRef(aptg);
             }
 
-            if (aFirstRow <= destFirstRowIndex && destLastRowIndex <= aLastRow)
+            if(aFirstRow <= destFirstRowIndex && destLastRowIndex <= aLastRow)
             {
                 // destination rows are within area ref (possibly exact on top
                 // or bottom, but not both)
                 return null; // - no change to area
             }
 
-            if (destFirstRowIndex < aFirstRow && aFirstRow <= destLastRowIndex)
+            if(destFirstRowIndex < aFirstRow && aFirstRow <= destLastRowIndex)
             {
                 // dest rows overlap top of area
                 // - truncate the top
@@ -813,7 +811,7 @@ namespace NPOI.SS.Formula
                 return aptg;
             }
 
-            if (destFirstRowIndex <= aLastRow && aLastRow < destLastRowIndex)
+            if(destFirstRowIndex <= aLastRow && aLastRow < destLastRowIndex)
             {
                 // dest rows overlap bottom of area
                 // - truncate the bottom
@@ -823,7 +821,7 @@ namespace NPOI.SS.Formula
 
             throw new InvalidOperationException(
                 "Situation not covered: (" + _firstMovedIndex + ", " +
-                        _lastMovedIndex + ", " + _amountToMove + ", " + 
+                        _lastMovedIndex + ", " + _amountToMove + ", " +
                         aFirstRow + ", " + aLastRow + ")");
         }
 
@@ -831,7 +829,7 @@ namespace NPOI.SS.Formula
         {
             int aFirstColumn = aptg.FirstColumn;
             int aLastColumn = aptg.LastColumn;
-            if (_firstMovedIndex <= aFirstColumn && aLastColumn <= _lastMovedIndex)
+            if(_firstMovedIndex <= aFirstColumn && aLastColumn <= _lastMovedIndex)
             {
                 // Columns being moved completely enclose the area ref. - move the
                 // area ref along with the columns regardless of destination
@@ -845,20 +843,20 @@ namespace NPOI.SS.Formula
             int destFirstColumnIndex = _firstMovedIndex + _amountToMove;
             int destLastColumnIndex = _lastMovedIndex + _amountToMove;
 
-            if (aFirstColumn < _firstMovedIndex && _lastMovedIndex < aLastColumn)
+            if(aFirstColumn < _firstMovedIndex && _lastMovedIndex < aLastColumn)
             {
                 // Columns moved were originally *completely* within the area ref
 
                 // If the destination of the columns overlaps either the left
                 // or right of the area ref there will be a change
-                if (destFirstColumnIndex < aFirstColumn
+                if(destFirstColumnIndex < aFirstColumn
                     && aFirstColumn <= destLastColumnIndex)
                 {
                     // truncate the left of the area by the moved columns
                     aptg.FirstColumn = destLastColumnIndex + 1;
                     return aptg;
                 }
-                else if (destFirstColumnIndex <= aLastColumn
+                else if(destFirstColumnIndex <= aLastColumn
                     && aLastColumn < destLastColumnIndex)
                 {
                     // truncate the right of the area by the moved columns
@@ -870,25 +868,25 @@ namespace NPOI.SS.Formula
                 return null; // - no change to the area
             }
 
-            if (_firstMovedIndex <= aFirstColumn && aFirstColumn <= _lastMovedIndex)
+            if(_firstMovedIndex <= aFirstColumn && aFirstColumn <= _lastMovedIndex)
             {
                 // Columns moved include the first column of the area ref, but not
                 // the last column btw: (aLastColumn > _lastMovedIndex)
-                if (_amountToMove < 0)
+                if(_amountToMove < 0)
                 {
                     // simple case - expand area by shifting left to the left
                     aptg.FirstColumn = aFirstColumn + _amountToMove;
                     return aptg;
                 }
 
-                if (destFirstColumnIndex > aLastColumn)
+                if(destFirstColumnIndex > aLastColumn)
                 {
                     // in this case, excel ignores the column move
                     return null;
                 }
 
                 int newFirstColumnIx = aFirstColumn + _amountToMove;
-                if (destLastColumnIndex < aLastColumn)
+                if(destLastColumnIndex < aLastColumn)
                 {
                     // end of area is preserved (will remain exact same column)
                     // the left area column is moved simply
@@ -898,7 +896,7 @@ namespace NPOI.SS.Formula
                 // else - right area column has been replaced - both area left and
                 // right may move now
                 int areaRemainingLeftColumnIx = _lastMovedIndex + 1;
-                if (destFirstColumnIndex > areaRemainingLeftColumnIx)
+                if(destFirstColumnIndex > areaRemainingLeftColumnIx)
                 {
                     // old left column of area has moved deep within the area, and
                     // exposed a new left column
@@ -910,25 +908,25 @@ namespace NPOI.SS.Formula
                 return aptg;
             }
 
-            if (_firstMovedIndex <= aLastColumn && aLastColumn <= _lastMovedIndex)
+            if(_firstMovedIndex <= aLastColumn && aLastColumn <= _lastMovedIndex)
             {
                 // Columns moved include the last column of the area ref, but not the
                 // first. btw: (aFirstColumn < _firstMovedIndex)
-                if (_amountToMove > 0)
+                if(_amountToMove > 0)
                 {
                     // simple case - expand area by shifting right to the right
                     aptg.LastColumn = aLastColumn + _amountToMove;
                     return aptg;
                 }
 
-                if (destLastColumnIndex < aFirstColumn)
+                if(destLastColumnIndex < aFirstColumn)
                 {
                     // in this case, excel ignores the column move
                     return null;
                 }
 
                 int newLastColumnIx = aLastColumn + _amountToMove;
-                if (destFirstColumnIndex > aFirstColumn)
+                if(destFirstColumnIndex > aFirstColumn)
                 {
                     // left of area is preserved (will remain exact same column)
                     // the right area column is moved simply
@@ -938,7 +936,7 @@ namespace NPOI.SS.Formula
                 // else - left area column has been replaced - both area left and
                 // right may move now
                 int areaRemainingRightColumnIx = _firstMovedIndex - 1;
-                if (destLastColumnIndex < areaRemainingRightColumnIx)
+                if(destLastColumnIndex < areaRemainingRightColumnIx)
                 {
                     // old right column of area has moved left deep within the
                     // area, and exposed a new right column
@@ -952,26 +950,26 @@ namespace NPOI.SS.Formula
             // else source columns include none of the columns of the area ref
             // check for clashes with destination
 
-            if (destLastColumnIndex < aFirstColumn || aLastColumn < destFirstColumnIndex)
+            if(destLastColumnIndex < aFirstColumn || aLastColumn < destFirstColumnIndex)
             {
                 // destination columns are completely outside area ref
                 return null;
             }
 
-            if (destFirstColumnIndex <= aFirstColumn && aLastColumn <= destLastColumnIndex)
+            if(destFirstColumnIndex <= aFirstColumn && aLastColumn <= destLastColumnIndex)
             {
                 // destination columns enclose the area (possibly exactly)
                 return CreateDeletedRef(aptg);
             }
 
-            if (aFirstColumn <= destFirstColumnIndex && destLastColumnIndex <= aLastColumn)
+            if(aFirstColumn <= destFirstColumnIndex && destLastColumnIndex <= aLastColumn)
             {
                 // destination columns are within area ref (possibly exact on left
                 // or right, but not both)
                 return null; // - no change to area
             }
 
-            if (destFirstColumnIndex < aFirstColumn && aFirstColumn <= destLastColumnIndex)
+            if(destFirstColumnIndex < aFirstColumn && aFirstColumn <= destLastColumnIndex)
             {
                 // dest columns overlap left of area
                 // - truncate the left
@@ -979,7 +977,7 @@ namespace NPOI.SS.Formula
                 return aptg;
             }
 
-            if (destFirstColumnIndex <= aLastColumn && aLastColumn < destLastColumnIndex)
+            if(destFirstColumnIndex <= aLastColumn && aLastColumn < destLastColumnIndex)
             {
                 // dest columns overlap right of area
                 // - truncate the right
@@ -1003,11 +1001,11 @@ namespace NPOI.SS.Formula
         private Ptg RowCopyRefPtg(RefPtgBase rptg)
         {
             int refRow = rptg.Row;
-            if (rptg.IsRowRelative)
+            if(rptg.IsRowRelative)
             {
                 // check new location where the ref is located
                 int destRowIndex = _firstMovedIndex + _amountToMove;
-                if (destRowIndex < 0 || _version.LastRowIndex < destRowIndex)
+                if(destRowIndex < 0 || _version.LastRowIndex < destRowIndex)
                 {
                     return CreateDeletedRef(rptg);
                 }
@@ -1034,10 +1032,10 @@ namespace NPOI.SS.Formula
         private Ptg ColumnCopyRefPtg(RefPtgBase rptg)
         {
             int refColumn = rptg.Column;
-            if (rptg.IsColRelative)
+            if(rptg.IsColRelative)
             {
                 int destColumnIndex = _firstMovedIndex + _amountToMove;
-                if (destColumnIndex < 0 || _version.LastColumnIndex < destColumnIndex)
+                if(destColumnIndex < 0 || _version.LastColumnIndex < destColumnIndex)
                 {
                     return CreateDeletedRef(rptg);
                 }
@@ -1064,10 +1062,10 @@ namespace NPOI.SS.Formula
             int aFirstRow = aptg.FirstRow;
             int aLastRow = aptg.LastRow;
 
-            if (aptg.IsFirstRowRelative)
+            if(aptg.IsFirstRowRelative)
             {
                 int destFirstRowIndex = aFirstRow + _amountToMove;
-                if (destFirstRowIndex < 0 
+                if(destFirstRowIndex < 0
                     || _version.LastRowIndex < destFirstRowIndex)
                 {
                     return CreateDeletedRef(aptg);
@@ -1077,10 +1075,10 @@ namespace NPOI.SS.Formula
                 changed = true;
             }
 
-            if (aptg.IsLastRowRelative)
+            if(aptg.IsLastRowRelative)
             {
                 int destLastRowIndex = aLastRow + _amountToMove;
-                if (destLastRowIndex < 0 
+                if(destLastRowIndex < 0
                     || _version.LastRowIndex < destLastRowIndex)
                 {
                     return CreateDeletedRef(aptg);
@@ -1090,7 +1088,7 @@ namespace NPOI.SS.Formula
                 changed = true;
             }
 
-            if (changed)
+            if(changed)
             {
                 aptg.SortTopLeftToBottomRight();
             }
@@ -1113,10 +1111,10 @@ namespace NPOI.SS.Formula
             int aFirstColumn = aptg.FirstColumn;
             int aLastColumn = aptg.LastColumn;
 
-            if (aptg.IsFirstColRelative)
+            if(aptg.IsFirstColRelative)
             {
                 int destFirstColumnIndex = aFirstColumn + _amountToMove;
-                if (destFirstColumnIndex < 0
+                if(destFirstColumnIndex < 0
                     || _version.LastColumnIndex < destFirstColumnIndex)
                 {
                     return CreateDeletedRef(aptg);
@@ -1126,10 +1124,10 @@ namespace NPOI.SS.Formula
                 changed = true;
             }
 
-            if (aptg.IsLastColRelative)
+            if(aptg.IsLastColRelative)
             {
                 int destLastColumnIndex = aLastColumn + _amountToMove;
-                if (destLastColumnIndex < 0
+                if(destLastColumnIndex < 0
                     || _version.LastColumnIndex < destLastColumnIndex)
                 {
                     return CreateDeletedRef(aptg);
@@ -1139,7 +1137,7 @@ namespace NPOI.SS.Formula
                 changed = true;
             }
 
-            if (changed)
+            if(changed)
             {
                 aptg.SortTopLeftToBottomRight();
             }
@@ -1149,36 +1147,36 @@ namespace NPOI.SS.Formula
 
         private static Ptg CreateDeletedRef(Ptg ptg)
         {
-            if (ptg is RefPtg)
+            if(ptg is RefPtg)
             {
                 return new RefErrorPtg();
             }
 
-            if (ptg is Ref3DPtg rptg)
+            if(ptg is Ref3DPtg rptg)
             {
                 return new DeletedRef3DPtg(rptg.ExternSheetIndex);
             }
 
-            if (ptg is AreaPtg)
+            if(ptg is AreaPtg)
             {
                 return new AreaErrPtg();
             }
 
-            if (ptg is Area3DPtg area3DPtg)
+            if(ptg is Area3DPtg area3DPtg)
             {
                 return new DeletedArea3DPtg(area3DPtg.ExternSheetIndex);
             }
 
-            if (ptg is Ref3DPxg pxg)
+            if(ptg is Ref3DPxg pxg)
             {
-                return 
+                return
                     new Deleted3DPxg(pxg.ExternalWorkbookNumber, pxg.SheetName);
             }
 
-            if (ptg is Area3DPxg areaPxg)
+            if(ptg is Area3DPxg areaPxg)
             {
                 return new Deleted3DPxg(
-                    areaPxg.ExternalWorkbookNumber, 
+                    areaPxg.ExternalWorkbookNumber,
                     areaPxg.SheetName);
             }
 

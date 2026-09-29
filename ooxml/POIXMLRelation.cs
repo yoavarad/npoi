@@ -125,7 +125,7 @@ namespace NPOI
          */
         public String GetFileName(int index)
         {
-            if (!_defaultName.Contains('#'))
+            if(!_defaultName.Contains('#'))
             {
                 // Generic filename in all cases
                 return DefaultFileName;
@@ -157,9 +157,3 @@ namespace NPOI
         }
     }
 }
-
-
-
-
-
-

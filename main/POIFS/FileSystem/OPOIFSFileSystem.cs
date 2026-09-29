@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,17 +25,16 @@
  * 
  * ==============================================================*/
 
+using NPOI.POIFS.Common;
+using NPOI.POIFS.Dev;
+using NPOI.POIFS.EventFileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
 using System;
 using System.Collections;
-using System.IO;
-
-using NPOI.POIFS.Properties;
-using NPOI.POIFS.Dev;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.EventFileSystem;
-using NPOI.POIFS.Common;
-using NPOI.Util;
 using System.Collections.Generic;
+using System.IO;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -62,7 +61,8 @@ namespace NPOI.POIFS.FileSystem
         /// doSomethingElse(is);
         /// </example>
         /// <returns></returns>
-        public static Stream CreateNonClosingInputStream(Stream stream) {
+        public static Stream CreateNonClosingInputStream(Stream stream)
+        {
             return new CloseIgnoringInputStream(stream);
         }
 
@@ -156,19 +156,24 @@ namespace NPOI.POIFS.FileSystem
          */
         private static void CloseInputStream(Stream stream, bool success)
         {
-            
-            if(stream is MemoryStream) {
-                String msg = "POIFS is closing the supplied input stream of type (" 
+
+            if(stream is MemoryStream)
+            {
+                String msg = "POIFS is closing the supplied input stream of type ("
                         + stream.GetType().Name + ") which supports mark/reset.  "
                         + "This will be a problem for the caller if the stream will still be used.  "
                         + "If that is the case the caller should wrap the input stream to avoid this Close logic.  "
                         + "This warning is only temporary and will not be present in future versions of POI.";
                 //_logger.Log(POILogger.WARN, msg);
             }
-            try {
+            try
+            {
                 stream.Close();
-            } catch (IOException) {
-                if(success) {
+            }
+            catch(IOException)
+            {
+                if(success)
+                {
                     throw;
                 }
                 // else not success? Try block did not complete normally 
@@ -261,12 +266,12 @@ namespace NPOI.POIFS.FileSystem
             // a starting block number
             IEnumerator iter = bm_objects.GetEnumerator();
 
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 BATManaged bmo         = ( BATManaged ) iter.Current;
                 int        block_count = bmo.CountBlocks;
 
-                if (block_count != 0)
+                if(block_count != 0)
                 {
                     bmo.StartBlock=bat.AllocateSpace(block_count);
                 }
@@ -311,14 +316,14 @@ namespace NPOI.POIFS.FileSystem
             Writers.Add(sbtw);
             Writers.Add(sbtw.SBAT);
             Writers.Add(bat);
-            for (int j = 0; j < xbat_blocks.Length; j++)
+            for(int j = 0; j < xbat_blocks.Length; j++)
             {
                 Writers.Add(xbat_blocks[j]);
             }
 
             // now, Write everything out
             iter = Writers.GetEnumerator();
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 BlockWritable Writer = ( BlockWritable ) iter.Current;
 
@@ -335,8 +340,9 @@ namespace NPOI.POIFS.FileSystem
         /// <value>The root.</value>
         public DirectoryNode Root
         {
-            get{
-                if (_root == null)
+            get
+            {
+                if(_root == null)
                 {
                     _root = new DirectoryNode(_property_table.Root, this, null);
                 }
@@ -381,9 +387,9 @@ namespace NPOI.POIFS.FileSystem
         public void Remove(EntryNode entry)
         {
             _property_table.RemoveProperty(entry.Property);
-            if (entry.IsDocumentEntry)
+            if(entry.IsDocumentEntry)
             {
-                _documents.Remove((( DocumentNode ) entry).Document);
+                _documents.Remove(((DocumentNode) entry).Document);
             }
         }
 
@@ -393,7 +399,7 @@ namespace NPOI.POIFS.FileSystem
                                        DirectoryNode dir,
                                        int headerPropertiesStartAt)
         {
-            while (properties.MoveNext())
+            while(properties.MoveNext())
             {
                 Property      property = ( Property ) properties.Current;
                 String        name     = property.Name;
@@ -401,16 +407,16 @@ namespace NPOI.POIFS.FileSystem
                                          ? (( DirectoryNode ) this.Root)
                                          : dir;
 
-                if (property.IsDirectory)
+                if(property.IsDirectory)
                 {
                     DirectoryNode new_dir =
                         ( DirectoryNode ) parent.CreateDirectory(name);
 
-                    new_dir.StorageClsid=property.StorageClsid ;
+                    new_dir.StorageClsid=property.StorageClsid;
 
                     ProcessProperties(
                         small_blocks, big_blocks,
-                        ((DirectoryProperty)property).Children, new_dir, headerPropertiesStartAt);
+                        ((DirectoryProperty) property).Children, new_dir, headerPropertiesStartAt);
                 }
                 else
                 {
@@ -418,7 +424,7 @@ namespace NPOI.POIFS.FileSystem
                     int           size       = property.Size;
                     OPOIFSDocument document   = null;
 
-                    if (property.ShouldUseSmallBlocks)
+                    if(property.ShouldUseSmallBlocks)
                     {
                         document =
                             new OPOIFSDocument(name, small_blocks
@@ -428,7 +434,7 @@ namespace NPOI.POIFS.FileSystem
                     {
                         document =
                             new OPOIFSDocument(name,
-                                              big_blocks.FetchBlocks(startBlock,headerPropertiesStartAt),
+                                              big_blocks.FetchBlocks(startBlock, headerPropertiesStartAt),
                                               size);
                     }
                     parent.CreateDocument(document);
@@ -445,9 +451,9 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                if (PreferArray)
+                if(PreferArray)
                 {
-                    return ((POIFSViewable)this.Root).ViewableArray;
+                    return ((POIFSViewable) this.Root).ViewableArray;
                 }
                 else
                 {
@@ -466,7 +472,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                if (!this.PreferArray)
+                if(!this.PreferArray)
                 {
                     return this.Root.ViewableIterator;
                 }
@@ -485,7 +491,7 @@ namespace NPOI.POIFS.FileSystem
         /// a viewer should call GetViewableIterator </value>
         public bool PreferArray
         {
-            get{return (( POIFSViewable ) this.Root).PreferArray;}
+            get { return ((POIFSViewable) this.Root).PreferArray; }
         }
 
         /// <summary>
@@ -495,14 +501,14 @@ namespace NPOI.POIFS.FileSystem
         /// <value>The short description.</value>
         public String ShortDescription
         {
-            get{return "POIFS FileSystem";}
+            get { return "POIFS FileSystem"; }
         }
 
         /// <summary>
         /// Gets The Big Block size, normally 512 bytes, sometimes 4096 bytes
         /// </summary>
         /// <value>The size of the big block.</value>
-        public int BigBlockSize 
+        public int BigBlockSize
         {
             get { return bigBlockSize.GetBigBlockSize(); }
         }

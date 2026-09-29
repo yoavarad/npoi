@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -84,7 +84,7 @@ namespace NPOI.SS.Util
             {
                 return _propertyTemplate;
             }
-            
+
         }
 
         private static Dictionary<String, object> cloneCellProperties(Dictionary<String, object> properties)
@@ -850,7 +850,7 @@ namespace NPOI.SS.Util
         /// <param name="value">value</param>
         private void addProperty(int row, int col, String property, short value)
         {
-            AddProperty(row, col, property, (object)value);
+            AddProperty(row, col, property, (object) value);
         }
 
         /// <summary>
@@ -890,8 +890,8 @@ namespace NPOI.SS.Util
                 {
                     cellProperties.Remove(p);
                 }
-                
-                
+
+
                 if(cellProperties.Count == 0)
                 {
                     _propertyTemplate.Remove(cell);
@@ -1055,4 +1055,3 @@ namespace NPOI.SS.Util
         }
     }
 }
-

@@ -28,17 +28,17 @@
 
 namespace TestCases.POIFS.Storage
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.POIFS.Storage;
     using NPOI.POIFS.Common;
-    using NPOI.Util;
-    using NPOI.POIFS.Properties;
     using NPOI.POIFS.FileSystem;
+    using NPOI.POIFS.Properties;
+    using NPOI.POIFS.Storage;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
 
     /**
 * Class to Test SmallBlockTableWriter functionality

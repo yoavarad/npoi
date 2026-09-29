@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
-using System.Xml.Serialization;
 using NPOI.OpenXml4Net.Util;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -23,15 +22,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_RElt Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_RElt ctObj = new CT_RElt();
             XmlNode tNode = node.SelectSingleNode("d:t", namespaceManager);
             if(tNode!=null)
-                ctObj.t = tNode.InnerText.Replace("\r", ""); ;
-            foreach (XmlNode childNode in node.ChildNodes)
+                ctObj.t = tNode.InnerText.Replace("\r", "");
+            ;
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "rPr")
+                if(childNode.LocalName == "rPr")
                     ctObj.rPr = CT_RPrElt.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -43,9 +43,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.rPr != null)
+            if(this.rPr != null)
                 this.rPr.Write(sw, "rPr");
-            if (this.t != null)
+            if(this.t != null)
             {
                 sw.Write("<t xml:space=\"preserve\">");
                 sw.Write(XmlHelper.ExcelEncodeString(XmlHelper.EncodeXml(this.t)));

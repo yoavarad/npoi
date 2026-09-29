@@ -15,6 +15,7 @@
    limitations under the License.
 ==================================================================== */
 
+using Cysharp.Text;
 using NPOI.OpenXml4Net.Exceptions;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Dml.Spreadsheet;
@@ -31,15 +32,14 @@ using SkiaSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Cysharp.Text;
 using System.Xml;
+using System.Xml.Linq;
 using CT_Shape = NPOI.OpenXmlFormats.Vml.CT_Shape;
 using ST_EditAs = NPOI.OpenXmlFormats.Dml.Spreadsheet.ST_EditAs;
-using System.Xml.Linq;
-using System.Diagnostics;
-using System.Data;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -1463,10 +1463,12 @@ namespace NPOI.XSSF.UserModel
 
         internal void EnsureWorksheetLoaded()
         {
-            if (_worksheetLoaded) return;
-            lock (_loadLock)
+            if(_worksheetLoaded)
+                return;
+            lock(_loadLock)
             {
-                if (_worksheetLoaded) return;
+                if(_worksheetLoaded)
+                    return;
                 // Set _worksheetLoaded = true before calling Read() to prevent infinite
                 // recursion: code paths inside Read() (e.g. XSSFRow/XSSFCell construction)
                 // may call sheet properties that trigger EnsureWorksheetLoaded again.
@@ -1479,13 +1481,14 @@ namespace NPOI.XSSF.UserModel
                     _parseCount++;
                     success = true;
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new POIXMLException(e);
                 }
                 finally
                 {
-                    if (!success) _worksheetLoaded = false;
+                    if(!success)
+                        _worksheetLoaded = false;
                 }
             }
         }
@@ -1634,7 +1637,7 @@ namespace NPOI.XSSF.UserModel
 
         protected internal override void PrepareForCommit()
         {
-            if (_worksheetLoaded)
+            if(_worksheetLoaded)
             {
                 base.PrepareForCommit();
             }
@@ -1643,7 +1646,7 @@ namespace NPOI.XSSF.UserModel
 
         protected internal override void Commit()
         {
-            if (!_worksheetLoaded)
+            if(!_worksheetLoaded)
             {
                 // Sheet was never accessed; original XML is still in the package part
                 return;
@@ -2210,7 +2213,7 @@ namespace NPOI.XSSF.UserModel
             EnsureWorksheetLoaded();
             CT_Row ctRow;
             XSSFRow prev = _rows.TryGetValue(rownum, out XSSFRow row) ? row : null;
-            if (prev != null)
+            if(prev != null)
             {
                 // the Cells in an existing row are invalidated on-purpose, in
                 // order to clean up correctly, we need to call the remove, so
@@ -2259,7 +2262,7 @@ namespace NPOI.XSSF.UserModel
             EnsureWorksheetLoaded();
             CT_Col ctCol;
             XSSFColumn prev = _columns.TryGetValue(columnnum, out XSSFColumn column) ? column : null;
-            if (prev != null)
+            if(prev != null)
             {
                 // the Cells in an existing column are invalidated on-purpose, in
                 // order to clean up correctly, we need to call the remove, so
@@ -2643,7 +2646,7 @@ namespace NPOI.XSSF.UserModel
         public IRow GetRow(int rownum)
         {
             EnsureWorksheetLoaded();
-            if (_rows.TryGetValue(rownum, out XSSFRow row))
+            if(_rows.TryGetValue(rownum, out XSSFRow row))
             {
                 return row;
             }
@@ -2662,7 +2665,7 @@ namespace NPOI.XSSF.UserModel
         public IColumn GetColumn(int columnnum, bool createIfNull = false)
         {
             EnsureWorksheetLoaded();
-            if (_columns.TryGetValue(columnnum, out XSSFColumn column))
+            if(_columns.TryGetValue(columnnum, out XSSFColumn column))
             {
                 return column;
             }
@@ -3464,13 +3467,13 @@ namespace NPOI.XSSF.UserModel
             if(col != null)
             {
                 ICellStyle style = col.ColumnStyle;
-                if (style != null)
+                if(style != null)
                 {
                     return style;
                 }
             }
 
-            return ((XSSFWorkbook)Workbook).GetCellStyleAt(0);
+            return ((XSSFWorkbook) Workbook).GetCellStyleAt(0);
         }
 
         /// <summary>
@@ -3994,7 +3997,7 @@ namespace NPOI.XSSF.UserModel
                 false);
             XSSFTable table = rp.DocumentPart as XSSFTable;
             tbl.id = rp.Relationship.Id;
-            table.GetCTTable().id = (uint)tableNumber;
+            table.GetCTTable().id = (uint) tableNumber;
             tables[tbl.id] = table;
 
             return table;
@@ -4559,7 +4562,7 @@ namespace NPOI.XSSF.UserModel
                     Debug.WriteLine("Warning: Can't get id for chart.");
                     continue;
                 }
-                
+
                 var newXSSFChart = (newSheetDrawing as XSSFDrawing).CreateChart(newAnchor) as XSSFChart;
                 var linkedChart = sourceCharts.FirstOrDefault(x=>x.GetPackageRelationship().Id == id);
                 if(linkedChart == null)
@@ -4572,7 +4575,7 @@ namespace NPOI.XSSF.UserModel
 
                 var linkedCTChart = linkedChart.GetCTChart();
                 var newCTChart = newXSSFChart.GetCTChart();
-                
+
                 newCTChart.plotArea =  linkedCTChart.plotArea;
                 newCTChart.extLst =  linkedCTChart.extLst;
                 newCTChart.title =  linkedCTChart.title;
@@ -4587,7 +4590,7 @@ namespace NPOI.XSSF.UserModel
                 newCTChart.pivotFmts =  linkedCTChart.pivotFmts;
                 newCTChart.showDLblsOverMax =  linkedCTChart.showDLblsOverMax;
 
-                
+
             }
         }
 
@@ -6373,7 +6376,7 @@ namespace NPOI.XSSF.UserModel
                     else
                     {
                         int styleHashCode = oldCell.CellStyle.GetHashCode();
-                        if (styleMap.TryGetValue(styleHashCode, out ICellStyle value))
+                        if(styleMap.TryGetValue(styleHashCode, out ICellStyle value))
                         {
                             newCell.CellStyle = value;
                         }
@@ -6571,7 +6574,7 @@ namespace NPOI.XSSF.UserModel
          */
         public CT_OleObject ReadOleObject(long shapeId)
         {
-            if (!GetCTWorksheet().IsSetOleObjects())
+            if(!GetCTWorksheet().IsSetOleObjects())
             {
                 return null;
             }
@@ -6843,7 +6846,7 @@ namespace NPOI.XSSF.UserModel
             {
                 height = _rows.TryGetValue(iRow, out XSSFRow row) ? row.HeightInPoints
                                                  : DefaultRowHeightInPoints;
-                if (y >= Units.ToEMU(height))
+                if(y >= Units.ToEMU(height))
                 {
                     y -= Units.ToEMU(height);
                     cell++;
@@ -6902,9 +6905,12 @@ lblforbreak:
         /// <summary>
         /// called when a sheet is being deleted/removed from a workbook, to clean up relations and other document pieces tied to the sheet
         /// </summary>
-        internal void OnSheetDelete() {
-            foreach (RelationPart part in RelationParts) {
-                if (part.DocumentPart is XSSFTable) {
+        internal void OnSheetDelete()
+        {
+            foreach(RelationPart part in RelationParts)
+            {
+                if(part.DocumentPart is XSSFTable)
+                {
                     // call table delete
                     RemoveTable((XSSFTable) part.DocumentPart);
                     continue;
@@ -6917,7 +6923,7 @@ lblforbreak:
         {
             return SheetUtil.ToDataTable(this, firstRowAsHeader, showCalculatedValue);
         }
-        
+
         public XSSFHeaderFooterProperties HeaderFooterProperties
         {
             get
@@ -6928,17 +6934,19 @@ lblforbreak:
 
         public NCellRange Cells
         {
-            get {
+            get
+            {
                 return new NCellRange(this, 0, 0, this.Workbook.SpreadsheetVersion.MaxRows, this.Workbook.SpreadsheetVersion.MaxColumns);
             }
-            
+
         }
 
         public NCellRange this[string address] => Cells[address];
 
         public NRowRange Rows
         {
-            get {
+            get
+            {
                 return new NRowRange(this, 0, this.Workbook.SpreadsheetVersion.MaxRows);
             }
         }

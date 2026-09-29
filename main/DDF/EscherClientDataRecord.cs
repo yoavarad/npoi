@@ -18,10 +18,10 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.IO;
     using System.Text;
-    using NPOI.Util;
 
 
     /// <summary>
@@ -68,7 +68,8 @@ namespace NPOI.DDF
         {
             listener.BeforeRecordSerialize(offset, RecordId, this);
 
-            if (remainingData == null) remainingData = [];
+            if(remainingData == null)
+                remainingData = [];
             LittleEndian.PutShort(data, offset, Options);
             LittleEndian.PutShort(data, offset + 2, RecordId);
             LittleEndian.PutInt(data, offset + 4, remainingData.Length);
@@ -118,7 +119,7 @@ namespace NPOI.DDF
                     "  Version: 0x" + HexDump.ToHex(Version) + nl +
                     "  Instance: 0x" + HexDump.ToHex(Instance) + nl +
                     "  Extra Data:" + nl + extraData;
-            
+
         }
         public override String ToXml(String tab)
         {
@@ -140,7 +141,7 @@ namespace NPOI.DDF
             get { return remainingData; }
             set
             {
-                this.remainingData = (value == null) ? [] : (byte[])value.Clone();
+                this.remainingData = (value == null) ? [] : (byte[]) value.Clone();
             }
         }
     }

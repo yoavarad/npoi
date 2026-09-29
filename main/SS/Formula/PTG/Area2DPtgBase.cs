@@ -17,12 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
-    using NPOI.Util;
-
+    using Cysharp.Text;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Common superclass of 2-D area refs 
@@ -32,14 +31,14 @@ using Cysharp.Text;
     {
         private const int SIZE = 9;
 
-        protected Area2DPtgBase(int firstRow, int lastRow, int firstColumn, int lastColumn, bool  firstRowRelative, bool  lastRowRelative, bool  firstColRelative, bool  lastColRelative)
+        protected Area2DPtgBase(int firstRow, int lastRow, int firstColumn, int lastColumn, bool firstRowRelative, bool lastRowRelative, bool firstColRelative, bool lastColRelative)
             : base(firstRow, lastRow, firstColumn, lastColumn, firstRowRelative, lastRowRelative, firstColRelative, lastColRelative)
         {
 
         }
-        protected Area2DPtgBase(AreaReference ar):base(ar)
+        protected Area2DPtgBase(AreaReference ar) : base(ar)
         {
-            
+
         }
         protected Area2DPtgBase(ILittleEndianInput in1)
         {

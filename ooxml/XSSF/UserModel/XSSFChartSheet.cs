@@ -15,12 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.Util;
+using System;
 using System.IO;
 using System.Xml;
-using System;
-using NPOI.Util;
-using NPOI.OpenXml4Net.OPC;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -45,7 +45,7 @@ namespace NPOI.XSSF.UserModel
         protected XSSFChartSheet(PackagePart part)
             : base(part)
         {
-            
+
         }
         [Obsolete("deprecated in POI 3.14, scheduled for removal in POI 3.16")]
         protected XSSFChartSheet(PackagePart part, PackageRelationship rel)
@@ -64,7 +64,7 @@ namespace NPOI.XSSF.UserModel
                 XmlDocument doc = ConvertStreamToXml(is1);
                 chartsheet = ChartsheetDocument.Parse(doc, XSSFSheet.NamespaceManager).GetChartsheet();
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new POIXMLException(e);
             }
@@ -96,7 +96,7 @@ namespace NPOI.XSSF.UserModel
         }
 
 
-        internal override void Write(Stream output, bool leaveOpen=false)
+        internal override void Write(Stream output, bool leaveOpen = false)
         {
             EnsureWorksheetLoaded();
             new ChartsheetDocument(this.chartsheet).Save(output);
@@ -104,13 +104,13 @@ namespace NPOI.XSSF.UserModel
 
         private static byte[] blankWorksheet()
         {
-            using (MemoryStream out1 = RecyclableMemory.GetStream())
-            { 
+            using(MemoryStream out1 = RecyclableMemory.GetStream())
+            {
                 try
                 {
-                    new XSSFSheet().Write(out1,true);
+                    new XSSFSheet().Write(out1, true);
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new RuntimeException(e);
                 }

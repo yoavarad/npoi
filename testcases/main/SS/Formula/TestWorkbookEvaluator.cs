@@ -17,16 +17,16 @@
 
 namespace TestCases.SS.Formula
 {
-    using System;
-    using System.IO;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using TestCases.HSSF;
 
     /**
@@ -58,7 +58,7 @@ namespace TestCases.SS.Formula
             Ptg[] ptgs = { new IntPtg(42), AttrPtg.SUM, };
 
             ValueEval result = EvaluateFormula(ptgs);
-            ClassicAssert.AreEqual(42, ((NumberEval)result).NumberValue, 0.0);
+            ClassicAssert.AreEqual(42, ((NumberEval) result).NumberValue, 0.0);
         }
 
         /**
@@ -93,7 +93,7 @@ namespace TestCases.SS.Formula
             Ptg[] ptgs = { new IntPtg(42), AttrPtg.SUM, };
 
             ValueEval result = EvaluateFormula(ptgs);
-            ClassicAssert.AreEqual(42, ((NumberEval)result).NumberValue, 0.0);
+            ClassicAssert.AreEqual(42, ((NumberEval) result).NumberValue, 0.0);
         }
 
         [Test]
@@ -177,7 +177,7 @@ namespace TestCases.SS.Formula
             {
                 cv = fe.Evaluate(cell);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 Assert.Fail("Missing arg result not being handled correctly.");
             }
@@ -224,9 +224,9 @@ namespace TestCases.SS.Formula
             {
                 cv = fe.Evaluate(cell);
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if ("Specified row index (0) is outside the allowed range (1..4)".Equals(e.Message))
+                if("Specified row index (0) is outside the allowed range (1..4)".Equals(e.Message))
                 {
                     Assert.Fail("Identified bug in result dereferencing");
                 }
@@ -290,7 +290,7 @@ namespace TestCases.SS.Formula
 
 
         // Test IF-Equals Formula Evaluation (bug 58591)
-        
+
         private IWorkbook TestIFEqualsFormulaEvaluation_setup(String formula, CellType a1CellType)
         {
             IWorkbook wb = new HSSFWorkbook();
@@ -301,7 +301,7 @@ namespace TestCases.SS.Formula
             ICell C1 = row.CreateCell(2);
             ICell D1 = row.CreateCell(3);
 
-            switch (a1CellType)
+            switch(a1CellType)
             {
                 case CellType.Numeric:
                     A1.SetCellValue(1.0);
@@ -321,7 +321,7 @@ namespace TestCases.SS.Formula
                     // "A1=1" should return true
                     break;
                 case CellType.Blank:
-                    A1.SetCellValue((String)null);
+                    A1.SetCellValue((String) null);
                     // "A1=1" should return false
                     break;
             }
@@ -338,7 +338,7 @@ namespace TestCases.SS.Formula
             {
                 wb.Close();
             }
-            catch (IOException)
+            catch(IOException)
             {
                 Assert.Fail("Unable to close workbook");
             }
@@ -544,7 +544,7 @@ namespace TestCases.SS.Formula
                 string tmp = D1.CellFormula;
                 Assert.Fail("cell formula should be overwritten with formula result");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
             }
             ClassicAssert.AreEqual(CellType.Numeric, D1.CellType);

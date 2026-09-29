@@ -17,16 +17,16 @@
 
 namespace NPOI.HPSF
 {
+    using Cysharp.Text;
     using NPOI;
     using NPOI.HPSF.Wellknown;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.IO;
-    using System.Text; 
-    using Cysharp.Text;
+    using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// <para>
@@ -671,11 +671,11 @@ namespace NPOI.HPSF
                         return LittleEndian.GetUInt(data).ToString();
                     default:
                         // Maybe it's a string? who knows!
-                        try 
+                        try
                         {
                             return CodePageUtil.GetStringFromCodePage(data, Property.DEFAULT_CODEPAGE);
                         }
-                        catch (UnsupportedEncodingException e)
+                        catch(UnsupportedEncodingException e)
                         {
                             // doesn't happen ...
                             return "";
@@ -691,7 +691,7 @@ namespace NPOI.HPSF
         /// <return>true if this <see cref="PropertySet"/>
         /// represents a Summary Information, else <c>false</c>.
         /// </return>
-        public bool IsSummaryInformation => sections.Count != 0 && 
+        public bool IsSummaryInformation => sections.Count != 0 &&
             matchesSummary(FirstSection.FormatID, SectionIDMap.SUMMARY_INFORMATION_ID);
 
         /// <summary>
@@ -700,13 +700,14 @@ namespace NPOI.HPSF
         /// <return>true if this <see cref="PropertySet"/>
         /// represents a Document Summary Information, else <c>false</c>.
         /// </return>
-        public bool IsDocumentSummaryInformation => sections.Count != 0 && 
-            matchesSummary(FirstSection.FormatID, SectionIDMap.DOCUMENT_SUMMARY_INFORMATION_ID); 
+        public bool IsDocumentSummaryInformation => sections.Count != 0 &&
+            matchesSummary(FirstSection.FormatID, SectionIDMap.DOCUMENT_SUMMARY_INFORMATION_ID);
 
-        internal static bool matchesSummary(ClassID actual, params ClassID[] expected) {
-            foreach (ClassID sum in expected)
+        internal static bool matchesSummary(ClassID actual, params ClassID[] expected)
+        {
+            foreach(ClassID sum in expected)
             {
-                if (sum.Equals(actual) || sum.EqualsInverted(actual))
+                if(sum.Equals(actual) || sum.EqualsInverted(actual))
                 {
                     return true;
                 }
@@ -901,7 +902,7 @@ namespace NPOI.HPSF
         /// @see Object#toString()
         public override String ToString()
         {
-           using var b= ZString.CreateStringBuilder();
+            using var b= ZString.CreateStringBuilder();
             int sectionCount = SectionCount;
             b.Append(GetType().Name);
             b.Append('[');
@@ -959,4 +960,3 @@ namespace NPOI.HPSF
         }
     }
 }
-

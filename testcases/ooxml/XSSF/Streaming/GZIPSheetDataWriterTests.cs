@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,7 +16,8 @@
 ==================================================================== */
 using ICSharpCode.SharpZipLib.GZip;
 using NPOI.XSSF.Streaming;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.IO;
 
 namespace TestCases.XSSF.Streaming
@@ -29,11 +30,11 @@ namespace TestCases.XSSF.Streaming
         [TearDown]
         public void CleanUp()
         {
-            if (_objectToTest != null)
+            if(_objectToTest != null)
             {
                 _objectToTest.Dispose();
 
-                if (File.Exists(_objectToTest.TemporaryFilePath()))
+                if(File.Exists(_objectToTest.TemporaryFilePath()))
                     File.Delete(_objectToTest.TemporaryFilePath());
             }
         }
@@ -51,7 +52,7 @@ namespace TestCases.XSSF.Streaming
             _objectToTest = new GZIPSheetDataWriter();
 
             var tempFile = _objectToTest.CreateTempFile();
-            using (var result = _objectToTest.CreateWriter(tempFile))
+            using(var result = _objectToTest.CreateWriter(tempFile))
             {
                 ClassicAssert.True(result is GZipOutputStream);
             }
@@ -63,10 +64,10 @@ namespace TestCases.XSSF.Streaming
             _objectToTest = new GZIPSheetDataWriter();
             _objectToTest.Close();
 
-            using (var result = _objectToTest.GetWorksheetXmlInputStream())
+            using(var result = _objectToTest.GetWorksheetXmlInputStream())
             {
                 ClassicAssert.True(result is GZipInputStream);
-            }   
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,40 +52,40 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_ScatterSer Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ScatterSer ctObj = new CT_ScatterSer();
             ctObj.dPt = new List<CT_DPt>();
             ctObj.trendline = new List<CT_Trendline>();
             ctObj.errBars = new List<CT_ErrBars>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "idx")
+                if(childNode.LocalName == "idx")
                     ctObj.idx = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "order")
+                else if(childNode.LocalName == "order")
                     ctObj.order = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tx")
+                else if(childNode.LocalName == "tx")
                     ctObj.tx = CT_SerTx.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "marker")
+                else if(childNode.LocalName == "marker")
                     ctObj.marker = CT_Marker.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dLbls")
+                else if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "xVal")
+                else if(childNode.LocalName == "xVal")
                     ctObj.xVal = CT_AxDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "yVal")
+                else if(childNode.LocalName == "yVal")
                     ctObj.yVal = CT_NumDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "smooth")
+                else if(childNode.LocalName == "smooth")
                     ctObj.smooth = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dPt")
+                else if(childNode.LocalName == "dPt")
                     ctObj.dPt.Add(CT_DPt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "trendline")
+                else if(childNode.LocalName == "trendline")
                     ctObj.trendline.Add(CT_Trendline.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "errBars")
+                else if(childNode.LocalName == "errBars")
                     ctObj.errBars.Add(CT_ErrBars.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -97,48 +97,48 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.idx != null)
+            if(this.idx != null)
                 this.idx.Write(sw, "idx");
-            if (this.order != null)
+            if(this.order != null)
                 this.order.Write(sw, "order");
-            if (this.tx != null)
+            if(this.tx != null)
                 this.tx.Write(sw, "tx");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.marker != null)
+            if(this.marker != null)
                 this.marker.Write(sw, "marker");
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.xVal != null)
+            if(this.xVal != null)
                 this.xVal.Write(sw, "xVal");
-            if (this.yVal != null)
+            if(this.yVal != null)
                 this.yVal.Write(sw, "yVal");
-            if (this.smooth != null)
+            if(this.smooth != null)
                 this.smooth.Write(sw, "smooth");
-            if (this.dPt != null)
+            if(this.dPt != null)
             {
-                foreach (CT_DPt x in this.dPt)
+                foreach(CT_DPt x in this.dPt)
                 {
                     x.Write(sw, "dPt");
                 }
             }
-            if (this.trendline != null)
+            if(this.trendline != null)
             {
-                foreach (CT_Trendline x in this.trendline)
+                foreach(CT_Trendline x in this.trendline)
                 {
                     x.Write(sw, "trendline");
                 }
             }
-            if (this.errBars != null)
+            if(this.errBars != null)
             {
-                foreach (CT_ErrBars x in this.errBars)
+                foreach(CT_ErrBars x in this.errBars)
                 {
                     x.Write(sw, "errBars");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -412,11 +412,11 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
     {
         public static CT_ScatterStyle Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ScatterStyle ctObj = new CT_ScatterStyle();
-            if (node.Attributes["val"] != null)
-                ctObj.val = (ST_ScatterStyle)Enum.Parse(typeof(ST_ScatterStyle), node.Attributes["val"].Value);
+            if(node.Attributes["val"] != null)
+                ctObj.val = (ST_ScatterStyle) Enum.Parse(typeof(ST_ScatterStyle), node.Attributes["val"].Value);
             return ctObj;
         }
 
@@ -506,25 +506,25 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_ScatterChart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ScatterChart ctObj = new CT_ScatterChart();
             ctObj.ser = new List<CT_ScatterSer>();
             ctObj.axId = new List<CT_UnsignedInt>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "scatterStyle")
+                if(childNode.LocalName == "scatterStyle")
                     ctObj.scatterStyle = CT_ScatterStyle.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "varyColors")
+                else if(childNode.LocalName == "varyColors")
                     ctObj.varyColors = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dLbls")
+                else if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ser")
+                else if(childNode.LocalName == "ser")
                     ctObj.ser.Add(CT_ScatterSer.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "axId")
+                else if(childNode.LocalName == "axId")
                     ctObj.axId.Add(CT_UnsignedInt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -536,29 +536,29 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.scatterStyle != null)
+            if(this.scatterStyle != null)
                 this.scatterStyle.Write(sw, "scatterStyle");
-            if (this.varyColors != null)
+            if(this.varyColors != null)
                 this.varyColors.Write(sw, "varyColors");
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.ser != null)
+            if(this.ser != null)
             {
-                foreach (CT_ScatterSer x in this.ser)
+                foreach(CT_ScatterSer x in this.ser)
                 {
                     x.Write(sw, "ser");
                 }
             }
-            if (this.axId != null)
+            if(this.axId != null)
             {
-                foreach (CT_UnsignedInt x in this.axId)
+                foreach(CT_UnsignedInt x in this.axId)
                 {
                     x.Write(sw, "axId");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -573,7 +573,7 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public CT_UnsignedInt AddNewAxId()
         {
-            if (this.axIdField == null)
+            if(this.axIdField == null)
                 this.axIdField = new List<CT_UnsignedInt>();
             CT_UnsignedInt axIdItem = new CT_UnsignedInt();
             this.axIdField.Add(axIdItem);
@@ -581,7 +581,7 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public CT_ScatterSer AddNewSer()
         {
-            if (this.serField == null)
+            if(this.serField == null)
                 this.serField = new List<CT_ScatterSer>();
             CT_ScatterSer ser = new CT_ScatterSer();
             this.serField.Add(ser);

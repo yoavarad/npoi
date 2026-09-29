@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -17,13 +17,14 @@
  * ====================================================================
  */
 
-using System;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using TestCases.HSSF;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 using System.Collections.Generic;
+using TestCases.HSSF;
 
 namespace TestCases.SS.Formula
 {
@@ -73,7 +74,7 @@ namespace TestCases.SS.Formula
                 evaluator.EvaluateFormulaCell(lA1Cell);
                 Assert.Fail("Missing external workbook reference exception expected!");
             }
-            catch (RuntimeException re)
+            catch(RuntimeException re)
             {
                 ClassicAssert.IsTrue(re.Message.IndexOf(SOURCE_DUMMY_WORKBOOK_FILENAME) != -1, "Unexpected exception: " + re);
             }

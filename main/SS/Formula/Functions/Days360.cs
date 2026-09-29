@@ -1,6 +1,6 @@
-﻿using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
+using System;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -55,7 +55,7 @@ namespace NPOI.SS.Formula.Functions
                 double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                 return new NumberEval(Days360.Evaluate(d0, d1, false));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -69,9 +69,9 @@ namespace NPOI.SS.Formula.Functions
                 double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                 ValueEval ve = OperandResolver.GetSingleValue(arg2, srcRowIndex, srcColumnIndex);
                 bool? method = OperandResolver.CoerceValueToBoolean(ve, false);
-                return new NumberEval(Days360.Evaluate(d0, d1, method != null && (bool)method));
+                return new NumberEval(Days360.Evaluate(d0, d1, method != null && (bool) method));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -99,8 +99,9 @@ namespace NPOI.SS.Formula.Functions
             int yyyy = realStart.Year;
             int mm = realStart.Month;
             int dd = Math.Min(30, realStart.Day);
-            
-            if (!method&& Days360.IsLastDayOfMonth(realStart)) dd = 30;
+
+            if(!method&& Days360.IsLastDayOfMonth(realStart))
+                dd = 30;
             return new int[] { yyyy, mm, dd };
         }
 
@@ -111,9 +112,9 @@ namespace NPOI.SS.Formula.Functions
             int mm = d.Month;
             int dd = Math.Min(30, d.Day);
 
-            if (method == false && realEnd.Day == 31)
+            if(method == false && realEnd.Day == 31)
             {
-                if (realStart.Day < 30)
+                if(realStart.Day < 30)
                 {
                     d = new DateTime(d.Year, d.Month, 1);
                     d = d.AddMonths(1);
@@ -136,9 +137,9 @@ namespace NPOI.SS.Formula.Functions
             int mm = realEnd.Month;
             int dd = Math.Min(30, realEnd.Day);
 
-            if (!method && realEnd.Day == 31)
+            if(!method && realEnd.Day == 31)
             {
-                if (startingDate[2] < 30)
+                if(startingDate[2] < 30)
                 {
                     yyyy = realEnd.Year;
                     mm = realEnd.Month+1;
@@ -155,9 +156,9 @@ namespace NPOI.SS.Formula.Functions
         private static DateTime GetEndingDateAccordingToStartingDate(double date, DateTime startingDate, bool method)
         {
             DateTime endingDate = DateUtil.GetJavaDate(date, false);
-            if (Days360.IsLastDayOfMonth(endingDate))
+            if(Days360.IsLastDayOfMonth(endingDate))
             {
-                if (startingDate.Day < 30)
+                if(startingDate.Day < 30)
                 {
                     endingDate = GetFirstDayOfNextMonth(endingDate);
                 }
@@ -176,7 +177,7 @@ namespace NPOI.SS.Formula.Functions
         private static DateTime GetFirstDayOfNextMonth(DateTime date)
         {
             DateTime newDate;
-            if (date.Month < 12)
+            if(date.Month < 12)
             {
                 newDate = new DateTime(date.Year, date.Month + 1, 1, date.Hour, date.Minute, date.Second);
             }

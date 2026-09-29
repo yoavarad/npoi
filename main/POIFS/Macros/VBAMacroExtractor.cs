@@ -33,7 +33,7 @@ namespace NPOI.POIFS.Macros
     {
         public static void main(String[] args)
         {
-            if (args.Length == 0)
+            if(args.Length == 0)
             {
                 Console.WriteLine("Use:");
                 Console.WriteLine("   VBAMacroExtractor <office.doc> [output]");
@@ -45,7 +45,7 @@ namespace NPOI.POIFS.Macros
 
             FileInfo input = new FileInfo(args[0]);
             DirectoryInfo output = null;
-            if (args.Length > 1)
+            if(args.Length > 1)
             {
                 output = new DirectoryInfo(args[1]);
             }
@@ -69,11 +69,12 @@ namespace NPOI.POIFS.Macros
           */
         public void Extract(FileInfo input, DirectoryInfo outputDir, String extension)
         {
-            if (!input.Exists) throw new FileNotFoundException(input.ToString());
+            if(!input.Exists)
+                throw new FileNotFoundException(input.ToString());
             //System.err.Print("Extracting VBA Macros from " + input + " to ");
-            if (outputDir != null)
+            if(outputDir != null)
             {
-                if (!outputDir.Exists)
+                if(!outputDir.Exists)
                 {
                     outputDir.Create();
                     //throw new IOException("Output directory " + outputDir + " could not be Created");
@@ -90,11 +91,11 @@ namespace NPOI.POIFS.Macros
             Reader.Close();
 
             String divider = "---------------------------------------";
-            foreach (KeyValuePair<String, String> entry in macros)
+            foreach(KeyValuePair<String, String> entry in macros)
             {
                 String moduleName = entry.Key;
                 String moduleCode = entry.Value;
-                if (outputDir == null)
+                if(outputDir == null)
                 {
                     Console.WriteLine(divider);
                     Console.WriteLine(moduleName);
@@ -112,7 +113,7 @@ namespace NPOI.POIFS.Macros
                     Console.WriteLine("Extracted " + out1);
                 }
             }
-            if (outputDir == null)
+            if(outputDir == null)
             {
                 //System.out.Println(divider);
             }

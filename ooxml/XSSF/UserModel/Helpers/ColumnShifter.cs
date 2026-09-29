@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,12 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
-using System.Linq;
-
 using NPOI.SS.Formula;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NPOI.XSSF.UserModel.Helpers
 {
@@ -59,12 +58,12 @@ namespace NPOI.XSSF.UserModel.Helpers
             //boundaries when they are Shifted
             int size = sheet.NumMergedRegions;
 
-            for (int i = 0; i < size; i++)
+            for(int i = 0; i < size; i++)
             {
                 CellRangeAddress merged = sheet.GetMergedRegion(i);
 
                 // remove merged region that overlaps Shifting
-                if (RemovalNeeded(merged, startColumn, endColumn, n))
+                if(RemovalNeeded(merged, startColumn, endColumn, n))
                 {
                     _ = removedIndices.Add(i);
                     continue;
@@ -76,14 +75,14 @@ namespace NPOI.XSSF.UserModel.Helpers
                     merged.LastColumn <= endColumn;
 
                 //don't check if it's not within the Shifted area
-                if (!inStart || !inEnd)
+                if(!inStart || !inEnd)
                 {
                     continue;
                 }
 
                 //only shift if the region outside the Shifted columns is not
                 //merged too
-                if (!merged.ContainsColumn(startColumn - 1)
+                if(!merged.ContainsColumn(startColumn - 1)
                     && !merged.ContainsColumn(endColumn + 1))
                 {
                     merged.FirstColumn += n;
@@ -94,13 +93,13 @@ namespace NPOI.XSSF.UserModel.Helpers
                 }
             }
 
-            if (removedIndices.Count != 0)
+            if(removedIndices.Count != 0)
             {
                 sheet.RemoveMergedRegions(removedIndices.ToList());
             }
 
             //read so it doesn't Get Shifted again
-            foreach (CellRangeAddress region in shiftedRegions)
+            foreach(CellRangeAddress region in shiftedRegions)
             {
                 _ = sheet.AddMergedRegion(region);
             }

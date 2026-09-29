@@ -33,9 +33,9 @@ namespace NPOI.SS.Formula.Functions
 
         public bool ProcessMatch(ValueEval eval)
         {
-            if (eval is NumericValueEval valueEval)
+            if(eval is NumericValueEval valueEval)
             {
-                if (minimumValue == null)
+                if(minimumValue == null)
                 { // First match, just Set the value.
                     minimumValue = valueEval;
                 }
@@ -43,7 +43,7 @@ namespace NPOI.SS.Formula.Functions
                 { // There was a previous match, find the new minimum.
                     double currentValue = valueEval.NumberValue;
                     double oldValue = ((NumericValueEval)minimumValue).NumberValue;
-                    if (currentValue < oldValue)
+                    if(currentValue < oldValue)
                     {
                         minimumValue = valueEval;
                     }
@@ -57,7 +57,7 @@ namespace NPOI.SS.Formula.Functions
         {
             get
             {
-                if (minimumValue == null)
+                if(minimumValue == null)
                 {
                     return NumberEval.ZERO;
                 }

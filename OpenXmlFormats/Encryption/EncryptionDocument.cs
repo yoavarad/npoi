@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +18,7 @@ namespace NPOI.OpenXmlFormats.Encryption
         {
             get
             {
-                if (nsm == null)
+                if(nsm == null)
                     nsm = CreateEncryptionNSM();
                 return nsm;
             }

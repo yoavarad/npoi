@@ -17,10 +17,10 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using NPOI.HSSF.Model;
-    using NPOI.HSSF.UserModel;
     using NPOI.DDF;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
     using System;
 
     /**
@@ -54,7 +54,7 @@ namespace TestCases.HSSF.UserModel
             {
                 EscherDgRecord dg = new EscherDgRecord();
                 dg.RecordId = (EscherDgRecord.RECORD_ID);
-                dg.Options = ((short)(16));
+                dg.Options = ((short) (16));
                 dg.NumShapes = (1);
                 dg.LastMSOSPID = (1024);
                 return dg;

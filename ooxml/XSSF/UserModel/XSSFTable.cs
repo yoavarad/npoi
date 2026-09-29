@@ -15,22 +15,22 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Xml;
-using System.Collections.Generic;
-using NPOI.SS.Util;
-using System;
-using NPOI.OpenXml4Net.OPC;
-using System.IO;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.Util;
-using System.Collections;
-using NPOI.XSSF.UserModel.Helpers;
-using NPOI.SS.UserModel;
-using System.Text.RegularExpressions;
-using System.Globalization;
-using NPOI.SS;
-using System.Linq;
 using NPOI.OOXML.XSSF.UserModel;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.Util;
+using NPOI.XSSF.UserModel.Helpers;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -95,7 +95,7 @@ namespace NPOI.XSSF.UserModel
                 TableDocument doc = TableDocument.Parse(xmlDoc, NamespaceManager);
                 ctTable = doc.GetTable();
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -107,7 +107,7 @@ namespace NPOI.XSSF.UserModel
         /// <returns>owning sheet</returns>
         public XSSFSheet GetXSSFSheet()
         {
-            return (XSSFSheet)GetParent();
+            return (XSSFSheet) GetParent();
         }
 
         /// <summary>
@@ -151,9 +151,9 @@ namespace NPOI.XSSF.UserModel
 
             List<XSSFXmlColumnPr> pointers = GetXmlColumnPrs();
 
-            foreach (XSSFXmlColumnPr pointer in pointers)
+            foreach(XSSFXmlColumnPr pointer in pointers)
             {
-                if (pointer.MapId == id)
+                if(pointer.MapId == id)
                 {
                     maps = true;
                     break;
@@ -172,27 +172,27 @@ namespace NPOI.XSSF.UserModel
         public String GetCommonXpath()
         {
 
-            if (commonXPath == null)
+            if(commonXPath == null)
             {
 
                 Array commonTokens = null;
 
-                foreach (XSSFTableColumn column in GetColumns())
+                foreach(XSSFTableColumn column in GetColumns())
                 {
-                    if (column.GetXmlColumnPr() != null)
+                    if(column.GetXmlColumnPr() != null)
                     {
                         String xpath = column.GetXmlColumnPr().XPath;
                         String[] tokens = xpath.Split('/');
-                        if (commonTokens==null)
+                        if(commonTokens==null)
                         {
                             commonTokens = tokens;
                         }
                         else
                         {
                             int maxLenght = commonTokens.Length > tokens.Length ? tokens.Length : commonTokens.Length;
-                            for (int i = 0; i < maxLenght; i++)
+                            for(int i = 0; i < maxLenght; i++)
                             {
-                                if (!commonTokens.GetValue(i).Equals(tokens[i]))
+                                if(!commonTokens.GetValue(i).Equals(tokens[i]))
                                 {
                                     ArrayList subCommonTokens = Arrays.AsList(commonTokens).GetRange(0, i);
                                     commonTokens = subCommonTokens.ToArray(typeof(string));
@@ -209,7 +209,7 @@ namespace NPOI.XSSF.UserModel
 
                 commonXPath = "";
 
-                for (int i = 1; i < commonTokens.Length; i++)
+                for(int i = 1; i < commonTokens.Length; i++)
                 {
                     commonXPath += "/" + commonTokens.GetValue(i);
 
@@ -227,12 +227,12 @@ namespace NPOI.XSSF.UserModel
         public List<XSSFXmlColumnPr> GetXmlColumnPrs()
         {
 
-            if (xmlColumnPrs == null)
+            if(xmlColumnPrs == null)
             {
                 xmlColumnPrs = new List<XSSFXmlColumnPr>();
-                foreach (CT_TableColumn column in ctTable.tableColumns.tableColumn)
+                foreach(CT_TableColumn column in ctTable.tableColumns.tableColumn)
                 {
-                    if (column.xmlColumnPr != null)
+                    if(column.xmlColumnPr != null)
                     {
                         XSSFXmlColumnPr columnPr = new XSSFXmlColumnPr(this, column, column.xmlColumnPr);
                         xmlColumnPrs.Add(columnPr);
@@ -246,7 +246,7 @@ namespace NPOI.XSSF.UserModel
         {
             // Ensure we have Table Columns
             CT_TableColumns columns = ctTable.tableColumns;
-            if (columns == null)
+            if(columns == null)
             {
                 columns = ctTable.AddNewTableColumns();
             }
@@ -254,8 +254,8 @@ namespace NPOI.XSSF.UserModel
             // Add another Column, and give it a sensible ID
             CT_TableColumn column = columns.AddNewTableColumn();
             int num = columns.tableColumn.Count;
-            columns.count = (uint)num;
-            column.id = (uint)num;
+            columns.count = (uint) num;
+            column.id = (uint) num;
 
             // Have the Headers updated if possible
             UpdateHeaders();
@@ -268,15 +268,15 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (name == null)
+                if(name == null)
                 {
                     Name = ctTable.name;
                 }
                 return name;
             }
-            set 
+            set
             {
-                if (value == null)
+                if(value == null)
                 {
                     ctTable.name=null;
                     name = null;
@@ -287,7 +287,7 @@ namespace NPOI.XSSF.UserModel
             }
         }
 
-   
+
         /// <summary>
         /// Get or set the name of the Table
         /// </summary>
@@ -296,8 +296,9 @@ namespace NPOI.XSSF.UserModel
         /// </remarks>
         public string StyleName
         {
-            get {
-                if (styleName == null && ctTable.IsSetTableStyleInfo())
+            get
+            {
+                if(styleName == null && ctTable.IsSetTableStyleInfo())
                 {
                     StyleName = ctTable.tableStyleInfo.name;
                 }
@@ -305,16 +306,16 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                if (value == null)
+                if(value == null)
                 {
-                    if (ctTable.IsSetTableStyleInfo())
+                    if(ctTable.IsSetTableStyleInfo())
                     {
                         ctTable.tableStyleInfo.name =null;
                     }
                     styleName = null;
                     return;
                 }
-                if (!ctTable.IsSetTableStyleInfo())
+                if(!ctTable.IsSetTableStyleInfo())
                 {
                     ctTable.AddNewTableStyleInfo();
                 }
@@ -331,23 +332,23 @@ namespace NPOI.XSSF.UserModel
         {
 
             int columnCount = ColumnCount;
-            if (columnIndex < 0 || columnIndex > columnCount)
+            if(columnIndex < 0 || columnIndex > columnCount)
             {
                 throw new ArgumentException("Column index out of bounds");
             }
 
             // Ensure we have Table Columns
             CT_TableColumns columns = ctTable.tableColumns;
-            if (columns == null)
+            if(columns == null)
             {
                 columns = ctTable.AddNewTableColumns();
             }
 
             // check if name is unique and calculate unique column id 
             long nextColumnId = 0;
-            foreach (XSSFTableColumn tableColumn in this.GetColumns())
+            foreach(XSSFTableColumn tableColumn in this.GetColumns())
             {
-                if (columnName != null && columnName.Equals(tableColumn.Name,StringComparison.InvariantCultureIgnoreCase))
+                if(columnName != null && columnName.Equals(tableColumn.Name, StringComparison.InvariantCultureIgnoreCase))
                 {
                     throw new ArgumentException("Column '" + columnName
                             + "' already exists. Column names must be unique per table.");
@@ -361,8 +362,8 @@ namespace NPOI.XSSF.UserModel
             CT_TableColumn column = columns.InsertNewTableColumn(columnIndex);
             columns.count = columns.count;
 
-            column.id = (uint)nextColumnId;
-            if (columnName != null)
+            column.id = (uint) nextColumnId;
+            if(columnName != null)
             {
                 column.name = columnName;
             }
@@ -389,7 +390,7 @@ namespace NPOI.XSSF.UserModel
 
             return GetColumns()[columnIndex];
         }
-        
+
         /// <summary>
         /// <para>
         /// Get or set the area reference for the cells which this table covers.
@@ -420,25 +421,25 @@ namespace NPOI.XSSF.UserModel
                 SetCellRef(value);
             }
         }
-        
+
         protected void SetCellRef(AreaReference refs)
         {
 
             // Strip the sheet name,
             // CTWorksheet.getTableParts defines in which sheet the table is
             String reference = refs.FormatAsString();
-            if (reference.Contains('!'))
+            if(reference.Contains('!'))
             {
                 reference = reference.Substring(reference.IndexOf('!') + 1);
             }
 
             // Update
             ctTable.@ref = reference;
-            if (ctTable.IsSetAutoFilter)
+            if(ctTable.IsSetAutoFilter)
             {
                 String filterRef;
                 int totalsRowCount = TotalsRowCount;
-                if (totalsRowCount == 0)
+                if(totalsRowCount == 0)
                 {
                     filterRef = reference;
                 }
@@ -457,13 +458,14 @@ namespace NPOI.XSSF.UserModel
             UpdateReferences();
             UpdateHeaders();
         }
-        
+
         public ITableStyleInfo Style
         {
             get
             {
-                if (!ctTable.IsSetTableStyleInfo()) return null;
-                return new XSSFTableStyleInfo(((XSSFWorkbook)((XSSFSheet)GetParent()).Workbook).GetStylesSource(), ctTable.tableStyleInfo);
+                if(!ctTable.IsSetTableStyleInfo())
+                    return null;
+                return new XSSFTableStyleInfo(((XSSFWorkbook) ((XSSFSheet) GetParent()).Workbook).GetStylesSource(), ctTable.tableStyleInfo);
             }
         }
         /**
@@ -499,13 +501,13 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TableColumns tableColumns = ctTable.tableColumns;
-                if (tableColumns == null)
+                if(tableColumns == null)
                 {
                     return 0;
                 }
                 // Casting to int should be safe here - tables larger than the
                 // sheet (which holds the actual data of the table) can't exists.
-                return (int)tableColumns.tableColumn.Count;
+                return (int) tableColumns.tableColumn.Count;
             }
         }
         /// <summary>
@@ -515,8 +517,9 @@ namespace NPOI.XSSF.UserModel
         /// </summary>
         public int TotalsRowCount
         {
-            get { 
-                return (int)ctTable.totalsRowCount;
+            get
+            {
+                return (int) ctTable.totalsRowCount;
             }
         }
         /// <summary>
@@ -525,9 +528,9 @@ namespace NPOI.XSSF.UserModel
         /// </summary>
         public int HeaderRowCount
         {
-            get 
+            get
             {
-                return (int)ctTable.headerRowCount;
+                return (int) ctTable.headerRowCount;
             }
         }
         /**
@@ -541,13 +544,13 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (startCellReference == null)
+                if(startCellReference == null)
                 {
                     SetCellReferences();
                 }
                 return startCellReference;
             }
-            
+
         }
 
         /**
@@ -562,13 +565,13 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (endCellReference == null)
+                if(endCellReference == null)
                 {
                     SetCellReferences();
                 }
                 return endCellReference;
             }
-            
+
         }
 
 
@@ -578,7 +581,8 @@ namespace NPOI.XSSF.UserModel
         private void SetCellReferences()
         {
             string ref1 = ctTable.@ref;
-            if (ref1 != null) {
+            if(ref1 != null)
+            {
                 string[] boundaries = ref1.Split([':'], 2);
                 string from = boundaries[0];
                 string to = boundaries.Length == 2 ? boundaries[1] : boundaries[0];
@@ -619,7 +623,7 @@ namespace NPOI.XSSF.UserModel
                 CellReference to = EndCellReference;
 
                 int rowCount = 0;
-                if (from != null && to != null)
+                if(from != null && to != null)
                 {
                     rowCount = to.Row - from.Row + 1;
                 }
@@ -649,8 +653,9 @@ namespace NPOI.XSSF.UserModel
         {
             XSSFSheet sheet = (XSSFSheet)GetParent();
             CellReference ref1 = StartCellReference;
-            
-            if (ref1 == null) return;
+
+            if(ref1 == null)
+                return;
 
             int headerRow = ref1.Row;
             int firstHeaderColumn = ref1.Col;
@@ -658,16 +663,16 @@ namespace NPOI.XSSF.UserModel
             XSSFRow row = sheet.GetRow(headerRow) as XSSFRow;
             DataFormatter formatter = new DataFormatter();
 
-            if (row != null && row.GetCTRow() != null)
+            if(row != null && row.GetCTRow() != null)
             {
                 int cellnum = firstHeaderColumn;
                 CT_TableColumns tableColumns = GetCTTable().tableColumns;
 
-                if (tableColumns != null)
+                if(tableColumns != null)
                 {
-                    foreach (CT_TableColumn col in tableColumns.tableColumn)
+                    foreach(CT_TableColumn col in tableColumns.tableColumn)
                     {
-                        if (row.GetCell(cellnum) is XSSFCell cell)
+                        if(row.GetCell(cellnum) is XSSFCell cell)
                         {
                             col.name = formatter.FormatCellValue(cell);
                         }
@@ -694,14 +699,15 @@ namespace NPOI.XSSF.UserModel
          */
         public int FindColumnIndex(String columnHeader)
         {
-            if (columnHeader == null) return -1;
-            if (columnMap == null)
+            if(columnHeader == null)
+                return -1;
+            if(columnMap == null)
             {
                 int count = ColumnCount;
                 columnMap = new Dictionary<string, int>(count * 3 / 2);
 
                 int i = 0;
-                foreach (XSSFTableColumn column in GetColumns())
+                foreach(XSSFTableColumn column in GetColumns())
                 {
                     columnMap.Add(column.Name.ToUpper(CultureInfo.CurrentCulture), i);
                     i++;
@@ -711,7 +717,7 @@ namespace NPOI.XSSF.UserModel
             // but the escape is not present in the column definition
             int idx = -1;
             string testKey = columnHeader.Replace("'", "").ToUpper(CultureInfo.CurrentCulture);
-            if (columnMap.TryGetValue(testKey, out int value))
+            if(columnMap.TryGetValue(testKey, out int value))
                 idx = value;
             return idx;
         }
@@ -721,13 +727,13 @@ namespace NPOI.XSSF.UserModel
         /// <returns></returns>
         public List<XSSFTableColumn> GetColumns()
         {
-            if (tableColumns == null)
+            if(tableColumns == null)
             {
                 var columns = new List<XSSFTableColumn>();
                 CT_TableColumns ctTableColumns = ctTable.tableColumns;
-                if (ctTableColumns != null)
+                if(ctTableColumns != null)
                 {
-                    foreach (CT_TableColumn column in ctTableColumns.GetTableColumnList())
+                    foreach(CT_TableColumn column in ctTableColumns.GetTableColumnList())
                     {
                         XSSFTableColumn tableColumn = new XSSFTableColumn(this, column);
                         columns.Add(tableColumn);
@@ -740,7 +746,7 @@ namespace NPOI.XSSF.UserModel
         public void RemoveColumn(XSSFTableColumn column)
         {
             int columnIndex = GetColumns().IndexOf(column);
-            if (columnIndex >= 0)
+            if(columnIndex >= 0)
             {
                 ctTable.tableColumns.RemoveTableColumn(columnIndex);
                 UpdateReferences();
@@ -765,7 +771,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctTable.totalsRowShown;
             }
-            set 
+            set
             {
                 ctTable.totalsRowShown = value;
             }
@@ -804,11 +810,13 @@ namespace NPOI.XSSF.UserModel
         }
         public bool Contains(CellReference cell)
         {
-            if (cell == null) return false;
+            if(cell == null)
+                return false;
             // check if cell is on the same sheet as the table
-            if (! SheetName.Equals(cell.SheetName)) return false;
+            if(!SheetName.Equals(cell.SheetName))
+                return false;
             // check if the cell is inside the table
-            if (cell.Row >= StartRowIndex
+            if(cell.Row >= StartRowIndex
                 && cell.Row <= EndRowIndex
                 && cell.Col >= StartColIndex
                 && cell.Col <= EndColIndex)
@@ -826,14 +834,17 @@ namespace NPOI.XSSF.UserModel
         /// </remarks>
         public bool Contains(ICell cell)
         {
-            if (cell == null) return false;
+            if(cell == null)
+                return false;
             // check if cell is on the same sheet as the table
-            if (!SheetName.Equals(cell.Sheet.SheetName)) return false;
+            if(!SheetName.Equals(cell.Sheet.SheetName))
+                return false;
             // check if the cell is inside the table
-            if (cell.RowIndex >= StartRowIndex
+            if(cell.RowIndex >= StartRowIndex
                 && cell.RowIndex <= EndRowIndex
                 && cell.ColumnIndex >= StartColIndex
-                && cell.ColumnIndex <= EndColIndex) {
+                && cell.ColumnIndex <= EndColIndex)
+            {
                 return true;
             }
             return false;
@@ -844,7 +855,7 @@ namespace NPOI.XSSF.UserModel
         /// </summary>
         internal void OnTableDelete()
         {
-            foreach (RelationPart part in RelationParts)
+            foreach(RelationPart part in RelationParts)
             {
                 RemoveRelation(part.DocumentPart, true);
             }

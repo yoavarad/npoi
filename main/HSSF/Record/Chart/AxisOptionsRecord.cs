@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -143,7 +143,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2;
             }
-            
+
         }
 
         public override short Sid
@@ -382,7 +382,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         public void SetIsDate(bool value)
         {
-            
+
         }
 
         /**

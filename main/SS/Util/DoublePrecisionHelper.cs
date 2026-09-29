@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -36,7 +36,8 @@ namespace NPOI.SS.Util
         }
         public static double DropDigitsAfterSignificantOnes(double number, int digits)
         {
-            if (number == 0.0) return 0.0;
+            if(number == 0.0)
+                return 0.0;
 
             var isNegative = number < 0;
             var positiveNumber = isNegative ? -number : number;
@@ -58,24 +59,24 @@ namespace NPOI.SS.Util
 
         public static bool IsIntegerWithDigitsDropped(this BigDecimal number, int significantDigits)
         {
-            if (number.IsZero())
+            if(number.IsZero())
                 return true;
 
-            if (number.IsNegative())
+            if(number.IsNegative())
                 number = -number;
 
             int decimalPlaces = number.DecimalPlaces;
             int realSigDigits = number.SignifigantDigits;
             int integerPlaces = realSigDigits - decimalPlaces;
 
-            if (integerPlaces >= significantDigits)
+            if(integerPlaces >= significantDigits)
             {
                 return true;
             }
 
             BigDecimal fracPart = number.GetFractionalPart();
 
-            if (fracPart.IsZero())
+            if(fracPart.IsZero())
             {
                 return true;
             }

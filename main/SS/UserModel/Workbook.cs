@@ -82,7 +82,7 @@ namespace NPOI.SS.UserModel
         /// <param name="sheet">sheet number (0 based)</param>
         /// <param name="name">sheet name</param>
         void SetSheetName(int sheet, String name);
-   
+
         /// <summary>
         /// Returns the index of the sheet by its name
         /// </summary>
@@ -119,9 +119,9 @@ namespace NPOI.SS.UserModel
         /// <returns></returns>
         ISheet CloneSheet(int sheetNum);
 
-         /// <summary>
-         /// Get the number of spreadsheets in the workbook
-         /// </summary>
+        /// <summary>
+        /// Get the number of spreadsheets in the workbook
+        /// </summary>
         int NumberOfSheets { get; }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace NPOI.SS.UserModel
         /// <param name="workbook">The open workbook to fetch the link required information from</param>
         /// <returns></returns>
         int LinkExternalWorkbook(String name, IWorkbook workbook);
-    
+
 
         /// <summary>
         /// Sets the printarea for the sheet provided

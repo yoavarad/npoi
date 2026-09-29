@@ -25,18 +25,16 @@
  * 
  * ==============================================================*/
 
+using NPOI.POIFS.EventFileSystem;
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.FileSystem;
-using NPOI.Util;
-
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
-using NPOI.POIFS.EventFileSystem;
 
 
 namespace TestCases.POIFS.FileSystem
@@ -55,7 +53,7 @@ namespace TestCases.POIFS.FileSystem
             }
         }
 
-        private class AnonymousClass1 :POIFSWriterListener
+        private class AnonymousClass1 : POIFSWriterListener
         {
             public void ProcessPOIFSWriterEvent(POIFSWriterEvent ev)
             {
@@ -64,7 +62,7 @@ namespace TestCases.POIFS.FileSystem
                     ev.Stream.Write(0);
                     Console.WriteLine("Send an event");
                 }
-                catch (IOException exception)
+                catch(IOException exception)
                 {
                     throw new Exception("Exception on write: " + exception.Message);
                 }
@@ -79,13 +77,13 @@ namespace TestCases.POIFS.FileSystem
                 {
                     ;
                 }
-                catch (IOException exception)
+                catch(IOException exception)
                 {
                     throw new Exception("Exception on write: " + exception.Message);
                 }
             }
         }
-       
+
 
         [Test]
         public void TestSingleEmptyDocument()
@@ -96,7 +94,7 @@ namespace TestCases.POIFS.FileSystem
 
             MemoryStream output = new MemoryStream();
             fs.WriteFileSystem(output);
-            
+
             new POIFSFileSystem(new ByteArrayInputStream(output.ToArray())).Close();
             fs.Close();
         }
@@ -118,8 +116,8 @@ namespace TestCases.POIFS.FileSystem
         {
             POIFSFileSystem fs = new POIFSFileSystem();
             DirectoryEntry dir = fs.Root;
-            dir.CreateDocument("Bar", new MemoryStream(new byte[]{0}));
-            dir.CreateDocument("Foo", new MemoryStream(new byte[]{}));
+            dir.CreateDocument("Bar", new MemoryStream(new byte[] { 0 }));
+            dir.CreateDocument("Foo", new MemoryStream(new byte[] { }));
 
             MemoryStream output = new MemoryStream();
             fs.WriteFileSystem(output);
@@ -162,11 +160,11 @@ namespace TestCases.POIFS.FileSystem
             actualReadbackData = NPOI.Util.IOUtils.ToByteArray(new DocumentInputStream(entry));
             ClassicAssert.AreEqual(0, actualReadbackData.Length, "Expected zero read from stream");
 
-            entry = (DocumentEntry)fs.Root.GetEntry("NotEmpty");
+            entry = (DocumentEntry) fs.Root.GetEntry("NotEmpty");
             actualReadbackData = NPOI.Util.IOUtils.ToByteArray(new DocumentInputStream(entry));
             ClassicAssert.AreEqual(TestData.Length, entry.Size, "Expected size was wrong");
             ClassicAssert.IsTrue(
-                    Arrays.Equals(TestData,actualReadbackData), "Expected different data Read from stream");
+                    Arrays.Equals(TestData, actualReadbackData), "Expected different data Read from stream");
 
             fs.Close();
         }

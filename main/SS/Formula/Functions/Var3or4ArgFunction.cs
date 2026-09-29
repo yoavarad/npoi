@@ -30,7 +30,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 3:
                     return Evaluate(srcRowIndex, srcColumnIndex, args[0], args[1], args[2]);

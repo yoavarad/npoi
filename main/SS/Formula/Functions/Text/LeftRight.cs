@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
@@ -40,7 +40,7 @@ namespace NPOI.SS.Formula.Functions
             return Evaluate(srcRowIndex, srcColumnIndex, arg0, DEFAULT_ARG1);
         }
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0,
-				ValueEval arg1)
+                ValueEval arg1)
         {
             String arg;
             int index;
@@ -49,18 +49,18 @@ namespace NPOI.SS.Formula.Functions
                 arg = TextFunction.EvaluateStringArg(arg0, srcRowIndex, srcColumnIndex);
                 index = TextFunction.EvaluateIntArg(arg1, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
 
-            if (index < 0)
+            if(index < 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
             String result;
-            if (_isLeft)
+            if(_isLeft)
             {
                 result = arg.Substring(0, Math.Min(arg.Length, index));
             }

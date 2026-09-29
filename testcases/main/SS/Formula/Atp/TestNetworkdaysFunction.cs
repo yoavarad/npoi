@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,14 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.Atp;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace TestCases.SS.Formula.Atp
 {
@@ -83,20 +84,20 @@ namespace TestCases.SS.Formula.Atp
         [Test]
         public void TestReturnNetworkdays()
         {
-            ClassicAssert.AreEqual(108, (int)((NumericValueEval)NetworkdaysFunction.instance.Evaluate(new ValueEval[]{
+            ClassicAssert.AreEqual(108, (int) ((NumericValueEval) NetworkdaysFunction.instance.Evaluate(new ValueEval[]{
                 new StringEval(STARTING_DATE), new StringEval(END_DATE) }, EC)).NumberValue);
         }
         [Test]
         public void TestReturnNetworkdaysWithAHoliday()
         {
-            ClassicAssert.AreEqual(107, (int)((NumericValueEval)NetworkdaysFunction.instance.Evaluate(new ValueEval[]{
+            ClassicAssert.AreEqual(107, (int) ((NumericValueEval) NetworkdaysFunction.instance.Evaluate(new ValueEval[]{
                 new StringEval(STARTING_DATE), new StringEval(END_DATE), new StringEval(FIRST_HOLIDAY) },
                     EC)).NumberValue);
         }
         [Test]
         public void TestReturnNetworkdaysWithManyHolidays()
         {
-            ClassicAssert.AreEqual(105, (int)((NumericValueEval)NetworkdaysFunction.instance.Evaluate(new ValueEval[]{
+            ClassicAssert.AreEqual(105, (int) ((NumericValueEval) NetworkdaysFunction.instance.Evaluate(new ValueEval[]{
                 new StringEval(STARTING_DATE), new StringEval(END_DATE),
                 new MockAreaEval(new string[]{FIRST_HOLIDAY, SECOND_HOLIDAY, THIRD_HOLIDAY}) }, EC)).NumberValue);
         }
@@ -111,7 +112,7 @@ namespace TestCases.SS.Formula.Atp
             {
 
                 this.holidays = new List<ValueEval>();
-                foreach (String holiday in holidays)
+                foreach(String holiday in holidays)
                 {
                     this.holidays.Add(new StringEval(holiday));
                 }

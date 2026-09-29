@@ -16,12 +16,12 @@
 ==================================================================== */
 
 using NPOI.HSSF.UserModel;
-using System.Collections.Generic;
-using System;
-using NPOI.Util;
 using NPOI.SS.UserModel;
-using System.Text;
+using NPOI.Util;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace TestCases.SS.Util
 {
@@ -54,7 +54,7 @@ namespace TestCases.SS.Util
             public void AddTestRow(long rawBits, String expectedExcelRendering)
             {
                 WriteDataRow(_sheet, _rowIndex++, rawBits, expectedExcelRendering);
-                if (Double.IsNaN(BitConverter.Int64BitsToDouble(rawBits)))
+                if(Double.IsNaN(BitConverter.Int64BitsToDouble(rawBits)))
                 {
                     _ReplacementNaNs.Add(rawBits);
                 }
@@ -64,7 +64,7 @@ namespace TestCases.SS.Util
             {
                 int nRepls = _ReplacementNaNs.Count;
                 long[] result = new long[nRepls];
-                for (int i = 0; i < nRepls; i++)
+                for(int i = 0; i < nRepls; i++)
                 {
                     result[i] = _ReplacementNaNs[i];
                 }
@@ -172,7 +172,7 @@ namespace TestCases.SS.Util
         {
 
             NumberToTextConversionExamples.ExampleConversion[] exampleConversions = NumberToTextConversionExamples.GetExampleConversions();
-            for (int i = 0; i < exampleConversions.Length; i++)
+            for(int i = 0; i < exampleConversions.Length; i++)
             {
                 NumberToTextConversionExamples.ExampleConversion ec = exampleConversions[i];
                 String line = " * <tr><td>"
@@ -189,15 +189,15 @@ namespace TestCases.SS.Util
         private static void ReplaceNaNs(byte[] fileContent, long[] ReplacementNaNs)
         {
             int countFound = 0;
-            for (int i = 0; i < fileContent.Length; i++)
+            for(int i = 0; i < fileContent.Length; i++)
             {
-                if (IsNaNBytes(fileContent, i))
+                if(IsNaNBytes(fileContent, i))
                 {
                     WriteLong(fileContent, i, ReplacementNaNs[countFound]);
                     countFound++;
                 }
             }
-            if (countFound < ReplacementNaNs.Length)
+            if(countFound < ReplacementNaNs.Length)
             {
                 throw new Exception("wrong repl count");
             }
@@ -207,14 +207,14 @@ namespace TestCases.SS.Util
         private static void WriteLong(byte[] bb, int i, long val)
         {
             String oldVal = InterpretLong(bb, i);
-            bb[i + 7] = (byte)(val >> 56);
-            bb[i + 6] = (byte)(val >> 48);
-            bb[i + 5] = (byte)(val >> 40);
-            bb[i + 4] = (byte)(val >> 32);
-            bb[i + 3] = (byte)(val >> 24);
-            bb[i + 2] = (byte)(val >> 16);
-            bb[i + 1] = (byte)(val >> 8);
-            bb[i + 0] = (byte)(val >> 0);
+            bb[i + 7] = (byte) (val >> 56);
+            bb[i + 6] = (byte) (val >> 48);
+            bb[i + 5] = (byte) (val >> 40);
+            bb[i + 4] = (byte) (val >> 32);
+            bb[i + 3] = (byte) (val >> 24);
+            bb[i + 2] = (byte) (val >> 16);
+            bb[i + 1] = (byte) (val >> 8);
+            bb[i + 0] = (byte) (val >> 0);
             //if (false)
             //{
             //    String newVal = interpretLong(bb, i);
@@ -233,7 +233,7 @@ namespace TestCases.SS.Util
 
         private static bool IsNaNBytes(byte[] fileContent, int offset)
         {
-            if (offset + JAVA_NAN_BYTES.Length > fileContent.Length)
+            if(offset + JAVA_NAN_BYTES.Length > fileContent.Length)
             {
                 return false;
             }
@@ -243,9 +243,9 @@ namespace TestCases.SS.Util
         }
         private static bool AreArraySectionsEqual(byte[] bb, int off, byte[] section)
         {
-            for (int i = section.Length - 1; i >= 0; i--)
+            for(int i = section.Length - 1; i >= 0; i--)
             {
-                if (bb[off + i] != section[i])
+                if(bb[off + i] != section[i])
                 {
                     return false;
                 }

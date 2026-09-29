@@ -21,9 +21,10 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
 
     /**
@@ -42,7 +43,7 @@ namespace TestCases.SS.Formula.Functions
             ClassicAssert.IsTrue(Double.IsNaN(d), "Acosh 0 is NaN");
 
             d = MathX.Acosh(1);
-            AssertEquals("Acosh 1 ",0, d);
+            AssertEquals("Acosh 1 ", 0, d);
 
             d = MathX.Acosh(-1);
             ClassicAssert.IsTrue(Double.IsNaN(d), "Acosh -1 is NaN");
@@ -51,10 +52,10 @@ namespace TestCases.SS.Formula.Functions
             AssertEquals("Acosh 100 ", 5.298292366d, d);
 
             d = MathX.Acosh(101.001);
-            AssertEquals("Acosh 101.001 ",5.308253091d, d);
+            AssertEquals("Acosh 101.001 ", 5.308253091d, d);
 
             d = MathX.Acosh(200000);
-            AssertEquals("Acosh 200000 ",12.89921983d, d);
+            AssertEquals("Acosh 200000 ", 12.89921983d, d);
 
         }
         [Test]
@@ -63,25 +64,25 @@ namespace TestCases.SS.Formula.Functions
             double d = 0;
 
             d = MathX.Asinh(0);
-            AssertEquals("asinh 0",d, 0);
+            AssertEquals("asinh 0", d, 0);
 
             d = MathX.Asinh(1);
-            AssertEquals("asinh 1 ",0.881373587, d);
+            AssertEquals("asinh 1 ", 0.881373587, d);
 
             d = MathX.Asinh(-1);
-            AssertEquals("asinh -1 ",-0.881373587, d);
+            AssertEquals("asinh -1 ", -0.881373587, d);
 
             d = MathX.Asinh(-100);
-            AssertEquals("asinh -100 ",-5.298342366, d);
+            AssertEquals("asinh -100 ", -5.298342366, d);
 
             d = MathX.Asinh(100);
-            AssertEquals("asinh 100 ",5.298342366, d);
+            AssertEquals("asinh 100 ", 5.298342366, d);
 
             d = MathX.Asinh(200000);
-            AssertEquals("asinh 200000",12.899219826096400, d);
+            AssertEquals("asinh 200000", 12.899219826096400, d);
 
             d = MathX.Asinh(-200000);
-            AssertEquals("asinh -200000 ",-12.899223853137, d);
+            AssertEquals("asinh -200000 ", -12.899223853137, d);
 
         }
         [Test]
@@ -99,7 +100,7 @@ namespace TestCases.SS.Formula.Functions
 
             d = MathX.Atanh(-100);
             AssertEquals("atanh -100 ", Double.NaN, d);
-            
+
             d = MathX.Atanh(100);
             AssertEquals("atanh 100 ", Double.NaN, d);
 
@@ -184,11 +185,26 @@ namespace TestCases.SS.Formula.Functions
         public void TestMax()
         {
             double[] d = new double[100];
-            d[0] = 1.1; d[1] = 2.1; d[2] = 3.1; d[3] = 4.1;
-            d[4] = 5.1; d[5] = 6.1; d[6] = 7.1; d[7] = 8.1;
-            d[8] = 9.1; d[9] = 10.1; d[10] = 11.1; d[11] = 12.1;
-            d[12] = 13.1; d[13] = 14.1; d[14] = 15.1; d[15] = 16.1;
-            d[16] = 17.1; d[17] = 18.1; d[18] = 19.1; d[19] = 20.1;
+            d[0] = 1.1;
+            d[1] = 2.1;
+            d[2] = 3.1;
+            d[3] = 4.1;
+            d[4] = 5.1;
+            d[5] = 6.1;
+            d[6] = 7.1;
+            d[7] = 8.1;
+            d[8] = 9.1;
+            d[9] = 10.1;
+            d[10] = 11.1;
+            d[11] = 12.1;
+            d[12] = 13.1;
+            d[13] = 14.1;
+            d[14] = 15.1;
+            d[15] = 16.1;
+            d[16] = 17.1;
+            d[17] = 18.1;
+            d[18] = 19.1;
+            d[19] = 20.1;
 
             double m = MathX.Max(d);
             AssertEquals("Max ", 20.1, m);
@@ -197,20 +213,50 @@ namespace TestCases.SS.Formula.Functions
             m = MathX.Max(d);
             AssertEquals("Max ", 0, m);
 
-            d[0] = -1.1; d[1] = 2.1; d[2] = -3.1; d[3] = 4.1;
-            d[4] = -5.1; d[5] = 6.1; d[6] = -7.1; d[7] = 8.1;
-            d[8] = -9.1; d[9] = 10.1; d[10] = -11.1; d[11] = 12.1;
-            d[12] = -13.1; d[13] = 14.1; d[14] = -15.1; d[15] = 16.1;
-            d[16] = -17.1; d[17] = 18.1; d[18] = -19.1; d[19] = 20.1;
+            d[0] = -1.1;
+            d[1] = 2.1;
+            d[2] = -3.1;
+            d[3] = 4.1;
+            d[4] = -5.1;
+            d[5] = 6.1;
+            d[6] = -7.1;
+            d[7] = 8.1;
+            d[8] = -9.1;
+            d[9] = 10.1;
+            d[10] = -11.1;
+            d[11] = 12.1;
+            d[12] = -13.1;
+            d[13] = 14.1;
+            d[14] = -15.1;
+            d[15] = 16.1;
+            d[16] = -17.1;
+            d[17] = 18.1;
+            d[18] = -19.1;
+            d[19] = 20.1;
             m = MathX.Max(d);
             AssertEquals("Max ", 20.1, m);
 
             d = new double[20];
-            d[0] = -1.1; d[1] = -2.1; d[2] = -3.1; d[3] = -4.1;
-            d[4] = -5.1; d[5] = -6.1; d[6] = -7.1; d[7] = -8.1;
-            d[8] = -9.1; d[9] = -10.1; d[10] = -11.1; d[11] = -12.1;
-            d[12] = -13.1; d[13] = -14.1; d[14] = -15.1; d[15] = -16.1;
-            d[16] = -17.1; d[17] = -18.1; d[18] = -19.1; d[19] = -20.1;
+            d[0] = -1.1;
+            d[1] = -2.1;
+            d[2] = -3.1;
+            d[3] = -4.1;
+            d[4] = -5.1;
+            d[5] = -6.1;
+            d[6] = -7.1;
+            d[7] = -8.1;
+            d[8] = -9.1;
+            d[9] = -10.1;
+            d[10] = -11.1;
+            d[11] = -12.1;
+            d[12] = -13.1;
+            d[13] = -14.1;
+            d[14] = -15.1;
+            d[15] = -16.1;
+            d[16] = -17.1;
+            d[17] = -18.1;
+            d[18] = -19.1;
+            d[19] = -20.1;
             m = MathX.Max(d);
             AssertEquals("Max ", -1.1, m);
 
@@ -219,21 +265,51 @@ namespace TestCases.SS.Formula.Functions
         public void TestMin()
         {
             double[] d = new double[100];
-            d[0] = 1.1; d[1] = 2.1; d[2] = 3.1; d[3] = 4.1;
-            d[4] = 5.1; d[5] = 6.1; d[6] = 7.1; d[7] = 8.1;
-            d[8] = 9.1; d[9] = 10.1; d[10] = 11.1; d[11] = 12.1;
-            d[12] = 13.1; d[13] = 14.1; d[14] = 15.1; d[15] = 16.1;
-            d[16] = 17.1; d[17] = 18.1; d[18] = 19.1; d[19] = 20.1;
+            d[0] = 1.1;
+            d[1] = 2.1;
+            d[2] = 3.1;
+            d[3] = 4.1;
+            d[4] = 5.1;
+            d[5] = 6.1;
+            d[6] = 7.1;
+            d[7] = 8.1;
+            d[8] = 9.1;
+            d[9] = 10.1;
+            d[10] = 11.1;
+            d[11] = 12.1;
+            d[12] = 13.1;
+            d[13] = 14.1;
+            d[14] = 15.1;
+            d[15] = 16.1;
+            d[16] = 17.1;
+            d[17] = 18.1;
+            d[18] = 19.1;
+            d[19] = 20.1;
 
             double m = MathX.Min(d);
             AssertEquals("Min ", 0, m);
 
             d = new double[20];
-            d[0] = 1.1; d[1] = 2.1; d[2] = 3.1; d[3] = 4.1;
-            d[4] = 5.1; d[5] = 6.1; d[6] = 7.1; d[7] = 8.1;
-            d[8] = 9.1; d[9] = 10.1; d[10] = 11.1; d[11] = 12.1;
-            d[12] = 13.1; d[13] = 14.1; d[14] = 15.1; d[15] = 16.1;
-            d[16] = 17.1; d[17] = 18.1; d[18] = 19.1; d[19] = 20.1;
+            d[0] = 1.1;
+            d[1] = 2.1;
+            d[2] = 3.1;
+            d[3] = 4.1;
+            d[4] = 5.1;
+            d[5] = 6.1;
+            d[6] = 7.1;
+            d[7] = 8.1;
+            d[8] = 9.1;
+            d[9] = 10.1;
+            d[10] = 11.1;
+            d[11] = 12.1;
+            d[12] = 13.1;
+            d[13] = 14.1;
+            d[14] = 15.1;
+            d[15] = 16.1;
+            d[16] = 17.1;
+            d[17] = 18.1;
+            d[18] = 19.1;
+            d[19] = 20.1;
 
             m = MathX.Min(d);
             AssertEquals("Min ", 1.1, m);
@@ -242,20 +318,50 @@ namespace TestCases.SS.Formula.Functions
             m = MathX.Min(d);
             AssertEquals("Min ", 0, m);
 
-            d[0] = -1.1; d[1] = 2.1; d[2] = -3.1; d[3] = 4.1;
-            d[4] = -5.1; d[5] = 6.1; d[6] = -7.1; d[7] = 8.1;
-            d[8] = -9.1; d[9] = 10.1; d[10] = -11.1; d[11] = 12.1;
-            d[12] = -13.1; d[13] = 14.1; d[14] = -15.1; d[15] = 16.1;
-            d[16] = -17.1; d[17] = 18.1; d[18] = -19.1; d[19] = 20.1;
+            d[0] = -1.1;
+            d[1] = 2.1;
+            d[2] = -3.1;
+            d[3] = 4.1;
+            d[4] = -5.1;
+            d[5] = 6.1;
+            d[6] = -7.1;
+            d[7] = 8.1;
+            d[8] = -9.1;
+            d[9] = 10.1;
+            d[10] = -11.1;
+            d[11] = 12.1;
+            d[12] = -13.1;
+            d[13] = 14.1;
+            d[14] = -15.1;
+            d[15] = 16.1;
+            d[16] = -17.1;
+            d[17] = 18.1;
+            d[18] = -19.1;
+            d[19] = 20.1;
             m = MathX.Min(d);
             AssertEquals("Min ", -19.1, m);
 
             d = new double[20];
-            d[0] = -1.1; d[1] = -2.1; d[2] = -3.1; d[3] = -4.1;
-            d[4] = -5.1; d[5] = -6.1; d[6] = -7.1; d[7] = -8.1;
-            d[8] = -9.1; d[9] = -10.1; d[10] = -11.1; d[11] = -12.1;
-            d[12] = -13.1; d[13] = -14.1; d[14] = -15.1; d[15] = -16.1;
-            d[16] = -17.1; d[17] = -18.1; d[18] = -19.1; d[19] = -20.1;
+            d[0] = -1.1;
+            d[1] = -2.1;
+            d[2] = -3.1;
+            d[3] = -4.1;
+            d[4] = -5.1;
+            d[5] = -6.1;
+            d[6] = -7.1;
+            d[7] = -8.1;
+            d[8] = -9.1;
+            d[9] = -10.1;
+            d[10] = -11.1;
+            d[11] = -12.1;
+            d[12] = -13.1;
+            d[13] = -14.1;
+            d[14] = -15.1;
+            d[15] = -16.1;
+            d[16] = -17.1;
+            d[17] = -18.1;
+            d[18] = -19.1;
+            d[19] = -20.1;
             m = MathX.Min(d);
             AssertEquals("Min ", -20.1, m);
         }
@@ -271,24 +377,54 @@ namespace TestCases.SS.Formula.Functions
             ClassicAssert.AreEqual(10, MathX.Product(new double[] { 10, 1 }), "Product ");
             ClassicAssert.AreEqual(-2, MathX.Product(new double[] { 2, -1 }), "Product ");
             ClassicAssert.AreEqual(99988000209999d, MathX.Product(new double[] { 99999, 99999, 9999 }), "Product ");
-        
+
 
             double[] d = new double[100];
-            d[0] = 1.1; d[1] = 2.1; d[2] = 3.1; d[3] = 4.1;
-            d[4] = 5.1; d[5] = 6.1; d[6] = 7.1; d[7] = 8.1;
-            d[8] = 9.1; d[9] = 10.1; d[10] = 11.1; d[11] = 12.1;
-            d[12] = 13.1; d[13] = 14.1; d[14] = 15.1; d[15] = 16.1;
-            d[16] = 17.1; d[17] = 18.1; d[18] = 19.1; d[19] = 20.1;
+            d[0] = 1.1;
+            d[1] = 2.1;
+            d[2] = 3.1;
+            d[3] = 4.1;
+            d[4] = 5.1;
+            d[5] = 6.1;
+            d[6] = 7.1;
+            d[7] = 8.1;
+            d[8] = 9.1;
+            d[9] = 10.1;
+            d[10] = 11.1;
+            d[11] = 12.1;
+            d[12] = 13.1;
+            d[13] = 14.1;
+            d[14] = 15.1;
+            d[15] = 16.1;
+            d[16] = 17.1;
+            d[17] = 18.1;
+            d[18] = 19.1;
+            d[19] = 20.1;
 
             double m = MathX.Product(d);
             AssertEquals("Product", 0, m);
 
             d = new double[20];
-            d[0] = 1.1; d[1] = 2.1; d[2] = 3.1; d[3] = 4.1;
-            d[4] = 5.1; d[5] = 6.1; d[6] = 7.1; d[7] = 8.1;
-            d[8] = 9.1; d[9] = 10.1; d[10] = 11.1; d[11] = 12.1;
-            d[12] = 13.1; d[13] = 14.1; d[14] = 15.1; d[15] = 16.1;
-            d[16] = 17.1; d[17] = 18.1; d[18] = 19.1; d[19] = 20.1;
+            d[0] = 1.1;
+            d[1] = 2.1;
+            d[2] = 3.1;
+            d[3] = 4.1;
+            d[4] = 5.1;
+            d[5] = 6.1;
+            d[6] = 7.1;
+            d[7] = 8.1;
+            d[8] = 9.1;
+            d[9] = 10.1;
+            d[10] = 11.1;
+            d[11] = 12.1;
+            d[12] = 13.1;
+            d[13] = 14.1;
+            d[14] = 15.1;
+            d[15] = 16.1;
+            d[16] = 17.1;
+            d[17] = 18.1;
+            d[18] = 19.1;
+            d[19] = 20.1;
 
             m = MathX.Product(d);
             AssertEquals("Product ", 3459946360003355534d, m);
@@ -298,11 +434,26 @@ namespace TestCases.SS.Formula.Functions
             AssertEquals("Product ", 0, m);
 
             d = new double[20];
-            d[0] = -1.1; d[1] = -2.1; d[2] = -3.1; d[3] = -4.1;
-            d[4] = -5.1; d[5] = -6.1; d[6] = -7.1; d[7] = -8.1;
-            d[8] = -9.1; d[9] = -10.1; d[10] = -11.1; d[11] = -12.1;
-            d[12] = -13.1; d[13] = -14.1; d[14] = -15.1; d[15] = -16.1;
-            d[16] = -17.1; d[17] = -18.1; d[18] = -19.1; d[19] = -20.1;
+            d[0] = -1.1;
+            d[1] = -2.1;
+            d[2] = -3.1;
+            d[3] = -4.1;
+            d[4] = -5.1;
+            d[5] = -6.1;
+            d[6] = -7.1;
+            d[7] = -8.1;
+            d[8] = -9.1;
+            d[9] = -10.1;
+            d[10] = -11.1;
+            d[11] = -12.1;
+            d[12] = -13.1;
+            d[13] = -14.1;
+            d[14] = -15.1;
+            d[15] = -16.1;
+            d[16] = -17.1;
+            d[17] = -18.1;
+            d[18] = -19.1;
+            d[19] = -20.1;
             m = MathX.Product(d);
             AssertEquals("Product ", 3459946360003355534d, m);
         }
@@ -319,10 +470,10 @@ namespace TestCases.SS.Formula.Functions
             ClassicAssert.AreEqual(0.0, MathX.Mod(0, 2));
             ClassicAssert.AreEqual(Double.NaN, MathX.Mod(3, 0));
 
-            ClassicAssert.AreEqual((double)1.4, MathX.Mod(3.4, 2));
-            ClassicAssert.AreEqual((double)-1.4, MathX.Mod(-3.4, -2));
-            ClassicAssert.AreEqual((double)0.6000000000000001, MathX.Mod(-3.4, 2.0));// should actually be 0.6
-            ClassicAssert.AreEqual((double)-0.6000000000000001, MathX.Mod(3.4, -2.0));// should actually be -0.6
+            ClassicAssert.AreEqual((double) 1.4, MathX.Mod(3.4, 2));
+            ClassicAssert.AreEqual((double) -1.4, MathX.Mod(-3.4, -2));
+            ClassicAssert.AreEqual((double) 0.6000000000000001, MathX.Mod(-3.4, 2.0));// should actually be 0.6
+            ClassicAssert.AreEqual((double) -0.6000000000000001, MathX.Mod(3.4, -2.0));// should actually be -0.6
 
             ClassicAssert.AreEqual(3.0, MathX.Mod(3, Double.MaxValue));
             ClassicAssert.AreEqual(2.0, MathX.Mod(Double.MaxValue, 3));
@@ -338,43 +489,53 @@ namespace TestCases.SS.Formula.Functions
             double d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 1.00891344545564E29, d);
 
-            n = -1; k = 1;
+            n = -1;
+            k = 1;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", Double.NaN, d);
 
-            n = 1; k = -1;
+            n = 1;
+            k = -1;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", Double.NaN, d);
 
-            n = 0; k = 1;
+            n = 0;
+            k = 1;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", Double.NaN, d);
 
-            n = 1; k = 0;
+            n = 1;
+            k = 0;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 1, d);
 
-            n = 10; k = 9;
+            n = 10;
+            k = 9;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 10, d);
 
-            n = 10; k = 10;
+            n = 10;
+            k = 10;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 1, d);
 
-            n = 10; k = 1;
+            n = 10;
+            k = 1;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 10, d);
 
-            n = 1000; k = 1;
+            n = 1000;
+            k = 1;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 1000, d); // awesome ;)
 
-            n = 1000; k = 2;
+            n = 1000;
+            k = 2;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 499500, d); // awesome ;)
 
-            n = 13; k = 7;
+            n = 13;
+            k = 7;
             d = MathX.NChooseK(n, k);
             AssertEquals("NChooseK ", 1716, d);
 
@@ -468,32 +629,77 @@ namespace TestCases.SS.Formula.Functions
         public void TestSum()
         {
             double[] d = new double[100];
-            d[0] = 1.1; d[1] = 2.1; d[2] = 3.1; d[3] = 4.1;
-            d[4] = 5.1; d[5] = 6.1; d[6] = 7.1; d[7] = 8.1;
-            d[8] = 9.1; d[9] = 10.1; d[10] = 11.1; d[11] = 12.1;
-            d[12] = 13.1; d[13] = 14.1; d[14] = 15.1; d[15] = 16.1;
-            d[16] = 17.1; d[17] = 18.1; d[18] = 19.1; d[19] = 20.1;
+            d[0] = 1.1;
+            d[1] = 2.1;
+            d[2] = 3.1;
+            d[3] = 4.1;
+            d[4] = 5.1;
+            d[5] = 6.1;
+            d[6] = 7.1;
+            d[7] = 8.1;
+            d[8] = 9.1;
+            d[9] = 10.1;
+            d[10] = 11.1;
+            d[11] = 12.1;
+            d[12] = 13.1;
+            d[13] = 14.1;
+            d[14] = 15.1;
+            d[15] = 16.1;
+            d[16] = 17.1;
+            d[17] = 18.1;
+            d[18] = 19.1;
+            d[19] = 20.1;
 
             double s = MathX.Sum(d);
-            AssertEquals( "Sum ", 212, s );
+            AssertEquals("Sum ", 212, s);
 
             d = new double[1000];
             s = MathX.Sum(d);
             AssertEquals("Sum ", 0d, s);
 
-            d[0] = -1.1; d[1] = 2.1; d[2] = -3.1; d[3] = 4.1;
-            d[4] = -5.1; d[5] = 6.1; d[6] = -7.1; d[7] = 8.1;
-            d[8] = -9.1; d[9] = 10.1; d[10] = -11.1; d[11] = 12.1;
-            d[12] = -13.1; d[13] = 14.1; d[14] = -15.1; d[15] = 16.1;
-            d[16] = -17.1; d[17] = 18.1; d[18] = -19.1; d[19] = 20.1;
+            d[0] = -1.1;
+            d[1] = 2.1;
+            d[2] = -3.1;
+            d[3] = 4.1;
+            d[4] = -5.1;
+            d[5] = 6.1;
+            d[6] = -7.1;
+            d[7] = 8.1;
+            d[8] = -9.1;
+            d[9] = 10.1;
+            d[10] = -11.1;
+            d[11] = 12.1;
+            d[12] = -13.1;
+            d[13] = 14.1;
+            d[14] = -15.1;
+            d[15] = 16.1;
+            d[16] = -17.1;
+            d[17] = 18.1;
+            d[18] = -19.1;
+            d[19] = 20.1;
             s = MathX.Sum(d);
             AssertEquals("Sum ", 10d, s);
 
-            d[0] = -1.1; d[1] = -2.1; d[2] = -3.1; d[3] = -4.1;
-            d[4] = -5.1; d[5] = -6.1; d[6] = -7.1; d[7] = -8.1;
-            d[8] = -9.1; d[9] = -10.1; d[10] = -11.1; d[11] = -12.1;
-            d[12] = -13.1; d[13] = -14.1; d[14] = -15.1; d[15] = -16.1;
-            d[16] = -17.1; d[17] = -18.1; d[18] = -19.1; d[19] = -20.1;
+            d[0] = -1.1;
+            d[1] = -2.1;
+            d[2] = -3.1;
+            d[3] = -4.1;
+            d[4] = -5.1;
+            d[5] = -6.1;
+            d[6] = -7.1;
+            d[7] = -8.1;
+            d[8] = -9.1;
+            d[9] = -10.1;
+            d[10] = -11.1;
+            d[11] = -12.1;
+            d[12] = -13.1;
+            d[13] = -14.1;
+            d[14] = -15.1;
+            d[15] = -16.1;
+            d[16] = -17.1;
+            d[17] = -18.1;
+            d[18] = -19.1;
+            d[19] = -20.1;
             s = MathX.Sum(d);
             AssertEquals("Sum ", -212d, s);
 
@@ -502,11 +708,26 @@ namespace TestCases.SS.Formula.Functions
         public void TestSumsq()
         {
             double[] d = new double[100];
-            d[0] = 1.1; d[1] = 2.1; d[2] = 3.1; d[3] = 4.1;
-            d[4] = 5.1; d[5] = 6.1; d[6] = 7.1; d[7] = 8.1;
-            d[8] = 9.1; d[9] = 10.1; d[10] = 11.1; d[11] = 12.1;
-            d[12] = 13.1; d[13] = 14.1; d[14] = 15.1; d[15] = 16.1;
-            d[16] = 17.1; d[17] = 18.1; d[18] = 19.1; d[19] = 20.1;
+            d[0] = 1.1;
+            d[1] = 2.1;
+            d[2] = 3.1;
+            d[3] = 4.1;
+            d[4] = 5.1;
+            d[5] = 6.1;
+            d[6] = 7.1;
+            d[7] = 8.1;
+            d[8] = 9.1;
+            d[9] = 10.1;
+            d[10] = 11.1;
+            d[11] = 12.1;
+            d[12] = 13.1;
+            d[13] = 14.1;
+            d[14] = 15.1;
+            d[15] = 16.1;
+            d[16] = 17.1;
+            d[17] = 18.1;
+            d[18] = 19.1;
+            d[19] = 20.1;
 
             double s = MathX.Sumsq(d);
             AssertEquals("Sumsq ", 2912.2, s);
@@ -515,19 +736,49 @@ namespace TestCases.SS.Formula.Functions
             s = MathX.Sumsq(d);
             AssertEquals("Sumsq ", 0, s);
 
-            d[0] = -1.1; d[1] = 2.1; d[2] = -3.1; d[3] = 4.1;
-            d[4] = -5.1; d[5] = 6.1; d[6] = -7.1; d[7] = 8.1;
-            d[8] = -9.1; d[9] = 10.1; d[10] = -11.1; d[11] = 12.1;
-            d[12] = -13.1; d[13] = 14.1; d[14] = -15.1; d[15] = 16.1;
-            d[16] = -17.1; d[17] = 18.1; d[18] = -19.1; d[19] = 20.1;
+            d[0] = -1.1;
+            d[1] = 2.1;
+            d[2] = -3.1;
+            d[3] = 4.1;
+            d[4] = -5.1;
+            d[5] = 6.1;
+            d[6] = -7.1;
+            d[7] = 8.1;
+            d[8] = -9.1;
+            d[9] = 10.1;
+            d[10] = -11.1;
+            d[11] = 12.1;
+            d[12] = -13.1;
+            d[13] = 14.1;
+            d[14] = -15.1;
+            d[15] = 16.1;
+            d[16] = -17.1;
+            d[17] = 18.1;
+            d[18] = -19.1;
+            d[19] = 20.1;
             s = MathX.Sumsq(d);
             AssertEquals("Sumsq ", 2912.2, s);
 
-            d[0] = -1.1; d[1] = -2.1; d[2] = -3.1; d[3] = -4.1;
-            d[4] = -5.1; d[5] = -6.1; d[6] = -7.1; d[7] = -8.1;
-            d[8] = -9.1; d[9] = -10.1; d[10] = -11.1; d[11] = -12.1;
-            d[12] = -13.1; d[13] = -14.1; d[14] = -15.1; d[15] = -16.1;
-            d[16] = -17.1; d[17] = -18.1; d[18] = -19.1; d[19] = -20.1;
+            d[0] = -1.1;
+            d[1] = -2.1;
+            d[2] = -3.1;
+            d[3] = -4.1;
+            d[4] = -5.1;
+            d[5] = -6.1;
+            d[6] = -7.1;
+            d[7] = -8.1;
+            d[8] = -9.1;
+            d[9] = -10.1;
+            d[10] = -11.1;
+            d[11] = -12.1;
+            d[12] = -13.1;
+            d[13] = -14.1;
+            d[14] = -15.1;
+            d[15] = -16.1;
+            d[16] = -17.1;
+            d[17] = -18.1;
+            d[18] = -19.1;
+            d[19] = -20.1;
             s = MathX.Sumsq(d);
             AssertEquals("Sumsq ", 2912.2, s);
         }
@@ -657,7 +908,7 @@ namespace TestCases.SS.Formula.Functions
                 double expectedResult)
         {
             double result = 0.0;
-            for (int i = 0; i < xarr.Length; i++)
+            for(int i = 0; i < xarr.Length; i++)
             {
                 result += acc.Accumulate(xarr[i], yarr[i]);
             }
@@ -669,74 +920,97 @@ namespace TestCases.SS.Formula.Functions
             double d = 0;
             int p = 0;
 
-            d = 0; p = 0;
+            d = 0;
+            p = 0;
             AssertEquals("round ", 0, MathX.Round(d, p));
 
-            d = 10; p = 0;
+            d = 10;
+            p = 0;
             AssertEquals("round ", 10, MathX.Round(d, p));
 
-            d = 123.23; p = 0;
+            d = 123.23;
+            p = 0;
             AssertEquals("round ", 123, MathX.Round(d, p));
 
-            d = -123.23; p = 0;
+            d = -123.23;
+            p = 0;
             AssertEquals("round ", -123, MathX.Round(d, p));
 
-            d = 123.12; p = 2;
+            d = 123.12;
+            p = 2;
             AssertEquals("round ", 123.12, MathX.Round(d, p));
 
-            d = 88.123459; p = 5;
+            d = 88.123459;
+            p = 5;
             AssertEquals("round ", 88.12346, MathX.Round(d, p));
 
-            d = 0; p = 2;
+            d = 0;
+            p = 2;
             AssertEquals("round ", 0, MathX.Round(d, p));
 
-            d = 0; p = -1;
+            d = 0;
+            p = -1;
             AssertEquals("round ", 0, MathX.Round(d, p));
 
-            d = 0.01; p = -1;
+            d = 0.01;
+            p = -1;
             AssertEquals("round ", 0, MathX.Round(d, p));
 
-            d = 123.12; p = -2;
+            d = 123.12;
+            p = -2;
             AssertEquals("round ", 100, MathX.Round(d, p));
 
-            d = 88.123459; p = -3;
+            d = 88.123459;
+            p = -3;
             AssertEquals("round ", 0, MathX.Round(d, p));
 
-            d = 49.00000001; p = -1;
+            d = 49.00000001;
+            p = -1;
             AssertEquals("round ", 50, MathX.Round(d, p));
 
-            d = 149.999999; p = -2;
+            d = 149.999999;
+            p = -2;
             AssertEquals("round ", 100, MathX.Round(d, p));
 
-            d = 150.0; p = -2;
+            d = 150.0;
+            p = -2;
             AssertEquals("round ", 200, MathX.Round(d, p));
 
-            d = 2162.615d; p = 2;
+            d = 2162.615d;
+            p = 2;
             AssertEquals("round ", 2162.62d, MathX.Round(d, p));
 
 
-            d = 0.049999999999999975d; p = 2;
+            d = 0.049999999999999975d;
+            p = 2;
             AssertEquals("round ", 0.05d, MathX.Round(d, p));
 
-            d = 0.049999999999999975d; p = 1;
+            d = 0.049999999999999975d;
+            p = 1;
             AssertEquals("round ", 0.1d, MathX.Round(d, p));
 
-            d = Double.NaN; p = 1;
+            d = Double.NaN;
+            p = 1;
             AssertEquals("round ", Double.NaN, MathX.Round(d, p));
 
-            d = Double.PositiveInfinity; p = 1;
+            d = Double.PositiveInfinity;
+            p = 1;
             AssertEquals("round ", Double.NaN, MathX.Round(d, p));
 
-            d = Double.NegativeInfinity; p = 1;
+            d = Double.NegativeInfinity;
+            p = 1;
             AssertEquals("round ", Double.NaN, MathX.Round(d, p));
 
-            d = Double.MaxValue; p = 1;
+            d = Double.MaxValue;
+            p = 1;
             AssertEquals("round ", Double.MaxValue, MathX.Round(d, p));
 
-            d = Double.MinValue; p = 1;
+            d = Double.MinValue;
+            p = 1;
             AssertEquals("round ", 0.0d, MathX.Round(d, p));
 
-            d = 481.75478; p = 2;
+            d = 481.75478;
+            p = 2;
             AssertEquals("round ", 481.75d, MathX.Round(d, p));
         }
         [Test]
@@ -745,76 +1019,100 @@ namespace TestCases.SS.Formula.Functions
             double d = 0;
             int p = 0;
 
-            d = 0; p = 0;
+            d = 0;
+            p = 0;
             AssertEquals("roundDown ", 0, MathX.RoundDown(d, p));
 
-            d = 10; p = 0;
+            d = 10;
+            p = 0;
             AssertEquals("roundDown ", 10, MathX.RoundDown(d, p));
 
-            d = 123.99; p = 0;
+            d = 123.99;
+            p = 0;
             AssertEquals("roundDown ", 123, MathX.RoundDown(d, p));
 
-            d = -123.99; p = 0;
+            d = -123.99;
+            p = 0;
             AssertEquals("roundDown ", -123, MathX.RoundDown(d, p));
 
-            d = -123.99; p = 2;
+            d = -123.99;
+            p = 2;
             AssertEquals("roundDown ", -123.99, MathX.RoundDown(d, p));
 
-            d = 123.99; p = 2;
+            d = 123.99;
+            p = 2;
             AssertEquals("roundDown ", 123.99, MathX.RoundDown(d, p));
 
-            d = 88.123459; p = 5;
+            d = 88.123459;
+            p = 5;
             AssertEquals("roundDown ", 88.12345, MathX.RoundDown(d, p));
 
-            d = 0; p = 2;
+            d = 0;
+            p = 2;
             AssertEquals("roundDown ", 0, MathX.RoundDown(d, p));
 
-            d = 0; p = -1;
+            d = 0;
+            p = -1;
             AssertEquals("roundDown ", 0, MathX.RoundDown(d, p));
 
-            d = 0.01; p = -1;
+            d = 0.01;
+            p = -1;
             AssertEquals("roundDown ", 0, MathX.RoundDown(d, p));
 
-            d = 199.12; p = -2;
+            d = 199.12;
+            p = -2;
             AssertEquals("roundDown ", 100, MathX.RoundDown(d, p));
 
-            d = 88.123459; p = -3;
+            d = 88.123459;
+            p = -3;
             AssertEquals("roundDown ", 0, MathX.RoundDown(d, p));
 
-            d = 99.00000001; p = -1;
+            d = 99.00000001;
+            p = -1;
             AssertEquals("roundDown ", 90, MathX.RoundDown(d, p));
 
-            d = 100.00001; p = -2;
+            d = 100.00001;
+            p = -2;
             AssertEquals("roundDown ", 100, MathX.RoundDown(d, p));
 
-            d = 150.0; p = -2;
+            d = 150.0;
+            p = -2;
             AssertEquals("roundDown ", 100, MathX.RoundDown(d, p));
 
-            d = 0.049999999999999975d; p = 2;
+            d = 0.049999999999999975d;
+            p = 2;
             AssertEquals("roundDown ", 0.04d, MathX.RoundDown(d, p));
 
-            d = 0.049999999999999975d; p = 1;
+            d = 0.049999999999999975d;
+            p = 1;
             AssertEquals("roundDown ", 0.0d, MathX.RoundDown(d, p));
 
-            d = Double.NaN; p = 1;
+            d = Double.NaN;
+            p = 1;
             AssertEquals("roundDown ", Double.NaN, MathX.RoundDown(d, p));
 
-            d = Double.PositiveInfinity; p = 1;
+            d = Double.PositiveInfinity;
+            p = 1;
             AssertEquals("roundDown ", Double.NaN, MathX.RoundDown(d, p));
 
-            d = Double.NegativeInfinity; p = 1;
+            d = Double.NegativeInfinity;
+            p = 1;
             AssertEquals("roundDown ", Double.NaN, MathX.RoundDown(d, p));
 
-            d = Double.MaxValue; p = 1;
+            d = Double.MaxValue;
+            p = 1;
             AssertEquals("roundDown ", Double.MaxValue, MathX.RoundDown(d, p));
 
-            d = Double.MinValue; p = 1;
+            d = Double.MinValue;
+            p = 1;
             AssertEquals("roundDown ", 0.0d, MathX.RoundDown(d, p));
 
-            d = 17.56; p = 2;
+            d = 17.56;
+            p = 2;
             AssertEquals("roundDown ", 17.56, MathX.RoundDown(d, p));
 
-            d = 3987 * 0.2; p = 2;
+            d = 3987 * 0.2;
+            p = 2;
             AssertEquals("roundDown ", 797.40, MathX.Round(d, p));
         }
         [Test]
@@ -823,79 +1121,103 @@ namespace TestCases.SS.Formula.Functions
             double d = 0;
             int p = 0;
 
-            d = 0; p = 0;
+            d = 0;
+            p = 0;
             AssertEquals("roundUp ", 0, MathX.RoundUp(d, p));
 
-            d = 10; p = 0;
+            d = 10;
+            p = 0;
             AssertEquals("roundUp ", 10, MathX.RoundUp(d, p));
 
-            d = 123.23; p = 0;
+            d = 123.23;
+            p = 0;
             AssertEquals("roundUp ", 124, MathX.RoundUp(d, p));
 
-            d = -123.23; p = 0;
+            d = -123.23;
+            p = 0;
             AssertEquals("roundUp ", -124, MathX.RoundUp(d, p));
 
-            d = 123.12; p = 2;
+            d = 123.12;
+            p = 2;
             AssertEquals("roundUp ", 123.12, MathX.RoundUp(d, p));
 
-            d = 88.123459; p = 5;
+            d = 88.123459;
+            p = 5;
             AssertEquals("roundUp ", 88.12346, MathX.RoundUp(d, p));
 
-            d = 0; p = 2;
+            d = 0;
+            p = 2;
             AssertEquals("roundUp ", 0, MathX.RoundUp(d, p));
 
-            d = 0; p = -1;
+            d = 0;
+            p = -1;
             AssertEquals("roundUp ", 0, MathX.RoundUp(d, p));
 
-            d = 0.01; p = -1;
+            d = 0.01;
+            p = -1;
             AssertEquals("roundUp ", 10, MathX.RoundUp(d, p));
 
-            d = 123.12; p = -2;
+            d = 123.12;
+            p = -2;
             AssertEquals("roundUp ", 200, MathX.RoundUp(d, p));
 
-            d = 88.123459; p = -3;
+            d = 88.123459;
+            p = -3;
             AssertEquals("roundUp ", 1000, MathX.RoundUp(d, p));
 
-            d = 49.00000001; p = -1;
+            d = 49.00000001;
+            p = -1;
             AssertEquals("roundUp ", 50, MathX.RoundUp(d, p));
 
-            d = 149.999999; p = -2;
+            d = 149.999999;
+            p = -2;
             AssertEquals("roundUp ", 200, MathX.RoundUp(d, p));
 
-            d = 150.0; p = -2;
+            d = 150.0;
+            p = -2;
             AssertEquals("roundUp ", 200, MathX.RoundUp(d, p));
 
-            d = 0.049999999999999975d; p = 2;
+            d = 0.049999999999999975d;
+            p = 2;
             AssertEquals("roundUp ", 0.05d, MathX.RoundUp(d, p));
 
-            d = 0.049999999999999975d; p = 1;
+            d = 0.049999999999999975d;
+            p = 1;
             AssertEquals("roundUp ", 0.1d, MathX.RoundUp(d, p));
 
-            d = Double.NaN; p = 1;
+            d = Double.NaN;
+            p = 1;
             AssertEquals("roundUp ", Double.NaN, MathX.RoundUp(d, p));
 
-            d = Double.PositiveInfinity; p = 1;
+            d = Double.PositiveInfinity;
+            p = 1;
             AssertEquals("roundUp ", Double.NaN, MathX.RoundUp(d, p));
 
-            d = Double.NegativeInfinity; p = 1;
+            d = Double.NegativeInfinity;
+            p = 1;
             AssertEquals("roundUp ", Double.NaN, MathX.RoundUp(d, p));
 
-            d = Double.MaxValue; p = 1;
+            d = Double.MaxValue;
+            p = 1;
             AssertEquals("roundUp ", Double.MaxValue, MathX.RoundUp(d, p));
 
-            d = Double.MinValue; p = 1;
+            d = Double.MinValue;
+            p = 1;
             AssertEquals("roundUp ", 0.1d, MathX.RoundUp(d, p));
 
-            d = 20.44; p = 2;
+            d = 20.44;
+            p = 2;
             AssertEquals("roundUp ", 20.44d, MathX.RoundUp(d, p));
 
-            d = 20.445; p = 2;
+            d = 20.445;
+            p = 2;
             AssertEquals("roundUp ", 20.45d, MathX.RoundUp(d, p));
 
             //github-43: https://github.com/apache/poi/pull/43
             //@Ignore("ROUNDUP(3987*0.2, 2) currently fails by returning 797.41")
             //but passed by using C# language.
-            d = 3987 * 0.2; p = 2;
+            d = 3987 * 0.2;
+            p = 2;
             AssertEquals("roundUp ", 797.40, MathX.RoundUp(d, p));
         }
         [Test]
@@ -904,84 +1226,113 @@ namespace TestCases.SS.Formula.Functions
             double d = 0;
             double s = 0;
 
-            d = 0; s = 0;
+            d = 0;
+            s = 0;
             AssertEquals("ceiling ", 0, MathX.Ceiling(d, s));
 
-            d = 1; s = 0;
+            d = 1;
+            s = 0;
             AssertEquals("ceiling ", 0, MathX.Ceiling(d, s));
 
-            d = 0; s = 1;
+            d = 0;
+            s = 1;
             AssertEquals("ceiling ", 0, MathX.Ceiling(d, s));
 
-            d = -1; s = 0;
+            d = -1;
+            s = 0;
             AssertEquals("ceiling ", 0, MathX.Ceiling(d, s));
 
-            d = 0; s = -1;
+            d = 0;
+            s = -1;
             AssertEquals("ceiling ", 0, MathX.Ceiling(d, s));
 
-            d = 10; s = 1.11;
+            d = 10;
+            s = 1.11;
             AssertEquals("ceiling ", 11.1, MathX.Ceiling(d, s));
 
-            d = 11.12333; s = 0.03499;
+            d = 11.12333;
+            s = 0.03499;
             AssertEquals("ceiling ", 11.12682, MathX.Ceiling(d, s));
 
-            d = -11.12333; s = 0.03499;
+            d = -11.12333;
+            s = 0.03499;
             AssertEquals("ceiling ", Double.NaN, MathX.Ceiling(d, s));
 
-            d = 11.12333; s = -0.03499;
+            d = 11.12333;
+            s = -0.03499;
             AssertEquals("ceiling ", Double.NaN, MathX.Ceiling(d, s));
 
-            d = -11.12333; s = -0.03499;
+            d = -11.12333;
+            s = -0.03499;
             AssertEquals("ceiling ", -11.12682, MathX.Ceiling(d, s));
 
-            d = 100; s = 0.001;
+            d = 100;
+            s = 0.001;
             AssertEquals("ceiling ", 100, MathX.Ceiling(d, s));
 
-            d = -0.001; s = -9.99;
+            d = -0.001;
+            s = -9.99;
             AssertEquals("ceiling ", -9.99, MathX.Ceiling(d, s));
 
-            d = 4.42; s = 0.05;
+            d = 4.42;
+            s = 0.05;
             AssertEquals("ceiling ", 4.45, MathX.Ceiling(d, s));
 
-            d = 0.05; s = 4.42;
+            d = 0.05;
+            s = 4.42;
             AssertEquals("ceiling ", 4.42, MathX.Ceiling(d, s));
 
-            d = 0.6666; s = 3.33;
+            d = 0.6666;
+            s = 3.33;
             AssertEquals("ceiling ", 3.33, MathX.Ceiling(d, s));
 
-            d = 2d / 3; s = 3.33;
+            d = 2d / 3;
+            s = 3.33;
             AssertEquals("ceiling ", 3.33, MathX.Ceiling(d, s));
 
             // samples from http://www.excelfunctions.net/Excel-Ceiling-Function.html
             // and https://support.office.com/en-us/article/CEILING-function-0a5cd7c8-0720-4f0a-bd2c-c943e510899f
-            d = 22.25; s = 0.1;
+            d = 22.25;
+            s = 0.1;
             AssertEquals("ceiling ", 22.3, MathX.Ceiling(d, s));
-            d = 22.25; s = 0.5;
+            d = 22.25;
+            s = 0.5;
             AssertEquals("ceiling ", 22.5, MathX.Ceiling(d, s));
-            d = 22.25; s = 1;
+            d = 22.25;
+            s = 1;
             AssertEquals("ceiling ", 23, MathX.Ceiling(d, s));
-            d = 22.25; s = 10;
+            d = 22.25;
+            s = 10;
             AssertEquals("ceiling ", 30, MathX.Ceiling(d, s));
-            d = 22.25; s = 20;
+            d = 22.25;
+            s = 20;
             AssertEquals("ceiling ", 40, MathX.Ceiling(d, s));
-            d = -22.25; s = -0.1;
+            d = -22.25;
+            s = -0.1;
             AssertEquals("ceiling ", -22.3, MathX.Ceiling(d, s));
-            d = -22.25; s = -1;
+            d = -22.25;
+            s = -1;
             AssertEquals("ceiling ", -23, MathX.Ceiling(d, s));
-            d = -22.25; s = -5;
+            d = -22.25;
+            s = -5;
             AssertEquals("ceiling ", -25, MathX.Ceiling(d, s));
 
-            d = 22.25; s = 1;
+            d = 22.25;
+            s = 1;
             AssertEquals("ceiling ", 23, MathX.Ceiling(d, s));
-            d = 22.25; s = -1;
+            d = 22.25;
+            s = -1;
             AssertEquals("ceiling ", Double.NaN, MathX.Ceiling(d, s));
-            d = -22.25; s = 1;
+            d = -22.25;
+            s = 1;
             AssertEquals("ceiling ", -22, MathX.Ceiling(d, s)); // returns an error in Excel 2007 & earlier
-            d = -22.25; s = -1;
+            d = -22.25;
+            s = -1;
             AssertEquals("ceiling ", -23, MathX.Ceiling(d, s));
 
             // test cases for newer versions of Excel where d can be negative for
-            d = -11.12333; s = 0.03499;
+            d = -11.12333;
+            s = 0.03499;
             AssertEquals("ceiling ", -11.09183, MathX.Ceiling(d, s));
         }
         [Test]
@@ -990,65 +1341,86 @@ namespace TestCases.SS.Formula.Functions
             double d = 0;
             double s = 0;
 
-            d = 0; s = 0;
+            d = 0;
+            s = 0;
             AssertEquals("floor ", 0, MathX.Floor(d, s));
 
-            d = 1; s = 0;
+            d = 1;
+            s = 0;
             AssertEquals("floor ", Double.NaN, MathX.Floor(d, s));
 
-            d = 0; s = 1;
+            d = 0;
+            s = 1;
             AssertEquals("floor ", 0, MathX.Floor(d, s));
 
-            d = -1; s = 0;
+            d = -1;
+            s = 0;
             AssertEquals("floor ", Double.NaN, MathX.Floor(d, s));
 
-            d = 0; s = -1;
+            d = 0;
+            s = -1;
             AssertEquals("floor ", 0, MathX.Floor(d, s));
 
-            d = 10; s = 1.11;
+            d = 10;
+            s = 1.11;
             AssertEquals("floor ", 9.99, MathX.Floor(d, s));
 
-            d = 11.12333; s = 0.03499;
+            d = 11.12333;
+            s = 0.03499;
             AssertEquals("floor ", 11.09183, MathX.Floor(d, s));
 
-            d = -11.12333; s = 0.03499;
+            d = -11.12333;
+            s = 0.03499;
             AssertEquals("floor ", Double.NaN, MathX.Floor(d, s));
 
-            d = 11.12333; s = -0.03499;
+            d = 11.12333;
+            s = -0.03499;
             AssertEquals("floor ", Double.NaN, MathX.Floor(d, s));
 
-            d = -11.12333; s = -0.03499;
+            d = -11.12333;
+            s = -0.03499;
             AssertEquals("floor ", -11.09183, MathX.Floor(d, s));
 
-            d = 100; s = 0.001;
+            d = 100;
+            s = 0.001;
             AssertEquals("floor ", 100, MathX.Floor(d, s));
 
-            d = -0.001; s = -9.99;
+            d = -0.001;
+            s = -9.99;
             AssertEquals("floor ", 0, MathX.Floor(d, s));
 
-            d = 4.42; s = 0.05;
+            d = 4.42;
+            s = 0.05;
             AssertEquals("floor ", 4.4, MathX.Floor(d, s));
 
-            d = 0.05; s = 4.42;
+            d = 0.05;
+            s = 4.42;
             AssertEquals("floor ", 0, MathX.Floor(d, s));
 
-            d = 0.6666; s = 3.33;
+            d = 0.6666;
+            s = 3.33;
             AssertEquals("floor ", 0, MathX.Floor(d, s));
 
-            d = 2d / 3; s = 3.33;
+            d = 2d / 3;
+            s = 3.33;
             AssertEquals("floor ", 0, MathX.Floor(d, s));
 
             // samples from http://www.excelfunctions.net/Excel-Ceiling-Function.html
             // and https://support.office.com/en-us/article/CEILING-function-0a5cd7c8-0720-4f0a-bd2c-c943e510899f
-            d = 3.7; s = 2;
+            d = 3.7;
+            s = 2;
             AssertEquals("floor ", 2, MathX.Floor(d, s));
-            d = -2.5; s = -2;
+            d = -2.5;
+            s = -2;
             AssertEquals("floor ", -2, MathX.Floor(d, s));
-            d = 2.5; s = -2;
+            d = 2.5;
+            s = -2;
             AssertEquals("floor ", Double.NaN, MathX.Floor(d, s));
-            d = 1.58; s = 0.1;
+            d = 1.58;
+            s = 0.1;
             AssertEquals("floor ", 1.5, MathX.Floor(d, s));
-            d = 0.234; s = 0.01;
+            d = 0.234;
+            s = 0.01;
             AssertEquals("floor ", 0.23, MathX.Floor(d, s));
         }
         [Ignore("not implement")]

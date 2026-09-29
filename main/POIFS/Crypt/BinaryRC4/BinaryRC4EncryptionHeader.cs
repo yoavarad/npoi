@@ -17,12 +17,10 @@
 
 namespace NPOI.POIFS.Crypt.BinaryRC4
 {
-    using System;
-
     using NPOI.POIFS.Crypt;
-
     using NPOI.POIFS.Crypt.Standard;
     using NPOI.Util;
+    using System;
 
     public class BinaryRC4EncryptionHeader : EncryptionHeader, EncryptionRecord
     {

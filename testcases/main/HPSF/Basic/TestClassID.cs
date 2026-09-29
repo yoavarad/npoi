@@ -17,10 +17,10 @@
 
 namespace TestCases.HPSF.Basic
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HPSF;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * <p>Tests ClassID structure.</p>
@@ -74,7 +74,7 @@ namespace TestCases.HPSF.Basic
             {
                 clsidTest.Write(new byte[15], 0);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 bExceptionOccurred = true;
             }
@@ -85,7 +85,7 @@ namespace TestCases.HPSF.Basic
             {
                 clsidTest.Write(new byte[16], 1);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 bExceptionOccurred = true;
             }
@@ -98,7 +98,7 @@ namespace TestCases.HPSF.Basic
                 clsidTest.Write(new byte[16], 0);
                 clsidTest.Write(new byte[17], 1);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 bExceptionOccurred = true;
             }

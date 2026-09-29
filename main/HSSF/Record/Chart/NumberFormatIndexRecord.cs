@@ -18,10 +18,10 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
-    using System.Collections;
-    using System;
-    using System.Text;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Text;
 
 
     /**
@@ -109,6 +109,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-
-

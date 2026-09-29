@@ -15,14 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.HSSF.Extractor;
-using TestCases.HSSF;
-using System.Text.RegularExpressions;
-using NPOI.XSSF.Extractor;
-using NPOI.XSSF;
 using NPOI;
+using NPOI.HSSF.Extractor;
+using NPOI.XSSF;
+using NPOI.XSSF.Extractor;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
+using System.Text.RegularExpressions;
+using TestCases.HSSF;
 
 namespace TestCases.XSSF.Extractor
 {
@@ -41,7 +42,7 @@ namespace TestCases.XSSF.Extractor
         /**
          * Get text out of the simple file
          */
-           [Test]
+        [Test]
         public void TestGetSimpleText()
         {
             // a very simple file
@@ -122,7 +123,7 @@ namespace TestCases.XSSF.Extractor
          *  ExcelExtractor does, when we're both passed
          *  the same file, just saved as xls and xlsx
          */
-           [Test]
+        [Test]
         public void TestComparedToOLE2()
         {
             // A fairly simple file - ooxml
@@ -133,7 +134,7 @@ namespace TestCases.XSSF.Extractor
 
             POITextExtractor[] extractors =
                 new POITextExtractor[] { ooxmlExtractor, ole2Extractor };
-            for (int i = 0; i < extractors.Length; i++)
+            for(int i = 0; i < extractors.Length; i++)
             {
                 POITextExtractor extractor = extractors[i];
 
@@ -141,7 +142,7 @@ namespace TestCases.XSSF.Extractor
                 ClassicAssert.IsTrue(text.StartsWith("First Sheet\nTest spreadsheet\n2nd row2nd row 2nd column\n"));
                 Regex pattern = new Regex(".*13(\\.0+)?\\s+Sheet3.*",RegexOptions.Compiled);
                 ClassicAssert.IsTrue(pattern.IsMatch(text));
-                
+
             }
             ole2Extractor.Close();
             ooxmlExtractor.Close();
@@ -150,29 +151,29 @@ namespace TestCases.XSSF.Extractor
         /**
          * From bug #45540
          */
-           [Test]
-           public void TestHeaderFooter()
-           {
-               string[] files = new string[] {
+        [Test]
+        public void TestHeaderFooter()
+        {
+            string[] files = new string[] {
                     "45540_classic_Header.xlsx", "45540_form_Header.xlsx",
                     "45540_classic_Footer.xlsx", "45540_form_Footer.xlsx",
                };
 
-               foreach (string sampleName in files)
-               {
-                   XSSFExcelExtractor extractor = GetExtractor(sampleName);
-                   string text = extractor.Text;
+            foreach(string sampleName in files)
+            {
+                XSSFExcelExtractor extractor = GetExtractor(sampleName);
+                string text = extractor.Text;
 
-                   ClassicAssert.IsTrue(text.Contains("testdoc"), "Unable to find expected word in text from " + sampleName + "\n" + text);
-                   ClassicAssert.IsTrue(text.Contains("test phrase"), "Unable to find expected word in text\n" + text);
-                   extractor.Close();
-               }
-           }
+                ClassicAssert.IsTrue(text.Contains("testdoc"), "Unable to find expected word in text from " + sampleName + "\n" + text);
+                ClassicAssert.IsTrue(text.Contains("test phrase"), "Unable to find expected word in text\n" + text);
+                extractor.Close();
+            }
+        }
 
         /**
          * From bug #45544
          */
-           [Test]
+        [Test]
         public void TestComments()
         {
 
@@ -222,25 +223,25 @@ namespace TestCases.XSSF.Extractor
 
             string text = extractor.Text;
             ClassicAssert.IsTrue(text.Length > 0);
-            
+
             // This sheet demonstrates the preservation of empty cells, as
             // signified by sequential \t characters.
             ClassicAssert.AreEqual(
                 // Sheet 1
-                "Sheet1\n" + 
-                "test\t\t1\n" + 
-                "test 2\t\t2\n" + 
-                "\t\t3\n" + 
-                "\t\t4\n" + 
-                "\t\t5\n" + 
-                "\t\t6\n" + 
+                "Sheet1\n" +
+                "test\t\t1\n" +
+                "test 2\t\t2\n" +
+                "\t\t3\n" +
+                "\t\t4\n" +
+                "\t\t5\n" +
+                "\t\t6\n" +
                 // Sheet 2
-                "Sheet Number 2\n" + 
-                "This is sheet 2\n" + 
-                "Stuff\n" + 
-                "1\t2\t3\t4\t5\t6\n" + 
-                "1/1/90\n" + 
-                "10\t\t3\n", 
+                "Sheet Number 2\n" +
+                "This is sheet 2\n" +
+                "Stuff\n" +
+                "1\t2\t3\t4\t5\t6\n" +
+                "1/1/90\n" +
+                "10\t\t3\n",
                 text);
 
             extractor.Close();
@@ -272,11 +273,11 @@ namespace TestCases.XSSF.Extractor
         public void Test67784()
         {
             XSSFExcelExtractor extractor = GetExtractor("bug67784.xlsx");
- 	        string text = extractor.Text.Replace("\r", "");
- 	        string[] lines = text.Split('\n');
- 	        ClassicAssert.AreEqual("FALSE", lines[2]);
- 	        ClassicAssert.AreEqual("TRUE", lines[3]);
- 	        ClassicAssert.AreEqual("ERROR:#DIV/0!", lines[4]);
+            string text = extractor.Text.Replace("\r", "");
+            string[] lines = text.Split('\n');
+            ClassicAssert.AreEqual("FALSE", lines[2]);
+            ClassicAssert.AreEqual("TRUE", lines[3]);
+            ClassicAssert.AreEqual("ERROR:#DIV/0!", lines[4]);
             extractor.Close();
         }
 
@@ -312,5 +313,3 @@ namespace TestCases.XSSF.Extractor
         }
     }
 }
-
-

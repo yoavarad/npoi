@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,12 +25,12 @@
  * 
  * ==============================================================*/
 
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using System.IO;
-using NPOI.Util;
 
 namespace TestCases.Util
 {
@@ -61,57 +61,57 @@ namespace TestCases.Util
                 new ByteField(-1);
                 Assert.Fail("Should have caught IndexOutOfRangeException");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
             }
             ByteField field = new ByteField(2);
 
-            ClassicAssert.AreEqual(( byte ) 0, field.Value);
+            ClassicAssert.AreEqual((byte) 0, field.Value);
             try
             {
-                new ByteField(-1, ( byte ) 1);
+                new ByteField(-1, (byte) 1);
                 Assert.Fail("Should have caught IndexOutOfRangeException");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
             }
-            field = new ByteField(2, ( byte ) 3);
-            ClassicAssert.AreEqual(( byte ) 3, field.Value);
+            field = new ByteField(2, (byte) 3);
+            ClassicAssert.AreEqual((byte) 3, field.Value);
             byte[] array = new byte[ 3 ];
 
             try
             {
-                new ByteField(-1, ( byte ) 1, array);
+                new ByteField(-1, (byte) 1, array);
                 Assert.Fail("Should have caught IndexOutOfRangeException");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
             }
-            field = new ByteField(2, ( byte ) 4, array);
-            ClassicAssert.AreEqual(( byte ) 4, field.Value);
-            ClassicAssert.AreEqual(( byte ) 4, array[ 2 ]);
-            array = new byte[ 2 ];
+            field = new ByteField(2, (byte) 4, array);
+            ClassicAssert.AreEqual((byte) 4, field.Value);
+            ClassicAssert.AreEqual((byte) 4, array[2]);
+            array = new byte[2];
             try
             {
-                new ByteField(2, ( byte ) 5, array);
+                new ByteField(2, (byte) 5, array);
                 Assert.Fail("should have gotten IndexOutOfRangeException");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
             }
-            for (int j = 0; j < _test_array.Length; j++)
+            for(int j = 0; j < _test_array.Length; j++)
             {
-                array = new byte[ 1 ];
-                new ByteField(0, _test_array[ j ], array);
-                ClassicAssert.AreEqual(_test_array[ j ], new ByteField(0, array).Value);
+                array = new byte[1];
+                new ByteField(0, _test_array[j], array);
+                ClassicAssert.AreEqual(_test_array[j], new ByteField(0, array).Value);
             }
         }
 
@@ -124,12 +124,12 @@ namespace TestCases.Util
             ByteField field = new ByteField(0);
             byte[]    array = new byte[ 1 ];
 
-            for (int j = 0; j < _test_array.Length; j++)
+            for(int j = 0; j < _test_array.Length; j++)
             {
-                field.Value=_test_array[ j ];
+                field.Value=_test_array[j];
                 ClassicAssert.AreEqual(_test_array[j], field.Value, "testing _1 " + j);
                 field = new ByteField(0);
-                field.Set(_test_array[ j ], array);
+                field.Set(_test_array[j], array);
                 ClassicAssert.AreEqual(_test_array[j], field.Value, "testing _2 ");
                 ClassicAssert.AreEqual(_test_array[j], array[0], "testing _3 ");
             }
@@ -149,15 +149,15 @@ namespace TestCases.Util
                 field.ReadFromBytes(array);
                 Assert.Fail("should have caught IndexOutOfRangeException");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
             }
             field = new ByteField(0);
-            for (int j = 0; j < _test_array.Length; j++)
+            for(int j = 0; j < _test_array.Length; j++)
             {
-                array[ 0 ] = _test_array[ j ];
+                array[0] = _test_array[j];
                 field.ReadFromBytes(array);
                 ClassicAssert.AreEqual(_test_array[j], field.Value, "testing " + j);
             }
@@ -177,7 +177,7 @@ namespace TestCases.Util
             Array.Copy(_test_array, 0, buffer, 0, buffer.Length);
             MemoryStream stream = new MemoryStream(buffer);
 
-            for (int j = 0; j < buffer.Length; j++)
+            for(int j = 0; j < buffer.Length; j++)
             {
                 field.ReadFromStream(stream);
                 ClassicAssert.AreEqual(_test_array[j], field.Value, "Testing " + j);
@@ -193,9 +193,9 @@ namespace TestCases.Util
             ByteField field = new ByteField(0);
             byte[]    array = new byte[ 1 ];
 
-            for (int j = 0; j < _test_array.Length; j++)
+            for(int j = 0; j < _test_array.Length; j++)
             {
-                field.Value=_test_array[ j ];
+                field.Value=_test_array[j];
                 field.WriteToBytes(array);
                 ClassicAssert.AreEqual(_test_array[j], array[0], "testing ");
             }

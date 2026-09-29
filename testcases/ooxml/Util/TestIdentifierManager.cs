@@ -15,7 +15,8 @@
    limitations under the License.
 ==================================================================== */
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 namespace TestCases.Util
 {
@@ -67,7 +68,7 @@ namespace TestCases.Util
                 manager.Reserve(0L);
                 Assert.Fail("Exception expected");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -76,7 +77,7 @@ namespace TestCases.Util
                 manager.Reserve(1L);
                 Assert.Fail("Exception expected");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -85,7 +86,7 @@ namespace TestCases.Util
                 manager.Reserve(2L);
                 Assert.Fail("Exception expected");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }
@@ -102,7 +103,7 @@ namespace TestCases.Util
                 manager.ReserveNew();
                 Assert.Fail("InvalidOperationException expected");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }

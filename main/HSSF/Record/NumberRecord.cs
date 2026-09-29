@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * NumberRecord.java
@@ -25,11 +25,10 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.SS.Util;
     using NPOI.Util;
-
     using System;
     using System.Text;
-    using NPOI.SS.Util;
 
     /**
      * Contains a numeric cell value. 

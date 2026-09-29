@@ -37,21 +37,21 @@ internal static class GenerateHugeStylesWorkbook
     public static void EnsureExists(string path)
     {
         var dir = Path.GetDirectoryName(path);
-        if (!string.IsNullOrEmpty(dir))
+        if(!string.IsNullOrEmpty(dir))
             Directory.CreateDirectory(dir);
 
-        if (File.Exists(path) &&
+        if(File.Exists(path) &&
             ZipUtils.GetStylesXmlUncompressedSize(path) >= TargetUncompressedBytes)
         {
             return;
         }
 
         int styleCount = InitialStyleCount;
-        while (true)
+        while(true)
         {
             Generate(path, styleCount);
 
-            if (ZipUtils.GetStylesXmlUncompressedSize(path) >= TargetUncompressedBytes ||
+            if(ZipUtils.GetStylesXmlUncompressedSize(path) >= TargetUncompressedBytes ||
                 styleCount >= MaxStyleCount)
             {
                 break;
@@ -71,7 +71,7 @@ internal static class GenerateHugeStylesWorkbook
         // 250-custom-format limit while still contributing varied numFmtId values.
         const int NumFmtCount = 20;
         var numFmtIds = new short[NumFmtCount];
-        for (int f = 0; f < NumFmtCount; f++)
+        for(int f = 0; f < NumFmtCount; f++)
             numFmtIds[f] = fmt.GetFormat($"0.{new string('0', f + 1)}");
 
         // Four border styles (small fixed set — keeps border dedup O(constant)).
@@ -90,7 +90,7 @@ internal static class GenerateHugeStylesWorkbook
         const int HeightRange = 200; // point sizes 8–207
         const int ColorRange  = 56;  // indexed colours 8–63
 
-        for (int i = 0; i < styleCount; i++)
+        for(int i = 0; i < styleCount; i++)
         {
             var row = sheet.CreateRow(i);
             var cell = row.CreateCell(0);
@@ -103,9 +103,9 @@ internal static class GenerateHugeStylesWorkbook
             // i < 179,200, ensuring a unique font entry per style.
             int fi = i;
             var font = (XSSFFont)wb.CreateFont();
-            font.FontHeightInPoints = (short)(8 + (fi % HeightRange));
+            font.FontHeightInPoints = (short) (8 + (fi % HeightRange));
             fi /= HeightRange;
-            font.Color    = (short)(8 + (fi % ColorRange));
+            font.Color    = (short) (8 + (fi % ColorRange));
             fi /= ColorRange;
             font.IsBold   = (fi % 2 == 0);
             fi /= 2;
@@ -117,8 +117,8 @@ internal static class GenerateHugeStylesWorkbook
             // increasing each <font> entry's byte count.
             font.Underline   = (fi % 2 == 0) ? FontUnderlineType.Single : FontUnderlineType.Double;
             font.IsStrikeout = (i % 3 == 0);
-            font.Charset     = (short)(i % 3 == 0 ? 161 : 0);
-            font.TypeOffset  = (FontSuperScript)(i % 3);    // adds <vertAlign>
+            font.Charset     = (short) (i % 3 == 0 ? 161 : 0);
+            font.TypeOffset  = (FontSuperScript) (i % 3);    // adds <vertAlign>
             font.Family      = 2;                            // adds <family val="2"/>
             font.SetScheme(FontScheme.MINOR);                // adds <scheme val="minor"/>
 
@@ -131,7 +131,7 @@ internal static class GenerateHugeStylesWorkbook
 
             // Fill: cycle through 56 distinct indexed foreground colours.
             style.FillPattern = FillPattern.SolidForeground;
-            style.FillForegroundColor = (short)(8 + (i % ColorRange));
+            style.FillForegroundColor = (short) (8 + (i % ColorRange));
 
             // Border: cycle through the 4 border styles (tiny fixed set = fast dedup).
             var bs = borderStyles[i % borderStyles.Length];
@@ -142,10 +142,10 @@ internal static class GenerateHugeStylesWorkbook
 
             // Verbose alignment sub-element: adds ~130 bytes to each <xf> entry.
             style.Alignment         = (i % 2 == 0) ? HorizontalAlignment.Left : HorizontalAlignment.Right;
-            style.VerticalAlignment = (i % 3 == 0) ? VerticalAlignment.Top    : VerticalAlignment.Center;
+            style.VerticalAlignment = (i % 3 == 0) ? VerticalAlignment.Top : VerticalAlignment.Center;
             style.WrapText          = (i % 2 == 0);
-            style.Indention         = (short)(i % 8);
-            style.Rotation          = (short)(i % 90);
+            style.Indention         = (short) (i % 8);
+            style.Rotation          = (short) (i % 90);
             style.ShrinkToFit       = (i % 5 == 0);
             style.ReadingOrder      = (i % 2 == 0) ? ReadingOrder.LEFT_TO_RIGHT : ReadingOrder.RIGHT_TO_LEFT;
             style.IsQuotePrefixed   = (i % 3 == 0);
@@ -159,5 +159,3 @@ internal static class GenerateHugeStylesWorkbook
         wb.Write(fs);
     }
 }
-
-

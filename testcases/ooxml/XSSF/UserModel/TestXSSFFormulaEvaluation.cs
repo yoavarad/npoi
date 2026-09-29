@@ -15,15 +15,16 @@
    limitations under the License.
 ==================================================================== */
 
-using TestCases.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using TestCases.HSSF;
-using NPOI.XSSF;
-using NPOI.XSSF.UserModel;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -85,7 +86,7 @@ namespace TestCases.XSSF.UserModel
              *  The first row simply Contains the numbers 1 - 300.
              *  The second row simply refers to the cell value above in the first row by a simple formula.
              */
-            for (int i = 245; i < 265; i++)
+            for(int i = 245; i < 265; i++)
             {
                 ICell cell_noformula = wb.GetSheetAt(0).GetRow(0).GetCell(i);
                 ICell cell_formula = wb.GetSheetAt(0).GetRow(1).GetCell(i);
@@ -152,7 +153,7 @@ namespace TestCases.XSSF.UserModel
                 Assert.Fail("Without a fix for #56752, shouldn't be able to Evaluate a " +
                      "reference to a non-provided linked workbook");
             }
-            catch (Exception)
+            catch(Exception)
             {
             }
 
@@ -166,9 +167,9 @@ namespace TestCases.XSSF.UserModel
             evaluator.SetupReferencedWorkbooks(evaluators);
 
             // Try Evaluating all of them, ensure we don't blow up
-            foreach (IRow r in s)
+            foreach(IRow r in s)
             {
-                foreach (ICell c in r)
+                foreach(ICell c in r)
                 {
                     // TODO Fix and enable
                     evaluator.Evaluate(c);
@@ -184,7 +185,7 @@ namespace TestCases.XSSF.UserModel
                 XSSFFormulaEvaluator.EvaluateAllFormulaCells(wb);
                 Assert.Fail("Static method lacks references, shouldn't work");
             }
-            catch (Exception)
+            catch(Exception)
             {
                 // expected here
             }
@@ -217,7 +218,7 @@ namespace TestCases.XSSF.UserModel
                 cXSLX_nw_cell.CellFormula = (/*setter*/"[alt.xlsx]Sheet1!$A$1");
                 Assert.Fail("New workbook not linked, shouldn't be able to Add");
             }
-            catch (Exception) { }
+            catch(Exception) { }
 
             // Link and re-try
             IWorkbook alt = new XSSFWorkbook();
@@ -278,7 +279,7 @@ namespace TestCases.XSSF.UserModel
             IWorkbook wb1 = HSSFTestDataSamples.OpenSampleWorkbook("55906-MultiSheetRefs.xls");
             IWorkbook wb2 = XSSFTestDataSamples.OpenSampleWorkbook("55906-MultiSheetRefs.xlsx");
 
-            foreach (IWorkbook wb in new IWorkbook[] { wb1, wb2 })
+            foreach(IWorkbook wb in new IWorkbook[] { wb1, wb2 })
             {
                 IFormulaEvaluator Evaluator = wb.GetCreationHelper().CreateFormulaEvaluator();
                 ISheet s1 = wb.GetSheetAt(0);
@@ -346,7 +347,7 @@ namespace TestCases.XSSF.UserModel
             IWorkbook wb1 = HSSFTestDataSamples.OpenSampleWorkbook("55906-MultiSheetRefs.xls");
             IWorkbook wb2 = XSSFTestDataSamples.OpenSampleWorkbook("55906-MultiSheetRefs.xlsx");
 
-            foreach (IWorkbook wb in new IWorkbook[] { wb1, wb2 })
+            foreach(IWorkbook wb in new IWorkbook[] { wb1, wb2 })
             {
                 IFormulaEvaluator Evaluator = wb.GetCreationHelper().CreateFormulaEvaluator();
                 ISheet s1 = wb.GetSheetAt(0);

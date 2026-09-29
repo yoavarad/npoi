@@ -24,12 +24,11 @@
 
 namespace NPOI.POIFS.Crypt.Dsig.Facets
 {
+    using NPOI.POIFS.Crypt;
     using System;
     using System.Collections.Generic;
     using System.Security.Cryptography.Xml;
     using System.Xml;
-    
-    using NPOI.POIFS.Crypt;
 
 
     /**

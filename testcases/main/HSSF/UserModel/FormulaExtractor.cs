@@ -17,14 +17,14 @@
 
 namespace TestCases.HSSF.UserModel
 {
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.Record.Aggregates;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
+    using NPOI.SS.UserModel;
     using System;
     using System.Collections;
-    using NPOI.HSSF.Record;
-    using NPOI.HSSF.UserModel;
-    using NPOI.HSSF.Record.Aggregates;
-    using NPOI.SS.Formula;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Formula.PTG;
 
     /**
      * Test utility class to Get <c>Ptg</c> arrays out of formula cells
@@ -38,11 +38,11 @@ namespace TestCases.HSSF.UserModel
         {
             // no instances of this class
         }
-        
+
         public static Ptg[] GetPtgs(ICell cell)
         {
             CellValueRecordInterface vr = ((HSSFCell)cell).CellValueRecord;
-            if (!(vr is FormulaRecordAggregate))
+            if(!(vr is FormulaRecordAggregate))
             {
                 throw new ArgumentException("Not a formula cell");
             }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -32,9 +32,9 @@ namespace NPOI.SS.Formula.Functions
         {
 
             ValueEval eval;
-            if (arg is RefEval re)
+            if(arg is RefEval re)
             {
-                if (re.NumberOfSheets > 1)
+                if(re.NumberOfSheets > 1)
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
@@ -45,17 +45,17 @@ namespace NPOI.SS.Formula.Functions
                 eval = arg;
             }
 
-            if (eval is AreaEval ae)
+            if(eval is AreaEval ae)
             {
                 // an area ref can work as a scalar value if it is 1x1
-                if (!ae.IsColumn || !ae.IsRow)
+                if(!ae.IsColumn || !ae.IsRow)
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
                 eval = ae.GetRelativeValue(0, 0);
             }
 
-            if (eval is null)
+            if(eval is null)
             {
                 throw new ArgumentException("parameter (eval) may not be null");
             }
@@ -67,18 +67,17 @@ namespace NPOI.SS.Formula.Functions
             int height = evalArg.LastRow - evalArg.FirstRow + 1;
             int width = evalArg.LastColumn - evalArg.FirstColumn + 1; // TODO - junit
 
-            for (int rrIx = 0; rrIx < height; rrIx++)
+            for(int rrIx = 0; rrIx < height; rrIx++)
             {
-                for (int rcIx = 0; rcIx < width; rcIx++)
+                for(int rcIx = 0; rcIx < width; rcIx++)
                 {
                     var val = GetSingleValue(evalArg.GetRelativeValue(rrIx, rcIx));
-                    if (val.HasValue)
+                    if(val.HasValue)
                         numList.Add(val.Value);
                 }
             }
         }
-        private static double? GetSingleValue(ValueEval ve) => ve switch
-        {
+        private static double? GetSingleValue(ValueEval ve) => ve switch {
             NumericValueEval nve => nve.NumberValue,
             null or BlankEval or StringEval => null,
             ErrorEval ev => throw new EvaluationException(ev),

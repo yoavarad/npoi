@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,10 +17,10 @@
 
 namespace NPOI.POIFS.FileSystem
 {
+    using NPOI.POIFS.Common;
+    using NPOI.POIFS.Properties;
     using System;
     using System.IO;
-    using NPOI.POIFS.Properties;
-    using NPOI.POIFS.Common;
 
     /**
      * This class provides methods to write a DocumentEntry managed by a
@@ -55,14 +55,14 @@ namespace NPOI.POIFS.FileSystem
          */
         public NDocumentOutputStream(DocumentEntry document)
         {
-            if (document is not DocumentNode node)
+            if(document is not DocumentNode node)
             {
                 throw new IOException("Cannot open internal document storage, " + document + " not a Document Node");
             }
             _document_size = 0;
             _closed = false;
 
-            _property = (DocumentProperty)node.Property;
+            _property = (DocumentProperty) node.Property;
 
             _document = new NPOIFSDocument(node);
             _document.Free();
@@ -76,7 +76,7 @@ namespace NPOI.POIFS.FileSystem
          */
         public NDocumentOutputStream(DirectoryEntry parent, String name)
         {
-            if (parent is not DirectoryNode)
+            if(parent is not DirectoryNode)
             {
                 throw new IOException("Cannot open internal directory storage, " + parent + " not a Directory Node");
             }
@@ -85,12 +85,12 @@ namespace NPOI.POIFS.FileSystem
 
             // Have an empty one Created for now
             DocumentEntry doc = parent.CreateDocument(name, new MemoryStream([]));
-            _property = (DocumentProperty)((DocumentNode)doc).Property;
-            _document = new NPOIFSDocument((DocumentNode)doc);
+            _property = (DocumentProperty) ((DocumentNode) doc).Property;
+            _document = new NPOIFSDocument((DocumentNode) doc);
         }
         private void dieIfClosed()
         {
-            if (_closed)
+            if(_closed)
             {
                 throw new IOException("cannot perform requested operation on a closed stream");
             }
@@ -99,7 +99,7 @@ namespace NPOI.POIFS.FileSystem
         private void CheckBufferSize()
         {
             // Have we gone over the mini stream limit yet?
-            if (_buffer.Length > POIFSConstants.BIG_BLOCK_MINIMUM_DOCUMENT_SIZE)
+            if(_buffer.Length > POIFSConstants.BIG_BLOCK_MINIMUM_DOCUMENT_SIZE)
             {
                 // Will need to be in the main stream
                 byte[] data = _buffer.ToArray();
@@ -115,14 +115,14 @@ namespace NPOI.POIFS.FileSystem
         {
             dieIfClosed();
 
-            if (_buffer != null)
+            if(_buffer != null)
             {
-                _buffer.WriteByte((byte)b);
+                _buffer.WriteByte((byte) b);
                 CheckBufferSize();
             }
             else
             {
-                Write(new byte[] { (byte)b });
+                Write(new byte[] { (byte) b });
             }
         }
 
@@ -130,7 +130,7 @@ namespace NPOI.POIFS.FileSystem
         {
             dieIfClosed();
 
-            if (_buffer != null)
+            if(_buffer != null)
             {
                 _buffer.Write(b, 0, b.Length);
                 CheckBufferSize();
@@ -145,14 +145,14 @@ namespace NPOI.POIFS.FileSystem
         {
             dieIfClosed();
 
-            if (_buffer != null)
+            if(_buffer != null)
             {
                 _buffer.Write(b, off, len);
                 CheckBufferSize();
             }
             else
             {
-                if (_stream == null)
+                if(_stream == null)
                 {
                     _stream = new NPOIFSStream(_document.FileSystem);
                     _stream_output = _stream.GetOutputStream();
@@ -166,7 +166,7 @@ namespace NPOI.POIFS.FileSystem
         {
             base.Close();
             // Do we have a pending buffer for the mini stream?
-            if (_buffer != null)
+            if(_buffer != null)
             {
                 // It's not much data, so ask NPOIFSDocument to do it for us
                 _document.ReplaceContents(new MemoryStream(_buffer.ToArray()));

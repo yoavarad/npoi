@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Atp
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
 
     /// <summary>
@@ -62,7 +62,7 @@ namespace NPOI.SS.Formula.Atp
         public static double Calculate(double pStartDateVal, double pEndDateVal, int basis)
         {
 
-            if (basis < 0 || basis >= 5)
+            if(basis < 0 || basis >= 5)
             {
                 // if basis is invalid the result is #NUM!
                 throw new EvaluationException(ErrorEval.NUM_ERROR);
@@ -73,26 +73,31 @@ namespace NPOI.SS.Formula.Atp
             // truncate day values
             int startDateVal = (int)Math.Floor(pStartDateVal);
             int endDateVal = (int)Math.Floor(pEndDateVal);
-            if (startDateVal == endDateVal)
+            if(startDateVal == endDateVal)
             {
                 // when dates are equal, result is zero 
                 return 0;
             }
             // swap start and end if out of order
-            if (startDateVal > endDateVal)
+            if(startDateVal > endDateVal)
             {
                 int temp = startDateVal;
                 startDateVal = endDateVal;
                 endDateVal = temp;
             }
 
-            switch (basis)
+            switch(basis)
             {
-                case 0: return Basis0(startDateVal, endDateVal);
-                case 1: return Basis1(startDateVal, endDateVal);
-                case 2: return Basis2(startDateVal, endDateVal);
-                case 3: return Basis3(startDateVal, endDateVal);
-                case 4: return Basis4(startDateVal, endDateVal);
+                case 0:
+                    return Basis0(startDateVal, endDateVal);
+                case 1:
+                    return Basis1(startDateVal, endDateVal);
+                case 2:
+                    return Basis2(startDateVal, endDateVal);
+                case 3:
+                    return Basis3(startDateVal, endDateVal);
+                case 4:
+                    return Basis4(startDateVal, endDateVal);
             }
             throw new InvalidOperationException("cannot happen");
         }
@@ -112,26 +117,26 @@ namespace NPOI.SS.Formula.Atp
             int date2day = endDate.day;
 
             // basis zero has funny adjustments to the day-of-month fields when at end-of-month 
-            if (date1day == LONG_MONTH_LEN && date2day == LONG_MONTH_LEN)
+            if(date1day == LONG_MONTH_LEN && date2day == LONG_MONTH_LEN)
             {
                 date1day = SHORT_MONTH_LEN;
                 date2day = SHORT_MONTH_LEN;
             }
-            else if (date1day == LONG_MONTH_LEN)
+            else if(date1day == LONG_MONTH_LEN)
             {
                 date1day = SHORT_MONTH_LEN;
             }
-            else if (date1day == SHORT_MONTH_LEN && date2day == LONG_MONTH_LEN)
+            else if(date1day == SHORT_MONTH_LEN && date2day == LONG_MONTH_LEN)
             {
                 date2day = SHORT_MONTH_LEN;
                 // Note: If date2day==31, it STAYS 31 if date1day < 30.
                 // Special fixes for February:
             }
-            else if (startDate.month == 2 && IsLastDayOfMonth(startDate))
+            else if(startDate.month == 2 && IsLastDayOfMonth(startDate))
             {
                 // Note - these assignments deliberately set Feb 30 date.
                 date1day = SHORT_MONTH_LEN;
-                if (endDate.month == 2 && IsLastDayOfMonth(endDate))
+                if(endDate.month == 2 && IsLastDayOfMonth(endDate))
                 {
                     // only adjusted when first date is last day in Feb
                     date2day = SHORT_MONTH_LEN;
@@ -150,11 +155,11 @@ namespace NPOI.SS.Formula.Atp
             SimpleDate startDate = CreateDate(startDateVal);
             SimpleDate endDate = CreateDate(endDateVal);
             double yearLength;
-            if (IsGreaterThanOneYear(startDate, endDate))
+            if(IsGreaterThanOneYear(startDate, endDate))
             {
                 yearLength = AverageYearLength(startDate.year, endDate.year);
             }
-            else if (ShouldCountFeb29(startDate, endDate))
+            else if(ShouldCountFeb29(startDate, endDate))
             {
                 yearLength = DAYS_PER_LEAP_YEAR;
             }
@@ -200,11 +205,11 @@ namespace NPOI.SS.Formula.Atp
 
 
             // basis four has funny adjustments to the day-of-month fields when at end-of-month 
-            if (date1day == LONG_MONTH_LEN)
+            if(date1day == LONG_MONTH_LEN)
             {
                 date1day = SHORT_MONTH_LEN;
             }
-            if (date2day == LONG_MONTH_LEN)
+            if(date2day == LONG_MONTH_LEN)
             {
                 date2day = SHORT_MONTH_LEN;
             }
@@ -240,7 +245,7 @@ namespace NPOI.SS.Formula.Atp
         /// </returns>
         private static bool IsLastDayOfMonth(SimpleDate date)
         {
-            if (date.day < SHORT_FEB_LEN)
+            if(date.day < SHORT_FEB_LEN)
             {
                 return false;
             }
@@ -254,7 +259,7 @@ namespace NPOI.SS.Formula.Atp
         /// <returns></returns>
         private static int GetLastDayOfMonth(SimpleDate date)
         {
-            switch (date.month)
+            switch(date.month)
             {
                 case 1:
                 case 3:
@@ -270,7 +275,7 @@ namespace NPOI.SS.Formula.Atp
                 case 11:
                     return SHORT_MONTH_LEN;
             }
-            if (IsLeapYear(date.year))
+            if(IsLeapYear(date.year))
             {
                 return LONG_FEB_LEN;
             }
@@ -287,20 +292,20 @@ namespace NPOI.SS.Formula.Atp
         private static bool ShouldCountFeb29(SimpleDate start, SimpleDate end)
         {
             bool startIsLeapYear = IsLeapYear(start.year);
-            if (startIsLeapYear && start.year == end.year)
+            if(startIsLeapYear && start.year == end.year)
             {
                 // note - dates may not actually span Feb-29, but it gets counted anyway in this case
                 return true;
             }
 
             bool endIsLeapYear = IsLeapYear(end.year);
-            if (!startIsLeapYear && !endIsLeapYear)
+            if(!startIsLeapYear && !endIsLeapYear)
             {
                 return false;
             }
-            if (startIsLeapYear)
+            if(startIsLeapYear)
             {
-                switch (start.month)
+                switch(start.month)
                 {
                     case SimpleDate.JANUARY:
                     case SimpleDate.FEBRUARY:
@@ -308,9 +313,9 @@ namespace NPOI.SS.Formula.Atp
                 }
                 return false;
             }
-            if (endIsLeapYear)
+            if(endIsLeapYear)
             {
-                switch (end.month)
+                switch(end.month)
                 {
                     case SimpleDate.JANUARY:
                         return false;
@@ -345,10 +350,10 @@ namespace NPOI.SS.Formula.Atp
         private static double AverageYearLength(int startYear, int endYear)
         {
             int dayCount = 0;
-            for (int i = startYear; i <= endYear; i++)
+            for(int i = startYear; i <= endYear; i++)
             {
                 dayCount += DAYS_PER_NORMAL_YEAR;
-                if (IsLeapYear(i))
+                if(IsLeapYear(i))
                 {
                     dayCount++;
                 }
@@ -365,17 +370,17 @@ namespace NPOI.SS.Formula.Atp
         private static bool IsLeapYear(int i)
         {
             // leap years are always divisible by 4
-            if (i % 4 != 0)
+            if(i % 4 != 0)
             {
                 return false;
             }
             // each 4th century is a leap year
-            if (i % 400 == 0)
+            if(i % 400 == 0)
             {
                 return true;
             }
             // all other centuries are *not* leap years
-            if (i % 100 == 0)
+            if(i % 100 == 0)
             {
                 return false;
             }
@@ -392,20 +397,20 @@ namespace NPOI.SS.Formula.Atp
         /// </returns>
         private static bool IsGreaterThanOneYear(SimpleDate start, SimpleDate end)
         {
-            if (start.year == end.year)
+            if(start.year == end.year)
             {
                 return false;
             }
-            if (start.year + 1 != end.year)
+            if(start.year + 1 != end.year)
             {
                 return true;
             }
 
-            if (start.month > end.month)
+            if(start.month > end.month)
             {
                 return false;
             }
-            if (start.month < end.month)
+            if(start.month < end.month)
             {
                 return true;
             }

@@ -15,10 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.OpenXml4Net.OPC;
 using NPOI.Util;
 using NPOI.XSSF.UserModel;
 using System;
-using NPOI.OpenXml4Net.OPC;
 using System.Reflection;
 namespace NPOI.XSSF.UserModel
 {
@@ -56,16 +56,16 @@ namespace NPOI.XSSF.UserModel
 
         protected override POIXMLDocumentPart CreateDocumentPart(Type cls, Type[] classes, Object[] values)
         {
-            if (classes == null)
+            if(classes == null)
             {
                 classes = [];
             }
-            
+
             ConstructorInfo constructor = cls.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public,
                         null, classes, null);
-            if (constructor == null)
+            if(constructor == null)
                 throw new MissingMethodException();
-            if (values == null)
+            if(values == null)
             {
                 values = [];
             }

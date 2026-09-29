@@ -16,13 +16,13 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.OpenXmlFormats.Wordprocessing;
-    using System.IO;
-    using System.Xml.Serialization;
-    using System.Xml;
     using NPOI.Util;
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Serialization;
     using System.Xml.XPath;
 
     /**
@@ -30,7 +30,7 @@ namespace NPOI.XWPF.UserModel
      */
     public class XWPFHeader : XWPFHeaderFooter
     {
-        public XWPFHeader():base()
+        public XWPFHeader() : base()
         {
             headerFooter = new CT_Hdr();
             ReadHdrFtr();
@@ -39,7 +39,7 @@ namespace NPOI.XWPF.UserModel
         public XWPFHeader(POIXMLDocumentPart parent, PackagePart part)
             : base(parent, part)
         {
-            
+
         }
 
         [Obsolete("deprecated in POI 3.14, scheduled for removal in POI 3.16")]
@@ -67,14 +67,14 @@ namespace NPOI.XWPF.UserModel
                 }
             }
             cursor.Dispose();*/
-            foreach (object o in hdrFtr.Items)
+            foreach(object o in hdrFtr.Items)
             {
-                if (o is CT_P ctP)
+                if(o is CT_P ctP)
                 {
                     XWPFParagraph p = new XWPFParagraph(ctP, this);
                     paragraphs.Add(p);
                 }
-                if (o is CT_Tbl tbl)
+                if(o is CT_Tbl tbl)
                 {
                     XWPFTable t = new XWPFTable(tbl, this);
                     tables.Add(t);
@@ -101,7 +101,7 @@ namespace NPOI.XWPF.UserModel
             map.Put("http://schemas.microsoft.com/office/word/2006/wordml", "wne");
             xmlOptions.SaveSuggestedPrefixes=(/map);*/
             PackagePart part = GetPackagePart();
-            using (Stream out1 = part.GetOutputStream())
+            using(Stream out1 = part.GetOutputStream())
             {
                 HdrDocument doc = new HdrDocument((CT_Hdr)headerFooter);
                 doc.Save(out1);
@@ -123,34 +123,34 @@ namespace NPOI.XWPF.UserModel
                 XmlDocument xmldoc = DocumentHelper.LoadDocument(is1);
                 hdrDocument = HdrDocument.Parse(xmldoc, NamespaceManager);
                 headerFooter = hdrDocument.Hdr;
-                foreach (object o in headerFooter.Items)
+                foreach(object o in headerFooter.Items)
                 {
-                    if (o is CT_P ctP)
+                    if(o is CT_P ctP)
                     {
                         XWPFParagraph p = new XWPFParagraph(ctP, this);
                         paragraphs.Add(p);
                         bodyElements.Add(p);
                     }
-                    if (o is CT_Tbl tbl)
+                    if(o is CT_Tbl tbl)
                     {
                         XWPFTable t = new XWPFTable(tbl, this);
                         tables.Add(t);
                         bodyElements.Add(t);
                     }
-                    if (o is CT_SdtBlock block)
+                    if(o is CT_SdtBlock block)
                     {
                         XWPFSDT c = new XWPFSDT(block, this);
                         bodyElements.Add(c);
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new POIXMLException(e);
             }
             finally
             {
-                if (is1 != null)
+                if(is1 != null)
                     is1.Close();
             }
         }

@@ -16,10 +16,11 @@
 */
 namespace TestCases.HSSF.Model
 {
-    using System;
     using NPOI.DDF;
     using NPOI.HSSF.Model;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestDrawingManager2
@@ -57,52 +58,53 @@ namespace TestCases.HSSF.Model
             // converted from TestDrawingManager(1)
             EscherDggRecord dgg = new EscherDggRecord();
             dgg.DrawingsSaved = 0;
-            dgg.FileIdClusters = new EscherDggRecord.FileIdCluster[]{};
+            dgg.FileIdClusters = new EscherDggRecord.FileIdCluster[] { };
             DrawingManager2 dm = new DrawingManager2( dgg );
 
             EscherDgRecord dgRecord = dm.CreateDgRecord();
-            ClassicAssert.AreEqual( -1, dgRecord.LastMSOSPID );
-            ClassicAssert.AreEqual( 0, dgRecord.NumShapes );
-            ClassicAssert.AreEqual( 1, dm.Dgg.DrawingsSaved );
-            ClassicAssert.AreEqual( 1, dm.Dgg.FileIdClusters.Length );
-            ClassicAssert.AreEqual( 1, dm.Dgg.FileIdClusters[0].DrawingGroupId );
-            ClassicAssert.AreEqual( 0, dm.Dgg.FileIdClusters[0].NumShapeIdsUsed );
+            ClassicAssert.AreEqual(-1, dgRecord.LastMSOSPID);
+            ClassicAssert.AreEqual(0, dgRecord.NumShapes);
+            ClassicAssert.AreEqual(1, dm.Dgg.DrawingsSaved);
+            ClassicAssert.AreEqual(1, dm.Dgg.FileIdClusters.Length);
+            ClassicAssert.AreEqual(1, dm.Dgg.FileIdClusters[0].DrawingGroupId);
+            ClassicAssert.AreEqual(0, dm.Dgg.FileIdClusters[0].NumShapeIdsUsed);
         }
 
         [Test]
-        public void TestAllocateShapeId() {
+        public void TestAllocateShapeId()
+        {
             EscherDgRecord dgRecord1 = drawingManager2.CreateDgRecord();
-            ClassicAssert.AreEqual( 1, dgg.DrawingsSaved );
+            ClassicAssert.AreEqual(1, dgg.DrawingsSaved);
             EscherDgRecord dgRecord2 = drawingManager2.CreateDgRecord();
-            ClassicAssert.AreEqual( 2, dgg.DrawingsSaved );
+            ClassicAssert.AreEqual(2, dgg.DrawingsSaved);
 
-            ClassicAssert.AreEqual( 1024, drawingManager2.AllocateShapeId( dgRecord1 ) );
-            ClassicAssert.AreEqual( 1024, dgRecord1.LastMSOSPID );
-            ClassicAssert.AreEqual( 1025, dgg.ShapeIdMax );
-            ClassicAssert.AreEqual( 1, dgg.FileIdClusters[0].DrawingGroupId );
-            ClassicAssert.AreEqual( 1, dgg.FileIdClusters[0].NumShapeIdsUsed );
-            ClassicAssert.AreEqual( 1, dgRecord1.NumShapes );
-            ClassicAssert.AreEqual( 1025, drawingManager2.AllocateShapeId( dgRecord1 ) );
-            ClassicAssert.AreEqual( 1025, dgRecord1.LastMSOSPID );
-            ClassicAssert.AreEqual( 1026, dgg.ShapeIdMax );
-            ClassicAssert.AreEqual( 1026, drawingManager2.AllocateShapeId( dgRecord1 ) );
-            ClassicAssert.AreEqual( 1026, dgRecord1.LastMSOSPID );
-            ClassicAssert.AreEqual( 1027, dgg.ShapeIdMax );
-            ClassicAssert.AreEqual( 2048, drawingManager2.AllocateShapeId( dgRecord2 ) );
-            ClassicAssert.AreEqual( 2048, dgRecord2.LastMSOSPID );
-            ClassicAssert.AreEqual( 2049, dgg.ShapeIdMax );
+            ClassicAssert.AreEqual(1024, drawingManager2.AllocateShapeId(dgRecord1));
+            ClassicAssert.AreEqual(1024, dgRecord1.LastMSOSPID);
+            ClassicAssert.AreEqual(1025, dgg.ShapeIdMax);
+            ClassicAssert.AreEqual(1, dgg.FileIdClusters[0].DrawingGroupId);
+            ClassicAssert.AreEqual(1, dgg.FileIdClusters[0].NumShapeIdsUsed);
+            ClassicAssert.AreEqual(1, dgRecord1.NumShapes);
+            ClassicAssert.AreEqual(1025, drawingManager2.AllocateShapeId(dgRecord1));
+            ClassicAssert.AreEqual(1025, dgRecord1.LastMSOSPID);
+            ClassicAssert.AreEqual(1026, dgg.ShapeIdMax);
+            ClassicAssert.AreEqual(1026, drawingManager2.AllocateShapeId(dgRecord1));
+            ClassicAssert.AreEqual(1026, dgRecord1.LastMSOSPID);
+            ClassicAssert.AreEqual(1027, dgg.ShapeIdMax);
+            ClassicAssert.AreEqual(2048, drawingManager2.AllocateShapeId(dgRecord2));
+            ClassicAssert.AreEqual(2048, dgRecord2.LastMSOSPID);
+            ClassicAssert.AreEqual(2049, dgg.ShapeIdMax);
 
-            for (int i = 0; i < 1021; i++)
+            for(int i = 0; i < 1021; i++)
             {
-                drawingManager2.AllocateShapeId( dgRecord1 );
-                ClassicAssert.AreEqual( 2049, dgg.ShapeIdMax );
+                drawingManager2.AllocateShapeId(dgRecord1);
+                ClassicAssert.AreEqual(2049, dgg.ShapeIdMax);
             }
-            ClassicAssert.AreEqual( 3072, drawingManager2.AllocateShapeId( dgRecord1 ) );
-            ClassicAssert.AreEqual( 3073, dgg.ShapeIdMax );
+            ClassicAssert.AreEqual(3072, drawingManager2.AllocateShapeId(dgRecord1));
+            ClassicAssert.AreEqual(3073, dgg.ShapeIdMax);
 
-            ClassicAssert.AreEqual( 2, dgg.DrawingsSaved );
-            ClassicAssert.AreEqual( 4, dgg.NumIdClusters );
-            ClassicAssert.AreEqual( 1026, dgg.NumShapesSaved );
+            ClassicAssert.AreEqual(2, dgg.DrawingsSaved);
+            ClassicAssert.AreEqual(4, dgg.NumIdClusters);
+            ClassicAssert.AreEqual(1026, dgg.NumShapesSaved);
         }
 
         [Test]
@@ -114,11 +116,11 @@ namespace TestCases.HSSF.Model
             dgg.FileIdClusters = new EscherDggRecord.FileIdCluster[]{
                 new EscherDggRecord.FileIdCluster( 2, 10 )};
             DrawingManager2 dm = new DrawingManager2( dgg );
-            ClassicAssert.AreEqual( 1, dm.FindNewDrawingGroupId() );
+            ClassicAssert.AreEqual(1, dm.FindNewDrawingGroupId());
             dgg.FileIdClusters = new EscherDggRecord.FileIdCluster[]{
                 new EscherDggRecord.FileIdCluster( 1, 10 ),
                 new EscherDggRecord.FileIdCluster( 2, 10 )};
-            ClassicAssert.AreEqual( 3, dm.FindNewDrawingGroupId() );
+            ClassicAssert.AreEqual(3, dm.FindNewDrawingGroupId());
         }
     }
 }

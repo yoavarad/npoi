@@ -18,10 +18,10 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
+    using System;
     using System.Collections.Generic;
     using System.Threading;
 
@@ -44,9 +44,9 @@ namespace NPOI.HSSF.UserModel
         /// <param name="rec">The record.</param>
         /// <param name="workbook">The workbook.</param>
         public HSSFCellStyle(short index, ExtendedFormatRecord rec, HSSFWorkbook workbook)
-            :this(index, rec, workbook.Workbook)
+            : this(index, rec, workbook.Workbook)
         {
-            
+
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="HSSFCellStyle"/> class.
@@ -82,7 +82,7 @@ namespace NPOI.HSSF.UserModel
             {
                 short parentIndex = _format.ParentIndex;
                 // parentIndex equal 0xFFF indicates no inheritance from a cell style XF (See 2.4.353 XF)
-                if ( parentIndex == 0|| parentIndex == 0xFFF)
+                if(parentIndex == 0|| parentIndex == 0xFFF)
                 {
                     return null;
                 }
@@ -107,7 +107,7 @@ namespace NPOI.HSSF.UserModel
         private static readonly AsyncLocal<List<FormatRecord>> lastFormats;
         private static readonly AsyncLocal<string> getDataFormatStringCache;
 
-        static HSSFCellStyle ()
+        static HSSFCellStyle()
         {
             lastDateFormat = new AsyncLocal<short>();
             lastDateFormat.Value = short.MinValue;
@@ -129,9 +129,9 @@ namespace NPOI.HSSF.UserModel
             //HSSFDataFormat format = new HSSFDataFormat(workbook);
             //return format.GetFormat(DataFormat);
 
-            if (getDataFormatStringCache.Value != null)
+            if(getDataFormatStringCache.Value != null)
             {
-                if (lastDateFormat.Value == DataFormat && _workbook.Formats.Equals(lastFormats.Value))
+                if(lastDateFormat.Value == DataFormat && _workbook.Formats.Equals(lastFormats.Value))
                 {
                     return getDataFormatStringCache.Value;
                 }
@@ -208,7 +208,7 @@ namespace NPOI.HSSF.UserModel
         /// <returns></returns>
         public IFont GetFont(IWorkbook parentWorkbook)
         {
-            return ((HSSFWorkbook)parentWorkbook).GetFontAt(FontIndex);
+            return ((HSSFWorkbook) parentWorkbook).GetFontAt(FontIndex);
         }
 
         /// <summary>
@@ -262,11 +262,11 @@ namespace NPOI.HSSF.UserModel
         /// <value> the type of alignment</value>
         public HorizontalAlignment Alignment
         {
-            get { return (HorizontalAlignment)_format.Alignment; }
+            get { return (HorizontalAlignment) _format.Alignment; }
             set
             {
                 _format.IsIndentNotParentAlignment=(true);
-                _format.Alignment=(short)value;
+                _format.Alignment=(short) value;
             }
         }
 
@@ -295,10 +295,10 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                return (VerticalAlignment)_format.VerticalAlignment;
+                return (VerticalAlignment) _format.VerticalAlignment;
 
             }
-            set { _format.VerticalAlignment=(short)value; }
+            set { _format.VerticalAlignment=(short) value; }
         }
 
         /// <summary>
@@ -315,34 +315,35 @@ namespace NPOI.HSSF.UserModel
             get
             {
                 short rotation = _format.Rotation;
-                if (rotation == 0xff) 
+                if(rotation == 0xff)
                 {
                     return rotation;
                 }
-                if (rotation > 90)
+                if(rotation > 90)
                     //This is actually the 4th quadrant
-                    rotation = (short)(90 - rotation);
+                    rotation = (short) (90 - rotation);
                 return rotation;
             }
             set
             {
                 short rotation = value;
 
-                if (rotation == 0xff) 
+                if(rotation == 0xff)
                 {
 
-                }else if ((value < 0) && (value >= -90))
+                }
+                else if((value < 0) && (value >= -90))
                 {
                     //Take care of the funny 4th quadrant Issue
                     //The 4th quadrant (-1 to -90) is stored as (91 to 180)
-                    rotation = (short)(90 - value);
+                    rotation = (short) (90 - value);
                 }
-                else if (rotation > 90 && rotation <= 180)
+                else if(rotation > 90 && rotation <= 180)
                 {
                     // stay compatible with the range used by XSSF, map from ]90..180] to ]0..-90]
                     // we actually don't need to do anything here as the internal value is stored in [0-180] anyway!
                 }
-                else if ((value < -90) || (value > 90))
+                else if((value < -90) || (value > 90))
                 {
                     //Do not allow an incorrect rotation to be Set
                     throw new ArgumentException("The rotation must be between -90 and 90 degrees, or 0xff");
@@ -360,7 +361,7 @@ namespace NPOI.HSSF.UserModel
         /// <param name="wb">The workbook.</param>
         public void VerifyBelongsToWorkbook(HSSFWorkbook wb)
         {
-            if (wb.Workbook != _workbook)
+            if(wb.Workbook != _workbook)
             {
                 throw new ArgumentException("This Style does not belong to the supplied Workbook. Are you trying to assign a style from one workbook to the cell of a different workbook?");
             }
@@ -373,7 +374,7 @@ namespace NPOI.HSSF.UserModel
         /// <value>number of spaces</value>
         public short Indention
         {
-            get{return _format.Indent;}
+            get { return _format.Indent; }
             set { _format.Indent = (value); }
         }
 
@@ -383,11 +384,11 @@ namespace NPOI.HSSF.UserModel
         /// <value>The border type.</value>
         public BorderStyle BorderLeft
         {
-            get { return (BorderStyle)_format.BorderLeft; }
+            get { return (BorderStyle) _format.BorderLeft; }
             set
             {
                 _format.IsIndentNotParentBorder=(true);
-                _format.BorderLeft=(short)value;
+                _format.BorderLeft=(short) value;
             }
         }
 
@@ -397,11 +398,11 @@ namespace NPOI.HSSF.UserModel
         /// <value>The border type.</value>
         public BorderStyle BorderRight
         {
-            get { return (BorderStyle)_format.BorderRight; }
+            get { return (BorderStyle) _format.BorderRight; }
             set
             {
                 _format.IsIndentNotParentBorder = (true);
-                _format.BorderRight = (short)value;
+                _format.BorderRight = (short) value;
             }
         }
 
@@ -411,11 +412,11 @@ namespace NPOI.HSSF.UserModel
         /// <value>The border type.</value>
         public BorderStyle BorderTop
         {
-            get { return (BorderStyle)_format.BorderTop; }
+            get { return (BorderStyle) _format.BorderTop; }
             set
             {
                 _format.IsIndentNotParentBorder = (true);
-                _format.BorderTop = (short)value;
+                _format.BorderTop = (short) value;
             }
         }
 
@@ -425,11 +426,11 @@ namespace NPOI.HSSF.UserModel
         /// <value>The border type.</value>
         public BorderStyle BorderBottom
         {
-            get { return (BorderStyle)_format.BorderBottom; }
+            get { return (BorderStyle) _format.BorderBottom; }
             set
             {
                 _format.IsIndentNotParentBorder = true;
-                _format.BorderBottom = (short)value;
+                _format.BorderBottom = (short) value;
             }
         }
 
@@ -492,8 +493,8 @@ namespace NPOI.HSSF.UserModel
         /// <value>The line type.</value>
         public BorderStyle BorderDiagonalLineStyle
         {
-            get { return (BorderStyle)_format.AdtlDiagLineStyle; }
-            set { _format.AdtlDiagLineStyle=(short)value; }
+            get { return (BorderStyle) _format.AdtlDiagLineStyle; }
+            set { _format.AdtlDiagLineStyle=(short) value; }
         }
 
         /// <summary>
@@ -502,8 +503,8 @@ namespace NPOI.HSSF.UserModel
         /// <value>The border diagional type.</value>
         public BorderDiagonal BorderDiagonal
         {
-            get { return (BorderDiagonal)_format.Diagonal; }
-            set { _format.Diagonal = (short)value; }
+            get { return (BorderDiagonal) _format.Diagonal; }
+            set { _format.Diagonal = (short) value; }
         }
 
         /// <summary>
@@ -527,11 +528,11 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                return (ReadingOrder)_format.ReadingOrder;
+                return (ReadingOrder) _format.ReadingOrder;
             }
             set
             {
-                _format.ReadingOrder = (short)value;
+                _format.ReadingOrder = (short) value;
             }
         }
 
@@ -543,9 +544,9 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                return (FillPattern)_format.AdtlFillPattern;
+                return (FillPattern) _format.AdtlFillPattern;
             }
-            set { _format.AdtlFillPattern=(short)value; }
+            set { _format.AdtlFillPattern=(short) value; }
         }
 
         /// <summary>
@@ -560,17 +561,17 @@ namespace NPOI.HSSF.UserModel
         /// </summary>
         private void CheckDefaultBackgroundFills()
         {
-            if (_format.FillForeground == HSSFColor.Automatic.Index)
+            if(_format.FillForeground == HSSFColor.Automatic.Index)
             {
                 //JMH: Why +1, hell why not. I guess it made some sense to someone at the time. Doesnt
                 //to me now.... But experience has shown that when the fore is Set to AUTOMATIC then the
                 //background needs to be incremented......
-                if (_format.FillBackground != (HSSFColor.Automatic.Index + 1))
+                if(_format.FillBackground != (HSSFColor.Automatic.Index + 1))
                     FillBackgroundColor = HSSFColor.Automatic.Index + 1;
             }
-            else if (_format.FillBackground == HSSFColor.Automatic.Index + 1)
+            else if(_format.FillBackground == HSSFColor.Automatic.Index + 1)
                 //Now if the forground Changes to a non-AUTOMATIC color the background Resets itself!!!
-                if (_format.FillForeground != HSSFColor.Automatic.Index)
+                if(_format.FillForeground != HSSFColor.Automatic.Index)
                     FillBackgroundColor=(HSSFColor.Automatic.Index);
         }
         /**
@@ -587,7 +588,7 @@ namespace NPOI.HSSF.UserModel
          */
         public void CloneStyleFrom(ICellStyle source)
         {
-            if (source is HSSFCellStyle style)
+            if(source is HSSFCellStyle style)
             {
                 this.CloneStyleFrom(style);
             }
@@ -616,7 +617,7 @@ namespace NPOI.HSSF.UserModel
             _format.CloneStyleFrom(source._format);
 
             // Handle matching things if we cross workbooks
-            if (_workbook != source._workbook)
+            if(_workbook != source._workbook)
             {
                 lastDateFormat.Value = short.MinValue;
                 lastFormats.Value = null;
@@ -669,9 +670,10 @@ namespace NPOI.HSSF.UserModel
                 short result = _format.FillBackground;
                 //JMH: Do this ridiculous conversion, and let HSSFCellStyle
                 //internally migrate back and forth
-                if (result == (HSSFColor.Automatic.Index + 1))
+                if(result == (HSSFColor.Automatic.Index + 1))
                     return HSSFColor.Automatic.Index;
-                else return result;
+                else
+                    return result;
             }
             set
             {
@@ -694,7 +696,7 @@ namespace NPOI.HSSF.UserModel
         /// @see org.apache.poi.hssf.usermodel.HSSFPalette#GetColor(short)
         public short FillForegroundColor
         {
-            get{return _format.FillForeground;}
+            get { return _format.FillForeground; }
             set
             {
                 _format.FillForeground = value;
@@ -719,26 +721,26 @@ namespace NPOI.HSSF.UserModel
             get
             {
                 StyleRecord sr = _workbook.GetStyleRecord(index);
-                if (sr == null)
+                if(sr == null)
                 {
                     return null;
                 }
-                if (sr.IsBuiltin)
+                if(sr.IsBuiltin)
                 {
                     return null;
                 }
                 return sr.Name;
             }
-            set 
+            set
             {
                 StyleRecord sr = _workbook.GetStyleRecord(index);
-                if (sr == null)
+                if(sr == null)
                 {
                     sr = _workbook.CreateStyleRecord(index);
                 }
                 // All Style records start as "builtin", but generally
                 //  only 20 and below really need to be
-                if (sr.IsBuiltin && index <= 20)
+                if(sr.IsBuiltin && index <= 20)
                 {
                     throw new ArgumentException("Unable to set user specified style names for built in styles!");
                 }
@@ -774,18 +776,20 @@ namespace NPOI.HSSF.UserModel
         /// </exception>
         public override bool Equals(Object obj)
         {
-            if (this == obj) return true;
-            if (obj == null) return false;
-            if (obj is HSSFCellStyle other)
+            if(this == obj)
+                return true;
+            if(obj == null)
+                return false;
+            if(obj is HSSFCellStyle other)
             {
-                if (_format == null)
+                if(_format == null)
                 {
-                    if (other._format != null)
+                    if(other._format != null)
                         return false;
                 }
-                else if (!_format.Equals(other._format))
+                else if(!_format.Equals(other._format))
                     return false;
-                if (index != other.index)
+                if(index != other.index)
                     return false;
                 return true;
             }

@@ -26,7 +26,7 @@ public class XSSFRowCellNumBenchmark
 
         // Dense row: 200 contiguous cells (typical spreadsheet)
         _denseRow = sheet.CreateRow(1);
-        for (int i = 0; i < 200; i++)
+        for(int i = 0; i < 200; i++)
         {
             _denseRow.CreateCell(i).SetCellValue(i);
         }
@@ -37,7 +37,7 @@ public class XSSFRowCellNumBenchmark
     {
         // Simulates tight loop pattern: for (j = row.FirstCellNum; j <= row.LastCellNum; j++)
         int sum = 0;
-        for (int i = 0; i < 10_000; i++)
+        for(int i = 0; i < 10_000; i++)
         {
             sum += _sparseRow.FirstCellNum + _sparseRow.LastCellNum;
         }
@@ -48,7 +48,7 @@ public class XSSFRowCellNumBenchmark
     public int DenseRow_FirstLastCellNum_10000x()
     {
         int sum = 0;
-        for (int i = 0; i < 10_000; i++)
+        for(int i = 0; i < 10_000; i++)
         {
             sum += _denseRow.FirstCellNum + _denseRow.LastCellNum;
         }
@@ -60,10 +60,11 @@ public class XSSFRowCellNumBenchmark
     {
         // Pattern seen in copy/shift operations: iterate FirstCellNum..LastCellNum
         int count = 0;
-        for (int j = _denseRow.FirstCellNum; j < _denseRow.LastCellNum; j++)
+        for(int j = _denseRow.FirstCellNum; j < _denseRow.LastCellNum; j++)
         {
             ICell cell = _denseRow.GetCell(j);
-            if (cell != null) count++;
+            if(cell != null)
+                count++;
         }
         return count;
     }

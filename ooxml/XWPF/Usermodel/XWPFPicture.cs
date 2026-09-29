@@ -15,10 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXmlFormats.Dml.Picture;
 using NPOI.OpenXmlFormats.Dml;
+using NPOI.OpenXmlFormats.Dml.Picture;
+using System;
 
 namespace NPOI.XWPF.UserModel
 {
@@ -68,7 +68,7 @@ namespace NPOI.XWPF.UserModel
             //String blipId = ctPic.blipFill.blip.embed;
             CT_BlipFillProperties blipProps = ctPic.blipFill;
 
-            if (blipProps == null || !blipProps.IsSetBlip())
+            if(blipProps == null || !blipProps.IsSetBlip())
             {
                 // return null if Blip data is missing
                 return null;
@@ -78,10 +78,10 @@ namespace NPOI.XWPF.UserModel
 
 
             POIXMLDocumentPart part = run.Parent.Part;
-            if (part != null)
+            if(part != null)
             {
                 POIXMLDocumentPart relatedPart = part.GetRelationById(blipId);
-                if (relatedPart is XWPFPictureData data)
+                if(relatedPart is XWPFPictureData data)
                 {
                     return data;
                 }

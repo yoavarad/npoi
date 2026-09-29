@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,7 +16,8 @@
 ==================================================================== */
 
 
-namespace NPOI.SS.Formula.Functions {
+namespace NPOI.SS.Formula.Functions
+{
     using NPOI.SS.Formula.Eval;
 
     /**
@@ -32,15 +33,18 @@ namespace NPOI.SS.Formula.Functions {
      * </p>
      * @author Josh Micich
      */
-    public class AverageIf : FreeRefFunction {
+    public class AverageIf : FreeRefFunction
+    {
 
         public static FreeRefFunction instance = new AverageIf();
 
-        public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec) {
-            if (args.Length > 3 || args.Length < 2) {
+        public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
+        {
+            if(args.Length > 3 || args.Length < 2)
+            {
                 return ErrorEval.VALUE_INVALID;
             }
-            return AverageIfs.instance.Evaluate(new [] {  GetSumRange(args), args[0], args[1]}, ec);
+            return AverageIfs.instance.Evaluate(new[] { GetSumRange(args), args[0], args[1] }, ec);
         }
 
         private static ValueEval GetSumRange(ValueEval[] args)

@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.PTG;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace NPOI.SS.Formula.Functions
     {
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length == 0)
+            if(args.Length == 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -18,7 +18,8 @@ namespace NPOI.SS.Formula.Functions
             {
                 ValueEval valueEval = args[0];
                 int result = 1;
-                if (valueEval is RefListEval refListEval) {
+                if(valueEval is RefListEval refListEval)
+                {
                     result = refListEval.GetList().Count;
                 }
                 NumberEval numberEval = new NumberEval(new NumberPtg(result));

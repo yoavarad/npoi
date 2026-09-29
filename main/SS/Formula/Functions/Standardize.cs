@@ -1,11 +1,11 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NPOI.SS.Formula.Functions
 {
-    public class Standardize:Fixed3ArgFunction,FreeRefFunction
+    public class Standardize : Fixed3ArgFunction, FreeRefFunction
     {
         public static Standardize instance = new Standardize();
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg1, ValueEval arg2, ValueEval arg3)
@@ -13,21 +13,21 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 Double xval = evaluateValue(arg1, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(xval))
+                if(double.IsNaN(xval))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 Double mean = evaluateValue(arg2, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(mean))
+                if(double.IsNaN(mean))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 Double stdev = evaluateValue(arg3, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(stdev))
+                if(double.IsNaN(stdev))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
-                else if (stdev <= 0)
+                else if(stdev <= 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
@@ -35,14 +35,14 @@ namespace NPOI.SS.Formula.Functions
                 var result = (xval - mean)/stdev;
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 3)
+            if(args.Length == 3)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], args[2]);
             }

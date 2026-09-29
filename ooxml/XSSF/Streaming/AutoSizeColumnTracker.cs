@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,11 +14,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NPOI.SS.UserModel;
-using NPOI.SS.Util;
 
 namespace NPOI.XSSF.Streaming
 {
@@ -50,7 +50,7 @@ namespace NPOI.XSSF.Streaming
 
             public ColumnWidthPair() : this(-1.0, -1.0)
             {
-               
+
             }
 
             public ColumnWidthPair(double columnWidthSkipMergedCells, double columnWidthUseMergedCells)
@@ -170,7 +170,7 @@ namespace NPOI.XSSF.Streaming
          */
         public void TrackColumns(ICollection<int> columns)
         {
-            foreach ( int column in columns)
+            foreach(int column in columns)
             {
                 TrackColumn(column);
             }
@@ -188,7 +188,7 @@ namespace NPOI.XSSF.Streaming
         public bool TrackColumn(int column)
         {
             untrackedColumns.Remove(column);
-            if (!maxColumnWidths.ContainsKey(column))
+            if(!maxColumnWidths.ContainsKey(column))
             {
                 maxColumnWidths.Add(column, new ColumnWidthPair());
                 return true;
@@ -206,7 +206,7 @@ namespace NPOI.XSSF.Streaming
          */
         private bool ImplicitlyTrackColumn(int column)
         {
-            if (!untrackedColumns.Contains(column))
+            if(!untrackedColumns.Contains(column))
             {
                 TrackColumn(column);
                 return true;
@@ -226,10 +226,10 @@ namespace NPOI.XSSF.Streaming
         public bool UntrackColumns(ICollection<int> columns)
         {
             bool result = false;
-            foreach (var col in columns)
+            foreach(var col in columns)
             {
                 untrackedColumns.Add(col);
-                if (maxColumnWidths.ContainsKey(col))
+                if(maxColumnWidths.ContainsKey(col))
                 {
                     result=  maxColumnWidths.Remove(col);
                 }
@@ -250,7 +250,7 @@ namespace NPOI.XSSF.Streaming
         public bool UntrackColumn(int column)
         {
             var result = false;
-            if (maxColumnWidths.ContainsKey(column))
+            if(maxColumnWidths.ContainsKey(column))
             {
                 untrackedColumns.Add(column);
                 result = maxColumnWidths.Remove(column);
@@ -270,18 +270,18 @@ namespace NPOI.XSSF.Streaming
          */
         public int GetBestFitColumnWidth(int column, bool useMergedCells)
         {
-            if (!maxColumnWidths.ContainsKey(column))
+            if(!maxColumnWidths.ContainsKey(column))
             {
                 // if column is not tracked, implicitly track the column if trackAllColumns is True and column has not been explicitly untracked
-                if (trackAllColumns)
+                if(trackAllColumns)
                 {
-                    if (!ImplicitlyTrackColumn(column))
+                    if(!ImplicitlyTrackColumn(column))
                     {
                         var reason = new InvalidOperationException(
                                 "Column was explicitly untracked after trackAllColumns() was called.");
                         throw new InvalidOperationException(
                                 "Cannot get best fit column width on explicitly untracked column " + column + ". " +
-                                "Either explicitly track the column or track all columns.",reason);
+                                "Either explicitly track the column or track all columns.", reason);
                     }
                 }
                 else
@@ -295,7 +295,7 @@ namespace NPOI.XSSF.Streaming
                 }
             }
             double width = maxColumnWidths[column].GetMaxColumnWidth(useMergedCells);
-            return (int)(256 * width);
+            return (int) (256 * width);
         }
 
 
@@ -315,13 +315,13 @@ namespace NPOI.XSSF.Streaming
             // update the widths
             // for-loop over the shorter of the number of cells in the row and the number of tracked columns
             // these two for-loops should do the same thing
-            if (maxColumnWidths.Count < row.PhysicalNumberOfCells)
+            if(maxColumnWidths.Count < row.PhysicalNumberOfCells)
             {
                 // loop over the tracked columns, because there are fewer tracked columns than cells in this row
-                foreach (var e in maxColumnWidths)
+                foreach(var e in maxColumnWidths)
                 {
-                     int column = e.Key;
-                     ICell cell = row.GetCell(column); //is MissingCellPolicy=Row.RETURN_NULL_AND_BLANK needed?
+                    int column = e.Key;
+                    ICell cell = row.GetCell(column); //is MissingCellPolicy=Row.RETURN_NULL_AND_BLANK needed?
 
                     // FIXME: if cell belongs to a merged region, some of the merged region may have fallen outside of the random access window
                     // In this case, getting the column width may result in an error. Need to gracefully handle this.
@@ -329,7 +329,7 @@ namespace NPOI.XSSF.Streaming
                     // FIXME: Most cells are not merged, so calling getCellWidth twice re-computes the same value twice.
                     // Need to rewrite this to avoid unnecessary computation if this proves to be a performance bottleneck.
 
-                    if (cell != null)
+                    if(cell != null)
                     {
                         ColumnWidthPair pair = e.Value;
                         UpdateColumnWidth(cell, pair);
@@ -339,7 +339,7 @@ namespace NPOI.XSSF.Streaming
             else
             {
                 // loop over the cells in this row, because there are fewer cells in this row than tracked columns
-                foreach (var cell in row)
+                foreach(var cell in row)
                 {
                     int column = cell.ColumnIndex;
 
@@ -349,7 +349,7 @@ namespace NPOI.XSSF.Streaming
                     // FIXME: Most cells are not merged, so calling getCellWidth twice re-computes the same value twice.
                     // Need to rewrite this to avoid unnecessary computation if this proves to be a performance bottleneck.
 
-                    if (maxColumnWidths.TryGetValue(column, out ColumnWidthPair pair))
+                    if(maxColumnWidths.TryGetValue(column, out ColumnWidthPair pair))
                     {
                         UpdateColumnWidth(cell, pair);
                     }
@@ -369,10 +369,10 @@ namespace NPOI.XSSF.Streaming
         private void ImplicitlyTrackColumnsInRow(IRow row)
         {
             // track new columns
-            if (trackAllColumns)
+            if(trackAllColumns)
             {
                 // if column is not tracked, implicitly track the column if trackAllColumns is True and column has not been explicitly untracked 
-                foreach (var cell in row)
+                foreach(var cell in row)
                 {
                     int column = cell.ColumnIndex;
                     ImplicitlyTrackColumn(column);

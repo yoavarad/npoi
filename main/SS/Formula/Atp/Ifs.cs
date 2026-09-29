@@ -14,11 +14,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NPOI.SS.Formula.Functions;
-using NPOI.SS.Formula.Eval;
 
 namespace NPOI.SS.Formula.Atp
 {
@@ -33,15 +33,15 @@ namespace NPOI.SS.Formula.Atp
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length % 2 != 0)
+            if(args.Length % 2 != 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
-            for (int i = 0; i < args.Length; i = i + 2)
+            for(int i = 0; i < args.Length; i = i + 2)
             {
                 BoolEval logicalTest = (BoolEval)args[i];
-                if ( logicalTest.BooleanValue )
+                if(logicalTest.BooleanValue)
                 {
                     return args[i + 1];
                 }

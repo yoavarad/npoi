@@ -17,15 +17,15 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
-    using System.Collections;
     using NPOI.DDF;
-    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Model;
+    using NPOI.HSSF.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
 
     internal sealed class SerializationListener : EscherSerializationListener
     {
@@ -44,12 +44,12 @@ namespace NPOI.HSSF.Record
 
         void EscherSerializationListener.BeforeRecordSerialize(int offset, short recordId, EscherRecord record)
         {
-           
+
         }
 
         void EscherSerializationListener.AfterRecordSerialize(int offset, short recordId, int size, EscherRecord record)
         {
-            if (recordId == EscherClientDataRecord.RECORD_ID || recordId == EscherTextboxRecord.RECORD_ID)
+            if(recordId == EscherClientDataRecord.RECORD_ID || recordId == EscherTextboxRecord.RECORD_ID)
             {
                 spEndingOffsets.Add(offset);
                 records.Add(record);
@@ -79,7 +79,7 @@ namespace NPOI.HSSF.Record
 
         void EscherSerializationListener.AfterRecordSerialize(int offset, short recordId, int size, EscherRecord record)
         {
-            if (recordId == EscherClientDataRecord.RECORD_ID || recordId == EscherTextboxRecord.RECORD_ID)
+            if(recordId == EscherClientDataRecord.RECORD_ID || recordId == EscherTextboxRecord.RECORD_ID)
             {
                 spEndingOffsets.Add(offset);
             }
@@ -358,7 +358,7 @@ namespace NPOI.HSSF.Record
 
         public EscherAggregate(bool createDefaultTree)
         {
-            if (createDefaultTree)
+            if(createDefaultTree)
             {
                 BuildBaseTree();
             }
@@ -382,7 +382,7 @@ namespace NPOI.HSSF.Record
 
             StringBuilder result = new StringBuilder();
             result.Append('[').Append(RecordName).Append(']' + nl);
-            for (IEnumerator iterator = EscherRecords.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = EscherRecords.GetEnumerator(); iterator.MoveNext();)
             {
                 EscherRecord escherRecord = (EscherRecord)iterator.Current;
                 result.Append(escherRecord.ToString() + nl);
@@ -401,7 +401,7 @@ namespace NPOI.HSSF.Record
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(tab).Append("<").Append(RecordName).Append(">\n");
-            for (IEnumerator iterator = EscherRecords.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = EscherRecords.GetEnumerator(); iterator.MoveNext();)
             {
                 EscherRecord escherRecord = (EscherRecord)iterator.Current;
                 builder.Append(escherRecord.ToXml(tab + "\t"));
@@ -439,21 +439,21 @@ namespace NPOI.HSSF.Record
             CustomEscherRecordFactory recordFactory = new(shapeRecords);
 
             // Create one big buffer
-            using (MemoryStream stream = RecyclableMemory.GetStream())
+            using(MemoryStream stream = RecyclableMemory.GetStream())
             {
                 EscherAggregate agg = new EscherAggregate(false);
                 int loc = locFirstDrawingRecord;
-                while (loc + 1 < records.Count
+                while(loc + 1 < records.Count
                         && (IsDrawingLayerRecord(GetSid(records, loc))))
                 {
                     try
                     {
-                        if (!(GetSid(records, loc) == DrawingRecord.sid || GetSid(records, loc) == ContinueRecord.sid))
+                        if(!(GetSid(records, loc) == DrawingRecord.sid || GetSid(records, loc) == ContinueRecord.sid))
                         {
                             loc++;
                             continue;
                         }
-                        if (GetSid(records, loc) == DrawingRecord.sid)
+                        if(GetSid(records, loc) == DrawingRecord.sid)
                         {
                             byte[] data = ((DrawingRecord)records[loc]).RecordData;
                             stream.Write(data, 0, data.Length);
@@ -464,7 +464,7 @@ namespace NPOI.HSSF.Record
                             stream.Write(data, 0, data.Length);
                         }
                     }
-                    catch (IOException e)
+                    catch(IOException e)
                     {
                         throw new RuntimeException("Couldn't get data from drawing/continue records", e);
                     }
@@ -475,7 +475,7 @@ namespace NPOI.HSSF.Record
                 //        agg.escherRecords = new ArrayList();
                 int pos = 0;
                 byte[] buffer = stream.ToArray();
-                while (pos < buffer.Length)
+                while(pos < buffer.Length)
                 {
                     EscherRecord r = recordFactory.CreateRecord(buffer, pos);
                     int bytesRead = r.FillFields(buffer, pos, recordFactory);
@@ -487,9 +487,9 @@ namespace NPOI.HSSF.Record
                 loc = locFirstDrawingRecord + 1;
                 int shapeIndex = 0;
 
-                while (loc < records.Count && IsDrawingLayerRecord(GetSid(records, loc)))
+                while(loc < records.Count && IsDrawingLayerRecord(GetSid(records, loc)))
                 {
-                    if (!IsObjectRecord(records, loc))
+                    if(!IsObjectRecord(records, loc))
                     {
                         loc++;
                         continue;
@@ -500,9 +500,9 @@ namespace NPOI.HSSF.Record
                 }
                 // any NoteRecords that follow the drawing block must be aggregated and and saved in the tailRec collection
                 //put noterecord into tailsRec
-                while (loc < records.Count)
+                while(loc < records.Count)
                 {
-                    if (GetSid(records, loc) == NoteRecord.sid)
+                    if(GetSid(records, loc) == NoteRecord.sid)
                     {
                         NoteRecord r = (NoteRecord)records[(loc)];
                         agg.tailRec[r.ShapeId] = r;
@@ -542,7 +542,7 @@ namespace NPOI.HSSF.Record
             List<int> spEndingOffsets = new List<int>();
             List<EscherRecord> shapes = new List<EscherRecord>();
             int pos = 0;
-            foreach (EscherRecord e in records)
+            foreach(EscherRecord e in records)
             {
                 pos += e.Serialize(pos, buffer, new SerializationListener(spEndingOffsets, shapes, e));
             }
@@ -555,14 +555,14 @@ namespace NPOI.HSSF.Record
             pos = offset;
             int writtenEscherBytes = 0;
             int i;
-            for (i = 1; i < shapes.Count; i++)
+            for(i = 1; i < shapes.Count; i++)
             {
                 int endOffset = (int)spEndingOffsets[i] - 1;
                 int startOffset;
-                if (i == 1)
+                if(i == 1)
                     startOffset = 0;
                 else
-                    startOffset = (int)spEndingOffsets[i - 1];
+                    startOffset = (int) spEndingOffsets[i - 1];
 
                 byte[] drawingData = new byte[endOffset - startOffset + 1];
                 Array.Copy(buffer, startOffset, drawingData, 0, drawingData.Length);
@@ -574,7 +574,7 @@ namespace NPOI.HSSF.Record
                 Record obj = (Record)shapeToObj[shapes[i]];
                 pos += obj.Serialize(pos, data);
 
-                if (i == shapes.Count - 1 && endOffset < buffer.Length - 1)
+                if(i == shapes.Count - 1 && endOffset < buffer.Length - 1)
                 {
                     drawingData = new byte[buffer.Length - endOffset - 1];
                     Array.Copy(buffer, endOffset + 1, drawingData, 0, drawingData.Length);
@@ -582,19 +582,19 @@ namespace NPOI.HSSF.Record
                 }
 
             }
-            if ((pos - offset) < buffer.Length - 1)
+            if((pos - offset) < buffer.Length - 1)
             {
                 byte[] drawingData = new byte[buffer.Length - (pos - offset)];
                 System.Array.Copy(buffer, (pos - offset), drawingData, 0, drawingData.Length);
                 pos += WriteDataIntoDrawingRecord(drawingData, writtenEscherBytes, pos, data, i);
             }
             // Write records that need to be Serialized after all drawing Group records
-            foreach (Record rec in tailRec.Values)
+            foreach(Record rec in tailRec.Values)
             {
                 pos += rec.Serialize(pos, data);
             }
             int bytesWritten = pos - offset;
-            if (bytesWritten != RecordSize)
+            if(bytesWritten != RecordSize)
                 throw new RecordFormatException(bytesWritten + " bytes written but RecordSize reports " + RecordSize);
             return bytesWritten;
         }
@@ -612,9 +612,9 @@ namespace NPOI.HSSF.Record
         {
             int temp = 0;
             //First record in drawing layer MUST be DrawingRecord
-            if (writtenEscherBytes + drawingData.Length > RecordInputStream.MAX_RECORD_DATA_SIZE && i != 1)
+            if(writtenEscherBytes + drawingData.Length > RecordInputStream.MAX_RECORD_DATA_SIZE && i != 1)
             {
-                for (int j = 0; j < drawingData.Length; j += RecordInputStream.MAX_RECORD_DATA_SIZE)
+                for(int j = 0; j < drawingData.Length; j += RecordInputStream.MAX_RECORD_DATA_SIZE)
                 {
                     byte[] buf = new byte[Math.Min(RecordInputStream.MAX_RECORD_DATA_SIZE, drawingData.Length - j)];
                     System.Array.Copy(drawingData, j, buf, 0, Math.Min(RecordInputStream.MAX_RECORD_DATA_SIZE, drawingData.Length - j));
@@ -624,9 +624,9 @@ namespace NPOI.HSSF.Record
             }
             else
             {
-                for (int j = 0; j < drawingData.Length; j += RecordInputStream.MAX_RECORD_DATA_SIZE)
+                for(int j = 0; j < drawingData.Length; j += RecordInputStream.MAX_RECORD_DATA_SIZE)
                 {
-                    if (j == 0)
+                    if(j == 0)
                     {
                         DrawingRecord drawing = new DrawingRecord();
                         byte[] buf = new byte[Math.Min(RecordInputStream.MAX_RECORD_DATA_SIZE, drawingData.Length - j)];
@@ -655,7 +655,7 @@ namespace NPOI.HSSF.Record
         private static int GetEscherRecordSize(List<EscherRecord> records)
         {
             int size = 0;
-            foreach (EscherRecord record in records)
+            foreach(EscherRecord record in records)
             {
                 size += record.RecordSize;
             }
@@ -669,7 +669,7 @@ namespace NPOI.HSSF.Record
         private static short GetSid(List<RecordBase> records, int loc)
         {
             RecordBase record = records[(loc)];
-            if (record is Record record1)
+            if(record is Record record1)
             {
                 return record1.Sid;
             }
@@ -698,19 +698,19 @@ namespace NPOI.HSSF.Record
                 byte[] buffer = IOUtils.SafelyAllocate(rawEscherSize, MAX_RECORD_LENGTH);
                 List<int> spEndingOffsets = new List<int>();
                 int pos = 0;
-                foreach (EscherRecord e in records)
+                foreach(EscherRecord e in records)
                 {
                     pos += e.Serialize(pos, buffer, new RecordSizeListener(spEndingOffsets, e));
                 }
                 spEndingOffsets.Insert(0, 0);
 
-                for (int i = 1; i < spEndingOffsets.Count; i++)
+                for(int i = 1; i < spEndingOffsets.Count; i++)
                 {
-                    if (i == spEndingOffsets.Count - 1 && spEndingOffsets[(i)] < pos)
+                    if(i == spEndingOffsets.Count - 1 && spEndingOffsets[(i)] < pos)
                     {
                         continueRecordsHeadersSize += 4;
                     }
-                    if (spEndingOffsets[(i)] - spEndingOffsets[(i - 1)] <= RecordInputStream.MAX_RECORD_DATA_SIZE)
+                    if(spEndingOffsets[(i)] - spEndingOffsets[(i - 1)] <= RecordInputStream.MAX_RECORD_DATA_SIZE)
                     {
                         continue;
                     }
@@ -718,17 +718,17 @@ namespace NPOI.HSSF.Record
                 }
 
                 int drawingRecordSize = rawEscherSize + (shapeToObj.Count) * 4;
-                if (rawEscherSize != 0 && spEndingOffsets.Count == 1/*EMPTY*/)
+                if(rawEscherSize != 0 && spEndingOffsets.Count == 1/*EMPTY*/)
                 {
                     continueRecordsHeadersSize += 4;
                 }
                 int objRecordSize = 0;
-                foreach (Record r in shapeToObj.Values)
+                foreach(Record r in shapeToObj.Values)
                 {
                     objRecordSize += r.RecordSize;
                 }
                 int tailRecordSize = 0;
-                foreach (NoteRecord noteRecord in tailRec.Values)
+                foreach(NoteRecord noteRecord in tailRec.Values)
                 {
                     tailRecordSize += noteRecord.RecordSize;
                 }
@@ -756,27 +756,27 @@ namespace NPOI.HSSF.Record
             EscherSpgrRecord spgr = new EscherSpgrRecord();
             EscherSpRecord sp1 = new EscherSpRecord();
             dgContainer.RecordId = (EscherContainerRecord.DG_CONTAINER);
-            dgContainer.Options = ((short)0x000F);
+            dgContainer.Options = ((short) 0x000F);
             EscherDgRecord dg = new EscherDgRecord();
             dg.RecordId = EscherDgRecord.RECORD_ID;
             short dgId = 1;
-            dg.Options = ((short)(dgId << 4));
+            dg.Options = ((short) (dgId << 4));
             dg.NumShapes = (0);
             dg.LastMSOSPID=(1024);
             spgrContainer.RecordId=(EscherContainerRecord.SPGR_CONTAINER);
-            spgrContainer.Options=((short)0x000F);
+            spgrContainer.Options=((short) 0x000F);
             spContainer1.RecordId=(EscherContainerRecord.SP_CONTAINER);
-            spContainer1.Options=((short)0x000F);
+            spContainer1.Options=((short) 0x000F);
             spgr.RecordId=(EscherSpgrRecord.RECORD_ID);
-            spgr.Options=((short)0x0001);    // version
+            spgr.Options=((short) 0x0001);    // version
             spgr.RectX1=(0);
             spgr.RectY1=(0);
             spgr.RectX2=(1023);
             spgr.RectY2=(255);
             sp1.RecordId=(EscherSpRecord.RECORD_ID);
 
-            sp1.Options=((short)0x0002);
-            sp1.Version=((short)0x2);
+            sp1.Options=((short) 0x0002);
+            sp1.Version=((short) 0x2);
             sp1.ShapeId=(-1);
             sp1.Flags=(EscherSpRecord.FLAG_GROUP | EscherSpRecord.FLAG_PATRIARCH);
             dgContainer.AddChildRecord(dg);
@@ -803,9 +803,9 @@ namespace NPOI.HSSF.Record
             throw new InvalidOperationException("Should not reach here");
         }
 
-        
 
-        
+
+
 
         internal sealed class CustomEscherRecordFactory : DefaultEscherRecordFactory
         {
@@ -818,7 +818,7 @@ namespace NPOI.HSSF.Record
             public override EscherRecord CreateRecord(byte[] data, int offset)
             {
                 EscherRecord r = base.CreateRecord(data, offset);
-                if (r.RecordId == EscherClientDataRecord.RECORD_ID || r.RecordId == EscherTextboxRecord.RECORD_ID)
+                if(r.RecordId == EscherClientDataRecord.RECORD_ID || r.RecordId == EscherTextboxRecord.RECORD_ID)
                 {
                     shapeRecords.Add(r);
                 }
@@ -1002,10 +1002,10 @@ namespace NPOI.HSSF.Record
 
         private static EscherRecord GetEscherChild(EscherContainerRecord owner, int recordId)
         {
-            for (IEnumerator iterator = owner.ChildRecords.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = owner.ChildRecords.GetEnumerator(); iterator.MoveNext();)
             {
                 EscherRecord escherRecord = (EscherRecord)iterator.Current;
-                if (escherRecord.RecordId == recordId)
+                if(escherRecord.RecordId == recordId)
                     return escherRecord;
             }
             return null;
@@ -1092,7 +1092,7 @@ namespace NPOI.HSSF.Record
         {
             return GetSid(records, loc) == ObjRecord.sid || GetSid(records, loc) == TextObjectRecord.sid;
         }
-        
+
 
         //private void ConvertShapes(HSSFShapeContainer parent, EscherContainerRecord escherParent, Hashtable shapeToObj)
         //{
@@ -1281,7 +1281,7 @@ namespace NPOI.HSSF.Record
         {
             EscherContainerRecord dgContainer = GetEscherContainer();
             EscherDgRecord dg = (EscherDgRecord)dgContainer.GetChildById(EscherDgRecord.RECORD_ID);
-            dg.Options = (short)(dgId << 4);
+            dg.Options = (short) (dgId << 4);
         }
         internal void SetMainSpRecordId(int shapeId)
         {
@@ -1318,7 +1318,7 @@ namespace NPOI.HSSF.Record
         internal NoteRecord GetNoteRecordByObj(ObjRecord obj)
         {
             CommonObjectDataSubRecord cod = (CommonObjectDataSubRecord)obj.SubRecords[0];
-            if (!tailRec.TryGetValue(cod.ObjectId, out NoteRecord byObj))
+            if(!tailRec.TryGetValue(cod.ObjectId, out NoteRecord byObj))
                 return null;
             return byObj;
         }

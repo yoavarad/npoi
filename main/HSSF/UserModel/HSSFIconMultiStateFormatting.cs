@@ -17,11 +17,10 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.CF;
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * High level representation for Icon / Multi-State Formatting 
@@ -65,7 +64,7 @@ namespace NPOI.HSSF.UserModel
             {
                 Threshold[] t = iconFormatting.Thresholds;
                 HSSFConditionalFormattingThreshold[] ht = new HSSFConditionalFormattingThreshold[t.Length];
-                for (int i = 0; i < t.Length; i++)
+                for(int i = 0; i < t.Length; i++)
                 {
                     ht[i] = new HSSFConditionalFormattingThreshold(t[i], sheet);
                 }
@@ -74,9 +73,9 @@ namespace NPOI.HSSF.UserModel
             set
             {
                 Threshold[] t = new Threshold[value.Length];
-                for (int i = 0; i < t.Length; i++)
+                for(int i = 0; i < t.Length; i++)
                 {
-                    t[i] = ((HSSFConditionalFormattingThreshold)value[i]).Threshold;
+                    t[i] = ((HSSFConditionalFormattingThreshold) value[i]).Threshold;
                 }
                 iconFormatting.Thresholds = t;
             }

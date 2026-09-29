@@ -4,9 +4,9 @@ namespace NPOI.Util.Optional
 {
     public struct Option<T> : IEquatable<Option<T>> where T : class
     {
-        #nullable enable
+#nullable enable
         private T? _content;
-        #nullable disable
+#nullable disable
         public static Option<T> Some(T obj) => new() { _content = obj };
         public static Option<T> None() => new();
 
@@ -22,7 +22,8 @@ namespace NPOI.Util.Optional
 
         public Option<T> IfPresent(Action<T> action)
         {
-            if(_content !=null) action(_content);
+            if(_content !=null)
+                action(_content);
             return this;
         }
 
@@ -37,9 +38,9 @@ namespace NPOI.Util.Optional
             _content is not null && !predicate(_content) ? this : Option<T>.None();
 
         public override int GetHashCode() => _content?.GetHashCode() ?? 0;
-        #nullable enable
+#nullable enable
         public override bool Equals(object? other) => other is Option<T> option && Equals(option);
-        #nullable disable
+#nullable disable
         public bool Equals(Option<T> other) =>
             _content is null ? other._content is null
             : _content.Equals(other._content);

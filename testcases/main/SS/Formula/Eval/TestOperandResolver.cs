@@ -15,9 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.SS.Formula.Eval;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 namespace TestCases.SS.Formula.Eval
 {
 
@@ -41,7 +42,7 @@ namespace TestCases.SS.Formula.Eval
             {
                 ResolvedValue = OperandResolver.ParseDouble(value);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 throw new AssertionException("Identified bug 48472");
             }
@@ -76,9 +77,9 @@ namespace TestCases.SS.Formula.Eval
 
             String[] values = new String[] { ".19", "0.19", "1.9", "1E4", "-.19", "-0.19", "8.5", "-1E4", ".5E6", "+1.5", "+1E5", "  +1E5  " };
 
-            foreach (String value in values)
+            foreach(String value in values)
             {
-                ClassicAssert.AreNotEqual(double.NaN,OperandResolver.ParseDouble(value));  //this bug is caused by double.Parse
+                ClassicAssert.AreNotEqual(double.NaN, OperandResolver.ParseDouble(value));  //this bug is caused by double.Parse
                 ClassicAssert.AreEqual(OperandResolver.ParseDouble(value), Double.Parse(value));
             }
 
@@ -96,7 +97,7 @@ namespace TestCases.SS.Formula.Eval
 
             String[] values = new String[] { "-", "ABC", "-X", "1E5a", "Infinity", "NaN", ".5F" };    //, "1,000" };
 
-            foreach (String value in values)
+            foreach(String value in values)
             {
                 ClassicAssert.AreEqual(double.NaN, OperandResolver.ParseDouble(value));
             }

@@ -16,12 +16,13 @@
 ==================================================================== */
 namespace TestCases.XSSF.Streaming
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.XSSF.Streaming;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
 
 
     /**
@@ -38,7 +39,8 @@ namespace TestCases.XSSF.Streaming
         private SXSSFWorkbook workbook;
         private AutoSizeColumnTracker tracker;
         private static SortedSet<int> columns;
-        static TestAutoSizeColumnTracker() {
+        static TestAutoSizeColumnTracker()
+        {
             SortedSet<int> _columns = new SortedSet<int>();
             _columns.Add(0);
             _columns.Add(1);
@@ -49,24 +51,29 @@ namespace TestCases.XSSF.Streaming
         private static String LONG_MESSAGE = "This is a test of a long message! This is a test of a long message!";
 
         [SetUp]
-        public void SetUpSheetAndWorkbook() {
+        public void SetUpSheetAndWorkbook()
+        {
             workbook = new SXSSFWorkbook();
             sheet = workbook.CreateSheet() as SXSSFSheet;
             tracker = new AutoSizeColumnTracker(sheet);
         }
 
         [TearDown]
-        public void TearDownSheetAndWorkbook() {
-            if (sheet != null) {
+        public void TearDownSheetAndWorkbook()
+        {
+            if(sheet != null)
+            {
                 sheet.Dispose();
             }
-            if (workbook != null) {
+            if(workbook != null)
+            {
                 workbook.Close();
             }
         }
 
         [Test]
-        public void trackAndUntrackColumn() {
+        public void trackAndUntrackColumn()
+        {
             Assume.That(tracker.TrackedColumns.Count == 0);
             tracker.TrackColumn(0);
             ISet<int> expected = new HashSet<int>();
@@ -77,7 +84,8 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
-        public void trackAndUntrackColumns() {
+        public void trackAndUntrackColumns()
+        {
             Assume.That(tracker.TrackedColumns.Count == 0);
             tracker.TrackColumns(columns);
             ClassicAssert.AreEqual(columns, tracker.TrackedColumns);
@@ -94,13 +102,15 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
-        public void trackAndUntrackAllColumns() {
+        public void trackAndUntrackAllColumns()
+        {
             Assume.That(tracker.TrackedColumns.Count == 0);
             tracker.TrackAllColumns();
             ClassicAssert.IsTrue(tracker.TrackedColumns.Count == 0);
 
             IRow row = sheet.CreateRow(0);
-            foreach (int column in columns) {
+            foreach(int column in columns)
+            {
                 row.CreateCell(column);
             }
             // implicitly track the columns
@@ -112,7 +122,8 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
-        public void isColumnTracked() {
+        public void isColumnTracked()
+        {
             ClassicAssert.IsFalse(tracker.IsColumnTracked(0));
             tracker.TrackColumn(0);
             ClassicAssert.IsTrue(tracker.IsColumnTracked(0));
@@ -121,10 +132,12 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
-        public void GetTrackedColumns() {
+        public void GetTrackedColumns()
+        {
             Assume.That(tracker.TrackedColumns.Count == 0);
 
-            foreach (int column in columns) {
+            foreach(int column in columns)
+            {
                 tracker.TrackColumn(column);
             }
 
@@ -133,7 +146,8 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
-        public void isAllColumnsTracked() {
+        public void isAllColumnsTracked()
+        {
             ClassicAssert.IsFalse(tracker.IsAllColumnsTracked());
             tracker.TrackAllColumns();
             ClassicAssert.IsTrue(tracker.IsAllColumnsTracked());
@@ -142,12 +156,14 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
-        public void updateColumnWidths_and_getBestFitColumnWidth() {
+        public void updateColumnWidths_and_getBestFitColumnWidth()
+        {
             tracker.TrackAllColumns();
             IRow row1 = sheet.CreateRow(0);
             IRow row2 = sheet.CreateRow(1);
             // A1, B1, D1
-            foreach (int column in columns) {
+            foreach(int column in columns)
+            {
                 row1.CreateCell(column).SetCellValue(LONG_MESSAGE);
                 row2.CreateCell(column + 1).SetCellValue(SHORT_MESSAGE);
             }
@@ -183,12 +199,15 @@ namespace TestCases.XSSF.Streaming
             CheckColumnWidth(shortMsgWidth, 4, false);
         }
 
-        private void CheckColumnWidth(int expectedWidth, int column, bool useMergedCells) {
+        private void CheckColumnWidth(int expectedWidth, int column, bool useMergedCells)
+        {
             int bestFitWidth = tracker.GetBestFitColumnWidth(column, useMergedCells);
-            if (bestFitWidth < 0 && expectedWidth < 0) return;
+            if(bestFitWidth < 0 && expectedWidth < 0)
+                return;
             double abs_error = Math.Abs(bestFitWidth - expectedWidth);
             double rel_error = abs_error / expectedWidth;
-            if (rel_error > 0.25) {
+            if(rel_error > 0.25)
+            {
                 Assert.Fail("check column width: " +
                         rel_error + ", " + abs_error + ", " +
                         expectedWidth + ", " + bestFitWidth);
@@ -196,7 +215,8 @@ namespace TestCases.XSSF.Streaming
 
         }
 
-        private static void assumeRequiredFontsAreInstalled(IWorkbook workbook, ICell cell) {
+        private static void assumeRequiredFontsAreInstalled(IWorkbook workbook, ICell cell)
+        {
             // autoSize will fail if required fonts are not installed, skip this test then
             IFont font = workbook.GetFontAt(cell.CellStyle.FontIndex);
             Assume.That(SheetUtil.CanComputeColumnWidth(font),

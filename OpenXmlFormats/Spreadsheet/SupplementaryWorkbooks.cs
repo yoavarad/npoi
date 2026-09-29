@@ -1,12 +1,12 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXmlFormats.Spreadsheet.Document;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Xml.Serialization;
-using System.Collections.Generic;
-using NPOI.OpenXmlFormats.Spreadsheet.Document;
-using System.Xml;
-using NPOI.OpenXml4Net.Util;
 using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -20,11 +20,12 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     }
 
     [Serializable]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", 
-        IsNullable=true, ElementName = "externalLink")]
-    public partial class CT_ExternalLink {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+        IsNullable = true, ElementName = "externalLink")]
+    public partial class CT_ExternalLink
+    {
+
         private object itemField;
 
         public ExternalLinkItem itemType { get; set; }
@@ -32,11 +33,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         [XmlElement("extLst", typeof(CT_ExtensionList))]
         [XmlElement("externalBook", typeof(CT_ExternalBook))]
         [XmlElement("oleLink", typeof(CT_OleLink))]
-        public object Item {
-            get {
+        public object Item
+        {
+            get
+            {
                 return this.itemField;
             }
-            set {
+            set
+            {
                 this.itemField = value;
             }
         }
@@ -71,31 +75,31 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_ExternalLink Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ExternalLink ctObj = new CT_ExternalLink();
 
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "externalBook")
+                if(childNode.LocalName == "externalBook")
                 {
                     ctObj.externalBookField = CT_ExternalBook.Parse(childNode, namespaceManager);
                     ctObj.itemField = ctObj.externalBookField;
                     ctObj.itemType = ExternalLinkItem.externalBook;
                 }
-                else if (childNode.LocalName == "ddeLink")
+                else if(childNode.LocalName == "ddeLink")
                 {
                     ctObj.ddeLinkField = CT_DdeLink.Parse(childNode, namespaceManager);
                     ctObj.itemField = ctObj.ddeLinkField;
                     ctObj.itemType = ExternalLinkItem.ddeLink;
                 }
-                else if (childNode.LocalName == "oleLink")
+                else if(childNode.LocalName == "oleLink")
                 {
                     ctObj.oleLinkField = CT_OleLink.Parse(childNode, namespaceManager);
                     ctObj.itemField = ctObj.oleLinkField;
                     ctObj.itemType = ExternalLinkItem.oleLink;
                 }
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                 {
                     ctObj.extLstField = CT_ExtensionList.Parse(childNode, namespaceManager);
                     ctObj.itemField = ctObj.extLstField;
@@ -109,13 +113,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.Write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
             sw.Write(@"<externalLink xmlns=""http://schemas.openxmlformats.org/spreadsheetml/2006/main"" xmlns:r=""http://schemas.openxmlformats.org/officeDocument/2006/relationships"" xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006"" mc:Ignorable=""x14"" xmlns:x14=""http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"">");
-            if (this.externalBookField != null)
+            if(this.externalBookField != null)
                 this.externalBookField.Write(sw, "externalBook");
-            if (this.ddeLinkField != null)
+            if(this.ddeLinkField != null)
                 this.ddeLinkField.Write(sw, "ddeLink");
-            if (this.extLstField != null)
+            if(this.extLstField != null)
                 this.extLstField.Write(sw, "extLst");
-            if (this.oleLinkField != null)
+            if(this.oleLinkField != null)
                 this.oleLinkField.Write(sw, "oleLink");
             sw.Write("</externalLink>");
         }
@@ -125,51 +129,61 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.externalBookField = new CT_ExternalBook();
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_DdeLink {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_DdeLink
+    {
+
         private List<CT_DdeItem> ddeItemsField = null; // 0..1
-        
+
         private string ddeServiceField; // 1..1
-        
+
         private string ddeTopicField; // 1..1
 
 
         [XmlArray("ddeItems")]
         [XmlArrayItem("ddeItem")]
-        public List<CT_DdeItem> ddeItems {
-            get {
+        public List<CT_DdeItem> ddeItems
+        {
+            get
+            {
                 return this.ddeItemsField;
             }
-            set {
+            set
+            {
                 this.ddeItemsField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public string ddeService {
-            get {
+        public string ddeService
+        {
+            get
+            {
                 return this.ddeServiceField;
             }
-            set {
+            set
+            {
                 this.ddeServiceField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public string ddeTopic {
-            get {
+        public string ddeTopic
+        {
+            get
+            {
                 return this.ddeTopicField;
             }
-            set {
+            set
+            {
                 this.ddeTopicField = value;
             }
         }
@@ -184,285 +198,332 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             throw new NotImplementedException();
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_DdeItem {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_DdeItem
+    {
+
         private CT_DdeValues valuesField;
-        
+
         private string nameField;
-        
+
         private bool oleField;
-        
+
         private bool adviseField;
-        
+
         private bool preferPicField;
-        
-        public CT_DdeItem() {
+
+        public CT_DdeItem()
+        {
             this.nameField = "0";
             this.oleField = false;
             this.adviseField = false;
             this.preferPicField = false;
         }
-        
-    
-        public CT_DdeValues values {
-            get {
+
+
+        public CT_DdeValues values
+        {
+            get
+            {
                 return this.valuesField;
             }
-            set {
+            set
+            {
                 this.valuesField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute("0")]
-        public string name {
-            get {
+        public string name
+        {
+            get
+            {
                 return this.nameField;
             }
-            set {
+            set
+            {
                 this.nameField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(false)]
-        public bool ole {
-            get {
+        public bool ole
+        {
+            get
+            {
                 return this.oleField;
             }
-            set {
+            set
+            {
                 this.oleField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(false)]
-        public bool advise {
-            get {
+        public bool advise
+        {
+            get
+            {
                 return this.adviseField;
             }
-            set {
+            set
+            {
                 this.adviseField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(false)]
-        public bool preferPic {
-            get {
+        public bool preferPic
+        {
+            get
+            {
                 return this.preferPicField;
             }
-            set {
+            set
+            {
                 this.preferPicField = value;
             }
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_DdeValues {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_DdeValues
+    {
+
         private CT_DdeValue[] valueField;
-        
+
         private uint rowsField;
-        
+
         private uint colsField;
-        
-        public CT_DdeValues() {
-            this.rowsField = ((uint)(1));
-            this.colsField = ((uint)(1));
+
+        public CT_DdeValues()
+        {
+            this.rowsField = ((uint) (1));
+            this.colsField = ((uint) (1));
         }
-        
-    
+
+
         [XmlElement("value")]
-        public CT_DdeValue[] value {
-            get {
+        public CT_DdeValue[] value
+        {
+            get
+            {
                 return this.valueField;
             }
-            set {
+            set
+            {
                 this.valueField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(typeof(uint), "1")]
-        public uint rows {
-            get {
+        public uint rows
+        {
+            get
+            {
                 return this.rowsField;
             }
-            set {
+            set
+            {
                 this.rowsField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(typeof(uint), "1")]
-        public uint cols {
-            get {
+        public uint cols
+        {
+            get
+            {
                 return this.colsField;
             }
-            set {
+            set
+            {
                 this.colsField = value;
             }
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_DdeValue {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_DdeValue
+    {
+
         private string valField;
-        
+
         private ST_DdeValueType tField;
-        
-        public CT_DdeValue() {
+
+        public CT_DdeValue()
+        {
             this.tField = ST_DdeValueType.n;
         }
-        
-    
-        public string val {
-            get {
+
+
+        public string val
+        {
+            get
+            {
                 return this.valField;
             }
-            set {
+            set
+            {
                 this.valField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(ST_DdeValueType.n)]
-        public ST_DdeValueType t {
-            get {
+        public ST_DdeValueType t
+        {
+            get
+            {
                 return this.tField;
             }
-            set {
+            set
+            {
                 this.tField = value;
             }
         }
     }
-    
+
 
     [Serializable]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=false)]
-    public enum ST_DdeValueType {
-        
-    
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = false)]
+    public enum ST_DdeValueType
+    {
+
+
         nil,
-        
-    
+
+
         b,
-        
-    
+
+
         n,
-        
-    
+
+
         e,
-        
-    
+
+
         str,
     }
-    
+
 
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalBook {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalBook
+    {
+
         private CT_ExternalSheetNames sheetNamesField;
-        
+
         private CT_ExternalDefinedNames definedNamesField;
-        
+
         private CT_ExternalSheetDataSet sheetDataSetField;
-        
+
         private string idField;
-        
-    
-        [XmlArrayItem("sheetName", IsNullable=false)]
+
+
+        [XmlArrayItem("sheetName", IsNullable = false)]
         public CT_ExternalSheetNames sheetNames
         {
-            get {
+            get
+            {
                 return this.sheetNamesField;
             }
-            set {
+            set
+            {
                 this.sheetNamesField = value;
             }
         }
-        
-    
-        [XmlArrayItem("definedName", IsNullable=false)]
+
+
+        [XmlArrayItem("definedName", IsNullable = false)]
         public CT_ExternalDefinedNames definedNames
         {
-            get {
+            get
+            {
                 return this.definedNamesField;
             }
-            set {
+            set
+            {
                 this.definedNamesField = value;
             }
         }
-        
-    
-        [XmlArrayItem("sheetData", IsNullable=false)]
+
+
+        [XmlArrayItem("sheetData", IsNullable = false)]
         public CT_ExternalSheetDataSet sheetDataSet
         {
-            get {
+            get
+            {
                 return this.sheetDataSetField;
             }
-            set {
+            set
+            {
                 this.sheetDataSetField = value;
             }
         }
-        
-        
-        [XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, Namespace="http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
-        public string id {
-            get {
+
+
+        [XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
+        public string id
+        {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
 
         internal static CT_ExternalBook Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ExternalBook ctObj = new CT_ExternalBook();
-            
+
             ctObj.idField = XmlHelper.ReadString(node.Attributes["id", namespaceManager.LookupNamespace("r")]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "sheetNames")
+                if(childNode.LocalName == "sheetNames")
                     ctObj.sheetNamesField = CT_ExternalSheetNames.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "definedNames")
+                else if(childNode.LocalName == "definedNames")
                     ctObj.definedNamesField = CT_ExternalDefinedNames.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sheetDataSet")
+                else if(childNode.LocalName == "sheetDataSet")
                     ctObj.sheetDataSetField = CT_ExternalSheetDataSet.Parse(childNode, namespaceManager);
             }
 
@@ -475,30 +536,34 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "r:id", this.idField);
             sw.Write('>');
 
-            if (this.sheetNamesField != null)
+            if(this.sheetNamesField != null)
                 this.sheetNamesField.Write(sw, "sheetNames");
-            if (this.definedNamesField != null)
+            if(this.definedNamesField != null)
                 this.definedNamesField.Write(sw, "definedNames");
 
-            if (this.sheetDataSetField != null)
+            if(this.sheetDataSetField != null)
                 this.sheetDataSetField.Write(sw, "sheetDataSet");
 
             sw.WriteEndElement(nodeName);
         }
     }
-    
+
 
     [Serializable]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalSheetName {
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalSheetName
+    {
         private string valField;
         [XmlAttribute]
-        public string val {
-            get {
+        public string val
+        {
+            get
+            {
                 return this.valField;
             }
-            set {
+            set
+            {
                 this.valField = value;
             }
         }
@@ -517,64 +582,77 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.Write("/>");
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalDefinedName {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalDefinedName
+    {
+
         private string nameField;
-        
+
         private string refersToField;
-        
+
         private uint sheetIdField;
-        
+
         private bool sheetIdFieldSpecified;
-        
-    
+
+
         [XmlAttribute]
-        public string name {
-            get {
+        public string name
+        {
+            get
+            {
                 return this.nameField;
             }
-            set {
+            set
+            {
                 this.nameField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public string refersTo {
-            get {
+        public string refersTo
+        {
+            get
+            {
                 return this.refersToField;
             }
-            set {
+            set
+            {
                 this.refersToField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public uint sheetId {
-            get {
+        public uint sheetId
+        {
+            get
+            {
                 return this.sheetIdField;
             }
-            set {
+            set
+            {
                 this.sheetIdFieldSpecified = true;
                 this.sheetIdField = value;
             }
         }
-        
-    
+
+
         [XmlIgnore]
-        public bool sheetIdSpecified {
-            get {
+        public bool sheetIdSpecified
+        {
+            get
+            {
                 return this.sheetIdFieldSpecified;
             }
-            set {
+            set
+            {
                 this.sheetIdFieldSpecified = value;
             }
         }
@@ -590,7 +668,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             name.nameField = XmlHelper.ReadString(node.Attributes["name"]);
             name.refersToField = XmlHelper.ReadString(node.Attributes["refersTo"]);
             name.sheetIdFieldSpecified = node.Attributes["sheetId"] != null;
-            if (name.sheetIdFieldSpecified)
+            if(name.sheetIdFieldSpecified)
             {
                 name.sheetIdField = XmlHelper.ReadUInt(node.Attributes["sheetId"]);
             }
@@ -607,23 +685,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.Write("/>");
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalSheetData {
-        
-        public CT_ExternalSheetData ()
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalSheetData
+    {
+
+        public CT_ExternalSheetData()
         {
             rowField = new List<CT_ExternalRow>();
         }
         private List<CT_ExternalRow> rowField;
-        
+
         private uint sheetIdField;
-        
+
         private bool refreshErrorField;
 
 
@@ -640,26 +719,32 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                 this.rowField.AddRange(value);
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public uint sheetId {
-            get {
+        public uint sheetId
+        {
+            get
+            {
                 return this.sheetIdField;
             }
-            set {
+            set
+            {
                 this.sheetIdField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(false)]
-        public bool refreshError {
-            get {
+        public bool refreshError
+        {
+            get
+            {
                 return this.refreshErrorField;
             }
-            set {
+            set
+            {
                 this.refreshErrorField = value;
             }
         }
@@ -669,9 +754,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             CT_ExternalSheetData sheetData = new CT_ExternalSheetData();
             sheetData.refreshErrorField = XmlHelper.ReadBool(node.Attributes["refreshError"]);
             sheetData.sheetIdField = XmlHelper.ReadUInt(node.Attributes["sheetId"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "row")
+                if(childNode.LocalName == "row")
                     sheetData.rowField.Add(CT_ExternalRow.Parse(childNode, namespaceManager));
             }
             return sheetData;
@@ -680,11 +765,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            XmlHelper.WriteAttribute(sw, "sheetId", this.sheetIdField,true);
+            XmlHelper.WriteAttribute(sw, "sheetId", this.sheetIdField, true);
             if(this.refreshError)
                 XmlHelper.WriteAttribute(sw, "refreshError", this.refreshErrorField);
             sw.Write('>');
-            foreach (CT_ExternalRow ctObj in this.rowField)
+            foreach(CT_ExternalRow ctObj in this.rowField)
             {
                 ctObj.Write(sw, "row");
             }
@@ -692,20 +777,21 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteEndElement(nodeName);
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalRow {
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalRow
+    {
         public CT_ExternalRow()
         {
             cellField = new List<CT_ExternalCell>();
         }
         private List<CT_ExternalCell> cellField;
-        
+
         private uint rField;
 
 
@@ -722,14 +808,17 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                 this.cellField.AddRange(value);
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public uint r {
-            get {
+        public uint r
+        {
+            get
+            {
                 return this.rField;
             }
-            set {
+            set
+            {
                 this.rField = value;
             }
         }
@@ -738,9 +827,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             CT_ExternalRow row = new CT_ExternalRow();
             row.r = XmlHelper.ReadUInt(node.Attributes["r"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cell")
+                if(childNode.LocalName == "cell")
                     row.cellField.Add(CT_ExternalCell.Parse(childNode, namespaceManager));
             }
             return row;
@@ -751,7 +840,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "r", this.rField);
             sw.Write('>');
-            foreach (CT_ExternalCell ctObj in this.cellField)
+            foreach(CT_ExternalCell ctObj in this.cellField)
             {
                 ctObj.Write(sw, "cell");
             }
@@ -759,69 +848,83 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteEndElement(nodeName);
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalCell {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalCell
+    {
+
         private string vField;
-        
+
         private string rField;
-        
+
         private ST_CellType tField;
-        
+
         private uint vmField;
-        
-        public CT_ExternalCell() {
+
+        public CT_ExternalCell()
+        {
             this.tField = ST_CellType.n;
-            this.vmField = ((uint)(0));
+            this.vmField = ((uint) (0));
         }
-        
-    
-        public string v {
-            get {
+
+
+        public string v
+        {
+            get
+            {
                 return this.vField;
             }
-            set {
+            set
+            {
                 this.vField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public string r {
-            get {
+        public string r
+        {
+            get
+            {
                 return this.rField;
             }
-            set {
+            set
+            {
                 this.rField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(ST_CellType.n)]
-        public ST_CellType t {
-            get {
+        public ST_CellType t
+        {
+            get
+            {
                 return this.tField;
             }
-            set {
+            set
+            {
                 this.tField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(typeof(uint), "0")]
-        public uint vm {
-            get {
+        public uint vm
+        {
+            get
+            {
                 return this.vmField;
             }
-            set {
+            set
+            {
                 this.vmField = value;
             }
         }
@@ -830,13 +933,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             CT_ExternalCell ctObj = new CT_ExternalCell();
             ctObj.rField = XmlHelper.ReadString(node.Attributes["r"]);
-            if (node.Attributes["t"] != null)
-                ctObj.tField = (ST_CellType)Enum.Parse(typeof(ST_CellType), node.Attributes["t"].Value);
+            if(node.Attributes["t"] != null)
+                ctObj.tField = (ST_CellType) Enum.Parse(typeof(ST_CellType), node.Attributes["t"].Value);
             ctObj.vm = XmlHelper.ReadUInt(node.Attributes["vm"]);
 
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "v")
+                if(childNode.LocalName == "v")
                     ctObj.v = childNode.InnerText;
             }
             return ctObj;
@@ -846,11 +949,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "r", this.rField);
-            if (this.t != ST_CellType.n)
+            if(this.t != ST_CellType.n)
                 XmlHelper.WriteAttribute(sw, "t", this.tField.ToString());
             XmlHelper.WriteAttribute(sw, "vm", this.vmField);
 
-            if (this.v == null)
+            if(this.v == null)
             {
                 sw.Write("/>");
             }
@@ -862,49 +965,59 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             }
         }
     }
-    
-    
+
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_OleLink {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_OleLink
+    {
+
         private List<CT_OleItem> oleItemsField;
-        
+
         private string idField;
-        
+
         private string progIdField;
-        
-    
-        public List<CT_OleItem> oleItems {
-            get {
+
+
+        public List<CT_OleItem> oleItems
+        {
+            get
+            {
                 return this.oleItemsField;
             }
-            set {
+            set
+            {
                 this.oleItemsField = value;
             }
         }
-        
-    
-        public string id {
-            get {
+
+
+        public string id
+        {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
-        public string progId {
-            get {
+        public string progId
+        {
+            get
+            {
                 return this.progIdField;
             }
-            set {
+            set
+            {
                 this.progIdField = value;
             }
         }
@@ -914,17 +1027,17 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             CT_OleLink ctObj = new CT_OleLink();
             ctObj.idField = XmlHelper.ReadString(node.Attributes["r:id"]);
             ctObj.progIdField = XmlHelper.ReadString(node.Attributes["progId"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "oleItems")
+                if(childNode.LocalName == "oleItems")
                 {
                     ctObj.oleItemsField = new List<CT_OleItem>();
-                    foreach (XmlNode subNode in childNode.ChildNodes)
+                    foreach(XmlNode subNode in childNode.ChildNodes)
                     {
                         ctObj.oleItems.Add(CT_OleItem.Parse(subNode));
                     }
                 }
-                
+
             }
             return ctObj;
         }
@@ -935,10 +1048,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "r:id", this.idField);
             XmlHelper.WriteAttribute(sw, "progId", this.progIdField);
             sw.Write('>');
-            if (this.oleItemsField.Count > 0)
+            if(this.oleItemsField.Count > 0)
             {
                 sw.Write("<oleItems>");
-                foreach (CT_OleItem ctObj in this.oleItemsField)
+                foreach(CT_OleItem ctObj in this.oleItemsField)
                 {
                     ctObj.Write(sw, "oleItem");
                 }
@@ -947,72 +1060,86 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteEndElement(nodeName);
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_OleItem {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_OleItem
+    {
+
         private string nameField;
-        
+
         private bool iconField;
-        
+
         private bool adviseField;
-        
+
         private bool preferPicField;
-        
-        public CT_OleItem() {
+
+        public CT_OleItem()
+        {
             this.iconField = false;
             this.adviseField = false;
             this.preferPicField = false;
         }
-        
-    
+
+
         [XmlAttribute]
-        public string name {
-            get {
+        public string name
+        {
+            get
+            {
                 return this.nameField;
             }
-            set {
+            set
+            {
                 this.nameField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(false)]
-        public bool icon {
-            get {
+        public bool icon
+        {
+            get
+            {
                 return this.iconField;
             }
-            set {
+            set
+            {
                 this.iconField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(false)]
-        public bool advise {
-            get {
+        public bool advise
+        {
+            get
+            {
                 return this.adviseField;
             }
-            set {
+            set
+            {
                 this.adviseField = value;
             }
         }
-        
-    
+
+
         [XmlAttribute]
         [DefaultValueAttribute(false)]
-        public bool preferPic {
-            get {
+        public bool preferPic
+        {
+            get
+            {
                 return this.preferPicField;
             }
-            set {
+            set
+            {
                 this.preferPicField = value;
             }
         }
@@ -1035,15 +1162,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.Write("/>", nodeName);
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalSheetNames {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalSheetNames
+    {
+
         public CT_ExternalSheetNames()
         {
             this.sheetNameField = new List<CT_ExternalSheetName>();
@@ -1069,7 +1197,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal static CT_ExternalSheetNames Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
             CT_ExternalSheetNames ctObj = new CT_ExternalSheetNames();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
                 ctObj.sheetNameField.Add(CT_ExternalSheetName.Parse(childNode, namespaceManager));
             }
@@ -1081,7 +1209,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             sw.Write('>');
 
-            foreach (CT_ExternalSheetName ctObj in this.sheetNameField)
+            foreach(CT_ExternalSheetName ctObj in this.sheetNameField)
             {
                 ctObj.Write(sw, "sheetName");
             }
@@ -1089,14 +1217,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteEndElement(nodeName);
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalDefinedNames {
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalDefinedNames
+    {
 
         public CT_ExternalDefinedNames()
         {
@@ -1122,7 +1251,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal static CT_ExternalDefinedNames Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
             CT_ExternalDefinedNames ctObj = new CT_ExternalDefinedNames();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
                 ctObj.definedNameField.Add(CT_ExternalDefinedName.Parse(childNode, namespaceManager));
             }
@@ -1134,7 +1263,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             sw.Write('>');
 
-            foreach (CT_ExternalDefinedName ctObj in this.definedNameField)
+            foreach(CT_ExternalDefinedName ctObj in this.definedNameField)
             {
                 ctObj.Write(sw, "definedName");
             }
@@ -1142,14 +1271,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteEndElement(nodeName);
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_ExternalSheetDataSet {
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_ExternalSheetDataSet
+    {
         public CT_ExternalSheetDataSet()
         {
             sheetDataField = new List<CT_ExternalSheetData>();
@@ -1174,7 +1304,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal static CT_ExternalSheetDataSet Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
             CT_ExternalSheetDataSet ctObj = new CT_ExternalSheetDataSet();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
                 ctObj.sheetDataField.Add(CT_ExternalSheetData.Parse(childNode, namespaceManager));
             }
@@ -1185,7 +1315,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            foreach (CT_ExternalSheetData ctObj in this.sheetDataField)
+            foreach(CT_ExternalSheetData ctObj in this.sheetDataField)
             {
                 ctObj.Write(sw, "sheetData");
             }
@@ -1193,46 +1323,54 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteEndElement(nodeName);
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_DdeItems {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_DdeItems
+    {
+
         private CT_DdeItem[] ddeItemField;
-        
-    
+
+
         [XmlElement("ddeItem")]
-        public CT_DdeItem[] ddeItem {
-            get {
+        public CT_DdeItem[] ddeItem
+        {
+            get
+            {
                 return this.ddeItemField;
             }
-            set {
+            set
+            {
                 this.ddeItemField = value;
             }
         }
     }
-    
+
 
     [Serializable]
-    
+
     [DesignerCategory("code")]
-    [XmlType(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
-    [XmlRoot(Namespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable=true)]
-    public partial class CT_OleItems {
-        
+    [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    [XmlRoot(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main", IsNullable = true)]
+    public partial class CT_OleItems
+    {
+
         private CT_OleItem[] oleItemField;
-        
-    
+
+
         [XmlElement("oleItem")]
-        public CT_OleItem[] oleItem {
-            get {
+        public CT_OleItem[] oleItem
+        {
+            get
+            {
                 return this.oleItemField;
             }
-            set {
+            set
+            {
                 this.oleItemField = value;
             }
         }

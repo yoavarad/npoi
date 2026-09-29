@@ -17,16 +17,15 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-    using NPOI.HSSF.UserModel;
-    using NUnit.Framework;
-    using NUnit.Framework.Legacy;
-
-    using TestCases.HSSF;
     using NPOI.HPSF;
+    using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
 
     /**
      * Old-style setting of POIFS properties doesn't work with POI 3.0.2

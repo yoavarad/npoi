@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
+    using System;
     using RecordExtendedColor = NPOI.HSSF.Record.Common.ExtendedColor;
 
     /**
@@ -58,7 +58,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                if (value)
+                if(value)
                     color.type = RecordExtendedColor.TYPE_AUTO;
                 else
                     color.type = RecordExtendedColor.TYPE_UNSET;
@@ -90,7 +90,7 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                return (short)color.ColorIndex;
+                return (short) color.ColorIndex;
             }
         }
         public override int Theme
@@ -112,19 +112,20 @@ namespace NPOI.HSSF.UserModel
                 // Trim trailing A
                 byte[] rgb = new byte[3];
                 byte[] rgba = color.RGBA;
-                if (rgba == null) return null;
+                if(rgba == null)
+                    return null;
                 Array.Copy(rgba, 0, rgb, 0, 3);
                 return rgb;
             }
             set
             {
-                if (value.Length == 3)
+                if(value.Length == 3)
                 {
                     byte[] rgba = new byte[4];
                     Array.Copy(value, 0, rgba, 0, 3);
                     unchecked
                     {
-                        rgba[3] = (byte)-1;
+                        rgba[3] = (byte) -1;
                     }
                 }
                 else
@@ -147,7 +148,8 @@ namespace NPOI.HSSF.UserModel
                 // Swap from RGBA to ARGB
                 byte[] argb = new byte[4];
                 byte[] rgba = color.RGBA;
-                if (rgba == null) return null;
+                if(rgba == null)
+                    return null;
                 Array.Copy(rgba, 0, argb, 1, 3);
                 argb[0] = rgba[3];
                 return argb;
@@ -164,7 +166,7 @@ namespace NPOI.HSSF.UserModel
 
         public void SetRGB(byte[] rgb)
         {
-            
+
         }
 
         public override double Tint
@@ -183,10 +185,12 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                if (IsIndexed && Index > 0) {
+                if(IsIndexed && Index > 0)
+                {
                     int indexNum = Index;
                     HSSFColor indexed = HSSFColor.GetIndexHash()[indexNum];
-                    if (indexed != null) {
+                    if(indexed != null)
+                    {
                         byte[] rgb = new byte[3];
                         rgb[0] = (byte) indexed.GetTriplet()[0];
                         rgb[1] = (byte) indexed.GetTriplet()[1];

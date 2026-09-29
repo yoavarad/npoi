@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -43,7 +43,7 @@ namespace NPOI.HSSF.Record
         private int field2_y_position;   // lower left
         private int field3_width;
         private int field4_height;
-        
+
         private short field5_grbit;
         private BitField varyDisplayPattern = BitFieldFactory.GetInstance(0x01);
 
@@ -138,7 +138,7 @@ namespace NPOI.HSSF.Record
             {
                 return field2_y_position;
             }
-            set 
+            set
             {
                 this.field2_y_position = value;
             }
@@ -168,10 +168,10 @@ namespace NPOI.HSSF.Record
             {
                 return varyDisplayPattern.IsSet(field5_grbit);
             }
-            set 
+            set
             {
                 field5_grbit = varyDisplayPattern.SetShortBoolean(field5_grbit,
-                        value);           
+                        value);
             }
         }
     }

@@ -17,16 +17,15 @@
 
 namespace TestCases.HSSF.EventUserModel
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
     using NPOI.HSSF;
     using NPOI.HSSF.EventUserModel;
     using NPOI.HSSF.Record;
     using NPOI.POIFS.FileSystem;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
 
     [TestFixture]
     public class TestHSSFEventFactory
@@ -78,7 +77,7 @@ namespace TestCases.HSSF.EventUserModel
             ClassicAssert.IsTrue(recs.Length > 100);
 
             // And none of them are continue ones
-            for (int i = 0; i < recs.Length; i++)
+            for(int i = 0; i < recs.Length; i++)
             {
                 ClassicAssert.IsFalse(recs[i] is ContinueRecord);
             }

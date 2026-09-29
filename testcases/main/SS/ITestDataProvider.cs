@@ -1,6 +1,6 @@
-﻿using System;
-using NPOI.SS.UserModel;
 using NPOI.SS;
+using NPOI.SS.UserModel;
+using System;
 
 namespace TestCases.SS
 {
@@ -60,6 +60,6 @@ namespace TestCases.SS
         SpreadsheetVersion GetSpreadsheetVersion();
 
         string StandardFileNameExtension { get; }
-        
+
     }
 }

@@ -68,7 +68,7 @@ namespace NPOI.SS.UserModel
             get;
             set;
         }
-        
+
 
         /**
          * Get whether the font weight is Set to bold or not

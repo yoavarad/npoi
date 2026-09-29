@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace NPOI.HSSF
 {
@@ -30,8 +30,8 @@ namespace NPOI.HSSF
         public ushort colFirst;
         public ushort colLast;
     }
-    
-#region xmlToken
+
+    #region xmlToken
     [StructLayout(LayoutKind.Sequential)]
     struct XmlTkHeader
     {
@@ -119,5 +119,5 @@ namespace NPOI.HSSF
         /// </summary>
         public XmlTkDWord nInterval;
     }
-#endregion
+    #endregion
 }

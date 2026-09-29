@@ -24,18 +24,17 @@
  * Contributors:
  * 
  * ==============================================================*/
-using System;
-using System.Text;
-using System.Collections;
-using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
 using NPOI.POIFS.Common;
-using NPOI.POIFS.Storage;
 using NPOI.POIFS.Properties;
-using TestCases.POIFS.Storage;
+using NPOI.POIFS.Storage;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using TestCases.POIFS.Storage;
 
 
 namespace TestCases.POIFS.Properties
@@ -333,7 +332,7 @@ namespace TestCases.POIFS.Properties
             MemoryStream stream = new MemoryStream(testData);
             RawDataBlock[] rawData = new RawDataBlock[testData.Length / 512];
 
-            for (int j = 0; j < rawData.Length; j++)
+            for(int j = 0; j < rawData.Length; j++)
                 rawData[j] = new RawDataBlock(stream);
 
             List<Property> properties = PropertyFactory.ConvertToProperties(rawData);
@@ -410,18 +409,18 @@ namespace TestCases.POIFS.Properties
         };
 
             ClassicAssert.AreEqual(64, isNull.Length);
-            for (int j = 0; j < 64; j++)
+            for(int j = 0; j < 64; j++)
             {
-                if (isNull[j])
+                if(isNull[j])
                     ClassicAssert.IsTrue(isNull[j], "Checking property " + j);
                 else
                 {
                     ClassicAssert.IsFalse(isNull[j], "Checking property " + j);
-                    if (isRoot[j])
+                    if(isRoot[j])
                         ClassicAssert.IsTrue(isRoot[j], " Checking property " + j);
-                    if (isDirectory[j])
+                    if(isDirectory[j])
                         ClassicAssert.IsTrue(properties[j] is DirectoryProperty, "Checking property " + j);
-                    if (isDocument[j])
+                    if(isDocument[j])
                         ClassicAssert.IsTrue(properties[j] is DocumentProperty, "Checking property " + j);
 
                     ClassicAssert.AreEqual(names[j], properties[j].Name, "Checking property " + j);

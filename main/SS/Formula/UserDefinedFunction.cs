@@ -1,6 +1,6 @@
-﻿using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
+using System;
 
 namespace NPOI.SS.Formula
 {
@@ -17,14 +17,14 @@ namespace NPOI.SS.Formula
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
             int nIncomingArgs = args.Length;
-            if (nIncomingArgs < 1)
+            if(nIncomingArgs < 1)
             {
                 throw new Exception("function name argument missing");
             }
 
             ValueEval nameArg = args[0];
             String functionName = string.Empty ;
-            if (nameArg is FunctionNameEval nameEval)
+            if(nameArg is FunctionNameEval nameEval)
             {
                 functionName = nameEval.FunctionName;
             }
@@ -34,17 +34,18 @@ namespace NPOI.SS.Formula
                         + nameArg.GetType().Name + ")");
             }
             FreeRefFunction targetFunc = ec.FindUserDefinedFunction(functionName);
-            if (targetFunc == null)
+            if(targetFunc == null)
             {
                 throw new NotImplementedFunctionException(functionName);
             }
             int nOutGoingArgs = nIncomingArgs - 1;
             ValueEval[] outGoingArgs = new ValueEval[nOutGoingArgs];
             Array.Copy(args, 1, outGoingArgs, 0, nOutGoingArgs);
-            if (targetFunc is IArrayFunction) {
+            if(targetFunc is IArrayFunction)
+            {
                 IArrayFunction func = (IArrayFunction)targetFunc;
                 ValueEval eval = OperationEvaluatorFactory.EvaluateArrayFunction(func, outGoingArgs, ec);
-                if (eval != null)
+                if(eval != null)
                 {
                     return eval;
                 }

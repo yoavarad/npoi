@@ -25,11 +25,10 @@
  * 
  * ==============================================================*/
 
-using System;
-
 using NPOI.HPSF.Wellknown;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
+using System;
 
 namespace NPOI.HPSF
 {
@@ -101,26 +100,26 @@ namespace NPOI.HPSF
             byte[] clsIdBuf = new byte[ClassID.LENGTH];
             leis.ReadFully(clsIdBuf);
             int sectionCount = (int)leis.ReadUInt();
-        
-            if (byteOrder != PropertySet.BYTE_ORDER_ASSERTION ||
+
+            if(byteOrder != PropertySet.BYTE_ORDER_ASSERTION ||
                 format != PropertySet.FORMAT_ASSERTION ||
                 sectionCount < 0)
             {
                 throw new NoPropertySetStreamException();
             }
-        
-            if (sectionCount > 0)
+
+            if(sectionCount > 0)
             {
                 leis.ReadFully(clsIdBuf);
             }
             stream.Reset();
-        
+
             ClassID clsId = new ClassID(clsIdBuf, 0);
-            if (sectionCount > 0 && PropertySet.matchesSummary(clsId, SectionIDMap.SUMMARY_INFORMATION_ID))
+            if(sectionCount > 0 && PropertySet.matchesSummary(clsId, SectionIDMap.SUMMARY_INFORMATION_ID))
             {
                 return new SummaryInformation(stream);
             }
-            else if (sectionCount > 0 && PropertySet.matchesSummary(clsId, SectionIDMap.DOCUMENT_SUMMARY_INFORMATION_ID))
+            else if(sectionCount > 0 && PropertySet.matchesSummary(clsId, SectionIDMap.DOCUMENT_SUMMARY_INFORMATION_ID))
             {
                 return new DocumentSummaryInformation(stream);
             }

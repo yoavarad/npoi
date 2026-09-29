@@ -20,9 +20,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -72,8 +72,8 @@ namespace NPOI.HSSF.Record
         public RecalcIdRecord(RecordInputStream in1)
         {
             in1.ReadUShort(); // field 'rt' should have value 0x01C1, but Excel doesn't care during reading
-    	_reserved0 = in1.ReadUShort();
-    	_engineId = in1.ReadInt();
+            _reserved0 = in1.ReadUShort();
+            _engineId = in1.ReadInt();
         }
 
         // /**
@@ -98,7 +98,7 @@ namespace NPOI.HSSF.Record
 
         public bool IsNeeded
         {
-            get { return  true; }
+            get { return true; }
         }
 
         public override String ToString()

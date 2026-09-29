@@ -17,11 +17,11 @@
 
 namespace TestCases.HSSF.Record
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using NPOI.Util;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using TestCases.HSSF.Record;
 
     /**
      * Tests for {@link ColumnInfoRecord}
@@ -32,22 +32,23 @@ namespace TestCases.HSSF.Record
     public class TestColumnInfoRecord
     {
         [Test]
-        public void TestBasic() {
-		byte[] data = HexRead.ReadFromString("7D 00 0C 00 14 00 9B 00 C7 19 0F 00 01 13 00 00");
+        public void TestBasic()
+        {
+            byte[] data = HexRead.ReadFromString("7D 00 0C 00 14 00 9B 00 C7 19 0F 00 01 13 00 00");
 
-		RecordInputStream in1 = TestcaseRecordInputStream.Create(data);
-		ColumnInfoRecord cir = new ColumnInfoRecord(in1);
-		ClassicAssert.AreEqual(0, in1.Remaining);
+            RecordInputStream in1 = TestcaseRecordInputStream.Create(data);
+            ColumnInfoRecord cir = new ColumnInfoRecord(in1);
+            ClassicAssert.AreEqual(0, in1.Remaining);
 
-		ClassicAssert.AreEqual(20, cir.FirstColumn);
-		ClassicAssert.AreEqual(155, cir.LastColumn);
-		ClassicAssert.AreEqual(6599, cir.ColumnWidth);
-		ClassicAssert.AreEqual(15, cir.XFIndex);
-		ClassicAssert.AreEqual(true, cir.IsHidden);
-		ClassicAssert.AreEqual(3, cir.OutlineLevel);
-		ClassicAssert.AreEqual(true, cir.IsCollapsed);
-		ClassicAssert.IsTrue(Arrays.Equals(data, cir.Serialize()));
-	}
+            ClassicAssert.AreEqual(20, cir.FirstColumn);
+            ClassicAssert.AreEqual(155, cir.LastColumn);
+            ClassicAssert.AreEqual(6599, cir.ColumnWidth);
+            ClassicAssert.AreEqual(15, cir.XFIndex);
+            ClassicAssert.AreEqual(true, cir.IsHidden);
+            ClassicAssert.AreEqual(3, cir.OutlineLevel);
+            ClassicAssert.AreEqual(true, cir.IsCollapsed);
+            ClassicAssert.IsTrue(Arrays.Equals(data, cir.Serialize()));
+        }
 
         /**
          * Some applications skip the last reserved field when writing {@link ColumnInfoRecord}s
@@ -67,9 +68,9 @@ namespace TestCases.HSSF.Record
             {
                 cir = new ColumnInfoRecord(in1);
             }
-            catch (RuntimeException e)
+            catch(RuntimeException e)
             {
-                if (e.Message.Equals("Unusual record size remaining=(0)"))
+                if(e.Message.Equals("Unusual record size remaining=(0)"))
                 {
                     throw new AssertionException("Identified bug 48332");
                 }

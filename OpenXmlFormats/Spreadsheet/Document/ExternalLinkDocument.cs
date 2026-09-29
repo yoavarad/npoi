@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 using System.Xml;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet.Document
@@ -36,7 +36,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet.Document
         }
         public void Save(Stream stream)
         {
-            using (StreamWriter sw1 = new StreamWriter(stream))
+            using(StreamWriter sw1 = new StreamWriter(stream))
             {
                 this.link.Write(sw1);
             }

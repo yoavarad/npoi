@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,10 +16,9 @@
 ==================================================================== */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * <p>Implementation for Excel Oct2Dec() function.</p>
@@ -53,7 +52,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 return new NumberEval(BaseNumberUtils.ConvertToDecimal(octal, OCTAL_BASE, MAX_NUMBER_OF_PLACES));
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -61,7 +60,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }

@@ -70,7 +70,7 @@ namespace NPOI.SS.Util
          */
         public short HorizontalSplitPosition
         {
-           get{return y;}
+            get { return y; }
         }
 
         /**
@@ -101,7 +101,7 @@ namespace NPOI.SS.Util
          */
         public byte ActivePane
         {
-            get{return activePane;}
+            get { return activePane; }
         }
 
         /** Returns true if this is a Freeze pane, false if it is a split pane.

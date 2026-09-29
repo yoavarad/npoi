@@ -17,12 +17,13 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     [TestFixture]
     public class TestEOMonth
     {
@@ -73,7 +74,7 @@ namespace TestCases.SS.Formula.Functions
             NumberEval result = (NumberEval)eOMonth.Evaluate(new ValueEval[] { new NumberEval(0), new NumberEval(0) }, ec);
             ClassicAssert.AreEqual(DATE_1900_01_31, result.NumberValue, "0 startDate is 1900-01-00");
 
-            result = (NumberEval)eOMonth.Evaluate(new ValueEval[] { new NumberEval(0), new NumberEval(1) }, ec);
+            result = (NumberEval) eOMonth.Evaluate(new ValueEval[] { new NumberEval(0), new NumberEval(1) }, ec);
             ClassicAssert.AreEqual(DATE_1900_02_28, result.NumberValue, "0 startDate is 1900-01-00");
         }
 
@@ -82,16 +83,16 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval result = eOMonth.Evaluate(new ValueEval[] { new NumberEval(DATE_1902_09_26) }, ec);
             ClassicAssert.IsTrue(result is ErrorEval);
-            ClassicAssert.AreEqual(FormulaError.VALUE.Code, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(FormulaError.VALUE.Code, ((ErrorEval) result).ErrorCode);
 
             result = eOMonth.Evaluate(new ValueEval[] { new StringEval("a"), new StringEval("b") }, ec);
             ClassicAssert.IsTrue(result is ErrorEval);
-            ClassicAssert.AreEqual(FormulaError.VALUE.Code, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(FormulaError.VALUE.Code, ((ErrorEval) result).ErrorCode);
         }
         [Test]
         public void CheckOffset()
         {
-            for (int offset = -12; offset <= 12; offset++)
+            for(int offset = -12; offset <= 12; offset++)
             {
                 DateTime startDate = DateTime.Now;
                 //the month
@@ -174,7 +175,7 @@ namespace TestCases.SS.Formula.Functions
             ClassicAssert.AreEqual(DATE_1900_02_28, result.NumberValue, "Blank is handled as 0");
 
             ValueEval[] ve2 = { new NumberEval(1), new RefEvalImplementation(BlankEval.instance) };
-            result = (NumberEval)eOMonth.Evaluate(ve2, ec);
+            result = (NumberEval) eOMonth.Evaluate(ve2, ec);
             ClassicAssert.AreEqual(DATE_1900_01_31, result.NumberValue, "Blank is handled as 0");
         }
     }

@@ -18,11 +18,10 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.SS.Formula.Constant;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-
-    using NPOI.SS.Formula.Constant;
 
     /**
      * Title:       CRN  

@@ -19,9 +19,9 @@ namespace NPOI.POIFS.Crypt
     using System;
 
 
-/**
- * Used when Checking if a key is valid for a document 
- */
+    /**
+     * Used when Checking if a key is valid for a document 
+     */
 
     public abstract class EncryptionVerifier
     {
@@ -50,7 +50,7 @@ namespace NPOI.POIFS.Crypt
         }
 
         public byte[] EncryptedVerifier { get; set; }
-        
+
 
         /**
      * The method name is misleading - you'll Get the encrypted verifier hash, not the plain verifier hash
@@ -91,7 +91,7 @@ namespace NPOI.POIFS.Crypt
 
         public HashAlgorithm HashAlgorithm { get; set; }
 
-        public ChainingMode ChainingMode { get; set; }        
+        public ChainingMode ChainingMode { get; set; }
     }
 
 }

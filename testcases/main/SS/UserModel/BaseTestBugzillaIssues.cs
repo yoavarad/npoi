@@ -22,7 +22,8 @@ namespace TestCases.SS.UserModel
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
     using System;
     using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace TestCases.SS.UserModel
         {
             double diff = Math.Abs(expected - actual);
             double fuzz = expected * factor;
-            if (diff > fuzz)
+            if(diff > fuzz)
             {
                 Assert.Fail(actual + " not within " + fuzz + " of " + expected);
             }
@@ -94,7 +95,7 @@ namespace TestCases.SS.UserModel
             ISheet sheet = wb.CreateSheet();
             ICreationHelper factory = wb.GetCreationHelper();
 
-            for (int i = 0; i < num; i++)
+            for(int i = 0; i < num; i++)
             {
                 string tmp1 = "Test1" + i;
                 string tmp2 = "Test2" + i;
@@ -110,7 +111,7 @@ namespace TestCases.SS.UserModel
                 cell.SetCellValue(factory.CreateRichTextString(tmp3));
             }
             wb = _testDataProvider.WriteOutAndReadBack(wb);
-            for (int i = 0; i < num; i++)
+            for(int i = 0; i < num; i++)
             {
                 string tmp1 = "Test1" + i;
                 string tmp2 = "Test2" + i;
@@ -142,14 +143,14 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(2, originalMerged, "2 merged regions");
 
             //remove merged regions from clone
-            for (int i = template.NumMergedRegions - 1; i >= 0; i--)
+            for(int i = template.NumMergedRegions - 1; i >= 0; i--)
             {
                 clone.RemoveMergedRegion(i);
             }
 
             ClassicAssert.AreEqual(originalMerged, template.NumMergedRegions, "Original Sheet's Merged Regions were Removed");
             //check if template's merged regions are OK
-            if (template.NumMergedRegions > 0)
+            if(template.NumMergedRegions > 0)
             {
                 // fetch the first merged region...EXCEPTION OCCURS HERE
                 template.GetMergedRegion(0);
@@ -209,16 +210,16 @@ namespace TestCases.SS.UserModel
             IRow rw;
             rw = sheet.CreateRow(0);
             //Header row
-            for (int j = 0; j < col_cnt; j++)
+            for(int j = 0; j < col_cnt; j++)
             {
                 ICell cell = rw.CreateCell(j);
                 cell.SetCellValue("Col " + (j + 1));
             }
 
-            for (int i = 1; i < rw_cnt; i++)
+            for(int i = 1; i < rw_cnt; i++)
             {
                 rw = sheet.CreateRow(i);
-                for (int j = 0; j < col_cnt; j++)
+                for(int j = 0; j < col_cnt; j++)
                 {
                     ICell cell = rw.CreateCell(j);
                     cell.SetCellValue("Row:" + (i + 1) + ",Column:" + (j + 1));
@@ -231,15 +232,15 @@ namespace TestCases.SS.UserModel
             sheet = wb.GetSheetAt(0);
             rw = sheet.GetRow(0);
             //Header row
-            for (int j = 0; j < col_cnt; j++)
+            for(int j = 0; j < col_cnt; j++)
             {
                 ICell cell = rw.GetCell(j);
                 ClassicAssert.AreEqual("Col " + (j + 1), cell.StringCellValue);
             }
-            for (int i = 1; i < rw_cnt; i++)
+            for(int i = 1; i < rw_cnt; i++)
             {
                 rw = sheet.GetRow(i);
-                for (int j = 0; j < col_cnt; j++)
+                for(int j = 0; j < col_cnt; j++)
                 {
                     ICell cell = rw.GetCell(j);
                     ClassicAssert.AreEqual("Row:" + (i + 1) + ",Column:" + (j + 1), cell.StringCellValue);
@@ -278,11 +279,11 @@ namespace TestCases.SS.UserModel
         {
 
             ISheet sht = book.CreateSheet("s" + sheet);
-            for (int r = 0; r < 4; r++)
+            for(int r = 0; r < 4; r++)
             {
 
                 IRow row = sht.CreateRow(r);
-                for (int c = 0; c < 4; c++)
+                for(int c = 0; c < 4; c++)
                 {
 
                     ICell cel = row.CreateCell(c);
@@ -320,7 +321,7 @@ namespace TestCases.SS.UserModel
             ICell cell = wb.CreateSheet().CreateRow(0).CreateCell(0);
 
             String fmla;
-            foreach (String name in func)
+            foreach(String name in func)
             {
 
                 fmla = CreateFunction(name, 5);
@@ -335,7 +336,7 @@ namespace TestCases.SS.UserModel
                     cell.CellFormula = (/*setter*/fmla);
                     Assert.Fail("Expected FormulaParseException");
                 }
-                catch (NPOI.SS.Formula.FormulaParseException e)
+                catch(NPOI.SS.Formula.FormulaParseException e)
                 {
                     ClassicAssert.IsTrue(e.Message.StartsWith("Too many arguments to function '" + name + "'"));
                 }
@@ -347,9 +348,9 @@ namespace TestCases.SS.UserModel
             StringBuilder fmla = new StringBuilder();
             fmla.Append(name);
             fmla.Append("(");
-            for (int i = 0; i < maxArgs; i++)
+            for(int i = 0; i < maxArgs; i++)
             {
-                if (i > 0)
+                if(i > 0)
                 {
                     fmla.Append(',');
                 }
@@ -390,7 +391,7 @@ namespace TestCases.SS.UserModel
 
             // check computing size up to a large size
             StringBuilder b = new StringBuilder();
-            for (int i = 0; i < longValue.Length * 5; i++)
+            for(int i = 0; i < longValue.Length * 5; i++)
             {
                 b.Append("w");
                 ClassicAssert.IsTrue(ComputeCellWidthFixed(font, b.ToString()) > 0, "Had zero length starting at length " + i);
@@ -468,7 +469,7 @@ namespace TestCases.SS.UserModel
          */
         private void assertGreaterThan(String message, double a, double b)
         {
-            if (a <= b)
+            if(a <= b)
             {
                 String msg = "Expected: " + a + " > " + b;
                 Assert.Fail(message + ": " + msg);
@@ -542,10 +543,10 @@ namespace TestCases.SS.UserModel
             ISheet s = wb.CreateSheet();
 
             // Populate
-            for (int rn = 0; rn <= topRow; rn++)
+            for(int rn = 0; rn <= topRow; rn++)
             {
                 IRow r = s.CreateRow(rn);
-                for (int cn = 0; cn < leftmostColumn; cn++)
+                for(int cn = 0; cn < leftmostColumn; cn++)
                 {
                     ICell c = r.CreateCell(cn, CellType.Numeric);
                     c.SetCellValue(100 * rn + cn);
@@ -667,35 +668,35 @@ namespace TestCases.SS.UserModel
             _testDataProvider.TrackAllColumnsForAutosizing(s);
             IRow r1 = s.CreateRow(0);
 
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 r1.CreateCell(i, CellType.Numeric).SetCellValue(0);
             }
-            for (int i = 3; i < 6; i++)
+            for(int i = 3; i < 6; i++)
             {
                 r1.CreateCell(i, CellType.Numeric).SetCellValue(1);
             }
-            for (int i = 6; i < 9; i++)
+            for(int i = 6; i < 9; i++)
             {
                 r1.CreateCell(i, CellType.Numeric).SetCellValue(0.12345);
             }
-            for (int i = 9; i < 12; i++)
+            for(int i = 9; i < 12; i++)
             {
                 r1.CreateCell(i, CellType.Numeric).SetCellValue(1.2345);
             }
-            for (int i = 0; i < 12; i += 3)
+            for(int i = 0; i < 12; i += 3)
             {
                 r1.GetCell(i).CellStyle = (/*setter*/iPercent);
                 r1.GetCell(i + 1).CellStyle = (/*setter*/d1Percent);
                 r1.GetCell(i + 2).CellStyle = (/*setter*/d2Percent);
             }
-            for (int i = 0; i < 12; i++)
+            for(int i = 0; i < 12; i++)
             {
                 s.AutoSizeColumn(i);
             }
 
             // Verify that auto-sizing ran (all widths > 0)
-            for (int i = 0; i < 12; i++)
+            for(int i = 0; i < 12; i++)
             {
                 ClassicAssert.IsTrue(s.GetColumnWidth(i) > 0, $"Column {i} should have width > 0 after auto-sizing");
             }
@@ -824,7 +825,7 @@ namespace TestCases.SS.UserModel
 
             cf.SetCellFormula("SEARCH(\"am\", B1)");
             cf = EvaluateCell(wb, cf);
-            ClassicAssert.AreEqual(19, (int)cf.NumericCellValue);
+            ClassicAssert.AreEqual(19, (int) cf.NumericCellValue);
 
             cf.SetCellFormula("SEARCH(\"am\", C1)");
             cf = EvaluateCell(wb, cf);
@@ -918,13 +919,13 @@ namespace TestCases.SS.UserModel
                 EvaluateCell(wb, c1);
                 Assert.Fail("Shouldn't be able to Evaluate without the other file");
             }
-            catch (Exception) { }
+            catch(Exception) { }
             try
             {
                 EvaluateCell(wb, c2);
                 Assert.Fail("Shouldn't be able to Evaluate without the other file");
             }
-            catch (Exception) { }
+            catch(Exception) { }
 
 
             // Set up references to the other file
@@ -1012,7 +1013,7 @@ namespace TestCases.SS.UserModel
             // Get a font, and slightly change it
             IFont a = wb.CreateFont();
             ClassicAssert.AreEqual(startingFonts + 1, wb.NumberOfFonts);
-            a.FontHeightInPoints = ((short)23);
+            a.FontHeightInPoints = ((short) 23);
             ClassicAssert.AreEqual(startingFonts + 1, wb.NumberOfFonts);
 
             // Get two more, unchanged
@@ -1117,7 +1118,7 @@ namespace TestCases.SS.UserModel
             //apply custom font to the text in the comment
             IFont font = wb.CreateFont();
             font.FontName = ("Arial");
-            font.FontHeightInPoints = ((short)14);
+            font.FontHeightInPoints = ((short) 14);
             font.IsBold = true;
             font.Color = (IndexedColors.Red.Index);
             str2.ApplyFont(font);
@@ -1175,7 +1176,7 @@ namespace TestCases.SS.UserModel
                 var tmp = cn.RichStringCellValue;
                 Assert.Fail();
             }
-            catch (InvalidOperationException) { }
+            catch(InvalidOperationException) { }
 
             ClassicAssert.AreEqual("Testing", cs.StringCellValue);
             try
@@ -1183,7 +1184,7 @@ namespace TestCases.SS.UserModel
                 var tmp = cs.NumericCellValue;
                 Assert.Fail();
             }
-            catch (InvalidOperationException) { }
+            catch(InvalidOperationException) { }
 
             ClassicAssert.AreEqual(1.2, cfn.NumericCellValue, 0);
             try
@@ -1191,7 +1192,7 @@ namespace TestCases.SS.UserModel
                 var tmp = cfn.RichStringCellValue;
                 Assert.Fail();
             }
-            catch (InvalidOperationException) { }
+            catch(InvalidOperationException) { }
 
             ClassicAssert.AreEqual("Testing", cfs.StringCellValue);
             try
@@ -1199,7 +1200,7 @@ namespace TestCases.SS.UserModel
                 var tmp = cfs.NumericCellValue;
                 Assert.Fail();
             }
-            catch (InvalidOperationException) { }
+            catch(InvalidOperationException) { }
 
             wb.Close();
         }
@@ -1211,14 +1212,14 @@ namespace TestCases.SS.UserModel
             IRow row = sheet.CreateRow(0);
             ICell cell = row.CreateCell(0);
             // verify that null-values can be set, this was possible up to 3.11, but broken in 3.12 
-            cell.SetCellValue((String)null);
+            cell.SetCellValue((String) null);
             String value = cell.StringCellValue;
             ClassicAssert.IsTrue(value == null || value.Length == 0, "HSSF will currently return empty string, XSSF/SXSSF will return null, but had: " + value);
 
             cell = row.CreateCell(1);
             // also verify that setting formulas to null works  
             cell.SetCellType(CellType.Formula);
-            cell.SetCellValue((String)null);
+            cell.SetCellValue((String) null);
 
             wb.GetCreationHelper().CreateFormulaEvaluator().EvaluateAll();
             value = cell.StringCellValue;
@@ -1230,7 +1231,7 @@ namespace TestCases.SS.UserModel
             value = cell.StringCellValue;
             ClassicAssert.IsTrue(value.Equals("somevalue"), "can set value afterwards: " + value);
             // verify that the null-value is actually set even if there was some value in the cell before  
-            cell.SetCellValue((String)null);
+            cell.SetCellValue((String) null);
             value = cell.StringCellValue;
             ClassicAssert.IsTrue(value == null || value.Length == 0, "HSSF will currently return empty string, XSSF/SXSSF will return null, but had: " + value);
         }
@@ -1300,7 +1301,7 @@ namespace TestCases.SS.UserModel
             // use a fixed seed to always produce the same file which makes comparing stuff easier
             //Random rnd = new Random(4352345);
             int maxStyles = (wb is HSSFWorkbook) ? 4009 : 64000;
-            for (int i = 0; i < maxStyles; i++)
+            for(int i = 0; i < maxStyles; i++)
             {
                 //Create new row
                 //IRow row = worksheet.CreateRow(i);
@@ -1310,12 +1311,12 @@ namespace TestCases.SS.UserModel
                 {
                     style = wb.CreateCellStyle();
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
                     throw new InvalidOperationException("Failed for row " + i, e);
                 }
                 style.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Right;
-                if ((wb is HSSFWorkbook))
+                if((wb is HSSFWorkbook))
                 {
                     // there are some predefined styles
                     ClassicAssert.AreEqual(i + 21, style.Index);
@@ -1340,7 +1341,7 @@ namespace TestCases.SS.UserModel
                 wb.CreateCellStyle();
                 Assert.Fail("Should Assert.Fail after " + maxStyles + " styles, but did not Assert.Fail");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected here
             }
@@ -1405,7 +1406,7 @@ namespace TestCases.SS.UserModel
             IWorkbook wb = _testDataProvider.CreateWorkbook();
             ISheet s = wb.CreateSheet();
             ICell cell = s.CreateRow(0).CreateCell(0);
-            cell.SetCellValue((String)null);
+            cell.SetCellValue((String) null);
             ClassicAssert.AreEqual(CellType.Blank, cell.CellType);
 
             _testDataProvider.TrackAllColumnsForAutosizing(s);
@@ -1452,10 +1453,10 @@ namespace TestCases.SS.UserModel
 
             long t0 = TimeUtil.CurrentMillis();
             _testDataProvider.TrackAllColumnsForAutosizing(sh);
-            for (int r = 0; r < nrows; r++)
+            for(int r = 0; r < nrows; r++)
             {
                 IRow row = sh.CreateRow(r);
-                for (int c = 0; c < ncols; c++)
+                for(int c = 0; c < ncols; c++)
                 {
                     ICell cell = row.CreateCell(c);
                     cell.SetCellValue("Cell[r=" + r + ",c=" + c + "]");
@@ -1467,7 +1468,7 @@ namespace TestCases.SS.UserModel
 
             out1.WriteLine("\nAutosizing...");
             long t1 = TimeUtil.CurrentMillis();
-            for (int c = 0; c < ncols; c++)
+            for(int c = 0; c < ncols; c++)
             {
                 long t2 = TimeUtil.CurrentMillis();
                 sh.AutoSizeColumn(c);
@@ -1556,7 +1557,7 @@ namespace TestCases.SS.UserModel
             IRow row = sheet.GetRow(rowId);
             ICell cell = row.GetCell(cellId);
             ClassicAssert.AreEqual("A1", cell.CellFormula);
-            if (CellType.Formula == cell.CellType)
+            if(CellType.Formula == cell.CellType)
             {
                 ClassicAssert.AreEqual(CellType.String, cell.CachedFormulaResultType);
             }
@@ -1568,7 +1569,7 @@ namespace TestCases.SS.UserModel
             row = sheet.GetRow(rowId);
             cell = row.GetCell(cellId);
             ClassicAssert.AreEqual("A1", cell.CellFormula);
-            if (CellType.Formula == cell.CellType)
+            if(CellType.Formula == cell.CellType)
             {
                 ClassicAssert.AreEqual(CellType.String, cell.CachedFormulaResultType);
             }
@@ -1613,10 +1614,10 @@ namespace TestCases.SS.UserModel
             try
             {
                 ISheet sh = wb.CreateSheet();
-                for (int rownum = 0; rownum < 10; rownum++)
+                for(int rownum = 0; rownum < 10; rownum++)
                 {
                     IRow row1 = sh.CreateRow(rownum);
-                    for (int cellnum = 0; cellnum < 3; cellnum++)
+                    for(int cellnum = 0; cellnum < 3; cellnum++)
                     {
                         ICell cell = row1.CreateCell(cellnum);
                         cell.SetCellValue(rownum + cellnum);
@@ -1663,10 +1664,10 @@ namespace TestCases.SS.UserModel
             ISheet sheet = readFile.GetSheetAt(0);
             IRow row = sheet.GetRow(sheet.LastRowNum);
             ClassicAssert.AreEqual(10, row.RowNum);
-            foreach (ICell cell in row)
+            foreach(ICell cell in row)
             {
                 String cellValue = null;
-                switch (cell.CellType)
+                switch(cell.CellType)
                 {
                     case CellType.String:
                         cellValue = cell.RichStringCellValue.String;
@@ -1688,7 +1689,7 @@ namespace TestCases.SS.UserModel
         [Test]
         public virtual void bug60197_NamedRangesReferToCorrectSheetWhenSheetOrderIsChanged()
         {
-            using (IWorkbook wb = _testDataProvider.CreateWorkbook())
+            using(IWorkbook wb = _testDataProvider.CreateWorkbook())
             {
                 ISheet sheet1 = wb.CreateSheet("Sheet1");
                 ISheet sheet2 = wb.CreateSheet("Sheet2");
@@ -1721,7 +1722,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.AreEqual("Sheet2!A1", name.RefersToFormula);
 
                 // rearrange the sheets several times to make sure the names always refer to the right sheet
-                for (int i = 0; i <= 9; i++)
+                for(int i = 0; i <= 9; i++)
                 {
                     wb.SetSheetOrder("Sheet3", i % 3);
 
@@ -1748,7 +1749,7 @@ namespace TestCases.SS.UserModel
                     ClassicAssert.AreEqual("Sheet2!A1", name.RefersToFormula);
 
                     // make sure the changes to the names stick after writing out the workbook
-                    using (IWorkbook wb2 = _testDataProvider.WriteOutAndReadBack(wb))
+                    using(IWorkbook wb2 = _testDataProvider.WriteOutAndReadBack(wb))
                     {
                         // See note above. XSSFNames become invalid after workbook write
                         // Without reassignment here, an XmlValueDisconnectedException may occur
@@ -1839,7 +1840,7 @@ namespace TestCases.SS.UserModel
                 dataValidation.CreatePromptBox(title, text);
                 ClassicAssert.IsFalse(shouldFail, "Should fail in a length-check, had " + (title == null ? null : title.Length) + " and " + (text == null ? null : text.Length));
             }
-            catch (ArgumentOutOfRangeException)
+            catch(ArgumentOutOfRangeException)
             {
                 ClassicAssert.IsTrue(shouldFail, "Should not fail in a length-check, had " + (title == null ? null : title.Length) + " and " + (text == null ? null : text.Length));
                 // expected here
@@ -1849,7 +1850,7 @@ namespace TestCases.SS.UserModel
                 dataValidation.CreateErrorBox(title, text);
                 ClassicAssert.IsFalse(shouldFail, "Should fail in a length-check, had " + (title == null ? null : title.Length) + " and " + (text == null ? null : text.Length));
             }
-            catch (ArgumentOutOfRangeException)
+            catch(ArgumentOutOfRangeException)
             {
                 ClassicAssert.IsTrue(shouldFail, "Should not fail in a length-check, had " + (title == null ? null : title.Length) + " and " + (text == null ? null : text.Length));
             }

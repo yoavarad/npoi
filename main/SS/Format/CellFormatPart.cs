@@ -16,16 +16,16 @@
 ==================================================================== */
 namespace NPOI.SS.Format
 {
-    using System;
-
+    using Cysharp.Text;
     using NPOI.HSSF.Util;
-    using System.Collections.Generic;
-    using System.Collections;
-    using System.Text.RegularExpressions;
-    using System.Text;using Cysharp.Text;
-    using System.Globalization;
-    using SkiaSharp;
     using NPOI.Util;
+    using SkiaSharp;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
     /**
      * Objects of this class represent a single part of a cell format expression.
@@ -78,20 +78,20 @@ namespace NPOI.SS.Format
             NAMED_COLORS = new Dictionary<String, SKColor>(CASE_INSENSITIVE_ORDER);
 
             var colors = HSSFColor.GetIndexHash();
-            foreach (HSSFColor hc in colors.Values)
+            foreach(HSSFColor hc in colors.Values)
             {
                 Type type = hc.GetType();
                 String name = type.Name;
-                if (name.Equals(name.ToUpper()))
+                if(name.Equals(name.ToUpper()))
                 {
                     byte[] rgb = hc.RGB;
                     SKColor c = new SKColor(rgb[0], rgb[1], rgb[2]);
                     NAMED_COLORS.TryAdd(name, c);
-                    if (name.IndexOf('_') > 0)
+                    if(name.IndexOf('_') > 0)
                     {
                         NAMED_COLORS.TryAdd(name.Replace('_', ' '), c);
                     }
-                    if (name.IndexOf("_PERCENT", StringComparison.Ordinal) > 0)
+                    if(name.IndexOf("_PERCENT", StringComparison.Ordinal) > 0)
                     {
                         NAMED_COLORS.TryAdd(name.Replace("_PERCENT", "%").Replace('_', ' '), c);
                     }
@@ -208,7 +208,7 @@ namespace NPOI.SS.Format
         public CellFormatPart(CultureInfo locale, String desc)
         {
             Match m = FORMAT_PAT.Match(desc);
-            if (!m.Success)
+            if(!m.Success)
             {
                 throw new ArgumentException("Unrecognized format: " + "\"" + desc + "\"");
             }
@@ -230,9 +230,9 @@ namespace NPOI.SS.Format
          */
         public bool Applies(Object valueObject)
         {
-            if (condition == null || !(valueObject.GetType().IsPrimitive))
+            if(condition == null || !(valueObject.GetType().IsPrimitive))
             {
-                if (valueObject == null)
+                if(valueObject == null)
                     throw new NullReferenceException("valueObject");
                 return true;
             }
@@ -258,14 +258,14 @@ namespace NPOI.SS.Format
         private static int FindGroup(Regex pat, String str, String marker)
         {
             Match m = pat.Match(str);
-            if (!m.Success)
+            if(!m.Success)
                 throw new ArgumentException(
                         "Pattern \"" + pat.ToString() + "\" doesn't match \"" + str +
                                 "\"");
-            for (int i = 1; i <= m.Groups.Count; i++)
+            for(int i = 1; i <= m.Groups.Count; i++)
             {
                 String grp = m.Groups[i].Value;
-                if (grp != null && grp.Equals(marker))
+                if(grp != null && grp.Equals(marker))
                     return i;
             }
             throw new ArgumentException(
@@ -283,10 +283,10 @@ namespace NPOI.SS.Format
         private static SKColor GetColor(Match m)
         {
             String cdesc = m.Groups[(COLOR_GROUP)].Value.ToUpper();
-            if (cdesc == null || cdesc.Length == 0)
+            if(cdesc == null || cdesc.Length == 0)
                 return POIUtils.Color_Empty;
             SKColor c = POIUtils.Color_Empty;
-            if (NAMED_COLORS.TryGetValue(cdesc, out SKColor value))
+            if(NAMED_COLORS.TryGetValue(cdesc, out SKColor value))
                 c = value;
             //if (c == null)
             //    logger.Warning("Unknown color: " + quote(cdesc));
@@ -304,7 +304,7 @@ namespace NPOI.SS.Format
         private static CellFormatCondition GetCondition(Match m)
         {
             String mdesc = m.Groups[(CONDITION_OPERATOR_GROUP)].Value;
-            if (mdesc == null || mdesc.Length == 0)
+            if(mdesc == null || mdesc.Length == 0)
                 return null;
             return CellFormatCondition.GetInstance(m.Groups[(
                     CONDITION_OPERATOR_GROUP)].Value, m.Groups[(CONDITION_VALUE_GROUP)].Value);
@@ -337,11 +337,11 @@ namespace NPOI.SS.Format
             String fdesc = matcher.Groups[(SPECIFICATION_GROUP)].Value;
             // For now, we don't support localised currencies, so simplify if there
             Match currencyM = CURRENCY_PAT.Match(fdesc);
-            if (currencyM.Success)
+            if(currencyM.Success)
             {
                 String currencyPart = currencyM.Groups[(1)].Value;
                 String currencyRepl;
-                if (currencyPart.StartsWith("[$-"))
+                if(currencyPart.StartsWith("[$-"))
                 {
                     // Default $ in a different locale
                     currencyRepl = "$";
@@ -367,7 +367,7 @@ namespace NPOI.SS.Format
         private static CellFormatType formatType(String fdesc)
         {
             fdesc = fdesc.Trim();
-            if (fdesc.Equals("") || fdesc.Equals("General", StringComparison.InvariantCultureIgnoreCase))
+            if(fdesc.Equals("") || fdesc.Equals("General", StringComparison.InvariantCultureIgnoreCase))
                 return CellFormatType.GENERAL;
 
             MatchCollection mc = SPECIFICATION_PAT.Matches(fdesc);
@@ -377,15 +377,15 @@ namespace NPOI.SS.Format
             //while (m.Success)
             {
                 String repl = m.Groups[(0)].Value;
-                if (repl.Length > 0)
+                if(repl.Length > 0)
                 {
                     //switch (repl[0])
                     char c1 = repl[0];
                     char c2 = '\0';
-                    if (repl.Length > 1)
+                    if(repl.Length > 1)
                         c2 = Char.ToLower(repl[(1)]);
 
-                    switch (c1)
+                    switch(c1)
                     {
                         case '@':
                             return CellFormatType.TEXT;
@@ -408,11 +408,11 @@ namespace NPOI.SS.Format
                             seenZero = true;
                             break;
                         case '[':
-                            if (c2 == 'h' || c2 == 'm' || c2 == 's')
+                            if(c2 == 'h' || c2 == 'm' || c2 == 's')
                             {
                                 return CellFormatType.ELAPSED;
                             }
-                            if (c2 == '$')
+                            if(c2 == '$')
                             {
                                 // Localised currency
                                 return CellFormatType.NUMBER;
@@ -428,9 +428,9 @@ namespace NPOI.SS.Format
             }
 
             // Nothing defInitive was found, so we figure out it deductively
-            if (couldBeDate)
+            if(couldBeDate)
                 return CellFormatType.DATE;
-            if (seenZero)
+            if(seenZero)
                 return CellFormatType.NUMBER;
             return CellFormatType.TEXT;
         }
@@ -454,17 +454,17 @@ namespace NPOI.SS.Format
             for(int i = 0; i < repl.Length; i++)
             {
                 char ch = repl[i];
-                if (ch == '\'' && type.IsSpecial('\''))
+                if(ch == '\'' && type.IsSpecial('\''))
                 {
                     sb.Append('\u0000');
                     continue;
                 }
 
                 bool special = type.IsSpecial(ch);
-                if (special)
+                if(special)
                     sb.Append("'");
                 sb.Append(ch);
-                if (special)
+                if(special)
                     sb.Append("'");
             }
             return sb.ToString();
@@ -484,7 +484,7 @@ namespace NPOI.SS.Format
             bool applies = Applies(value);
             String text;
             SKColor textColor;
-            if (applies)
+            if(applies)
             {
                 text = format.Format(value);
                 textColor = color;
@@ -550,12 +550,12 @@ namespace NPOI.SS.Format
             foreach(Match m in mc)
             {
                 String part = Group(m, 0);
-                if (part.Length > 0)
+                if(part.Length > 0)
                 {
                     String repl = partHandler.HandlePart(m, part, type, fmt);
-                    if (repl == null)
+                    if(repl == null)
                     {
-                        switch (part[0])
+                        switch(part[0])
                         {
                             case '\"':
                                 repl = QuoteSpecial(part.Substring(1,
@@ -577,24 +577,24 @@ namespace NPOI.SS.Format
                     }
                     //m.AppendReplacement(fmt, Match.QuoteReplacement(repl));
                     fmt.Append(part.Replace(m.Captures[0].Value, repl));
-                    if (m.NextMatch().Index - (m.Index + part.Length) > 0)
+                    if(m.NextMatch().Index - (m.Index + part.Length) > 0)
                     {
                         fmt.Append(fdesc.Substring(m.Index + part.Length, m.NextMatch().Index - (m.Index + part.Length)));
                     }
                     lastMatch = m;
                 }
             }
-            if (lastMatch != null)
+            if(lastMatch != null)
             {
                 fmt.Append(fdesc.Substring(lastMatch.Index + lastMatch.Groups[0].Value.Length));
             }
             //m.AppendTail(fmt);
 
-            if (type.IsSpecial('\''))
+            if(type.IsSpecial('\''))
             {
                 // Now the next pass for quoted characters: Remove '' chars, making "'a''b'" into "'ab'"
                 int pos = 0;
-                while ((pos = fmt.ToString().IndexOf("''", pos)) >= 0)
+                while((pos = fmt.ToString().IndexOf("''", pos)) >= 0)
                 {
                     //fmt.Delete(pos, pos + 2);
                     fmt.Remove(pos, 2);
@@ -602,7 +602,7 @@ namespace NPOI.SS.Format
 
                 // Now the pass for quoted chars: Replace any \u0000 with ''
                 pos = 0;
-                while ((pos = fmt.ToString().IndexOf('\u0000', pos)) >= 0)
+                while((pos = fmt.ToString().IndexOf('\u0000', pos)) >= 0)
                 {
                     //fmt.Replace(pos, pos + 1, "''");
                     fmt.Remove(pos, 1);
@@ -614,14 +614,14 @@ namespace NPOI.SS.Format
         }
         public static String QuoteReplacement(String s)
         {
-            if (!s.Contains('\\') && !s.Contains('$'))
+            if(!s.Contains('\\') && !s.Contains('$'))
                 return s;
             using var sb = ZString.CreateStringBuilder();
 
             for(int i = 0; i < s.Length; i++)
             {
                 char c = s[(i)];
-                if (c == '\\' || c == '$')
+                if(c == '\\' || c == '$')
                 {
                     sb.Append('\\');
                 }

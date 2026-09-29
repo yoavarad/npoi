@@ -24,16 +24,16 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.IO;
-    using System.Reflection;
-    using System.Collections;
-    using System.Collections.Generic;
+    using NPOI.HSSF.Record.AutoFilter;
     using NPOI.HSSF.Record.Chart;
     using NPOI.HSSF.Record.PivotTable;
-    using NPOI.HSSF.Record.AutoFilter;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
+    using System.Reflection;
 
     /**
      * Title:  Record Factory
@@ -72,9 +72,9 @@ namespace NPOI.HSSF.Record
                 Object[] args = { in1 };
                 try
                 {
-                    return (Record)_c.Invoke(args);
+                    return (Record) _c.Invoke(args);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     throw new RecordFormatException("Unable to construct record instance", e.InnerException);
                 }
@@ -101,9 +101,9 @@ namespace NPOI.HSSF.Record
                 Object[] args = { in1 };
                 try
                 {
-                    return (Record)_m.Invoke(null, args);
+                    return (Record) _m.Invoke(null, args);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     throw new RecordFormatException("Unable to construct record instance", e.InnerException);
                 }
@@ -122,18 +122,18 @@ namespace NPOI.HSSF.Record
         {
             recordClasses = new Type[]
             {
-		        typeof(ArrayRecord),
+                typeof(ArrayRecord),
                 typeof(AutoFilterInfoRecord),
-		        typeof(BackupRecord),
-		        typeof(BlankRecord),
-		        typeof(BOFRecord),
-		        typeof(BookBoolRecord),
-		        typeof(BoolErrRecord),
-		        typeof(BottomMarginRecord),
-		        typeof(BoundSheetRecord),
-		        typeof(CalcCountRecord),
-		        typeof(CalcModeRecord),
-		        typeof(CFHeaderRecord),
+                typeof(BackupRecord),
+                typeof(BlankRecord),
+                typeof(BOFRecord),
+                typeof(BookBoolRecord),
+                typeof(BoolErrRecord),
+                typeof(BottomMarginRecord),
+                typeof(BoundSheetRecord),
+                typeof(CalcCountRecord),
+                typeof(CalcModeRecord),
+                typeof(CFHeaderRecord),
                 typeof(CFHeader12Record),
                 typeof(CFRuleRecord),
                 typeof(CFRule12Record),
@@ -141,107 +141,107 @@ namespace NPOI.HSSF.Record
                 typeof(AlRunsRecord),
                 //typeof(CodeNameRecord),
 		        typeof(CodepageRecord),
-		        typeof(ColumnInfoRecord),
-		        typeof(ContinueRecord),
-		        typeof(CountryRecord),
-		        typeof(CRNCountRecord),
-		        typeof(CRNRecord),
-		        typeof(DateWindow1904Record),
-		        typeof(DBCellRecord),
+                typeof(ColumnInfoRecord),
+                typeof(ContinueRecord),
+                typeof(CountryRecord),
+                typeof(CRNCountRecord),
+                typeof(CRNRecord),
+                typeof(DateWindow1904Record),
+                typeof(DBCellRecord),
                 typeof(DConRefRecord),
-		        typeof(DefaultColWidthRecord),
-		        typeof(DefaultRowHeightRecord),
-		        typeof(DeltaRecord),
-		        typeof(DimensionsRecord),
-		        typeof(DrawingGroupRecord),
-		        typeof(DrawingRecord),
-		        typeof(DrawingSelectionRecord),
-		        typeof(DSFRecord),
-		        typeof(DVALRecord),
-		        typeof(DVRecord),
-		        typeof(EOFRecord),
-		        typeof(ExtendedFormatRecord),
-		        typeof(ExternalNameRecord),
-		        typeof(ExternSheetRecord),
-		        typeof(ExtSSTRecord),
-		        typeof(FilePassRecord),
-		        typeof(FileSharingRecord),
-		        typeof(FnGroupCountRecord),
-		        typeof(FontRecord),
-		        typeof(FooterRecord),
-		        typeof(FormatRecord),
-		        typeof(FormulaRecord),
-		        typeof(GridsetRecord),
-		        typeof(GutsRecord),
-		        typeof(HCenterRecord),
-		        typeof(HeaderRecord),
+                typeof(DefaultColWidthRecord),
+                typeof(DefaultRowHeightRecord),
+                typeof(DeltaRecord),
+                typeof(DimensionsRecord),
+                typeof(DrawingGroupRecord),
+                typeof(DrawingRecord),
+                typeof(DrawingSelectionRecord),
+                typeof(DSFRecord),
+                typeof(DVALRecord),
+                typeof(DVRecord),
+                typeof(EOFRecord),
+                typeof(ExtendedFormatRecord),
+                typeof(ExternalNameRecord),
+                typeof(ExternSheetRecord),
+                typeof(ExtSSTRecord),
+                typeof(FilePassRecord),
+                typeof(FileSharingRecord),
+                typeof(FnGroupCountRecord),
+                typeof(FontRecord),
+                typeof(FooterRecord),
+                typeof(FormatRecord),
+                typeof(FormulaRecord),
+                typeof(GridsetRecord),
+                typeof(GutsRecord),
+                typeof(HCenterRecord),
+                typeof(HeaderRecord),
                 typeof(HeaderFooterRecord),
-		        typeof(HideObjRecord),
-		        typeof(HorizontalPageBreakRecord),
-		        typeof(HyperlinkRecord),
-		        typeof(IndexRecord),
-		        typeof(InterfaceEndRecord),
-		        typeof(InterfaceHdrRecord),
-		        typeof(IterationRecord),
-		        typeof(LabelRecord),
-		        typeof(LabelSSTRecord),
-		        typeof(LeftMarginRecord),
-		        typeof(MergeCellsRecord),
-		        typeof(MMSRecord),
-		        typeof(MulBlankRecord),
-		        typeof(MulRKRecord),
-		        typeof(NameRecord),
+                typeof(HideObjRecord),
+                typeof(HorizontalPageBreakRecord),
+                typeof(HyperlinkRecord),
+                typeof(IndexRecord),
+                typeof(InterfaceEndRecord),
+                typeof(InterfaceHdrRecord),
+                typeof(IterationRecord),
+                typeof(LabelRecord),
+                typeof(LabelSSTRecord),
+                typeof(LeftMarginRecord),
+                typeof(MergeCellsRecord),
+                typeof(MMSRecord),
+                typeof(MulBlankRecord),
+                typeof(MulRKRecord),
+                typeof(NameRecord),
                 typeof(NameCommentRecord),
-		        typeof(NoteRecord),
-		        typeof(NumberRecord),
-		        typeof(ObjectProtectRecord),
-		        typeof(ObjRecord),
-		        typeof(PaletteRecord),
-		        typeof(PaneRecord),
-		        typeof(PasswordRecord),
-		        typeof(PasswordRev4Record),
-		        typeof(PrecisionRecord),
-		        typeof(PrintGridlinesRecord),
-		        typeof(PrintHeadersRecord),
-		        typeof(PrintSetupRecord),
+                typeof(NoteRecord),
+                typeof(NumberRecord),
+                typeof(ObjectProtectRecord),
+                typeof(ObjRecord),
+                typeof(PaletteRecord),
+                typeof(PaneRecord),
+                typeof(PasswordRecord),
+                typeof(PasswordRev4Record),
+                typeof(PrecisionRecord),
+                typeof(PrintGridlinesRecord),
+                typeof(PrintHeadersRecord),
+                typeof(PrintSetupRecord),
                 typeof(PrintSizeRecord),
-		        typeof(ProtectionRev4Record),
-		        typeof(ProtectRecord),
-		        typeof(RecalcIdRecord),
-		        typeof(RefModeRecord),
-		        typeof(RefreshAllRecord),
-		        typeof(RightMarginRecord),
-		        typeof(RKRecord),
-		        typeof(RowRecord),
-		        typeof(SaveRecalcRecord),
-		        typeof(ScenarioProtectRecord),
+                typeof(ProtectionRev4Record),
+                typeof(ProtectRecord),
+                typeof(RecalcIdRecord),
+                typeof(RefModeRecord),
+                typeof(RefreshAllRecord),
+                typeof(RightMarginRecord),
+                typeof(RKRecord),
+                typeof(RowRecord),
+                typeof(SaveRecalcRecord),
+                typeof(ScenarioProtectRecord),
                 typeof(SCLRecord),
-		        typeof(SelectionRecord),
+                typeof(SelectionRecord),
                 typeof(SeriesRecord),
                 typeof(SeriesTextRecord),
-		        typeof(SharedFormulaRecord),
-		        typeof(SSTRecord),
-		        typeof(StringRecord),
-		        typeof(StyleRecord),
-		        typeof(SupBookRecord),
-		        typeof(TabIdRecord),
-		        typeof(TableRecord),
+                typeof(SharedFormulaRecord),
+                typeof(SSTRecord),
+                typeof(StringRecord),
+                typeof(StyleRecord),
+                typeof(SupBookRecord),
+                typeof(TabIdRecord),
+                typeof(TableRecord),
                 typeof(TableStylesRecord),
-		        typeof(TextObjectRecord),
-		        typeof(TopMarginRecord),
-		        typeof(UncalcedRecord),
-		        typeof(UseSelFSRecord),
+                typeof(TextObjectRecord),
+                typeof(TopMarginRecord),
+                typeof(UncalcedRecord),
+                typeof(UseSelFSRecord),
                 typeof(UserSViewBegin),
-		        typeof(UserSViewEnd),
+                typeof(UserSViewEnd),
                 typeof(ValueRangeRecord),
-		        typeof(VCenterRecord),
-		        typeof(VerticalPageBreakRecord),
-		        typeof(WindowOneRecord),
-		        typeof(WindowProtectRecord),
-		        typeof(WindowTwoRecord),
-		        typeof(WriteAccessRecord),
-		        typeof(WriteProtectRecord),
-		        typeof(WSBoolRecord),
+                typeof(VCenterRecord),
+                typeof(VerticalPageBreakRecord),
+                typeof(WindowOneRecord),
+                typeof(WindowProtectRecord),
+                typeof(WindowTwoRecord),
+                typeof(WriteAccessRecord),
+                typeof(WriteProtectRecord),
+                typeof(WSBoolRecord),
                 typeof(SheetExtRecord),
                 typeof(FeatHdrRecord),
                 typeof(FeatRecord),
@@ -392,12 +392,12 @@ namespace NPOI.HSSF.Record
 
           		// pivot table records
 		        typeof(DataItemRecord),
-		        typeof(ExtendedPivotTableViewFieldsRecord),
-		        typeof(PageItemRecord),
-		        typeof(StreamIDRecord),
-		        typeof(ViewDefinitionRecord), 
-		        typeof(ViewFieldsRecord),
-		        typeof(ViewSourceRecord),
+                typeof(ExtendedPivotTableViewFieldsRecord),
+                typeof(PageItemRecord),
+                typeof(StreamIDRecord),
+                typeof(ViewDefinitionRecord),
+                typeof(ViewFieldsRecord),
+                typeof(ViewSourceRecord),
 
                 //autofilter
                 typeof(AutoFilterRecord),
@@ -426,10 +426,10 @@ namespace NPOI.HSSF.Record
         public static Type GetRecordClass(int sid)
         {
             I_RecordCreator rc = null;
-            if (_recordCreatorsById.ContainsKey((short)sid))
-                rc = _recordCreatorsById[(short)sid];
+            if(_recordCreatorsById.ContainsKey((short) sid))
+                rc = _recordCreatorsById[(short) sid];
 
-            if (rc == null)
+            if(rc == null)
             {
                 return null;
             }
@@ -464,7 +464,7 @@ namespace NPOI.HSSF.Record
             RecordFactoryInputStream recStream = new RecordFactoryInputStream(in1, true);
 
             Record record;
-            while ((record = recStream.NextRecord()) != null)
+            while((record = recStream.NextRecord()) != null)
             {
                 records.Add(record);
             }
@@ -474,7 +474,7 @@ namespace NPOI.HSSF.Record
         [Obsolete]
         private static void AddAll(List<Record> destList, Record[] srcRecs)
         {
-            for (int i = 0; i < srcRecs.Length; i++)
+            for(int i = 0; i < srcRecs.Length; i++)
             {
                 destList.Add(srcRecs[i]);
             }
@@ -484,16 +484,16 @@ namespace NPOI.HSSF.Record
         public static Record[] CreateRecord(RecordInputStream in1)
         {
             Record record = CreateSingleRecord(in1);
-            if (record is DBCellRecord)
+            if(record is DBCellRecord)
             {
                 // Not needed by POI.  Regenerated from scratch by POI when spreadsheet is written
                 return new Record[] { null, };
             }
-            if (record is RKRecord rkRecord)
+            if(record is RKRecord rkRecord)
             {
                 return new Record[] { ConvertToNumberRecord(rkRecord), };
             }
-            if (record is MulRKRecord mulRkRecord)
+            if(record is MulRKRecord mulRkRecord)
             {
                 return ConvertRKRecords(mulRkRecord);
             }
@@ -505,7 +505,7 @@ namespace NPOI.HSSF.Record
         public static BlankRecord[] ConvertBlankRecords(MulBlankRecord mbk)
         {
             BlankRecord[] mulRecs = new BlankRecord[mbk.NumColumns];
-            for (int k = 0; k < mbk.NumColumns; k++)
+            for(int k = 0; k < mbk.NumColumns; k++)
             {
                 BlankRecord br = new BlankRecord();
 
@@ -519,7 +519,7 @@ namespace NPOI.HSSF.Record
 
         public static Record CreateSingleRecord(RecordInputStream in1)
         {
-            if (_recordCreatorsById.TryGetValue(in1.Sid, out I_RecordCreator constructor))
+            if(_recordCreatorsById.TryGetValue(in1.Sid, out I_RecordCreator constructor))
             {
                 return constructor.Create(in1);
             }
@@ -553,11 +553,11 @@ namespace NPOI.HSSF.Record
         {
 
             NumberRecord[] mulRecs = new NumberRecord[mrk.NumColumns];
-            for (int k = 0; k < mrk.NumColumns; k++)
+            for(int k = 0; k < mrk.NumColumns; k++)
             {
                 NumberRecord nr = new NumberRecord();
 
-                nr.Column = ((short)(k + mrk.FirstColumn));
+                nr.Column = ((short) (k + mrk.FirstColumn));
                 nr.Row = (mrk.Row);
                 nr.XFIndex = (mrk.GetXFAt(k));
                 nr.Value = (mrk.GetRKNumberAt(k));
@@ -567,12 +567,12 @@ namespace NPOI.HSSF.Record
         }
         public static short[] GetAllKnownRecordSIDs()
         {
-            if (_allKnownRecordSIDs == null)
+            if(_allKnownRecordSIDs == null)
             {
                 short[] results = new short[_recordCreatorsById.Count];
                 int i = 0;
 
-                foreach (KeyValuePair<short, I_RecordCreator> kv in _recordCreatorsById)
+                foreach(KeyValuePair<short, I_RecordCreator> kv in _recordCreatorsById)
                 {
                     results[i++] = kv.Key;
                 }
@@ -580,7 +580,7 @@ namespace NPOI.HSSF.Record
                 _allKnownRecordSIDs = results;
             }
 
-            return (short[])_allKnownRecordSIDs.Clone();
+            return (short[]) _allKnownRecordSIDs.Clone();
         }
 
         private static Dictionary<short, I_RecordCreator> RecordsToMap(Type[] records)
@@ -588,19 +588,19 @@ namespace NPOI.HSSF.Record
             Dictionary<short, I_RecordCreator> result = new Dictionary<short, I_RecordCreator>();
             Hashtable uniqueRecClasses = new Hashtable(records.Length * 3 / 2);
 
-            for (int i = 0; i < records.Length; i++)
+            for(int i = 0; i < records.Length; i++)
             {
 
                 Type recClass = records[i];
-                if (!typeof(Record).IsAssignableFrom(recClass))
+                if(!typeof(Record).IsAssignableFrom(recClass))
                 {
                     throw new Exception("Invalid record sub-class (" + recClass.Name + ")");
                 }
-                if (recClass.IsAbstract)
+                if(recClass.IsAbstract)
                 {
                     throw new Exception("Invalid record class (" + recClass.Name + ") - must not be abstract");
                 }
-                if (uniqueRecClasses.Contains(recClass))
+                if(uniqueRecClasses.Contains(recClass))
                 {
                     throw new Exception("duplicate record class (" + recClass.Name + ")");
                 }
@@ -609,14 +609,14 @@ namespace NPOI.HSSF.Record
                 short sid = 0;
                 try
                 {
-                    sid = (short)recClass.GetField("sid").GetValue(null);
+                    sid = (short) recClass.GetField("sid").GetValue(null);
                 }
-                catch (Exception ArgumentException)
+                catch(Exception ArgumentException)
                 {
                     throw new RecordFormatException(
                         "Unable to determine record types", ArgumentException);
                 }
-                if (result.TryGetValue(sid, out I_RecordCreator value))
+                if(result.TryGetValue(sid, out I_RecordCreator value))
                 {
                     Type prevClass = value.GetRecordClass();
                     throw new RuntimeException("duplicate record sid 0x" + sid.ToString("X", CultureInfo.CurrentCulture)
@@ -630,20 +630,20 @@ namespace NPOI.HSSF.Record
         private static void CheckZeros(Stream in1, int avail)
         {
             int count = 0;
-            while (true)
+            while(true)
             {
                 int b = (int)in1.ReadByte();
-                if (b < 0)
+                if(b < 0)
                 {
                     break;
                 }
-                if (b != 0)
+                if(b != 0)
                 {
                     Console.Error.WriteLine(HexDump.ByteToHex(b));
                 }
                 count++;
             }
-            if (avail != count)
+            if(avail != count)
             {
                 Console.Error.WriteLine("avail!=count (" + avail + "!=" + count + ").");
             }
@@ -655,7 +655,7 @@ namespace NPOI.HSSF.Record
             {
                 ConstructorInfo constructor;
                 constructor = recClass.GetConstructor(CONSTRUCTOR_ARGS);
-                if (constructor != null)
+                if(constructor != null)
                     return new ReflectionConstructorRecordCreator(constructor);
             }
             catch

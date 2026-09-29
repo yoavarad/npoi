@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -20,13 +20,14 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.HSSF;
-    using NPOI.SS.Formula.Eval;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Formula.Functions;
 
     /**
      * Test for Excel function INTERCEPT()
@@ -41,20 +42,20 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invoke(Function function, ValueEval xArray, ValueEval yArray)
         {
             ValueEval[] args = new ValueEval[] { xArray, yArray, };
-            return function.Evaluate(args, -1, (short)-1);
+            return function.Evaluate(args, -1, (short) -1);
         }
 
         private void Confirm(Function function, ValueEval xArray, ValueEval yArray, double expected)
         {
             ValueEval result = invoke(function, xArray, yArray);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, 0);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, 0);
         }
         private void ConfirmError(Function function, ValueEval xArray, ValueEval yArray, ErrorEval expectedError)
         {
             ValueEval result = invoke(function, xArray, yArray);
             ClassicAssert.AreEqual(typeof(ErrorEval), result.GetType());
-            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval) result).ErrorCode);
         }
 
         private void ConfirmError(ValueEval xArray, ValueEval yArray, ErrorEval expectedError)
@@ -105,7 +106,7 @@ namespace TestCases.SS.Formula.Functions
         private ValueEval[] CreateMockNumberArray(int size, double value)
         {
             ValueEval[] result = new ValueEval[size];
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
             {
                 result[i] = new NumberEval((i + 1) % value);
             }

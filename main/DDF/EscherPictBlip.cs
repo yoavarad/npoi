@@ -16,13 +16,13 @@
 */
 namespace NPOI.DDF
 {
+    using ICSharpCode.SharpZipLib.Zip.Compression;
+    using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+    using NPOI.Util;
+    using SkiaSharp;
     using System;
     using System.IO;
     using System.Text;
-    using NPOI.Util;
-    using ICSharpCode.SharpZipLib.Zip.Compression;
-    using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
-    using SkiaSharp;
 
     /// <summary>
     /// @author Daniel Noll
@@ -67,24 +67,35 @@ namespace NPOI.DDF
             int bytesAfterHeader = ReadHeader(data, offset);
             int pos = offset + HEADER_SIZE;
 
-            Array.Copy(data, pos, field_1_UID, 0, 16); pos += 16;
-            field_2_cb = LittleEndian.GetInt(data, pos); pos += 4;
-            field_3_rcBounds_x1 = LittleEndian.GetInt(data, pos); pos += 4;
-            field_3_rcBounds_y1 = LittleEndian.GetInt(data, pos); pos += 4;
-            field_3_rcBounds_x2 = LittleEndian.GetInt(data, pos); pos += 4;
-            field_3_rcBounds_y2 = LittleEndian.GetInt(data, pos); pos += 4;
-            field_4_ptSize_w = LittleEndian.GetInt(data, pos); pos += 4;
-            field_4_ptSize_h = LittleEndian.GetInt(data, pos); pos += 4;
-            field_5_cbSave = LittleEndian.GetInt(data, pos); pos += 4;
-            field_6_fCompression = data[pos]; pos++;
-            field_7_fFilter = data[pos]; pos++;
+            Array.Copy(data, pos, field_1_UID, 0, 16);
+            pos += 16;
+            field_2_cb = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_3_rcBounds_x1 = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_3_rcBounds_y1 = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_3_rcBounds_x2 = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_3_rcBounds_y2 = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_4_ptSize_w = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_4_ptSize_h = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_5_cbSave = LittleEndian.GetInt(data, pos);
+            pos += 4;
+            field_6_fCompression = data[pos];
+            pos++;
+            field_7_fFilter = data[pos];
+            pos++;
 
             raw_pictureData = IOUtils.SafelyAllocate(field_5_cbSave, MAX_RECORD_LENGTH);
             Array.Copy(data, pos, raw_pictureData, 0, field_5_cbSave);
 
             // 0 means DEFLATE compression
             // 0xFE means no compression
-            if (field_6_fCompression == 0)
+            if(field_6_fCompression == 0)
             {
                 PictureData = InflatePictureData(raw_pictureData);
             }
@@ -108,21 +119,35 @@ namespace NPOI.DDF
             listener.BeforeRecordSerialize(offset, RecordId, this);
 
             int pos = offset;
-            LittleEndian.PutShort(data, pos, Options); pos += 2;
-            LittleEndian.PutShort(data, pos, RecordId); pos += 2;
-            LittleEndian.PutInt(data, 0, RecordSize - HEADER_SIZE); pos += 4;
+            LittleEndian.PutShort(data, pos, Options);
+            pos += 2;
+            LittleEndian.PutShort(data, pos, RecordId);
+            pos += 2;
+            LittleEndian.PutInt(data, 0, RecordSize - HEADER_SIZE);
+            pos += 4;
 
-            Array.Copy(field_1_UID, 0, data, pos, 16); pos += 16;
-            LittleEndian.PutInt(data, pos, field_2_cb); pos += 4;
-            LittleEndian.PutInt(data, pos, field_3_rcBounds_x1); pos += 4;
-            LittleEndian.PutInt(data, pos, field_3_rcBounds_y1); pos += 4;
-            LittleEndian.PutInt(data, pos, field_3_rcBounds_x2); pos += 4;
-            LittleEndian.PutInt(data, pos, field_3_rcBounds_y2); pos += 4;
-            LittleEndian.PutInt(data, pos, field_4_ptSize_w); pos += 4;
-            LittleEndian.PutInt(data, pos, field_4_ptSize_h); pos += 4;
-            LittleEndian.PutInt(data, pos, field_5_cbSave); pos += 4;
-            data[pos] = field_6_fCompression; pos++;
-            data[pos] = field_7_fFilter; pos++;
+            Array.Copy(field_1_UID, 0, data, pos, 16);
+            pos += 16;
+            LittleEndian.PutInt(data, pos, field_2_cb);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_3_rcBounds_x1);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_3_rcBounds_y1);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_3_rcBounds_x2);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_3_rcBounds_y2);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_4_ptSize_w);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_4_ptSize_h);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_5_cbSave);
+            pos += 4;
+            data[pos] = field_6_fCompression;
+            pos++;
+            data[pos] = field_7_fFilter;
+            pos++;
 
             Array.Copy(raw_pictureData, 0, data, pos, raw_pictureData.Length);
 
@@ -137,18 +162,18 @@ namespace NPOI.DDF
         /// <returns>the inflated picture data.</returns>
         private static byte[] InflatePictureData(byte[] data)
         {
-            using (MemoryStream out1 = new MemoryStream())
+            using(MemoryStream out1 = new MemoryStream())
             {
                 try
                 {
-                    using (MemoryStream ms = new MemoryStream(data))
+                    using(MemoryStream ms = new MemoryStream(data))
                     {
                         Inflater inflater = new Inflater(false);
-                        using (InflaterInputStream in1 = new InflaterInputStream(ms, inflater))
+                        using(InflaterInputStream in1 = new InflaterInputStream(ms, inflater))
                         {
                             byte[] buf = new byte[4096];
                             int ReadBytes;
-                            while ((ReadBytes = in1.Read(buf, 0, buf.Length)) > 0)
+                            while((ReadBytes = in1.Read(buf, 0, buf.Length)) > 0)
                             {
                                 out1.Write(buf, 0, ReadBytes);
                             }
@@ -156,7 +181,7 @@ namespace NPOI.DDF
                         }
                     }
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     log.Log(POILogger.INFO, "Possibly corrupt compression or non-compressed data", e);
                     return data;
@@ -180,8 +205,9 @@ namespace NPOI.DDF
         public byte[] UID
         {
             get { return field_1_UID; }
-            set {
-                if (value == null || value.Length != 16)
+            set
+            {
+                if(value == null || value.Length != 16)
                 {
                     throw new ArgumentException("uid must be byte[16]");
                 }
@@ -254,7 +280,7 @@ namespace NPOI.DDF
         public bool IsCompressed
         {
             get { return (field_6_fCompression == 0); }
-            set{field_6_fCompression = value ? (byte)0 : (byte)0xFE;}
+            set { field_6_fCompression = value ? (byte) 0 : (byte) 0xFE; }
         }
 
 

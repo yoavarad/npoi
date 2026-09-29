@@ -133,7 +133,7 @@ namespace NPOI.SS.UserModel
         /// have this set, older ones will return 0.
         /// </summary>
         /// <returns></returns>
-        int Priority {get; }
+        int Priority { get; }
 
         /// <summary>
         /// <para>
@@ -146,7 +146,7 @@ namespace NPOI.SS.UserModel
         /// </summary>
         /// <see href="https://support.office.com/en-us/article/Manage-conditional-formatting-rule-precedence-063cde21-516e-45ca-83f5-8e8126076249">Microsoft Excel help</see>
         bool StopIfTrue { get; }
-        
+
         /// <summary>
         /// number format defined for this rule, or null if the cell default should be used
         /// </summary>

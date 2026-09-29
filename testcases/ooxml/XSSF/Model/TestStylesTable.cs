@@ -15,13 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.XSSF.UserModel;
-using System.Collections.Generic;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.Model;
 using NPOI.XSSF;
+using NPOI.XSSF.Model;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
 
 namespace TestCases.XSSF.Model
 {
@@ -59,7 +60,7 @@ namespace TestCases.XSSF.Model
             ClassicAssert.AreEqual(1, st.StyleXfsSize);
             ClassicAssert.AreEqual(0, st.NumDataFormats);
 
-            st = ((XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(wb)).GetStylesSource();
+            st = ((XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(wb)).GetStylesSource();
 
             ClassicAssert.IsNotNull(st.GetCTStylesheet());
             ClassicAssert.AreEqual(1, st.XfsSize);
@@ -89,7 +90,7 @@ namespace TestCases.XSSF.Model
             StylesTable st = workbook.GetStylesSource();
             doTestExisting(st);
 
-            st = ((XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(workbook)).GetStylesSource();
+            st = ((XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(workbook)).GetStylesSource();
             doTestExisting(st);
         }
         public void doTestExisting(StylesTable st)
@@ -104,8 +105,8 @@ namespace TestCases.XSSF.Model
             ClassicAssert.AreEqual(2, st.GetFills().Count);
             ClassicAssert.AreEqual(1, st.GetBorders().Count);
 
-            ClassicAssert.AreEqual("yyyy/mm/dd", st.GetNumberFormatAt((short)165));
-            ClassicAssert.AreEqual("yy/mm/dd", st.GetNumberFormatAt((short)167));
+            ClassicAssert.AreEqual("yyyy/mm/dd", st.GetNumberFormatAt((short) 165));
+            ClassicAssert.AreEqual("yy/mm/dd", st.GetNumberFormatAt((short) 167));
 
             ClassicAssert.IsNotNull(st.GetStyleAt(0));
             ClassicAssert.IsNotNull(st.GetStyleAt(1));
@@ -136,14 +137,14 @@ namespace TestCases.XSSF.Model
             st.PutStyle(new XSSFCellStyle(st));
 
             // Save and re-load
-            st = ((XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(wb)).GetStylesSource();
+            st = ((XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(wb)).GetStylesSource();
 
             ClassicAssert.IsNotNull(st.GetCTStylesheet());
             ClassicAssert.AreEqual(2, st.XfsSize);
             ClassicAssert.AreEqual(1, st.StyleXfsSize);
             ClassicAssert.AreEqual(2, st.NumDataFormats);
 
-            ClassicAssert.AreEqual("yyyy-mm-dd", st.GetNumberFormatAt((short)nf1));
+            ClassicAssert.AreEqual("yyyy-mm-dd", st.GetNumberFormatAt((short) nf1));
             ClassicAssert.AreEqual(nf1, st.PutNumberFormat("yyyy-mm-dd"));
             ClassicAssert.AreEqual(nf2, st.PutNumberFormat("yyyy-mm-DD"));
 
@@ -164,13 +165,13 @@ namespace TestCases.XSSF.Model
             int nf2 = st.PutNumberFormat("YYYY-mm-DD");
             ClassicAssert.AreEqual(nf1, st.PutNumberFormat("YYYY-mm-dd"));
 
-            st = ((XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(workbook)).GetStylesSource();
+            st = ((XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(workbook)).GetStylesSource();
 
             ClassicAssert.AreEqual(11, st.XfsSize);
             ClassicAssert.AreEqual(1, st.StyleXfsSize);
             ClassicAssert.AreEqual(10, st.NumDataFormats);
 
-            ClassicAssert.AreEqual("YYYY-mm-dd", st.GetNumberFormatAt((short)nf1));
+            ClassicAssert.AreEqual("YYYY-mm-dd", st.GetNumberFormatAt((short) nf1));
             ClassicAssert.AreEqual(nf1, st.PutNumberFormat("YYYY-mm-dd"));
             ClassicAssert.AreEqual(nf2, st.PutNumberFormat("YYYY-mm-DD"));
 
@@ -184,7 +185,7 @@ namespace TestCases.XSSF.Model
             try
             {
                 StylesTable styles = wb.GetStylesSource();
-                for (int i = 0; i < styles.MaxNumberOfDataFormats; i++)
+                for(int i = 0; i < styles.MaxNumberOfDataFormats; i++)
                 {
                     wb.GetStylesSource().PutNumberFormat("\"test" + i + " \"0");
                 }
@@ -192,9 +193,9 @@ namespace TestCases.XSSF.Model
                 {
                     wb.GetStylesSource().PutNumberFormat("\"anotherformat \"0");
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
-                    if (e.Message.StartsWith("The maximum number of Data Formats was exceeded."))
+                    if(e.Message.StartsWith("The maximum number of Data Formats was exceeded."))
                     {
                         //expected
                     }
@@ -307,9 +308,9 @@ namespace TestCases.XSSF.Model
                     styles.MaxNumberOfDataFormats = (-1);
                     Assert.Fail("Expected to get an IllegalArgumentException(\"Maximum Number of Data Formats must be greater than or equal to 0\")");
                 }
-                catch (ArgumentException e)
+                catch(ArgumentException e)
                 {
-                    if (e.Message.StartsWith("Maximum Number of Data Formats must be greater than or equal to 0"))
+                    if(e.Message.StartsWith("Maximum Number of Data Formats must be greater than or equal to 0"))
                     {
                         // expected
                     }
@@ -341,9 +342,9 @@ namespace TestCases.XSSF.Model
                     styles.PutNumberFormat("\"test \"0");
                     Assert.Fail("Expected to raise InvalidOperationException");
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
-                    if (e.Message.StartsWith("The maximum number of Data Formats was exceeded."))
+                    if(e.Message.StartsWith("The maximum number of Data Formats was exceeded."))
                     {
                         // expected
                     }
@@ -375,9 +376,9 @@ namespace TestCases.XSSF.Model
                     styles.MaxNumberOfDataFormats = (0);
                     Assert.Fail("Expected to raise InvalidOperationException");
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
-                    if (e.Message.StartsWith("Cannot set the maximum number of data formats less than the current quantity."))
+                    if(e.Message.StartsWith("Cannot set the maximum number of data formats less than the current quantity."))
                     {
                         // expected
                     }

@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -27,12 +27,12 @@ namespace NPOI.SS.Formula.Atp
 
         private static ValueEval _evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length < 2)
+            if(args.Length < 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
             LookupUtils.MatchMode matchMode = LookupUtils.MatchMode.ExactMatch;
-            if (args.Length > 2)
+            if(args.Length > 2)
             {
                 try
                 {
@@ -40,7 +40,7 @@ namespace NPOI.SS.Formula.Atp
                     int matchInt = OperandResolver.CoerceValueToInt(matchModeValue);
                     matchMode = LookupUtils.GetMatchMode(matchInt);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
@@ -50,7 +50,7 @@ namespace NPOI.SS.Formula.Atp
                 }
             }
             LookupUtils.SearchMode searchMode = LookupUtils.SearchMode.IterateForward;
-            if (args.Length > 3)
+            if(args.Length > 3)
             {
                 try
                 {
@@ -58,7 +58,7 @@ namespace NPOI.SS.Formula.Atp
                     int searchInt = OperandResolver.CoerceValueToInt(searchModeValue);
                     searchMode = LookupUtils.GetSearchMode(searchInt);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
@@ -78,7 +78,7 @@ namespace NPOI.SS.Formula.Atp
                 ValueEval lookupValue = OperandResolver.GetSingleValue(lookupEval, srcRowIndex, srcColumnIndex);
                 TwoDEval tableArray = LookupUtils.ResolveTableArrayArg(indexEval);
                 ValueVector vector;
-                if (tableArray.IsColumn)
+                if(tableArray.IsColumn)
                 {
                     vector = LookupUtils.CreateColumnVector(tableArray, 0);
                 }
@@ -87,13 +87,12 @@ namespace NPOI.SS.Formula.Atp
                     vector = LookupUtils.CreateRowVector(tableArray, 0);
                 }
                 int matchedIdx = LookupUtils.XlookupIndexOfValue(lookupValue, vector, matchMode, searchMode);
-                return new NumberEval((double)matchedIdx + 1);
+                return new NumberEval((double) matchedIdx + 1);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
     }
 }
-

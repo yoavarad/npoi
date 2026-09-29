@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.Util;
     using NPOI.SS.Formula;
+    using NPOI.Util;
+    using System;
 
 
     /**
@@ -31,7 +31,7 @@ namespace NPOI.SS.Formula.PTG
      *  is {@link NameXPxg}
      */
     [Serializable]
-    public class NameXPtg : OperandPtg,WorkbookDependentFormula
+    public class NameXPtg : OperandPtg, WorkbookDependentFormula
     {
         public const short sid = 0x39;
         private const int SIZE = 7;
@@ -55,13 +55,13 @@ namespace NPOI.SS.Formula.PTG
          * @param nameIndex index to defined name or externname table
          */
         public NameXPtg(int sheetRefIndex, int nameIndex)
-            :this(sheetRefIndex, nameIndex + 1, 0)
+            : this(sheetRefIndex, nameIndex + 1, 0)
         {
-            
+
         }
 
         public NameXPtg(ILittleEndianInput in1)
-            :this(in1.ReadUShort(), in1.ReadUShort(), in1.ReadUShort())
+            : this(in1.ReadUShort(), in1.ReadUShort(), in1.ReadUShort())
         {
 
         }

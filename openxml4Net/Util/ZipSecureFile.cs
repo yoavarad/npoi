@@ -1,4 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using NPOI.Util;
 using System;
@@ -57,7 +57,7 @@ namespace NPOI.OpenXml4Net.Util
          */
         public static void SetMaxEntrySize(long maxEntrySize)
         {
-            if (maxEntrySize < 0 || maxEntrySize > 0xFFFFFFFFL)
+            if(maxEntrySize < 0 || maxEntrySize > 0xFFFFFFFFL)
             {
                 throw new ArgumentException("Max entry size is bounded [0-4GB].");
             }
@@ -89,8 +89,10 @@ namespace NPOI.OpenXml4Net.Util
         /// </para>
         /// </summary>
         /// <param name="maxTextSize">the max. file size of a single zip entry</param>
-        public static void SetMaxTextSize(long maxTextSize) {
-            if (maxTextSize < 0 || maxTextSize > 0xFFFFFFFFL) {     // don't use MAX_ENTRY_SIZE here!
+        public static void SetMaxTextSize(long maxTextSize)
+        {
+            if(maxTextSize < 0 || maxTextSize > 0xFFFFFFFFL)
+            {     // don't use MAX_ENTRY_SIZE here!
                 throw new ArgumentException("Max text size is bounded [0-4GB], but had " + maxTextSize);
             }
             MAX_TEXT_SIZE = maxTextSize;
@@ -105,7 +107,8 @@ namespace NPOI.OpenXml4Net.Util
         /// </para>
         /// </summary>
         /// <returns>The max accepted text size.</returns>
-        public static long GetMaxTextSize() {
+        public static long GetMaxTextSize()
+        {
             return MAX_TEXT_SIZE;
         }
         public ZipSecureFile(FileStream file, int mode)
@@ -150,7 +153,7 @@ namespace NPOI.OpenXml4Net.Util
         {
 
             ThresholdInputStream newInner = null;
-            if (zipIS is InflaterInputStream)
+            if(zipIS is InflaterInputStream)
             {
                 //replace inner stream of zipIS by using a ThresholdInputStream instance??
                 try
@@ -160,11 +163,15 @@ namespace NPOI.OpenXml4Net.Util
                     //InputStream oldInner = (InputStream)f.Get(zipIS);
                     //newInner = new ThresholdInputStream(oldInner, null);
                     //f.Set(zipIS, newInner);
-                } catch (Exception ex) {
+                }
+                catch(Exception ex)
+                {
                     //logger.Log(POILogger.WARN, "SecurityManager doesn't allow manipulation via reflection for zipbomb detection - continue with original input stream", ex);
                     newInner = null;
                 }
-            } else {
+            }
+            else
+            {
                 // the inner stream is a ZipFileInputStream, i.e. the data wasn't compressed
                 newInner = null;
             }
@@ -190,7 +197,7 @@ namespace NPOI.OpenXml4Net.Util
             public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             public ThresholdInputStream(Stream is1, ThresholdInputStream cis)
-                        
+
             {
                 this.input = is1;
                 this.cis = cis;
@@ -200,7 +207,8 @@ namespace NPOI.OpenXml4Net.Util
             {
 
                 int b = this.input.ReadByte();
-                if (b > -1) Advance(1);
+                if(b > -1)
+                    Advance(1);
                 return b;
             }
 
@@ -208,7 +216,8 @@ namespace NPOI.OpenXml4Net.Util
             {
 
                 int cnt = input.Read(b, off, len);
-                if (cnt > -1) Advance(cnt);
+                if(cnt > -1)
+                    Advance(cnt);
                 return cnt;
 
             }
@@ -240,17 +249,20 @@ namespace NPOI.OpenXml4Net.Util
                             + "Limits: MAX_ENTRY_SIZE: " + MAX_ENTRY_SIZE);
                 }
                 // no expanded size?
-                if (cis == null) {
+                if(cis == null)
+                {
                     return;
                 }
-            
+
                 // don't alert for small expanded size
-                if (counter <= GRACE_ENTRY_SIZE) {
+                if(counter <= GRACE_ENTRY_SIZE)
+                {
                     return;
                 }
 
                 double ratio = (double)cis.counter/(double)counter;
-                if (ratio >= MIN_INFLATE_RATIO) {
+                if(ratio >= MIN_INFLATE_RATIO)
+                {
                     return;
                 }
 
@@ -265,7 +277,8 @@ namespace NPOI.OpenXml4Net.Util
             public ZipEntry GetNextEntry()
             {
 
-                if (input is not ZipInputStream stream) {
+                if(input is not ZipInputStream stream)
+                {
                     throw new NotSupportedException("underlying stream is not a ZipInputStream");
                 }
                 counter = 0;
@@ -275,7 +288,8 @@ namespace NPOI.OpenXml4Net.Util
             public void CloseEntry()
             {
 
-                if (input is not ZipInputStream stream) {
+                if(input is not ZipInputStream stream)
+                {
                     throw new NotSupportedException("underlying stream is not a ZipInputStream");
                 }
                 counter = 0;
@@ -285,27 +299,31 @@ namespace NPOI.OpenXml4Net.Util
             public void Unread(int b)
             {
 
-                if (input is not PushbackInputStream stream) {
+                if(input is not PushbackInputStream stream)
+                {
                     throw new NotSupportedException("underlying stream is not a PushbackInputStream");
                 }
-                if (--counter < 0) counter = 0;
+                if(--counter < 0)
+                    counter = 0;
                 stream.Unread(b);
             }
 
             public void Unread(byte[] b, int off, int len)
             {
 
-                if (input is not PushbackInputStream stream) {
+                if(input is not PushbackInputStream stream)
+                {
                     throw new NotSupportedException("underlying stream is not a PushbackInputStream");
                 }
                 counter -= len;
-                if (--counter < 0) counter = 0;
+                if(--counter < 0)
+                    counter = 0;
                 stream.Unread(b, off, len);
             }
 
             public int Available()
             {
-                return (int)(input.Length - input.Position);
+                return (int) (input.Length - input.Position);
                 //return input.Available();
             }
 

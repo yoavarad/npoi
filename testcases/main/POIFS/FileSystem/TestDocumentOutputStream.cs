@@ -26,16 +26,15 @@
  * ==============================================================*/
 
 
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.FileSystem;
-using NPOI.Util;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
 
 
 namespace TestCases.POIFS.FileSystem
@@ -73,7 +72,7 @@ namespace TestCases.POIFS.FileSystem
             MemoryStream stream = new MemoryStream();
             DocumentOutputStream dstream = new DocumentOutputStream(stream, 25);
 
-            for (int j = 0; j < 25; j++)
+            for(int j = 0; j < 25; j++)
             {
                 dstream.Write(j);
             }
@@ -82,15 +81,15 @@ namespace TestCases.POIFS.FileSystem
                 dstream.Write(0);
                 Assert.Fail("Should have caught IOException");
             }
-            catch (IOException)
+            catch(IOException)
             {
             }
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(25, output.Length);
-            for (int j = 0; j < 25; j++)
+            for(int j = 0; j < 25; j++)
             {
-                ClassicAssert.AreEqual((byte)j, output[j]);
+                ClassicAssert.AreEqual((byte) j, output[j]);
             }
             stream.Close();
         }
@@ -106,37 +105,37 @@ namespace TestCases.POIFS.FileSystem
             MemoryStream stream = new MemoryStream();
             DocumentOutputStream dstream = new DocumentOutputStream(stream, 25);
 
-            for (int j = 0; j < 6; j++)
+            for(int j = 0; j < 6; j++)
             {
                 byte[] array = new byte[4];
-                for (int i = 0; i < array.Length; i++)
+                for(int i = 0; i < array.Length; i++)
                 {
-                    array[i] = (byte)j;
+                    array[i] = (byte) j;
                 }
                 dstream.Write(array);
             }
             try
             {
                 byte[] array = new byte[4];
-                for (int i = 0; i < array.Length; i++)
+                for(int i = 0; i < array.Length; i++)
                 {
-                    array[i] = (byte)7;
+                    array[i] = (byte) 7;
                 }
 
                 dstream.Write(array);
                 Assert.Fail("Should have caught IOException");
             }
-            catch (IOException )
+            catch(IOException)
             {
             }
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(24, output.Length);
-            for (int j = 0; j < 6; j++)
+            for(int j = 0; j < 6; j++)
             {
-                for (int k = 0; k < 4; k++)
+                for(int k = 0; k < 4; k++)
                 {
-                    ClassicAssert.AreEqual((byte)j,
+                    ClassicAssert.AreEqual((byte) j,
                                  output[(j * 4) + k], ((j * 4) + k).ToString());
                 }
             }
@@ -155,9 +154,9 @@ namespace TestCases.POIFS.FileSystem
             DocumentOutputStream dstream = new DocumentOutputStream(stream, 25);
             byte[] array = new byte[50];
 
-            for (int j = 0; j < 50; j++)
+            for(int j = 0; j < 50; j++)
             {
-                array[j] = (byte)j;
+                array[j] = (byte) j;
             }
             dstream.Write(array, 1, 25);
             try
@@ -165,15 +164,15 @@ namespace TestCases.POIFS.FileSystem
                 dstream.Write(array, 0, 1);
                 Assert.Fail("Should have caught IOException");
             }
-            catch (IOException )
+            catch(IOException)
             {
             }
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(25, output.Length);
-            for (int j = 0; j < 25; j++)
+            for(int j = 0; j < 25; j++)
             {
-                ClassicAssert.AreEqual((byte)(j + 1), output[j]);
+                ClassicAssert.AreEqual((byte) (j + 1), output[j]);
             }
             stream.Close();
         }
@@ -189,7 +188,7 @@ namespace TestCases.POIFS.FileSystem
             MemoryStream stream = new MemoryStream();
             DocumentOutputStream dstream = new DocumentOutputStream(stream, 25);
 
-            for (int j = 0; j < 25; j++)
+            for(int j = 0; j < 25; j++)
             {
                 dstream.Write(j);
             }
@@ -198,20 +197,20 @@ namespace TestCases.POIFS.FileSystem
                 dstream.Write(0);
                 Assert.Fail("Should have caught IOException");
             }
-            catch (IOException )
+            catch(IOException)
             {
             }
-            dstream.WriteFiller(100, (byte)0xff);
+            dstream.WriteFiller(100, (byte) 0xff);
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(100, output.Length);
-            for (int j = 0; j < 25; j++)
+            for(int j = 0; j < 25; j++)
             {
-                ClassicAssert.AreEqual((byte)j, output[j]);
+                ClassicAssert.AreEqual((byte) j, output[j]);
             }
-            for (int j = 25; j < 100; j++)
+            for(int j = 25; j < 100; j++)
             {
-                ClassicAssert.AreEqual((byte)0xff, output[j], j.ToString());
+                ClassicAssert.AreEqual((byte) 0xff, output[j], j.ToString());
             }
             stream.Close();
         }

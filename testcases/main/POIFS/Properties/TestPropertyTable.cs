@@ -24,18 +24,17 @@
  * Contributors:
  * 
  * ==============================================================*/
-        
-using System;
-using System.Text;
-using System.Collections;
-using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
 
 using NPOI.POIFS.Common;
-using NPOI.POIFS.Storage;
 using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using TestCases.POIFS.Storage;
 
 namespace TestCases.POIFS.Properties
@@ -58,15 +57,15 @@ namespace TestCases.POIFS.Properties
             {
                 table.WriteBlocks(stream);
             }
-            catch (IOException e)
-        {
+            catch(IOException e)
+            {
                 throw new Exception(e.Message);
             }
 
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(expectedData.Length, output.Length, "length check #1");
-            for (int i = 0; i < expectedData.Length; i++)
+            for(int i = 0; i < expectedData.Length; i++)
                 ClassicAssert.AreEqual(expectedData[i], output[i], "content check #1: mismatch at offset " + i);
         }
 
@@ -450,18 +449,18 @@ namespace TestCases.POIFS.Properties
             ClassicAssert.AreEqual(30 * 64, table.Root.Size);
             int count = 0;
             Property child = null;
-            foreach (Property p in table.Root)
+            foreach(Property p in table.Root)
             {
                 child = p;
                 ++count;
             }
-            if (child == null)
+            if(child == null)
                 throw new Exception("no children found");
 
             ClassicAssert.AreEqual(1, count);
             ClassicAssert.IsTrue(child.IsDirectory);
             count = 0;
-            foreach (Property p in (DirectoryProperty)child)
+            foreach(Property p in (DirectoryProperty) child)
             {
                 child = p;
                 ++count;

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -25,7 +25,7 @@ namespace NPOI.OOXML.XSSF.UserModel
     /// <summary>
     /// Uses the legacy colors defined in HSSF for index lookups
     /// </summary>
-    public class DefaultIndexedColorMap:IIndexedColorMap
+    public class DefaultIndexedColorMap : IIndexedColorMap
     {
         public byte[] GetRGB(int index)
         {
@@ -41,7 +41,8 @@ namespace NPOI.OOXML.XSSF.UserModel
             var colorDict = HSSFColor.GetIndexHash();
             colorDict.TryGetValue(index, out HSSFColor hssfColor);
             //HSSFColor hssfColor = HSSFColor.GetIndexHash()[index];
-            if (hssfColor == null) return null;
+            if(hssfColor == null)
+                return null;
             byte[] rgbShort = hssfColor.GetTriplet();
             return rgbShort;
         }

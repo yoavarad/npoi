@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,11 +26,11 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_SizeRepresents Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SizeRepresents ctObj = new CT_SizeRepresents();
-            if (node.Attributes["val"] != null)
-                ctObj.val = (ST_SizeRepresents)Enum.Parse(typeof(ST_SizeRepresents), node.Attributes["val"].Value);
+            if(node.Attributes["val"] != null)
+                ctObj.val = (ST_SizeRepresents) Enum.Parse(typeof(ST_SizeRepresents), node.Attributes["val"].Value);
             return ctObj;
         }
 
@@ -82,14 +82,14 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
 
         public CT_BubbleScale()
         {
-            this.valField = ((uint)(100));
+            this.valField = ((uint) (100));
         }
         public static CT_BubbleScale Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BubbleScale ctObj = new CT_BubbleScale();
-            if (node.Attributes["val"] != null)
+            if(node.Attributes["val"] != null)
                 ctObj.val = XmlHelper.ReadUInt(node.Attributes["val"]);
             return ctObj;
         }
@@ -160,42 +160,42 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_BubbleSer Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BubbleSer ctObj = new CT_BubbleSer();
             ctObj.dPt = new List<CT_DPt>();
             ctObj.trendline = new List<CT_Trendline>();
             ctObj.errBars = new List<CT_ErrBars>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "idx")
+                if(childNode.LocalName == "idx")
                     ctObj.idx = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "order")
+                else if(childNode.LocalName == "order")
                     ctObj.order = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tx")
+                else if(childNode.LocalName == "tx")
                     ctObj.tx = CT_SerTx.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "invertIfNegative")
+                else if(childNode.LocalName == "invertIfNegative")
                     ctObj.invertIfNegative = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dLbls")
+                else if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "xVal")
+                else if(childNode.LocalName == "xVal")
                     ctObj.xVal = CT_AxDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "yVal")
+                else if(childNode.LocalName == "yVal")
                     ctObj.yVal = CT_NumDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bubbleSize")
+                else if(childNode.LocalName == "bubbleSize")
                     ctObj.bubbleSize = CT_NumDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bubble3D")
+                else if(childNode.LocalName == "bubble3D")
                     ctObj.bubble3D = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dPt")
+                else if(childNode.LocalName == "dPt")
                     ctObj.dPt.Add(CT_DPt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "trendline")
+                else if(childNode.LocalName == "trendline")
                     ctObj.trendline.Add(CT_Trendline.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "errBars")
+                else if(childNode.LocalName == "errBars")
                     ctObj.errBars.Add(CT_ErrBars.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -207,50 +207,50 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.idx != null)
+            if(this.idx != null)
                 this.idx.Write(sw, "idx");
-            if (this.order != null)
+            if(this.order != null)
                 this.order.Write(sw, "order");
-            if (this.tx != null)
+            if(this.tx != null)
                 this.tx.Write(sw, "tx");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.invertIfNegative != null)
+            if(this.invertIfNegative != null)
                 this.invertIfNegative.Write(sw, "invertIfNegative");
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.xVal != null)
+            if(this.xVal != null)
                 this.xVal.Write(sw, "xVal");
-            if (this.yVal != null)
+            if(this.yVal != null)
                 this.yVal.Write(sw, "yVal");
-            if (this.bubbleSize != null)
+            if(this.bubbleSize != null)
                 this.bubbleSize.Write(sw, "bubbleSize");
-            if (this.bubble3D != null)
+            if(this.bubble3D != null)
                 this.bubble3D.Write(sw, "bubble3D");
-            if (this.dPt != null)
+            if(this.dPt != null)
             {
-                foreach (CT_DPt x in this.dPt)
+                foreach(CT_DPt x in this.dPt)
                 {
                     x.Write(sw, "dPt");
                 }
             }
-            if (this.trendline != null)
+            if(this.trendline != null)
             {
-                foreach (CT_Trendline x in this.trendline)
+                foreach(CT_Trendline x in this.trendline)
                 {
                     x.Write(sw, "trendline");
                 }
             }
-            if (this.errBars != null)
+            if(this.errBars != null)
             {
-                foreach (CT_ErrBars x in this.errBars)
+                foreach(CT_ErrBars x in this.errBars)
                 {
                     x.Write(sw, "errBars");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -472,31 +472,31 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_BubbleChart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BubbleChart ctObj = new CT_BubbleChart();
             ctObj.ser = new List<CT_BubbleSer>();
             ctObj.axId = new List<CT_UnsignedInt>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "varyColors")
+                if(childNode.LocalName == "varyColors")
                     ctObj.varyColors = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dLbls")
+                else if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bubble3D")
+                else if(childNode.LocalName == "bubble3D")
                     ctObj.bubble3D = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bubbleScale")
+                else if(childNode.LocalName == "bubbleScale")
                     ctObj.bubbleScale = CT_BubbleScale.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "showNegBubbles")
+                else if(childNode.LocalName == "showNegBubbles")
                     ctObj.showNegBubbles = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sizeRepresents")
+                else if(childNode.LocalName == "sizeRepresents")
                     ctObj.sizeRepresents = CT_SizeRepresents.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ser")
+                else if(childNode.LocalName == "ser")
                     ctObj.ser.Add(CT_BubbleSer.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "axId")
+                else if(childNode.LocalName == "axId")
                     ctObj.axId.Add(CT_UnsignedInt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -508,35 +508,35 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.varyColors != null)
+            if(this.varyColors != null)
                 this.varyColors.Write(sw, "varyColors");
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.bubble3D != null)
+            if(this.bubble3D != null)
                 this.bubble3D.Write(sw, "bubble3D");
-            if (this.bubbleScale != null)
+            if(this.bubbleScale != null)
                 this.bubbleScale.Write(sw, "bubbleScale");
-            if (this.showNegBubbles != null)
+            if(this.showNegBubbles != null)
                 this.showNegBubbles.Write(sw, "showNegBubbles");
-            if (this.sizeRepresents != null)
+            if(this.sizeRepresents != null)
                 this.sizeRepresents.Write(sw, "sizeRepresents");
-            if (this.ser != null)
+            if(this.ser != null)
             {
-                foreach (CT_BubbleSer x in this.ser)
+                foreach(CT_BubbleSer x in this.ser)
                 {
                     x.Write(sw, "ser");
                 }
             }
-            if (this.axId != null)
+            if(this.axId != null)
             {
-                foreach (CT_UnsignedInt x in this.axId)
+                foreach(CT_UnsignedInt x in this.axId)
                 {
                     x.Write(sw, "axId");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }

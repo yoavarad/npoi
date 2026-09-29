@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -26,11 +26,9 @@ namespace NPOI.XDDF.UserModel.Chart
 {
 
 
-    using NPOI.Util;
-
-    using NPOI.XDDF.UserModel;
-
     using NPOI.OpenXmlFormats.Dml.Chart;
+    using NPOI.Util;
+    using NPOI.XDDF.UserModel;
 
 
 
@@ -51,7 +49,7 @@ namespace NPOI.XDDF.UserModel.Chart
             DefineAxes(categories, values);
         }
 
-        private void DefineAxes(Dictionary<long, XDDFChartAxis> categories, 
+        private void DefineAxes(Dictionary<long, XDDFChartAxis> categories,
             Dictionary<long, XDDFValueAxis> values)
         {
             if(chart.SizeOfAxIdArray() == 0)
@@ -119,7 +117,7 @@ namespace NPOI.XDDF.UserModel.Chart
             }
 
             internal Series(CT_RadarSer series, CT_AxDataSource category, CT_NumDataSource values)
-                : base(XDDFDataSourcesFactory.FromDataSource(category) as IXDDFDataSource<T>, 
+                : base(XDDFDataSourcesFactory.FromDataSource(category) as IXDDFDataSource<T>,
                       XDDFDataSourcesFactory.FromDataSource(values) as IXDDFNumericalDataSource<V>)
             {
                 this.series = series;

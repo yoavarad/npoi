@@ -17,13 +17,14 @@
 namespace TestCases.SS.Formula
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.UDF;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.SS;
 
     /**
@@ -39,7 +40,7 @@ namespace TestCases.SS.Formula
         public BaseTestExternalFunctions()
         {
             _testDataProvider = TestCases.HSSF.HSSFITestDataProvider.Instance;
-            
+
         }
 
         /**
@@ -60,21 +61,21 @@ namespace TestCases.SS.Formula
 
             ICell cell1 = sh.CreateRow(0).CreateCell(0);
             // functions from the Excel Analysis Toolpack
-            cell1.CellFormula=("ISODD(1)+ISEVEN(2)"); 
+            cell1.CellFormula=("ISODD(1)+ISEVEN(2)");
             ClassicAssert.AreEqual("ISODD(1)+ISEVEN(2)", cell1.CellFormula);
 
             ICell cell2 = sh.CreateRow(1).CreateCell(0);
             //unregistered functions are parseable and renderable, but may not be evaluateable
-            cell2.SetCellFormula("MYFUNC(\"B1\")"); 
+            cell2.SetCellFormula("MYFUNC(\"B1\")");
 
             try
             {
                 evaluator.Evaluate(cell2);
                 Assert.Fail("Expected NotImplementedFunctionException/NotImplementedException");
             }
-            catch (NotImplementedException e)
+            catch(NotImplementedException e)
             {
-                if (!(e.InnerException is NotImplementedFunctionException))
+                if(!(e.InnerException is NotImplementedFunctionException))
                     throw e;
                 // expected
                 // Alternatively, a future implementation of evaluate could return #NAME? error to align behavior with Excel
@@ -148,7 +149,7 @@ namespace TestCases.SS.Formula
 
             public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
             {
-                if (args.Length != 1 || !(args[0] is StringEval))
+                if(args.Length != 1 || !(args[0] is StringEval))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
@@ -166,7 +167,7 @@ namespace TestCases.SS.Formula
 
             public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
             {
-                if (args.Length != 1 || !(args[0] is StringEval))
+                if(args.Length != 1 || !(args[0] is StringEval))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }

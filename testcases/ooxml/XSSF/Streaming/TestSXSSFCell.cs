@@ -23,7 +23,8 @@ namespace TestCases.XSSF.Streaming
     using NPOI.SS.UserModel;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.SS.UserModel;
 
@@ -42,7 +43,8 @@ namespace TestCases.XSSF.Streaming
         }
 
         [TearDown]
-        public static void TearDown() {
+        public static void TearDown()
+        {
             //SXSSFITestDataProvider.instance.Cleanup();
         }
 
@@ -56,7 +58,7 @@ namespace TestCases.XSSF.Streaming
                 "\nPOI",
                 "\n\nPOI \n",
             };
-            foreach (String str in samplesWithSpaces) 
+            foreach(String str in samplesWithSpaces)
             {
                 using(var swb = _testDataProvider.CreateWorkbook())
                 {

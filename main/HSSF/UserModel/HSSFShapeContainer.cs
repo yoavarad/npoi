@@ -18,8 +18,8 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System.Collections.Generic;
     using NPOI.SS.UserModel;
+    using System.Collections.Generic;
 
     /// <summary>
     /// An interface that indicates whether a class can contain children.

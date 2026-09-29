@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -49,17 +49,17 @@ namespace NPOI.XSSF.Streaming
 
         public IEvaluationCell GetCell(int rowIndex, int columnIndex)
         {
-            SXSSFRow row = (SXSSFRow)_xs.GetRow(rowIndex);                
-            if (row == null)
+            SXSSFRow row = (SXSSFRow)_xs.GetRow(rowIndex);
+            if(row == null)
             {
-                if (rowIndex <= _xs.LastFlushedRowNumber)
+                if(rowIndex <= _xs.LastFlushedRowNumber)
                 {
                     throw new RowFlushedException(rowIndex);
                 }
                 return null;
             }
             SXSSFCell cell = (SXSSFCell)row.GetCell(columnIndex);
-            if (cell == null)
+            if(cell == null)
             {
                 return null;
             }

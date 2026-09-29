@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,7 +51,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_Xf CopyTo(CT_Xf obj)
         {
-            if (this.alignment != null)
+            if(this.alignment != null)
                 obj.alignment = this.alignment.Copy();
             obj.protection = this.protection;
             obj.extLstField = null == extLstField ? null : this.extLstField.Copy();
@@ -79,7 +79,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Xf Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Xf ctObj = new CT_Xf();
             ctObj.numFmtId = XmlHelper.ReadUInt(node.Attributes["numFmtId"]);
@@ -95,13 +95,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.applyBorder = XmlHelper.ReadBool(node.Attributes["applyBorder"]);
             ctObj.applyAlignment = XmlHelper.ReadBool(node.Attributes["applyAlignment"]);
             ctObj.applyProtection = XmlHelper.ReadBool(node.Attributes["applyProtection"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "alignment")
+                if(childNode.LocalName == "alignment")
                     ctObj.alignment = CT_CellAlignment.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "protection")
+                else if(childNode.LocalName == "protection")
                     ctObj.protection = CT_CellProtection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -109,40 +109,40 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
 
 
-        internal void Write(StreamWriter sw, string nodeName, bool writingCellStyle=false)
+        internal void Write(StreamWriter sw, string nodeName, bool writingCellStyle = false)
         {
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "numFmtId", this.numFmtId, true);
             XmlHelper.WriteAttribute(sw, "fontId", this.fontId, true);
             XmlHelper.WriteAttribute(sw, "fillId", this.fillId, true);
             XmlHelper.WriteAttribute(sw, "borderId", this.borderId, true);
-            if (!writingCellStyle)
+            if(!writingCellStyle)
                 XmlHelper.WriteAttribute(sw, "xfId", this.xfId, true);
-            XmlHelper.WriteAttribute(sw, "quotePrefix", this.quotePrefix,false);
+            XmlHelper.WriteAttribute(sw, "quotePrefix", this.quotePrefix, false);
             XmlHelper.WriteAttribute(sw, "pivotButton", this.pivotButton, false);
             if(this.applyNumberFormat)
                 XmlHelper.WriteAttribute(sw, "applyNumberFormat", this.applyNumberFormat);
             XmlHelper.WriteAttribute(sw, "applyFont", this.applyFont, false);
-            if (this.applyFill)
+            if(this.applyFill)
                 XmlHelper.WriteAttribute(sw, "applyFill", this.applyFill);
-            if (this.applyBorder)
+            if(this.applyBorder)
                 XmlHelper.WriteAttribute(sw, "applyBorder", this.applyBorder, true);
-            if (this.applyAlignment)
+            if(this.applyAlignment)
                 XmlHelper.WriteAttribute(sw, "applyAlignment", this.applyAlignment, true);
             if(this.applyProtection)
                 XmlHelper.WriteAttribute(sw, "applyProtection", this.applyProtection, true);
-            if (this.alignment == null && this.protection == null && this.extLst == null)
+            if(this.alignment == null && this.protection == null && this.extLst == null)
             {
                 sw.Write("/>");
             }
             else
             {
                 sw.Write('>');
-                if (this.alignment != null)
+                if(this.alignment != null)
                     this.alignment.Write(sw, "alignment");
-                if (this.protection != null)
+                if(this.protection != null)
                     this.protection.Write(sw, "protection");
-                if (this.extLst != null)
+                if(this.extLst != null)
                     this.extLst.Write(sw, "extLst");
                 sw.WriteEndElement(nodeName);
             }

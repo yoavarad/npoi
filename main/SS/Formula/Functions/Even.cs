@@ -30,12 +30,12 @@ namespace NPOI.SS.Formula.Functions
 
         public override double Evaluate(double d)
         {
-            if (d == 0)
+            if(d == 0)
             {
                 return 0;
             }
             long result;
-            if (d > 0)
+            if(d > 0)
             {
                 result = calcEven(d);
             }
@@ -49,7 +49,7 @@ namespace NPOI.SS.Formula.Functions
         private static long calcEven(double d)
         {
             long x = ((long)d) & PARITY_MASK;
-            if (x == d)
+            if(x == d)
             {
                 return x;
             }

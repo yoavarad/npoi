@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations under the License.
 ==================================================================== */
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace NPOI.POIFS.FileSystem
@@ -31,16 +31,16 @@ namespace NPOI.POIFS.FileSystem
             // System.err.println("copyNodeRecursively called with "+entry.getName()+
             // ","+target.getName());
             DirectoryEntry newTarget = null;
-            if (entry.IsDirectoryEntry)
+            if(entry.IsDirectoryEntry)
             {
                 DirectoryEntry dirEntry = (DirectoryEntry)entry;
                 newTarget = target.CreateDirectory(entry.Name);
                 newTarget.StorageClsid=(dirEntry.StorageClsid);
                 IEnumerator<Entry> entries = dirEntry.Entries;
 
-                while (entries.MoveNext())
+                while(entries.MoveNext())
                 {
-                    CopyNodeRecursively((Entry)entries.Current, newTarget);
+                    CopyNodeRecursively((Entry) entries.Current, newTarget);
                 }
             }
             else
@@ -63,7 +63,7 @@ namespace NPOI.POIFS.FileSystem
         public static void CopyNodes(DirectoryEntry sourceRoot,
                 DirectoryEntry targetRoot)
         {
-            foreach (Entry entry in sourceRoot)
+            foreach(Entry entry in sourceRoot)
             {
                 CopyNodeRecursively(entry, targetRoot);
             }
@@ -80,7 +80,7 @@ namespace NPOI.POIFS.FileSystem
         {
             // Nothing special here, just overloaded types to make the
             //  recommended new way to handle this clearer
-            CopyNodes((DirectoryEntry)filteredSource, (DirectoryEntry)filteredTarget);
+            CopyNodes((DirectoryEntry) filteredSource, (DirectoryEntry) filteredTarget);
         }
 
         /**
@@ -184,13 +184,13 @@ namespace NPOI.POIFS.FileSystem
         public static bool AreDirectoriesIdentical(DirectoryEntry dirA, DirectoryEntry dirB)
         {
             // First, check names
-            if (!dirA.Name.Equals(dirB.Name))
+            if(!dirA.Name.Equals(dirB.Name))
             {
                 return false;
             }
 
             // Next up, check they have the same number of children
-            if (dirA.EntryCount != dirB.EntryCount)
+            if(dirA.EntryCount != dirB.EntryCount)
             {
                 return false;
             }
@@ -198,37 +198,37 @@ namespace NPOI.POIFS.FileSystem
             // Next, check entries and their types/sizes
             Dictionary<String, int> aSizes = new Dictionary<String, int>();
             int isDirectory = -12345;
-            foreach (Entry a in dirA)
+            foreach(Entry a in dirA)
             {
                 String aName = a.Name;
-                if (a.IsDirectoryEntry)
+                if(a.IsDirectoryEntry)
                 {
                     aSizes.Add(aName, isDirectory);
                 }
                 else
                 {
-                    aSizes.Add(aName, ((DocumentNode)a).Size);
+                    aSizes.Add(aName, ((DocumentNode) a).Size);
                 }
             }
-            foreach (Entry b in dirB)
+            foreach(Entry b in dirB)
             {
                 String bName = b.Name;
-                if (!aSizes.TryGetValue(bName, out int value))
+                if(!aSizes.TryGetValue(bName, out int value))
                 {
                     // In B but not A
                     return false;
                 }
 
                 int size;
-                if (b.IsDirectoryEntry)
+                if(b.IsDirectoryEntry)
                 {
                     size = isDirectory;
                 }
                 else
                 {
-                    size = ((DocumentNode)b).Size;
+                    size = ((DocumentNode) b).Size;
                 }
-                if (size != value)
+                if(size != value)
                 {
                     // Either the wrong type, or they're different sizes
                     return false;
@@ -237,37 +237,38 @@ namespace NPOI.POIFS.FileSystem
                 // Track it as checked
                 aSizes.Remove(bName);
             }
-            if (!(aSizes.Count == 0))
+            if(!(aSizes.Count == 0))
             {
                 // Nodes were in A but not B
                 return false;
             }
 
             // If that passed, check entry contents
-            foreach (Entry a in dirA)
+            foreach(Entry a in dirA)
             {
                 try
                 {
                     Entry b = dirB.GetEntry(a.Name);
                     bool match;
-                    if (a.IsDirectoryEntry)
+                    if(a.IsDirectoryEntry)
                     {
                         match = AreDirectoriesIdentical(
-                              (DirectoryEntry)a, (DirectoryEntry)b);
+                              (DirectoryEntry) a, (DirectoryEntry) b);
                     }
                     else
                     {
                         match = AreDocumentsIdentical(
-                              (DocumentEntry)a, (DocumentEntry)b);
+                              (DocumentEntry) a, (DocumentEntry) b);
                     }
-                    if (!match) return false;
+                    if(!match)
+                        return false;
                 }
-                catch (FileNotFoundException)
+                catch(FileNotFoundException)
                 {
                     // Shouldn't really happen...
                     return false;
                 }
-                catch (IOException)
+                catch(IOException)
                 {
                     // Something's messed up with one document, not a match
                     return false;
@@ -285,12 +286,12 @@ namespace NPOI.POIFS.FileSystem
          */
         public static bool AreDocumentsIdentical(DocumentEntry docA, DocumentEntry docB)
         {
-            if (!docA.Name.Equals(docB.Name))
+            if(!docA.Name.Equals(docB.Name))
             {
                 // Names don't match, not the same
                 return false;
             }
-            if (docA.Size != docB.Size)
+            if(docA.Size != docB.Size)
             {
                 // Wrong sizes, can't have the same contents
                 return false;
@@ -308,17 +309,19 @@ namespace NPOI.POIFS.FileSystem
                 {
                     readA = inpA.Read();
                     readB = inpB.Read();
-                    if (readA != readB)
+                    if(readA != readB)
                     {
                         matches = false;
                         break;
                     }
-                } while (readA != -1 && readB != -1);
+                } while(readA != -1 && readB != -1);
             }
             finally
             {
-                if (inpA != null) inpA.Close();
-                if (inpB != null) inpB.Close();
+                if(inpA != null)
+                    inpA.Close();
+                if(inpB != null)
+                    inpB.Close();
             }
 
             return matches;

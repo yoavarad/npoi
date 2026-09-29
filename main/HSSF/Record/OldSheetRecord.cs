@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Bound Sheet Record (aka BundleSheet) (0x0085) for BIFF 5<br/>

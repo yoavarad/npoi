@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.Atp
 {
-    using System;
+    using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NPOI.SS.Formula;
+    using System;
     /**
      * Implementation of Excel 'Analysis ToolPak' function ISEVEN() ISODD()<br/>
      * 
@@ -37,9 +37,9 @@ namespace NPOI.SS.Formula.Atp
         {
             _desiredParity = desiredParity;
         }
-        public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec) 
+        public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -49,7 +49,7 @@ namespace NPOI.SS.Formula.Atp
             {
                 val = EvaluateArgParity(args[0], ec.RowIndex, ec.ColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -62,12 +62,12 @@ namespace NPOI.SS.Formula.Atp
             ValueEval ve = OperandResolver.GetSingleValue(arg, srcCellRow, srcCellCol);
 
             double d = OperandResolver.CoerceValueToDouble(ve);
-            if (d < 0)
+            if(d < 0)
             {
                 d = -d;
             }
             long v = (long)Math.Floor(d);
-            return (int)(v & 0x0001);
+            return (int) (v & 0x0001);
         }
     }
 }

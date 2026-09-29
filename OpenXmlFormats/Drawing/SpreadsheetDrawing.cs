@@ -1,14 +1,14 @@
-﻿using System;
+using Cysharp.Text;
+using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXmlFormats.Vml;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using NPOI.OpenXml4Net.Util;
-using NPOI.OpenXmlFormats.Vml;
-using Cysharp.Text;
 
 namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 {
@@ -19,20 +19,20 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
     {
         public static CT_NonVisualDrawingProps Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualDrawingProps ctObj = new CT_NonVisualDrawingProps();
             ctObj.id = XmlHelper.ReadUInt(node.Attributes["id"]);
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
             ctObj.descr = XmlHelper.ReadString(node.Attributes["descr"]);
             ctObj.hidden = XmlHelper.ReadBool(node.Attributes["hidden"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "hlinkClick")
+                if(childNode.LocalName == "hlinkClick")
                     ctObj.hlinkClick = CT_Hyperlink.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hlinkHover")
+                else if(childNode.LocalName == "hlinkHover")
                     ctObj.hlinkHover = CT_Hyperlink.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -48,11 +48,11 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             XmlHelper.WriteAttribute(sw, "descr", this.descr);
             XmlHelper.WriteAttribute(sw, "hidden", this.hidden, false);
             sw.Write('>');
-            if (this.hlinkClick != null)
+            if(this.hlinkClick != null)
                 this.hlinkClick.Write(sw, "hlinkClick");
-            if (this.hlinkHover != null)
+            if(this.hlinkHover != null)
                 this.hlinkHover.Write(sw, "hlinkHover");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -160,7 +160,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             get
             {
-                return null == this.hiddenField ? false : (bool)hiddenField;
+                return null == this.hiddenField ? false : (bool) hiddenField;
             }
             set
             {
@@ -197,14 +197,14 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
         public static CT_NonVisualGraphicFrameProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualGraphicFrameProperties ctObj = new CT_NonVisualGraphicFrameProperties();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "graphicFrameLocks")
+                if(childNode.LocalName == "graphicFrameLocks")
                     ctObj.graphicFrameLocks = CT_GraphicalObjectFrameLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -216,9 +216,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.graphicFrameLocks != null)
+            if(this.graphicFrameLocks != null)
                 this.graphicFrameLocks.Write(sw, "graphicFrameLocks");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -258,14 +258,14 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         CT_NonVisualGraphicFrameProperties cNvGraphicFramePrField;
         public static CT_GraphicalObjectFrameNonVisual Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GraphicalObjectFrameNonVisual ctObj = new CT_GraphicalObjectFrameNonVisual();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cNvPr")
+                if(childNode.LocalName == "cNvPr")
                     ctObj.cNvPr = CT_NonVisualDrawingProps.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cNvGraphicFramePr")
+                else if(childNode.LocalName == "cNvGraphicFramePr")
                     ctObj.cNvGraphicFramePr = CT_NonVisualGraphicFrameProperties.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -277,9 +277,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.cNvPr != null)
+            if(this.cNvPr != null)
                 this.cNvPr.Write(sw, "cNvPr");
-            if (this.cNvGraphicFramePr != null)
+            if(this.cNvGraphicFramePr != null)
                 this.cNvGraphicFramePr.Write(sw, "cNvGraphicFramePr");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -313,15 +313,15 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
     {
         public static CT_NonVisualPictureProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualPictureProperties ctObj = new CT_NonVisualPictureProperties();
             ctObj.preferRelativeResize = XmlHelper.ReadBool(node.Attributes["preferRelativeResize"], true);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "picLocks")
+                if(childNode.LocalName == "picLocks")
                     ctObj.picLocks = CT_PictureLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -335,9 +335,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             if(!preferRelativeResize)
                 XmlHelper.WriteAttribute(sw, "preferRelativeResize", this.preferRelativeResize);
             sw.Write('>');
-            if (this.picLocks != null)
+            if(this.picLocks != null)
                 this.picLocks.Write(sw, "picLocks");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -432,20 +432,20 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 
         public static CT_BlipFillProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BlipFillProperties ctObj = new CT_BlipFillProperties();
             ctObj.dpi = XmlHelper.ReadUInt(node.Attributes["dpi"]);
             ctObj.rotWithShape = XmlHelper.ReadBool(node.Attributes["rotWithShape"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "blip")
+                if(childNode.LocalName == "blip")
                     ctObj.blip = CT_Blip.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "srcRect")
+                else if(childNode.LocalName == "srcRect")
                     ctObj.srcRect = CT_RelativeRect.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tile")
+                else if(childNode.LocalName == "tile")
                     ctObj.tile = CT_TileInfoProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "stretch")
+                else if(childNode.LocalName == "stretch")
                     ctObj.stretch = CT_StretchInfoProperties.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -460,13 +460,13 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             if(rotWithShape)
                 XmlHelper.WriteAttribute(sw, "rotWithShape", this.rotWithShape);
             sw.Write('>');
-            if (this.blip != null)
+            if(this.blip != null)
                 this.blip.Write(sw, "blip");
-            if (this.srcRect != null)
+            if(this.srcRect != null)
                 this.srcRect.Write(sw, "srcRect");
-            if (this.tile != null)
+            if(this.tile != null)
                 this.tile.Write(sw, "tile");
-            if (this.stretch != null)
+            if(this.stretch != null)
                 this.stretch.Write(sw, "stretch");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -528,7 +528,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             get
             {
-                return (uint)this.dpiField;
+                return (uint) this.dpiField;
             }
             set
             {
@@ -554,7 +554,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             get
             {
-                return (bool)this.rotWithShapeField;
+                return (bool) this.rotWithShapeField;
             }
             set
             {
@@ -886,42 +886,42 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 
         public static CT_ShapeProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ShapeProperties ctObj = new CT_ShapeProperties();
-            if (node.Attributes["bwMode"] != null)
-                ctObj.bwMode = (ST_BlackWhiteMode)Enum.Parse(typeof(ST_BlackWhiteMode), node.Attributes["bwMode"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["bwMode"] != null)
+                ctObj.bwMode = (ST_BlackWhiteMode) Enum.Parse(typeof(ST_BlackWhiteMode), node.Attributes["bwMode"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "xfrm")
+                if(childNode.LocalName == "xfrm")
                     ctObj.xfrm = CT_Transform2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "custGeom")
+                else if(childNode.LocalName == "custGeom")
                     ctObj.custGeom = CT_CustomGeometry2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "prstGeom")
+                else if(childNode.LocalName == "prstGeom")
                     ctObj.prstGeom = CT_PresetGeometry2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noFill")
+                else if(childNode.LocalName == "noFill")
                     ctObj.noFill = new CT_NoFillProperties();
-                else if (childNode.LocalName == "solidFill")
+                else if(childNode.LocalName == "solidFill")
                     ctObj.solidFill = CT_SolidColorFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gradFill")
+                else if(childNode.LocalName == "gradFill")
                     ctObj.gradFill = CT_GradientFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "blipFill")
+                else if(childNode.LocalName == "blipFill")
                     ctObj.blipFill = CT_BlipFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pattFill")
+                else if(childNode.LocalName == "pattFill")
                     ctObj.pattFill = CT_PatternFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "grpFill")
+                else if(childNode.LocalName == "grpFill")
                     ctObj.grpFill = new CT_GroupFillProperties();
-                else if (childNode.LocalName == "ln")
+                else if(childNode.LocalName == "ln")
                     ctObj.ln = CT_LineProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "effectLst")
+                else if(childNode.LocalName == "effectLst")
                     ctObj.effectLst = CT_EffectList.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "effectDag")
+                else if(childNode.LocalName == "effectDag")
                     ctObj.effectDag = CT_EffectContainer.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "scene3d")
+                else if(childNode.LocalName == "scene3d")
                     ctObj.scene3d = CT_Scene3D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sp3d")
+                else if(childNode.LocalName == "sp3d")
                     ctObj.sp3d = CT_Shape3D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -935,35 +935,35 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             if(bwMode!= ST_BlackWhiteMode.none)
                 XmlHelper.WriteAttribute(sw, "bwMode", this.bwMode.ToString());
             sw.Write('>');
-            if (this.xfrm != null)
+            if(this.xfrm != null)
                 this.xfrm.Write(sw, "a:xfrm");
-            if (this.custGeom != null)
+            if(this.custGeom != null)
                 this.custGeom.Write(sw, "custGeom");
-            if (this.prstGeom != null)
+            if(this.prstGeom != null)
                 this.prstGeom.Write(sw, "prstGeom");
-            if (this.noFill != null)
+            if(this.noFill != null)
                 sw.Write("<a:noFill/>");
-            if (this.solidFill != null)
+            if(this.solidFill != null)
                 this.solidFill.Write(sw, "solidFill");
-            if (this.gradFill != null)
+            if(this.gradFill != null)
                 this.gradFill.Write(sw, "gradFill");
-            if (this.blipFill != null)
+            if(this.blipFill != null)
                 this.blipFill.Write(sw, "blipFill");
-            if (this.pattFill != null)
+            if(this.pattFill != null)
                 this.pattFill.Write(sw, "pattFill");
-            if (this.grpFill != null)
+            if(this.grpFill != null)
                 sw.Write("<a:grpFill/>");
-            if (this.ln != null)
+            if(this.ln != null)
                 this.ln.Write(sw, "ln");
-            if (this.effectLst != null)
+            if(this.effectLst != null)
                 this.effectLst.Write(sw, "effectLst");
-            if (this.effectDag != null)
+            if(this.effectDag != null)
                 this.effectDag.Write(sw, "effectDag");
-            if (this.scene3d != null)
+            if(this.scene3d != null)
                 this.scene3d.Write(sw, "scene3d");
-            if (this.sp3d != null)
+            if(this.sp3d != null)
                 this.sp3d.Write(sw, "sp3d");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -1039,18 +1039,18 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
         public static CT_GraphicalObjectFrame Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GraphicalObjectFrame ctObj = new CT_GraphicalObjectFrame();
             ctObj.macro = XmlHelper.ReadString(node.Attributes["macro"]);
             ctObj.fPublished = XmlHelper.ReadBool(node.Attributes["fPublished"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "nvGraphicFramePr")
+                if(childNode.LocalName == "nvGraphicFramePr")
                     ctObj.nvGraphicFramePr = CT_GraphicalObjectFrameNonVisual.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "xfrm")
+                else if(childNode.LocalName == "xfrm")
                     ctObj.xfrm = CT_Transform2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "graphic")
+                else if(childNode.LocalName == "graphic")
                     ctObj.graphic = CT_GraphicalObject.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1064,11 +1064,11 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             XmlHelper.WriteAttribute(sw, "macro", this.macro, true);
             XmlHelper.WriteAttribute(sw, "fPublished", this.fPublished, false);
             sw.Write('>');
-            if (this.nvGraphicFramePr != null)
+            if(this.nvGraphicFramePr != null)
                 this.nvGraphicFramePr.Write(sw, "nvGraphicFramePr");
-            if (this.xfrm != null)
+            if(this.xfrm != null)
                 this.xfrm.Write(sw, "xdr:xfrm");
-            if (this.graphic != null)
+            if(this.graphic != null)
                 this.graphic.Write(sw, "graphic");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -1120,14 +1120,14 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
         public static CT_ConnectorNonVisual Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ConnectorNonVisual ctObj = new CT_ConnectorNonVisual();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cNvCxnSpPr")
+                if(childNode.LocalName == "cNvCxnSpPr")
                     ctObj.cNvCxnSpPr = CT_NonVisualConnectorProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cNvPr")
+                else if(childNode.LocalName == "cNvPr")
                     ctObj.cNvPr = CT_NonVisualDrawingProps.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1137,9 +1137,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.cNvPr != null)
+            if(this.cNvPr != null)
                 this.cNvPr.Write(sw, "cNvPr");
-            if (this.cNvCxnSpPr != null)
+            if(this.cNvCxnSpPr != null)
                 this.cNvCxnSpPr.Write(sw, "cNvCxnSpPr");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -1159,18 +1159,18 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 
         public int col
         {
-            get 
+            get
             {
                 return _col;
             }
-            set 
+            set
             {
                 _col = value;
             }
         }
         public long colOff
         {
-            get 
+            get
             {
                 return _colOff;
             }
@@ -1199,21 +1199,21 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public static CT_Marker Parse(XmlNode node, XmlNamespaceManager nameSpaceManager)
         {
             CT_Marker ctMarker = new CT_Marker();
-            foreach (XmlNode subnode in node.ChildNodes)
+            foreach(XmlNode subnode in node.ChildNodes)
             {
-                if (subnode.LocalName == "col")
+                if(subnode.LocalName == "col")
                 {
                     ctMarker.col = Int32.Parse(subnode.InnerText);
                 }
-                else if (subnode.LocalName == "colOff")
+                else if(subnode.LocalName == "colOff")
                 {
                     ctMarker.colOff = Int64.Parse(subnode.InnerText);
                 }
-                else if (subnode.LocalName == "row")
+                else if(subnode.LocalName == "row")
                 {
                     ctMarker.row = Int32.Parse(subnode.InnerText);
                 }
-                else if (subnode.LocalName == "rowOff")
+                else if(subnode.LocalName == "rowOff")
                 {
                     ctMarker.rowOff = Int64.Parse(subnode.InnerText);
                 }
@@ -1224,7 +1224,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public override string ToString()
         {
             StringBuilder sb=new StringBuilder();
-            using(StringWriter sw =new StringWriter(sb))
+            using(StringWriter sw = new StringWriter(sb))
             {
                 sw.Write("<xdr:col>");
                 sw.Write(this.col.ToString());
@@ -1273,10 +1273,10 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing")]
     public class CT_AnchorClientData
     {
-        
+
         public static CT_AnchorClientData Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_AnchorClientData ctObj = new CT_AnchorClientData();
             ctObj.fLocksWithSheet = XmlHelper.ReadBool(node.Attributes["fLocksWithSheet"], true);
@@ -1341,9 +1341,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public int SizeOfTwoCellAnchorArray()
         {
             int count = 0;
-            foreach (IEG_Anchor anchor in cellAnchors)
+            foreach(IEG_Anchor anchor in cellAnchors)
             {
-                if (anchor is CT_TwoCellAnchor)
+                if(anchor is CT_TwoCellAnchor)
                 {
                     count++;
                 }
@@ -1353,7 +1353,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 sw.Write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
                 sw.Write("<xdr:wsDr xmlns:xdr=\"http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\">");
@@ -1362,7 +1362,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
                     sw.Write("<mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\">");
                     sw.Write("<mc:Choice xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\" Requires=\"a14\">");
                 }
-                foreach (IEG_Anchor anchor in this.cellAnchors)
+                foreach(IEG_Anchor anchor in this.cellAnchors)
                 {
                     anchor.Write(sw);
                 }
@@ -1393,7 +1393,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public void Set(CT_Drawing ctDrawing)
         {
             this.cellAnchors.Clear();
-            foreach (IEG_Anchor anchor in ctDrawing.cellAnchors)
+            foreach(IEG_Anchor anchor in ctDrawing.cellAnchors)
             {
                 this.cellAnchors.Add(anchor);
             }
@@ -1407,9 +1407,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public int SizeOfOneCellAnchorArray()
         {
             int count = 0;
-            foreach (IEG_Anchor anchor in cellAnchors)
+            foreach(IEG_Anchor anchor in cellAnchors)
             {
-                if (anchor is CT_OneCellAnchor)
+                if(anchor is CT_OneCellAnchor)
                 {
                     count++;
                 }
@@ -1420,7 +1420,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public static CT_Drawing Parse(XmlDocument xmldoc, XmlNamespaceManager namespaceManager)
         {
             XmlNode root = xmldoc.SelectSingleNode("/xdr:wsDr", namespaceManager);
-            if (root == null)
+            if(root == null)
             {
                 return new CT_Drawing();
             }
@@ -1428,24 +1428,24 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             XmlNodeList childNodes = xmldoc.SelectNodes("/xdr:wsDr/*", namespaceManager);
             CT_Drawing ctDrawing = new CT_Drawing();
             // handle with-/out AlternateContent wrappers
-            foreach (XmlNode node in childNodes)
+            foreach(XmlNode node in childNodes)
             {
                 if(node.LocalName == "AlternateContent")
                 {
                     ctDrawing.inAlternateContent = true;
                     ctDrawing.cellAnchors.Add(ParseAlternateContent(node, namespaceManager));
                 }
-                else if (node.LocalName == "twoCellAnchor")
+                else if(node.LocalName == "twoCellAnchor")
                 {
                     CT_TwoCellAnchor twoCellAnchor = CT_TwoCellAnchor.Parse(node, namespaceManager);
                     ctDrawing.cellAnchors.Add(twoCellAnchor);
                 }
-                else if (node.LocalName == "oneCellAnchor")
+                else if(node.LocalName == "oneCellAnchor")
                 {
                     CT_OneCellAnchor oneCellAnchor = CT_OneCellAnchor.Parse(node, namespaceManager);
                     ctDrawing.cellAnchors.Add(oneCellAnchor);
                 }
-                else if (node.LocalName == "absCellAnchor")
+                else if(node.LocalName == "absCellAnchor")
                 {
                     CT_AbsoluteCellAnchor absCellAnchor = CT_AbsoluteCellAnchor.Parse(node, namespaceManager);
                     ctDrawing.cellAnchors.Add(absCellAnchor);
@@ -1509,7 +1509,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
     }
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing")]
-    public class CT_OneCellAnchor: IEG_Anchor
+    public class CT_OneCellAnchor : IEG_Anchor
     {
         private CT_Marker fromField = new CT_Marker();
         private CT_PositiveSize2D extField; //= new CT_PositiveSize2D();
@@ -1580,27 +1580,27 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             get { return pictureField; }
             set { pictureField = value; }
         }
-         
+
         public void Write(StreamWriter sw)
         {
             sw.Write("<xdr:oneCellAnchor>");
             this.from.Write(sw, "xdr:from");
             this.ext.Write(sw, "xdr:ext");
-            if (this.sp != null)
+            if(this.sp != null)
                 sp.Write(sw, "sp");
-            else if (this.connector != null)
+            else if(this.connector != null)
                 this.connector.Write(sw, "cxnSp");
-            else if (this.groupShape != null)
+            else if(this.groupShape != null)
                 this.groupShape.Write(sw, "grpSp");
-            else if (this.graphicalObjectField != null)
+            else if(this.graphicalObjectField != null)
                 this.graphicalObjectField.Write(sw, "graphicFrame");
-            else if (this.pictureField != null)
+            else if(this.pictureField != null)
                 this.picture.Write(sw, "pic");
-            if (this.alternateContent != null)
+            if(this.alternateContent != null)
             {
                 this.alternateContent.Write(sw, "AlternateContent");
             }
-            if (this.clientData != null)
+            if(this.clientData != null)
                 this.clientData.Write(sw, "clientData");
             sw.Write("</xdr:oneCellAnchor>");
         }
@@ -1608,41 +1608,42 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         internal static CT_OneCellAnchor Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
             CT_OneCellAnchor oneCellAnchor = new CT_OneCellAnchor();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "from")
+                if(childNode.LocalName == "from")
                 {
                     oneCellAnchor.from = CT_Marker.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "ext")
+                else if(childNode.LocalName == "ext")
                 {
                     oneCellAnchor.ext = CT_PositiveSize2D.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "sp")
+                else if(childNode.LocalName == "sp")
                 {
-                    oneCellAnchor.sp = CT_Shape.Parse(childNode, namespaceManager); ;
+                    oneCellAnchor.sp = CT_Shape.Parse(childNode, namespaceManager);
+                    ;
                 }
-                else if (childNode.LocalName == "pic")
+                else if(childNode.LocalName == "pic")
                 {
                     oneCellAnchor.picture = CT_Picture.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "cxnSp")
+                else if(childNode.LocalName == "cxnSp")
                 {
                     oneCellAnchor.connector = CT_Connector.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "grpSp")
+                else if(childNode.LocalName == "grpSp")
                 {
                     oneCellAnchor.groupShape = CT_GroupShape.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "graphicFrame")
+                else if(childNode.LocalName == "graphicFrame")
                 {
                     oneCellAnchor.graphicFrame = CT_GraphicalObjectFrame.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "AlternateContent")
+                else if(childNode.LocalName == "AlternateContent")
                 {
                     oneCellAnchor.alternateContent = CT_AlternateContent.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "clientData")
+                else if(childNode.LocalName == "clientData")
                 {
                     oneCellAnchor.clientData = CT_AnchorClientData.Parse(childNode, namespaceManager);
                 }
@@ -1674,37 +1675,38 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public static CT_AbsoluteCellAnchor Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
             CT_AbsoluteCellAnchor absCellAnchor = new CT_AbsoluteCellAnchor();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "pos")
+                if(childNode.LocalName == "pos")
                 {
                     absCellAnchor.pos = CT_Point2D.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "ext")
+                else if(childNode.LocalName == "ext")
                 {
                     absCellAnchor.ext = CT_PositiveSize2D.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "sp")
+                else if(childNode.LocalName == "sp")
                 {
-                    absCellAnchor.sp = CT_Shape.Parse(childNode, namespaceManager); ;
+                    absCellAnchor.sp = CT_Shape.Parse(childNode, namespaceManager);
+                    ;
                 }
-                else if (childNode.LocalName == "pic")
+                else if(childNode.LocalName == "pic")
                 {
                     absCellAnchor.picture = CT_Picture.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "cxnSp")
+                else if(childNode.LocalName == "cxnSp")
                 {
                     absCellAnchor.connector = CT_Connector.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "grpSp")
+                else if(childNode.LocalName == "grpSp")
                 {
                     absCellAnchor.groupShape = CT_GroupShape.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "graphicFrame")
+                else if(childNode.LocalName == "graphicFrame")
                 {
                     absCellAnchor.graphicFrame = CT_GraphicalObjectFrame.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "clientData")
+                else if(childNode.LocalName == "clientData")
                 {
                     absCellAnchor.clientData = CT_AnchorClientData.Parse(childNode, namespaceManager);
                 }
@@ -1773,20 +1775,20 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         public void Write(StreamWriter sw)
         {
             sw.Write("<xdr:absCellAnchor>");
-            if (this.pos!=null)
+            if(this.pos!=null)
                 this.pos.Write(sw, "p:pos");
-            if (this.sp != null)
+            if(this.sp != null)
                 sp.Write(sw, "sp");
-            else if (this.connector != null)
+            else if(this.connector != null)
                 this.connector.Write(sw, "cxnSp");
-            else if (this.groupShape != null)
+            else if(this.groupShape != null)
                 this.groupShape.Write(sw, "grpSp");
-            else if (this.graphicalObjectField != null)
+            else if(this.graphicalObjectField != null)
                 this.graphicalObjectField.Write(sw, "graphicFrame");
-            else if (this.pictureField != null)
+            else if(this.pictureField != null)
                 this.picture.Write(sw, "pic");
 
-            if (this.clientData != null)
+            if(this.clientData != null)
             {
                 this.clientData.Write(sw, "clientData");
             }
@@ -1940,25 +1942,25 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.Write("<xdr:twoCellAnchor");
             if(this.editAsField!= ST_EditAs.NONE)
-                sw.Write(" editAs=\"{0}\"",this.editAsField.ToString());
+                sw.Write(" editAs=\"{0}\"", this.editAsField.ToString());
             sw.Write('>');
             this.from.Write(sw, "xdr:from");
             this.to.Write(sw, "xdr:to");
-            if (this.sp != null)
+            if(this.sp != null)
                 sp.Write(sw, "sp");
-            else if (this.connector != null)
+            else if(this.connector != null)
                 this.connector.Write(sw, "cxnSp");
-            else if (this.groupShape != null)
+            else if(this.groupShape != null)
                 this.groupShape.Write(sw, "grpSp");
-            else if (this.graphicalObjectField != null)
+            else if(this.graphicalObjectField != null)
                 this.graphicalObjectField.Write(sw, "graphicFrame");
-            else if (this.pictureField != null)
+            else if(this.pictureField != null)
                 this.picture.Write(sw, "pic");
-            if (this.alternateContent != null)
+            if(this.alternateContent != null)
             {
                 this.alternateContent.Write(sw, "AlternateContent");
             }
-            if (this.clientData != null)
+            if(this.clientData != null)
             {
                 this.clientData.Write(sw, "clientData");
             }
@@ -1968,44 +1970,45 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         internal static CT_TwoCellAnchor Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
             CT_TwoCellAnchor twoCellAnchor = new CT_TwoCellAnchor();
-            if (node.Attributes["editAs"] != null)
-                twoCellAnchor.editAs = (ST_EditAs)Enum.Parse(typeof(ST_EditAs), node.Attributes["editAs"].Value);
+            if(node.Attributes["editAs"] != null)
+                twoCellAnchor.editAs = (ST_EditAs) Enum.Parse(typeof(ST_EditAs), node.Attributes["editAs"].Value);
 
             foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "from")
+                if(childNode.LocalName == "from")
                 {
                     twoCellAnchor.from = CT_Marker.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "to")
+                else if(childNode.LocalName == "to")
                 {
                     twoCellAnchor.to = CT_Marker.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "sp")
+                else if(childNode.LocalName == "sp")
                 {
-                    twoCellAnchor.sp = CT_Shape.Parse(childNode, namespaceManager); ;
+                    twoCellAnchor.sp = CT_Shape.Parse(childNode, namespaceManager);
+                    ;
                 }
-                else if (childNode.LocalName == "pic")
+                else if(childNode.LocalName == "pic")
                 {
                     twoCellAnchor.picture = CT_Picture.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "cxnSp")
+                else if(childNode.LocalName == "cxnSp")
                 {
                     twoCellAnchor.connector = CT_Connector.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "grpSp")
+                else if(childNode.LocalName == "grpSp")
                 {
                     twoCellAnchor.groupShape = CT_GroupShape.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "graphicFrame")
+                else if(childNode.LocalName == "graphicFrame")
                 {
                     twoCellAnchor.graphicFrame = CT_GraphicalObjectFrame.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "AlternateContent")
+                else if(childNode.LocalName == "AlternateContent")
                 {
                     twoCellAnchor.alternateContent = Vml.CT_AlternateContent.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "clientData")
+                else if(childNode.LocalName == "clientData")
                 {
                     twoCellAnchor.clientData = CT_AnchorClientData.Parse(childNode, namespaceManager);
                 }
@@ -2016,7 +2019,7 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 
     [Serializable]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing")]
-    public class CT_Connector: XmlObject // empty interface: EG_ObjectChoices
+    public class CT_Connector : XmlObject // empty interface: EG_ObjectChoices
     {
         string macroField;
         bool fPublishedField;
@@ -2030,18 +2033,18 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
         public static CT_Connector Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Connector ctObj = new CT_Connector();
             ctObj.macro = XmlHelper.ReadString(node.Attributes["macro"]);
             ctObj.fPublished = XmlHelper.ReadBool(node.Attributes["fPublished"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "nvCxnSpPr")
+                if(childNode.LocalName == "nvCxnSpPr")
                     ctObj.nvCxnSpPr = CT_ConnectorNonVisual.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "style")
+                else if(childNode.LocalName == "style")
                     ctObj.style = CT_ShapeStyle.Parse(childNode, namespaceManager);
             }
             ctObj.Node = node;
@@ -2054,13 +2057,13 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             XmlHelper.WriteAttribute(sw, "macro", this.macro, true);
-            XmlHelper.WriteAttribute(sw, "fPublished", this.fPublished,false);
+            XmlHelper.WriteAttribute(sw, "fPublished", this.fPublished, false);
             sw.Write('>');
-            if (this.nvCxnSpPr != null)
+            if(this.nvCxnSpPr != null)
                 this.nvCxnSpPr.Write(sw, "nvCxnSpPr");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.style != null)
+            if(this.style != null)
                 this.style.Write(sw, "style");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -2124,6 +2127,6 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
     }
 
-    
+
 
 }

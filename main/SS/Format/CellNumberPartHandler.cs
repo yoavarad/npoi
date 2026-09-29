@@ -40,14 +40,14 @@ namespace NPOI.SS.Format
         {
             int pos = descBuf.Length;
             char firstCh = part[0];
-            switch (firstCh)
+            switch(firstCh)
             {
                 case 'e':
                 case 'E':
                     // See comment in WriteScientific -- exponent handling is complex.
                     // (1) When parsing the format, remove the sign from After the 'e' and
                     // Put it before the first digit of the exponent.
-                    if (exponent == null && specials.Count > 0)
+                    if(exponent == null && specials.Count > 0)
                     {
                         exponent = new CellNumberFormatter.Special('.', pos);
                         specials.Add(exponent);
@@ -59,14 +59,14 @@ namespace NPOI.SS.Format
                 case '0':
                 case '?':
                 case '#':
-                    if (insertSignForExponent != '\0')
+                    if(insertSignForExponent != '\0')
                     {
                         specials.Add(new CellNumberFormatter.Special(insertSignForExponent, pos));
                         descBuf.Append(insertSignForExponent);
                         insertSignForExponent = '\0';
                         pos++;
                     }
-                    for (int i = 0; i < part.Length; i++)
+                    for(int i = 0; i < part.Length; i++)
                     {
                         char ch = part[i];
                         specials.Add(new CellNumberFormatter.Special(ch, pos + i));
@@ -74,7 +74,7 @@ namespace NPOI.SS.Format
                     break;
 
                 case '.':
-                    if (decimalPoint == null && specials.Count > 0)
+                    if(decimalPoint == null && specials.Count > 0)
                     {
                         decimalPoint = new CellNumberFormatter.Special('.', pos);
                         specials.Add(decimalPoint);
@@ -83,7 +83,7 @@ namespace NPOI.SS.Format
 
                 case '/':
                     //!! This assumes there is a numerator and a denominator, but these are actually optional
-                    if (slash == null && specials.Count > 0)
+                    if(slash == null && specials.Count > 0)
                     {
                         numerator = PreviousNumber();
                         // If the first number in the whole format is the numerator, the
@@ -151,7 +151,7 @@ namespace NPOI.SS.Format
             {
                 return specials;
             }
-            
+
         }
 
         public bool IsImproperFraction
@@ -164,17 +164,17 @@ namespace NPOI.SS.Format
 
         private CellNumberFormatter.Special PreviousNumber()
         {
-            for (int i = specials.Count - 1; i >= 0; i--)
+            for(int i = specials.Count - 1; i >= 0; i--)
             {
                 CellNumberFormatter.Special s = specials[i];
-                if (IsDigitFmt(s))
+                if(IsDigitFmt(s))
                 {
                     //Special numStart = s;
                     CellNumberFormatter.Special last = s;
-                    while (i >= 0)
+                    while(i >= 0)
                     {
                         s = specials[i];
-                        if (last.pos - s.pos > 1 || !IsDigitFmt(s)) // it has to be continuous digits
+                        if(last.pos - s.pos > 1 || !IsDigitFmt(s)) // it has to be continuous digits
                             break;
                         last = s;
                         i--;
@@ -192,9 +192,9 @@ namespace NPOI.SS.Format
 
         private static CellNumberFormatter.Special FirstDigit(List<CellNumberFormatter.Special> specials)
         {
-            foreach (CellNumberFormatter.Special s in specials)
+            foreach(CellNumberFormatter.Special s in specials)
             {
-                if (IsDigitFmt(s))
+                if(IsDigitFmt(s))
                 {
                     return s;
                 }

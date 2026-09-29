@@ -17,26 +17,26 @@
 
 namespace NPOI.XSSF.UserModel
 {
+    using Cysharp.Text;
+    using NPOI.HSSF.Util;
+    using NPOI.OpenXmlFormats.Dml;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NPOI.Util.Optional;
+    using NPOI.XDDF.UserModel;
+    using NPOI.XDDF.UserModel.Text;
+    using OpenXmlFormats.Dml.Spreadsheet;
     using System;
     using System.Collections.Generic;
-    using NPOI.HSSF.Util;
-    using NPOI.SS.UserModel;
-    using NPOI.OpenXmlFormats.Dml;
-    using OpenXmlFormats.Dml.Spreadsheet;
-    using System.Text; 
-using Cysharp.Text;
-    using NPOI.OpenXmlFormats.Spreadsheet;
-    using NPOI.Util;
-    using NPOI.XDDF.UserModel.Text;
-    using NPOI.XDDF.UserModel;
-    using NPOI.Util.Optional;
+    using System.Text;
 
 
     /**
      * Represents a shape with a predefined geometry in a SpreadsheetML Drawing.
      * Possible shape types are defined in {@link NPOI.SS.UserModel.ShapeTypes}
      */
-    public class XSSFSimpleShape : XSSFShape, IEnumerable<XSSFTextParagraph>, 
+    public class XSSFSimpleShape : XSSFShape, IEnumerable<XSSFTextParagraph>,
         ISimpleShape, ITextContainer
     { // TODO - instantiable superclass
         /// <summary>
@@ -156,7 +156,8 @@ using Cysharp.Text;
          * Returns the simple shape id.
          * @return id of the simple shape
          */
-        public override uint ID {
+        public override uint ID
+        {
             get
             {
                 return ctShape.nvSpPr.cNvPr.id;
@@ -167,7 +168,8 @@ using Cysharp.Text;
          * Returns the simple shape name.
          * @return name of the simple shape
          */
-        public override String Name {
+        public override String Name
+        {
             get
             {
                 return ctShape.nvSpPr.cNvPr.name;
@@ -180,7 +182,7 @@ using Cysharp.Text;
 
         public IEnumerator<XSSFTextParagraph> GetEnumerator()
         {
-            return (IEnumerator<XSSFTextParagraph>)_paragraphs.GetEnumerator();
+            return (IEnumerator<XSSFTextParagraph>) _paragraphs.GetEnumerator();
         }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
@@ -201,29 +203,30 @@ using Cysharp.Text;
                 XSSFTextParagraph p = null;
 
                 // Initialise the levelCount array - this maintains a record of the numbering to be used at each level
-                for (int k = 0; k < MAX_LEVELS; k++)
+                for(int k = 0; k < MAX_LEVELS; k++)
                 {
                     levelCount.Add(0);
                 }
 
-                for (int i = 0; i < _paragraphs.Count; i++)
+                for(int i = 0; i < _paragraphs.Count; i++)
                 {
-                    if (out1.Length > 0) out1.Append('\n');
+                    if(out1.Length > 0)
+                        out1.Append('\n');
                     p = _paragraphs[(i)];
 
-                    if (p.IsBullet && p.Text.Length > 0)
+                    if(p.IsBullet && p.Text.Length > 0)
                     {
 
                         int level = Math.Min(p.Level, MAX_LEVELS - 1);
 
-                        if (p.IsBulletAutoNumber)
+                        if(p.IsBulletAutoNumber)
                         {
                             i = ProcessAutoNumGroup(i, level, levelCount, out1);
                         }
                         else
                         {
                             // indent appropriately for the level
-                            for (int j = 0; j < level; j++)
+                            for(int j = 0; j < level; j++)
                             {
                                 out1.Append('\t');
                             }
@@ -237,7 +240,7 @@ using Cysharp.Text;
                         out1.Append(p.Text);
 
                         // this paragraph is not a bullet, so reset the count array
-                        for (int k = 0; k < MAX_LEVELS; k++)
+                        for(int k = 0; k < MAX_LEVELS; k++)
                         {
                             levelCount[k] = 0;
                         }
@@ -269,51 +272,55 @@ using Cysharp.Text;
             // first auto-number paragraph so Initialise to 1 or the bullets startAt if present
             startAt = p.BulletAutoNumberStart;
             scheme = p.BulletAutoNumberScheme;
-            if (levelCount[(level)] == 0)
+            if(levelCount[(level)] == 0)
             {
                 levelCount[level] = startAt == 0 ? 1 : startAt;
             }
             // indent appropriately for the level
-            for (int j = 0; j < level; j++)
+            for(int j = 0; j < level; j++)
             {
                 out1.Append('\t');
             }
-            if (p.Text.Length > 0)
+            if(p.Text.Length > 0)
             {
                 out1.Append(GetBulletPrefix(scheme, levelCount[level]));
                 out1.Append(p.Text);
             }
-            while (true)
+            while(true)
             {
                 nextp = (index + 1) == _paragraphs.Count ? null : _paragraphs[(index + 1)];
-                if (nextp == null) break; // out of paragraphs
-                if (!(nextp.IsBullet && p.IsBulletAutoNumber)) break; // not an auto-number bullet                      
-                if (nextp.Level > level)
+                if(nextp == null)
+                    break; // out of paragraphs
+                if(!(nextp.IsBullet && p.IsBulletAutoNumber))
+                    break; // not an auto-number bullet                      
+                if(nextp.Level > level)
                 {
                     // recurse into the new level group
-                    if (out1.Length > 0) out1.Append('\n');
+                    if(out1.Length > 0)
+                        out1.Append('\n');
                     index = ProcessAutoNumGroup(index + 1, nextp.Level, levelCount, out1);
                     continue; // restart the loop given the new index
                 }
-                else if (nextp.Level < level)
+                else if(nextp.Level < level)
                 {
                     break; // Changed level   
                 }
                 nextScheme = nextp.BulletAutoNumberScheme;
                 nextStartAt = nextp.BulletAutoNumberStart;
 
-                if (nextScheme == scheme && nextStartAt == startAt)
+                if(nextScheme == scheme && nextStartAt == startAt)
                 {
                     // bullet is valid, so increment i 
                     ++index;
-                    if (out1.Length > 0) out1.Append('\n');
+                    if(out1.Length > 0)
+                        out1.Append('\n');
                     // indent for the level
-                    for (int j = 0; j < level; j++)
+                    for(int j = 0; j < level; j++)
                     {
                         out1.Append('\t');
                     }
                     // check for empty text - only output a bullet if there is text, but it is still part of the group
-                    if (nextp.Text.Length > 0)
+                    if(nextp.Text.Length > 0)
                     {
                         // increment the count for this level
                         levelCount[level] = levelCount[level] + 1;
@@ -342,17 +349,19 @@ using Cysharp.Text;
         {
             using var out1 = ZString.CreateStringBuilder();
 
-            switch (scheme)
+            switch(scheme)
             {
                 case ListAutoNumber.ALPHA_LC_PARENT_BOTH:
                 case ListAutoNumber.ALPHA_LC_PARENT_R:
-                    if (scheme == ListAutoNumber.ALPHA_LC_PARENT_BOTH) out1.Append('(');
+                    if(scheme == ListAutoNumber.ALPHA_LC_PARENT_BOTH)
+                        out1.Append('(');
                     out1.Append(valueToAlpha(value).ToLower());
                     out1.Append(')');
                     break;
                 case ListAutoNumber.ALPHA_UC_PARENT_BOTH:
                 case ListAutoNumber.ALPHA_UC_PARENT_R:
-                    if (scheme == ListAutoNumber.ALPHA_UC_PARENT_BOTH) out1.Append('(');
+                    if(scheme == ListAutoNumber.ALPHA_UC_PARENT_BOTH)
+                        out1.Append('(');
                     out1.Append(valueToAlpha(value));
                     out1.Append(')');
                     break;
@@ -366,7 +375,8 @@ using Cysharp.Text;
                     break;
                 case ListAutoNumber.ARABIC_PARENT_BOTH:
                 case ListAutoNumber.ARABIC_PARENT_R:
-                    if (scheme == ListAutoNumber.ARABIC_PARENT_BOTH) out1.Append('(');
+                    if(scheme == ListAutoNumber.ARABIC_PARENT_BOTH)
+                        out1.Append('(');
                     out1.Append(value);
                     out1.Append(')');
                     break;
@@ -379,13 +389,15 @@ using Cysharp.Text;
                     break;
                 case ListAutoNumber.ROMAN_LC_PARENT_BOTH:
                 case ListAutoNumber.ROMAN_LC_PARENT_R:
-                    if (scheme == ListAutoNumber.ROMAN_LC_PARENT_BOTH) out1.Append('(');
+                    if(scheme == ListAutoNumber.ROMAN_LC_PARENT_BOTH)
+                        out1.Append('(');
                     out1.Append(valueToRoman(value).ToLower());
                     out1.Append(')');
                     break;
                 case ListAutoNumber.ROMAN_UC_PARENT_BOTH:
                 case ListAutoNumber.ROMAN_UC_PARENT_R:
-                    if (scheme == ListAutoNumber.ROMAN_UC_PARENT_BOTH) out1.Append('(');
+                    if(scheme == ListAutoNumber.ROMAN_UC_PARENT_BOTH)
+                        out1.Append('(');
                     out1.Append(valueToRoman(value));
                     out1.Append(')');
                     break;
@@ -412,10 +424,10 @@ using Cysharp.Text;
         {
             String alpha = "";
             int modulo;
-            while (value > 0)
+            while(value > 0)
             {
                 modulo = (value - 1) % 26;
-                alpha = (char)(65 + modulo) + alpha;
+                alpha = (char) (65 + modulo) + alpha;
                 value = (value - modulo) / 26;
             }
             return alpha;
@@ -430,9 +442,9 @@ using Cysharp.Text;
         private static String valueToRoman(int value)
         {
             using var out1 = ZString.CreateStringBuilder();
-            for (int i = 0; value > 0 && i < _romanChars.Length; i++)
+            for(int i = 0; value > 0 && i < _romanChars.Length; i++)
             {
-                while (_romanAlphaValues[i] <= value)
+                while(_romanAlphaValues[i] <= value)
                 {
                     out1.Append(_romanChars[i]);
                     value -= _romanAlphaValues[i];
@@ -473,7 +485,7 @@ using Cysharp.Text;
             str.SetStylesTableReference(wb.GetStylesSource());
 
             CT_TextParagraph p = new CT_TextParagraph();
-            if (str.NumFormattingRuns == 0)
+            if(str.NumFormattingRuns == 0)
             {
                 CT_RegularTextRun r = p.AddNewR();
                 CT_TextCharacterProperties rPr = r.AddNewRPr();
@@ -484,11 +496,12 @@ using Cysharp.Text;
             }
             else
             {
-                for (int i = 0; i < str.GetCTRst().SizeOfRArray(); i++)
+                for(int i = 0; i < str.GetCTRst().SizeOfRArray(); i++)
                 {
                     CT_RElt lt = str.GetCTRst().GetRArray(i);
                     CT_RPrElt ltPr = lt.rPr;
-                    if (ltPr == null) ltPr = lt.AddNewRPr();
+                    if(ltPr == null)
+                        ltPr = lt.AddNewRPr();
 
                     CT_RegularTextRun r = p.AddNewR();
                     CT_TextCharacterProperties rPr = r.AddNewRPr();
@@ -568,7 +581,7 @@ using Cysharp.Text;
             CT_TextBody txBody = ctShape.txBody;
             CT_TextParagraph p = txBody.AddNewP();
 
-            if (str.NumFormattingRuns == 0)
+            if(str.NumFormattingRuns == 0)
             {
                 CT_RegularTextRun r = p.AddNewR();
                 CT_TextCharacterProperties rPr = r.AddNewRPr();
@@ -579,11 +592,12 @@ using Cysharp.Text;
             }
             else
             {
-                for (int i = 0; i < str.GetCTRst().SizeOfRArray(); i++)
+                for(int i = 0; i < str.GetCTRst().SizeOfRArray(); i++)
                 {
                     CT_RElt lt = str.GetCTRst().GetRArray(i);
                     CT_RPrElt ltPr = lt.rPr;
-                    if (ltPr == null) ltPr = lt.AddNewRPr();
+                    if(ltPr == null)
+                        ltPr = lt.AddNewRPr();
 
                     CT_RegularTextRun r = p.AddNewR();
                     CT_TextCharacterProperties rPr = r.AddNewRPr();
@@ -612,11 +626,11 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetHorzOverflow())
+                    if(bodyPr.IsSetHorzOverflow())
                     {
-                        return (TextHorizontalOverflow)((int)bodyPr.horzOverflow - 1);
+                        return (TextHorizontalOverflow) ((int) bodyPr.horzOverflow - 1);
                     }
                 }
                 return TextHorizontalOverflow.OVERFLOW;
@@ -624,15 +638,16 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == TextHorizontalOverflow.None)
+                    if(value == TextHorizontalOverflow.None)
                     {
-                        if (bodyPr.IsSetHorzOverflow()) bodyPr.UnsetHorzOverflow();
+                        if(bodyPr.IsSetHorzOverflow())
+                            bodyPr.UnsetHorzOverflow();
                     }
                     else
                     {
-                        bodyPr.horzOverflow = (/*setter*/(ST_TextHorzOverflowType)((int)value + 1));
+                        bodyPr.horzOverflow = (/*setter*/(ST_TextHorzOverflowType) ((int) value + 1));
                     }
                 }
             }
@@ -648,11 +663,11 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetVertOverflow())
+                    if(bodyPr.IsSetVertOverflow())
                     {
-                        return (TextVerticalOverflow)((int)bodyPr.vertOverflow - 1);
+                        return (TextVerticalOverflow) ((int) bodyPr.vertOverflow - 1);
                     }
                 }
                 return TextVerticalOverflow.OVERFLOW;
@@ -660,15 +675,16 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == TextVerticalOverflow.None)
+                    if(value == TextVerticalOverflow.None)
                     {
-                        if (bodyPr.IsSetVertOverflow()) bodyPr.UnsetVertOverflow();
+                        if(bodyPr.IsSetVertOverflow())
+                            bodyPr.UnsetVertOverflow();
                     }
                     else
                     {
-                        bodyPr.vertOverflow = (/*setter*/(ST_TextVertOverflowType)((int)value + 1));
+                        bodyPr.vertOverflow = (/*setter*/(ST_TextVertOverflowType) ((int) value + 1));
                     }
                 }
             }
@@ -684,11 +700,11 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetAnchor())
+                    if(bodyPr.IsSetAnchor())
                     {
-                        return (VerticalAlignment)((int)bodyPr.anchor);
+                        return (VerticalAlignment) ((int) bodyPr.anchor);
                     }
                 }
                 return VerticalAlignment.Top;
@@ -696,15 +712,16 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == VerticalAlignment.None)
+                    if(value == VerticalAlignment.None)
                     {
-                        if (bodyPr.IsSetAnchor()) bodyPr.UnsetAnchor();
+                        if(bodyPr.IsSetAnchor())
+                            bodyPr.UnsetAnchor();
                     }
                     else
                     {
-                        bodyPr.anchor = (/*setter*/(ST_TextAnchoringType)((int)value));
+                        bodyPr.anchor = (/*setter*/(ST_TextAnchoringType) ((int) value));
                     }
                 }
             }
@@ -720,12 +737,12 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
                     ST_TextVerticalType val = bodyPr.vert;
-                    if (val != ST_TextVerticalType.horz)
+                    if(val != ST_TextVerticalType.horz)
                     {
-                        return (TextDirection)(val - 1);
+                        return (TextDirection) (val - 1);
                     }
                 }
                 return TextDirection.HORIZONTAL;
@@ -733,15 +750,16 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == TextDirection.None)
+                    if(value == TextDirection.None)
                     {
-                        if (bodyPr.IsSetVert()) bodyPr.UnsetVert();
+                        if(bodyPr.IsSetVert())
+                            bodyPr.UnsetVert();
                     }
                     else
                     {
-                        bodyPr.vert = (/*setter*/(ST_TextVerticalType)((int)value + 1));
+                        bodyPr.vert = (/*setter*/(ST_TextVerticalType) ((int) value + 1));
                     }
                 }
             }
@@ -759,9 +777,9 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetBIns())
+                    if(bodyPr.IsSetBIns())
                     {
                         return Units.ToPoints(bodyPr.bIns);
                     }
@@ -772,13 +790,15 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == -1 || value == 3.6)
+                    if(value == -1 || value == 3.6)
                     {
-                        if (bodyPr.IsSetBIns()) bodyPr.UnsetBIns();
+                        if(bodyPr.IsSetBIns())
+                            bodyPr.UnsetBIns();
                     }
-                    else bodyPr.bIns = (/*setter*/Units.ToEMU(value));
+                    else
+                        bodyPr.bIns = (/*setter*/Units.ToEMU(value));
                 }
             }
         }
@@ -795,9 +815,9 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetLIns())
+                    if(bodyPr.IsSetLIns())
                     {
                         return Units.ToPoints(bodyPr.lIns);
                     }
@@ -809,13 +829,15 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == -1 || value == 7.2)
+                    if(value == -1 || value == 7.2)
                     {
-                        if (bodyPr.IsSetLIns()) bodyPr.UnsetLIns();
+                        if(bodyPr.IsSetLIns())
+                            bodyPr.UnsetLIns();
                     }
-                    else bodyPr.lIns = (/*setter*/Units.ToEMU(value));
+                    else
+                        bodyPr.lIns = (/*setter*/Units.ToEMU(value));
                 }
             }
         }
@@ -832,9 +854,9 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetRIns())
+                    if(bodyPr.IsSetRIns())
                     {
                         return Units.ToPoints(bodyPr.rIns);
                     }
@@ -845,13 +867,15 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == -1 || value == 7.2)
+                    if(value == -1 || value == 7.2)
                     {
-                        if (bodyPr.IsSetRIns()) bodyPr.UnsetRIns();
+                        if(bodyPr.IsSetRIns())
+                            bodyPr.UnsetRIns();
                     }
-                    else bodyPr.rIns = (/*setter*/Units.ToEMU(value));
+                    else
+                        bodyPr.rIns = (/*setter*/Units.ToEMU(value));
                 }
             }
         }
@@ -867,9 +891,9 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetTIns())
+                    if(bodyPr.IsSetTIns())
                     {
                         return Units.ToPoints(bodyPr.tIns);
                     }
@@ -880,13 +904,15 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (value == -1 || value == 3.6)
+                    if(value == -1 || value == 3.6)
                     {
-                        if (bodyPr.IsSetTIns()) bodyPr.UnsetTIns();
+                        if(bodyPr.IsSetTIns())
+                            bodyPr.UnsetTIns();
                     }
-                    else bodyPr.tIns = (/*setter*/Units.ToEMU(value));
+                    else
+                        bodyPr.tIns = (/*setter*/Units.ToEMU(value));
                 }
             }
         }
@@ -899,9 +925,9 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetWrap())
+                    if(bodyPr.IsSetWrap())
                     {
                         return bodyPr.wrap == ST_TextWrappingType.square;
                     }
@@ -911,7 +937,7 @@ using Cysharp.Text;
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
                     bodyPr.wrap = (/*setter*/value ? ST_TextWrappingType.square : ST_TextWrappingType.none);
                 }
@@ -933,28 +959,40 @@ using Cysharp.Text;
             get
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetNoAutofit()) return TextAutofit.NONE;
-                    else if (bodyPr.IsSetNormAutofit()) return TextAutofit.NORMAL;
-                    else if (bodyPr.IsSetSpAutoFit()) return TextAutofit.SHAPE;
+                    if(bodyPr.IsSetNoAutofit())
+                        return TextAutofit.NONE;
+                    else if(bodyPr.IsSetNormAutofit())
+                        return TextAutofit.NORMAL;
+                    else if(bodyPr.IsSetSpAutoFit())
+                        return TextAutofit.SHAPE;
                 }
                 return TextAutofit.NORMAL;
             }
             set
             {
                 CT_TextBodyProperties bodyPr = ctShape.txBody.bodyPr;
-                if (bodyPr != null)
+                if(bodyPr != null)
                 {
-                    if (bodyPr.IsSetSpAutoFit()) bodyPr.UnsetSpAutoFit();
-                    if (bodyPr.IsSetNoAutofit()) bodyPr.UnsetNoAutofit();
-                    if (bodyPr.IsSetNormAutofit()) bodyPr.UnsetNormAutofit();
+                    if(bodyPr.IsSetSpAutoFit())
+                        bodyPr.UnsetSpAutoFit();
+                    if(bodyPr.IsSetNoAutofit())
+                        bodyPr.UnsetNoAutofit();
+                    if(bodyPr.IsSetNormAutofit())
+                        bodyPr.UnsetNormAutofit();
 
-                    switch (value)
+                    switch(value)
                     {
-                        case TextAutofit.NONE: bodyPr.AddNewNoAutofit(); break;
-                        case TextAutofit.NORMAL: bodyPr.AddNewNormAutofit(); break;
-                        case TextAutofit.SHAPE: bodyPr.AddNewSpAutoFit(); break;
+                        case TextAutofit.NONE:
+                            bodyPr.AddNewNoAutofit();
+                            break;
+                        case TextAutofit.NORMAL:
+                            bodyPr.AddNewNormAutofit();
+                            break;
+                        case TextAutofit.SHAPE:
+                            bodyPr.AddNewSpAutoFit();
+                            break;
                     }
                 }
             }
@@ -970,11 +1008,11 @@ using Cysharp.Text;
         {
             get
             {
-                return (int)ctShape.spPr.prstGeom.prst;
+                return (int) ctShape.spPr.prstGeom.prst;
             }
             set
             {
-                ctShape.spPr.prstGeom.prst = (/*setter*/(ST_ShapeType)(value));
+                ctShape.spPr.prstGeom.prst = (/*setter*/(ST_ShapeType) (value));
             }
         }
 
@@ -990,46 +1028,51 @@ using Cysharp.Text;
         private static void ApplyAttributes(CT_RPrElt pr, CT_TextCharacterProperties rPr)
         {
 
-            if (pr.SizeOfBArray() > 0) rPr.b = (/*setter*/pr.GetBArray(0).val);
-            if (pr.SizeOfUArray() > 0)
+            if(pr.SizeOfBArray() > 0)
+                rPr.b = (/*setter*/pr.GetBArray(0).val);
+            if(pr.SizeOfUArray() > 0)
             {
                 ST_UnderlineValues u1 = pr.GetUArray(0).val;
-                if (u1 == ST_UnderlineValues.single) rPr.u = (/*setter*/ST_TextUnderlineType.sng);
-                else if (u1 == ST_UnderlineValues.@double) rPr.u = (/*setter*/ST_TextUnderlineType.dbl);
-                else if (u1 == ST_UnderlineValues.none) rPr.u = (/*setter*/ST_TextUnderlineType.none);
+                if(u1 == ST_UnderlineValues.single)
+                    rPr.u = (/*setter*/ST_TextUnderlineType.sng);
+                else if(u1 == ST_UnderlineValues.@double)
+                    rPr.u = (/*setter*/ST_TextUnderlineType.dbl);
+                else if(u1 == ST_UnderlineValues.none)
+                    rPr.u = (/*setter*/ST_TextUnderlineType.none);
             }
-            if (pr.SizeOfIArray() > 0) rPr.i = (/*setter*/pr.GetIArray(0).val);
+            if(pr.SizeOfIArray() > 0)
+                rPr.i = (/*setter*/pr.GetIArray(0).val);
 
-            if (pr.SizeOfRFontArray() > 0)
+            if(pr.SizeOfRFontArray() > 0)
             {
                 CT_TextFont rFont = rPr.IsSetLatin() ? rPr.latin : rPr.AddNewLatin();
                 rFont.typeface = (/*setter*/pr.GetRFontArray(0).val);
             }
 
-            if (pr.SizeOfSzArray() > 0)
+            if(pr.SizeOfSzArray() > 0)
             {
                 int sz = (int)(pr.GetSzArray(0).val * 100);
                 rPr.sz = (/*setter*/sz);
             }
 
-            if (pr.SizeOfColorArray() > 0)
+            if(pr.SizeOfColorArray() > 0)
             {
                 CT_SolidColorFillProperties fill = rPr.IsSetSolidFill() ? rPr.solidFill : rPr.AddNewSolidFill();
                 NPOI.OpenXmlFormats.Spreadsheet.CT_Color xlsColor = pr.GetColorArray(0);
-                if (xlsColor.IsSetRgb())
+                if(xlsColor.IsSetRgb())
                 {
                     CT_SRgbColor clr = fill.IsSetSrgbClr() ? fill.srgbClr : fill.AddNewSrgbClr();
                     clr.val = (/*setter*/xlsColor.rgb);
                 }
-                else if (xlsColor.IsSetIndexed())
+                else if(xlsColor.IsSetIndexed())
                 {
                     HSSFColor indexed = (HSSFColor)HSSFColor.GetIndexHash()[((int)xlsColor.indexed)];
-                    if (indexed != null)
+                    if(indexed != null)
                     {
                         byte[] rgb = new byte[3];
-                        rgb[0] = (byte)indexed.GetTriplet()[0];
-                        rgb[1] = (byte)indexed.GetTriplet()[1];
-                        rgb[2] = (byte)indexed.GetTriplet()[2];
+                        rgb[0] = (byte) indexed.GetTriplet()[0];
+                        rgb[1] = (byte) indexed.GetTriplet()[1];
+                        rgb[2] = (byte) indexed.GetTriplet()[2];
                         CT_SRgbColor clr = fill.IsSetSrgbClr() ? fill.srgbClr : fill.AddNewSrgbClr();
                         clr.val = (/*setter*/rgb);
                     }

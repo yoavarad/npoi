@@ -16,10 +16,11 @@
 ==================================================================== */
 
 using NPOI.OpenXmlFormats.Spreadsheet;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.XSSF.Model;
-using NPOI.XSSF.UserModel.Helpers;
 using NPOI.XSSF.UserModel;
+using NPOI.XSSF.UserModel.Helpers;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 
 namespace TestCases.XSSF.UserModel.Helpers
@@ -275,8 +276,8 @@ namespace TestCases.XSSF.UserModel.Helpers
         private CT_Col createCol(int min, int max)
         {
             CT_Col col = new CT_Col();
-            col.min = (uint)(min);
-            col.max = (uint)(max);
+            col.min = (uint) (min);
+            col.max = (uint) (max);
             return col;
         }
 
@@ -385,11 +386,11 @@ namespace TestCases.XSSF.UserModel.Helpers
         {
             int count;
             count = 0;
-            for (int i = 0; i < worksheet.sizeOfColsArray(); i++)
+            for(int i = 0; i < worksheet.sizeOfColsArray(); i++)
             {
-                for (int y = 0; y < worksheet.GetColsArray(i).sizeOfColArray(); y++)
+                for(int y = 0; y < worksheet.GetColsArray(i).sizeOfColArray(); y++)
                 {
-                    for (long k = worksheet.GetColsArray(i).GetColArray(y).min; k <= worksheet
+                    for(long k = worksheet.GetColsArray(i).GetColArray(y).min; k <= worksheet
                             .GetColsArray(i).GetColArray(y).max; k++)
                     {
                         count++;
@@ -400,4 +401,3 @@ namespace TestCases.XSSF.UserModel.Helpers
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -27,13 +27,13 @@ namespace NPOI.SS.Formula.Functions
     {
         public static double ConvertToDecimal(String value, int base1, int maxNumberOfPlaces)
         {
-            if (string.IsNullOrEmpty(value))
+            if(string.IsNullOrEmpty(value))
             {
                 return 0.0;
             }
 
             long stringLength = value.Length;
-            if (stringLength > maxNumberOfPlaces)
+            if(stringLength > maxNumberOfPlaces)
             {
                 throw new ArgumentException();
             }
@@ -43,19 +43,19 @@ namespace NPOI.SS.Formula.Functions
             long signedDigit = 0;
             bool hasSignedDigit = true;
             char[] characters = value.ToCharArray();
-            foreach (char character in characters)
+            foreach(char character in characters)
             {
                 long digit;
 
-                if ('0' <= character && character <= '9')
+                if('0' <= character && character <= '9')
                 {
                     digit = character - '0';
                 }
-                else if ('A' <= character && character <= 'Z')
+                else if('A' <= character && character <= 'Z')
                 {
                     digit = 10 + (character - 'A');
                 }
-                else if ('a' <= character && character <= 'z')
+                else if('a' <= character && character <= 'z')
                 {
                     digit = 10 + (character - 'a');
                 }
@@ -64,9 +64,9 @@ namespace NPOI.SS.Formula.Functions
                     digit = base1;
                 }
 
-                if (digit < base1)
+                if(digit < base1)
                 {
-                    if (hasSignedDigit)
+                    if(hasSignedDigit)
                     {
                         hasSignedDigit = false;
                         signedDigit = digit;
@@ -80,7 +80,7 @@ namespace NPOI.SS.Formula.Functions
             }
 
             bool isNegative = (!hasSignedDigit && stringLength == maxNumberOfPlaces && (signedDigit >= base1 / 2));
-            if (isNegative)
+            if(isNegative)
             {
                 decimalValue = GetTwoComplement(base1, maxNumberOfPlaces, decimalValue);
                 decimalValue = decimalValue * -1.0;

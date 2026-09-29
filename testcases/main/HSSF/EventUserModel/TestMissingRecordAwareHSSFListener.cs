@@ -17,17 +17,16 @@
 
 namespace TestCases.HSSF.EventUserModel
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
     using NPOI.HSSF;
     using NPOI.HSSF.EventUserModel;
+    using NPOI.HSSF.EventUserModel.DummyRecord;
     using NPOI.HSSF.Record;
     using NPOI.POIFS.FileSystem;
-    using NPOI.HSSF.EventUserModel.DummyRecord;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
 
     [TestFixture]
     public class TestMissingRecordAwareHSSFListener
@@ -49,7 +48,7 @@ namespace TestCases.HSSF.EventUserModel
                 POIFSFileSystem fs = new POIFSFileSystem(is1);
                 factory.ProcessWorkbookEvents(req, fs);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
@@ -68,12 +67,13 @@ namespace TestCases.HSSF.EventUserModel
 
             // We have rows 0, 1, 2, 20 and 21
             int row0 = -1;
-            for (int i = 0; i < r.Length; i++)
+            for(int i = 0; i < r.Length; i++)
             {
-                if (r[i] is RowRecord)
+                if(r[i] is RowRecord)
                 {
                     RowRecord rr = (RowRecord)r[i];
-                    if (rr.RowNumber == 0) { row0 = i; }
+                    if(rr.RowNumber == 0)
+                    { row0 = i; }
                 }
             }
             ClassicAssert.IsTrue(row0 > -1);
@@ -95,23 +95,23 @@ namespace TestCases.HSSF.EventUserModel
 
             // Check things had the right row numbers
             RowRecord rr2;
-            rr2 = (RowRecord)r[row0 + 2];
+            rr2 = (RowRecord) r[row0 + 2];
             ClassicAssert.AreEqual(2, rr2.RowNumber);
-            rr2 = (RowRecord)r[row0 + 20];
+            rr2 = (RowRecord) r[row0 + 20];
             ClassicAssert.AreEqual(20, rr2.RowNumber);
-            rr2 = (RowRecord)r[row0 + 21];
+            rr2 = (RowRecord) r[row0 + 21];
             ClassicAssert.AreEqual(21, rr2.RowNumber);
 
             MissingRowDummyRecord mr;
-            mr = (MissingRowDummyRecord)r[row0 + 3];
+            mr = (MissingRowDummyRecord) r[row0 + 3];
             ClassicAssert.AreEqual(3, mr.RowNumber);
-            mr = (MissingRowDummyRecord)r[row0 + 4];
+            mr = (MissingRowDummyRecord) r[row0 + 4];
             ClassicAssert.AreEqual(4, mr.RowNumber);
-            mr = (MissingRowDummyRecord)r[row0 + 5];
+            mr = (MissingRowDummyRecord) r[row0 + 5];
             ClassicAssert.AreEqual(5, mr.RowNumber);
-            mr = (MissingRowDummyRecord)r[row0 + 18];
+            mr = (MissingRowDummyRecord) r[row0 + 18];
             ClassicAssert.AreEqual(18, mr.RowNumber);
-            mr = (MissingRowDummyRecord)r[row0 + 19];
+            mr = (MissingRowDummyRecord) r[row0 + 19];
             ClassicAssert.AreEqual(19, mr.RowNumber);
         }
         [Test]
@@ -121,12 +121,13 @@ namespace TestCases.HSSF.EventUserModel
 
             // Find the cell at 0,0
             int cell00 = -1;
-            for (int i = 0; i < r.Length; i++)
+            for(int i = 0; i < r.Length; i++)
             {
-                if (r[i] is LabelSSTRecord)
+                if(r[i] is LabelSSTRecord)
                 {
                     LabelSSTRecord lr = (LabelSSTRecord)r[i];
-                    if (lr.Row == 0 && lr.Column == 0) { cell00 = i; }
+                    if(lr.Row == 0 && lr.Column == 0)
+                    { cell00 = i; }
                 }
             }
             ClassicAssert.IsTrue(cell00 > -1);
@@ -208,11 +209,11 @@ namespace TestCases.HSSF.EventUserModel
             // Check the numbers of the last seen columns
             LastCellOfRowDummyRecord[] lrs = new LastCellOfRowDummyRecord[24];
             int lrscount = 0;
-            for (int i = 0; i < r.Length; i++)
+            for(int i = 0; i < r.Length; i++)
             {
-                if (r[i] is LastCellOfRowDummyRecord)
+                if(r[i] is LastCellOfRowDummyRecord)
                 {
-                    lrs[lrscount] = (LastCellOfRowDummyRecord)r[i];
+                    lrs[lrscount] = (LastCellOfRowDummyRecord) r[i];
                     lrscount++;
                 }
             }
@@ -226,7 +227,7 @@ namespace TestCases.HSSF.EventUserModel
             ClassicAssert.AreEqual(5, lrs[2].LastColumnNumber);
             ClassicAssert.AreEqual(2, lrs[2].Row);
 
-            for (int i = 3; i <= 19; i++)
+            for(int i = 3; i <= 19; i++)
             {
                 ClassicAssert.AreEqual(-1, lrs[i].LastColumnNumber);
                 ClassicAssert.AreEqual(i, lrs[i].Row);
@@ -249,12 +250,13 @@ namespace TestCases.HSSF.EventUserModel
 
             // Find the cell at 0,0
             int cell00 = -1;
-            for (int i = 0; i < r.Length; i++)
+            for(int i = 0; i < r.Length; i++)
             {
-                if (r[i] is LabelSSTRecord)
+                if(r[i] is LabelSSTRecord)
                 {
                     LabelSSTRecord lr = (LabelSSTRecord)r[i];
-                    if (lr.Row == 0 && lr.Column == 0) { cell00 = i; }
+                    if(lr.Row == 0 && lr.Column == 0)
+                    { cell00 = i; }
                 }
             }
             ClassicAssert.IsTrue(cell00 > -1);
@@ -327,21 +329,21 @@ namespace TestCases.HSSF.EventUserModel
             // Check some numbers
             MissingCellDummyRecord mc;
 
-            mc = (MissingCellDummyRecord)r[cell00 + 3];
+            mc = (MissingCellDummyRecord) r[cell00 + 3];
             ClassicAssert.AreEqual(1, mc.Row);
             ClassicAssert.AreEqual(1, mc.Column);
-            mc = (MissingCellDummyRecord)r[cell00 + 4];
+            mc = (MissingCellDummyRecord) r[cell00 + 4];
             ClassicAssert.AreEqual(1, mc.Row);
             ClassicAssert.AreEqual(2, mc.Column);
 
-            mc = (MissingCellDummyRecord)r[cell00 + 8];
+            mc = (MissingCellDummyRecord) r[cell00 + 8];
             ClassicAssert.AreEqual(2, mc.Row);
             ClassicAssert.AreEqual(1, mc.Column);
-            mc = (MissingCellDummyRecord)r[cell00 + 9];
+            mc = (MissingCellDummyRecord) r[cell00 + 9];
             ClassicAssert.AreEqual(2, mc.Row);
             ClassicAssert.AreEqual(2, mc.Column);
 
-            mc = (MissingCellDummyRecord)r[cell00 + 55];
+            mc = (MissingCellDummyRecord) r[cell00 + 55];
             ClassicAssert.AreEqual(22, mc.Row);
             ClassicAssert.AreEqual(10, mc.Column);
         }
@@ -356,9 +358,9 @@ namespace TestCases.HSSF.EventUserModel
             ReadRecords("MRExtraLines.xls");
 
             int rowCount = 0;
-            for (int i = 0; i < r.Length; i++)
+            for(int i = 0; i < r.Length; i++)
             {
-                if (r[i] is LastCellOfRowDummyRecord)
+                if(r[i] is LastCellOfRowDummyRecord)
                 {
                     LastCellOfRowDummyRecord eor = (LastCellOfRowDummyRecord)r[i];
                     ClassicAssert.AreEqual(rowCount, eor.Row);
@@ -379,31 +381,31 @@ namespace TestCases.HSSF.EventUserModel
             {
                 _records.Add(record);
 
-                if (record is MissingRowDummyRecord)
+                if(record is MissingRowDummyRecord)
                 {
                     MissingRowDummyRecord mr = (MissingRowDummyRecord)record;
                     log("Got dummy row " + mr.RowNumber);
                 }
-                if (record is MissingCellDummyRecord)
+                if(record is MissingCellDummyRecord)
                 {
                     MissingCellDummyRecord mc = (MissingCellDummyRecord)record;
                     log("Got dummy cell " + mc.Row + " " + mc.Column);
                 }
-                if (record is LastCellOfRowDummyRecord)
+                if(record is LastCellOfRowDummyRecord)
                 {
                     LastCellOfRowDummyRecord lc = (LastCellOfRowDummyRecord)record;
                     log("Got end-of row, row was " + lc.Row + ", last column was " + lc.LastColumnNumber);
                 }
 
-                if (record is BOFRecord)
+                if(record is BOFRecord)
                 {
                     BOFRecord r = (BOFRecord)record;
-                    if (r.Type == BOFRecordType.Worksheet)
+                    if(r.Type == BOFRecordType.Worksheet)
                     {
                         log("On new sheet");
                     }
                 }
-                if (record is RowRecord)
+                if(record is RowRecord)
                 {
                     RowRecord rr = (RowRecord)record;
                     log("Starting row #" + rr.RowNumber);
@@ -411,7 +413,7 @@ namespace TestCases.HSSF.EventUserModel
             }
             private void log(String msg)
             {
-                if (logToStdOut)
+                if(logToStdOut)
                 {
                     Console.WriteLine(msg);
                 }
@@ -434,19 +436,19 @@ namespace TestCases.HSSF.EventUserModel
             Record[] rr = r;
             int eorCount = 0;
             int sfrCount = 0;
-            for (int i = 0; i < rr.Length; i++)
+            for(int i = 0; i < rr.Length; i++)
             {
                 Record record = rr[i];
-                if (record is SharedFormulaRecord)
+                if(record is SharedFormulaRecord)
                 {
                     sfrCount++;
                 }
-                if (record is LastCellOfRowDummyRecord)
+                if(record is LastCellOfRowDummyRecord)
                 {
                     eorCount++;
                 }
             }
-            if (eorCount == 2)
+            if(eorCount == 2)
             {
                 throw new AssertionException("Identified bug 45672");
             }
@@ -469,31 +471,31 @@ namespace TestCases.HSSF.EventUserModel
             int eorCount = 0;
             int mbrCount = 0;
             int brCount = 0;
-            for (int i = 0; i < rr.Length; i++)
+            for(int i = 0; i < rr.Length; i++)
             {
                 Record record = rr[i];
-                if (record is MulBlankRecord)
+                if(record is MulBlankRecord)
                 {
                     mbrCount++;
                 }
-                if (record is BlankRecord)
+                if(record is BlankRecord)
                 {
                     brCount++;
                 }
-                if (record is LastCellOfRowDummyRecord)
+                if(record is LastCellOfRowDummyRecord)
                 {
                     eorCount++;
                 }
             }
-            if (mbrCount > 0)
+            if(mbrCount > 0)
             {
                 throw new AssertionException("Identified bug 45672");
             }
-            if (brCount < 20)
+            if(brCount < 20)
             {
                 throw new AssertionException("Identified bug 45672");
             }
-            if (eorCount != 2)
+            if(eorCount != 2)
             {
                 throw new AssertionException("Identified bug 45672");
             }
@@ -506,14 +508,14 @@ namespace TestCases.HSSF.EventUserModel
             Record[] rr = r;
             int missingCount = 0;
             int lastCount = 0;
-            for (int i = 0; i < rr.Length; i++)
+            for(int i = 0; i < rr.Length; i++)
             {
                 Record record = rr[i];
-                if (record is MissingCellDummyRecord)
+                if(record is MissingCellDummyRecord)
                 {
                     missingCount++;
                 }
-                if (record is LastCellOfRowDummyRecord)
+                if(record is LastCellOfRowDummyRecord)
                 {
                     lastCount++;
                 }

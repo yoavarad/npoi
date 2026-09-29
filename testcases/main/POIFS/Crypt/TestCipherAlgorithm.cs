@@ -1,7 +1,8 @@
-﻿using System;
 using NPOI;
 using NPOI.POIFS.Crypt;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 
 namespace TestCases.POIFS.Crypt
 {
@@ -13,7 +14,7 @@ namespace TestCases.POIFS.Crypt
         {
             ClassicAssert.AreEqual(128, CipherAlgorithm.aes128.defaultKeySize);
 
-            foreach (CipherAlgorithm alg in CipherAlgorithm.Values)
+            foreach(CipherAlgorithm alg in CipherAlgorithm.Values)
             {
                 ClassicAssert.AreEqual(alg, CipherAlgorithm.ValueOf(alg.ToString()));
             }
@@ -26,7 +27,7 @@ namespace TestCases.POIFS.Crypt
                 CipherAlgorithm.FromEcmaId(0);
                 Assert.Fail("Should throw exception");
             }
-            catch (EncryptedDocumentException)
+            catch(EncryptedDocumentException)
             {
                 // expected
             }
@@ -36,7 +37,7 @@ namespace TestCases.POIFS.Crypt
                 CipherAlgorithm.FromXmlId("AES", 1);
                 Assert.Fail("Should throw exception");
             }
-            catch (EncryptedDocumentException)
+            catch(EncryptedDocumentException)
             {
                 // expected
             }
@@ -46,7 +47,7 @@ namespace TestCases.POIFS.Crypt
                 CipherAlgorithm.FromXmlId("RC1", 0x40);
                 Assert.Fail("Should throw exception");
             }
-            catch (EncryptedDocumentException)
+            catch(EncryptedDocumentException)
             {
                 // expected
             }

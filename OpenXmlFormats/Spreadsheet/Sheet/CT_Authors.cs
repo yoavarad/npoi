@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,12 +30,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public void Insert(int index, string author)
         {
-            if (null == authorField) { authorField = new List<string>(); }
+            if(null == authorField)
+            { authorField = new List<string>(); }
             authorField.Insert(index, author);
         }
         public void AddAuthor(string name)
         {
-            if (null == authorField) { authorField = new List<string>(); }
+            if(null == authorField)
+            { authorField = new List<string>(); }
             authorField.Add(name);
         }
         //[XmlArray("authors", Order = 0)] // - encapsulates the following items, but the outer element already provides the container.
@@ -54,13 +56,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Authors Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Authors ctObj = new CT_Authors();
             ctObj.author = new List<String>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "author")
+                if(childNode.LocalName == "author")
                     ctObj.author.Add(childNode.InnerText);
             }
             return ctObj;
@@ -72,9 +74,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.author != null)
+            if(this.author != null)
             {
-                foreach (String x in this.author)
+                foreach(String x in this.author)
                 {
                     sw.Write("<author>");
                     sw.Write(XmlHelper.EncodeXml(x));

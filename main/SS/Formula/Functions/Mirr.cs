@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -18,8 +18,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * Calculates Modified internal rate of return. Syntax is MIRR(cash_flow_values, finance_rate, reinvest_rate)
@@ -71,21 +71,21 @@ namespace NPOI.SS.Formula.Functions
             Array.Copy(values, 0, mirrValues, 0, mirrValues.Length);
 
             bool mirrValuesAreAllNegatives = true;
-            foreach (double mirrValue in mirrValues)
+            foreach(double mirrValue in mirrValues)
             {
                 mirrValuesAreAllNegatives &= mirrValue < 0;
             }
-            if (mirrValuesAreAllNegatives)
+            if(mirrValuesAreAllNegatives)
             {
                 return -1.0d;
             }
 
             bool mirrValuesAreAllPositives = true;
-            foreach (double mirrValue in mirrValues)
+            foreach(double mirrValue in mirrValues)
             {
                 mirrValuesAreAllPositives &= mirrValue > 0;
             }
-            if (mirrValuesAreAllPositives)
+            if(mirrValuesAreAllPositives)
             {
                 throw new EvaluationException(ErrorEval.DIV_ZERO);
             }
@@ -101,20 +101,20 @@ namespace NPOI.SS.Formula.Functions
             double fv = 0;
 
             int indexN = 0;
-            foreach (double anIn in in1)
+            foreach(double anIn in in1)
             {
-                if (anIn < 0)
+                if(anIn < 0)
                 {
                     pv += anIn / Math.Pow(1 + financeRate, indexN);
                 }
-                if (anIn > 0)
+                if(anIn > 0)
                 {
                     fv += anIn * Math.Pow(1 + reinvestRate, numOfYears - indexN);
                 }
                 indexN++;
             }
 
-            if (fv != 0 && pv != 0)
+            if(fv != 0 && pv != 0)
             {
                 value = Math.Pow(-fv / pv, 1d / numOfYears) - 1;
             }

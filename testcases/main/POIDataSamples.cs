@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using NPOI.HSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace TestCases
 {
@@ -44,66 +45,77 @@ namespace TestCases
 
         public static POIDataSamples GetSpreadSheetInstance()
         {
-            if (_instSpreadsheet == null) _instSpreadsheet = new POIDataSamples("spreadsheet");
+            if(_instSpreadsheet == null)
+                _instSpreadsheet = new POIDataSamples("spreadsheet");
             return _instSpreadsheet;
         }
 
         public static POIDataSamples GetDocumentInstance()
         {
-            if (_instDocument == null) _instDocument = new POIDataSamples("document");
+            if(_instDocument == null)
+                _instDocument = new POIDataSamples("document");
             return _instDocument;
         }
 
         public static POIDataSamples GetSlideShowInstance()
         {
-            if (_instSlideshow == null) _instSlideshow = new POIDataSamples("slideshow");
+            if(_instSlideshow == null)
+                _instSlideshow = new POIDataSamples("slideshow");
             return _instSlideshow;
         }
 
         public static POIDataSamples GetDiagramInstance()
         {
-            if (_instOpenxml4j == null) _instOpenxml4j = new POIDataSamples("diagram");
+            if(_instOpenxml4j == null)
+                _instOpenxml4j = new POIDataSamples("diagram");
             return _instOpenxml4j;
         }
 
         public static POIDataSamples GetOpenXML4JInstance()
         {
-            if (_instDiagram == null) _instDiagram = new POIDataSamples("openxml4j");
+            if(_instDiagram == null)
+                _instDiagram = new POIDataSamples("openxml4j");
             return _instDiagram;
         }
 
         public static POIDataSamples GetPOIFSInstance()
         {
-            if (_instPOIFS == null) _instPOIFS = new POIDataSamples("poifs");
+            if(_instPOIFS == null)
+                _instPOIFS = new POIDataSamples("poifs");
             return _instPOIFS;
         }
 
         public static POIDataSamples GetDDFInstance()
         {
-            if (_instDDF == null) _instDDF = new POIDataSamples("ddf");
+            if(_instDDF == null)
+                _instDDF = new POIDataSamples("ddf");
             return _instDDF;
         }
 
         public static POIDataSamples GetHPSFInstance()
         {
-            if (_instHPSF == null) _instHPSF = new POIDataSamples("hpsf");
+            if(_instHPSF == null)
+                _instHPSF = new POIDataSamples("hpsf");
             return _instHPSF;
         }
 
         public static POIDataSamples GetPublisherInstance()
         {
-            if (_instHPBF == null) _instHPBF = new POIDataSamples("publisher");
+            if(_instHPBF == null)
+                _instHPBF = new POIDataSamples("publisher");
             return _instHPBF;
         }
 
         public static POIDataSamples GetHSMFInstance()
         {
-            if (_instHSMF == null) _instHSMF = new POIDataSamples("hsmf");
+            if(_instHSMF == null)
+                _instHSMF = new POIDataSamples("hsmf");
             return _instHSMF;
         }
         public static POIDataSamples GetXmlDSignInstance()
         {
-            if (_instXmlDSign == null) _instXmlDSign = new POIDataSamples("xmldsign");
+            if(_instXmlDSign == null)
+                _instXmlDSign = new POIDataSamples("xmldsign");
             return _instXmlDSign;
         }
 
@@ -125,13 +137,13 @@ namespace TestCases
 
             String dataDirName = TestContext.Parameters[TEST_PROPERTY];
 
-            if (dataDirName == null)
+            if(dataDirName == null)
                 throw new Exception("Must set system property '"
                         + TEST_PROPERTY
                         + "' before running tests");
 
             string dataDir = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory,dataDirName, _moduleDir));
-            if (!Directory.Exists(dataDir))
+            if(!Directory.Exists(dataDir))
             {
                 throw new IOException("Data dir '" + dataDir
                         + "' specified by system property '"
@@ -147,19 +159,19 @@ namespace TestCases
             get { return _resolvedDataDir; }
         }
 
-    /**
-* Opens a sample file from the standard HSSF test data directory
-* 
-* @return an Open <c>Stream</c> for the specified sample file
+        /**
+    * Opens a sample file from the standard HSSF test data directory
+    * 
+    * @return an Open <c>Stream</c> for the specified sample file
 */
-    public Stream OpenResourceAsStream(String sampleFileName)
+        public Stream OpenResourceAsStream(String sampleFileName)
         {
             Initialise();
 
-            if (_sampleDataIsAvaliableOnClassPath)
+            if(_sampleDataIsAvaliableOnClassPath)
             {
                 Stream result = OpenClasspathResource(sampleFileName);
-                if (result == null)
+                if(result == null)
                 {
                     throw new Exception("specified test sample file '" + sampleFileName
                             + "' not found on the classpath");
@@ -168,7 +180,7 @@ namespace TestCases
                 // wrap to avoid temp warning method about auto-closing input stream
                 return new NonSeekableStream(result);
             }
-            if (_resolvedDataDir == "")
+            if(_resolvedDataDir == "")
             {
                 throw new Exception("Must set system property '"
                         + TEST_PROPERTY
@@ -176,7 +188,7 @@ namespace TestCases
             }
 
 
-            if (!File.Exists(_resolvedDataDir + sampleFileName))
+            if(!File.Exists(_resolvedDataDir + sampleFileName))
             {
                 throw new Exception("Sample file '" + sampleFileName
                         + "' not found in data dir '" + _resolvedDataDir + "'");
@@ -188,7 +200,7 @@ namespace TestCases
             {
                 return new FileStream(_resolvedDataDir + sampleFileName, FileMode.Open, FileAccess.Read);
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
                 throw;
             }
@@ -197,7 +209,7 @@ namespace TestCases
         public FileInfo GetFileInfo(String sampleFileName)
         {
             string path = _resolvedDataDir + sampleFileName;
-            if (!File.Exists(path))
+            if(!File.Exists(path))
             {
                 throw new Exception("Sample file '" + sampleFileName
                         + "' not found in data dir '" + _resolvedDataDir + "'");
@@ -214,7 +226,7 @@ namespace TestCases
         public FileStream GetFile(String sampleFileName)
         {
             string path = _resolvedDataDir+ sampleFileName;
-            if (!File.Exists(path))
+            if(!File.Exists(path))
             {
                 throw new Exception("Sample file '" + sampleFileName
                         + "' not found in data dir '" + _resolvedDataDir + "'");
@@ -231,7 +243,7 @@ namespace TestCases
             //{
             //    throw new RuntimeException(e);
             //}
-            return new FileStream(path,FileMode.OpenOrCreate);
+            return new FileStream(path, FileMode.OpenOrCreate);
         }
         public string[] GetFiles()
         {
@@ -253,10 +265,10 @@ namespace TestCases
                 Stream fis = OpenResourceAsStream(fileName);
 
                 byte[] buf = new byte[512];
-                while (true)
+                while(true)
                 {
                     int bytesRead = fis.Read(buf, 0, buf.Length);
-                    if (bytesRead < 1)
+                    if(bytesRead < 1)
                     {
                         break;
                     }
@@ -264,7 +276,7 @@ namespace TestCases
                 }
                 fis.Close();
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }

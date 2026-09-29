@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Text;
 using NPOI.Util;
+using System.Text;
 
 namespace NPOI.HSSF.Record.Chart
 {
@@ -98,7 +98,7 @@ namespace NPOI.HSSF.Record.Chart
         public int Start
         {
             get { return field_1_anStart; }
-            set { field_1_anStart = (short)value; }
+            set { field_1_anStart = (short) value; }
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace NPOI.HSSF.Record.Chart
         public int Dount
         {
             get { return field_2_pcDonut; }
-            set { field_2_pcDonut = (short)value; }
+            set { field_2_pcDonut = (short) value; }
         }
 
         /// <summary>

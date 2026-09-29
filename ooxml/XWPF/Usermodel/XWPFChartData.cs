@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC;
 using System;
 using System.IO;
 

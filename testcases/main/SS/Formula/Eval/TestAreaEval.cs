@@ -17,11 +17,12 @@
 
 namespace TestCases.SS.Formula.Eval
 {
-    using NPOI.SS.Formula.PTG;
-    using NPOI.SS.Formula.Functions;
-    using TestCases.SS.Formula.Functions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.Functions;
+    using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using TestCases.SS.Formula.Functions;
 
     /**
      * Tests for <c>AreaEval</c>
@@ -38,15 +39,15 @@ namespace TestCases.SS.Formula.Eval
             AreaPtg ptg = new AreaPtg("B2:D3");
             NumberEval one = new NumberEval(1);
             ValueEval[] values = {
-				one,
-				new NumberEval(2),
-				new NumberEval(3),
-				new NumberEval(4),
-				new NumberEval(5),
-				new NumberEval(6),
-		};
+                one,
+                new NumberEval(2),
+                new NumberEval(3),
+                new NumberEval(4),
+                new NumberEval(5),
+                new NumberEval(6),
+        };
             AreaEval ae = EvalFactory.CreateAreaEval(ptg, values);
-            if (one == ae.GetAbsoluteValue(1, 2))
+            if(one == ae.GetAbsoluteValue(1, 2))
             {
                 throw new AssertionException("Identified bug 44950 a");
             }

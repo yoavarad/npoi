@@ -36,7 +36,7 @@ namespace NPOI.HSSF.Record
        : HeaderFooterBase, ICloneable
     {
         public const short sid = 0x15;
-        public FooterRecord(string text):base(text)
+        public FooterRecord(string text) : base(text)
         {
         }
 
@@ -44,7 +44,7 @@ namespace NPOI.HSSF.Record
         /// Initializes a new instance of the <see cref="FooterRecord"/> class.
         /// </summary>
         /// <param name="in1">the RecordInputstream to Read the record from</param>
-        public FooterRecord(RecordInputStream in1):base(in1)
+        public FooterRecord(RecordInputStream in1) : base(in1)
         {
         }
 

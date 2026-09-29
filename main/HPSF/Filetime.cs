@@ -1,6 +1,6 @@
-﻿using System;
-using System.IO;
 using NPOI.Util;
+using System;
+using System.IO;
 
 namespace NPOI.HPSF
 {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -32,7 +32,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 styles.Write(sw);
             }

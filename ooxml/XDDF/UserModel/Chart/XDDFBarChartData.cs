@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,9 +16,9 @@
 ==================================================================== */
 
 
+using NPOI.OpenXmlFormats.Dml.Chart;
 using System;
 using System.Collections.Generic;
-using NPOI.OpenXmlFormats.Dml.Chart;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
@@ -45,7 +45,7 @@ namespace NPOI.XDDF.UserModel.Chart
             DefineAxes(categories, values);
         }
 
-        private void DefineAxes(Dictionary<long, XDDFChartAxis> categories, 
+        private void DefineAxes(Dictionary<long, XDDFChartAxis> categories,
             Dictionary<long, XDDFValueAxis> values)
         {
             if(chart.SizeOfAxIdArray() == 0)
@@ -61,7 +61,7 @@ namespace NPOI.XDDF.UserModel.Chart
             }
             DefineAxis(chart.GetAxIdArray(), categories, values);
         }
-        
+
         public override void SetVaryColors(bool varyColors)
         {
             if(chart.IsSetVaryColors())
@@ -80,8 +80,9 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return BarDirectionExtensions.ValueOf(chart.barDir.val);
             }
-            set { 
-                chart.barDir.val = value.ToST_BarDir(); 
+            set
+            {
+                chart.barDir.val = value.ToST_BarDir();
             }
         }
 
@@ -98,7 +99,7 @@ namespace NPOI.XDDF.UserModel.Chart
                     return BarGrouping.Standard;
                 }
             }
-            set 
+            set
             {
                 if(chart.IsSetGrouping())
                 {
@@ -124,7 +125,8 @@ namespace NPOI.XDDF.UserModel.Chart
                     return 0;
                 }
             }
-            set {
+            set
+            {
                 if(chart.IsSetGapWidth())
                 {
                     chart.gapWidth.val = (ushort) value;
@@ -231,21 +233,21 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return series.cat;
             }
-        protected override CT_NumDataSource GetNumDS()
-        {
-            return series.val;
-        }
+            protected override CT_NumDataSource GetNumDS()
+            {
+                return series.val;
+            }
 
-        public void UpdateIdXVal(long val)
-        {
-            series.idx.val = (uint)val;
-        }
+            public void UpdateIdXVal(long val)
+            {
+                series.idx.val = (uint) val;
+            }
 
-        public void UpdateOrderVal(long val)
-        {
-            series.order.val = (uint)val;
-        }
-            
+            public void UpdateOrderVal(long val)
+            {
+                series.order.val = (uint) val;
+            }
+
         }
     }
 }

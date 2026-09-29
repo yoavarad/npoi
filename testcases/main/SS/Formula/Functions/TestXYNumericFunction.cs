@@ -20,7 +20,8 @@ namespace TestCases.SS.Formula.Functions
 
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     /**
      * Tests for Excel functions SUMX2MY2(), SUMX2PY2(), SUMXMY2()
@@ -37,20 +38,20 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invoke(Function function, ValueEval xArray, ValueEval yArray)
         {
             ValueEval[] args = new ValueEval[] { xArray, yArray, };
-            return function.Evaluate(args, -1, (short)-1);
+            return function.Evaluate(args, -1, (short) -1);
         }
 
         private void Confirm(Function function, ValueEval xArray, ValueEval yArray, double expected)
         {
             ValueEval result = invoke(function, xArray, yArray);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, 0);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, 0);
         }
         private void ConfirmError(Function function, ValueEval xArray, ValueEval yArray, ErrorEval expectedError)
         {
             ValueEval result = invoke(function, xArray, yArray);
             ClassicAssert.AreEqual(typeof(ErrorEval), result.GetType());
-            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval) result).ErrorCode);
         }
 
         private void ConfirmError(ValueEval xArray, ValueEval yArray, ErrorEval expectedError)
@@ -63,18 +64,18 @@ namespace TestCases.SS.Formula.Functions
         public void TestBasic()
         {
             ValueEval[] xValues = {
-			new NumberEval(1),
-			new NumberEval(2),
-		};
+            new NumberEval(1),
+            new NumberEval(2),
+        };
             ValueEval areaEvalX = CreateAreaEval(xValues);
             Confirm(SUM_SQUARES, areaEvalX, areaEvalX, 10.0);
             Confirm(DIFF_SQUARES, areaEvalX, areaEvalX, 0.0);
             Confirm(SUM_SQUARES_OF_DIFFS, areaEvalX, areaEvalX, 0.0);
 
             ValueEval[] yValues = {
-			new NumberEval(3),
-			new NumberEval(4),
-		};
+            new NumberEval(3),
+            new NumberEval(4),
+        };
             ValueEval areaEvalY = CreateAreaEval(yValues);
             Confirm(SUM_SQUARES, areaEvalX, areaEvalY, 30.0);
             Confirm(DIFF_SQUARES, areaEvalX, areaEvalY, -20.0);
@@ -99,7 +100,7 @@ namespace TestCases.SS.Formula.Functions
         private ValueEval[] CreateMockNumberArray(int size, double value)
         {
             ValueEval[] result = new ValueEval[size];
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
             {
                 result[i] = new NumberEval(value);
             }
@@ -115,18 +116,18 @@ namespace TestCases.SS.Formula.Functions
         public void TestErrors()
         {
             ValueEval[] xValues = {
-				ErrorEval.REF_INVALID,
-				new NumberEval(2),
-		};
+                ErrorEval.REF_INVALID,
+                new NumberEval(2),
+        };
             ValueEval areaEvalX = CreateAreaEval(xValues);
             ValueEval[] yValues = {
-				new NumberEval(2),
-				ErrorEval.NULL_INTERSECTION,
-		};
+                new NumberEval(2),
+                ErrorEval.NULL_INTERSECTION,
+        };
             ValueEval areaEvalY = CreateAreaEval(yValues);
             ValueEval[] zValues = { // wrong size
 				new NumberEval(2),
-		};
+        };
             ValueEval areaEvalZ = CreateAreaEval(zValues);
 
             // if either arg is an error, that error propagates

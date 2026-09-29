@@ -18,10 +18,10 @@
 
 namespace NPOI.DDF
 {
-    using System;
-    using System.Text;
     using NPOI.Util;
+    using System;
     using System.IO;
+    using System.Text;
 
     /// <summary>
     /// @author Glen Stampoultzis
@@ -123,11 +123,11 @@ namespace NPOI.DDF
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void SetPictureData(byte[] pictureData, int offset, int length)
         {
-            if (pictureData == null)
+            if(pictureData == null)
             {
                 throw new ArgumentNullException("picture data can't be null");
             }
-            if (offset < 0 || length < 0 || pictureData.Length < offset + length)
+            if(offset < 0 || length < 0 || pictureData.Length < offset + length)
             {
                 throw new ArgumentOutOfRangeException("picture data, offset, length were out of range");
             }
@@ -145,14 +145,14 @@ namespace NPOI.DDF
             String nl = Environment.NewLine;
 
             String extraData = string.Empty;
-            using (MemoryStream b = new MemoryStream())
+            using(MemoryStream b = new MemoryStream())
             {
                 try
                 {
                     HexDump.Dump(this.field_pictureData, 0, b, 0);
                     extraData = HexDump.ToHex(b.ToArray());
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     extraData = e.ToString();
                 }

@@ -16,8 +16,8 @@
 ==================================================================== */
 
 using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.XSSF.UserModel.Extensions;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel.Extensions;
 using System;
 namespace NPOI.XSSF.UserModel
 {
@@ -75,4 +75,3 @@ namespace NPOI.XSSF.UserModel
 
     }
 }
-

@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * FormulaRecord.java
@@ -25,11 +25,11 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -66,19 +66,19 @@ namespace NPOI.HSSF.Record
          */
         public static SpecialCachedValue Create(long valueLongBits)
         {
-            if ((BIT_MARKER & valueLongBits) != BIT_MARKER)
+            if((BIT_MARKER & valueLongBits) != BIT_MARKER)
             {
                 return null;
             }
 
             byte[] result = new byte[VARIABLE_DATA_LENGTH];
             long x = valueLongBits;
-            for (int i = 0; i < VARIABLE_DATA_LENGTH; i++)
+            for(int i = 0; i < VARIABLE_DATA_LENGTH; i++)
             {
-                result[i] = (byte)x;
+                result[i] = (byte) x;
                 x >>= 8;
             }
-            switch (result[0])
+            switch(result[0])
             {
                 case STRING:
                 case BOOLEAN:
@@ -95,7 +95,8 @@ namespace NPOI.HSSF.Record
         //    System.Array.Copy(_variableData, 0, data, offset, VARIABLE_DATA_LENGTH);
         //    LittleEndian.PutUShort(data, offset + VARIABLE_DATA_LENGTH, 0xFFFF);
         //}
-        public void Serialize(ILittleEndianOutput out1) {
+        public void Serialize(ILittleEndianOutput out1)
+        {
             out1.Write(_variableData);
             out1.WriteShort(0xFFFF);
         }
@@ -112,12 +113,16 @@ namespace NPOI.HSSF.Record
             get
             {
                 int typeCode = GetTypeCode();
-                switch (typeCode)
+                switch(typeCode)
                 {
-                    case STRING: return "<string>";
-                    case BOOLEAN: return DataValue == 0 ? "FALSE" : "TRUE";
-                    case ERROR_CODE: return ErrorEval.GetText(DataValue);
-                    case EMPTY: return "<empty>";
+                    case STRING:
+                        return "<string>";
+                    case BOOLEAN:
+                        return DataValue == 0 ? "FALSE" : "TRUE";
+                    case ERROR_CODE:
+                        return ErrorEval.GetText(DataValue);
+                    case EMPTY:
+                        return "<empty>";
                 }
                 return "#error(type=" + typeCode + ")#";
             }
@@ -167,18 +172,22 @@ namespace NPOI.HSSF.Record
         public NPOI.SS.UserModel.CellType GetValueType()
         {
             int typeCode = GetTypeCode();
-            switch (typeCode)
+            switch(typeCode)
             {
-                case STRING: return NPOI.SS.UserModel.CellType.String;
-                case BOOLEAN: return NPOI.SS.UserModel.CellType.Boolean;
-                case ERROR_CODE: return NPOI.SS.UserModel.CellType.Error;
-                case EMPTY: return NPOI.SS.UserModel.CellType.String; // is this correct?
+                case STRING:
+                    return NPOI.SS.UserModel.CellType.String;
+                case BOOLEAN:
+                    return NPOI.SS.UserModel.CellType.Boolean;
+                case ERROR_CODE:
+                    return NPOI.SS.UserModel.CellType.Error;
+                case EMPTY:
+                    return NPOI.SS.UserModel.CellType.String; // is this correct?
             }
             throw new InvalidOperationException("Unexpected type id (" + typeCode + ")");
         }
         public bool GetBooleanValue()
         {
-            if (GetTypeCode() != BOOLEAN)
+            if(GetTypeCode() != BOOLEAN)
             {
                 throw new InvalidOperationException("Not a bool cached value - " + FormatValue);
             }
@@ -186,7 +195,7 @@ namespace NPOI.HSSF.Record
         }
         public int GetErrorValue()
         {
-            if (GetTypeCode() != ERROR_CODE)
+            if(GetTypeCode() != ERROR_CODE)
             {
                 throw new InvalidOperationException("Not an error cached value - " + FormatValue);
             }
@@ -248,19 +257,20 @@ namespace NPOI.HSSF.Record
          * @param in the RecordInputstream to Read the record from
          */
 
-        public FormulaRecord(RecordInputStream ris):base(ris)
+        public FormulaRecord(RecordInputStream ris) : base(ris)
         {
-                long valueLongBits  = ris.ReadLong();
-                field_5_options = ris.ReadShort();
-                specialCachedValue = SpecialCachedValue.Create(valueLongBits);
-                if (specialCachedValue == null) {
-                    field_4_value = BitConverter.Int64BitsToDouble(valueLongBits);
-                }
+            long valueLongBits  = ris.ReadLong();
+            field_5_options = ris.ReadShort();
+            specialCachedValue = SpecialCachedValue.Create(valueLongBits);
+            if(specialCachedValue == null)
+            {
+                field_4_value = BitConverter.Int64BitsToDouble(valueLongBits);
+            }
 
-                field_6_zero = ris.ReadInt();
-                int field_7_expression_len = ris.ReadShort();
+            field_6_zero = ris.ReadInt();
+            int field_7_expression_len = ris.ReadShort();
 
-                field_8_parsed_expr = NPOI.SS.Formula.Formula.Read(field_7_expression_len, ris, ris.Available());
+            field_8_parsed_expr = NPOI.SS.Formula.Formula.Read(field_7_expression_len, ris, ris.Available());
         }
         /**
          * @return <c>true</c> if this {@link FormulaRecord} is followed by a
@@ -271,7 +281,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (specialCachedValue == null)
+                if(specialCachedValue == null)
                 {
                     return false;
                 }
@@ -296,8 +306,9 @@ namespace NPOI.HSSF.Record
         public double Value
         {
             get { return field_4_value; }
-            set { 
-                field_4_value = value; 
+            set
+            {
+                field_4_value = value;
                 specialCachedValue = null;
             }
         }
@@ -354,7 +365,7 @@ namespace NPOI.HSSF.Record
 
         public Ptg[] ParsedExpression
         {
-            get { return (Ptg[])field_8_parsed_expr.Tokens; }
+            get { return (Ptg[]) field_8_parsed_expr.Tokens; }
             set { field_8_parsed_expr = NPOI.SS.Formula.Formula.Create(value); }
         }
         public NPOI.SS.Formula.Formula Formula
@@ -373,7 +384,7 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        protected override int ValueDataSize 
+        protected override int ValueDataSize
         {
             get
             {
@@ -421,22 +432,22 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (specialCachedValue == null)
+                if(specialCachedValue == null)
                 {
                     return NPOI.SS.UserModel.CellType.Numeric;
                 }
-                return (NPOI.SS.UserModel.CellType)specialCachedValue.GetValueType();
+                return (NPOI.SS.UserModel.CellType) specialCachedValue.GetValueType();
             }
         }
 
         public override bool Equals(Object obj)
         {
-            if (obj is not CellValueRecordInterface loc)
+            if(obj is not CellValueRecordInterface loc)
             {
                 return false;
             }
 
-            if ((this.Row == loc.Row)
+            if((this.Row == loc.Row)
                 && (this.Column == loc.Column))
             {
                 return true;
@@ -444,14 +455,14 @@ namespace NPOI.HSSF.Record
             return false;
         }
 
-        public override int GetHashCode ()
+        public override int GetHashCode()
         {
             return Row ^ Column;
         }
 
         protected override void SerializeValue(ILittleEndianOutput out1)
         {
-            if (specialCachedValue == null)
+            if(specialCachedValue == null)
             {
                 out1.WriteDouble(field_4_value);
             }
@@ -469,7 +480,7 @@ namespace NPOI.HSSF.Record
         protected override void AppendValueText(StringBuilder buffer)
         {
             buffer.Append("    .value           = ");
-            if (specialCachedValue == null)
+            if(specialCachedValue == null)
             {
                 buffer.Append(field_4_value).Append("\n");
             }
@@ -484,7 +495,7 @@ namespace NPOI.HSSF.Record
             buffer.Append("    .zero            = ").Append(field_6_zero).Append("\n");
 
             Ptg[] ptgs = field_8_parsed_expr.Tokens;
-            for (int k = 0; k < ptgs.Length; k++)
+            for(int k = 0; k < ptgs.Length; k++)
             {
                 buffer.Append("	 Ptg[").Append(k).Append("]=");
                 Ptg ptg = ptgs[k];

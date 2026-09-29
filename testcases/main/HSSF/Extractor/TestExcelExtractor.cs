@@ -17,17 +17,15 @@
 
 namespace TestCases.HSSF.Extractor
 {
-    using System;
-    using System.IO;
-
+    using NPOI.HSSF.Extractor;
+    using NPOI.HSSF.Record.Crypto;
     using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
-    using NPOI.HSSF.Extractor;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using TestCases.HSSF;
-
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.HSSF.Record.Crypto;
 
     [TestFixture]
     public class TestExcelExtractor
@@ -42,7 +40,7 @@ using NPOI.HSSF.Record.Crypto;
             {
                 return new ExcelExtractor(new POIFSFileSystem(is1));
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
@@ -89,7 +87,7 @@ using NPOI.HSSF.Record.Crypto;
                 "3000\t3\n" +
                 "4000\t4\n" +
                 "5000\t5\n" +
-                "Sheet2\nSheet3\n", 
+                "Sheet2\nSheet3\n",
                     extractor.Text
             );
 
@@ -328,12 +326,18 @@ using NPOI.HSSF.Record.Crypto;
             }
             finally
             {
-                if (ex != null) ex.Close();
-                if (exB != null) exB.Close();
-                if (exA != null) exA.Close();
-                if (wbB != null) wbB.Close();
-                if (wbA != null) wbA.Close();
-                if (fs != null) fs.Close();
+                if(ex != null)
+                    ex.Close();
+                if(exB != null)
+                    exB.Close();
+                if(exA != null)
+                    exA.Close();
+                if(wbB != null)
+                    wbB.Close();
+                if(wbA != null)
+                    wbA.Close();
+                if(fs != null)
+                    fs.Close();
             }
 
         }
@@ -348,7 +352,7 @@ using NPOI.HSSF.Record.Crypto;
                 "45538_classic_Footer.xls", "45538_form_Footer.xls",
                 "45538_classic_Header.xls", "45538_form_Header.xls"
             };
-            for (int i = 0; i < files.Length; i++)
+            for(int i = 0; i < files.Length; i++)
             {
                 ExcelExtractor extractor = CreateExtractor(files[i]);
                 String text = extractor.Text;
@@ -365,7 +369,7 @@ using NPOI.HSSF.Record.Crypto;
             String text = extractor.Text;
             Biff8EncryptionKey.CurrentUserPassword = (null);
 
-            POITestCase.AssertContains(text,"ZIP");
+            POITestCase.AssertContains(text, "ZIP");
             extractor.Close();
         }
 

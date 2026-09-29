@@ -1,8 +1,8 @@
-﻿using NPOI.SS.Formula.Eval;
+using Cysharp.Text;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
-using System.Text; 
-using Cysharp.Text;
+using System.Text;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -54,7 +54,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(real_num, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -63,7 +63,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 realNum = OperandResolver.CoerceValueToDouble(veText1);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -73,7 +73,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 veINum = OperandResolver.GetSingleValue(i_num, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -82,52 +82,52 @@ namespace NPOI.SS.Formula.Functions
             {
                 realINum = OperandResolver.CoerceValueToDouble(veINum);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
             String suffixValue = OperandResolver.CoerceValueToString(suffix);
-            if (suffixValue.Length == 0)
+            if(suffixValue.Length == 0)
             {
                 suffixValue = DEFAULT_SUFFIX;
             }
-            if (suffixValue.Equals(DEFAULT_SUFFIX.ToUpper()) || suffixValue.Equals(SUPPORTED_SUFFIX.ToUpper()))
+            if(suffixValue.Equals(DEFAULT_SUFFIX.ToUpper()) || suffixValue.Equals(SUPPORTED_SUFFIX.ToUpper()))
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            if (!(suffixValue.Equals(DEFAULT_SUFFIX) || suffixValue.Equals(SUPPORTED_SUFFIX)))
+            if(!(suffixValue.Equals(DEFAULT_SUFFIX) || suffixValue.Equals(SUPPORTED_SUFFIX)))
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
             using var strb = ZString.CreateStringBuilder();
-            if (realNum != 0)
+            if(realNum != 0)
             {
-                if (isDoubleAnInt(realNum))
+                if(isDoubleAnInt(realNum))
                 {
-                    strb.Append((int)realNum);
+                    strb.Append((int) realNum);
                 }
                 else
                 {
                     strb.Append(realNum);
                 }
             }
-            if (realINum != 0)
+            if(realINum != 0)
             {
-                if (strb.Length != 0)
+                if(strb.Length != 0)
                 {
-                    if (realINum > 0)
+                    if(realINum > 0)
                     {
                         strb.Append("+");
                     }
                 }
 
-                if (realINum != 1 && realINum != -1)
+                if(realINum != 1 && realINum != -1)
                 {
-                    if (isDoubleAnInt(realINum))
+                    if(isDoubleAnInt(realINum))
                     {
-                        strb.Append((int)realINum);
+                        strb.Append((int) realINum);
                     }
                     else
                     {
@@ -148,11 +148,11 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 2)
+            if(args.Length == 2)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1]);
             }
-            if (args.Length == 3)
+            if(args.Length == 3)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], args[2]);
             }

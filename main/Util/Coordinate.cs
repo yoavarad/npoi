@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 namespace NPOI.Util
 {
     public class Coords //<T> where T : INumber<T> {
-    {   
+    {
 
         /*=======+=========+=========+=========+=========+=========+=========+=========+														+*/
         /// <summary>

@@ -1,12 +1,12 @@
-﻿using System.IO;
-using System.Xml.Serialization;
+using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
     public class ChartsheetDocument
     {
-       CT_Chartsheet sheet = null;
+        CT_Chartsheet sheet = null;
 
         public ChartsheetDocument()
         {

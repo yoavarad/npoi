@@ -20,12 +20,11 @@ using System.Collections.ObjectModel;
 namespace NPOI.SS.UserModel
 {
 
-    using System;
-    using System.Collections.Generic;
-
     using NPOI.SS.Util;
-    using System.Collections;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Data;
 
     /// <summary>

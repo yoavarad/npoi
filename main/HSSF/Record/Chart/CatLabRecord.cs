@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -47,7 +47,7 @@ namespace NPOI.HSSF.Record.Chart
             at = in1.ReadShort();
             grbit = in1.ReadShort();
             // Often, but not always has an unused short at the end
-            if (in1.Available() == 0)
+            if(in1.Available() == 0)
             {
                 unused = null;
             }
@@ -83,8 +83,8 @@ namespace NPOI.HSSF.Record.Chart
             out1.WriteShort(wOffset);
             out1.WriteShort(at);
             out1.WriteShort(grbit);
-            if (unused != null)
-                out1.WriteShort((short)unused);
+            if(unused != null)
+                out1.WriteShort((short) unused);
         }
 
         public override String ToString()
@@ -97,7 +97,7 @@ namespace NPOI.HSSF.Record.Chart
             buffer.Append("    .wOffset =").Append(HexDump.ShortToHex(wOffset)).Append('\n');
             buffer.Append("    .at      =").Append(HexDump.ShortToHex(at)).Append('\n');
             buffer.Append("    .grbit   =").Append(HexDump.ShortToHex(grbit)).Append('\n');
-            buffer.Append("    .unused  =").Append(HexDump.ShortToHex((short)unused)).Append('\n');
+            buffer.Append("    .unused  =").Append(HexDump.ShortToHex((short) unused)).Append('\n');
 
             buffer.Append("[/CATLAB]\n");
             return buffer.ToString();

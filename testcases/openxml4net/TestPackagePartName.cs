@@ -16,7 +16,8 @@
 ==================================================================== */
 
 using NPOI.OpenXml4Net.OPC;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 namespace TestCases.OpenXml4Net.OPC
 {
     [TestFixture]
@@ -37,5 +38,3 @@ namespace TestCases.OpenXml4Net.OPC
     }
 
 }
-
-

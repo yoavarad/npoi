@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -27,8 +27,8 @@
  * ==============================================================*/
 
 using System;
-using System.IO;
 using System.Globalization;
+using System.IO;
 
 namespace NPOI.Util
 {
@@ -44,7 +44,7 @@ namespace NPOI.Util
         /// <param name="offset">The offset.</param>
         public LongField(int offset)
         {
-            if (offset < 0)
+            if(offset < 0)
             {
                 throw new IndexOutOfRangeException("Illegal offset: " + offset);
             }
@@ -57,7 +57,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="offset">offset of the field within its byte array</param>
         /// <param name="value">the initial value</param>
-        public LongField(int offset, long value):this(offset)
+        public LongField(int offset, long value) : this(offset)
         {
             this.Value=value;
         }
@@ -94,8 +94,8 @@ namespace NPOI.Util
         /// <value>The current value</value>
         public long Value
         {
-            get{return _value;}
-            set{_value = value;}
+            get { return _value; }
+            set { _value = value; }
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="value">value to be set</param>
         /// <param name="data">the byte array to write the value to</param>
-        public void Set(long value, byte [] data)
+        public void Set(long value, byte[] data)
         {
             this._value = value;
             WriteToBytes(data);
@@ -113,7 +113,7 @@ namespace NPOI.Util
         /// set the value from its offset into an array of bytes
         /// </summary>
         /// <param name="data">the byte array from which the value is to be read</param>
-        public void ReadFromBytes(byte [] data)
+        public void ReadFromBytes(byte[] data)
         {
             _value = LittleEndian.GetLong(data, _offset);
         }
@@ -131,7 +131,7 @@ namespace NPOI.Util
         /// write the value out to an array of bytes at the appropriate offset
         /// </summary>
         /// <param name="data">the array of bytes to which the value is to be written</param>
-        public void WriteToBytes(byte [] data)
+        public void WriteToBytes(byte[] data)
         {
             LittleEndian.PutLong(data, _offset, _value);
         }

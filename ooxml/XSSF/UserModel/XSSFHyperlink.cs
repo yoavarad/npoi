@@ -14,12 +14,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using NPOI.SS.UserModel;
 using NPOI.OpenXml4Net.OPC;
-using System;
-using NPOI.SS.Util;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using NPOI.Util;
+using System;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -60,15 +60,15 @@ namespace NPOI.XSSF.UserModel
 
             // Figure out the Hyperlink type and destination
 
-            if (_externalRel == null)
+            if(_externalRel == null)
             {
                 // If it has a location, it's internal
-                if (ctHyperlink.location != null)
+                if(ctHyperlink.location != null)
                 {
                     _type = HyperlinkType.Document;
                     _location = ctHyperlink.location;
                 }
-                else if (ctHyperlink.id != null)
+                else if(ctHyperlink.id != null)
                 {
                     throw new InvalidOperationException("The hyperlink for cell "
                             + ctHyperlink.@ref + " references relation "
@@ -84,19 +84,19 @@ namespace NPOI.XSSF.UserModel
             {
                 Uri target = _externalRel.TargetUri;
                 _location = target.OriginalString;
-                if (ctHyperlink.location != null)
+                if(ctHyperlink.location != null)
                 {
                     // URI fragment
                     _location += "#" + ctHyperlink.location;
                 }
 
                 // Try to figure out the type
-                if (_location.StartsWith("http://") || _location.StartsWith("https://")
+                if(_location.StartsWith("http://") || _location.StartsWith("https://")
                      || _location.StartsWith("ftp://"))
                 {
                     _type = HyperlinkType.Url;
                 }
-                else if (_location.StartsWith("mailto:"))
+                else if(_location.StartsWith("mailto:"))
                 {
                     _type = HyperlinkType.Email;
                 }
@@ -116,7 +116,7 @@ namespace NPOI.XSSF.UserModel
         //FIXME: change to protected if/when SXSSFHyperlink class is created
         public XSSFHyperlink(IHyperlink other)
         {
-            if (other is XSSFHyperlink xlink)
+            if(other is XSSFHyperlink xlink)
             {
                 _type = xlink.Type;
                 _location = xlink._location;
@@ -155,7 +155,7 @@ namespace NPOI.XSSF.UserModel
          */
         internal void GenerateRelationIfNeeded(PackagePart sheetPart)
         {
-            if (_externalRel == null && NeedsRelationToo())
+            if(_externalRel == null && NeedsRelationToo())
             {
                 // Generate the relation
                 PackageRelationship rel =
@@ -211,7 +211,7 @@ namespace NPOI.XSSF.UserModel
                 Validate(value);
                 _location = value;
                 //we must Set location for internal hyperlinks
-                if (_type == HyperlinkType.Document)
+                if(_type == HyperlinkType.Document)
                 {
                     this.Location = value;
                 }
@@ -220,13 +220,13 @@ namespace NPOI.XSSF.UserModel
 
         private void Validate(String address)
         {
-            switch (_type)
+            switch(_type)
             {
                 // email, path to file and url must be valid URIs
                 case HyperlinkType.Email:
                 case HyperlinkType.File:
                 case HyperlinkType.Url:
-                    if (!Uri.TryCreate(address, UriKind.RelativeOrAbsolute, out Uri uri))
+                    if(!Uri.TryCreate(address, UriKind.RelativeOrAbsolute, out Uri uri))
                         throw new ArgumentException("Address of hyperlink must be a valid URI:" + address);
                     break;
                 case HyperlinkType.Document:
@@ -293,7 +293,7 @@ namespace NPOI.XSSF.UserModel
         private CellReference buildCellReference()
         {
             String ref1 = _ctHyperlink.@ref;
-            if (ref1 == null)
+            if(ref1 == null)
             {
                 ref1 = "A1";
             }

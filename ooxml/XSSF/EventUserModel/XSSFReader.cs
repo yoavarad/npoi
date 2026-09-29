@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -66,9 +66,9 @@ namespace NPOI.XSSF.EventUserModel
             // strict OOXML likely not fully supported, see #57699
             // this code is similar to POIXMLDocumentPart.PartFromOPCPackage, but I could not combine it
             // easily due to different return values
-            if (coreDocRelationship == null)
+            if(coreDocRelationship == null)
             {
-                if (this.pkg.GetRelationshipsByType(
+                if(this.pkg.GetRelationshipsByType(
                         PackageRelationshipTypes.STRICT_CORE_DOCUMENT).GetRelationship(0) != null)
                 {
                     throw new POIXMLException("Strict OOXML isn't currently supported, please see bug #57699");
@@ -117,7 +117,7 @@ namespace NPOI.XSSF.EventUserModel
                 }
                 return styles;
             }
-            
+
         }
 
 
@@ -155,14 +155,14 @@ namespace NPOI.XSSF.EventUserModel
         {
 
             PackageRelationship rel = workbookPart.GetRelationship(relId);
-            if (rel == null)
+            if(rel == null)
             {
                 throw new ArgumentException("No Sheet found with r:id " + relId);
             }
 
             PackagePartName relName = PackagingUriHelper.CreatePartName(rel.TargetUri);
             PackagePart sheet = pkg.GetPart(relName);
-            if (sheet == null)
+            if(sheet == null)
             {
                 throw new ArgumentException("No data found for Sheet with r:id " + relId);
             }
@@ -205,7 +205,7 @@ namespace NPOI.XSSF.EventUserModel
             /// </summary>
             IEnumerator<XSSFSheetRef> sheetIterator;
 
-            
+
             /// <summary>
             /// Construct a new SheetIterator
             /// </summary>
@@ -221,10 +221,10 @@ namespace NPOI.XSSF.EventUserModel
                     sheetMap = new Dictionary<String, PackagePart>();
                     OPCPackage pkg = wb.Package;
                     ISet<String> worksheetRels = SheetRelationships;
-                    foreach (PackageRelationship rel in wb.Relationships)
+                    foreach(PackageRelationship rel in wb.Relationships)
                     {
                         String relType = rel.RelationshipType;
-                        if (worksheetRels.Contains(relType))
+                        if(worksheetRels.Contains(relType))
                         {
                             PackagePartName relName = PackagingUriHelper.CreatePartName(rel.TargetUri);
                             sheetMap.Add(rel.Id, pkg.GetPart(relName));
@@ -234,7 +234,7 @@ namespace NPOI.XSSF.EventUserModel
                     //and construct an iterator
                     sheetIterator = CreateSheetIteratorFromWB(wb).GetEnumerator();
                 }
-                catch (InvalidFormatException e)
+                catch(InvalidFormatException e)
                 {
                     throw new POIXMLException(e);
                 }
@@ -265,11 +265,11 @@ namespace NPOI.XSSF.EventUserModel
                     throw new POIXMLException(e);
                 }
                 List<XSSFSheetRef> validSheets = new List<XSSFSheetRef>();
-                foreach (XSSFSheetRef xssfSheetRef in xmlSheetRefReader.GetSheetRefs())
+                foreach(XSSFSheetRef xssfSheetRef in xmlSheetRefReader.GetSheetRefs())
                 {
                     //if there's no relationship id, silently skip the sheet
                     String sheetId = xssfSheetRef.Id;
-                    if (sheetId != null && sheetId.Length > 0)
+                    if(sheetId != null && sheetId.Length > 0)
                     {
                         validSheets.Add(xssfSheetRef);
                     }
@@ -309,7 +309,7 @@ namespace NPOI.XSSF.EventUserModel
                     PackagePart sheetPkg = sheetMap[sheetId];
                     return sheetPkg.GetInputStream();
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new POIXMLException(e);
                 }
@@ -429,7 +429,7 @@ namespace NPOI.XSSF.EventUserModel
                 throw new InvalidOperationException("Not supported");
             }
 
-           
+
         }
 
         public sealed class XSSFSheetRef
@@ -455,7 +455,7 @@ namespace NPOI.XSSF.EventUserModel
             private static String SHEET = "sheet";
             private static String ID = "id";
             private static String NAME = "name";
-            
+
             private List<XSSFSheetRef> sheetRefs = new List<XSSFSheetRef>();
 
             // read <sheet name="Sheet6" sheetId="4" r:id="rId6"/>

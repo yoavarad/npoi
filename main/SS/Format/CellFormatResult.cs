@@ -50,8 +50,8 @@ namespace NPOI.SS.Format
         /** The resulting text.  This will never be <tt>null</tt>. */
         public String Text
         {
-            get{return _text;}
-            set{_text=value;}
+            get { return _text; }
+            set { _text=value; }
         }
 
         /**
@@ -60,8 +60,8 @@ namespace NPOI.SS.Format
          */
         public SKColor TextColor
         {
-            get{return _textcolor;}
-            set{_textcolor=value;}
+            get { return _textcolor; }
+            set { _textcolor=value; }
         }
 
         /**
@@ -73,7 +73,7 @@ namespace NPOI.SS.Format
          */
         public CellFormatResult(bool applies, String text, SKColor textColor)
         {
-            if (text == null)
+            if(text == null)
                 throw new ArgumentException("CellFormatResult text may not be null");
 
             this.Applies = applies;

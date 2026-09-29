@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Shared;
+using NPOI.OpenXmlFormats.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace NPOI.XWPF.UserModel
     /// This element specifies an n-ary object, consisting of an n-ary object, a base (or operand), and optional upper and
     /// lower limits
     /// </summary>
-    public class XWPFNary:IRunBody
+    public class XWPFNary : IRunBody
     {
         private CT_Nary nary;
         private IRunBody parent;
@@ -24,19 +24,19 @@ namespace NPOI.XWPF.UserModel
             this.nary = nary;
             this.parent = p;
 
-            if (nary.e == null)
+            if(nary.e == null)
             {
                 nary.e = new CT_OMathArg();
             }
             this.e = new XWPFOMathArg(nary.e, this);
 
-            if (nary.sub == null)
+            if(nary.sub == null)
             {
                 nary.sub = new CT_OMathArg();
             }
             this.sub = new XWPFOMathArg(nary.sub, this);
 
-            if (nary.sup == null)
+            if(nary.sup == null)
             {
                 nary.sup = new CT_OMathArg();
             }
@@ -47,7 +47,7 @@ namespace NPOI.XWPF.UserModel
                 nary.naryPr = new CT_NaryPr();
             }
 
-            if (nary.naryPr.chr == null)
+            if(nary.naryPr.chr == null)
             {
                 nary.naryPr.chr = new CT_Char();
             }

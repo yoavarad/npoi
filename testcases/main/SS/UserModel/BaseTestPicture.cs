@@ -16,12 +16,13 @@
 ==================================================================== */
 
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.Util;
 using NPOI.SS.Util;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using SkiaSharp;
 using System.IO;
 using TestCases.HSSF;
-using SkiaSharp;
 
 namespace TestCases.SS.UserModel
 {
@@ -143,8 +144,3 @@ namespace TestCases.SS.UserModel
 
     }
 }
-
-
-
-
-

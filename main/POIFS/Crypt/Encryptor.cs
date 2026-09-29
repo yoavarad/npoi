@@ -15,8 +15,8 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
 using NPOI.POIFS.FileSystem;
+using System.IO;
 
 namespace NPOI.POIFS.Crypt
 {
@@ -33,11 +33,11 @@ namespace NPOI.POIFS.Crypt
         byte[] GetEncoded();
     }
 
-    public interface ISecretKey: IKey
+    public interface ISecretKey : IKey
     {
 
     }
-    public interface IPrivateKey: IKey
+    public interface IPrivateKey : IKey
     {
 
     }
@@ -80,11 +80,11 @@ namespace NPOI.POIFS.Crypt
         /// </summary>
         public static Encryptor GetInstance(EncryptionInfo info) => info.Encryptor;
 
- 		public OutputStream GetDataStream(NPOIFSFileSystem fs)
-		{
-			return GetDataStream(fs.Root);
-		}
-		
+        public OutputStream GetDataStream(NPOIFSFileSystem fs)
+        {
+            return GetDataStream(fs.Root);
+        }
+
         public OutputStream GetDataStream(OPOIFSFileSystem fs)
         {
             return GetDataStream(fs.Root);

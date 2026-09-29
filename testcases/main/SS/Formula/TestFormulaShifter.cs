@@ -18,11 +18,12 @@
 namespace TestCases.SS.Formula
 {
 
-    using NPOI.SS.Formula.PTG;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.SS.Formula;
     using NPOI.SS;
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
 
 
@@ -167,7 +168,7 @@ namespace TestCases.SS.Formula
             AreaPtg copyPtg = (AreaPtg)aptg.Copy(); // clone so we can re-use aptg in calling method
             Ptg[] ptgs = { copyPtg, };
             bool actualChanged = fs.AdjustFormula(ptgs, 0);
-            if (expectedAreaFirstRow < 0)
+            if(expectedAreaFirstRow < 0)
             {
                 ClassicAssert.AreEqual(typeof(AreaErrPtg), ptgs[0].GetType());
                 return;
@@ -190,7 +191,7 @@ namespace TestCases.SS.Formula
             bool actualChanged = fs.AdjustFormula(ptgs, 0);
 
             // DeletedAreaRef
-            if (expectedFirstRow < 0 || expectedLastRow < 0)
+            if(expectedFirstRow < 0 || expectedLastRow < 0)
             {
                 ClassicAssert.AreEqual(typeof(AreaErrPtg), ptgs[0].GetType(),
                     "Reference should have shifted off worksheet, producing #REF! error: " + ptgs[0]);
@@ -229,13 +230,13 @@ namespace TestCases.SS.Formula
 
             shifter.AdjustFormula(ptgs, -1);
 
-            ClassicAssert.AreEqual(1, ((Ref3DPtg)ptgs[0]).ExternSheetIndex,
+            ClassicAssert.AreEqual(1, ((Ref3DPtg) ptgs[0]).ExternSheetIndex,
                 "formula previously pointing to sheet 0 should now point to sheet 1");
-            ClassicAssert.AreEqual(2, ((Ref3DPtg)ptgs[1]).ExternSheetIndex,
+            ClassicAssert.AreEqual(2, ((Ref3DPtg) ptgs[1]).ExternSheetIndex,
                 "formula previously pointing to sheet 1 should now point to sheet 2");
-            ClassicAssert.AreEqual(0, ((Ref3DPtg)ptgs[2]).ExternSheetIndex,
+            ClassicAssert.AreEqual(0, ((Ref3DPtg) ptgs[2]).ExternSheetIndex,
                 "formula previously pointing to sheet 2 should now point to sheet 0");
-            ClassicAssert.AreEqual(3, ((Ref3DPtg)ptgs[3]).ExternSheetIndex,
+            ClassicAssert.AreEqual(3, ((Ref3DPtg) ptgs[3]).ExternSheetIndex,
                 "formula previously pointing to sheet 3 should be unchanged");
         }
 
@@ -253,13 +254,13 @@ namespace TestCases.SS.Formula
         };
             shifter.AdjustFormula(ptgs, -1);
 
-            ClassicAssert.AreEqual(0, ((Ref3DPtg)ptgs[0]).ExternSheetIndex,
+            ClassicAssert.AreEqual(0, ((Ref3DPtg) ptgs[0]).ExternSheetIndex,
                 "formula previously pointing to sheet 0 should be unchanged");
-            ClassicAssert.AreEqual(2, ((Ref3DPtg)ptgs[1]).ExternSheetIndex,
+            ClassicAssert.AreEqual(2, ((Ref3DPtg) ptgs[1]).ExternSheetIndex,
                 "formula previously pointing to sheet 1 should now point to sheet 2");
-            ClassicAssert.AreEqual(1, ((Ref3DPtg)ptgs[2]).ExternSheetIndex,
+            ClassicAssert.AreEqual(1, ((Ref3DPtg) ptgs[2]).ExternSheetIndex,
                 "formula previously pointing to sheet 2 should now point to sheet 1");
-            ClassicAssert.AreEqual(3, ((Ref3DPtg)ptgs[3]).ExternSheetIndex,
+            ClassicAssert.AreEqual(3, ((Ref3DPtg) ptgs[3]).ExternSheetIndex,
                 "formula previously pointing to sheet 3 should be unchanged");
         }
 
@@ -271,7 +272,7 @@ namespace TestCases.SS.Formula
                 FormulaShifter.CreateForRowShift(1, "name", 1, 2, 0, SpreadsheetVersion.EXCEL97);
                 Assert.Fail("Should catch exception here");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected here
             }
@@ -280,7 +281,7 @@ namespace TestCases.SS.Formula
                 FormulaShifter.CreateForRowShift(1, "name", 2, 1, 2, SpreadsheetVersion.EXCEL97);
                 Assert.Fail("Should catch exception here");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected here
             }

@@ -36,13 +36,13 @@ namespace NPOI.SS.Formula.Functions
             {
                 b = EvaluateFirstArg(arg0, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
-            if (b)
+            if(b)
             {
-                if (arg1 == MissingArgEval.instance)
+                if(arg1 == MissingArgEval.instance)
                 {
                     return BlankEval.instance;
                 }
@@ -59,19 +59,19 @@ namespace NPOI.SS.Formula.Functions
             {
                 b = EvaluateFirstArg(arg0, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
-            if (b)
+            if(b)
             {
-                if (arg1 == MissingArgEval.instance)
+                if(arg1 == MissingArgEval.instance)
                 {
                     return BlankEval.instance;
                 }
                 return arg1;
             }
-            if (arg2 == MissingArgEval.instance)
+            if(arg2 == MissingArgEval.instance)
             {
                 return BlankEval.instance;
             }
@@ -82,11 +82,11 @@ namespace NPOI.SS.Formula.Functions
         {
             ValueEval ve = OperandResolver.GetSingleValue(arg, srcCellRow, srcCellCol);
             bool? b = OperandResolver.CoerceValueToBoolean(ve, false);
-            if (b == null)
+            if(b == null)
             {
                 return false;
             }
-            return (bool)b;
+            return (bool) b;
         }
     }
 }

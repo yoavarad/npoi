@@ -1,4 +1,4 @@
-﻿namespace NPOI.POIFS.Crypt.XOR
+namespace NPOI.POIFS.Crypt.XOR
 {
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.FileSystem;
@@ -32,18 +32,18 @@
         {
             int keyComp = CryptoFunctions.CreateXorKey1(password);
             int verifierComp = CryptoFunctions.CreateXorVerifier1(password);
-            
+
             XOREncryptionVerifier ver = (XOREncryptionVerifier)builder.GetVerifier();
             int encKey = ver.GetEncryptedKey();
             int encVerifier = ver.GetEncryptedVerifier();
-            
-            if (keyComp == encKey && verifierComp == encVerifier)
+
+            if(keyComp == encKey && verifierComp == encVerifier)
             {
                 byte[] xorArray = CryptoFunctions.CreateXorArray1(password);
                 SetSecretKey(new SecretKeySpec(xorArray, "XOR"));
                 return true;
             }
-            
+
             return false;
         }
 
@@ -51,7 +51,7 @@
         {
             // XOR encryption doesn't use traditional ciphers, but we need to return something
             // The actual XOR logic is handled in the stream processing
-            if (cipher == null)
+            if(cipher == null)
             {
                 cipher = new XORCipher(skey, encryptMode);
             }
@@ -73,7 +73,7 @@
 
         public override long GetLength()
         {
-            if (_length == -1L)
+            if(_length == -1L)
             {
                 throw new InvalidOperationException("Decryptor.DataStream was not called");
             }
@@ -102,9 +102,9 @@
             public byte[] Update(byte[] input, int inputOffset, int inputLen, byte[] output)
             {
                 byte[] xorArray = secretKey.GetEncoded();
-                for (int i = 0; i < inputLen; i++)
+                for(int i = 0; i < inputLen; i++)
                 {
-                    output[i] = (byte)(input[inputOffset + i] ^ xorArray[i % xorArray.Length]);
+                    output[i] = (byte) (input[inputOffset + i] ^ xorArray[i % xorArray.Length]);
                 }
                 return output;
             }

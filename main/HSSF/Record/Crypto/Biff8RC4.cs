@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Record.Crypto
 {
-    using System;
     using NPOI.HSSF.Record;
+    using System;
 
     /**
      * Used for both encrypting and decrypting BIFF8 streams. The internal
@@ -46,7 +46,7 @@ namespace NPOI.HSSF.Record.Crypto
 
         public Biff8RC4(int InitialOffset, Biff8EncryptionKey key)
         {
-            if (InitialOffset >= RC4_REKEYING_INTERVAL)
+            if(InitialOffset >= RC4_REKEYING_INTERVAL)
             {
                 throw new Exception("InitialOffset (" + InitialOffset + ")>"
                         + RC4_REKEYING_INTERVAL + " not supported yet");
@@ -55,7 +55,7 @@ namespace NPOI.HSSF.Record.Crypto
             _streamPos = 0;
             RekeyForNextBlock();
             _streamPos = InitialOffset;
-            for (int i = InitialOffset; i > 0; i--)
+            for(int i = InitialOffset; i > 0; i--)
             {
                 _rc4.Output();
             }
@@ -71,13 +71,13 @@ namespace NPOI.HSSF.Record.Crypto
 
         private int GetNextRC4Byte()
         {
-            if (_streamPos >= _nextRC4BlockStart)
+            if(_streamPos >= _nextRC4BlockStart)
             {
                 RekeyForNextBlock();
             }
             byte mask = _rc4.Output();
             _streamPos++;
-            if (_shouldSkipEncryptionOnCurrentRecord)
+            if(_shouldSkipEncryptionOnCurrentRecord)
             {
                 return 0;
             }
@@ -96,7 +96,7 @@ namespace NPOI.HSSF.Record.Crypto
          */
         private static bool IsNeverEncryptedRecord(int sid)
         {
-            switch (sid)
+            switch(sid)
             {
                 case BOFRecord.sid:
                 // sheet BOFs for sure
@@ -132,7 +132,7 @@ namespace NPOI.HSSF.Record.Crypto
         {
             int nLeftInBlock;
             nLeftInBlock = _nextRC4BlockStart - _streamPos;
-            if (pLen <= nLeftInBlock)
+            if(pLen <= nLeftInBlock)
             {
                 // simple case - this read does not cross key blocks
                 _rc4.Encrypt(buf, pOffSet, pLen);
@@ -144,9 +144,9 @@ namespace NPOI.HSSF.Record.Crypto
             int len = pLen;
 
             // start by using the rest of the current block
-            if (len > nLeftInBlock)
+            if(len > nLeftInBlock)
             {
-                if (nLeftInBlock > 0)
+                if(nLeftInBlock > 0)
                 {
                     _rc4.Encrypt(buf, offset, nLeftInBlock);
                     _streamPos += nLeftInBlock;
@@ -156,7 +156,7 @@ namespace NPOI.HSSF.Record.Crypto
                 RekeyForNextBlock();
             }
             // all full blocks following
-            while (len > RC4_REKEYING_INTERVAL)
+            while(len > RC4_REKEYING_INTERVAL)
             {
                 _rc4.Encrypt(buf, offset, RC4_REKEYING_INTERVAL);
                 _streamPos += RC4_REKEYING_INTERVAL;
@@ -172,7 +172,7 @@ namespace NPOI.HSSF.Record.Crypto
         public int XorByte(int rawVal)
         {
             int mask = GetNextRC4Byte();
-            return (byte)(rawVal ^ mask);
+            return (byte) (rawVal ^ mask);
         }
 
         public int Xorshort(int rawVal)
@@ -216,4 +216,3 @@ namespace NPOI.HSSF.Record.Crypto
         }
     }
 }
-

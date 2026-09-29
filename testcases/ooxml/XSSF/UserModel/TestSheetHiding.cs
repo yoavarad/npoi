@@ -15,9 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using TestCases.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.XSSF;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -28,11 +29,10 @@ namespace TestCases.XSSF.UserModel
     [TestFixture]
     public class TestSheetHiding : BaseTestSheetHiding
     {
-        public TestSheetHiding():base(XSSFITestDataProvider.instance,
+        public TestSheetHiding() : base(XSSFITestDataProvider.instance,
                     "TwoSheetsOneHidden.xlsx", "TwoSheetsNoneHidden.xlsx")
         {
-            
+
         }
     }
 }
-

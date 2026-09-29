@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -70,18 +70,18 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.showHorizontalScrollField = true;
             this.showVerticalScrollField = true;
             this.showSheetTabsField = true;
-            this.tabRatioField = ((uint)(600));
-            this.firstSheetField = ((uint)(0));
-            this.activeTabField = ((uint)(0));
+            this.tabRatioField = ((uint) (600));
+            this.firstSheetField = ((uint) (0));
+            this.activeTabField = ((uint) (0));
             this.autoFilterDateGroupingField = true;
         }
         public static CT_BookView Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BookView ctObj = new CT_BookView();
-            if (node.Attributes["visibility"] != null)
-                ctObj.visibility = (ST_Visibility)Enum.Parse(typeof(ST_Visibility), node.Attributes["visibility"].Value);
+            if(node.Attributes["visibility"] != null)
+                ctObj.visibility = (ST_Visibility) Enum.Parse(typeof(ST_Visibility), node.Attributes["visibility"].Value);
             ctObj.minimized = XmlHelper.ReadBool(node.Attributes["minimized"]);
             ctObj.showHorizontalScroll = XmlHelper.ReadBool(node.Attributes["showHorizontalScroll"], true);
             ctObj.showVerticalScroll = XmlHelper.ReadBool(node.Attributes["showVerticalScroll"], true);
@@ -102,9 +102,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.firstSheet = XmlHelper.ReadUInt(node.Attributes["firstSheet"]);
             ctObj.activeTab = XmlHelper.ReadUInt(node.Attributes["activeTab"]);
             ctObj.autoFilterDateGrouping = XmlHelper.ReadBool(node.Attributes["autoFilterDateGrouping"], true);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -118,9 +118,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             if(this.visibility!= ST_Visibility.visible)
                 XmlHelper.WriteAttribute(sw, "visibility", this.visibility.ToString());
             XmlHelper.WriteAttribute(sw, "minimized", this.minimized, false);
-            if (!this.showHorizontalScroll)
+            if(!this.showHorizontalScroll)
                 XmlHelper.WriteAttribute(sw, "showHorizontalScroll", this.showHorizontalScroll);
-            if (!this.showVerticalScroll)
+            if(!this.showVerticalScroll)
                 XmlHelper.WriteAttribute(sw, "showVerticalScroll", this.showVerticalScroll);
             if(!this.showSheetTabs)
                 XmlHelper.WriteAttribute(sw, "showSheetTabs", this.showSheetTabs);
@@ -133,9 +133,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "tabRatio", this.tabRatio);
             XmlHelper.WriteAttribute(sw, "firstSheet", this.firstSheet);
             XmlHelper.WriteAttribute(sw, "activeTab", this.activeTab);
-            if (!this.autoFilterDateGrouping)
+            if(!this.autoFilterDateGrouping)
                 XmlHelper.WriteAttribute(sw, "autoFilterDateGrouping", this.autoFilterDateGrouping);
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
                 sw.Write('>');
                 this.extLst.Write(sw, "extLst");
@@ -408,13 +408,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private List<CT_BookView> workbookViewField;
         public static CT_BookViews Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BookViews ctObj = new CT_BookViews();
             ctObj.workbookView = new List<CT_BookView>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "workbookView")
+                if(childNode.LocalName == "workbookView")
                     ctObj.workbookView.Add(CT_BookView.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -426,9 +426,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.workbookView != null)
+            if(this.workbookView != null)
             {
-                foreach (CT_BookView x in this.workbookView)
+                foreach(CT_BookView x in this.workbookView)
                 {
                     x.Write(sw, "workbookView");
                 }
@@ -442,7 +442,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BookView AddNewWorkbookView()
         {
-            if (this.workbookViewField == null)
+            if(this.workbookViewField == null)
                 this.workbookViewField = new List<CT_BookView>();
             CT_BookView bv = new CT_BookView();
             this.workbookViewField.Add(bv);
@@ -450,7 +450,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BookView GetWorkbookViewArray(int index)
         {
-            if (this.workbookViewField == null)
+            if(this.workbookViewField == null)
                 return null;
             return this.workbookViewField[index];
         }
@@ -542,7 +542,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.showSheetTabsField = true;
             this.xWindowField = 0;
             this.yWindowField = 0;
-            this.tabRatioField = ((uint)(600));
+            this.tabRatioField = ((uint) (600));
             this.showFormulaBarField = true;
             this.showStatusbarField = true;
             this.showCommentsField = ST_Comments.commIndicator;
@@ -550,7 +550,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_CustomWorkbookView Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CustomWorkbookView ctObj = new CT_CustomWorkbookView();
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
@@ -576,13 +576,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.activeSheetId = XmlHelper.ReadUInt(node.Attributes["activeSheetId"]);
             ctObj.showFormulaBar = XmlHelper.ReadBool(node.Attributes["showFormulaBar"]);
             ctObj.showStatusbar = XmlHelper.ReadBool(node.Attributes["showStatusbar"]);
-            if (node.Attributes["showComments"] != null)
-                ctObj.showComments = (ST_Comments)Enum.Parse(typeof(ST_Comments), node.Attributes["showComments"].Value);
-            if (node.Attributes["showObjects"] != null)
-                ctObj.showObjects = (ST_Objects)Enum.Parse(typeof(ST_Objects), node.Attributes["showObjects"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["showComments"] != null)
+                ctObj.showComments = (ST_Comments) Enum.Parse(typeof(ST_Comments), node.Attributes["showComments"].Value);
+            if(node.Attributes["showObjects"] != null)
+                ctObj.showObjects = (ST_Objects) Enum.Parse(typeof(ST_Objects), node.Attributes["showObjects"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -618,7 +618,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "showComments", this.showComments.ToString());
             XmlHelper.WriteAttribute(sw, "showObjects", this.showObjects.ToString());
             sw.Write('>');
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement(nodeName);
         }
@@ -963,13 +963,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private List<CT_CustomWorkbookView> customWorkbookViewField;
         public static CT_CustomWorkbookViews Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CustomWorkbookViews ctObj = new CT_CustomWorkbookViews();
             ctObj.customWorkbookView = new List<CT_CustomWorkbookView>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "customWorkbookView")
+                if(childNode.LocalName == "customWorkbookView")
                     ctObj.customWorkbookView.Add(CT_CustomWorkbookView.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -981,9 +981,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.customWorkbookView != null)
+            if(this.customWorkbookView != null)
             {
-                foreach (CT_CustomWorkbookView x in this.customWorkbookView)
+                foreach(CT_CustomWorkbookView x in this.customWorkbookView)
                 {
                     x.Write(sw, "customWorkbookView");
                 }

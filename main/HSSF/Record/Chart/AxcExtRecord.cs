@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     public enum DateUnit
     {
@@ -109,7 +109,7 @@ namespace NPOI.HSSF.Record.Chart
                 .Append(" (").Append(MajorInterval).Append(" )");
             buffer.Append(Environment.NewLine);
             buffer.Append("    .duMajor            = ")
-                .Append("0x").Append(HexDump.ToHex((short)MajorUnit))
+                .Append("0x").Append(HexDump.ToHex((short) MajorUnit))
                 .Append(" (").Append(MajorUnit).Append(" )");
             buffer.Append(Environment.NewLine);
             buffer.Append("    .catMinor       = ")
@@ -117,11 +117,11 @@ namespace NPOI.HSSF.Record.Chart
                 .Append(" (").Append(MinorInterval).Append(" )");
             buffer.Append(Environment.NewLine);
             buffer.Append("    .duMinor            = ")
-                .Append("0x").Append(HexDump.ToHex((short)MinorUnit))
+                .Append("0x").Append(HexDump.ToHex((short) MinorUnit))
                 .Append(" (").Append(MinorUnit).Append(" )");
             buffer.Append(Environment.NewLine);
             buffer.Append("    .duBase             = ")
-                .Append("0x").Append(HexDump.ToHex((short)BaseUnit))
+                .Append("0x").Append(HexDump.ToHex((short) BaseUnit))
                 .Append(" (").Append(BaseUnit).Append(" )");
             buffer.Append(Environment.NewLine);
             buffer.Append("    .catCrossDate        = ")
@@ -199,7 +199,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_catMin;
             }
-            set 
+            set
             {
                 this.field_1_catMin = value;
             }
@@ -214,7 +214,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_catMax;
             }
-            set 
+            set
             {
                 this.field_2_catMax = value;
             }
@@ -234,7 +234,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_3_catMajor;
             }
-            set 
+            set
             {
                 this.field_3_catMajor = value;
             }
@@ -252,11 +252,11 @@ namespace NPOI.HSSF.Record.Chart
         {
             get
             {
-                return (DateUnit)field_4_duMajor;
+                return (DateUnit) field_4_duMajor;
             }
             set
             {
-                this.field_4_duMajor = (short)value;
+                this.field_4_duMajor = (short) value;
             }
         }
 
@@ -287,11 +287,11 @@ namespace NPOI.HSSF.Record.Chart
         {
             get
             {
-                return (DateUnit)field_6_duMinor;
+                return (DateUnit) field_6_duMinor;
             }
-            set 
+            set
             {
-                this.field_6_duMinor = (short)value;
+                this.field_6_duMinor = (short) value;
             }
         }
 
@@ -307,11 +307,11 @@ namespace NPOI.HSSF.Record.Chart
         {
             get
             {
-                return (DateUnit)field_7_duBase;
+                return (DateUnit) field_7_duBase;
             }
-            set 
+            set
             {
-                this.field_7_duBase = (short)value;
+                this.field_7_duBase = (short) value;
             }
         }
 
@@ -329,7 +329,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_8_catCrossDate;
             }
-            set 
+            set
             {
                 this.field_8_catCrossDate = value;
             }
@@ -373,7 +373,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return fAutoMax.IsSet(field_9_options);
             }
-            set 
+            set
             {
                 field_9_options = fAutoMax.SetShortBoolean(field_9_options, value);
             }
@@ -389,7 +389,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return fAutoMajor.IsSet(field_9_options);
             }
-            set 
+            set
             {
                 field_9_options = fAutoMajor.SetShortBoolean(field_9_options, value);
             }
@@ -419,7 +419,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return fDateAxis.IsSet(field_9_options);
             }
-            set 
+            set
             {
                 field_9_options = fDateAxis.SetShortBoolean(field_9_options, value);
             }
@@ -448,7 +448,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return fAutoCross.IsSet(field_9_options);
             }
-            set 
+            set
             {
                 field_9_options = fAutoCross.SetShortBoolean(field_9_options, value);
             }
@@ -469,5 +469,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-

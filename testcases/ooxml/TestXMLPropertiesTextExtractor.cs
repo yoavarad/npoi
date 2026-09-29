@@ -16,13 +16,14 @@
 ==================================================================== */
 namespace TestCases.OOXML
 {
-    using System;
     using NPOI;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.Util;
     using NPOI.XSSF.Extractor;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestXMLPropertiesTextExtractor
@@ -102,4 +103,3 @@ namespace TestCases.OOXML
     }
 
 }
-

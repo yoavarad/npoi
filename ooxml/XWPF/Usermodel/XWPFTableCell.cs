@@ -16,11 +16,11 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
+    using Cysharp.Text;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
     using System.Collections.Generic;
-    using System.Text; 
-using Cysharp.Text;
+    using System.Text;
     using System.Xml;
     /**
      * Represents a Cell within a {@link XWPFTable}. The
@@ -72,26 +72,26 @@ using Cysharp.Text;
             bodyElements = new List<IBodyElement>();
             paragraphs = new List<XWPFParagraph>();
             tables = new List<XWPFTable>();
-            foreach (object o in ctTc.Items)
+            foreach(object o in ctTc.Items)
             {
-                if (o is CT_P ctP)
+                if(o is CT_P ctP)
                 {
                     XWPFParagraph p = new XWPFParagraph(ctP, this);
                     paragraphs.Add(p);
                     bodyElements.Add(p);
                 }
-                if (o is CT_Tbl tbl)
+                if(o is CT_Tbl tbl)
                 {
                     XWPFTable t = new XWPFTable(tbl, this);
                     tables.Add(t);
                     bodyElements.Add(t);
                 }
-                if (o is CT_SdtBlock block)
+                if(o is CT_SdtBlock block)
                 {
                     XWPFSDT c = new XWPFSDT(block, this);
                     bodyElements.Add(c);
                 }
-                if (o is CT_SdtRun run)
+                if(o is CT_SdtRun run)
                 {
                     XWPFSDT c = new XWPFSDT(run, this);
                     bodyElements.Add(c);
@@ -120,7 +120,8 @@ using Cysharp.Text;
 
         public void SetParagraph(XWPFParagraph p)
         {
-            if (ctTc.SizeOfPArray() == 0) {
+            if(ctTc.SizeOfPArray() == 0)
+            {
                 ctTc.AddNewP();
             }
             ctTc.SetPArray(0, p.GetCTP());
@@ -180,8 +181,10 @@ using Cysharp.Text;
          */
         public XWPFParagraph GetParagraph(CT_P p)
         {
-            foreach (XWPFParagraph paragraph in paragraphs) {
-                if(p.Equals(paragraph.GetCTP())){
+            foreach(XWPFParagraph paragraph in paragraphs)
+            {
+                if(p.Equals(paragraph.GetCTP()))
+                {
                     return paragraph;
                 }
             }
@@ -256,8 +259,8 @@ using Cysharp.Text;
         {
             CT_Border border = new CT_Border();
             border.val = XWPFTable.xwpfBorderTypeMap[type];
-            border.sz = (ulong)size;
-            border.space = (ulong)space;
+            border.sz = (ulong) size;
+            border.space = (ulong) space;
             border.color = (rgbColor);
             return border;
         }
@@ -305,10 +308,10 @@ using Cysharp.Text;
         {
             String color = null;
             CT_TcPr tcpr = ctTc.tcPr;
-            if (tcpr != null)
+            if(tcpr != null)
             {
                 CT_Shd ctshd = tcpr.shd;
-                if (ctshd != null)
+                if(ctshd != null)
                 {
                     color = ctshd.fill;
                 }
@@ -335,10 +338,10 @@ using Cysharp.Text;
         {
             XWPFVertAlign? vAlign = null;
             CT_TcPr tcpr = ctTc.tcPr;
-            if (tcpr != null)
+            if(tcpr != null)
             {
                 CT_VerticalJc va = tcpr.vAlign;
-                if (va != null)
+                if(va != null)
                 {
                     vAlign = stVertAlignTypeMap[va.val.Value];
                 }
@@ -445,7 +448,7 @@ using Cysharp.Text;
          */
         public XWPFParagraph GetParagraphArray(int pos)
         {
-            if (pos >= 0 && pos < paragraphs.Count)
+            if(pos >= 0 && pos < paragraphs.Count)
             {
                 return paragraphs[(pos)];
             }
@@ -484,8 +487,10 @@ using Cysharp.Text;
          */
         public XWPFTable GetTable(CT_Tbl ctTable)
         {
-            for(int i=0; i<tables.Count; i++){
-                if(this.Tables[(i)].GetCTTbl() == ctTable) return Tables[(i)]; 
+            for(int i = 0; i<tables.Count; i++)
+            {
+                if(this.Tables[(i)].GetCTTbl() == ctTable)
+                    return Tables[(i)];
             }
             return null;
         }
@@ -496,7 +501,7 @@ using Cysharp.Text;
          */
         public XWPFTable GetTableArray(int pos)
         {
-            if (pos >=0 && pos < tables.Count)
+            if(pos >=0 && pos < tables.Count)
             {
                 return tables[pos];
             }
@@ -524,9 +529,11 @@ using Cysharp.Text;
         {
             bodyElements.Insert(pos, table);
             int i;
-            for (i = 0; i < ctTc.GetTblList().Count; i++) {
+            for(i = 0; i < ctTc.GetTblList().Count; i++)
+            {
                 CT_Tbl tbl = ctTc.GetTblArray(i);
-                if(tbl == table.GetCTTbl()){
+                if(tbl == table.GetCTTbl())
+                {
                     break;
                 }
             }
@@ -536,7 +543,7 @@ using Cysharp.Text;
         public String GetText()
         {
             using var text = ZString.CreateStringBuilder();
-            foreach (XWPFParagraph p in paragraphs)
+            foreach(XWPFParagraph p in paragraphs)
             {
                 text.Append(p.Text);
             }
@@ -550,7 +557,7 @@ using Cysharp.Text;
         {
 
             StringBuilder text = new StringBuilder();
-            for (int i = 0; i < bodyElements.Count; i++)
+            for(int i = 0; i < bodyElements.Count; i++)
             {
                 bool isLast = (i == bodyElements.Count - 1) ? true : false;
                 AppendBodyElementText(text, bodyElements[i], isLast);
@@ -561,22 +568,22 @@ using Cysharp.Text;
 
         private static void AppendBodyElementText(StringBuilder text, IBodyElement e, bool isLast)
         {
-            if (e is XWPFParagraph paragraph)
+            if(e is XWPFParagraph paragraph)
             {
                 text.Append(paragraph.Text);
-                if (isLast == false)
+                if(isLast == false)
                 {
                     text.Append('\t');
                 }
             }
-            else if (e is XWPFTable eTable)
+            else if(e is XWPFTable eTable)
             {
-                foreach (XWPFTableRow row in eTable.Rows)
+                foreach(XWPFTableRow row in eTable.Rows)
                 {
-                    foreach (XWPFTableCell cell in row.GetTableCells())
+                    foreach(XWPFTableCell cell in row.GetTableCells())
                     {
                         IList<IBodyElement> localBodyElements = cell.BodyElements;
-                        for (int i = 0; i < localBodyElements.Count; i++)
+                        for(int i = 0; i < localBodyElements.Count; i++)
                         {
                             bool localIsLast = (i == localBodyElements.Count - 1) ? true : false;
                             AppendBodyElementText(text, localBodyElements[i], localIsLast);
@@ -584,15 +591,15 @@ using Cysharp.Text;
                     }
                 }
 
-                if (isLast == false)
+                if(isLast == false)
                 {
                     text.Append('\n');
                 }
             }
-            else if (e is XWPFSDT xwpfsdt)
+            else if(e is XWPFSDT xwpfsdt)
             {
                 text.Append(xwpfsdt.Content.Text);
-                if (isLast == false)
+                if(isLast == false)
                 {
                     text.Append('\t');
                 }
@@ -603,21 +610,21 @@ using Cysharp.Text;
          */
         public XWPFTableCell GetTableCell(CT_Tc cell)
         {
-            if (cell.Parent is not CT_Row row)
+            if(cell.Parent is not CT_Row row)
                 return null;
 
-            if (row.Parent is not CT_Tbl tbl)
+            if(row.Parent is not CT_Tbl tbl)
             {
                 return null;
             }
 
             XWPFTable table = GetTable(tbl);
-            if (table == null)
+            if(table == null)
             {
                 return null;
             }
             XWPFTableRow tr = table.GetRow(row);
-            if (tr == null)
+            if(tr == null)
             {
                 return null;
             }

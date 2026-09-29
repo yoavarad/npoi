@@ -15,8 +15,6 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.IO;
 using NPOI.HSSF.Record.Crypto;
 using NPOI.HSSF.UserModel;
 using NPOI.OpenXml4Net.Exceptions;
@@ -26,6 +24,8 @@ using NPOI.POIFS.FileSystem;
 using NPOI.Util;
 using NPOI.XSSF.UserModel;
 using Org.BouncyCastle.Security;
+using System;
+using System.IO;
 
 namespace NPOI.SS.UserModel
 {
@@ -83,7 +83,7 @@ namespace NPOI.SS.UserModel
             DirectoryNode root = fs.Root;
 
             // Encrypted OOXML files go inside OLE2 containers, is this one?
-            if (root.HasEntry(Decryptor.DEFAULT_POIFS_ENTRY))
+            if(root.HasEntry(Decryptor.DEFAULT_POIFS_ENTRY))
             {
                 InputStream stream = DocumentFactoryHelper.GetDecryptedStream(fs, password);
 
@@ -93,7 +93,7 @@ namespace NPOI.SS.UserModel
 
             // If we get here, it isn't an encrypted XLSX file
             // So, treat it as a regular HSSF XLS one
-            if (password != null)
+            if(password != null)
             {
                 Biff8EncryptionKey.CurrentUserPassword = (password);
             }
@@ -125,10 +125,10 @@ namespace NPOI.SS.UserModel
         ///  be wrapped as a {@link PushbackInputStream}!</remarks>
         public static IWorkbook Create(Stream inputStream, string password)
         {
-            if (inputStream.Length == 0)
+            if(inputStream.Length == 0)
                 throw new EmptyFileException();
             FileMagic fm = FileMagicContainer.ValueOf(inputStream);
-            switch (fm)
+            switch(fm)
             {
                 case FileMagic.OLE2:
                     POIFSFileSystem fs = new POIFSFileSystem(inputStream);
@@ -146,7 +146,7 @@ namespace NPOI.SS.UserModel
 
         public static IWorkbook Create(string file, string password, bool readOnly)
         {
-            if (!File.Exists(file))
+            if(!File.Exists(file))
             {
                 throw new FileNotFoundException(file);
             }
@@ -166,11 +166,11 @@ namespace NPOI.SS.UserModel
 
         public static IWorkbook Create(string file)
         {
-            if (!File.Exists(file))
+            if(!File.Exists(file))
             {
                 throw new FileNotFoundException(file);
             }
-            using (var stream = File.OpenRead(file))
+            using(var stream = File.OpenRead(file))
             {
                 return Create(stream);
             }
@@ -200,9 +200,9 @@ namespace NPOI.SS.UserModel
             FileMagic fm = FileMagicContainer.ValueOf(inputStream);
             try
             {
-                if (fm == FileMagic.OLE2)
+                if(fm == FileMagic.OLE2)
                 {
-                    if (DocumentFactoryHelper.GetPasswordProtected(inputStream) == DocumentFactoryHelper.OfficeProtectType.ProtectedOOXML)
+                    if(DocumentFactoryHelper.GetPasswordProtected(inputStream) == DocumentFactoryHelper.OfficeProtectType.ProtectedOOXML)
                     {
                         inputStream.Position = 0;
                         POIFSFileSystem fs = new POIFSFileSystem(inputStream);
@@ -228,7 +228,7 @@ namespace NPOI.SS.UserModel
                 }
 
                 inputStream.Position = 0;
-                if (fm == FileMagic.OOXML)
+                if(fm == FileMagic.OOXML)
                 {
                     inputStream.Position = 0;
                     OPCPackage pkg = OPCPackage.Open(inputStream, readOnly);
@@ -249,7 +249,7 @@ namespace NPOI.SS.UserModel
             }
             finally
             {
-                if (inputStream != null)
+                if(inputStream != null)
                     inputStream.Dispose();
             }
 
@@ -275,7 +275,7 @@ namespace NPOI.SS.UserModel
         /// </summary>
         public static IFormulaEvaluator CreateFormulaEvaluator(IWorkbook workbook)
         {
-            if (typeof(HSSFWorkbook) == workbook.GetType())
+            if(typeof(HSSFWorkbook) == workbook.GetType())
             {
                 return new HSSFFormulaEvaluator(workbook as HSSFWorkbook);
             }
@@ -292,7 +292,7 @@ namespace NPOI.SS.UserModel
         /// <param name="importOption">Customize the elements that are processed on the next import</param>
         public static void SetImportOption(ImportOption importOption)
         {
-            if (ImportOption.SheetContentOnly == importOption)
+            if(ImportOption.SheetContentOnly == importOption)
             {
                 // Add
                 XSSFRelation.AddRelation(XSSFRelation.WORKSHEET);
@@ -329,7 +329,7 @@ namespace NPOI.SS.UserModel
                 XSSFRelation.RemoveRelation(XSSFRelation.CALC_CHAIN);
                 XSSFRelation.RemoveRelation(XSSFRelation.PRINTER_SETTINGS);
             }
-            else if (ImportOption.TextOnly == importOption)
+            else if(ImportOption.TextOnly == importOption)
             {
                 // Add
                 XSSFRelation.AddRelation(XSSFRelation.WORKSHEET);

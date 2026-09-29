@@ -15,8 +15,8 @@
    limitations under the License.
 ==================================================================== */
 using NPOI.SS.UserModel;
-using System;
 using NPOI.XSSF.Model;
+using System;
 namespace NPOI.XSSF.UserModel
 {
 
@@ -50,8 +50,9 @@ namespace NPOI.XSSF.UserModel
         public short GetFormat(String format)
         {
             int idx = BuiltinFormats.GetBuiltinFormat(format);
-            if (idx == -1) idx = stylesSource.PutNumberFormat(format);
-            return (short)idx;
+            if(idx == -1)
+                idx = stylesSource.PutNumberFormat(format);
+            return (short) idx;
         }
 
         /**
@@ -68,7 +69,8 @@ namespace NPOI.XSSF.UserModel
             // This is why we need to check stylesSource first and only fall back to
             // BuiltinFormats if the format hasn't been overridden.
             String fmt = stylesSource.GetNumberFormatAt(index);
-            if (fmt == null) fmt = BuiltinFormats.GetBuiltinFormat(index);
+            if(fmt == null)
+                fmt = BuiltinFormats.GetBuiltinFormat(index);
             return fmt;
         }
 
@@ -83,7 +85,7 @@ namespace NPOI.XSSF.UserModel
         [Obsolete("use GetFormat(short) instead, schedule to remove NPOI 2.8")]
         public String GetFormat(int index)
         {
-            return GetFormat((short)index);
+            return GetFormat((short) index);
         }
         /**
          * Add a number format with a specific ID into the number format style table.
@@ -100,5 +102,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-
-

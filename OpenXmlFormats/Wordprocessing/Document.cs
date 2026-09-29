@@ -1,12 +1,12 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXmlFormats.Shared;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using NPOI.OpenXmlFormats.Shared;
-using NPOI.OpenXml4Net.Util;
-using System.IO;
-using System.Collections;
-using System.Linq;
 
 namespace NPOI.OpenXmlFormats.Wordprocessing
 {
@@ -91,11 +91,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
                     else
                     {
                         if(ctObj.bodyListField == null)
-                            ctObj.bodyListField = new List<CT_Body> ();
+                            ctObj.bodyListField = new List<CT_Body>();
                         ctObj.bodyListField.Add(CT_Body.Parse(childNode, namespaceManager));
                     }
                 }
-                    
+
                 else if(childNode.LocalName == "background")
                     ctObj.background = CT_Background.Parse(childNode, namespaceManager);
             }

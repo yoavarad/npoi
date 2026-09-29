@@ -20,16 +20,15 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
-    using System.Text;
-    using System;
-
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /// <summary>
     /// specifies the text elements that are formatted using the position and appearance information 
     /// specified by the Text record immediately following this record.
     /// </summary>
-    public enum TextFormatInfo:short
+    public enum TextFormatInfo : short
     {
         /// <summary>
         /// Format all Text records in the chart group where fShowPercent is equal to 0 or fShowValue is equal to 0.
@@ -90,7 +89,7 @@ namespace NPOI.HSSF.Record.Chart
 
             buffer.Append("[DEFAULTTEXT]\n");
             buffer.Append("    .categoryDataType     = ")
-                .Append("0x").Append(HexDump.ToHex((short)FormatType))
+                .Append("0x").Append(HexDump.ToHex((short) FormatType))
                 .Append(" (").Append(FormatType).Append(" )");
             buffer.Append(Environment.NewLine);
 
@@ -144,15 +143,14 @@ namespace NPOI.HSSF.Record.Chart
         {
             get
             {
-                return (TextFormatInfo)field_1_categoryDataType;
+                return (TextFormatInfo) field_1_categoryDataType;
             }
-            set 
+            set
             {
-                this.field_1_categoryDataType = (short)value;
+                this.field_1_categoryDataType = (short) value;
             }
         }
 
 
     }
 }
-

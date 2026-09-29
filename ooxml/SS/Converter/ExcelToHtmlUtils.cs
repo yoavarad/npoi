@@ -16,14 +16,13 @@
 ==================================================================== */
 namespace NPOI.SS.Converter
 {
-    using System;
-    using System.Text;
-    using System.IO;
-
     using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
     using NPOI.HSSF.Util;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
+    using System.IO;
+    using System.Text;
 
     public class ExcelToHtmlUtils
     {
@@ -32,7 +31,7 @@ namespace NPOI.SS.Converter
 
         public static void AppendAlign(StringBuilder style, HorizontalAlignment alignment)
         {
-            switch (alignment)
+            switch(alignment)
             {
                 case HorizontalAlignment.Center:
                     style.Append("text-align: center; ");
@@ -64,56 +63,56 @@ namespace NPOI.SS.Converter
      * @see #getMergedRange(CellRangeAddress[][], int, int)
      */
         public static CellRangeAddress[][] BuildMergedRangesMap(ISheet sheet)
-    {
-        CellRangeAddress[][] mergedRanges = new CellRangeAddress[1][];
-        for ( int m = 0; m < sheet.NumMergedRegions; m++ )
         {
-            CellRangeAddress cellRangeAddress = sheet.GetMergedRegion( m );
-
-            int requiredHeight = cellRangeAddress.LastRow + 1;
-            if ( mergedRanges.Length < requiredHeight )
+            CellRangeAddress[][] mergedRanges = new CellRangeAddress[1][];
+            for(int m = 0; m < sheet.NumMergedRegions; m++)
             {
-                CellRangeAddress[][] newArray = new CellRangeAddress[requiredHeight][];
-                Array.Copy( mergedRanges, 0, newArray, 0, mergedRanges.Length );
-                mergedRanges = newArray;
-            }
+                CellRangeAddress cellRangeAddress = sheet.GetMergedRegion( m );
 
-            for ( int r = cellRangeAddress.FirstRow; r <= cellRangeAddress.LastRow; r++ )
-            {
-                int requiredWidth = cellRangeAddress.LastColumn + 1;
-
-                CellRangeAddress[] rowMerged = mergedRanges[r];
-                if ( rowMerged == null )
+                int requiredHeight = cellRangeAddress.LastRow + 1;
+                if(mergedRanges.Length < requiredHeight)
                 {
-                    rowMerged = new CellRangeAddress[requiredWidth];
-                    mergedRanges[r] = rowMerged;
+                    CellRangeAddress[][] newArray = new CellRangeAddress[requiredHeight][];
+                    Array.Copy(mergedRanges, 0, newArray, 0, mergedRanges.Length);
+                    mergedRanges = newArray;
                 }
-                else
-                {
-                     int rowMergedLength = rowMerged.Length;
-                    if ( rowMergedLength < requiredWidth )
-                    {
-                        CellRangeAddress[] newRow = new CellRangeAddress[requiredWidth];
-                        Array.Copy(rowMerged, 0, newRow, 0,rowMergedLength );
 
-                        mergedRanges[r] = newRow;
-                        rowMerged = newRow;
+                for(int r = cellRangeAddress.FirstRow; r <= cellRangeAddress.LastRow; r++)
+                {
+                    int requiredWidth = cellRangeAddress.LastColumn + 1;
+
+                    CellRangeAddress[] rowMerged = mergedRanges[r];
+                    if(rowMerged == null)
+                    {
+                        rowMerged = new CellRangeAddress[requiredWidth];
+                        mergedRanges[r] = rowMerged;
+                    }
+                    else
+                    {
+                        int rowMergedLength = rowMerged.Length;
+                        if(rowMergedLength < requiredWidth)
+                        {
+                            CellRangeAddress[] newRow = new CellRangeAddress[requiredWidth];
+                            Array.Copy(rowMerged, 0, newRow, 0, rowMergedLength);
+
+                            mergedRanges[r] = newRow;
+                            rowMerged = newRow;
+                        }
+                    }
+
+                    //Arrays.Fill( rowMerged, cellRangeAddress.FirstColumn, cellRangeAddress.LastColumn + 1, cellRangeAddress );
+                    for(int i = cellRangeAddress.FirstColumn; i < cellRangeAddress.LastColumn + 1; i++)
+                    {
+                        rowMerged[i] = cellRangeAddress;
                     }
                 }
-               
-                //Arrays.Fill( rowMerged, cellRangeAddress.FirstColumn, cellRangeAddress.LastColumn + 1, cellRangeAddress );
-                for (int i = cellRangeAddress.FirstColumn; i < cellRangeAddress.LastColumn + 1; i++)
-                {
-                    rowMerged[i] = cellRangeAddress;
-                }
             }
+            return mergedRanges;
         }
-        return mergedRanges;
-    }
         public static string GetBorderStyle(BorderStyle xlsBorder)
         {
             string borderStyle;
-            switch (xlsBorder)
+            switch(xlsBorder)
             {
                 case BorderStyle.None:
                     borderStyle = "none";
@@ -144,7 +143,7 @@ namespace NPOI.SS.Converter
         public static string GetBorderWidth(BorderStyle xlsBorder)
         {
             string borderWidth;
-            switch (xlsBorder)
+            switch(xlsBorder)
             {
                 case BorderStyle.MediumDashDot:
                 case BorderStyle.MediumDashDotDot:
@@ -166,22 +165,22 @@ namespace NPOI.SS.Converter
             stringBuilder.Append('#');
 
             byte[] rgb = color.RGB;
-            foreach (byte s in rgb)
+            foreach(byte s in rgb)
             {
                 stringBuilder.Append(s.ToString("x2"));
             }
             string result = stringBuilder.ToString();
 
-            if (result.Equals("#ffffff"))
+            if(result.Equals("#ffffff"))
                 return "white";
 
-            if (result.Equals("#c0c0c0"))
+            if(result.Equals("#c0c0c0"))
                 return "silver";
 
-            if (result.Equals("#808080"))
+            if(result.Equals("#808080"))
                 return "gray";
 
-            if (result.Equals("#000000"))
+            if(result.Equals("#000000"))
                 return "black";
 
             return result;
@@ -190,7 +189,7 @@ namespace NPOI.SS.Converter
         {
             StringBuilder stringBuilder = new StringBuilder(7);
             stringBuilder.Append('#');
-            foreach (byte s in color.RGB)
+            foreach(byte s in color.RGB)
             {
                 //if (s < 10)
                 //    stringBuilder.Append('0');
@@ -199,16 +198,16 @@ namespace NPOI.SS.Converter
             }
             string result = stringBuilder.ToString();
 
-            if (result.Equals("#ffffff"))
+            if(result.Equals("#ffffff"))
                 return "white";
 
-            if (result.Equals("#c0c0c0"))
+            if(result.Equals("#c0c0c0"))
                 return "silver";
 
-            if (result.Equals("#808080"))
+            if(result.Equals("#808080"))
                 return "gray";
 
-            if (result.Equals("#000000"))
+            if(result.Equals("#000000"))
                 return "black";
 
             return result;
@@ -224,7 +223,7 @@ namespace NPOI.SS.Converter
                     * UNIT_OFFSET_LENGTH;
 
             double offsetWidthUnits = widthUnits % EXCEL_COLUMN_WIDTH_FACTOR;
-            pixels += (int)Math.Round(offsetWidthUnits / ((float)EXCEL_COLUMN_WIDTH_FACTOR / UNIT_OFFSET_LENGTH));
+            pixels += (int) Math.Round(offsetWidthUnits / ((float) EXCEL_COLUMN_WIDTH_FACTOR / UNIT_OFFSET_LENGTH));
 
             return pixels;
         }
@@ -256,7 +255,7 @@ namespace NPOI.SS.Converter
             }
             finally
             {
-                if (inputStream != null)
+                if(inputStream != null)
                     inputStream.Close();
                 inputStream = null;
                 //IOUtils.closeQuietly( inputStream );

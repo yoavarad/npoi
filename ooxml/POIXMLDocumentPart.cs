@@ -17,15 +17,15 @@
 
 namespace NPOI
 {
-    using NPOI.Util;
+    using NPOI.OpenXml4Net.Exceptions;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXml4Net.OPC.Internal;
+    using NPOI.Util;
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using NPOI.OpenXml4Net.Exceptions;
-    using System.Xml;
-    using NPOI.OpenXml4Net.OPC.Internal;
     using System.Diagnostics;
+    using System.IO;
+    using System.Xml;
 
     /**
      * Represents an entry of a OOXML namespace.
@@ -91,7 +91,7 @@ namespace NPOI
 
             public T GetDocumentPart<T>() where T : POIXMLDocumentPart
             {
-                return (T)documentPart;
+                return (T) documentPart;
             }
 
             public POIXMLDocumentPart DocumentPart
@@ -228,7 +228,7 @@ namespace NPOI
         {
             PackageRelationshipCollection cores =
                 packagePart.GetRelationshipsByType(coreDocumentRel);
-            if (cores.Size != 1)
+            if(cores.Size != 1)
             {
                 throw new InvalidOperationException(
                     "Tried to rebase using " + coreDocumentRel +
@@ -244,7 +244,7 @@ namespace NPOI
         {
             get
             {
-                if (nsm == null)
+                if(nsm == null)
                     nsm = CreateDefaultNSM();
                 return nsm;
             }
@@ -316,11 +316,11 @@ namespace NPOI
         [Obsolete("deprecated in POI 3.14, scheduled for removal in POI 3.16")]
         public PackageRelationship GetPackageRelationship()
         {
-            if (this.parent != null)
+            if(this.parent != null)
             {
-                foreach (RelationPart rp in parent.RelationParts)
+                foreach(RelationPart rp in parent.RelationParts)
                 {
-                    if (rp.DocumentPart == this)
+                    if(rp.DocumentPart == this)
                     {
                         return rp.Relationship;
                     }
@@ -330,9 +330,9 @@ namespace NPOI
             {
                 OPCPackage pkg = GetPackagePart().Package;
                 String partName = GetPackagePart().PartName.Name;
-                foreach (PackageRelationship rel in pkg.Relationships)
+                foreach(PackageRelationship rel in pkg.Relationships)
                 {
-                    if (rel.TargetUri.OriginalString.Equals(partName))
+                    if(rel.TargetUri.OriginalString.Equals(partName))
                     {
                         return rel;
                     }
@@ -350,7 +350,7 @@ namespace NPOI
         public IList<POIXMLDocumentPart> GetRelations()
         {
             List<POIXMLDocumentPart> l = new List<POIXMLDocumentPart>();
-            foreach (RelationPart rp in relations.Values)
+            foreach(RelationPart rp in relations.Values)
             {
                 l.Add(rp.DocumentPart);
             }
@@ -386,7 +386,7 @@ namespace NPOI
 
         public POIXMLDocumentPart GetRelationById(String id)
         {
-            if (string.IsNullOrEmpty(id) || !relations.TryGetValue(id, out RelationPart rp))
+            if(string.IsNullOrEmpty(id) || !relations.TryGetValue(id, out RelationPart rp))
                 return null;
 
             return (rp == null) ? null : rp.DocumentPart;
@@ -407,9 +407,9 @@ namespace NPOI
 
         public String GetRelationId(POIXMLDocumentPart part)
         {
-            foreach (RelationPart rp in relations.Values)
+            foreach(RelationPart rp in relations.Values)
             {
-                if (rp.DocumentPart == part)
+                if(rp.DocumentPart == part)
                 {
                     return rp.Relationship.Id;
                 }
@@ -439,7 +439,7 @@ namespace NPOI
         public RelationPart AddRelation(String relId, POIXMLRelation relationshipType, POIXMLDocumentPart part)
         {
             PackageRelationship pr = this.packagePart.FindExistingRelation(part.GetPackagePart());
-            if (pr == null)
+            if(pr == null)
             {
                 PackagePartName ppn = part.GetPackagePart().PartName;
                 String relType = relationshipType.Relation;
@@ -456,7 +456,7 @@ namespace NPOI
         /// <param name="part">the child to add</param>
         private void AddRelation(PackageRelationship pr, POIXMLDocumentPart part)
         {
-            if (relations.ContainsKey(pr.Id))
+            if(relations.ContainsKey(pr.Id))
                 relations[pr.Id] = new RelationPart(pr, part);
             else
                 relations.Add(pr.Id, new RelationPart(pr, part));
@@ -487,7 +487,7 @@ namespace NPOI
         protected internal bool RemoveRelation(POIXMLDocumentPart part, bool RemoveUnusedParts)
         {
             String id = GetRelationId(part);
-            if (id == null)
+            if(id == null)
             {
                 // part is not related with this POIXMLDocumentPart
                 return false;
@@ -499,16 +499,16 @@ namespace NPOI
             /* remove POIXMLDocument from relations */
             relations.Remove(id);
 
-            if (RemoveUnusedParts)
+            if(RemoveUnusedParts)
             {
                 /* if last relation to target part was Removed, delete according target part */
-                if (part.GetRelationCounter() == 0)
+                if(part.GetRelationCounter() == 0)
                 {
                     try
                     {
                         part.onDocumentRemove();
                     }
-                    catch (IOException e)
+                    catch(IOException e)
                     {
                         throw new POIXMLException(e);
                     }
@@ -567,7 +567,8 @@ namespace NPOI
         protected internal void OnSave(List<PackagePart> alreadySaved)
         {
             //if part is already committed then return
-            if (this.isCommitted) {
+            if(this.isCommitted)
+            {
                 return;
             }
 
@@ -576,10 +577,10 @@ namespace NPOI
 
             Commit();
             alreadySaved.Add(this.GetPackagePart());
-            foreach (RelationPart rp in relations.Values)
+            foreach(RelationPart rp in relations.Values)
             {
                 POIXMLDocumentPart p = rp.DocumentPart;
-                if (!alreadySaved.Contains(p.GetPackagePart()))
+                if(!alreadySaved.Contains(p.GetPackagePart()))
                 {
                     p.OnSave(alreadySaved);
                 }
@@ -597,7 +598,7 @@ namespace NPOI
         protected internal virtual void PrepareForCommit()
         {
             PackagePart part = this.GetPackagePart();
-            if (part != null)
+            if(part != null)
             {
                 part.Clear();
             }
@@ -645,11 +646,11 @@ namespace NPOI
             try
             {
                 string name = descriptor.DefaultFileName;
-                if (name.Equals(descriptor.GetFileName(9999)))
+                if(name.Equals(descriptor.GetFileName(9999)))
                 {
                     // Non-index based, check if default is free
                     PackagePartName ppName = PackagingUriHelper.CreatePartName(name);
-                    if (pkg.ContainPart(ppName))
+                    if(pkg.ContainPart(ppName))
                     {
                         // Default name already taken, not index based, nothing free
                         return -1;
@@ -663,20 +664,21 @@ namespace NPOI
 
                 // Default to searching from 1, unless they asked for 0+
                 int idx = minIdx;
-                if (minIdx < 0) idx = 1;
+                if(minIdx < 0)
+                    idx = 1;
                 int maxIdx = minIdx + pkg.GetParts().Count;
-                while (idx < maxIdx)
+                while(idx < maxIdx)
                 {
                     name = descriptor.GetFileName(idx);
                     PackagePartName ppName = PackagingUriHelper.CreatePartName(name);
-                    if (!pkg.ContainPart(ppName))
+                    if(!pkg.ContainPart(ppName))
                     {
                         return idx;
                     }
                     idx++;
                 }
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 // Give a general wrapped exception for the problem
                 throw new POIXMLException(e);
@@ -701,7 +703,7 @@ namespace NPOI
                 PackagePartName ppName = PackagingUriHelper.CreatePartName(descriptor.GetFileName(idx));
                 PackageRelationship rel = null;
                 PackagePart part = packagePart.Package.CreatePart(ppName, descriptor.ContentType);
-                if (!noRelation)
+                if(!noRelation)
                 {
                     /* only add to relations, if according relationship is being Created. */
                     rel = packagePart.AddRelationship(ppName, TargetMode.Internal, descriptor.Relation);
@@ -709,20 +711,20 @@ namespace NPOI
                 POIXMLDocumentPart doc = factory.NewDocumentPart(descriptor);
                 doc.packagePart = part;
                 doc.parent = this;
-                if (!noRelation)
+                if(!noRelation)
                 {
                     /* only add to relations, if according relationship is being Created. */
                     AddRelation(rel, doc);
                 }
                 return new RelationPart(rel, doc);
             }
-            catch (PartAlreadyExistsException)
+            catch(PartAlreadyExistsException)
             {
                 // Return the specific exception so the user knows
                 //  that the name is already taken
                 throw;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 // Give a general wrapped exception for the problem
                 throw new POIXMLException(e);
@@ -731,7 +733,7 @@ namespace NPOI
 
         public TValue PutDictionary<TKey, TValue>(Dictionary<TKey, TValue> dict, TKey key, TValue value)
         {
-            if (dict.TryGetValue(key, out TValue oldValue))
+            if(dict.TryGetValue(key, out TValue oldValue))
             {
                 dict[key] = value;
             }
@@ -744,7 +746,7 @@ namespace NPOI
 
         public TValue GetDictionary<TKey, TValue>(Dictionary<TKey, TValue> dict, TKey key)
         {
-            if (dict.TryGetValue(key, out TValue dictionary))
+            if(dict.TryGetValue(key, out TValue dictionary))
             {
                 return dictionary;
             }
@@ -764,34 +766,35 @@ namespace NPOI
             PackagePart pp = GetPackagePart();
             // add mapping a second time, in case of initial caller hasn't done so
             POIXMLDocumentPart otherChild = PutDictionary(context, pp, this);
-            if (otherChild != null && otherChild != this)
+            if(otherChild != null && otherChild != this)
             {
                 throw new POIXMLException("Unique PackagePart-POIXMLDocumentPart relation broken!");
             }
 
-            if (!pp.HasRelationships) return;
+            if(!pp.HasRelationships)
+                return;
 
             PackageRelationshipCollection rels = packagePart.Relationships;
             List<POIXMLDocumentPart> readLater = new List<POIXMLDocumentPart>();
 
             // scan breadth-first, so parent-relations are hopefully the shallowest element
-            foreach (PackageRelationship rel in rels)
+            foreach(PackageRelationship rel in rels)
             {
-                if (rel.TargetMode == TargetMode.Internal)
+                if(rel.TargetMode == TargetMode.Internal)
                 {
                     Uri uri = rel.TargetUri;
 
                     // check for internal references (e.g. '#Sheet1!A1')
                     PackagePartName relName;
                     //if (uri.getRawFragment() != null)
-                    if (uri.OriginalString.Contains('#'))
+                    if(uri.OriginalString.Contains('#'))
                     {
                         string path = string.Empty;
                         try
                         {
                             path = uri.AbsolutePath;
                         }
-                        catch (InvalidOperationException)
+                        catch(InvalidOperationException)
                         {
                             path = uri.OriginalString.Substring(0, uri.OriginalString.IndexOf('#'));
                         }
@@ -803,14 +806,14 @@ namespace NPOI
                     }
 
                     PackagePart p = packagePart.Package.GetPart(relName);
-                    if (p == null)
+                    if(p == null)
                     {
                         //logger.log(POILogger.ERROR, "Skipped invalid entry " + rel.TargetUri);
                         continue;
                     }
 
                     POIXMLDocumentPart childPart = GetDictionary(context, p);
-                    if (childPart == null)
+                    if(childPart == null)
                     {
                         childPart = factory.CreateDocumentPart(this, p);
                         childPart.parent = this;
@@ -823,7 +826,7 @@ namespace NPOI
                 }
             }
 
-            foreach (POIXMLDocumentPart childPart in readLater)
+            foreach(POIXMLDocumentPart childPart in readLater)
             {
                 childPart.Read(factory, context);
             }
@@ -876,10 +879,10 @@ namespace NPOI
         {
             PackageRelationship coreRel = pkg.GetRelationshipsByType(coreDocumentRel).GetRelationship(0);
 
-            if (coreRel != null)
+            if(coreRel != null)
             {
                 PackagePart pp = pkg.GetPart(coreRel);
-                if (pp == null)
+                if(pp == null)
                 {
                     throw new POIXMLException("OOXML file structure broken/invalid - core document '" + coreRel.TargetUri + "' not found.");
                 }
@@ -887,7 +890,7 @@ namespace NPOI
             }
 
             coreRel = pkg.GetRelationshipsByType(PackageRelationshipTypes.STRICT_CORE_DOCUMENT).GetRelationship(0);
-            if (coreRel != null)
+            if(coreRel != null)
             {
                 throw new POIXMLException("Strict OOXML isn't currently supported, please see bug #57699");
             }

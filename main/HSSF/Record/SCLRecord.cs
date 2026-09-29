@@ -20,11 +20,10 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.HSSF.Record;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-
-    using NPOI.HSSF.Record;
 
     /**
      * Specifies the window's zoom magnification.  If this record Isn't present then the windows zoom is 100%. see p384 Excel Dev Kit
@@ -77,7 +76,8 @@ namespace NPOI.HSSF.Record
             return buffer.ToString();
         }
 
-        public override void Serialize(ILittleEndianOutput out1) {
+        public override void Serialize(ILittleEndianOutput out1)
+        {
             out1.WriteShort(field_1_numerator);
             out1.WriteShort(field_2_denominator);
         }
@@ -116,7 +116,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_1_numerator;
             }
-            set 
+            set
             {
                 this.field_1_numerator = value;
             }
@@ -131,7 +131,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_2_denominator;
             }
-            set 
+            set
             {
                 this.field_2_denominator = value;
             }
@@ -140,5 +140,3 @@ namespace NPOI.HSSF.Record
 
     }
 }
-
-

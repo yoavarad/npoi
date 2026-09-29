@@ -17,22 +17,23 @@
 
 namespace TestCases.HSSF.Model
 {
-    using System;
-    using System.Collections;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.Record.Aggregates;
-    using NPOI.HSSF.Record;
+    using NPOI.DDF;
     using NPOI.HSSF.EventModel;
     using NPOI.HSSF.Model;
-    using NPOI.SS.Util;
-    using TestCases.HSSF.UserModel;
-    using System.Collections.Generic;
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.Record.Aggregates;
     using NPOI.HSSF.UserModel;
-    using NPOI.SS.Formula;
-    using NPOI.Util;
-    using NPOI.DDF;
     using NPOI.SS;
+    using NPOI.SS.Formula;
+    using NPOI.SS.Util;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using TestCases.HSSF.UserModel;
 
     /**
      * Unit Test for the Sheet class.
@@ -84,7 +85,7 @@ namespace TestCases.HSSF.Model
             }
             public void VisitRecord(Record r)
             {
-                if (r is MergeCellsRecord)
+                if(r is MergeCellsRecord)
                 {
                     _count++;
                 }
@@ -106,7 +107,7 @@ namespace TestCases.HSSF.Model
             int startRecords = sheet.Records.Count;
 
             //simple Test that Adds a load of regions
-            for (int n = 0; n < regionsToAdd; n++)
+            for(int n = 0; n < regionsToAdd; n++)
             {
                 int index = sheet.AddMergedRegion(0, 0, 1, 1);
                 ClassicAssert.AreEqual(index, n, "Merged region index expected to be " + n + " got " + index);
@@ -120,7 +121,7 @@ namespace TestCases.HSSF.Model
             sheet.VisitContainedRecords(mcListener, 0);
             int recordsAdded = mcListener.Count;
             int recordsExpected = regionsToAdd / 1027;
-            if ((regionsToAdd % 1027) != 0)
+            if((regionsToAdd % 1027) != 0)
                 recordsExpected++;
             ClassicAssert.AreEqual(recordsAdded, recordsExpected, "The " + regionsToAdd + " merged regions should have been spRead out over " + recordsExpected + " records, not " + recordsAdded);
             // Check we can't Add one with invalid date
@@ -129,7 +130,7 @@ namespace TestCases.HSSF.Model
                 sheet.AddMergedRegion(10, 10, 9, 12);
                 Assert.Fail("Expected an exception to occur");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // occurs during successful Test
                 ClassicAssert.AreEqual("The 'to' row (9) must not be less than the 'from' row (10)", e.Message);
@@ -139,7 +140,7 @@ namespace TestCases.HSSF.Model
                 sheet.AddMergedRegion(10, 10, 12, 9);
                 Assert.Fail("Expected an exception to occur");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // occurs during successful Test
                 ClassicAssert.AreEqual("The 'to' col (9) must not be less than the 'from' col (10)", e.Message);
@@ -151,13 +152,13 @@ namespace TestCases.HSSF.Model
             InternalSheet sheet = InternalSheet.CreateSheet();
             int regionsToAdd = 4096;
 
-            for (int n = 0; n < regionsToAdd; n++)
+            for(int n = 0; n < regionsToAdd; n++)
                 sheet.AddMergedRegion(0, 0, 1, 1);
 
             int nSheetRecords = sheet.Records.Count;
 
             //remove a third from the beginning
-            for (int n = 0; n < regionsToAdd / 3; n++)
+            for(int n = 0; n < regionsToAdd / 3; n++)
             {
                 sheet.RemoveMergedRegion(0);
                 //assert they have been deleted
@@ -214,12 +215,12 @@ namespace TestCases.HSSF.Model
         private static Record CreateWindow2Record()
         {
             WindowTwoRecord result = new WindowTwoRecord();
-            result.Options = ((short)0x6b6);
-            result.TopRow = ((short)0);
-            result.LeftCol = ((short)0);
+            result.Options = ((short) 0x6b6);
+            result.TopRow = ((short) 0);
+            result.LeftCol = ((short) 0);
             result.HeaderColor = (0x40);
-            result.PageBreakZoom = ((short)0);
-            result.NormalZoom = ((short)0);
+            result.PageBreakZoom = ((short) 0);
+            result.NormalZoom = ((short) 0);
             return result;
         }
 
@@ -284,16 +285,16 @@ namespace TestCases.HSSF.Model
             bool is11 = false;
 
             int[] rowBreaks = sheet.RowBreaks;
-            for (int i = 0; i < rowBreaks.Length; i++)
+            for(int i = 0; i < rowBreaks.Length; i++)
             {
                 int main = rowBreaks[i];
-                if (main != 0 && main != 10 && main != 11)
+                if(main != 0 && main != 10 && main != 11)
                     Assert.Fail("Invalid page break");
-                if (main == 0)
+                if(main == 0)
                     is0 = true;
-                if (main == 10)
+                if(main == 10)
                     is10 = true;
-                if (main == 11)
+                if(main == 11)
                     is11 = true;
             }
 
@@ -348,18 +349,18 @@ namespace TestCases.HSSF.Model
             bool is15 = false;
 
             int[] colBreaks = sheet.ColumnBreaks;
-            for (int i = 0; i < colBreaks.Length; i++)
+            for(int i = 0; i < colBreaks.Length; i++)
             {
                 int main = colBreaks[i];
-                if (main != 0 && main != 1 && main != 10 && main != 15)
+                if(main != 0 && main != 1 && main != 10 && main != 15)
                     Assert.Fail("Invalid page break");
-                if (main == 0)
+                if(main == 0)
                     is0 = true;
-                if (main == 1)
+                if(main == 1)
                     is1 = true;
-                if (main == 10)
+                if(main == 10)
                     is10 = true;
-                if (main == 15)
+                if(main == 15)
                     is15 = true;
             }
 
@@ -393,62 +394,62 @@ namespace TestCases.HSSF.Model
             InternalSheet sheet = InternalSheet.CreateSheet();
 
             // without ColumnInfoRecord
-            xfindex = sheet.GetXFIndexForColAt((short)0);
+            xfindex = sheet.GetXFIndexForColAt((short) 0);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)1);
+            xfindex = sheet.GetXFIndexForColAt((short) 1);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
 
             ColumnInfoRecord nci = new ColumnInfoRecord();
             sheet.ColumnInfos.InsertColumn(nci);
 
             // single column ColumnInfoRecord
-            nci.FirstColumn = ((short)2);
-            nci.LastColumn = ((short)2);
+            nci.FirstColumn = ((short) 2);
+            nci.LastColumn = ((short) 2);
             nci.XFIndex = (TEST_IDX);
-            xfindex = sheet.GetXFIndexForColAt((short)0);
+            xfindex = sheet.GetXFIndexForColAt((short) 0);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)1);
+            xfindex = sheet.GetXFIndexForColAt((short) 1);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)2);
+            xfindex = sheet.GetXFIndexForColAt((short) 2);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)3);
+            xfindex = sheet.GetXFIndexForColAt((short) 3);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
 
             // ten column ColumnInfoRecord
-            nci.FirstColumn = ((short)2);
-            nci.LastColumn = ((short)11);
+            nci.FirstColumn = ((short) 2);
+            nci.LastColumn = ((short) 11);
             nci.XFIndex = (TEST_IDX);
-            xfindex = sheet.GetXFIndexForColAt((short)1);
+            xfindex = sheet.GetXFIndexForColAt((short) 1);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)2);
+            xfindex = sheet.GetXFIndexForColAt((short) 2);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)6);
+            xfindex = sheet.GetXFIndexForColAt((short) 6);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)11);
+            xfindex = sheet.GetXFIndexForColAt((short) 11);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)12);
+            xfindex = sheet.GetXFIndexForColAt((short) 12);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
 
             // single column ColumnInfoRecord starting at index 0
-            nci.FirstColumn = ((short)0);
-            nci.LastColumn = ((short)0);
+            nci.FirstColumn = ((short) 0);
+            nci.LastColumn = ((short) 0);
             nci.XFIndex = (TEST_IDX);
-            xfindex = sheet.GetXFIndexForColAt((short)0);
+            xfindex = sheet.GetXFIndexForColAt((short) 0);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)1);
+            xfindex = sheet.GetXFIndexForColAt((short) 1);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
 
             // ten column ColumnInfoRecord starting at index 0
-            nci.FirstColumn = ((short)0);
-            nci.LastColumn = ((short)9);
+            nci.FirstColumn = ((short) 0);
+            nci.LastColumn = ((short) 9);
             nci.XFIndex = (TEST_IDX);
-            xfindex = sheet.GetXFIndexForColAt((short)0);
+            xfindex = sheet.GetXFIndexForColAt((short) 0);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)7);
+            xfindex = sheet.GetXFIndexForColAt((short) 7);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)9);
+            xfindex = sheet.GetXFIndexForColAt((short) 9);
             ClassicAssert.AreEqual(TEST_IDX, xfindex);
-            xfindex = sheet.GetXFIndexForColAt((short)10);
+            xfindex = sheet.GetXFIndexForColAt((short) 10);
             ClassicAssert.AreEqual(DEFAULT_IDX, xfindex);
         }
         private class SizeCheckingRecordVisitor : RecordVisitor
@@ -465,7 +466,7 @@ namespace TestCases.HSSF.Model
                 int estimatedSize = r.RecordSize;
                 byte[] buf = new byte[estimatedSize];
                 int serializedSize = r.Serialize(0, buf);
-                if (estimatedSize != serializedSize)
+                if(estimatedSize != serializedSize)
                 {
                     throw new AssertionException("serialized size mismatch for record ("
                             + r.GetType().Name + ")");
@@ -527,7 +528,7 @@ namespace TestCases.HSSF.Model
 
 
             int dbCellRecordPos = GetDbCellRecordPos(sheet);
-            if (dbCellRecordPos == 252)
+            if(dbCellRecordPos == 252)
             {
                 // The overt symptom of the bug
                 // DBCELL record pos is1 calculated wrong if VRA comes before RRA
@@ -565,13 +566,13 @@ namespace TestCases.HSSF.Model
             }
             public void VisitRecord(Record r)
             {
-                if (r is IndexRecord)
+                if(r is IndexRecord)
                 {
-                    if (_indexRecord != null)
+                    if(_indexRecord != null)
                     {
                         throw new Exception("too many index records");
                     }
-                    _indexRecord = (IndexRecord)r;
+                    _indexRecord = (IndexRecord) r;
                 }
             }
         }
@@ -590,14 +591,14 @@ namespace TestCases.HSSF.Model
             sheet.ToString();
             IList recs = sheet.Records;
             int count = 0;
-            for (int i = 0; i < recs.Count; i++)
+            for(int i = 0; i < recs.Count; i++)
             {
-                if (recs[i] is GutsRecord)
+                if(recs[i] is GutsRecord)
                 {
                     count++;
                 }
             }
-            if (count == 2)
+            if(count == 2)
             {
                 throw new AssertionException("Identified bug 45640");
             }
@@ -611,7 +612,7 @@ namespace TestCases.HSSF.Model
             HSSFSheet sheet = (HSSFSheet)wb.GetSheetAt(0);
             HSSFRow row = (HSSFRow)sheet.GetRow(3);
             HSSFCell cell = (HSSFCell)row.GetCell(4);
-            if (cell == null)
+            if(cell == null)
             {
                 throw new AssertionException("Identified bug 45699");
             }
@@ -632,9 +633,9 @@ namespace TestCases.HSSF.Model
             {
                 row.CreateCell(0);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.Equals("Cannot Create value records before row records exist"))
+                if(e.Message.Equals("Cannot Create value records before row records exist"))
                 {
                     throw new AssertionException("Identified bug 45717");
                 }
@@ -654,7 +655,7 @@ namespace TestCases.HSSF.Model
             int colIx = 6;
             NumberRecord nr = new NumberRecord();
             nr.Row = (rowIx);
-            nr.Column = ((short)colIx);
+            nr.Column = ((short) colIx);
             nr.Value = (3.0);
 
             ArrayList inRecs = new ArrayList();
@@ -668,9 +669,9 @@ namespace TestCases.HSSF.Model
             {
                 sheet = CreateSheet(inRecs);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if ("DimensionsRecord was not found".Equals(e.Message))
+                if("DimensionsRecord was not found".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 46206");
                 }
@@ -707,7 +708,7 @@ namespace TestCases.HSSF.Model
 
             FormulaShifter shifter = FormulaShifter.CreateForRowShift(0, "", 0, 0, 1, SpreadsheetVersion.EXCEL97);
             sheet.UpdateFormulasAfterCellShift(shifter, 0);
-            if (sheetRecs.Count == 25 && sheetRecs[22] is ConditionalFormattingTable)
+            if(sheetRecs.Count == 25 && sheetRecs[22] is ConditionalFormattingTable)
             {
                 throw new AssertionException("Identified bug 46547a");
             }
@@ -732,7 +733,7 @@ namespace TestCases.HSSF.Model
 
                 cft = sheet.ConditionalFormattingTable; // lazy getter
             }
-            catch (InvalidCastException)
+            catch(InvalidCastException)
             {
                 throw new AssertionException("Identified bug 46547b");
             }
@@ -758,9 +759,9 @@ namespace TestCases.HSSF.Model
             {
                 sheet2 = sheet.CloneSheet();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("The class org.apache.poi.hssf.record.MulBlankRecord needs to define a clone method"))
+                if(e.Message.Equals("The class org.apache.poi.hssf.record.MulBlankRecord needs to define a clone method"))
                 {
                     throw new AssertionException("Identified bug 46776");
                 }
@@ -848,7 +849,7 @@ namespace TestCases.HSSF.Model
         {
             InternalSheet sheet = InternalSheet.CreateSheet();
             sheet.Records.Clear();
-            ((List<RecordBase>)sheet.Records).AddRange(recordStream);
+            ((List<RecordBase>) sheet.Records).AddRange(recordStream);
 
             IList sheetRecords = sheet.Records;
 
@@ -856,10 +857,10 @@ namespace TestCases.HSSF.Model
             sheet.AggregateDrawingRecords(drawingManager, false);
 
             ClassicAssert.AreEqual(4, sheetRecords.Count);
-            ClassicAssert.AreEqual(BOFRecord.sid, ((Record)sheetRecords[0]).Sid);
-            ClassicAssert.AreEqual(EscherAggregate.sid, ((Record)sheetRecords[1]).Sid);
-            ClassicAssert.AreEqual(WindowTwoRecord.sid, ((Record)sheetRecords[2]).Sid);
-            ClassicAssert.AreEqual(EOFRecord.sid, ((Record)sheetRecords[3]).Sid);
+            ClassicAssert.AreEqual(BOFRecord.sid, ((Record) sheetRecords[0]).Sid);
+            ClassicAssert.AreEqual(EscherAggregate.sid, ((Record) sheetRecords[1]).Sid);
+            ClassicAssert.AreEqual(WindowTwoRecord.sid, ((Record) sheetRecords[2]).Sid);
+            ClassicAssert.AreEqual(EOFRecord.sid, ((Record) sheetRecords[3]).Sid);
         }
         [Test]
         public void TestSheetDimensions()
@@ -882,7 +883,7 @@ namespace TestCases.HSSF.Model
             CellValueRecordInterface cvr;
 
             cvr = new BlankRecord();
-            cvr.Column = ((short)0);
+            cvr.Column = ((short) 0);
             cvr.Row = (0);
             sheet.AddValueRecord(0, cvr);
 
@@ -892,7 +893,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(1, dimensions.LastRow);
 
             cvr = new BlankRecord();
-            cvr.Column = ((short)1);
+            cvr.Column = ((short) 1);
             cvr.Row = (0);
             sheet.AddValueRecord(0, cvr);
 

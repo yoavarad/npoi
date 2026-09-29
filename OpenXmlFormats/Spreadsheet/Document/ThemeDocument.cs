@@ -1,8 +1,8 @@
-﻿using System.IO;
-using System.Xml.Serialization;
 using NPOI.OpenXmlFormats.Dml;
-using System.Diagnostics;
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -24,7 +24,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 this.stylesheet.Write(sw);
             }

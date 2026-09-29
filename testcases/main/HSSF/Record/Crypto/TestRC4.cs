@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.Record.Crypto
 {
+    using NPOI.HSSF.Record.Crypto;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Text;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util;
     using TestCases.Exceptions;
-    using NPOI.HSSF.Record.Crypto;
     /**
      * Tests for {@link RC4}
      *
@@ -46,7 +47,7 @@ namespace TestCases.HSSF.Record.Crypto
             new RC4(Encoding.GetEncoding("GB2312").GetBytes(k)).Encrypt(actEncr);
             byte[] expEncr = HexRead.ReadFromString(expEncrHex);
 
-            if (!Arrays.Equals(expEncr, actEncr))
+            if(!Arrays.Equals(expEncr, actEncr))
             {
                 throw new ComparisonFailure("Data mismatch", HexDump.ToHex(expEncr), HexDump.ToHex(actEncr));
             }
@@ -79,7 +80,7 @@ namespace TestCases.HSSF.Record.Crypto
             //    throw new Exception("Mismatch from jdk provider");
             //}
         }
-        
+
     }
 
 }

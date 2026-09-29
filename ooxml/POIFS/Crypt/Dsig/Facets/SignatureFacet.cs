@@ -35,7 +35,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
     /**
      * JSR105 Signature Facet base class.
      */
-    public abstract class SignatureFacet : ISignatureConfigurable {
+    public abstract class SignatureFacet : ISignatureConfigurable
+    {
 
         //private static POILogger LOG = POILogFactory.GetLogger(typeof(SignatureFacet));
 
@@ -48,7 +49,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
 
         protected SignatureConfig signatureConfig;
 
-        public void SetSignatureConfig(SignatureConfig signatureConfig) {
+        public void SetSignatureConfig(SignatureConfig signatureConfig)
+        {
             this.signatureConfig = signatureConfig;
         }
 
@@ -66,7 +68,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
               XmlDocument document
             , List<Reference> references
             , List<XmlNode> objects
-        ) {
+        )
+        {
             // empty
         }
 
@@ -78,7 +81,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
          * @param document the signature document to be modified
          * @throws MarshalException
          */
-        public virtual void postSign(XmlDocument document) {
+        public virtual void postSign(XmlDocument document)
+        {
             // empty
         }
 
@@ -86,7 +90,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         ////    return signatureConfig.SignatureFactory;
         ////}
 
-        protected Transform newTransform(String canonicalizationMethod) {
+        protected Transform newTransform(String canonicalizationMethod)
+        {
             ///return newTransform(canonicalizationMethod, null);
             throw new NotImplementedException();
         }
@@ -138,7 +143,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         }
 
         // helper method ... will be Removed soon
-        public static void brokenJvmWorkaround(Reference reference) {
+        public static void brokenJvmWorkaround(Reference reference)
+        {
             throw new NotImplementedException();
             //DigestMethod digestMethod = reference.DigestMethod;
             //String digestMethodUri = digestMethod.Algorithm;

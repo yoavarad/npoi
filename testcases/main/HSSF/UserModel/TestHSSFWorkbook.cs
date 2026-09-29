@@ -28,7 +28,8 @@ namespace TestCases.HSSF.UserModel
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -175,12 +176,12 @@ namespace TestCases.HSSF.UserModel
 
             // Demonstrate bug 44525:
             // Well... not quite, since isActive + isSelected were also Added in the same bug fix
-            if (sheet1.IsSelected)
+            if(sheet1.IsSelected)
             {
                 throw new AssertionException("Identified bug 44523 a");
             }
             wb.SetActiveSheet(1);
-            if (sheet1.IsActive)
+            if(sheet1.IsActive)
             {
                 throw new AssertionException("Identified bug 44523 b");
             }
@@ -193,7 +194,7 @@ namespace TestCases.HSSF.UserModel
         private static List<int> arrayToList(int[] array)
         {
             List<int> list = new List<int>(array.Length);
-            foreach (int element in array)
+            foreach(int element in array)
             {
                 list.Add(element);
             }
@@ -203,11 +204,11 @@ namespace TestCases.HSSF.UserModel
         private static void assertCollectionsEquals(List<int> expected, List<int> actual)
         {
             ClassicAssert.AreEqual(expected.Count, actual.Count, "size");
-            foreach (int e in expected)
+            foreach(int e in expected)
             {
                 ClassicAssert.IsTrue(actual.Contains(e));
             }
-            foreach (int a in actual)
+            foreach(int a in actual)
             {
                 ClassicAssert.IsTrue(expected.Contains(a));
             }
@@ -301,11 +302,11 @@ namespace TestCases.HSSF.UserModel
 
             wb.RemoveSheetAt(3);
             // after removing the only active/selected sheet, another should be active/selected in its place
-            if (!sheet4.IsSelected)
+            if(!sheet4.IsSelected)
             {
                 throw new AssertionException("identified bug 40414 a");
             }
-            if (!sheet4.IsActive)
+            if(!sheet4.IsActive)
             {
                 throw new AssertionException("identified bug 40414 b");
             }
@@ -376,7 +377,7 @@ namespace TestCases.HSSF.UserModel
                 wb.GetBytes();
                 throw new AssertionException("Identified bug 45066 a");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 // Expected badly behaved sheet record to cause exception
                 ClassicAssert.IsTrue(e.Message.StartsWith("Actual serialized sheet size"));
@@ -410,7 +411,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(1, nr.ExternSheetNumber);
             ClassicAssert.AreEqual(1, nr.NameDefinition.Length);
 
-            ptg = (Area3DPtg)nr.NameDefinition[0];
+            ptg = (Area3DPtg) nr.NameDefinition[0];
             ClassicAssert.AreEqual(1, ptg.ExternSheetIndex);
             ClassicAssert.AreEqual(0, ptg.FirstColumn);
             ClassicAssert.AreEqual(0, ptg.FirstRow);
@@ -433,7 +434,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(0, nr.ExternSheetNumber);
             ClassicAssert.AreEqual(1, nr.NameDefinition.Length);
 
-            ptg = (Area3DPtg)nr.NameDefinition[0];
+            ptg = (Area3DPtg) nr.NameDefinition[0];
             ClassicAssert.AreEqual(0, ptg.ExternSheetIndex);
             ClassicAssert.AreEqual(0, ptg.FirstColumn);
             ClassicAssert.AreEqual(2, ptg.FirstRow);
@@ -456,7 +457,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(2, nr.ExternSheetNumber);
             ClassicAssert.AreEqual(1, nr.NameDefinition.Length);
 
-            ptg = (Area3DPtg)nr.NameDefinition[0];
+            ptg = (Area3DPtg) nr.NameDefinition[0];
             ClassicAssert.AreEqual(2, ptg.ExternSheetIndex);
             ClassicAssert.AreEqual(0, ptg.FirstColumn);
             ClassicAssert.AreEqual(0, ptg.FirstRow);
@@ -485,7 +486,7 @@ namespace TestCases.HSSF.UserModel
             {
                 get
                 {
-                    return unchecked((short)0x777);
+                    return unchecked((short) 0x777);
                 }
             }
             public override int Serialize(int offset, byte[] data)
@@ -511,9 +512,9 @@ namespace TestCases.HSSF.UserModel
             {
                 HSSFTestDataSamples.OpenSampleWorkbook("ex45582-22397.xls");
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.InnerException is NPOI.Util.BufferUnderrunException)
+                if(e.InnerException is NPOI.Util.BufferUnderrunException)
                 {
                     throw new AssertionException("Identified bug 45582");
                 }
@@ -541,9 +542,9 @@ namespace TestCases.HSSF.UserModel
                 wb1.GetSheetAt(3).RepeatingRows = (CellRangeAddress.ValueOf("9:12"));
                 wb1.GetSheetAt(3).RepeatingColumns = (CellRangeAddress.ValueOf("E:F"));
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("Builtin (7) already exists for sheet (4)"))
+                if(e.Message.Equals("Builtin (7) already exists for sheet (4)"))
                 {
                     // there was a problem in the code which locates the existing print titles name record 
                     throw new Exception("Identified bug 45720b");
@@ -594,7 +595,7 @@ namespace TestCases.HSSF.UserModel
                 new HSSFWorkbook(excel4);
                 Assert.Fail("Shouldn't be able to load an Excel 4 file");
             }
-            catch (OldExcelFormatException e)
+            catch(OldExcelFormatException e)
             {
                 POITestCase.AssertContains(e.Message, "BIFF4");
             }
@@ -606,7 +607,7 @@ namespace TestCases.HSSF.UserModel
                 new HSSFWorkbook(excel5);
                 Assert.Fail("Shouldn't be able to load an Excel 5 file");
             }
-            catch (OldExcelFormatException e)
+            catch(OldExcelFormatException e)
             {
                 POITestCase.AssertContains(e.Message, "BIFF8");
             }
@@ -618,7 +619,7 @@ namespace TestCases.HSSF.UserModel
                 new HSSFWorkbook(excel95);
                 Assert.Fail("Shouldn't be able to load an Excel 95 file");
             }
-            catch (OldExcelFormatException e)
+            catch(OldExcelFormatException e)
             {
                 POITestCase.AssertContains(e.Message, "BIFF5");
             }
@@ -640,7 +641,7 @@ namespace TestCases.HSSF.UserModel
             files[1] = (new NPOIFSFileSystem(HSSFTestDataSamples.OpenSampleFileStream("Simple.xls"))).Root;
 
             // Open without preserving nodes 
-            foreach (DirectoryNode dir in files)
+            foreach(DirectoryNode dir in files)
             {
                 IWorkbook workbook = new HSSFWorkbook(dir, false);
                 ISheet sheet = workbook.GetSheetAt(0);
@@ -649,7 +650,7 @@ namespace TestCases.HSSF.UserModel
             }
 
             // Now re-check with preserving
-            foreach (DirectoryNode dir in files)
+            foreach(DirectoryNode dir in files)
             {
                 IWorkbook workbook = new HSSFWorkbook(dir, true);
                 ISheet sheet = workbook.GetSheetAt(0);
@@ -668,20 +669,20 @@ namespace TestCases.HSSF.UserModel
             files[1] = (new NPOIFSFileSystem(HSSFTestDataSamples.OpenSampleFileStream("WithEmbeddedObjects.xls"))).Root;
 
             // Check the embedded parts
-            foreach (DirectoryNode root in files)
+            foreach(DirectoryNode root in files)
             {
                 HSSFWorkbook hw = new HSSFWorkbook(root, true);
                 IList<HSSFObjectData> objects = hw.GetAllEmbeddedObjects();
                 bool found = false;
-                foreach (HSSFObjectData embeddedObject in objects)
+                foreach(HSSFObjectData embeddedObject in objects)
                 {
-                    if (embeddedObject.HasDirectoryEntry())
+                    if(embeddedObject.HasDirectoryEntry())
                     {
                         DirectoryEntry dir = embeddedObject.Directory;
-                        if (dir is DirectoryNode)
+                        if(dir is DirectoryNode)
                         {
                             DirectoryNode dNode = (DirectoryNode)dir;
-                            if (HasEntry(dNode, "WordDocument"))
+                            if(HasEntry(dNode, "WordDocument"))
                             {
                                 found = true;
                             }
@@ -734,7 +735,7 @@ namespace TestCases.HSSF.UserModel
             int numBuiltInStyles = wb.NumCellStyles;
             int MAX_STYLES = 4030;
             int limit = MAX_STYLES - numBuiltInStyles;
-            for (int i = 0; i < limit; i++)
+            for(int i = 0; i < limit; i++)
             {
                 ICellStyle style = wb.CreateCellStyle();
             }
@@ -745,7 +746,7 @@ namespace TestCases.HSSF.UserModel
                 ICellStyle style = wb.CreateCellStyle();
                 Assert.Fail("expected exception");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 ClassicAssert.AreEqual("The maximum number of cell styles was exceeded. " +
                         "You can define up to 4000 styles in a .xls workbook", e.Message);
@@ -816,7 +817,7 @@ namespace TestCases.HSSF.UserModel
                 dirNode.GetEntry(entryName);
                 return true;
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
                 return false;
             }
@@ -829,21 +830,21 @@ namespace TestCases.HSSF.UserModel
             InternalWorkbook iwb = ((HSSFWorkbook)wb).Workbook;
             iwb.FindDrawingGroup();
 
-            for (int pictureIndex = 1; pictureIndex <= 4; pictureIndex++)
+            for(int pictureIndex = 1; pictureIndex <= 4; pictureIndex++)
             {
                 EscherBSERecord bse = iwb.GetBSERecord(pictureIndex);
                 ClassicAssert.AreEqual(1, bse.Ref);
             }
 
             wb.CloneSheet(0);
-            for (int pictureIndex = 1; pictureIndex <= 4; pictureIndex++)
+            for(int pictureIndex = 1; pictureIndex <= 4; pictureIndex++)
             {
                 EscherBSERecord bse = iwb.GetBSERecord(pictureIndex);
                 ClassicAssert.AreEqual(2, bse.Ref);
             }
 
             wb.CloneSheet(0);
-            for (int pictureIndex = 1; pictureIndex <= 4; pictureIndex++)
+            for(int pictureIndex = 1; pictureIndex <= 4; pictureIndex++)
             {
                 EscherBSERecord bse = iwb.GetBSERecord(pictureIndex);
                 ClassicAssert.AreEqual(3, bse.Ref);
@@ -864,7 +865,7 @@ namespace TestCases.HSSF.UserModel
             {
                 new HSSFWorkbook(fs).Close();
             }
-            catch (ArgumentException ex)
+            catch(ArgumentException ex)
             {
                 ClassicAssert.IsTrue(ex.Message.StartsWith("The supplied POIFSFileSystem does not contain a BIFF8"));
             }
@@ -887,17 +888,17 @@ namespace TestCases.HSSF.UserModel
             ConfirmActiveSelected(sheet3, false);
             ConfirmActiveSelected(sheet4, false);
 
-            wb.SetSelectedTab((short)1);
+            wb.SetSelectedTab((short) 1);
 
             // Demonstrate bug 44525:
             // Well... not quite, since isActive + isSelected were also Added in the same bug fix
-            if (sheet1.IsSelected)
+            if(sheet1.IsSelected)
             {
                 //throw new AssertionFailedError("Identified bug 44523 a");
                 Assert.Fail("Identified bug 44523 a");
             }
             wb.SetActiveSheet(1);
-            if (sheet1.IsActive)
+            if(sheet1.IsActive)
             {
                 //throw new AssertionFailedError("Identified bug 44523 b");
                 Assert.Fail("Identified bug 44523 b");
@@ -925,7 +926,7 @@ namespace TestCases.HSSF.UserModel
                 wb.GetNameAt(0);
                 Assert.Fail("Fails without any defined names");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("no defined names"), e.Message);
             }
@@ -946,7 +947,7 @@ namespace TestCases.HSSF.UserModel
                 wb.GetNameAt(5);
                 Assert.Fail("Fails without any defined names");
             }
-            catch (ArgumentOutOfRangeException e)
+            catch(ArgumentOutOfRangeException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("outside the allowable range"), e.Message);
             }
@@ -956,7 +957,7 @@ namespace TestCases.HSSF.UserModel
                 wb.GetNameAt(-3);
                 Assert.Fail("Fails without any defined names");
             }
-            catch (ArgumentOutOfRangeException e)
+            catch(ArgumentOutOfRangeException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("outside the allowable range"), e.Message);
             }
@@ -1124,22 +1125,22 @@ namespace TestCases.HSSF.UserModel
 
             bool found = false;
             int numSheets = workbook.NumberOfSheets;
-            for (int i = 0; i < numSheets; i++)
+            for(int i = 0; i < numSheets; i++)
             {
                 HSSFSheet sheet = workbook.GetSheetAt(i) as HSSFSheet;
                 IList<HSSFShape> shapes = (sheet.DrawingPatriarch as HSSFPatriarch).Children;
-                foreach (HSSFShape shape in shapes)
+                foreach(HSSFShape shape in shapes)
                 {
                     HSSFAnchor anchor = shape.Anchor as HSSFAnchor;
 
-                    if (anchor is HSSFClientAnchor)
+                    if(anchor is HSSFClientAnchor)
                     {                        // absolute coordinates
                         HSSFClientAnchor clientAnchor = (HSSFClientAnchor)anchor;
                         ClassicAssert.IsNotNull(clientAnchor);
                         //System.out.Println(clientAnchor.Row1 + "," + clientAnchor.Row2);
                         found = true;
                     }
-                    else if (anchor is HSSFChildAnchor)
+                    else if(anchor is HSSFChildAnchor)
                     {
                         // shape is grouped and the anchor is expressed in the coordinate system of the group 
                         HSSFChildAnchor childAnchor = (HSSFChildAnchor)anchor;
@@ -1247,12 +1248,12 @@ namespace TestCases.HSSF.UserModel
             workbook.CreateSheet("A");
             try
             {
-                for (int i = 0; i < 2 * workbook.InternalWorkbook.Records.Count; i++)
+                for(int i = 0; i < 2 * workbook.InternalWorkbook.Records.Count; i++)
                 {
                     workbook.SetSheetOrder("A", 0);
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new Exception("Moving a sheet to the end should not throw an exception, but threw ", e);
             }
@@ -1271,7 +1272,7 @@ namespace TestCases.HSSF.UserModel
                 wb.Write();
                 Assert.Fail("Shouldn't work for new files");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected here
             }
@@ -1285,7 +1286,7 @@ namespace TestCases.HSSF.UserModel
                 wb.Write();
                 Assert.Fail("Shouldn't work for InputStream");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected here
             }
@@ -1300,7 +1301,7 @@ namespace TestCases.HSSF.UserModel
                 wb.Write();
                 Assert.Fail("Shouldn't work for OPOIFSFileSystem");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected here
             }
@@ -1315,7 +1316,7 @@ namespace TestCases.HSSF.UserModel
                 wb.Write();
                 Assert.Fail("Shouldn't work for Read Only");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected here
             }

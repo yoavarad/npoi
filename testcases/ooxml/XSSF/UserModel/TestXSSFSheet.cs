@@ -63,7 +63,7 @@ namespace TestCases.XSSF.UserModel
             XSSFWorkbook wb = new XSSFWorkbook();
             XSSFSheet sheet = (XSSFSheet)wb.CreateSheet("sheet1");
 
-            for (int i = 0; i < 12; i++)
+            for(int i = 0; i < 12; i++)
             {
                 sheet.CreateRow(i).CreateCell(0).SetCellValue(i);
             }
@@ -199,7 +199,7 @@ namespace TestCases.XSSF.UserModel
             XSSFSheet sheet = (XSSFSheet)wb.CreateSheet("sheet1");
             _ = sheet.CreateRow(0);
 
-            for (int i = 0; i < 12; i++)
+            for(int i = 0; i < 12; i++)
             {
                 sheet.GetRow(0).CreateCell(i).SetCellValue(i);
             }
@@ -334,8 +334,8 @@ namespace TestCases.XSSF.UserModel
             XSSFSheet s1 = (XSSFSheet)wb1.GetSheetAt(0);
             ClassicAssert.IsNotNull(s1.Header);
             ClassicAssert.IsNotNull(s1.Footer);
-            hdr = (XSSFOddHeader)s1.Header;
-            ftr = (XSSFOddFooter)s1.Footer;
+            hdr = (XSSFOddHeader) s1.Header;
+            ftr = (XSSFOddFooter) s1.Footer;
 
             ClassicAssert.AreEqual("&Ctestdoc&Rtest phrase", hdr.Text);
             ClassicAssert.AreEqual(null, ftr.Text);
@@ -352,8 +352,8 @@ namespace TestCases.XSSF.UserModel
             XSSFSheet s2 = (XSSFSheet)wb1.GetSheetAt(1);
             ClassicAssert.IsNotNull(s2.Header);
             ClassicAssert.IsNotNull(s2.Footer);
-            hdr = (XSSFOddHeader)s2.Header;
-            ftr = (XSSFOddFooter)s2.Footer;
+            hdr = (XSSFOddHeader) s2.Header;
+            ftr = (XSSFOddFooter) s2.Footer;
 
             ClassicAssert.AreEqual(null, hdr.Text);
             ClassicAssert.AreEqual("&L&F", ftr.Text);
@@ -370,8 +370,8 @@ namespace TestCases.XSSF.UserModel
             IWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb1);
             wb1.Close();
 
-            hdr = (XSSFOddHeader)wb2.GetSheetAt(0).Header;
-            ftr = (XSSFOddFooter)wb2.GetSheetAt(0).Footer;
+            hdr = (XSSFOddHeader) wb2.GetSheetAt(0).Header;
+            ftr = (XSSFOddFooter) wb2.GetSheetAt(0).Footer;
 
             ClassicAssert.AreEqual("", hdr.Left);
             ClassicAssert.AreEqual("testdoc", hdr.Center);
@@ -459,7 +459,7 @@ namespace TestCases.XSSF.UserModel
             headerRow.CreateCell(1).SetCellValue("Quantity");
             headerRow.CreateCell(2).SetCellValue("Price Date");
 
-            for (int r = 1; r <= 5; r++)
+            for(int r = 1; r <= 5; r++)
             {
                 IRow row = initialSheet.CreateRow(r);
                 row.CreateCell(0).SetCellValue("Row " + r);
@@ -578,7 +578,7 @@ namespace TestCases.XSSF.UserModel
             cell.CellComment = comment;
             ClassicAssert.AreEqual("A1", ctComments.commentList.GetCommentArray(0).@ref);
             comment.Author = "test A1 author";
-            ClassicAssert.AreEqual("test A1 author", comments.GetAuthor((int)ctComments.commentList.GetCommentArray(0).authorId));
+            ClassicAssert.AreEqual("test A1 author", comments.GetAuthor((int) ctComments.commentList.GetCommentArray(0).authorId));
 
             workbook.Close();
         }
@@ -733,28 +733,28 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(8, cols.sizeOfColArray());
             List<CT_Col> colArray = cols.GetColList();
             ClassicAssert.IsNotNull(colArray);
-            ClassicAssert.AreEqual((uint)(2 + 1), colArray[0].min); // 1 based
-            ClassicAssert.AreEqual((uint)(2 + 1), colArray[0].max); // 1 based
+            ClassicAssert.AreEqual((uint) (2 + 1), colArray[0].min); // 1 based
+            ClassicAssert.AreEqual((uint) (2 + 1), colArray[0].max); // 1 based
             ClassicAssert.AreEqual(1, colArray[0].outlineLevel);
 
-            ClassicAssert.AreEqual((uint)(3 + 1), colArray[1].min); // 1 based
-            ClassicAssert.AreEqual((uint)(3 + 1), colArray[1].max); // 1 based
+            ClassicAssert.AreEqual((uint) (3 + 1), colArray[1].min); // 1 based
+            ClassicAssert.AreEqual((uint) (3 + 1), colArray[1].max); // 1 based
             ClassicAssert.AreEqual(1, colArray[1].outlineLevel);
 
-            ClassicAssert.AreEqual((uint)(4 + 1), colArray[2].min); // 1 based
-            ClassicAssert.AreEqual((uint)(4 + 1), colArray[2].max); // 1 based
+            ClassicAssert.AreEqual((uint) (4 + 1), colArray[2].min); // 1 based
+            ClassicAssert.AreEqual((uint) (4 + 1), colArray[2].max); // 1 based
             ClassicAssert.AreEqual(1, colArray[2].outlineLevel);
 
-            ClassicAssert.AreEqual((uint)(5 + 1), colArray[3].min); // 1 based
-            ClassicAssert.AreEqual((uint)(5 + 1), colArray[3].max); // 1 based
+            ClassicAssert.AreEqual((uint) (5 + 1), colArray[3].min); // 1 based
+            ClassicAssert.AreEqual((uint) (5 + 1), colArray[3].max); // 1 based
             ClassicAssert.AreEqual(1, colArray[3].outlineLevel);
 
-            ClassicAssert.AreEqual((uint)(6 + 1), colArray[4].min); // 1 based
-            ClassicAssert.AreEqual((uint)(6 + 1), colArray[4].max); // 1 based
+            ClassicAssert.AreEqual((uint) (6 + 1), colArray[4].min); // 1 based
+            ClassicAssert.AreEqual((uint) (6 + 1), colArray[4].max); // 1 based
             ClassicAssert.AreEqual(1, colArray[4].outlineLevel);
 
-            ClassicAssert.AreEqual((uint)(7 + 1), colArray[5].min); // 1 based
-            ClassicAssert.AreEqual((uint)(7 + 1), colArray[5].max); // 1 based
+            ClassicAssert.AreEqual((uint) (7 + 1), colArray[5].min); // 1 based
+            ClassicAssert.AreEqual((uint) (7 + 1), colArray[5].max); // 1 based
             ClassicAssert.AreEqual(1, colArray[5].outlineLevel);
 
             ClassicAssert.AreEqual(0, sheet.GetColumnOutlineLevel(0));
@@ -803,12 +803,12 @@ namespace TestCases.XSSF.UserModel
 
             ClassicAssert.AreEqual(8, sheet.GetCTWorksheet().cols[0].col.Count);
 
-            for (int i = 2; i <= 7; i++)
+            for(int i = 2; i <= 7; i++)
             {
                 ClassicAssert.AreEqual(1, sheet.GetColumn(i).OutlineLevel);
             }
 
-            for (int i = 10; i <= 11; i++)
+            for(int i = 10; i <= 11; i++)
             {
                 ClassicAssert.AreEqual(1, sheet.GetColumn(i).OutlineLevel);
             }
@@ -850,9 +850,9 @@ namespace TestCases.XSSF.UserModel
 
             ClassicAssert.AreEqual(10, sheet.GetCTWorksheet().cols[0].col.Count);
 
-            for (int i = 2; i <= 11; i++)
+            for(int i = 2; i <= 11; i++)
             {
-                if (i == 6 || i == 7)
+                if(i == 6 || i == 7)
                 {
                     ClassicAssert.AreEqual(2, sheet.GetColumn(i).OutlineLevel);
                 }
@@ -903,7 +903,7 @@ namespace TestCases.XSSF.UserModel
             //two level
             sheet.GroupRow(10, 13);
             ClassicAssert.AreEqual(5, sheet.PhysicalNumberOfRows);
-            ctrow = ((XSSFRow)sheet.GetRow(10)).GetCTRow();
+            ctrow = ((XSSFRow) sheet.GetRow(10)).GetCTRow();
             ClassicAssert.IsNotNull(ctrow);
             ClassicAssert.AreEqual(11u, ctrow.r);
             ClassicAssert.AreEqual(2, ctrow.outlineLevel);
@@ -938,7 +938,7 @@ namespace TestCases.XSSF.UserModel
                 sheet1.SetZoom(500);
                 Assert.Fail("Expecting exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Valid scale values range from 10 to 400", e.Message);
             }
@@ -1689,67 +1689,67 @@ namespace TestCases.XSSF.UserModel
             sheet1.GroupRow(16, 19);
 
             ClassicAssert.AreEqual(14, sheet1.PhysicalNumberOfRows);
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetHidden());
 
             //collapsed
             sheet1.SetRowGroupCollapsed(7, true);
 
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetHidden());
 
             //expanded
             sheet1.SetRowGroupCollapsed(7, false);
 
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetHidden());
 
             // Save and re-load
             XSSFWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb1);
-            sheet1 = (XSSFSheet)wb2.GetSheetAt(0);
+            sheet1 = (XSSFSheet) wb2.GetSheetAt(0);
 
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(6)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(7)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(9)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsTrue(((XSSFRow)sheet1.GetRow(14)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(16)).GetCTRow().IsSetHidden());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
-            ClassicAssert.IsFalse(((XSSFRow)sheet1.GetRow(18)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(6)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(7)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(9)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsTrue(((XSSFRow) sheet1.GetRow(14)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(16)).GetCTRow().IsSetHidden());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetCollapsed());
+            ClassicAssert.IsFalse(((XSSFRow) sheet1.GetRow(18)).GetCTRow().IsSetHidden());
 
             wb2.Close();
         }
@@ -1821,30 +1821,30 @@ namespace TestCases.XSSF.UserModel
             //a span of columns [1,5]
             ClassicAssert.AreEqual(5, cols.sizeOfColArray());
             CT_Col col = cols.GetColArray(0);
-            ClassicAssert.AreEqual((uint)1, col.min);
-            ClassicAssert.AreEqual((uint)1, col.max);
+            ClassicAssert.AreEqual((uint) 1, col.min);
+            ClassicAssert.AreEqual((uint) 1, col.max);
             col = cols.GetColArray(1);
-            ClassicAssert.AreEqual((uint)2, col.min);
-            ClassicAssert.AreEqual((uint)2, col.max);
+            ClassicAssert.AreEqual((uint) 2, col.min);
+            ClassicAssert.AreEqual((uint) 2, col.max);
             col = cols.GetColArray(2);
-            ClassicAssert.AreEqual((uint)3, col.min);
-            ClassicAssert.AreEqual((uint)3, col.max);
+            ClassicAssert.AreEqual((uint) 3, col.min);
+            ClassicAssert.AreEqual((uint) 3, col.max);
             col = cols.GetColArray(3);
-            ClassicAssert.AreEqual((uint)4, col.min);
-            ClassicAssert.AreEqual((uint)4, col.max);
+            ClassicAssert.AreEqual((uint) 4, col.min);
+            ClassicAssert.AreEqual((uint) 4, col.max);
             col = cols.GetColArray(4);
-            ClassicAssert.AreEqual((uint)5, col.min);
-            ClassicAssert.AreEqual((uint)5, col.max);
+            ClassicAssert.AreEqual((uint) 5, col.min);
+            ClassicAssert.AreEqual((uint) 5, col.max);
             double swidth = 15.77734375; //width of columns in the span
             ClassicAssert.AreEqual(swidth, col.width, 0.0);
 
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
-                ClassicAssert.AreEqual((int)(swidth * 256), sheet.GetColumnWidth(i));
+                ClassicAssert.AreEqual((int) (swidth * 256), sheet.GetColumnWidth(i));
             }
 
             int[] cw = new int[] { 10, 15, 20, 25, 30 };
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
                 sheet.SetColumnWidth(i, cw[i] * 256);
             }
@@ -1861,7 +1861,7 @@ namespace TestCases.XSSF.UserModel
 
             //now the span is splitted into 5 individual columns
             ClassicAssert.AreEqual(5, cols.sizeOfColArray());
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
                 ClassicAssert.AreEqual(cw[i] * 256, sheet.GetColumnWidth(i));
                 ClassicAssert.AreEqual(cw[i], cols.GetColArray(i).width, 0.0);
@@ -1870,10 +1870,10 @@ namespace TestCases.XSSF.UserModel
             //serialize and check again
             XSSFWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb1);
             wb1.Close();
-            sheet = (XSSFSheet)wb2.GetSheetAt(0);
+            sheet = (XSSFSheet) wb2.GetSheetAt(0);
             cols = sheet.GetCTWorksheet().GetColsArray(0);
             ClassicAssert.AreEqual(5, cols.sizeOfColArray());
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
                 ClassicAssert.AreEqual(cw[i] * 256, sheet.GetColumnWidth(i));
                 ClassicAssert.AreEqual(cw[i], cols.GetColArray(i).width, 0.0);
@@ -1900,18 +1900,18 @@ namespace TestCases.XSSF.UserModel
 
             //a span of columns [2,4]
             col = cols.GetColArray(0);
-            ClassicAssert.AreEqual((uint)2, col.min);
-            ClassicAssert.AreEqual((uint)2, col.max);
+            ClassicAssert.AreEqual((uint) 2, col.min);
+            ClassicAssert.AreEqual((uint) 2, col.max);
             col = cols.GetColArray(1);
-            ClassicAssert.AreEqual((uint)3, col.min);
-            ClassicAssert.AreEqual((uint)3, col.max);
+            ClassicAssert.AreEqual((uint) 3, col.min);
+            ClassicAssert.AreEqual((uint) 3, col.max);
             col = cols.GetColArray(2);
-            ClassicAssert.AreEqual((uint)4, col.min);
-            ClassicAssert.AreEqual((uint)4, col.max);
+            ClassicAssert.AreEqual((uint) 4, col.min);
+            ClassicAssert.AreEqual((uint) 4, col.max);
             //individual column
             col = cols.GetColArray(3);
-            ClassicAssert.AreEqual((uint)7, col.min);
-            ClassicAssert.AreEqual((uint)7, col.max);
+            ClassicAssert.AreEqual((uint) 7, col.min);
+            ClassicAssert.AreEqual((uint) 7, col.max);
 
             sheet.SetColumnHidden(2, true); // Column C
             sheet.SetColumnHidden(6, true); // Column G
@@ -1937,23 +1937,23 @@ namespace TestCases.XSSF.UserModel
 
             ClassicAssert.AreEqual(4, cols.sizeOfColArray());
             col = cols.GetColArray(0);
-            ClassicAssert.AreEqual((uint)2, col.min);
-            ClassicAssert.AreEqual((uint)2, col.max);
+            ClassicAssert.AreEqual((uint) 2, col.min);
+            ClassicAssert.AreEqual((uint) 2, col.max);
             col = cols.GetColArray(1);
-            ClassicAssert.AreEqual((uint)3, col.min);
-            ClassicAssert.AreEqual((uint)3, col.max);
+            ClassicAssert.AreEqual((uint) 3, col.min);
+            ClassicAssert.AreEqual((uint) 3, col.max);
             col = cols.GetColArray(2);
-            ClassicAssert.AreEqual((uint)4, col.min);
-            ClassicAssert.AreEqual((uint)4, col.max);
+            ClassicAssert.AreEqual((uint) 4, col.min);
+            ClassicAssert.AreEqual((uint) 4, col.max);
             col = cols.GetColArray(3);
-            ClassicAssert.AreEqual((uint)7, col.min);
-            ClassicAssert.AreEqual((uint)7, col.max);
+            ClassicAssert.AreEqual((uint) 7, col.min);
+            ClassicAssert.AreEqual((uint) 7, col.max);
 
             //serialize and check again
             XSSFWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb1);
             wb1.Close();
 
-            sheet = (XSSFSheet)wb2.GetSheetAt(0);
+            sheet = (XSSFSheet) wb2.GetSheetAt(0);
             ClassicAssert.IsTrue(sheet.IsColumnHidden(2));
             ClassicAssert.IsTrue(sheet.IsColumnHidden(6));
             ClassicAssert.IsFalse(sheet.IsColumnHidden(1));
@@ -1994,7 +1994,7 @@ namespace TestCases.XSSF.UserModel
 
             //now Test against a workbook Containing cell comments
             XSSFWorkbook wb2 = XSSFTestDataSamples.OpenSampleWorkbook("WithMoreVariousData.xlsx");
-            sheet1 = (XSSFSheet)wb2.GetSheetAt(0);
+            sheet1 = (XSSFSheet) wb2.GetSheetAt(0);
             comment1 = sheet1.GetCommentsTable(true);
             ClassicAssert.IsNotNull(comment1);
             ClassicAssert.AreEqual("/xl/comments1.xml", comment1.GetPackagePart().PartName.Name);
@@ -2054,7 +2054,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual("F1", xcell[3].r);
 
             //re-creating a row does NOT add extra data to the parent
-            row2 = (XSSFRow)sheet.CreateRow(1);
+            row2 = (XSSFRow) sheet.CreateRow(1);
             ClassicAssert.AreEqual(3, sheetData.SizeOfRowArray());
             //existing cells are invalidated
             ClassicAssert.AreEqual(0, sheetData.GetRowArray(1).SizeOfCArray());
@@ -2062,7 +2062,7 @@ namespace TestCases.XSSF.UserModel
 
             XSSFWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb1);
             wb1.Close();
-            sheet = (XSSFSheet)wb2.GetSheetAt(0);
+            sheet = (XSSFSheet) wb2.GetSheetAt(0);
             wsh = sheet.GetCTWorksheet();
             xrow = sheetData.row;
             ClassicAssert.AreEqual(3, xrow.Count);
@@ -2254,7 +2254,7 @@ namespace TestCases.XSSF.UserModel
             XSSFWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb1);
             wb1.Close();
 
-            sheet = (XSSFSheet)wb2.GetSheet("Sheet 1");
+            sheet = (XSSFSheet) wb2.GetSheet("Sheet 1");
             ClassicAssert.IsFalse(sheet.ForceFormulaRecalculation);
 
             wb2.Close();
@@ -2281,7 +2281,7 @@ namespace TestCases.XSSF.UserModel
                 wb = XSSFTestDataSamples.OpenSampleWorkbook(file) :
                 wb = HSSFTestDataSamples.OpenSampleWorkbook(file);
 
-            for (int si = 0; si < wb.NumberOfSheets; si++)
+            for(int si = 0; si < wb.NumberOfSheets; si++)
             {
                 ISheet sh = wb.GetSheetAt(si);
                 ClassicAssert.IsNotNull(sh.SheetName);
@@ -2290,12 +2290,12 @@ namespace TestCases.XSSF.UserModel
 
             Assert.Warn("test about SXSSFWorkbook was commented");
             // for XSSF also test with SXSSF
-            if (isXSSF)
+            if(isXSSF)
             {
                 IWorkbook swb = new SXSSFWorkbook((XSSFWorkbook)wb);
                 try
                 {
-                    for (int si = 0; si < swb.NumberOfSheets; si++)
+                    for(int si = 0; si < swb.NumberOfSheets; si++)
                     {
                         ISheet sh = swb.GetSheetAt(si);
                         ClassicAssert.IsNotNull(sh.SheetName);
@@ -2317,7 +2317,7 @@ namespace TestCases.XSSF.UserModel
                 wb = XSSFTestDataSamples.OpenSampleWorkbook(file) :
                 wb = HSSFTestDataSamples.OpenSampleWorkbook(file);
 
-            for (int si = 0; si < wb.NumberOfSheets; si++)
+            for(int si = 0; si < wb.NumberOfSheets; si++)
             {
                 ISheet sh = wb.GetSheetAt(si);
                 ClassicAssert.IsNotNull(sh.SheetName);
@@ -2326,10 +2326,10 @@ namespace TestCases.XSSF.UserModel
 
             Assert.Warn("test about SXSSFWorkbook was commented");
             // for XSSF also test with SXSSF
-            if (isXSSF)
+            if(isXSSF)
             {
                 IWorkbook swb = new SXSSFWorkbook((XSSFWorkbook)wb);
-                for (int si = 0; si < swb.NumberOfSheets; si++)
+                for(int si = 0; si < swb.NumberOfSheets; si++)
                 {
                     ISheet sh = swb.GetSheetAt(si);
                     ClassicAssert.IsNotNull(sh.SheetName);
@@ -2428,7 +2428,8 @@ namespace TestCases.XSSF.UserModel
             ICell cell6 = row3.CreateCell(1);
             cell6.SetCellValue(3);
 
-            return wb;        }
+            return wb;
+        }
 
         [Test]
         public void TestCreateTwoPivotTablesInOneSheet()
@@ -2605,7 +2606,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(CellType.Error, cell.CellType, "[Error] D7 cell type");
             FormulaError error = FormulaError.ForInt(cell.ErrorCellValue);
             ClassicAssert.AreEqual(FormulaError.NA, error, "[Error] D7 cell value"); //FIXME: XSSFCell and HSSFCell expose different interfaces. getErrorCellString would be helpful here
-                                                                              // Date
+                                                                                     // Date
             cell = CellUtil.GetCell(destRow, col++);
             ClassicAssert.AreEqual(CellType.Numeric, cell.CellType, "[Date] E7 cell type");
             DateTime date = new DateTime(2000, 1, 1);
@@ -2622,7 +2623,7 @@ namespace TestCases.XSSF.UserModel
             // Int
             cell = CellUtil.GetCell(destRow, col++);
             ClassicAssert.AreEqual(CellType.Numeric, cell.CellType, "[Int] H7 cell type");
-            ClassicAssert.AreEqual(15, (int)cell.NumericCellValue, "[Int] H7 cell value");
+            ClassicAssert.AreEqual(15, (int) cell.NumericCellValue, "[Int] H7 cell value");
 
             // Float
             cell = CellUtil.GetCell(destRow, col++);
@@ -2788,7 +2789,8 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsFalse(cell.BooleanCellValue, "[Boolean] F11 cell value");
 
             // String
-            col++;            cell = CellUtil.GetCell(destRow1, col);
+            col++;
+            cell = CellUtil.GetCell(destRow1, col);
             ClassicAssert.AreEqual(CellType.String, cell.CellType, "[String] G10 cell type");
             ClassicAssert.AreEqual("Hello", cell.StringCellValue, "[String] G10 cell value");
 
@@ -2800,11 +2802,11 @@ namespace TestCases.XSSF.UserModel
             col++;
             cell = CellUtil.GetCell(destRow1, col);
             ClassicAssert.AreEqual(CellType.Numeric, cell.CellType, "[Int] H10 cell type");
-            ClassicAssert.AreEqual(15, (int)cell.NumericCellValue, "[Int] H10 cell value");
+            ClassicAssert.AreEqual(15, (int) cell.NumericCellValue, "[Int] H10 cell value");
 
             cell = CellUtil.GetCell(destRow2, col);
             ClassicAssert.AreEqual(CellType.Numeric, cell.CellType, "[Int] H11 cell type");
-            ClassicAssert.AreEqual(42, (int)cell.NumericCellValue, "[Int] H11 cell value");
+            ClassicAssert.AreEqual(42, (int) cell.NumericCellValue, "[Int] H11 cell value");
 
             // Float
             col++;
@@ -2917,7 +2919,7 @@ namespace TestCases.XSSF.UserModel
                 "[Merged across multiple rows] R10:S11 merged region");
 
             // Row 3 (zero-based) was empty, so Row 11 (zero-based) should be empty too.
-            if (srcRow3 == null)
+            if(srcRow3 == null)
             {
                 ClassicAssert.IsNull(destRow3, "Row 3 was empty, so Row 11 should be empty");
             }
@@ -3106,7 +3108,7 @@ namespace TestCases.XSSF.UserModel
         private void AddComments(ICreationHelper helper, ISheet sheet)
         {
             IDrawing<IShape> drawing = sheet.CreateDrawingPatriarch();
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 2; i++)
             {
                 IClientAnchor anchor = helper.CreateClientAnchor();
                 anchor.Col1 = 0;
@@ -3116,12 +3118,12 @@ namespace TestCases.XSSF.UserModel
                 IComment comment = drawing.CreateCellComment(anchor);
                 comment.String = helper.CreateRichTextString("BugTesting");
                 IRow row = sheet.GetRow(0 + i);
-                if (row == null)
+                if(row == null)
                 {
                     row = sheet.CreateRow(0 + i);
                 }
                 ICell cell = row.GetCell(0);
-                if (cell == null)
+                if(cell == null)
                 {
                     cell = row.CreateCell(0);
                 }
@@ -3196,7 +3198,7 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestDefaultColumnWidth()
         {
-            using (var book = new XSSFWorkbook())
+            using(var book = new XSSFWorkbook())
             {
                 var sheet = book.CreateSheet("Sheet1");
                 var row = sheet.CreateRow(1);
@@ -3219,10 +3221,10 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestCopyRepeatingRowsAndColumns()
         {
-            using (var book = new XSSFWorkbook())
+            using(var book = new XSSFWorkbook())
             {
                 var sheet = book.CreateSheet("Sheet1");
-                
+
                 var row1 = sheet.CreateRow(0);
                 row1.CreateCell(0);
 

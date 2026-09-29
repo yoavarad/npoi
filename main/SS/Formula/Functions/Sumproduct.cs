@@ -20,9 +20,9 @@ using NPOI.Util;
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
+    using System;
 
 
     /*
@@ -55,31 +55,31 @@ namespace NPOI.SS.Formula.Functions
 
             int maxN = args.Length;
 
-            if (maxN < 1)
+            if(maxN < 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }
             ValueEval firstArg = args[0];
             try
             {
-                if (firstArg is NumericValueEval)
+                if(firstArg is NumericValueEval)
                 {
                     return EvaluateSingleProduct(args);
                 }
-                if (firstArg is RefEval)
+                if(firstArg is RefEval)
                 {
                     return EvaluateSingleProduct(args);
                 }
-                if (firstArg is TwoDEval ae)
+                if(firstArg is TwoDEval ae)
                 {
-                    if (ae.IsRow && ae.IsColumn)
+                    if(ae.IsRow && ae.IsColumn)
                     {
                         return EvaluateSingleProduct(args);
                     }
                     return EvaluateAreaSumProduct(args);
                 }
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -92,7 +92,7 @@ namespace NPOI.SS.Formula.Functions
             int maxN = evalArgs.Length;
 
             double term = 1D;
-            for (int n = 0; n < maxN; n++)
+            for(int n = 0; n < maxN; n++)
             {
                 double val = GetScalarValue(evalArgs[n]);
                 term *= val;
@@ -104,9 +104,9 @@ namespace NPOI.SS.Formula.Functions
         {
 
             ValueEval eval;
-            if (arg is RefEval re)
+            if(arg is RefEval re)
             {
-                if (re.NumberOfSheets > 1)
+                if(re.NumberOfSheets > 1)
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
@@ -117,21 +117,21 @@ namespace NPOI.SS.Formula.Functions
                 eval = arg;
             }
 
-            if (eval == null)
+            if(eval == null)
             {
                 throw new ArgumentException("parameter may not be null");
             }
-            if (eval is AreaEval ae)
+            if(eval is AreaEval ae)
             {
                 // an area ref can work as a scalar value if it is 1x1
-                if (!ae.IsColumn || !ae.IsRow)
+                if(!ae.IsColumn || !ae.IsRow)
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
                 eval = ae.GetRelativeValue(0, 0);
             }
 
-            if (!(eval is ValueEval valueEval))
+            if(!(eval is ValueEval valueEval))
             {
                 throw new ArgumentException("Unexpected value eval class ("
                         + eval.GetType().Name + ")");
@@ -161,11 +161,11 @@ namespace NPOI.SS.Formula.Functions
             int width = firstArg.LastColumn - firstArg.FirstColumn + 1; // TODO - junit
 
             // first check dimensions
-            if (!AreasAllSameSize(args, height, width))
+            if(!AreasAllSameSize(args, height, width))
             {
                 // normally this results in #VALUE!, 
                 // but errors in individual cells take precedence
-                for (int i = 1; i < args.Length; i++)
+                for(int i = 1; i < args.Length; i++)
                 {
                     ThrowFirstError(args[i]);
                 }
@@ -173,12 +173,12 @@ namespace NPOI.SS.Formula.Functions
             }
             double acc = 0;
 
-            for (int rrIx = 0; rrIx < height; rrIx++)
+            for(int rrIx = 0; rrIx < height; rrIx++)
             {
-                for (int rcIx = 0; rcIx < width; rcIx++)
+                for(int rcIx = 0; rcIx < width; rcIx++)
                 {
                     double term = 1D;
-                    for (int n = 0; n < maxN; n++)
+                    for(int n = 0; n < maxN; n++)
                     {
                         double val = GetProductTerm(args[n].GetRelativeValue(rrIx, rcIx), false);
                         term *= val;
@@ -194,12 +194,12 @@ namespace NPOI.SS.Formula.Functions
         {
             int height = areaEval.Height;
             int width = areaEval.Width;
-            for (int rrIx = 0; rrIx < height; rrIx++)
+            for(int rrIx = 0; rrIx < height; rrIx++)
             {
-                for (int rcIx = 0; rcIx < width; rcIx++)
+                for(int rcIx = 0; rcIx < width; rcIx++)
                 {
                     ValueEval ve = areaEval.GetValue(rrIx, rcIx);
-                    if (ve is ErrorEval eval)
+                    if(ve is ErrorEval eval)
                     {
                         throw new EvaluationException(eval);
                     }
@@ -208,15 +208,15 @@ namespace NPOI.SS.Formula.Functions
         }
         private static bool AreasAllSameSize(TwoDEval[] args, int height, int width)
         {
-            for (int i = 0; i < args.Length; i++)
+            for(int i = 0; i < args.Length; i++)
             {
                 TwoDEval areaEval = args[i];
                 // check that height and width match
-                if (areaEval.Height != height)
+                if(areaEval.Height != height)
                 {
                     return false;
                 }
-                if (areaEval.Width != width)
+                if(areaEval.Width != width)
                 {
                     return false;
                 }
@@ -236,24 +236,24 @@ namespace NPOI.SS.Formula.Functions
         private static double GetProductTerm(ValueEval ve, bool IsScalarProduct)
         {
 
-            if (ve is BlankEval || ve == null)
+            if(ve is BlankEval || ve == null)
             {
                 // TODO - shouldn't BlankEval.INSTANCE be used always instead of null?
                 // null seems to occur when the blank cell Is part of an area ref (but not reliably)
-                if (IsScalarProduct)
+                if(IsScalarProduct)
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
                 return 0;
             }
 
-            if (ve is ErrorEval eval)
+            if(ve is ErrorEval eval)
             {
                 throw new EvaluationException(eval);
             }
-            if (ve is StringEval)
+            if(ve is StringEval)
             {
-                if (IsScalarProduct)
+                if(IsScalarProduct)
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
@@ -261,7 +261,7 @@ namespace NPOI.SS.Formula.Functions
                 // even if they would Parse as valid numeric values
                 return 0;
             }
-            if (ve is NumericValueEval nve)
+            if(ve is NumericValueEval nve)
             {
                 return nve.NumberValue;
             }

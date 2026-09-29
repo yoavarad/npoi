@@ -17,12 +17,11 @@
 
 namespace TestCases.Util
 {
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
-    using NPOI.Util;
-
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     /**
      * Class to test {@link LittleEndianInputStream} and {@link LittleEndianOutputStream}
      *
@@ -81,7 +80,7 @@ namespace TestCases.Util
             byte[] actBuf = new byte[4];
             lei.ReadFully(actBuf);
 
-            if (actBuf[0] == 0x00 && srcBuf[0] == 0x77 && srcBuf[3] == 0x44)
+            if(actBuf[0] == 0x00 && srcBuf[0] == 0x77 && srcBuf[3] == 0x44)
             {
                 throw new AssertionException("Identified bug in ReadFully() - source buffer was modified");
             }

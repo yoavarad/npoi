@@ -18,8 +18,8 @@
 namespace NPOI.HSSF.Record.Aggregates
 {
 
-    using System;
     using NPOI.HSSF.Record;
+    using System;
 
 
     public interface RecordVisitor

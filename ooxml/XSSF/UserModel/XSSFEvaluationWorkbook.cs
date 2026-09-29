@@ -15,7 +15,6 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS;
 using NPOI.SS.Formula;
@@ -23,9 +22,10 @@ using NPOI.SS.Formula.Functions;
 using NPOI.SS.Formula.PTG;
 using NPOI.SS.Formula.UDF;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.Model;
-using NPOI.Util;
 using NPOI.SS.Util;
+using NPOI.Util;
+using NPOI.XSSF.Model;
+using System;
 using System.Collections.Generic;
 
 namespace NPOI.XSSF.UserModel
@@ -41,7 +41,7 @@ namespace NPOI.XSSF.UserModel
 
         public static XSSFEvaluationWorkbook Create(IWorkbook book)
         {
-            if (book == null)
+            if(book == null)
             {
                 return null;
             }
@@ -72,16 +72,16 @@ namespace NPOI.XSSF.UserModel
             // to avoid re-creating the XSSFEvaluationSheet each time a new cell is evaluated
             // EvaluationWorkbooks make not guarantee to synchronize changes made to
             // the underlying workbook after the EvaluationWorkbook is created.
-            if (_sheetCache == null)
+            if(_sheetCache == null)
             {
                 int numberOfSheets = _uBook.NumberOfSheets;
                 _sheetCache = new XSSFEvaluationSheet[numberOfSheets];
-                for (int i = 0; i < numberOfSheets; i++)
+                for(int i = 0; i < numberOfSheets; i++)
                 {
                     _sheetCache[i] = new XSSFEvaluationSheet(_uBook.GetSheetAt(i));
                 }
             }
-            if (sheetIndex < 0 || sheetIndex >= _sheetCache.Length)
+            if(sheetIndex < 0 || sheetIndex >= _sheetCache.Length)
             {
                 // do this to reuse the out-of-bounds logic and message from XSSFWorkbook
                 _uBook.GetSheetAt(sheetIndex);
@@ -98,4 +98,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-

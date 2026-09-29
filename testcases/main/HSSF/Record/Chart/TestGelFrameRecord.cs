@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -15,13 +15,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.HSSF.Record;
+using NPOI.HSSF.Record.Chart;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NPOI.HSSF.Record;
-using NPOI.HSSF.Record.Chart;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.Util;
 
 namespace TestCases.HSSF.Record.Chart
 {

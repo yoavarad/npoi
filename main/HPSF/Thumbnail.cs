@@ -27,8 +27,8 @@
 
 namespace NPOI.HPSF
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /// <summary>
     /// Class To manipulate data in the Clipboard Variant (Variant#VT_CF VT_CF) format.
@@ -129,7 +129,7 @@ namespace NPOI.HPSF
         /// </summary>
         public Thumbnail()
         {
-            
+
         }
 
 
@@ -200,7 +200,7 @@ namespace NPOI.HPSF
         /// <returns>a flag indicating the Clipboard Format</returns>
         public long GetClipboardFormat()
         {
-            if (!(ClipboardFormatTag == CFTAG_WINDOWS))
+            if(!(ClipboardFormatTag == CFTAG_WINDOWS))
                 throw new HPSFException("Clipboard Format Tag of Thumbnail must " +
                                         "be CFTAG_WINDOWS.");
 
@@ -226,10 +226,10 @@ namespace NPOI.HPSF
         /// <returns></returns>
         public byte[] GetThumbnailAsWMF()
         {
-            if (!(ClipboardFormatTag == CFTAG_WINDOWS))
+            if(!(ClipboardFormatTag == CFTAG_WINDOWS))
                 throw new HPSFException("Clipboard Format Tag of Thumbnail must " +
                                         "be CFTAG_WINDOWS.");
-            if (!(GetClipboardFormat() == CF_METAFILEPICT))
+            if(!(GetClipboardFormat() == CF_METAFILEPICT))
                 throw new HPSFException("Clipboard Format of Thumbnail must " +
                                         "be CF_METAFILEPICT.");
             else

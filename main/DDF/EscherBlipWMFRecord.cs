@@ -19,12 +19,12 @@
 
 namespace NPOI.DDF
 {
-    using System;
-    using System.Text;
-    using NPOI.Util;
-    using System.IO;
     using ICSharpCode.SharpZipLib.Zip.Compression;
     using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+    using NPOI.Util;
+    using System;
+    using System.IO;
+    using System.Text;
 
 
     /// <summary>
@@ -72,17 +72,28 @@ namespace NPOI.DDF
 
             int size = 0;
             field_1_secondaryUID = new byte[16];
-            Array.Copy(data, pos + size, field_1_secondaryUID, 0, 16); size += 16;
-            field_2_cacheOfSize = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_3_boundaryTop = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_4_boundaryLeft = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_5_boundaryWidth = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_6_boundaryHeight = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_7_width = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_8_height = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_9_cacheOfSavedSize = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_10_compressionFlag = data[pos + size]; size++;
-            field_11_filter = data[pos + size]; size++;
+            Array.Copy(data, pos + size, field_1_secondaryUID, 0, 16);
+            size += 16;
+            field_2_cacheOfSize = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_3_boundaryTop = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_4_boundaryLeft = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_5_boundaryWidth = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_6_boundaryHeight = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_7_width = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_8_height = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_9_cacheOfSavedSize = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_10_compressionFlag = data[pos + size];
+            size++;
+            field_11_filter = data[pos + size];
+            size++;
 
             int bytesRemaining = bytesAfterHeader - size;
             field_12_data = new byte[bytesRemaining];
@@ -111,18 +122,28 @@ namespace NPOI.DDF
             LittleEndian.PutInt(data, offset + 4, remainingBytes);
 
             int pos = offset + HEADER_SIZE;
-            Array.Copy(field_1_secondaryUID, 0, data, pos, 16); pos += 16;
-            LittleEndian.PutInt(data, pos, field_2_cacheOfSize); pos += 4;
-            LittleEndian.PutInt(data, pos, field_3_boundaryTop); pos += 4;
-            LittleEndian.PutInt(data, pos, field_4_boundaryLeft); pos += 4;
-            LittleEndian.PutInt(data, pos, field_5_boundaryWidth); pos += 4;
-            LittleEndian.PutInt(data, pos, field_6_boundaryHeight); pos += 4;
-            LittleEndian.PutInt(data, pos, field_7_width); pos += 4;
-            LittleEndian.PutInt(data, pos, field_8_height); pos += 4;
-            LittleEndian.PutInt(data, pos, field_9_cacheOfSavedSize); pos += 4;
+            Array.Copy(field_1_secondaryUID, 0, data, pos, 16);
+            pos += 16;
+            LittleEndian.PutInt(data, pos, field_2_cacheOfSize);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_3_boundaryTop);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_4_boundaryLeft);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_5_boundaryWidth);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_6_boundaryHeight);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_7_width);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_8_height);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_9_cacheOfSavedSize);
+            pos += 4;
             data[pos++] = field_10_compressionFlag;
             data[pos++] = field_11_filter;
-            Array.Copy(field_12_data, 0, data, pos, field_12_data.Length); pos += field_12_data.Length;
+            Array.Copy(field_12_data, 0, data, pos, field_12_data.Length);
+            pos += field_12_data.Length;
 
             listener.AfterRecordSerialize(pos, RecordId, pos - offset, this);
             return pos - offset;
@@ -235,7 +256,7 @@ namespace NPOI.DDF
         /// <value>the cache of the saved size.</value>
         public int CacheOfSavedSize
         {
-            get{return field_9_cacheOfSavedSize;}
+            get { return field_9_cacheOfSavedSize; }
             set { this.field_9_cacheOfSavedSize = value; }
         }
 
@@ -281,15 +302,15 @@ namespace NPOI.DDF
             String nl = Environment.NewLine;
 
             String extraData = string.Empty;
-            using (MemoryStream b = new MemoryStream())
+            using(MemoryStream b = new MemoryStream())
             {
                 try
                 {
                     HexDump.Dump(this.field_12_data, 0, b, 0);
                     //extraData = b.ToString();
-                    extraData = Encoding.UTF8.GetString(b.GetBuffer(), 0, (int)b.Length);
+                    extraData = Encoding.UTF8.GetString(b.GetBuffer(), 0, (int) b.Length);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     extraData = e.ToString();
                 }
@@ -314,14 +335,14 @@ namespace NPOI.DDF
         public override String ToXml(String tab)
         {
             String extraData;
-            using (MemoryStream b = new MemoryStream())
+            using(MemoryStream b = new MemoryStream())
             {
                 try
                 {
                     HexDump.Dump(this.field_12_data, 0, b, 0);
                     extraData = HexDump.ToHex(b.ToArray());
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     extraData = e.ToString();
                 }
@@ -350,7 +371,7 @@ namespace NPOI.DDF
         /// <returns></returns>
         public static byte[] Compress(byte[] data)
         {
-            using (MemoryStream out1 = new MemoryStream())
+            using(MemoryStream out1 = new MemoryStream())
             {
                 Deflater deflater = new Deflater(0, false);
                 DeflaterOutputStream deflaterOutputStream = new DeflaterOutputStream(out1,deflater);
@@ -361,14 +382,14 @@ namespace NPOI.DDF
                     deflaterOutputStream.Write(data, 0, data.Length);   //Tony Qu changed the code
                     return out1.ToArray();
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new RecordFormatException(e.ToString());
                 }
                 finally
                 {
                     out1.Close();
-                    if (deflaterOutputStream != null)
+                    if(deflaterOutputStream != null)
                     {
                         deflaterOutputStream.Close();
                     }
@@ -387,22 +408,22 @@ namespace NPOI.DDF
         {
             byte[] compressedData = new byte[Length];
             Array.Copy(data, pos + 50, compressedData, 0, Length);
-            using (MemoryStream ms = new MemoryStream(compressedData))
+            using(MemoryStream ms = new MemoryStream(compressedData))
             {
                 Inflater inflater = new Inflater(false);
 
-                using (InflaterInputStream zIn = new InflaterInputStream(ms, inflater))
+                using(InflaterInputStream zIn = new InflaterInputStream(ms, inflater))
                 {
-                    using (MemoryStream out1 = new MemoryStream())
+                    using(MemoryStream out1 = new MemoryStream())
                     {
                         int c;
                         try
                         {
-                            while ((c = zIn.ReadByte()) != -1)
-                                out1.WriteByte((byte)c);
+                            while((c = zIn.ReadByte()) != -1)
+                                out1.WriteByte((byte) c);
                             return out1.ToArray();
                         }
-                        catch (IOException e)
+                        catch(IOException e)
                         {
                             throw new RecordFormatException(e.ToString());
                         }

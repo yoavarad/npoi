@@ -17,9 +17,9 @@
 
 namespace NPOI.POIFS.FileSystem
 {
+    using NPOI.Util;
     using System;
     using System.IO;
-    using NPOI.Util;
     using System.Text;
 
     /**
@@ -124,7 +124,7 @@ namespace NPOI.POIFS.FileSystem
         {
             int ofs = offset;        // current offset, Initialized to start
 
-            if (data.Length < offset + 2)
+            if(data.Length < offset + 2)
             {
                 throw new Ole10NativeException("data is too small");
             }
@@ -132,11 +132,11 @@ namespace NPOI.POIFS.FileSystem
             totalSize = LittleEndian.GetInt(data, ofs);
             ofs += LittleEndianConsts.INT_SIZE;
             mode = EncodingMode.unparsed;
-            if (LittleEndian.GetShort(data, ofs) == 2)
+            if(LittleEndian.GetShort(data, ofs) == 2)
             {
                 // some files like equations don't have a valid filename,
                 // but somehow encode the formula right away in the ole10 header
-                if (char.IsControl((char)data[ofs + LittleEndianConsts.SHORT_SIZE]))
+                if(char.IsControl((char) data[ofs + LittleEndianConsts.SHORT_SIZE]))
                 {
                     mode = EncodingMode.compact;
                 }
@@ -146,7 +146,7 @@ namespace NPOI.POIFS.FileSystem
                 }
             }
             int dataSize = 0;
-            switch (mode)
+            switch(mode)
             {
                 case EncodingMode.parsed:
                     flags1 = LittleEndian.GetShort(data, ofs);
@@ -168,7 +168,7 @@ namespace NPOI.POIFS.FileSystem
 
                     command = StringUtil.GetFromCompressedUnicode(data, ofs, len - 1);
                     ofs += len;
-                    if (totalSize < ofs)
+                    if(totalSize < ofs)
                     {
                         throw new Ole10NativeException("Invalid Ole10Native");
                     }
@@ -176,7 +176,7 @@ namespace NPOI.POIFS.FileSystem
                     dataSize = LittleEndian.GetInt(data, ofs);
                     ofs += LittleEndianConsts.INT_SIZE;
 
-                    if (dataSize < 0 || totalSize - (ofs - LittleEndianConsts.INT_SIZE) < dataSize)
+                    if(dataSize < 0 || totalSize - (ofs - LittleEndianConsts.INT_SIZE) < dataSize)
                     {
                         throw new Ole10NativeException("Invalid Ole10Native");
                     }
@@ -194,7 +194,7 @@ namespace NPOI.POIFS.FileSystem
                     break;
             }
 
-            if ((long)dataSize + (long)ofs > (long)data.Length)
+            if((long) dataSize + (long) ofs > (long) data.Length)
             { //cast to avoid overflow
                 throw new Ole10NativeException("Invalid Ole10Native: declared data length > available data");
             }
@@ -210,7 +210,7 @@ namespace NPOI.POIFS.FileSystem
         private static int GetStringLength(byte[] data, int ofs)
         {
             int len = 0;
-            while (len + ofs < data.Length && data[ofs + len] != 0)
+            while(len + ofs < data.Length && data[ofs + len] != 0)
             {
                 len++;
             }
@@ -363,7 +363,7 @@ namespace NPOI.POIFS.FileSystem
         public byte[] DataBuffer
         {
             get { return dataBuffer; }
-            set { dataBuffer = (byte[])value.Clone(); }
+            set { dataBuffer = (byte[]) value.Clone(); }
         }
 
         /**
@@ -399,33 +399,33 @@ namespace NPOI.POIFS.FileSystem
 
             LittleEndianOutputStream leosOut = new LittleEndianOutputStream(out1);
 
-            switch (mode)
+            switch(mode)
             {
                 case EncodingMode.parsed:
-                    {
-                        MemoryStream bos = new MemoryStream();
-                        LittleEndianOutputStream leos = new LittleEndianOutputStream(bos);
-                        // total size, will be determined later ..
+                {
+                    MemoryStream bos = new MemoryStream();
+                    LittleEndianOutputStream leos = new LittleEndianOutputStream(bos);
+                    // total size, will be determined later ..
 
-                        leos.WriteShort(Flags1);
-                        leos.Write(Encoding.GetEncoding(ISO1).GetBytes(Label));
-                        leos.WriteByte(0);
-                        leos.Write(Encoding.GetEncoding(ISO1).GetBytes(FileName));
-                        leos.WriteByte(0);
-                        leos.WriteShort(Flags2);
-                        leos.WriteShort(Unknown1);
-                        leos.WriteInt(Command.Length + 1);
-                        leos.Write(Encoding.GetEncoding(ISO1).GetBytes(Command));
-                        leos.WriteByte(0);
-                        leos.WriteInt(DataSize);
-                        leos.Write(DataBuffer);
-                        leos.WriteShort(Flags3);
-                        //leos.Close(); // satisfy compiler ...
+                    leos.WriteShort(Flags1);
+                    leos.Write(Encoding.GetEncoding(ISO1).GetBytes(Label));
+                    leos.WriteByte(0);
+                    leos.Write(Encoding.GetEncoding(ISO1).GetBytes(FileName));
+                    leos.WriteByte(0);
+                    leos.WriteShort(Flags2);
+                    leos.WriteShort(Unknown1);
+                    leos.WriteInt(Command.Length + 1);
+                    leos.Write(Encoding.GetEncoding(ISO1).GetBytes(Command));
+                    leos.WriteByte(0);
+                    leos.WriteInt(DataSize);
+                    leos.Write(DataBuffer);
+                    leos.WriteShort(Flags3);
+                    //leos.Close(); // satisfy compiler ...
 
-                        leosOut.WriteInt((int)bos.Length); // total size
-                        bos.WriteTo(out1);
-                        break;
-                    }
+                    leosOut.WriteInt((int) bos.Length); // total size
+                    bos.WriteTo(out1);
+                    break;
+                }
                 case EncodingMode.compact:
                     leosOut.WriteInt(DataSize + LittleEndianConsts.SHORT_SIZE);
                     leosOut.WriteShort(Flags1);

@@ -14,11 +14,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System.Collections.Generic;
+using Cysharp.Text;
 using NPOI.Util;
 using System;
-using System.Text; 
-using Cysharp.Text;
+using System.Collections.Generic;
+using System.Text;
 namespace NPOI.DDF
 {
 
@@ -77,7 +77,7 @@ namespace NPOI.DDF
             get
             {
                 int totalSize = 0;
-                foreach (EscherProperty property in properties)
+                foreach(EscherProperty property in properties)
                 {
                     totalSize += property.PropertySize;
                 }
@@ -97,9 +97,9 @@ namespace NPOI.DDF
 
         public EscherProperty Lookup(int propId)
         {
-            foreach (EscherProperty prop in properties)
+            foreach(EscherProperty prop in properties)
             {
-                if (prop.PropertyNumber == propId)
+                if(prop.PropertyNumber == propId)
                 {
 
                     return prop;
@@ -117,11 +117,11 @@ namespace NPOI.DDF
             LittleEndian.PutShort(data, offset + 2, RecordId);
             LittleEndian.PutInt(data, offset + 4, PropertiesSize);
             int pos = offset + 8;
-            foreach (EscherProperty property in properties)
+            foreach(EscherProperty property in properties)
             {
                 pos += property.SerializeSimplePart(data, pos);
             }
-            foreach (EscherProperty property in properties)
+            foreach(EscherProperty property in properties)
             {
                 pos += property.SerializeComplexPart(data, pos);
             }
@@ -156,15 +156,15 @@ namespace NPOI.DDF
         public void SetEscherProperty(EscherProperty value)
         {
             List<EscherProperty> toRemove = [];
-            foreach (var prop in properties)
+            foreach(var prop in properties)
             {
-                if (prop.Id == value.Id)
+                if(prop.Id == value.Id)
                 {
                     //iterator.Remove();
                     toRemove.Add(prop);
                 }
             }
-            foreach (EscherProperty e in toRemove)
+            foreach(EscherProperty e in toRemove)
                 EscherProperties.Remove(e);
             properties.Add(value);
             SortProperties();
@@ -175,7 +175,7 @@ namespace NPOI.DDF
             List<EscherProperty> toRemove = [];
             foreach(var prop in EscherProperties)
             {
-                if (prop.PropertyNumber == num)
+                if(prop.PropertyNumber == num)
                 {
                     //iterator.Remove();
                     toRemove.Add(prop);
@@ -195,7 +195,7 @@ namespace NPOI.DDF
         {
             String nl = Environment.NewLine;
 
-           using var stringBuilder = ZString.CreateStringBuilder();
+            using var stringBuilder = ZString.CreateStringBuilder();
             stringBuilder.Append(GetType().Name);
             stringBuilder.Append(":");
             stringBuilder.Append(nl);
@@ -217,7 +217,7 @@ namespace NPOI.DDF
             stringBuilder.Append("  properties:");
             stringBuilder.Append(nl);
 
-            foreach (EscherProperty property in properties)
+            foreach(EscherProperty property in properties)
             {
                 stringBuilder.Append("    " + property.ToString() + nl);
             }
@@ -230,7 +230,7 @@ namespace NPOI.DDF
             StringBuilder builder = new StringBuilder();
             builder.Append(tab).Append(FormatXmlRecordHeader(GetType().Name,
                     HexDump.ToHex(RecordId), HexDump.ToHex(Version), HexDump.ToHex(Instance)));
-            foreach (EscherProperty property in EscherProperties)
+            foreach(EscherProperty property in EscherProperties)
             {
                 builder.Append(property.ToXml(tab + "\t"));
             }
@@ -239,4 +239,3 @@ namespace NPOI.DDF
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -26,8 +26,8 @@
  * ==============================================================*/
 
 using System;
-using System.IO;
 using System.Globalization;
+using System.IO;
 
 namespace NPOI.Util
 {
@@ -47,7 +47,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="offset">The offset.</param>
         public ByteField(int offset)
-            : this(offset, (byte)0)
+            : this(offset, (byte) 0)
         {
         }
 
@@ -58,7 +58,7 @@ namespace NPOI.Util
         /// <param name="value">The value.</param>
         public ByteField(int offset, byte value)
         {
-            if (offset < 0)
+            if(offset < 0)
             {
                 throw new IndexOutOfRangeException("offset cannot be negative");
             }
@@ -116,11 +116,11 @@ namespace NPOI.Util
         {
             //this._value = LittleEndian.ReadFromStream(stream, LittleEndianConsts.BYTE_SIZE)[0];
             int ib = stream.ReadByte();
-            if (ib < 0)
+            if(ib < 0)
             {
                 throw new BufferUnderflowException();
             }
-            _value = (byte)ib;
+            _value = (byte) ib;
         }
 
         /// <summary>
@@ -155,6 +155,6 @@ namespace NPOI.Util
         }
     }
 
- 
+
 
 }

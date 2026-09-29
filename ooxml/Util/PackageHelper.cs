@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXml4Net.Exceptions;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.Util;
 using System;
 using System.IO;
-using NPOI.Util;
 namespace NPOI.Util
 {
 
@@ -36,7 +36,7 @@ namespace NPOI.Util
             {
                 return OPCPackage.Open(stream, readOnly);
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 throw new POIXMLException(e);
             }
@@ -54,23 +54,23 @@ namespace NPOI.Util
 
             OPCPackage dest = OPCPackage.Create(path);
             PackageRelationshipCollection rels = pkg.Relationships;
-            foreach (PackageRelationship rel in rels)
+            foreach(PackageRelationship rel in rels)
             {
                 PackagePart part = pkg.GetPart(rel);
                 PackagePart part_tgt;
-                if (rel.RelationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
+                if(rel.RelationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
                 {
                     CopyProperties(pkg.GetPackageProperties(), dest.GetPackageProperties());
                     continue;
                 }
-                dest.AddRelationship(part.PartName, (TargetMode)rel.TargetMode, rel.RelationshipType);
+                dest.AddRelationship(part.PartName, (TargetMode) rel.TargetMode, rel.RelationshipType);
                 part_tgt = dest.CreatePart(part.PartName, part.ContentType);
 
                 Stream out1 = part_tgt.GetOutputStream();
                 IOUtils.Copy(part.GetInputStream(), out1);
                 out1.Close();
 
-                if (part.HasRelationships)
+                if(part.HasRelationships)
                 {
                     Copy(pkg, part, dest, part_tgt);
                 }
@@ -94,39 +94,44 @@ namespace NPOI.Util
         /**
          * Recursively copy namespace parts to the destination namespace
          */
-        private static void Copy(OPCPackage pkg, PackagePart part, OPCPackage tgt, PackagePart part_tgt) {
-        PackageRelationshipCollection rels = part.Relationships;
-        if(rels != null) 
-            foreach (PackageRelationship rel in rels) {
-            PackagePart p;
-            if(rel.TargetMode == TargetMode.External){
-                part_tgt.AddExternalRelationship(rel.TargetUri.OriginalString, rel.RelationshipType, rel.Id);
-                //external relations don't have associated namespace parts
-                continue;
-            }
-            Uri uri = rel.TargetUri;
+        private static void Copy(OPCPackage pkg, PackagePart part, OPCPackage tgt, PackagePart part_tgt)
+        {
+            PackageRelationshipCollection rels = part.Relationships;
+            if(rels != null)
+                foreach(PackageRelationship rel in rels)
+                {
+                    PackagePart p;
+                    if(rel.TargetMode == TargetMode.External)
+                    {
+                        part_tgt.AddExternalRelationship(rel.TargetUri.OriginalString, rel.RelationshipType, rel.Id);
+                        //external relations don't have associated namespace parts
+                        continue;
+                    }
+                    Uri uri = rel.TargetUri;
 
-            if(uri.Fragment != null) {
-                part_tgt.AddRelationship(uri, (TargetMode)rel.TargetMode, rel.RelationshipType, rel.Id);
-                continue;
-            }
-            PackagePartName relName = PackagingUriHelper.CreatePartName(rel.TargetUri);
-            p = pkg.GetPart(relName);
-            part_tgt.AddRelationship(p.PartName, (TargetMode)rel.TargetMode, rel.RelationshipType, rel.Id);
+                    if(uri.Fragment != null)
+                    {
+                        part_tgt.AddRelationship(uri, (TargetMode) rel.TargetMode, rel.RelationshipType, rel.Id);
+                        continue;
+                    }
+                    PackagePartName relName = PackagingUriHelper.CreatePartName(rel.TargetUri);
+                    p = pkg.GetPart(relName);
+                    part_tgt.AddRelationship(p.PartName, (TargetMode) rel.TargetMode, rel.RelationshipType, rel.Id);
 
 
 
 
-            PackagePart dest;
-            if(!tgt.ContainPart(p.PartName)){
-                dest = tgt.CreatePart(p.PartName, p.ContentType);
-                Stream out1 = dest.GetOutputStream();
-                IOUtils.Copy(p.GetInputStream(), out1);
-                out1.Close();
-                Copy(pkg, p, tgt, dest);
-            }
+                    PackagePart dest;
+                    if(!tgt.ContainPart(p.PartName))
+                    {
+                        dest = tgt.CreatePart(p.PartName, p.ContentType);
+                        Stream out1 = dest.GetOutputStream();
+                        IOUtils.Copy(p.GetInputStream(), out1);
+                        out1.Close();
+                        Copy(pkg, p, tgt, dest);
+                    }
+                }
         }
-    }
 
         /**
          * Copy core namespace properties

@@ -27,15 +27,15 @@
 
 namespace TestCases.POIFS.Storage
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.POIFS.Common;
+    using NPOI.POIFS.FileSystem;
     using NPOI.POIFS.Storage;
     using NPOI.Util;
-    using NPOI.POIFS.FileSystem;
-    using NPOI.POIFS.Common;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
     /**
      * Class to Test HeaderBlockWriter functionality
      *
@@ -50,7 +50,7 @@ namespace TestCases.POIFS.Storage
             byte[] expected = RawDataUtil.Decode(expectedDataHexDumpLines);
 
             ClassicAssert.AreEqual(expected.Length, actual.Length);
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
                 ClassicAssert.AreEqual(expected[i], actual[i], "Test byte " + i);
         }
 
@@ -73,27 +73,27 @@ namespace TestCases.POIFS.Storage
             byte[] copy = output.ToArray();
             string[] expected = {
              "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
-			"06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
-			"00 00 00 00 FE FF FF FF 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
+            "00 00 00 00 FE FF FF FF 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+            "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
         };
             ConfirmEqual(expected, copy);
-            block.PropertyStart = unchecked((int)0x87654321);
+            block.PropertyStart = unchecked((int) 0x87654321);
             output = new MemoryStream(512);
             block.WriteBlocks(output);
-            ClassicAssert.AreEqual(unchecked((int)0x87654321),  new HeaderBlockReader(new MemoryStream(output.ToArray())).PropertyStart);
+            ClassicAssert.AreEqual(unchecked((int) 0x87654321), new HeaderBlockReader(new MemoryStream(output.ToArray())).PropertyStart);
 
         }
 
@@ -112,24 +112,24 @@ namespace TestCases.POIFS.Storage
 
             block.WriteBlocks(output);
             byte[] copy = output.ToArray();
-            string[] expected = 
+            string[] expected =
         {
                 "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
                 "06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 67 45 23 01",
                 "00 00 00 00 FE FF FF FF 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-	    		"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-	    		"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-		    	"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-		    	"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-    			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-    			"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-	    		"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-	    		"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-	    		"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-	    		"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-		    	"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-		    	"FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
         };
             ConfirmEqual(expected, copy);
         }
@@ -150,24 +150,24 @@ namespace TestCases.POIFS.Storage
             block.WriteBlocks(output);
             byte[] copy = output.ToArray();
 
-            string[] expected = 
+            string[] expected =
         {
-			    "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
-			    "06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 67 45 23 01 00 00 00 00 00 10 00 00 FE FF FF FF",
-			    "00 00 00 00 FE FF FF FF 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
-			    "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
+                "06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 67 45 23 01 00 00 00 00 00 10 00 00 FE FF FF FF",
+                "00 00 00 00 FE FF FF FF 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
+                "FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF",
         };
 
             ConfirmEqual(expected, copy);
@@ -191,7 +191,7 @@ namespace TestCases.POIFS.Storage
 
             block.WriteBlocks(output);
             byte[] copy = output.ToArray();
-            string[] expected = 
+            string[] expected =
         {
                 "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
                 "06 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
@@ -213,7 +213,7 @@ namespace TestCases.POIFS.Storage
 
             ConfirmEqual(expected, copy);
 
-            
+
 
             block = new HeaderBlockWriter(POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS);
             xbats = block.SetBATBlocks(109, 0x01234567);
@@ -222,24 +222,24 @@ namespace TestCases.POIFS.Storage
             output = new MemoryStream(512);
             block.WriteBlocks(output);
             copy = output.ToArray();
-            string[] expected2 = 
+            string[] expected2 =
         {
-			    "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
-			    "06 00 00 00 00 00 00 00 00 00 00 00 6D 00 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
-			    "00 00 00 00 FE FF FF FF 00 00 00 00 67 45 23 01 68 45 23 01 69 45 23 01 6A 45 23 01 6B 45 23 01",
-			    "6C 45 23 01 6D 45 23 01 6E 45 23 01 6F 45 23 01 70 45 23 01 71 45 23 01 72 45 23 01 73 45 23 01",
-			    "74 45 23 01 75 45 23 01 76 45 23 01 77 45 23 01 78 45 23 01 79 45 23 01 7A 45 23 01 7B 45 23 01",
-			    "7C 45 23 01 7D 45 23 01 7E 45 23 01 7F 45 23 01 80 45 23 01 81 45 23 01 82 45 23 01 83 45 23 01",
-			    "84 45 23 01 85 45 23 01 86 45 23 01 87 45 23 01 88 45 23 01 89 45 23 01 8A 45 23 01 8B 45 23 01",
-			    "8C 45 23 01 8D 45 23 01 8E 45 23 01 8F 45 23 01 90 45 23 01 91 45 23 01 92 45 23 01 93 45 23 01",
-			    "94 45 23 01 95 45 23 01 96 45 23 01 97 45 23 01 98 45 23 01 99 45 23 01 9A 45 23 01 9B 45 23 01",
-			    "9C 45 23 01 9D 45 23 01 9E 45 23 01 9F 45 23 01 A0 45 23 01 A1 45 23 01 A2 45 23 01 A3 45 23 01",
-			    "A4 45 23 01 A5 45 23 01 A6 45 23 01 A7 45 23 01 A8 45 23 01 A9 45 23 01 AA 45 23 01 AB 45 23 01",
-			    "AC 45 23 01 AD 45 23 01 AE 45 23 01 AF 45 23 01 B0 45 23 01 B1 45 23 01 B2 45 23 01 B3 45 23 01",
-			    "B4 45 23 01 B5 45 23 01 B6 45 23 01 B7 45 23 01 B8 45 23 01 B9 45 23 01 BA 45 23 01 BB 45 23 01",
-			    "BC 45 23 01 BD 45 23 01 BE 45 23 01 BF 45 23 01 C0 45 23 01 C1 45 23 01 C2 45 23 01 C3 45 23 01",
-			    "C4 45 23 01 C5 45 23 01 C6 45 23 01 C7 45 23 01 C8 45 23 01 C9 45 23 01 CA 45 23 01 CB 45 23 01",
-			    "CC 45 23 01 CD 45 23 01 CE 45 23 01 CF 45 23 01 D0 45 23 01 D1 45 23 01 D2 45 23 01 D3 45 23 01"
+                "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
+                "06 00 00 00 00 00 00 00 00 00 00 00 6D 00 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
+                "00 00 00 00 FE FF FF FF 00 00 00 00 67 45 23 01 68 45 23 01 69 45 23 01 6A 45 23 01 6B 45 23 01",
+                "6C 45 23 01 6D 45 23 01 6E 45 23 01 6F 45 23 01 70 45 23 01 71 45 23 01 72 45 23 01 73 45 23 01",
+                "74 45 23 01 75 45 23 01 76 45 23 01 77 45 23 01 78 45 23 01 79 45 23 01 7A 45 23 01 7B 45 23 01",
+                "7C 45 23 01 7D 45 23 01 7E 45 23 01 7F 45 23 01 80 45 23 01 81 45 23 01 82 45 23 01 83 45 23 01",
+                "84 45 23 01 85 45 23 01 86 45 23 01 87 45 23 01 88 45 23 01 89 45 23 01 8A 45 23 01 8B 45 23 01",
+                "8C 45 23 01 8D 45 23 01 8E 45 23 01 8F 45 23 01 90 45 23 01 91 45 23 01 92 45 23 01 93 45 23 01",
+                "94 45 23 01 95 45 23 01 96 45 23 01 97 45 23 01 98 45 23 01 99 45 23 01 9A 45 23 01 9B 45 23 01",
+                "9C 45 23 01 9D 45 23 01 9E 45 23 01 9F 45 23 01 A0 45 23 01 A1 45 23 01 A2 45 23 01 A3 45 23 01",
+                "A4 45 23 01 A5 45 23 01 A6 45 23 01 A7 45 23 01 A8 45 23 01 A9 45 23 01 AA 45 23 01 AB 45 23 01",
+                "AC 45 23 01 AD 45 23 01 AE 45 23 01 AF 45 23 01 B0 45 23 01 B1 45 23 01 B2 45 23 01 B3 45 23 01",
+                "B4 45 23 01 B5 45 23 01 B6 45 23 01 B7 45 23 01 B8 45 23 01 B9 45 23 01 BA 45 23 01 BB 45 23 01",
+                "BC 45 23 01 BD 45 23 01 BE 45 23 01 BF 45 23 01 C0 45 23 01 C1 45 23 01 C2 45 23 01 C3 45 23 01",
+                "C4 45 23 01 C5 45 23 01 C6 45 23 01 C7 45 23 01 C8 45 23 01 C9 45 23 01 CA 45 23 01 CB 45 23 01",
+                "CC 45 23 01 CD 45 23 01 CE 45 23 01 CF 45 23 01 D0 45 23 01 D1 45 23 01 D2 45 23 01 D3 45 23 01"
         };
             ConfirmEqual(expected2, copy);
 
@@ -250,24 +250,24 @@ namespace TestCases.POIFS.Storage
             output = new MemoryStream(512);
             block.WriteBlocks(output);
             copy = output.ToArray();
-            string[] expected3 = 
+            string[] expected3 =
         {
                 "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
-			    "06 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
-			    "00 00 00 00 67 46 23 01 02 00 00 00 67 45 23 01 68 45 23 01 69 45 23 01 6A 45 23 01 6B 45 23 01",
-			    "6C 45 23 01 6D 45 23 01 6E 45 23 01 6F 45 23 01 70 45 23 01 71 45 23 01 72 45 23 01 73 45 23 01",
-			    "74 45 23 01 75 45 23 01 76 45 23 01 77 45 23 01 78 45 23 01 79 45 23 01 7A 45 23 01 7B 45 23 01",
-			    "7C 45 23 01 7D 45 23 01 7E 45 23 01 7F 45 23 01 80 45 23 01 81 45 23 01 82 45 23 01 83 45 23 01",
-			    "84 45 23 01 85 45 23 01 86 45 23 01 87 45 23 01 88 45 23 01 89 45 23 01 8A 45 23 01 8B 45 23 01",
-			    "8C 45 23 01 8D 45 23 01 8E 45 23 01 8F 45 23 01 90 45 23 01 91 45 23 01 92 45 23 01 93 45 23 01",
-			    "94 45 23 01 95 45 23 01 96 45 23 01 97 45 23 01 98 45 23 01 99 45 23 01 9A 45 23 01 9B 45 23 01",
-			    "9C 45 23 01 9D 45 23 01 9E 45 23 01 9F 45 23 01 A0 45 23 01 A1 45 23 01 A2 45 23 01 A3 45 23 01",
-			    "A4 45 23 01 A5 45 23 01 A6 45 23 01 A7 45 23 01 A8 45 23 01 A9 45 23 01 AA 45 23 01 AB 45 23 01",
-			    "AC 45 23 01 AD 45 23 01 AE 45 23 01 AF 45 23 01 B0 45 23 01 B1 45 23 01 B2 45 23 01 B3 45 23 01",
-			    "B4 45 23 01 B5 45 23 01 B6 45 23 01 B7 45 23 01 B8 45 23 01 B9 45 23 01 BA 45 23 01 BB 45 23 01",
-			    "BC 45 23 01 BD 45 23 01 BE 45 23 01 BF 45 23 01 C0 45 23 01 C1 45 23 01 C2 45 23 01 C3 45 23 01",
-			    "C4 45 23 01 C5 45 23 01 C6 45 23 01 C7 45 23 01 C8 45 23 01 C9 45 23 01 CA 45 23 01 CB 45 23 01",
-			    "CC 45 23 01 CD 45 23 01 CE 45 23 01 CF 45 23 01 D0 45 23 01 D1 45 23 01 D2 45 23 01 D3 45 23 01"
+                "06 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
+                "00 00 00 00 67 46 23 01 02 00 00 00 67 45 23 01 68 45 23 01 69 45 23 01 6A 45 23 01 6B 45 23 01",
+                "6C 45 23 01 6D 45 23 01 6E 45 23 01 6F 45 23 01 70 45 23 01 71 45 23 01 72 45 23 01 73 45 23 01",
+                "74 45 23 01 75 45 23 01 76 45 23 01 77 45 23 01 78 45 23 01 79 45 23 01 7A 45 23 01 7B 45 23 01",
+                "7C 45 23 01 7D 45 23 01 7E 45 23 01 7F 45 23 01 80 45 23 01 81 45 23 01 82 45 23 01 83 45 23 01",
+                "84 45 23 01 85 45 23 01 86 45 23 01 87 45 23 01 88 45 23 01 89 45 23 01 8A 45 23 01 8B 45 23 01",
+                "8C 45 23 01 8D 45 23 01 8E 45 23 01 8F 45 23 01 90 45 23 01 91 45 23 01 92 45 23 01 93 45 23 01",
+                "94 45 23 01 95 45 23 01 96 45 23 01 97 45 23 01 98 45 23 01 99 45 23 01 9A 45 23 01 9B 45 23 01",
+                "9C 45 23 01 9D 45 23 01 9E 45 23 01 9F 45 23 01 A0 45 23 01 A1 45 23 01 A2 45 23 01 A3 45 23 01",
+                "A4 45 23 01 A5 45 23 01 A6 45 23 01 A7 45 23 01 A8 45 23 01 A9 45 23 01 AA 45 23 01 AB 45 23 01",
+                "AC 45 23 01 AD 45 23 01 AE 45 23 01 AF 45 23 01 B0 45 23 01 B1 45 23 01 B2 45 23 01 B3 45 23 01",
+                "B4 45 23 01 B5 45 23 01 B6 45 23 01 B7 45 23 01 B8 45 23 01 B9 45 23 01 BA 45 23 01 BB 45 23 01",
+                "BC 45 23 01 BD 45 23 01 BE 45 23 01 BF 45 23 01 C0 45 23 01 C1 45 23 01 C2 45 23 01 C3 45 23 01",
+                "C4 45 23 01 C5 45 23 01 C6 45 23 01 C7 45 23 01 C8 45 23 01 C9 45 23 01 CA 45 23 01 CB 45 23 01",
+                "CC 45 23 01 CD 45 23 01 CE 45 23 01 CF 45 23 01 D0 45 23 01 D1 45 23 01 D2 45 23 01 D3 45 23 01"
         };
             ConfirmEqual(expected3, copy);
 
@@ -279,7 +279,7 @@ namespace TestCases.POIFS.Storage
             int offset = 0;
             int k = 0;
 
-            for (; k < 127; k++)
+            for(; k < 127; k++)
             {
                 ClassicAssert.AreEqual(correct,
                              LittleEndian.GetInt(copy, offset), "XBAT entry " + k);
@@ -290,14 +290,14 @@ namespace TestCases.POIFS.Storage
                          LittleEndian.GetInt(copy, offset), "XBAT Chain");
             offset += LittleEndianConsts.INT_SIZE;
             k++;
-            for (; k < 148; k++)
+            for(; k < 148; k++)
             {
                 ClassicAssert.AreEqual(correct,
                              LittleEndian.GetInt(copy, offset), "XBAT entry " + k);
                 correct++;
                 offset += LittleEndianConsts.INT_SIZE;
             }
-            for (; k < 255; k++)
+            for(; k < 255; k++)
             {
                 ClassicAssert.AreEqual(-1,
                              LittleEndian.GetInt(copy, offset), "XBAT entry " + k);

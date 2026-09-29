@@ -45,18 +45,18 @@ namespace NPOI.HPSF
         /// <summary>
         /// Initializes a new instance of the <see cref="UnexpectedPropertySetTypeException"/> class.
         /// </summary>
-        public UnexpectedPropertySetTypeException():base()
+        public UnexpectedPropertySetTypeException() : base()
         {
-            
+
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnexpectedPropertySetTypeException"/> class.
         /// </summary>
         /// <param name="msg">The message string.</param>
-        public UnexpectedPropertySetTypeException(String msg):base(msg)
+        public UnexpectedPropertySetTypeException(String msg) : base(msg)
         {
-            
+
         }
 
 
@@ -65,9 +65,9 @@ namespace NPOI.HPSF
         /// </summary>
         /// <param name="reason">The reason, i.e. a throwable that indirectly
         /// caused this exception.</param>
-        public UnexpectedPropertySetTypeException(Exception reason):base(reason)
+        public UnexpectedPropertySetTypeException(Exception reason) : base(reason)
         {
-            
+
         }
 
 
@@ -78,9 +78,9 @@ namespace NPOI.HPSF
         /// <param name="reason">The reason, i.e. a throwable that indirectly
         /// caused this exception.</param>
         public UnexpectedPropertySetTypeException(String msg,
-                                                  Exception reason):base(msg, reason)
+                                                  Exception reason) : base(msg, reason)
         {
-            
+
         }
 
     }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -30,18 +30,16 @@ namespace NPOI.XDDF.UserModel.Text
     public interface ITextContainer
     {
 
-        Option<R> FindDefinedParagraphProperty<R>(Func<CT_TextParagraphProperties, bool> isSet, 
+        Option<R> FindDefinedParagraphProperty<R>(Func<CT_TextParagraphProperties, bool> isSet,
             Func<CT_TextParagraphProperties, R> getter) where R : class;
 
-        Option<R> FindDefinedRunProperty<R>(Func<CT_TextCharacterProperties, bool> isSet, 
+        Option<R> FindDefinedRunProperty<R>(Func<CT_TextCharacterProperties, bool> isSet,
             Func<CT_TextCharacterProperties, R> getter) where R : class;
 
-        ValueOption<V> FindDefinedParagraphValueProperty<V>(Func<CT_TextParagraphProperties, bool> isSet, 
-            Func<CT_TextParagraphProperties, V> getter) where V: struct;
+        ValueOption<V> FindDefinedParagraphValueProperty<V>(Func<CT_TextParagraphProperties, bool> isSet,
+            Func<CT_TextParagraphProperties, V> getter) where V : struct;
 
-        ValueOption<V> FindDefinedRunValueProperty<V>(Func<CT_TextCharacterProperties, bool> isSet, 
-            Func<CT_TextCharacterProperties, V> getter) where V: struct;
+        ValueOption<V> FindDefinedRunValueProperty<V>(Func<CT_TextCharacterProperties, bool> isSet,
+            Func<CT_TextCharacterProperties, V> getter) where V : struct;
     }
 }
-
-

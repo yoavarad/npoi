@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,12 +14,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.UDF;
 using NPOI.SS.UserModel;
 using NPOI.Util;
 using NPOI.XSSF.UserModel;
+using System;
 
 namespace NPOI.XSSF.Streaming
 {
@@ -33,13 +33,13 @@ namespace NPOI.XSSF.Streaming
         {
         }
 
-        private SXSSFFormulaEvaluator(SXSSFWorkbook workbook, IStabilityClassifier stabilityClassifier, UDFFinder udfFinder) 
+        private SXSSFFormulaEvaluator(SXSSFWorkbook workbook, IStabilityClassifier stabilityClassifier, UDFFinder udfFinder)
             : this(workbook, new WorkbookEvaluator(SXSSFEvaluationWorkbook.Create(workbook), stabilityClassifier, udfFinder))
         {
 
         }
 
-        private SXSSFFormulaEvaluator(SXSSFWorkbook workbook, WorkbookEvaluator bookEvaluator) 
+        private SXSSFFormulaEvaluator(SXSSFWorkbook workbook, WorkbookEvaluator bookEvaluator)
             : base(bookEvaluator)
         {
             this.wb = workbook;
@@ -52,19 +52,19 @@ namespace NPOI.XSSF.Streaming
 
         public override void NotifySetFormula(ICell cell)
         {
-            _bookEvaluator.NotifyUpdateCell(new SXSSFEvaluationCell((SXSSFCell)cell));
+            _bookEvaluator.NotifyUpdateCell(new SXSSFEvaluationCell((SXSSFCell) cell));
         }
         public override void NotifyDeleteCell(ICell cell)
         {
-            _bookEvaluator.NotifyDeleteCell(new SXSSFEvaluationCell((SXSSFCell)cell));
+            _bookEvaluator.NotifyDeleteCell(new SXSSFEvaluationCell((SXSSFCell) cell));
         }
         public override void NotifyUpdateCell(ICell cell)
         {
-            _bookEvaluator.NotifyUpdateCell(new SXSSFEvaluationCell((SXSSFCell)cell));
+            _bookEvaluator.NotifyUpdateCell(new SXSSFEvaluationCell((SXSSFCell) cell));
         }
         protected override IEvaluationCell ToEvaluationCell(ICell cell)
         {
-            if (cell is not SXSSFCell sxssfCell)
+            if(cell is not SXSSFCell sxssfCell)
             {
                 throw new ArgumentException("Unexpected type of cell: " + cell.GetType() + "." +
                         " Only SXSSFCells can be evaluated.");
@@ -78,32 +78,33 @@ namespace NPOI.XSSF.Streaming
             SXSSFFormulaEvaluator eval = new SXSSFFormulaEvaluator(wb);
 
             // Check they're all available
-            foreach (ISheet sheet in wb)
+            foreach(ISheet sheet in wb)
             {
-                if (((SXSSFSheet)sheet).AllRowsFlushed)
+                if(((SXSSFSheet) sheet).AllRowsFlushed)
                 {
                     throw new SheetsFlushedException();
                 }
             }
 
             // Process the sheets as best we can
-            foreach (ISheet sheet in wb)
+            foreach(ISheet sheet in wb)
             {
 
                 // Check if any rows have already been flushed out
                 int lastFlushedRowNum = ((SXSSFSheet)sheet).LastFlushedRowNumber;
-                if (lastFlushedRowNum > -1)
+                if(lastFlushedRowNum > -1)
                 {
-                    if (!skipOutOfWindow) throw new RowFlushedException(0);
+                    if(!skipOutOfWindow)
+                        throw new RowFlushedException(0);
                     logger.Log(POILogger.INFO, "Rows up to " + lastFlushedRowNum + " have already been flushed, skipping");
                 }
 
                 // Evaluate what we have
-                foreach (IRow r in sheet)
+                foreach(IRow r in sheet)
                 {
-                    foreach (ICell c in r)
+                    foreach(ICell c in r)
                     {
-                        if (c.CellType == CellType.Formula)
+                        if(c.CellType == CellType.Formula)
                         {
                             eval.EvaluateFormulaCell(c);
                         }
@@ -122,7 +123,7 @@ namespace NPOI.XSSF.Streaming
         public override void EvaluateAll()
         {
             // Have the evaluation done, with exceptions
-            EvaluateAllFormulaCells((SXSSFWorkbook)wb, false);
+            EvaluateAllFormulaCells((SXSSFWorkbook) wb, false);
         }
     }
 

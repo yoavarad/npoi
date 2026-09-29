@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
-using NPOI.POIFS.Common;
-using NPOI.Util;
-using NPOI.POIFS.Storage;
 using NPOI.Openxml4Net.Exceptions;
+using NPOI.POIFS.Common;
 using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {
@@ -54,7 +54,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             PackageRelationship corePropsRel = pkg.GetRelationshipsByType(
                     PackageRelationshipTypes.CORE_PROPERTIES).GetRelationship(0);
 
-            if (corePropsRel == null)
+            if(corePropsRel == null)
                 return null;
 
             ZipEntry ze = new ZipEntry(corePropsRel.TargetUri.OriginalString) { DateTime = ZipEntryTimestamp };
@@ -69,10 +69,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             IEnumerator entries = pkg.ZipArchive.Entries;
             // Enumerate through the Zip entries until we find the one named
             // '[Content_Types].xml'.
-            while (entries.MoveNext())
+            while(entries.MoveNext())
             {
                 ZipEntry entry = (ZipEntry)entries.Current;
-                if (entry.Name.Equals(
+                if(entry.Name.Equals(
                         ContentTypeManager.CONTENT_TYPES_PART_NAME))
                     return entry;
             }
@@ -89,9 +89,9 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public static String GetOPCNameFromZipItemName(String zipItemName)
         {
-            if (zipItemName == null)
+            if(zipItemName == null)
                 throw new ArgumentException("zipItemName");
-            if (zipItemName.StartsWith(FORWARD_SLASH))
+            if(zipItemName.StartsWith(FORWARD_SLASH))
                 return zipItemName;
             else
                 return FORWARD_SLASH + zipItemName;
@@ -107,11 +107,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public static String GetZipItemNameFromOPCName(String opcItemName)
         {
-            if (opcItemName == null)
+            if(opcItemName == null)
                 throw new ArgumentException("opcItemName");
 
             String retVal = opcItemName;
-            while (retVal.StartsWith(FORWARD_SLASH))
+            while(retVal.StartsWith(FORWARD_SLASH))
                 retVal = retVal.Substring(1);
             return retVal;
         }
@@ -126,17 +126,17 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public static Uri GetZipURIFromOPCName(String opcItemName)
         {
-            if (opcItemName == null)
+            if(opcItemName == null)
                 throw new ArgumentException("opcItemName");
 
             String retVal = opcItemName;
-            while (retVal.StartsWith(FORWARD_SLASH))
+            while(retVal.StartsWith(FORWARD_SLASH))
                 retVal = retVal.Substring(1);
             try
             {
                 return PackagingUriHelper.ParseUri(retVal, UriKind.RelativeOrAbsolute);
             }
-            catch (UriFormatException)
+            catch(UriFormatException)
             {
                 return null;
             }
@@ -177,11 +177,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal
 
         private static InputStream PrepareToCheckHeader(InputStream stream)
         {
-            if (stream is PushbackInputStream)
+            if(stream is PushbackInputStream)
             {
                 return stream;
             }
-            if (stream.MarkSupported())
+            if(stream.MarkSupported())
             {
                 stream.Mark(8);
                 return stream;
@@ -224,7 +224,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
         */
         public static ZipFile OpenZipFile(FileInfo file)
         {
-            if (!file.Exists)
+            if(!file.Exists)
             {
                 throw new FileNotFoundException("File does not exist");
             }

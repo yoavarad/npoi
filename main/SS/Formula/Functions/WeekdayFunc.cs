@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -16,9 +16,9 @@
  *    limitations under the License.
  * ====================================================================
  */
-using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
+using System;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -75,7 +75,7 @@ namespace NPOI.SS.Formula.Functions
         {
             try
             {
-                if (args.Length < 1 || args.Length > 2)
+                if(args.Length < 1 || args.Length > 2)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
@@ -83,7 +83,7 @@ namespace NPOI.SS.Formula.Functions
                 // extract first parameter
                 ValueEval serialDateVE = OperandResolver.GetSingleValue(args[0], srcRowIndex, srcColumnIndex);
                 double serialDate = OperandResolver.CoerceValueToDouble(serialDateVE);
-                if (!DateUtil.IsValidExcelDate(serialDate))
+                if(!DateUtil.IsValidExcelDate(serialDate))
                 {
                     return ErrorEval.NUM_ERROR;						// EXCEL uses this and no VALUE_ERROR
                 }
@@ -92,15 +92,15 @@ namespace NPOI.SS.Formula.Functions
 
                 // extract second parameter
                 int returnOption = 1;					// default value
-                if (args.Length == 2)
+                if(args.Length == 2)
                 {
                     ValueEval ve = OperandResolver.GetSingleValue(args[1], srcRowIndex, srcColumnIndex);
-                    if (ve == MissingArgEval.instance || ve == BlankEval.instance)
+                    if(ve == MissingArgEval.instance || ve == BlankEval.instance)
                     {
                         return ErrorEval.NUM_ERROR;		// EXCEL uses this and no VALUE_ERROR
                     }
                     returnOption = OperandResolver.CoerceValueToInt(ve);
-                    if (returnOption == 2)
+                    if(returnOption == 2)
                     {
                         returnOption = 11;				// both mean the same
                     }
@@ -108,16 +108,16 @@ namespace NPOI.SS.Formula.Functions
 
                 // perform calculation
                 double result;
-                if (returnOption == 1)
+                if(returnOption == 1)
                 {
                     result = weekday;
                     // value 2 is handled above (as value 11)
                 }
-                else if (returnOption == 3)
+                else if(returnOption == 3)
                 {
                     result = (weekday + 6 - 1) % 7;
                 }
-                else if (returnOption >= 11 && returnOption <= 17)
+                else if(returnOption >= 11 && returnOption <= 17)
                 {
                     result = (weekday + 6 - (returnOption - 10)) % 7 + 1;		// rotate in the value range 1 to 7
                 }
@@ -128,7 +128,7 @@ namespace NPOI.SS.Formula.Functions
 
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

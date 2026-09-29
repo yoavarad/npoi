@@ -18,7 +18,8 @@
 namespace TestCases.SS.UserModel
 {
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
 
@@ -258,7 +259,7 @@ namespace TestCases.SS.UserModel
         private static void SetValue(ISheet sheet, int rowIndex, int colIndex, double value)
         {
             IRow row = sheet.GetRow(rowIndex);
-            if (row == null)
+            if(row == null)
             {
                 row = sheet.CreateRow(rowIndex);
             }
@@ -307,9 +308,9 @@ namespace TestCases.SS.UserModel
             {
                 fe.EvaluateInCell(cellB1);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.Equals("Cannot get a numeric value from a error formula cell",
+                if(e.Message.Equals("Cannot get a numeric value from a error formula cell",
                     StringComparison.OrdinalIgnoreCase))
                 {
                     Assert.Fail("Identified bug 46479a");
@@ -351,7 +352,7 @@ namespace TestCases.SS.UserModel
             IFormulaEvaluator evaluator = wb.GetCreationHelper().CreateFormulaEvaluator();
             ICell cell = wb.GetSheetAt(0).GetRow(0).GetCell(0);
             ICell same = evaluator.EvaluateInCell(cell);
-            
+
             ClassicAssert.AreSame(cell, same);
             wb.Close();
         }
@@ -363,7 +364,7 @@ namespace TestCases.SS.UserModel
             ICell cell = wb.CreateSheet().CreateRow(0).CreateCell(0);
             cell.SetCellFormula("1+2");
 
-            ClassicAssert.AreEqual(0, (int)cell.NumericCellValue);
+            ClassicAssert.AreEqual(0, (int) cell.NumericCellValue);
             ClassicAssert.AreEqual("1+2", cell.ToString());
 
             IFormulaEvaluator eval = wb.GetCreationHelper().CreateFormulaEvaluator();
@@ -682,12 +683,12 @@ namespace TestCases.SS.UserModel
         private void SetCellFormula(ISheet sheet, int row, int column, string formula)
         {
             IRow r = sheet.GetRow(row);
-            if (r == null)
+            if(r == null)
             {
                 r = sheet.CreateRow(row);
             }
             ICell cell = r.GetCell(column);
-            if (cell == null)
+            if(cell == null)
             {
                 cell = r.CreateCell(column);
             }
@@ -705,15 +706,15 @@ namespace TestCases.SS.UserModel
         }
 
         [Test]
-        public void TestBug61532() 
+        public void TestBug61532()
         {
             IWorkbook wb = _testDataProvider.CreateWorkbook();
-            try 
+            try
             {
                 ICell cell = wb.CreateSheet().CreateRow(0).CreateCell(0);
                 cell.SetCellFormula("1+2");
 
-                ClassicAssert.AreEqual(0, (int)cell.NumericCellValue);
+                ClassicAssert.AreEqual(0, (int) cell.NumericCellValue);
                 ClassicAssert.AreEqual("1+2", cell.ToString());
 
                 IFormulaEvaluator eval = wb.GetCreationHelper().CreateFormulaEvaluator();
@@ -743,7 +744,7 @@ namespace TestCases.SS.UserModel
             DataFormatter formatter = new DataFormatter();
             var paramswb = _testDataProvider.OpenSampleWorkbook(paramsFile);
             var installwb = _testDataProvider.OpenSampleWorkbook(installFile);
-            
+
             var paramsevaluator = paramswb.GetCreationHelper().CreateFormulaEvaluator();
             var installevaluator = installwb.GetCreationHelper().CreateFormulaEvaluator();
 
@@ -757,7 +758,7 @@ namespace TestCases.SS.UserModel
             var row = sheet.GetRow(0);
             var cell = row.GetCell(1);
 
-            
+
             String cellValue = formatter.FormatCellValue(cell, installevaluator);
             ClassicAssert.AreEqual("Referenced value in sheet 1" + suffix, cellValue);
 

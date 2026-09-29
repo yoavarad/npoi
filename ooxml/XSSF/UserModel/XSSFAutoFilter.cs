@@ -36,5 +36,3 @@ namespace NPOI.XSSF.UserModel
 
     }
 }
-
-

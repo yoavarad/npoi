@@ -60,7 +60,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (cfvo.type == ST_CfvoType.formula)
+                if(cfvo.type == ST_CfvoType.formula)
                 {
                     return cfvo.val;
                 }
@@ -76,15 +76,15 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (cfvo.type == ST_CfvoType.formula ||
+                if(cfvo.type == ST_CfvoType.formula ||
                 cfvo.type == ST_CfvoType.min ||
-                cfvo.type == ST_CfvoType.max || 
+                cfvo.type == ST_CfvoType.max ||
                 cfvo.type == ST_CfvoType.autoMax||
                 cfvo.type == ST_CfvoType.autoMin)
                 {
                     return null;
                 }
-                if (cfvo.IsSetVal())
+                if(cfvo.IsSetVal())
                 {
                     return Double.Parse(cfvo.val, CultureInfo.InvariantCulture);
                 }
@@ -95,13 +95,13 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                if (value == null)
+                if(value == null)
                 {
                     cfvo.UnsetVal();
                 }
                 else
                 {
-                    cfvo.val = ((double)value).ToString(CultureInfo.InvariantCulture);
+                    cfvo.val = ((double) value).ToString(CultureInfo.InvariantCulture);
                 }
             }
         }

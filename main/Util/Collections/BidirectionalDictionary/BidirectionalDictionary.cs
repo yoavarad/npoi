@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -64,18 +64,18 @@ namespace System.Collections.Generic
             get => _baseDictionary[key];
             set
             {
-                if (key == null)
+                if(key == null)
                     throw new ArgumentNullException(nameof(key));
 
-                if (value == null)
+                if(value == null)
                     throw new ArgumentNullException(nameof(value));
 
-                if (TryGetValue(key, out var oldValue))
+                if(TryGetValue(key, out var oldValue))
                 {
-                    if (ValueComparer.Equals(oldValue, value))
+                    if(ValueComparer.Equals(oldValue, value))
                         return;
 
-                    if (ContainsValue(value))
+                    if(ContainsValue(value))
                     {
                         throw new ArgumentException("The value already exists.", nameof(value));
                     }
@@ -102,16 +102,16 @@ namespace System.Collections.Generic
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ICollection<TKey> IDictionary<TKey, TValue>.Keys => Keys;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ICollection<TValue> IDictionary<TKey, TValue>.Values => Values;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => Keys;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => Values;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => false;
 
@@ -216,7 +216,8 @@ namespace System.Collections.Generic
         public BidirectionalDictionary(IEnumerable<KeyValuePair<TKey, TValue>> collection,
             IEqualityComparer<TKey>? keyComparer, IEqualityComparer<TValue>? valueComparer)
             : this(new Dictionary<TKey, TValue>(collection?.ToDictionary(pair => pair.Key, pair => pair.Value, keyComparer)),
-                  valueComparer) { }
+                  valueComparer)
+        { }
 #endif
 
         private BidirectionalDictionary(BidirectionalDictionary<TValue, TKey> inverse)
@@ -246,16 +247,16 @@ namespace System.Collections.Generic
         /// <exception cref="ArgumentException"></exception>
         public void Add(TKey key, TValue value)
         {
-            if (key == null)
+            if(key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            if (value == null)
+            if(value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            if (ContainsKey(key))
+            if(ContainsKey(key))
                 throw new ArgumentException("The same key already exists.", nameof(key));
 
-            if (ContainsValue(value))
+            if(ContainsValue(value))
                 throw new ArgumentException("The same value already exists.", nameof(value));
 
             _baseDictionary.Add(key, value);
@@ -283,7 +284,7 @@ namespace System.Collections.Generic
         /// <exception cref="ArgumentNullException"></exception>
         public bool Remove(TKey key, out TValue value)
         {
-            if (key == null)
+            if(key == null)
                 throw new ArgumentNullException(nameof(key));
 #nullable disable
             return _baseDictionary.TryGetValue(key, out value) &&
@@ -327,13 +328,13 @@ namespace System.Collections.Generic
         /// <exception cref="ArgumentNullException"></exception>
         public bool TryAdd(TKey key, TValue value)
         {
-            if (key == null)
+            if(key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            if (value == null)
+            if(value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            if (ContainsKey(key) || ContainsValue(value))
+            if(ContainsKey(key) || ContainsValue(value))
                 return false;
 
             _baseDictionary.Add(key, value);
@@ -404,33 +405,33 @@ namespace System.Collections.Generic
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
-            if (item.Key == null)
+            if(item.Key == null)
                 throw new ArgumentNullException("The item key == null.", nameof(item));
 
-            if (item.Value == null)
+            if(item.Value == null)
                 throw new ArgumentNullException("The item value == null.", nameof(item));
 
-            return ((ICollection<KeyValuePair<TKey, TValue>>)_baseDictionary).Remove(item) &&
+            return ((ICollection<KeyValuePair<TKey, TValue>>) _baseDictionary).Remove(item) &&
                 Inverse._baseDictionary.Remove(item.Value);
         }
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
         {
-            if (item.Key == null)
+            if(item.Key == null)
                 throw new ArgumentNullException("The item key == null.", nameof(item));
 
-            if (item.Value == null)
+            if(item.Value == null)
                 throw new ArgumentNullException("The item value == null.", nameof(item));
 
-            return ((ICollection<KeyValuePair<TKey, TValue>>)_baseDictionary).Contains(item);
+            return ((ICollection<KeyValuePair<TKey, TValue>>) _baseDictionary).Contains(item);
         }
 
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
-            ((ICollection<KeyValuePair<TKey, TValue>>)_baseDictionary).CopyTo(array, arrayIndex);
+            ((ICollection<KeyValuePair<TKey, TValue>>) _baseDictionary).CopyTo(array, arrayIndex);
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
             => _baseDictionary.GetEnumerator();
 
-#endregion
+        #endregion
     }
 }

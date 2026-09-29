@@ -17,9 +17,6 @@
 
 namespace NPOI.XSSF.UserModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS;
     using NPOI.SS.Formula;
@@ -30,6 +27,9 @@ namespace NPOI.XSSF.UserModel
     using NPOI.SS.Util;
     using NPOI.XSSF.Model;
     using NPOI.XSSF.Streaming;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
 
     /**
      * Internal POI use only - parent of XSSF and SXSSF Evaluation workbooks
@@ -82,7 +82,7 @@ namespace NPOI.XSSF.UserModel
         private int ResolveBookIndex(String bookName)
         {
             // Strip the [] wrapper, if still present
-            if (bookName.StartsWith('[') && bookName.EndsWith(']'))
+            if(bookName.StartsWith('[') && bookName.EndsWith(']'))
             {
                 bookName = bookName.Substring(1, bookName.Length - 2);
             }
@@ -92,22 +92,24 @@ namespace NPOI.XSSF.UserModel
             {
                 return Int32.Parse(bookName);
             }
-            catch (FormatException ) { }
+            catch(FormatException) { }
 
             // Look up an External Link Table for this name
             List<ExternalLinksTable> tables = _uBook.ExternalLinksTable;
             int index = FindExternalLinkIndex(bookName, tables);
-            if (index != -1) return index;
+            if(index != -1)
+                return index;
 
             // Is it an absolute file reference?
-            if (bookName.StartsWith("'file:///") && bookName.EndsWith('\''))
+            if(bookName.StartsWith("'file:///") && bookName.EndsWith('\''))
             {
                 String relBookName = bookName.Substring(bookName.LastIndexOf('/') + 1);
                 relBookName = relBookName.Substring(0, relBookName.Length - 1); // Trailing '
 
                 // Try with this name
                 index = FindExternalLinkIndex(relBookName, tables);
-                if (index != -1) return index;
+                if(index != -1)
+                    return index;
 
                 // If we Get here, it's got no associated proper links yet
                 // So, add the missing reference and return
@@ -125,9 +127,9 @@ namespace NPOI.XSSF.UserModel
         private static int FindExternalLinkIndex(String bookName, List<ExternalLinksTable> tables)
         {
             int i = 0;
-            foreach (ExternalLinksTable table in tables)
+            foreach(ExternalLinksTable table in tables)
             {
-                if (table.LinkedFileName.Equals(bookName))
+                if(table.LinkedFileName.Equals(bookName))
                 {
                     return i + 1; // 1 based results, 0 = current workbook
                 }
@@ -163,12 +165,12 @@ namespace NPOI.XSSF.UserModel
         /// </returns>
         public IEvaluationName GetName(String name, int sheetIndex)
         {
-            for (int i = 0; i < _uBook.NumberOfNames; i++)
+            for(int i = 0; i < _uBook.NumberOfNames; i++)
             {
                 XSSFName nm = _uBook.GetNameAt(i) as XSSFName;
                 String nameText = nm.NameName;
                 int nameSheetindex = nm.SheetIndex;
-                if (name.Equals(nameText, StringComparison.CurrentCultureIgnoreCase) &&
+                if(name.Equals(nameText, StringComparison.CurrentCultureIgnoreCase) &&
                        (nameSheetindex == -1 || nameSheetindex == sheetIndex))
                 {
                     return new Name(nm, i, this);
@@ -189,15 +191,15 @@ namespace NPOI.XSSF.UserModel
 
         public ExternalName GetExternalName(String nameName, String sheetName, int externalWorkbookNumber)
         {
-            if (externalWorkbookNumber > 0)
+            if(externalWorkbookNumber > 0)
             {
                 // External reference - reference is 1 based, link table is 0 based
                 int linkNumber = externalWorkbookNumber - 1;
                 ExternalLinksTable linkTable = _uBook.ExternalLinksTable[(linkNumber)];
 
-                foreach (IName name in linkTable.DefinedNames)
+                foreach(IName name in linkTable.DefinedNames)
                 {
-                    if (name.NameName.Equals(nameName))
+                    if(name.NameName.Equals(nameName))
                     {
                         // HSSF returns one sheet higher than normal, and various bits
                         //  of the code assume that. So, make us match that behaviour!
@@ -232,21 +234,21 @@ namespace NPOI.XSSF.UserModel
             // First, try to find it as a User Defined Function
             IndexedUDFFinder udfFinder = (IndexedUDFFinder)GetUDFFinder();
             FreeRefFunction func = udfFinder.FindFunction(name);
-            if (func != null)
+            if(func != null)
             {
                 return new NameXPxg(null, name);
             }
 
             // Otherwise, try it as a named range
-            if (sheet == null)
+            if(sheet == null)
             {
-                if (_uBook.GetNames(name).Count > 0)
+                if(_uBook.GetNames(name).Count > 0)
                 {
                     return new NameXPxg(null, name);
                 }
                 return null;
             }
-            if (sheet._sheetIdentifier == null)
+            if(sheet._sheetIdentifier == null)
             {
                 // Workbook + Named Range only
                 int bookIndex = ResolveBookIndex(sheet._bookName);
@@ -256,7 +258,7 @@ namespace NPOI.XSSF.UserModel
             // Use the sheetname and process
             String sheetName = sheet._sheetIdentifier.Name;
 
-            if (sheet._bookName != null)
+            if(sheet._bookName != null)
             {
                 int bookIndex = ResolveBookIndex(sheet._bookName);
                 return new NameXPxg(bookIndex, sheetName, name);
@@ -268,7 +270,7 @@ namespace NPOI.XSSF.UserModel
         }
         public Ptg Get3DReferencePtg(CellReference cell, SheetIdentifier sheet)
         {
-            if (sheet._bookName != null)
+            if(sheet._bookName != null)
             {
                 int bookIndex = ResolveBookIndex(sheet._bookName);
                 return new Ref3DPxg(bookIndex, sheet, cell);
@@ -280,7 +282,7 @@ namespace NPOI.XSSF.UserModel
         }
         public Ptg Get3DReferencePtg(AreaReference area, SheetIdentifier sheet)
         {
-            if (sheet._bookName != null)
+            if(sheet._bookName != null)
             {
                 int bookIndex = ResolveBookIndex(sheet._bookName);
                 return new Area3DPxg(bookIndex, sheet, area);
@@ -299,11 +301,12 @@ namespace NPOI.XSSF.UserModel
             // First, try to find it as a User Defined Function
             IndexedUDFFinder udfFinder = (IndexedUDFFinder)GetUDFFinder();
             name = udfFinder.GetFunctionName(idx);
-            if (name != null) return name;
+            if(name != null)
+                return name;
 
             // Otherwise, try it as a named range
             XSSFName xname = _uBook.GetNameAt(idx) as XSSFName;
-            if (xname != null)
+            if(xname != null)
             {
                 name = xname.NameName;
             }
@@ -318,7 +321,7 @@ namespace NPOI.XSSF.UserModel
         public ExternalSheet GetExternalSheet(String firstSheetName, String lastSheetName, int externalWorkbookNumber)
         {
             String workbookName;
-            if (externalWorkbookNumber > 0)
+            if(externalWorkbookNumber > 0)
             {
                 // External reference - reference is 1 based, link table is 0 based
                 int linkNumber = externalWorkbookNumber - 1;
@@ -331,7 +334,7 @@ namespace NPOI.XSSF.UserModel
                 workbookName = null;
             }
 
-            if (lastSheetName == null || firstSheetName.Equals(lastSheetName))
+            if(lastSheetName == null || firstSheetName.Equals(lastSheetName))
             {
                 return new ExternalSheet(workbookName, firstSheetName);
             }
@@ -390,16 +393,16 @@ namespace NPOI.XSSF.UserModel
         private Dictionary<String, XSSFTable> _tableCache = null;
         private Dictionary<String, XSSFTable> GetTableCache()
         {
-            if (_tableCache != null)
+            if(_tableCache != null)
             {
                 return _tableCache;
             }
             // FIXME: use org.apache.commons.collections.map.CaseInsensitiveMap
             _tableCache = new Dictionary<String, XSSFTable>();
 
-            foreach (ISheet sheet in _uBook)
+            foreach(ISheet sheet in _uBook)
             {
-                foreach (XSSFTable tbl in ((XSSFSheet)sheet).GetTables())
+                foreach(XSSFTable tbl in ((XSSFSheet) sheet).GetTables())
                 {
                     String lname = tbl.Name.ToLower(CultureInfo.CurrentCulture);
                     _tableCache.Add(lname, tbl);
@@ -420,7 +423,8 @@ namespace NPOI.XSSF.UserModel
          */
         public ITable GetTable(String name)
         {
-            if (name == null) return null;
+            if(name == null)
+                return null;
             String lname = name.ToLower(CultureInfo.CurrentCulture);
             return GetTableCache()[lname];
         }
@@ -450,7 +454,7 @@ namespace NPOI.XSSF.UserModel
                 {
                     return FormulaParser.Parse(_nameRecord.RefersToFormula, _fpBook, FormulaType.NamedRange, _nameRecord.SheetIndex);
                 }
-                
+
             }
 
             public String NameText
@@ -459,7 +463,7 @@ namespace NPOI.XSSF.UserModel
                 {
                     return _nameRecord.NameName;
                 }
-                
+
             }
 
             public bool HasFormula
@@ -471,7 +475,7 @@ namespace NPOI.XSSF.UserModel
                     String strVal = ctn.Value;
                     return !ctn.function && strVal != null && strVal.Length > 0;
                 }
-                
+
             }
 
             public bool IsFunctionName
@@ -499,7 +503,7 @@ namespace NPOI.XSSF.UserModel
         {
             return SpreadsheetVersion.EXCEL2007;
         }
-        
+
         public abstract int GetSheetIndex(IEvaluationSheet sheet);
 
         public abstract IEvaluationSheet GetSheet(int sheetIndex);

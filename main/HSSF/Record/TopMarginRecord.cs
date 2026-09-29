@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Record for the top margin.
@@ -59,7 +59,7 @@ namespace NPOI.HSSF.Record
             out1.WriteDouble(field_1_margin);
         }
 
-        protected override int DataSize { get { return  8; } }
+        protected override int DataSize { get { return 8; } }
 
         public override short Sid { get { return sid; } }
 

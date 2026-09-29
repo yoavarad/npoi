@@ -15,16 +15,17 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.Util;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC.Internal;
+using NPOI.OpenXmlFormats;
+using NPOI.SS.Util;
+using NPOI.Util;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 using System.IO;
 using TestCases.OpenXml4Net;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.SS.Util;
-using System;
-using NPOI.OpenXmlFormats;
-using NPOI.OpenXml4Net.OPC.Internal;
-using NPOI.XSSF.UserModel;
 namespace TestCases.OpenXml4Net.OPC
 {
 
@@ -166,7 +167,7 @@ namespace TestCases.OpenXml4Net.OPC
             // Created
             ClassicAssert.AreEqual("", props.GetCreatedPropertyString());
             ClassicAssert.IsNull(props.GetCreatedProperty());
-            props.SetCreatedProperty((String)null);
+            props.SetCreatedProperty((String) null);
             ClassicAssert.AreEqual("", props.GetCreatedPropertyString());
             ClassicAssert.IsNull(props.GetCreatedProperty());
             props.SetCreatedProperty(new Nullable<DateTime>());
@@ -182,7 +183,7 @@ namespace TestCases.OpenXml4Net.OPC
             // lastPrinted
             ClassicAssert.AreEqual("", props.GetLastPrintedPropertyString());
             ClassicAssert.IsNull(props.GetLastPrintedProperty());
-            props.SetLastPrintedProperty((String)null);
+            props.SetLastPrintedProperty((String) null);
             ClassicAssert.AreEqual("", props.GetLastPrintedPropertyString());
             ClassicAssert.IsNull(props.GetLastPrintedProperty());
             props.SetLastPrintedProperty(new Nullable<DateTime>());
@@ -197,7 +198,7 @@ namespace TestCases.OpenXml4Net.OPC
 
             // modified
             ClassicAssert.IsNull(props.GetModifiedProperty());
-            props.SetModifiedProperty((String)null);
+            props.SetModifiedProperty((String) null);
             ClassicAssert.IsNull(props.GetModifiedProperty());
             props.SetModifiedProperty(new Nullable<DateTime>());
             ClassicAssert.IsNull(props.GetModifiedProperty());
@@ -237,13 +238,13 @@ namespace TestCases.OpenXml4Net.OPC
 
             // Should have 3 root relationships
             bool foundDocRel = false, foundCorePropRel = false, foundExtPropRel = false;
-            foreach (PackageRelationship pr in p.Relationships)
+            foreach(PackageRelationship pr in p.Relationships)
             {
-                if (pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_DOCUMENT))
+                if(pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_DOCUMENT))
                     foundDocRel = true;
-                if (pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
+                if(pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
                     foundCorePropRel = true;
-                if (pr.RelationshipType.Equals(PackageRelationshipTypes.EXTENDED_PROPERTIES))
+                if(pr.RelationshipType.Equals(PackageRelationshipTypes.EXTENDED_PROPERTIES))
                     foundExtPropRel = true;
             }
             ClassicAssert.IsTrue(foundDocRel, "Core/Doc Relationship not found in " + p.Relationships);
@@ -269,7 +270,7 @@ namespace TestCases.OpenXml4Net.OPC
             ClassicAssert.IsNotNull(wb.GetProperties());
             ClassicAssert.IsNotNull(wb.GetProperties().CustomProperties);
 
-            foreach (CT_Property prop in wb.GetProperties().CustomProperties.GetUnderlyingProperties().GetPropertyList())
+            foreach(CT_Property prop in wb.GetProperties().CustomProperties.GetUnderlyingProperties().GetPropertyList())
             {
                 ClassicAssert.IsNotNull(prop);
             }
@@ -294,7 +295,7 @@ namespace TestCases.OpenXml4Net.OPC
             // Check text properties first
             ClassicAssert.AreEqual("Lorem Ipsum", props.GetTitleProperty());
             ClassicAssert.AreEqual("Apache POI", props.GetCreatorProperty());
-            
+
             // Created at has a +3 timezone and milliseconds
             //   2006-10-13T18:06:00.123+03:00
             // = 2006-10-13T15:06:00.123+00:00
@@ -333,7 +334,3 @@ namespace TestCases.OpenXml4Net.OPC
 
     }
 }
-
-
-
-

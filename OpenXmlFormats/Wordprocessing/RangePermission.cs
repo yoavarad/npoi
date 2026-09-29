@@ -1,8 +1,8 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using NPOI.OpenXml4Net.Util;
 
 
 namespace NPOI.OpenXmlFormats.Wordprocessing
@@ -14,16 +14,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_ProofErr
     {
 
-    
+
         spellStart,
 
-    
+
         spellEnd,
 
-    
+
         gramStart,
 
-    
+
         gramEnd,
     }
 
@@ -43,12 +43,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool displacedByCustomXmlFieldSpecified;
         public static CT_Perm Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Perm ctObj = new CT_Perm();
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
-            if (node.Attributes["w:displacedByCustomXml"] != null)
-                ctObj.displacedByCustomXml = (ST_DisplacedByCustomXml)Enum.Parse(typeof(ST_DisplacedByCustomXml), node.Attributes["w:displacedByCustomXml"].Value);
+            if(node.Attributes["w:displacedByCustomXml"] != null)
+                ctObj.displacedByCustomXml = (ST_DisplacedByCustomXml) Enum.Parse(typeof(ST_DisplacedByCustomXml), node.Attributes["w:displacedByCustomXml"].Value);
             return ctObj;
         }
 
@@ -187,17 +187,17 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static new CT_PermStart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PermStart ctObj = new CT_PermStart();
-            if (node.Attributes["w:edGrp"] != null)
-                ctObj.edGrp = (ST_EdGrp)Enum.Parse(typeof(ST_EdGrp), node.Attributes["w:edGrp"].Value);
+            if(node.Attributes["w:edGrp"] != null)
+                ctObj.edGrp = (ST_EdGrp) Enum.Parse(typeof(ST_EdGrp), node.Attributes["w:edGrp"].Value);
             ctObj.ed = XmlHelper.ReadString(node.Attributes["w:ed"]);
             ctObj.colFirst = XmlHelper.ReadString(node.Attributes["w:colFirst"]);
             ctObj.colLast = XmlHelper.ReadString(node.Attributes["w:colLast"]);
             ctObj.id = XmlHelper.ReadString(node.Attributes["w:id"]);
-            if (node.Attributes["w:displacedByCustomXml"] != null)
-                ctObj.displacedByCustomXml = (ST_DisplacedByCustomXml)Enum.Parse(typeof(ST_DisplacedByCustomXml), node.Attributes["w:displacedByCustomXml"].Value);
+            if(node.Attributes["w:displacedByCustomXml"] != null)
+                ctObj.displacedByCustomXml = (ST_DisplacedByCustomXml) Enum.Parse(typeof(ST_DisplacedByCustomXml), node.Attributes["w:displacedByCustomXml"].Value);
             return ctObj;
         }
 
@@ -224,25 +224,25 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_EdGrp
     {
 
-    
+
         none,
 
-    
+
         everyone,
 
-    
+
         administrators,
 
-    
+
         contributors,
 
-    
+
         editors,
 
-    
+
         owners,
 
-    
+
         current,
     }
     #endregion

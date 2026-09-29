@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using NPOI.OpenXml4Net.OPC.Internal.Marshallers;
 using NPOI.OpenXml4Net.Exceptions;
+using NPOI.OpenXml4Net.OPC.Internal.Marshallers;
 using NPOI.Util;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {
@@ -60,11 +60,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             // If this part has been created from scratch and/or the data buffer is
             // not
             // initialize, so we do it now.
-            if (data == null)
+            if(data == null)
             {
                 return new MemoryStream();
             }
-            return new MemoryStream(data.GetBuffer(), 0, (int)data.Length, writable: false);
+            return new MemoryStream(data.GetBuffer(), 0, (int) data.Length, writable: false);
         }
 
         protected override Stream GetOutputStreamImpl()

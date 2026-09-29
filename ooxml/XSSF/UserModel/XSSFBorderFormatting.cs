@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using NPOI.SS.UserModel;
-using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.OOXML.XSSF.UserModel;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -46,8 +46,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_BorderPr pr = _border.IsSetBottom() ? _border.bottom : _border.AddNewBottom();
-                if (value == BorderStyle.None) _border.UnsetBottom();
-                else pr.style = (ST_BorderStyle)value;
+                if(value == BorderStyle.None)
+                    _border.UnsetBottom();
+                else
+                    pr.style = (ST_BorderStyle) value;
             }
         }
 
@@ -60,8 +62,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_BorderPr pr = _border.IsSetDiagonal() ? _border.diagonal : _border.AddNewDiagonal();
-                if (value == (short)BorderStyle.None) _border.UnsetDiagonal();
-                else pr.style = (ST_BorderStyle)value;
+                if(value == (short) BorderStyle.None)
+                    _border.UnsetDiagonal();
+                else
+                    pr.style = (ST_BorderStyle) value;
             }
         }
 
@@ -74,8 +78,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_BorderPr pr = _border.IsSetLeft() ? _border.left : _border.AddNewLeft();
-                if (value == (short)BorderStyle.None) _border.UnsetLeft();
-                else pr.style = (ST_BorderStyle)value;
+                if(value == (short) BorderStyle.None)
+                    _border.UnsetLeft();
+                else
+                    pr.style = (ST_BorderStyle) value;
             }
         }
 
@@ -88,8 +94,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_BorderPr pr = _border.IsSetRight() ? _border.right : _border.AddNewRight();
-                if (value == (short)BorderStyle.None) _border.UnsetRight();
-                else pr.style = (ST_BorderStyle)value;
+                if(value == (short) BorderStyle.None)
+                    _border.UnsetRight();
+                else
+                    pr.style = (ST_BorderStyle) value;
             }
         }
 
@@ -102,8 +110,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_BorderPr pr = _border.IsSetTop() ? _border.top : _border.AddNewTop();
-                if (value == (short)BorderStyle.None) _border.UnsetTop();
-                else pr.style = (ST_BorderStyle)value;
+                if(value == (short) BorderStyle.None)
+                    _border.UnsetTop();
+                else
+                    pr.style = (ST_BorderStyle) value;
             }
         }
 
@@ -116,7 +126,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Color ctColor = new CT_Color();
-                ctColor.indexed = (uint)value;
+                ctColor.indexed = (uint) value;
                 ctColor.indexedSpecified = true;
                 SetBottomBorderColor(ctColor);
             }
@@ -131,7 +141,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Color ctColor = new CT_Color();
-                ctColor.indexed = (uint)value;
+                ctColor.indexed = (uint) value;
                 ctColor.indexedSpecified = true;
                 SetDiagonalBorderColor(ctColor);
             }
@@ -146,7 +156,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Color ctColor = new CT_Color();
-                ctColor.indexed = (uint)(value);
+                ctColor.indexed = (uint) (value);
                 ctColor.indexedSpecified = true;
                 SetLeftBorderColor(ctColor);
             }
@@ -161,7 +171,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Color ctColor = new CT_Color();
-                ctColor.indexed = (uint)(value);
+                ctColor.indexed = (uint) (value);
                 ctColor.indexedSpecified = true;
                 SetRightBorderColor(ctColor);
             }
@@ -176,7 +186,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Color ctColor = new CT_Color();
-                ctColor.indexed = (uint)(value);
+                ctColor.indexed = (uint) (value);
                 ctColor.indexedSpecified = true;
                 SetTopBorderColor(ctColor);
             }
@@ -191,14 +201,16 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null) SetBottomBorderColor((CT_Color)null);
-                else SetBottomBorderColor(xcolor.GetCTColor());
+                if(xcolor == null)
+                    SetBottomBorderColor((CT_Color) null);
+                else
+                    SetBottomBorderColor(xcolor.GetCTColor());
             }
         }
         public void SetBottomBorderColor(CT_Color color)
         {
             CT_BorderPr pr = _border.IsSetBottom() ? _border.bottom : _border.AddNewBottom();
-            if (color == null)
+            if(color == null)
             {
                 pr.UnsetColor();
             }
@@ -216,14 +228,16 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null) SetDiagonalBorderColor((CT_Color)null);
-                else SetDiagonalBorderColor(xcolor.GetCTColor());
+                if(xcolor == null)
+                    SetDiagonalBorderColor((CT_Color) null);
+                else
+                    SetDiagonalBorderColor(xcolor.GetCTColor());
             }
         }
         public void SetDiagonalBorderColor(CT_Color color)
         {
             CT_BorderPr pr = _border.IsSetDiagonal() ? _border.diagonal : _border.AddNewDiagonal();
-            if (color == null)
+            if(color == null)
             {
                 pr.UnsetColor();
             }
@@ -241,15 +255,17 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null) SetLeftBorderColor((CT_Color)null);
-                else SetLeftBorderColor(xcolor.GetCTColor());
+                if(xcolor == null)
+                    SetLeftBorderColor((CT_Color) null);
+                else
+                    SetLeftBorderColor(xcolor.GetCTColor());
             }
         }
 
         public void SetLeftBorderColor(CT_Color color)
         {
             CT_BorderPr pr = _border.IsSetLeft() ? _border.left : _border.AddNewLeft();
-            if (color == null)
+            if(color == null)
             {
                 pr.UnsetColor();
             }
@@ -267,15 +283,17 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null) SetRightBorderColor((CT_Color)null);
-                else SetRightBorderColor(xcolor.GetCTColor());
+                if(xcolor == null)
+                    SetRightBorderColor((CT_Color) null);
+                else
+                    SetRightBorderColor(xcolor.GetCTColor());
             }
         }
 
         public void SetRightBorderColor(CT_Color color)
         {
             CT_BorderPr pr = _border.IsSetRight() ? _border.right : _border.AddNewRight();
-            if (color == null)
+            if(color == null)
             {
                 pr.UnsetColor();
             }
@@ -294,14 +312,16 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null) SetTopBorderColor((CT_Color)null);
-                else SetTopBorderColor(xcolor.GetCTColor());
+                if(xcolor == null)
+                    SetTopBorderColor((CT_Color) null);
+                else
+                    SetTopBorderColor(xcolor.GetCTColor());
             }
         }
         public void SetTopBorderColor(CT_Color color)
         {
             CT_BorderPr pr = _border.IsSetTop() ? _border.top : _border.AddNewTop();
-            if (color == null)
+            if(color == null)
             {
                 pr.UnsetColor();
             }
@@ -317,8 +337,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_BorderPr pr = _border.IsSetVertical() ? _border.vertical : _border.AddNewVertical();
-                if (value == BorderStyle.None) _border.UnsetVertical();
-                else pr.style = (ST_BorderStyle)value;
+                if(value == BorderStyle.None)
+                    _border.UnsetVertical();
+                else
+                    pr.style = (ST_BorderStyle) value;
             }
         }
 
@@ -328,8 +350,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_BorderPr pr = _border.IsSetHorizontal() ? _border.horizontal : _border.AddNewHorizontal();
-                if (value == BorderStyle.None) _border.UnsetHorizontal();
-                else pr.style = (ST_BorderStyle)value;
+                if(value == BorderStyle.None)
+                    _border.UnsetHorizontal();
+                else
+                    pr.style = (ST_BorderStyle) value;
             }
         }
 
@@ -343,7 +367,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Color ctColor = new CT_Color();
-                ctColor.indexed = (uint)value;
+                ctColor.indexed = (uint) value;
                 SetVerticalBorderColor(ctColor);
             }
         }
@@ -357,14 +381,16 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null) SetBottomBorderColor((CT_Color)null);
-                else SetVerticalBorderColor(xcolor.GetCTColor());
+                if(xcolor == null)
+                    SetBottomBorderColor((CT_Color) null);
+                else
+                    SetVerticalBorderColor(xcolor.GetCTColor());
             }
         }
         public void SetVerticalBorderColor(CT_Color color)
         {
             CT_BorderPr pr = _border.IsSetVertical() ? _border.vertical : _border.AddNewVertical();
-            if (color == null)
+            if(color == null)
             {
                 pr.UnsetColor();
             }
@@ -383,7 +409,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_Color ctColor = new CT_Color();
-                ctColor.indexed = (uint)value;
+                ctColor.indexed = (uint) value;
                 SetHorizontalBorderColor(ctColor);
             }
         }
@@ -397,8 +423,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null) SetBottomBorderColor((CT_Color)null);
-                else SetHorizontalBorderColor(xcolor.GetCTColor());
+                if(xcolor == null)
+                    SetBottomBorderColor((CT_Color) null);
+                else
+                    SetHorizontalBorderColor(xcolor.GetCTColor());
             }
         }
 
@@ -406,7 +434,7 @@ namespace NPOI.XSSF.UserModel
         public void SetHorizontalBorderColor(CT_Color color)
         {
             CT_BorderPr pr = _border.IsSetHorizontal() ? _border.horizontal : _border.AddNewHorizontal();
-            if (color == null)
+            if(color == null)
             {
                 pr.UnsetColor();
             }
@@ -424,14 +452,15 @@ namespace NPOI.XSSF.UserModel
          */
         private static BorderStyle GetBorderStyle(CT_BorderPr borderPr)
         {
-            if (borderPr == null) return BorderStyle.None;
+            if(borderPr == null)
+                return BorderStyle.None;
             ST_BorderStyle? ptrn = borderPr.style;
-            return ptrn == null ? BorderStyle.None : BorderStyleEnum.ValueOf((short)ptrn.Value);
+            return ptrn == null ? BorderStyle.None : BorderStyleEnum.ValueOf((short) ptrn.Value);
         }
 
         private static short GetIndexedColor(XSSFColor color)
         {
-            return (short)(color == null ? 0 : color.Indexed);
+            return (short) (color == null ? 0 : color.Indexed);
         }
 
         private XSSFColor GetColor(CT_BorderPr pr)

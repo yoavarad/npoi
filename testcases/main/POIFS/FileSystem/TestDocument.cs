@@ -24,19 +24,17 @@
  * Contributors:
  * 
  * ==============================================================*/
-        
 
+
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.FileSystem;
-using NPOI.Util;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
-
 using TestCases.POIFS.FileSystem;
 
 namespace TestCases.POIFS.FileSystem
@@ -75,9 +73,9 @@ namespace TestCases.POIFS.FileSystem
             OPOIFSDocument document;
             byte[] array = new byte[4096];
 
-            for (int j = 0; j < array.Length; j++)
+            for(int j = 0; j < array.Length; j++)
             {
-                array[j] = (byte)j;
+                array[j] = (byte) j;
             }
             document = new OPOIFSDocument("foo", new SlowInputStream(new MemoryStream(array)));
             checkDocument(document, array);
@@ -85,9 +83,9 @@ namespace TestCases.POIFS.FileSystem
             // Verify correct number of blocks Get Created for document
             // that is not an exact multiple of block size
             array = new byte[4097];
-            for (int j = 0; j < array.Length; j++)
+            for(int j = 0; j < array.Length; j++)
             {
-                array[j] = (byte)j;
+                array[j] = (byte) j;
             }
             document = new OPOIFSDocument("bar", new MemoryStream(array));
             checkDocument(document, array);
@@ -95,9 +93,9 @@ namespace TestCases.POIFS.FileSystem
             // Verify correct number of blocks Get Created for document
             // that is small
             array = new byte[4095];
-            for (int j = 0; j < array.Length; j++)
+            for(int j = 0; j < array.Length; j++)
             {
-                array[j] = (byte)j;
+                array[j] = (byte) j;
             }
             document = new OPOIFSDocument("_bar", new MemoryStream(array));
             checkDocument(document, array);
@@ -105,9 +103,9 @@ namespace TestCases.POIFS.FileSystem
             // Verify correct number of blocks Get Created for document
             // that is rather small
             array = new byte[199];
-            for (int j = 0; j < array.Length; j++)
+            for(int j = 0; j < array.Length; j++)
             {
-                array[j] = (byte)j;
+                array[j] = (byte) j;
             }
             document = new OPOIFSDocument("_bar2",
                                          new MemoryStream(array));
@@ -115,9 +113,9 @@ namespace TestCases.POIFS.FileSystem
 
             // Verify that output is correct
             array = new byte[4097];
-            for (int j = 0; j < array.Length; j++)
+            for(int j = 0; j < array.Length; j++)
             {
-                array[j] = (byte)j;
+                array[j] = (byte) j;
             }
             document = new OPOIFSDocument("foobar",
                                          new MemoryStream(array));
@@ -159,7 +157,7 @@ namespace TestCases.POIFS.FileSystem
         };
 
             ClassicAssert.AreEqual(array2.Length, output.Length);
-            for (int j = 0; j < output.Length; j++)
+            for(int j = 0; j < output.Length; j++)
             {
                 ClassicAssert.AreEqual(array2[j],
                              output[j], "Checking property offset " + j);
@@ -171,18 +169,18 @@ namespace TestCases.POIFS.FileSystem
         {
             OPOIFSDocument copy = null;
 
-            if (input.Length >= 4096)
+            if(input.Length >= 4096)
             {
                 RawDataBlock[] blocks =
                     new RawDataBlock[(input.Length + 511) / 512];
                 MemoryStream stream = new MemoryStream(data);
                 int index = 0;
 
-                while (true)
+                while(true)
                 {
                     RawDataBlock block = new RawDataBlock(stream);
 
-                    if (block.EOF)
+                    if(block.EOF)
                     {
                         break;
                     }
@@ -195,7 +193,7 @@ namespace TestCases.POIFS.FileSystem
             {
                 copy = new OPOIFSDocument(
                     "test" + input.Length,
-                    (SmallDocumentBlock[])document.SmallBlocks,
+                    (SmallDocumentBlock[]) document.SmallBlocks,
                     input.Length);
             }
             return copy;
@@ -208,7 +206,7 @@ namespace TestCases.POIFS.FileSystem
             int small_blocks = 0;
             int total_output = 0;
 
-            if (input.Length >= 4096)
+            if(input.Length >= 4096)
             {
                 big_blocks = (input.Length + 511) / 512;
                 total_output = big_blocks * 512;
@@ -234,15 +232,15 @@ namespace TestCases.POIFS.FileSystem
             ClassicAssert.AreEqual(document, document.DocumentProperty.Document);
             int increment = (int)Math.Sqrt(input.Length);
 
-            for (int j = 1; j <= input.Length; j += increment)
+            for(int j = 1; j <= input.Length; j += increment)
             {
                 byte[] buffer = new byte[j];
                 int offset = 0;
 
-                for (int k = 0; k < (input.Length / j); k++)
+                for(int k = 0; k < (input.Length / j); k++)
                 {
                     document.Read(buffer, offset);
-                    for (int n = 0; n < buffer.Length; n++)
+                    for(int n = 0; n < buffer.Length; n++)
                     {
                         ClassicAssert.AreEqual(input[(k * j) + n], buffer[n]
                             , "checking byte " + (k * j) + n);
@@ -260,14 +258,14 @@ namespace TestCases.POIFS.FileSystem
             ClassicAssert.AreEqual(total_output, output.Length);
             int limit = Math.Min(total_output, input.Length);
 
-            for (int j = 0; j < limit; j++)
+            for(int j = 0; j < limit; j++)
             {
                 ClassicAssert.AreEqual(input[j],
                              output[j], "Checking document offset " + j);
             }
-            for (int j = limit; j < output.Length; j++)
+            for(int j = limit; j < output.Length; j++)
             {
-                ClassicAssert.AreEqual(unchecked((byte)-1),
+                ClassicAssert.AreEqual(unchecked((byte) -1),
                              output[j], "Checking document offset " + j);
             }
             return output;

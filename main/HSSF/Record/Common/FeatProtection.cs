@@ -17,10 +17,9 @@
 
 namespace NPOI.HSSF.Record.Common
 {
-    using System;
-
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
     using System.Text;
 
     /**

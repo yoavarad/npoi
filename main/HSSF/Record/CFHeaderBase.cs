@@ -17,11 +17,11 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record.CF;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Parent of Conditional Formatting Header records,
@@ -81,9 +81,9 @@ namespace NPOI.HSSF.Record
             set
             {
                 // held on the first bit
-                if (value == NeedRecalculation)
+                if(value == NeedRecalculation)
                     return;
-                if (value)
+                if(value)
                     field_2_need_recalculation_and_id++;
                 else
                     field_2_need_recalculation_and_id--;
@@ -102,7 +102,7 @@ namespace NPOI.HSSF.Record
                 // Remaining 15 bits of field 2
                 bool needsRecalc = NeedRecalculation;
                 field_2_need_recalculation_and_id = (value << 1);
-                if (needsRecalc)
+                if(needsRecalc)
                     field_2_need_recalculation_and_id++;
             }
         }
@@ -117,7 +117,7 @@ namespace NPOI.HSSF.Record
             {
                 field_3_enclosing_cell_range = value;
             }
-            
+
         }
 
         /**
@@ -133,13 +133,13 @@ namespace NPOI.HSSF.Record
             }
             set
             {
-                if (value == null)
+                if(value == null)
                 {
                     throw new ArgumentNullException("cellRanges must not be null");
                 }
                 CellRangeAddressList cral = new CellRangeAddressList();
                 CellRangeAddress enclosingRange = null;
-                for (int i = 0; i < value.Length; i++)
+                for(int i = 0; i < value.Length; i++)
                 {
                     CellRangeAddress cr = value[i];
                     enclosingRange = CellRangeUtil.CreateEnclosingCellRange(cr, enclosingRange);
@@ -161,7 +161,7 @@ namespace NPOI.HSSF.Record
             buffer.Append("\t.id                = ").Append(ID).Append("\n");
             buffer.Append("\t.enclosingCellRange= ").Append(EnclosingCellRange).Append("\n");
             buffer.Append("\t.CFranges=[");
-            for (int i = 0; i < field_4_cell_ranges.CountRanges(); i++)
+            for(int i = 0; i < field_4_cell_ranges.CountRanges(); i++)
             {
                 buffer.Append(i == 0 ? "" : ",").Append(field_4_cell_ranges.GetCellRangeAddress(i).ToString());
             }
@@ -178,7 +178,7 @@ namespace NPOI.HSSF.Record
                  + CellRangeAddress.ENCODED_SIZE
                  + field_4_cell_ranges.Size;
             }
-            
+
         }
 
         public override void Serialize(ILittleEndianOutput out1)

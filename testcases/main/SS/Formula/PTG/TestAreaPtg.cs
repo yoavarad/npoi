@@ -19,11 +19,12 @@
 namespace TestCases.SS.Formula.PTG
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link AreaPtg}.
@@ -143,14 +144,14 @@ namespace TestCases.SS.Formula.PTG
             int letUsShiftColumn1By1Column = 1;
             HSSFWorkbook wb = null;
             Ptg[] ptgs = HSSFFormulaParser.Parse(formula, wb);
-            for (int i = 0; i < ptgs.Length; i++)
+            for(int i = 0; i < ptgs.Length; i++)
             {
                 Ptg ptg = ptgs[i];
-                if (ptg is AreaPtg)
+                if(ptg is AreaPtg)
                 {
                     AreaPtg aptg = (AreaPtg)ptg;
-                    aptg.FirstColumn = ((short)(aptg.FirstColumn + letUsShiftColumn1By1Column));
-                    aptg.LastColumn = ((short)(aptg.LastColumn + letUsShiftColumn1By1Column));
+                    aptg.FirstColumn = ((short) (aptg.FirstColumn + letUsShiftColumn1By1Column));
+                    aptg.LastColumn = ((short) (aptg.LastColumn + letUsShiftColumn1By1Column));
                 }
             }
             String newFormula = HSSFFormulaParser.ToFormulaString(wb, ptgs);

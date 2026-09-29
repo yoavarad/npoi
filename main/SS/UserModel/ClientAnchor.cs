@@ -93,7 +93,7 @@ namespace NPOI.SS.UserModel
     /// </summary>
     public interface IClientAnchor
     {
-                /// <summary>
+        /// <summary>
         /// Get or set the column (0 based) of the first cell, or -1 if there is no top-left anchor cell.
         /// This is the case for absolute positioning <see cref="AnchorType.MoveAndResize" />
         /// </summary>

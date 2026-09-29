@@ -17,14 +17,14 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.Format;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.Globalization;
-    using NPOI.SS.Format;
     using TestCases.HSSF;
 
     /**
@@ -70,7 +70,7 @@ namespace TestCases.SS.UserModel
 
             ClassicAssert.AreEqual("1234", dfUS.FormatRawCellContents(1234, -1, "@"));
             ClassicAssert.AreEqual("1234", dfFR.FormatRawCellContents(1234, -1, "@"));
-            
+
             ClassicAssert.AreEqual("12.34", dfUS.FormatRawCellContents(12.34, -1, "@"));
             ClassicAssert.AreEqual("12,34", dfFR.FormatRawCellContents(12.34, -1, "@"));
         }
@@ -128,7 +128,7 @@ namespace TestCases.SS.UserModel
              "[BLACK]##.##;[RED]-##.##",
              "[COLOR11]##.##;[COLOR 43]-##.00",
        };
-            foreach (String format in formats)
+            foreach(String format in formats)
             {
                 ClassicAssert.AreEqual(
                       "12.34",
@@ -157,16 +157,16 @@ namespace TestCases.SS.UserModel
             String[] formats = new String[] {
              "#,##0.00;[Blue](#,##0.00)",
        };
-            foreach (String format in formats)
+            foreach(String format in formats)
             {
                 ClassicAssert.AreEqual(
-                      
+
                       "12.34",
                       dfUS.FormatRawCellContents(12.343, -1, format),
                       "Wrong format for: " + format
                 );
                 ClassicAssert.AreEqual(
-                      
+
                       "(12.34)",
                       dfUS.FormatRawCellContents(-12.343, -1, format),
                       "Wrong format for: " + format
@@ -177,7 +177,7 @@ namespace TestCases.SS.UserModel
             formats = new String[] {
              "$#,##0.00;[Red]($#,##0.00)"
        };
-            foreach (String format in formats)
+            foreach(String format in formats)
             {
                 ClassicAssert.AreEqual(
                       "$12.34",
@@ -196,7 +196,7 @@ namespace TestCases.SS.UserModel
         public void TestConditionalRanges()
         {
             DataFormatter dfUS = new DataFormatter(CultureInfo.GetCultureInfo("en-US"));
-        
+
             String format = "[>=10]#,##0;[<10]0.0";
             ClassicAssert.AreEqual("17,876", dfUS.FormatRawCellContents(17876.000, -1, format), "Wrong format for " + format);
             ClassicAssert.AreEqual("9.7", dfUS.FormatRawCellContents(9.71, -1, format), "Wrong format for " + format);
@@ -499,9 +499,9 @@ namespace TestCases.SS.UserModel
 
             //boolean jdk_1_5 = System.getProperty("java.vm.version").startsWith("1.5");
             //if(!jdk_1_5) {
-           // YK: the tests below were written under JDK 1.6 and assume that
-           // the rounding mode in the underlying decimal formatters is HALF_UP
-           // It is not so JDK 1.5 where the default rounding mode is HALV_EVEN and cannot be changed.
+            // YK: the tests below were written under JDK 1.6 and assume that
+            // the rounding mode in the underlying decimal formatters is HALF_UP
+            // It is not so JDK 1.5 where the default rounding mode is HALV_EVEN and cannot be changed.
 
 
             ClassicAssert.AreEqual("27:18:08", dfUS.FormatRawCellContents(1.1376, -1, "[h]:mm:ss"));
@@ -734,7 +734,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.AreEqual("1h 0m\"", formatter.FormatRawCellContents(_15_MINUTES, -1, "[h]\"\"h\"\" m\"\"m\"\"\"\"", false));
                 Assert.Fail("Catches exception because of invalid format, i.e. trailing quoting");
             }
-            catch (Exception)
+            catch(Exception)
             {
                 //ClassicAssert.IsTrue(e.Message.Contains("Cannot format given Object as a Number"));
             }
@@ -834,7 +834,8 @@ namespace TestCases.SS.UserModel
         }
 
         [Test]
-        public void TestFormatWithTrailingDotsUS() {
+        public void TestFormatWithTrailingDotsUS()
+        {
             DataFormatter dfUS = new DataFormatter(CultureInfo.GetCultureInfo("en-US"));
             ClassicAssert.AreEqual("1,000,000", dfUS.FormatRawCellContents(1000000, -1, "#,##0"));
             ClassicAssert.AreEqual("1,000", dfUS.FormatRawCellContents(1000000, -1, "#,##0,"));
@@ -849,7 +850,8 @@ namespace TestCases.SS.UserModel
         }
 
         [Test]
-        public void TestFormatWithTrailingDotsOtherLocale() {
+        public void TestFormatWithTrailingDotsOtherLocale()
+        {
             DataFormatter dfIT = new DataFormatter(CultureInfo.GetCultureInfo("it-IT"));
             ClassicAssert.AreEqual("1.000.000", dfIT.FormatRawCellContents(1000000, -1, "#,##0"));
             ClassicAssert.AreEqual("1.000", dfIT.FormatRawCellContents(1000000, -1, "#,##0,"));

@@ -17,10 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-
     using NPOI.HSSF.Record.Common;
     using NPOI.Util;
+    using System;
     using System.Text;
 
     /**
@@ -87,7 +86,7 @@ namespace NPOI.HSSF.Record
             futureHeader = new FtrHeader(in1);
 
             isf_sharedFeatureType = in1.ReadShort();
-            reserved = (byte)in1.ReadByte();
+            reserved = (byte) in1.ReadByte();
             cbHdrData = in1.ReadInt();
             // Don't process this just yet, need the BOFRecord
             rgbHdrData = in1.ReadRemainder();
@@ -110,7 +109,7 @@ namespace NPOI.HSSF.Record
 
             out1.WriteShort(isf_sharedFeatureType);
             out1.WriteByte(reserved);
-            out1.WriteInt((int)cbHdrData);
+            out1.WriteInt((int) cbHdrData);
             out1.Write(rgbHdrData);
         }
 
@@ -131,4 +130,3 @@ namespace NPOI.HSSF.Record
 
     }
 }
-

@@ -20,11 +20,11 @@
 namespace NPOI.HSSF.Record
 {
 
-    using System;
-    using System.Text;
-    using NPOI.Util;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
     using System.Collections.Generic;
+    using System.Text;
 
     /**
      * Title:        Bound Sheet Record (aka BundleSheet) 
@@ -42,7 +42,7 @@ namespace NPOI.HSSF.Record
         public const short sid = 0x85;
 
         private static BitField hiddenFlag = BitFieldFactory.GetInstance(0x01);
-	    private static BitField veryHiddenFlag = BitFieldFactory.GetInstance(0x02);
+        private static BitField veryHiddenFlag = BitFieldFactory.GetInstance(0x02);
 
         private int field_1_position_of_BOF;
         private int field_2_option_flags;
@@ -67,10 +67,10 @@ namespace NPOI.HSSF.Record
             field_1_position_of_BOF = in1.ReadInt();	// bof
             field_2_option_flags = in1.ReadShort();	// flags
             int field_3_sheetname_length = in1.ReadUByte();						// len(str)
-            field_4_isMultibyteUnicode = (byte)in1.ReadByte();						// Unicode
+            field_4_isMultibyteUnicode = (byte) in1.ReadByte();                     // Unicode
 
-            
-            if (this.IsMultibyte)
+
+            if(this.IsMultibyte)
             {
                 field_5_sheetname = in1.ReadUnicodeLEString(field_3_sheetname_length);
             }
@@ -101,7 +101,7 @@ namespace NPOI.HSSF.Record
             {
                 return veryHiddenFlag.IsSet(field_2_option_flags);
             }
-            set 
+            set
             {
                 field_2_option_flags = veryHiddenFlag.SetBoolean(field_2_option_flags, value);
             }
@@ -119,7 +119,7 @@ namespace NPOI.HSSF.Record
             {
                 WorkbookUtil.ValidateSheetName(value);
                 field_5_sheetname = value;
-                field_4_isMultibyteUnicode = (StringUtil.HasMultibyte(value) ? (byte)1 : (byte)0);
+                field_4_isMultibyteUnicode = (StringUtil.HasMultibyte(value) ? (byte) 1 : (byte) 0);
 
             }
         }
@@ -162,7 +162,7 @@ namespace NPOI.HSSF.Record
             out1.WriteByte(name.Length);
             out1.WriteByte(field_4_isMultibyteUnicode);
 
-            if (IsMultibyte)
+            if(IsMultibyte)
             {
                 StringUtil.PutUnicodeLE(name, out1);
             }
@@ -189,25 +189,26 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        	/**
-	     * Converts a List of {@link BoundSheetRecord}s to an array and sorts by the position of their
-	     * BOFs.
-	     */
-	    public static BoundSheetRecord[] OrderByBofPosition(List<BoundSheetRecord> boundSheetRecords) 
+        /**
+     * Converts a List of {@link BoundSheetRecord}s to an array and sorts by the position of their
+     * BOFs.
+     */
+        public static BoundSheetRecord[] OrderByBofPosition(List<BoundSheetRecord> boundSheetRecords)
         {
-		    
-		    BoundSheetRecord[] bsrs = boundSheetRecords.ToArray();
-		    Array.Sort(bsrs, new BOFComparator());
-	 	    return bsrs;
-	    }
+
+            BoundSheetRecord[] bsrs = boundSheetRecords.ToArray();
+            Array.Sort(bsrs, new BOFComparator());
+            return bsrs;
+        }
 
 
 
         private sealed class BOFComparator : IComparer<BoundSheetRecord>
         {
-		    public int Compare(BoundSheetRecord bsr1, BoundSheetRecord bsr2) {
-			    return bsr1.PositionOfBof - bsr2.PositionOfBof;
-		    }
+            public int Compare(BoundSheetRecord bsr1, BoundSheetRecord bsr2)
+            {
+                return bsr1.PositionOfBof - bsr2.PositionOfBof;
+            }
 
         };
     }

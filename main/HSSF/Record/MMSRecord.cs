@@ -51,12 +51,12 @@ namespace NPOI.HSSF.Record
 
         public MMSRecord(RecordInputStream in1)
         {
-            if (in1.Remaining == 0)
+            if(in1.Remaining == 0)
             {
                 return;
             }
-            field_1_AddMenuCount = (byte)in1.ReadByte();
-            field_2_delMenuCount = (byte)in1.ReadByte();
+            field_1_AddMenuCount = (byte) in1.ReadByte();
+            field_2_delMenuCount = (byte) in1.ReadByte();
         }
 
         /**

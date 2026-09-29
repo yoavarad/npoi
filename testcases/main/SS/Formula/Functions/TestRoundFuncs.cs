@@ -23,10 +23,11 @@ namespace TestCases.SS.Formula.Functions
 {
 
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
-    using System.Numerics;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
+    using System.Numerics;
 
     /**
      * Test cases for ROUND(), ROUNDUP(), ROUNDDOWN()

@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.UserModel;
-    using TestCases.HSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF;
 
     /**
      * @author Josh Micich
@@ -60,14 +61,14 @@ namespace TestCases.HSSF.UserModel
             {
                 existingPatr = sheet.DrawingPatriarch;
             }
-            catch (NullReferenceException)
+            catch(NullReferenceException)
             {
                 throw new AssertionException("Identified bug 44916");
             }
 
             // 3. Use patriarch
             HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 600, 245, (short)1, 1, (short)1, 2);
-            anchor.AnchorType = (AnchorType)(3);
+            anchor.AnchorType = (AnchorType) (3);
             byte[] pictureData = HSSFTestDataSamples.GetTestDataFileContent("logoKarmokar4.png");
             int idx1 = wb.AddPicture(pictureData, PictureType.PNG);
             patr.CreatePicture(anchor, idx1);

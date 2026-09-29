@@ -17,11 +17,11 @@
 
 namespace TestCases.SS.Formula.PTG
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.PTG;
     using NPOI.Util;
-
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF.Record;
 
     /**
@@ -47,7 +47,7 @@ namespace TestCases.SS.Formula.PTG
             {
                 Ptg.SerializePtgs(ptgs, data2, 0);
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 throw new AssertionException("incorrect re-serialization of tAttrChoose");
             }

@@ -16,11 +16,12 @@
 ==================================================================== */
 namespace TestCases.XWPF
 {
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.POIFS.Crypt;
     using NPOI.Util;
     using NPOI.XWPF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System.IO;
 
     [TestFixture]
     public class TestDocumentProtection
@@ -144,7 +145,7 @@ namespace TestCases.XWPF
             doc1.EnforceCommentsProtection();
 
             FileInfo tempFile = TempFile.CreateTempFile("documentProtectionFile", ".docx");
-            if (File.Exists(tempFile.FullName))
+            if(File.Exists(tempFile.FullName))
                 File.Delete(tempFile.FullName);
             Stream out1 = new FileStream(tempFile.FullName, FileMode.CreateNew);
 

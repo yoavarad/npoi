@@ -20,11 +20,13 @@ namespace NPOI.XDDF.UserModel.Chart;
 using NPOI.OpenXmlFormats.Dml.Chart;
 using System.Collections.Generic;
 
-public class XDDFAreaChartData<T, V> : XDDFChartData<T, V> {
+public class XDDFAreaChartData<T, V> : XDDFChartData<T, V>
+{
     private CT_AreaChart chart;
 
     public XDDFAreaChartData(CT_AreaChart chart, Dictionary<long, XDDFChartAxis> categories,
-            Dictionary<long, XDDFValueAxis> values) {
+            Dictionary<long, XDDFValueAxis> values)
+    {
         this.chart = chart;
         if(chart.ser != null)
         {
@@ -36,74 +38,94 @@ public class XDDFAreaChartData<T, V> : XDDFChartData<T, V> {
         DefineAxes(categories, values);
     }
 
-    private void DefineAxes(Dictionary<long, XDDFChartAxis> categories, Dictionary<long, XDDFValueAxis> values) {
-        if (chart.SizeOfAxIdArray() == 0) {
-            foreach (long id in categories.Keys) {
-                chart.AddNewAxId().val = (uint)id;
+    private void DefineAxes(Dictionary<long, XDDFChartAxis> categories, Dictionary<long, XDDFValueAxis> values)
+    {
+        if(chart.SizeOfAxIdArray() == 0)
+        {
+            foreach(long id in categories.Keys)
+            {
+                chart.AddNewAxId().val = (uint) id;
             }
-            foreach (long id in values.Keys) {
-                chart.AddNewAxId().val = (uint)id;
+            foreach(long id in values.Keys)
+            {
+                chart.AddNewAxId().val = (uint) id;
             }
         }
         DefineAxis(chart.GetAxIdArray(), categories, values);
     }
 
-    
-    public override void SetVaryColors(bool varyColors) {
-        if (chart.IsSetVaryColors()) {
-            chart.varyColors.val = varyColors?1:0;
-        } else {
-            chart.AddNewVaryColors().val = varyColors?1:0;
+
+    public override void SetVaryColors(bool varyColors)
+    {
+        if(chart.IsSetVaryColors())
+        {
+            chart.varyColors.val = varyColors ? 1 : 0;
+        }
+        else
+        {
+            chart.AddNewVaryColors().val = varyColors ? 1 : 0;
         }
     }
 
-    public Grouping GetGrouping() {
+    public Grouping GetGrouping()
+    {
         return GroupingExtensions.ValueOf(chart.grouping.val);
     }
 
-   public void SetGrouping(Grouping grouping) {
-      if (chart.grouping != null) {
-         chart.grouping.val = grouping.ToST_Grouping();
-      } else {
-         chart.AddNewGrouping().val = grouping.ToST_Grouping();
-      }
-   }
+    public void SetGrouping(Grouping grouping)
+    {
+        if(chart.grouping != null)
+        {
+            chart.grouping.val = grouping.ToST_Grouping();
+        }
+        else
+        {
+            chart.AddNewGrouping().val = grouping.ToST_Grouping();
+        }
+    }
 
-    
+
     public override XDDFChartData<T, V>.Series AddSeries(IXDDFDataSource<T> category,
-        IXDDFNumericalDataSource<V> values) {
+        IXDDFNumericalDataSource<V> values)
+    {
         int index = this.series.Count;
         CT_AreaSer ctSer = this.chart.AddNewSer();
         ctSer.AddNewCat();
         ctSer.AddNewVal();
-        ctSer.AddNewIdx().val = (uint)index;
-        ctSer.AddNewOrder().val = (uint)index;
+        ctSer.AddNewIdx().val = (uint) index;
+        ctSer.AddNewOrder().val = (uint) index;
         Series added = new Series(ctSer, category, values);
         this.series.Add(added);
         return added;
     }
 
-    public class Series : XDDFChartData<T, V>.Series {
+    public class Series : XDDFChartData<T, V>.Series
+    {
         private CT_AreaSer series;
 
         internal Series(CT_AreaSer series, IXDDFDataSource<T> category,
-            IXDDFNumericalDataSource<V> values):base(category, values){
-            
+            IXDDFNumericalDataSource<V> values) : base(category, values)
+        {
+
             this.series = series;
         }
 
-        internal Series(CT_AreaSer series, CT_AxDataSource category, CT_NumDataSource values): 
-            base(XDDFDataSourcesFactory.FromDataSource(category) as IXDDFDataSource<T>, 
-                XDDFDataSourcesFactory.FromDataSource(values) as IXDDFNumericalDataSource<V>) 
+        internal Series(CT_AreaSer series, CT_AxDataSource category, CT_NumDataSource values) :
+            base(XDDFDataSourcesFactory.FromDataSource(category) as IXDDFDataSource<T>,
+                XDDFDataSourcesFactory.FromDataSource(values) as IXDDFNumericalDataSource<V>)
         {
             this.series = series;
         }
 
-        
-        protected override CT_SerTx GetSeriesText() {
-            if (series.IsSetTx()) {
+
+        protected override CT_SerTx GetSeriesText()
+        {
+            if(series.IsSetTx())
+            {
                 return series.tx;
-            } else {
+            }
+            else
+            {
                 return series.AddNewTx();
             }
         }
@@ -137,39 +159,49 @@ public class XDDFAreaChartData<T, V> : XDDFChartData<T, V> {
         }
 
 
-        public override void SetShapeProperties(XDDFShapeProperties properties) {
-            if (properties == null) {
-                if (series.IsSetSpPr()) {
+        public override void SetShapeProperties(XDDFShapeProperties properties)
+        {
+            if(properties == null)
+            {
+                if(series.IsSetSpPr())
+                {
                     series.UnsetSpPr();
                 }
-            } else {
-                if (series.IsSetSpPr()) {
+            }
+            else
+            {
+                if(series.IsSetSpPr())
+                {
                     series.spPr = properties.GetXmlObject();
-                } else {
+                }
+                else
+                {
                     series.AddNewSpPr().Set(properties.GetXmlObject());
                 }
             }
         }
 
-        
-        protected override CT_AxDataSource GetAxDS() {
+
+        protected override CT_AxDataSource GetAxDS()
+        {
             return series.cat;
         }
 
-        
-        protected override CT_NumDataSource GetNumDS() {
+
+        protected override CT_NumDataSource GetNumDS()
+        {
             return series.val;
         }
-        
-        
-        public void UpdateIdXVal(long val) {
-            series.idx.val=(uint)val;
+
+
+        public void UpdateIdXVal(long val)
+        {
+            series.idx.val=(uint) val;
         }
-        
+
         public void UpdateOrderVal(long val)
         {
             series.order.val = (uint) val;
         }
     }
 }
-

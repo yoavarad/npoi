@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.Util
 {
@@ -22,7 +22,7 @@ namespace NPOI.OpenXml4Net.Util
 
         public void Close()
         {
-            if (zipArchive != null)
+            if(zipArchive != null)
             {
                 zipArchive.Close();
             }
@@ -38,7 +38,7 @@ namespace NPOI.OpenXml4Net.Util
         {
             get
             {
-                if (zipArchive == null)
+                if(zipArchive == null)
                     throw new InvalidDataException("Zip File is closed");
                 return zipArchive.GetEnumerator();
 
@@ -47,7 +47,7 @@ namespace NPOI.OpenXml4Net.Util
 
         public Stream GetInputStream(ZipEntry entry)
         {
-            if (zipArchive == null)
+            if(zipArchive == null)
                 throw new InvalidDataException("Zip File is closed");
             Stream s = zipArchive.GetInputStream(entry);
             return s;

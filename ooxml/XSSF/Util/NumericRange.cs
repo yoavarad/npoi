@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -30,19 +30,19 @@ namespace NPOI.XSSF.Util
         public static long[] GetOverlappingRange(long[] range1, long[] range2)
         {
             int overlappingType = GetOverlappingType(range1, range2);
-            if (overlappingType == OVERLAPS_1_MINOR)
+            if(overlappingType == OVERLAPS_1_MINOR)
             {
                 return new long[] { range2[0], range1[1] };
             }
-            else if (overlappingType == OVERLAPS_2_MINOR)
+            else if(overlappingType == OVERLAPS_2_MINOR)
             {
                 return new long[] { range1[0], range2[1] };
             }
-            else if (overlappingType == OVERLAPS_2_WRAPS)
+            else if(overlappingType == OVERLAPS_2_WRAPS)
             {
                 return range1;
             }
-            else if (overlappingType == OVERLAPS_1_WRAPS)
+            else if(overlappingType == OVERLAPS_1_WRAPS)
             {
                 return range2;
             }
@@ -55,19 +55,19 @@ namespace NPOI.XSSF.Util
             long max1 = range1[1];
             long min2 = range2[0];
             long max2 = range2[1];
-            if (min1 >= min2 && max1 <= max2)
+            if(min1 >= min2 && max1 <= max2)
             {
                 return OVERLAPS_2_WRAPS;
             }
-            else if (min2 >= min1 && max2 <= max1)
+            else if(min2 >= min1 && max2 <= max1)
             {
                 return OVERLAPS_1_WRAPS;
             }
-            else if ((min2 >= min1 && min2 <= max1) && max2 >= max1)
+            else if((min2 >= min1 && min2 <= max1) && max2 >= max1)
             {
                 return OVERLAPS_1_MINOR;
             }
-            else if ((min1 >= min2 && min1 <= max2) && max1 >= max2)
+            else if((min1 >= min2 && min1 <= max2) && max1 >= max2)
             {
                 return OVERLAPS_2_MINOR;
             }

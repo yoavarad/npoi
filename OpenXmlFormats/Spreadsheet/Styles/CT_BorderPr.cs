@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,15 +20,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private bool styleFieldSpecified;
         public static CT_BorderPr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BorderPr ctObj = new CT_BorderPr();
             ctObj.styleFieldSpecified = node.Attributes["style"] != null;
-            if (node.Attributes["style"] != null)
-                ctObj.style = (ST_BorderStyle)Enum.Parse(typeof(ST_BorderStyle), node.Attributes["style"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["style"] != null)
+                ctObj.style = (ST_BorderStyle) Enum.Parse(typeof(ST_BorderStyle), node.Attributes["style"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "color")
+                if(childNode.LocalName == "color")
                     ctObj.color = CT_Color.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -41,7 +41,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             if(this.style!= ST_BorderStyle.none)
                 XmlHelper.WriteAttribute(sw, "style", this.style.ToString());
-            if (this.color != null)
+            if(this.color != null)
             {
                 sw.Write('>');
                 this.color.Write(sw, "color");

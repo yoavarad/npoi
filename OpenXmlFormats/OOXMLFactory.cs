@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using System.IO;
 
 namespace NPOI.OpenXmlFormats
 {
     public class OOXMLFactory<T>
     {
-        XmlSerializer serializerObj = null; 
+        XmlSerializer serializerObj = null;
         public OOXMLFactory()
         {
             serializerObj = new XmlSerializer(typeof(T));
@@ -22,7 +22,7 @@ namespace NPOI.OpenXmlFormats
         }
         public T Create()
         {
-            return (T)Activator.CreateInstance(typeof(T));
+            return (T) Activator.CreateInstance(typeof(T));
         }
     }
 }

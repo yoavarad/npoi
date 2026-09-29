@@ -17,16 +17,16 @@
 
 namespace NPOI.HSSF.Record.Aggregates
 {
-    using System;
-    using System.Text;
-    using System.Collections;
-    using NPOI.HSSF.Record;
     using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
     using NPOI.SS.Formula;
-    using System.Collections.Generic;
-    using NPOI.SS.Util;
     using NPOI.SS.Formula.PTG;
+    using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// 
@@ -51,28 +51,28 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private CFRecordsAggregate(CFHeaderBase pHeader, CFRuleBase[] pRules)
         {
-            if (pHeader == null)
+            if(pHeader == null)
             {
                 throw new ArgumentException("header must not be null");
             }
-            if (pRules == null)
+            if(pRules == null)
             {
                 throw new ArgumentException("rules must not be null");
             }
-            if (pRules.Length > MAX_97_2003_CONDTIONAL_FORMAT_RULES)
+            if(pRules.Length > MAX_97_2003_CONDTIONAL_FORMAT_RULES)
             {
                 Console.WriteLine("Excel versions before 2007 require that "
                     + "No more than " + MAX_97_2003_CONDTIONAL_FORMAT_RULES
                     + " rules may be specified, " + pRules.Length + " were found,"
                     + " this file will cause problems with old Excel versions");
             }
-            if (pRules.Length != pHeader.NumberOfConditionalFormats)
+            if(pRules.Length != pHeader.NumberOfConditionalFormats)
             {
                 throw new RecordFormatException("Mismatch number of rules");
             }
             header = pHeader;
             rules = new List<CFRuleBase>(pRules.Length);
-            foreach (CFRuleBase pRule in pRules)
+            foreach(CFRuleBase pRule in pRules)
             {
                 CheckRuleType(pRule);
                 rules.Add(pRule);
@@ -88,7 +88,8 @@ namespace NPOI.HSSF.Record.Aggregates
         private static CFHeaderBase CreateHeader(CellRangeAddress[] regions, CFRuleBase[] rules)
         {
             CFHeaderBase header;
-            if (rules.Length == 0 || rules[0] is CFRuleRecord) {
+            if(rules.Length == 0 || rules[0] is CFRuleRecord)
+            {
                 header = new CFHeaderRecord(regions, rules.Length);
             }
             else
@@ -108,11 +109,11 @@ namespace NPOI.HSSF.Record.Aggregates
         public static CFRecordsAggregate CreateCFAggregate(RecordStream rs)
         {
             Record rec = rs.GetNext();
-            if (rec.Sid != CFHeaderRecord.sid &&
+            if(rec.Sid != CFHeaderRecord.sid &&
                 rec.Sid != CFHeader12Record.sid)
             {
                 throw new InvalidOperationException("next record sid was " + rec.Sid
-                        + " instead of " + CFHeaderRecord.sid + " or " 
+                        + " instead of " + CFHeaderRecord.sid + " or "
                         + CFHeader12Record.sid + " as expected");
             }
 
@@ -120,9 +121,9 @@ namespace NPOI.HSSF.Record.Aggregates
             int nRules = header.NumberOfConditionalFormats;
 
             CFRuleBase[] rules = new CFRuleBase[nRules];
-            for (int i = 0; i < rules.Length; i++)
+            for(int i = 0; i < rules.Length; i++)
             {
-                rules[i] = (CFRuleBase)rs.GetNext();
+                rules[i] = (CFRuleBase) rs.GetNext();
             }
 
             return new CFRecordsAggregate(header, rules);
@@ -136,7 +137,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public static CFRecordsAggregate CreateCFAggregate(IList recs, int pOffset)
         {
             Record rec = (Record)recs[pOffset];
-            if (rec.Sid != CFHeaderRecord.sid)
+            if(rec.Sid != CFHeaderRecord.sid)
             {
                 throw new InvalidOperationException("next record sid was " + rec.Sid
                         + " instead of " + CFHeaderRecord.sid + " as expected");
@@ -148,15 +149,15 @@ namespace NPOI.HSSF.Record.Aggregates
             CFRuleRecord[] rules = new CFRuleRecord[nRules];
             int offset = pOffset;
             int countFound = 0;
-            while (countFound < rules.Length)
+            while(countFound < rules.Length)
             {
                 offset++;
-                if (offset >= recs.Count)
+                if(offset >= recs.Count)
                 {
                     break;
                 }
-                rec = (Record)recs[offset];
-                if (rec is CFRuleRecord record)
+                rec = (Record) recs[offset];
+                if(rec is CFRuleRecord record)
                 {
                     rules[countFound] = record;
                     countFound++;
@@ -167,7 +168,7 @@ namespace NPOI.HSSF.Record.Aggregates
                 }
             }
 
-            if (countFound < nRules)
+            if(countFound < nRules)
             { // TODO -(MAR-2008) can this ever happen? Write junit 
 
                 //if (log.Check(POILogger.DEBUG))
@@ -185,7 +186,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public override void VisitContainedRecords(RecordVisitor rv)
         {
             rv.VisitRecord(header);
-            foreach (CFRuleBase rule in rules)
+            foreach(CFRuleBase rule in rules)
             {
                 rv.VisitRecord(rule);
             }
@@ -198,11 +199,11 @@ namespace NPOI.HSSF.Record.Aggregates
         {
 
             CFRuleBase[] newRecs = new CFRuleBase[rules.Count];
-            for (int i = 0; i < newRecs.Length; i++)
+            for(int i = 0; i < newRecs.Length; i++)
             {
-                newRecs[i] = (CFRuleRecord)GetRule(i).Clone();
+                newRecs[i] = (CFRuleRecord) GetRule(i).Clone();
             }
-            return new CFRecordsAggregate((CFHeaderBase)header.Clone(), newRecs);
+            return new CFRecordsAggregate((CFHeaderBase) header.Clone(), newRecs);
         }
 
         public override short Sid
@@ -226,7 +227,7 @@ namespace NPOI.HSSF.Record.Aggregates
             int pos = offset;
 
             pos += header.Serialize(pos, data);
-            for (int i = 0; i < nRules; i++)
+            for(int i = 0; i < nRules; i++)
             {
                 pos += GetRule(i).Serialize(pos, data);
             }
@@ -240,7 +241,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private void CheckRuleIndex(int idx)
         {
-            if (idx < 0 || idx >= rules.Count)
+            if(idx < 0 || idx >= rules.Count)
             {
                 throw new ArgumentException("Bad rule record index (" + idx
                         + ") nRules=" + rules.Count);
@@ -248,12 +249,14 @@ namespace NPOI.HSSF.Record.Aggregates
         }
         private void CheckRuleType(CFRuleBase r)
         {
-            if (header is CFHeaderRecord &&
-                     r is CFRuleRecord) {
+            if(header is CFHeaderRecord &&
+                     r is CFRuleRecord)
+            {
                 return;
             }
-            if (header is CFHeader12Record &&
-                     r is CFRule12Record) {
+            if(header is CFHeader12Record &&
+                     r is CFRule12Record)
+            {
                 return;
             }
             throw new ArgumentException("Header and Rule must both be CF or both be CF12, can't mix");
@@ -278,25 +281,25 @@ namespace NPOI.HSSF.Record.Aggregates
             CellRangeAddress[] cellRanges = header.CellRanges;
             bool changed = false;
             List<CellRangeAddress> temp = new List<CellRangeAddress>();
-            foreach (CellRangeAddress craOld in cellRanges)
+            foreach(CellRangeAddress craOld in cellRanges)
             {
                 CellRangeAddress craNew = ShiftRange(shifter, craOld, currentExternSheetIx);
-                if (craNew == null)
+                if(craNew == null)
                 {
                     changed = true;
                     continue;
                 }
                 temp.Add(craNew);
-                if (craNew != craOld)
+                if(craNew != craOld)
                 {
                     changed = true;
                 }
             }
 
-            if (changed)
+            if(changed)
             {
                 int nRanges = temp.Count;
-                if (nRanges == 0)
+                if(nRanges == 0)
                 {
                     return false;
                 }
@@ -305,28 +308,28 @@ namespace NPOI.HSSF.Record.Aggregates
                 header.CellRanges = (newRanges);
             }
 
-            foreach (CFRuleBase rule in rules)
+            foreach(CFRuleBase rule in rules)
             {
                 Ptg[] ptgs;
                 ptgs = rule.ParsedExpression1;
-                if (ptgs != null && shifter.AdjustFormula(ptgs, currentExternSheetIx))
+                if(ptgs != null && shifter.AdjustFormula(ptgs, currentExternSheetIx))
                 {
                     rule.ParsedExpression1 = (ptgs);
                 }
                 ptgs = rule.ParsedExpression2;
-                if (ptgs != null && shifter.AdjustFormula(ptgs, currentExternSheetIx))
+                if(ptgs != null && shifter.AdjustFormula(ptgs, currentExternSheetIx))
                 {
                     rule.ParsedExpression2 = (ptgs);
                 }
-                if (rule is CFRule12Record rule12)
+                if(rule is CFRule12Record rule12)
                 {
                     ptgs = rule12.ParsedExpressionScale;
-                    if (ptgs != null && shifter.AdjustFormula(ptgs, currentExternSheetIx))
+                    if(ptgs != null && shifter.AdjustFormula(ptgs, currentExternSheetIx))
                     {
                         rule12.ParsedExpressionScale = (ptgs);
                     }
                 }
-        }
+            }
             return true;
         }
         private static CellRangeAddress ShiftRange(FormulaShifter shifter, CellRangeAddress cra, int currentExternSheetIx)
@@ -335,16 +338,16 @@ namespace NPOI.HSSF.Record.Aggregates
             AreaPtg aptg = new AreaPtg(cra.FirstRow, cra.LastRow, cra.FirstColumn, cra.LastColumn, false, false, false, false);
             Ptg[] ptgs = { aptg, };
 
-            if (!shifter.AdjustFormula(ptgs, currentExternSheetIx))
+            if(!shifter.AdjustFormula(ptgs, currentExternSheetIx))
             {
                 return cra;
             }
             Ptg ptg0 = ptgs[0];
-            if (ptg0 is AreaPtg bptg)
+            if(ptg0 is AreaPtg bptg)
             {
                 return new CellRangeAddress(bptg.FirstRow, bptg.LastRow, bptg.FirstColumn, bptg.LastColumn);
             }
-            if (ptg0 is AreaErrPtg)
+            if(ptg0 is AreaErrPtg)
             {
                 return null;
             }
@@ -352,7 +355,7 @@ namespace NPOI.HSSF.Record.Aggregates
         }
         public void AddRule(CFRuleBase r)
         {
-            if (rules.Count >= MAX_97_2003_CONDTIONAL_FORMAT_RULES)
+            if(rules.Count >= MAX_97_2003_CONDTIONAL_FORMAT_RULES)
             {
                 Console.WriteLine("Excel versions before 2007 cannot cope with"
                     + " any more than " + MAX_97_2003_CONDTIONAL_FORMAT_RULES
@@ -371,17 +374,18 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             StringBuilder buffer = new StringBuilder();
             String type = "CF";
-            if (header is CFHeader12Record) {
+            if(header is CFHeader12Record)
+            {
                 type = "CF12";
             }
             buffer.Append("[").Append(type).Append("]\n");
-            if (header != null)
+            if(header != null)
             {
                 buffer.Append(header.ToString());
             }
-            foreach (CFRuleBase cfRule in rules)
+            foreach(CFRuleBase cfRule in rules)
             {
-                if (cfRule != null)
+                if(cfRule != null)
                 {
                     buffer.Append(cfRule.ToString());
                 }

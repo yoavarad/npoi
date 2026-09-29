@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -14,11 +14,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
    ==================================================================== */
-using NPOI.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 namespace TestCases.SS.Util
 {
 
@@ -31,9 +32,9 @@ namespace TestCases.SS.Util
     {
 
         private static Object[][] testData = new Object[][] {
-	new object[]{         1,     2,        3},
-	new object[]{DateTime.Now,  null,     null},
-	new object[]{     "one", "two", "=A1+B2"}
+    new object[]{         1,     2,        3},
+    new object[]{DateTime.Now,  null,     null},
+    new object[]{     "one", "two", "=A1+B2"}
     };
         [Test]
         public void TestNotCreateEmptyCells()

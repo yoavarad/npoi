@@ -24,18 +24,17 @@
  */
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-    using NPOI.Util;
     using NPOI.HSSF.UserModel;
-
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
-    using NPOI.SS.UserModel;
     using NPOI.HSSF.Util;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading.Tasks;
+    using TestCases.HSSF;
 
     /**
      * Class to Test cell styling functionality
@@ -83,17 +82,17 @@ namespace TestCases.HSSF.UserModel
             fnt.Color = (HSSFColor.Red.Index);
             fnt.IsBold = true;
             cs.SetFont(fnt);
-            for (short rownum = (short)0; rownum < 100; rownum++)
+            for(short rownum = (short) 0; rownum < 100; rownum++)
             {
                 r = s.CreateRow(rownum);
 
                 // r.SetRowNum(( short ) rownum);
-                for (short cellnum = (short)0; cellnum < 50; cellnum += 2)
+                for(short cellnum = (short) 0; cellnum < 50; cellnum += 2)
                 {
                     c = r.CreateCell(cellnum);
                     c.SetCellValue(rownum * 10000 + cellnum
-                                   + (((double)rownum / 1000)
-                                      + ((double)cellnum / 10000)));
+                                   + (((double) rownum / 1000)
+                                      + ((double) cellnum / 10000)));
                     c = r.CreateCell(cellnum + 1);
                     c.SetCellValue("TEST");
                     c.CellStyle = (cs);
@@ -206,24 +205,24 @@ namespace TestCases.HSSF.UserModel
             cs.BorderLeft = (BorderStyle.Thin);
             cs.BorderRight = (BorderStyle.Thin);
             cs.BorderTop = (BorderStyle.Thin);
-            cs.FillForegroundColor = (short)0xA;
+            cs.FillForegroundColor = (short) 0xA;
             cs.FillPattern = FillPattern.Diamonds;
-            fnt.Color = (short)0xf;
+            fnt.Color = (short) 0xf;
             fnt.IsItalic = (true);
-            cs2.FillForegroundColor = (short)0x0;
+            cs2.FillForegroundColor = (short) 0x0;
             cs2.FillPattern = FillPattern.Diamonds;
             cs2.SetFont(fnt);
-            for (short rownum = (short)0; rownum < 100; rownum++)
+            for(short rownum = (short) 0; rownum < 100; rownum++)
             {
                 r = s.CreateRow(rownum);
 
                 // r.SetRowNum(( short ) rownum);
-                for (short cellnum = (short)0; cellnum < 50; cellnum += 2)
+                for(short cellnum = (short) 0; cellnum < 50; cellnum += 2)
                 {
                     c = r.CreateCell(cellnum);
                     c.SetCellValue(rownum * 10000 + cellnum
-                                   + (((double)rownum / 1000)
-                                      + ((double)cellnum / 10000)));
+                                   + (((double) rownum / 1000)
+                                      + ((double) cellnum / 10000)));
                     c.CellStyle = (cs);
                     c = r.CreateCell(cellnum + 1);
                     c.SetCellValue("TEST");
@@ -255,7 +254,7 @@ namespace TestCases.HSSF.UserModel
             NPOI.SS.UserModel.ICellStyle orig = wb.CreateCellStyle();
             orig.Alignment = (HorizontalAlignment.Justify);
             orig.SetFont(fnt);
-            orig.DataFormat = ((short)18);
+            orig.DataFormat = ((short) 18);
 
             ClassicAssert.AreEqual(HorizontalAlignment.Justify, orig.Alignment);
             ClassicAssert.AreEqual(fnt, orig.GetFont(wb));
@@ -369,7 +368,7 @@ namespace TestCases.HSSF.UserModel
             // now apply a named style to a new cell
             ICell c4 = s.GetRow(0).CreateCell(1);
             c4.CellStyle = (cs2);
-            ClassicAssert.AreEqual("style1", ((HSSFCellStyle)c4.CellStyle).ParentStyle.UserStyleName);
+            ClassicAssert.AreEqual("style1", ((HSSFCellStyle) c4.CellStyle).ParentStyle.UserStyleName);
         }
 
         [Test]
@@ -458,7 +457,7 @@ namespace TestCases.HSSF.UserModel
 
             // Create a new font and alter it.
             IFont font = wb.CreateFont();
-            font.FontHeightInPoints = ((short)24);
+            font.FontHeightInPoints = ((short) 24);
             font.FontName = ("Courier New");
             font.IsItalic = (true);
             font.IsStrikeout = (true);
@@ -478,7 +477,7 @@ namespace TestCases.HSSF.UserModel
             newCell.SetCellValue("2testtext2");
             ICellStyle newStyle = newCell.CellStyle;
             ClassicAssert.AreEqual(BorderStyle.Dotted, newStyle.BorderBottom);
-            ClassicAssert.AreEqual(HSSFColor.Red.Index, ((HSSFCellStyle)newStyle).GetFont(wb).Color);
+            ClassicAssert.AreEqual(HSSFColor.Red.Index, ((HSSFCellStyle) newStyle).GetFont(wb).Color);
 
             //        OutputStream out = new FileOutputStream("/tmp/56959.xls");
             //        try {
@@ -494,28 +493,28 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFCellStyle cellStyle = wb.CreateCellStyle() as HSSFCellStyle;
             ClassicAssert.AreEqual(0, cellStyle.Rotation);
-            cellStyle.Rotation = ((short)89);
+            cellStyle.Rotation = ((short) 89);
             ClassicAssert.AreEqual(89, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)90);
+            cellStyle.Rotation = ((short) 90);
             ClassicAssert.AreEqual(90, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)-1);
+            cellStyle.Rotation = ((short) -1);
             ClassicAssert.AreEqual(-1, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)-89);
+            cellStyle.Rotation = ((short) -89);
             ClassicAssert.AreEqual(-89, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)-90);
+            cellStyle.Rotation = ((short) -90);
             ClassicAssert.AreEqual(-90, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)-89);
+            cellStyle.Rotation = ((short) -89);
             ClassicAssert.AreEqual(-89, cellStyle.Rotation);
             // values above 90 are mapped to the correct values for compatibility between HSSF and XSSF
-            cellStyle.Rotation = ((short)179);
+            cellStyle.Rotation = ((short) 179);
             ClassicAssert.AreEqual(-89, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)180);
+            cellStyle.Rotation = ((short) 180);
             ClassicAssert.AreEqual(-90, cellStyle.Rotation);
 
             wb.Close();
@@ -594,7 +593,8 @@ namespace TestCases.HSSF.UserModel
                     for(var c = 0; c<numCells; c++)
                     {
                         ICell cell = row.GetCell(c);
-                        if(cell is null) continue;
+                        if(cell is null)
+                            continue;
                         readRow[c] = df.FormatCellValue(cell);
                     }
                     results.Add(readRow);

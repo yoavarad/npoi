@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,8 +24,8 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Text
 {
-    using NPOI.Util;
     using NPOI.OpenXmlFormats.Dml;
+    using NPOI.Util;
     public class XDDFSpacingPercent : XDDFSpacing
     {
         private CT_TextSpacingPercent percent;
@@ -34,7 +34,7 @@ namespace NPOI.XDDF.UserModel.Text
         public XDDFSpacingPercent(double value)
             : this(new CT_TextSpacing(), new CT_TextSpacingPercent(), null)
         {
-            
+
             if(spacing.IsSetSpcPts())
             {
                 spacing.UnsetSpcPts();
@@ -45,7 +45,7 @@ namespace NPOI.XDDF.UserModel.Text
         public XDDFSpacingPercent(CT_TextSpacing parent, CT_TextSpacingPercent percent, double? scale)
             : base(parent)
         {
-            
+
             this.percent = percent;
             this.scale = (scale == null) ? 0.001 : scale.Value * 0.001;
         }
@@ -55,7 +55,7 @@ namespace NPOI.XDDF.UserModel.Text
             {
                 return Kind.Percent;
             }
-            
+
         }
 
         public double GetPercent()
@@ -69,5 +69,3 @@ namespace NPOI.XDDF.UserModel.Text
         }
     }
 }
-
-

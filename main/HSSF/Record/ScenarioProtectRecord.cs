@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title: Scenario Protect Record
@@ -65,7 +65,7 @@ namespace NPOI.HSSF.Record
             get { return (field_1_protect == 1); }
             set
             {
-                if (value)
+                if(value)
                 {
                     field_1_protect = 1;
                 }

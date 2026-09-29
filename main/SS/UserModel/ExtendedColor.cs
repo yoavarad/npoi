@@ -16,13 +16,13 @@
 ==================================================================== */
 namespace NPOI.SS.UserModel
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
     using NPOI.Util;
     using SkiaSharp;
+    using System;
+    using System.Text;
 
     /**
      * Represents a XSSF-style color (based on either a
@@ -89,10 +89,10 @@ using Cysharp.Text;
 
         protected byte[] GetRGBOrARGB()
         {
-            if (IsIndexed && Index > 0)
+            if(IsIndexed && Index > 0)
             {
                 byte[] rgb = IndexedRGB;
-                if (rgb != null)
+                if(rgb != null)
                 {
                     return rgb;
                 }
@@ -114,24 +114,24 @@ using Cysharp.Text;
             get
             {
                 byte[] rgb = StoredRGB;
-                if (rgb != null)
+                if(rgb != null)
                 {
-                    rgb = (byte[])rgb.Clone();
-                    if (rgb.Length == 4)
+                    rgb = (byte[]) rgb.Clone();
+                    if(rgb.Length == 4)
                     {
                         byte[] tmp = new byte[3];
                         Array.Copy(rgb, 1, tmp, 0, 3);
                         rgb = tmp;
                     }
                     double tint = Tint;
-                    for (int i = 0; i < rgb.Length; i++)
+                    for(int i = 0; i < rgb.Length; i++)
                     {
                         rgb[i] = ApplyTint(rgb[i] & 0xFF, tint);
                     }
                 }
                 return rgb;
             }
-            
+
         }
 
         /**
@@ -147,7 +147,7 @@ using Cysharp.Text;
             get
             {
                 byte[] rgb = ARGB;
-                if (rgb == null)
+                if(rgb == null)
                 {
                     return null;
                 }
@@ -157,7 +157,7 @@ using Cysharp.Text;
                 {
                     int i = c & 0xff;
                     String cs = string.Format("{0:x}", i);
-                    if (cs.Length == 1)
+                    if(cs.Length == 1)
                     {
                         sb.Append('0');
                     }
@@ -167,13 +167,13 @@ using Cysharp.Text;
             }
             set
             {
-                if (value.Length == 6 || value.Length == 8)
+                if(value.Length == 6 || value.Length == 8)
                 {
                     byte[] rgb = new byte[value.Length / 2];
-                    for (int i = 0; i < rgb.Length; i++)
+                    for(int i = 0; i < rgb.Length; i++)
                     {
                         String part = value.Substring(i * 2, (i + 1) * 2-i*2);
-                        rgb[i] = (byte)Int32.Parse(part, System.Globalization.NumberStyles.HexNumber);
+                        rgb[i] = (byte) Int32.Parse(part, System.Globalization.NumberStyles.HexNumber);
                     }
                     RGB = (rgb);
                 }
@@ -186,17 +186,17 @@ using Cysharp.Text;
 
         private static byte ApplyTint(int lum, double tint)
         {
-            if (tint > 0)
+            if(tint > 0)
             {
-                return (byte)(lum * (1.0 - tint) + (255 - 255 * (1.0 - tint)));
+                return (byte) (lum * (1.0 - tint) + (255 - 255 * (1.0 - tint)));
             }
-            else if (tint < 0)
+            else if(tint < 0)
             {
-                return (byte)(lum * (1 + tint));
+                return (byte) (lum * (1 + tint));
             }
             else
             {
-                return (byte)lum;
+                return (byte) lum;
             }
         }
 

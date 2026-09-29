@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -33,7 +33,7 @@ namespace NPOI.SS.Formula.Functions
         protected override double Eval(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
 
-            if (args.Length < 4)
+            if(args.Length < 4)
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
 
             double result;
@@ -66,7 +66,7 @@ namespace NPOI.SS.Formula.Functions
                 v6 = OperandResolver.GetSingleValue(args[5], srcCellRow, srcCellCol);
                 double FV = OperandResolver.CoerceValueToDouble(v5);
                 int type = OperandResolver.CoerceValueToInt(v6);
-                result = Finance.PPMT(interestRate, period, numberPayments, PV, FV,type);
+                result = Finance.PPMT(interestRate, period, numberPayments, PV, FV, type);
             }
 
             CheckValue(result);

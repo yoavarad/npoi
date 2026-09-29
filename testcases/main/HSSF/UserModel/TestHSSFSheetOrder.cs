@@ -19,11 +19,12 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     /**
      * Tests HSSFWorkbook method setSheetOrder()
      *
@@ -46,7 +47,7 @@ namespace TestCases.HSSF.UserModel
         {
             HSSFWorkbook wb = new HSSFWorkbook();
 
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 HSSFSheet s = (HSSFSheet)wb.CreateSheet("Sheet " + i);
                 InternalSheet sheet = s.Sheet;
@@ -99,7 +100,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(9, wbr.GetSheetIndex("Sheet 1"));
 
             // Now get the index by the sheet, not the name
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 NPOI.SS.UserModel.ISheet s = wbr.GetSheetAt(i);
                 ClassicAssert.AreEqual(i, wbr.GetSheetIndex(s));
@@ -107,4 +108,3 @@ namespace TestCases.HSSF.UserModel
         }
     }
 }
-

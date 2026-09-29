@@ -17,8 +17,6 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record.CF;
     using NPOI.HSSF.Record.Common;
     using NPOI.HSSF.UserModel;
@@ -27,6 +25,8 @@ namespace NPOI.HSSF.Record
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
     using ExtendedColorR = NPOI.HSSF.Record.Common.ExtendedColor;
 
     /**
@@ -77,7 +77,8 @@ namespace NPOI.HSSF.Record
             SetDefaults();
             this.formula_scale = Formula.Create(formulaScale);
         }
-        private void SetDefaults() {
+        private void SetDefaults()
+        {
             futureHeader = new FtrHeader();
             futureHeader.RecordType = (/*setter*/sid);
 
@@ -96,7 +97,8 @@ namespace NPOI.HSSF.Record
         /**
          * Creates a new comparison operation rule
          */
-        public static CFRule12Record Create(HSSFSheet sheet, String formulaText) {
+        public static CFRule12Record Create(HSSFSheet sheet, String formulaText)
+        {
             Ptg[] formula1 = ParseFormula(formulaText, sheet);
             return new CFRule12Record(CONDITION_TYPE_FORMULA, ComparisonOperator.NO_COMPARISON,
                     formula1, null, null);
@@ -105,7 +107,8 @@ namespace NPOI.HSSF.Record
          * Creates a new comparison operation rule
          */
         public static CFRule12Record Create(HSSFSheet sheet, byte comparisonOperation,
-                String formulaText1, String formulaText2) {
+                String formulaText1, String formulaText2)
+        {
             Ptg[] formula1 = ParseFormula(formulaText1, sheet);
             Ptg[] formula2 = ParseFormula(formulaText2, sheet);
             return new CFRule12Record(CONDITION_TYPE_CELL_VALUE_IS, comparisonOperation,
@@ -115,7 +118,8 @@ namespace NPOI.HSSF.Record
          * Creates a new comparison operation rule
          */
         public static CFRule12Record Create(HSSFSheet sheet, byte comparisonOperation,
-                String formulaText1, String formulaText2, String formulaTextScale) {
+                String formulaText1, String formulaText2, String formulaTextScale)
+        {
             Ptg[] formula1 = ParseFormula(formulaText1, sheet);
             Ptg[] formula2 = ParseFormula(formulaText2, sheet);
             Ptg[] formula3 = ParseFormula(formulaTextScale, sheet);
@@ -128,13 +132,14 @@ namespace NPOI.HSSF.Record
         /// <param name="sheet"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public static CFRule12Record Create(HSSFSheet sheet, ExtendedColorR color) {
+        public static CFRule12Record Create(HSSFSheet sheet, ExtendedColorR color)
+        {
             CFRule12Record r = new CFRule12Record(CONDITION_TYPE_DATA_BAR,
                                                   ComparisonOperator.NO_COMPARISON);
             DataBarFormatting dbf = r.CreateDataBarFormatting();
             dbf.Color = color;
-            dbf.PercentMin = (byte)0;
-            dbf.PercentMax = (byte)100;
+            dbf.PercentMin = (byte) 0;
+            dbf.PercentMax = (byte) 100;
 
             DataBarThreshold min = new DataBarThreshold();
             min.SetType(RangeType.MIN.id);
@@ -152,9 +157,11 @@ namespace NPOI.HSSF.Record
         /// <param name="sheet"></param>
         /// <param name="iconSet"></param>
         /// <returns></returns>
-        public static CFRule12Record Create(HSSFSheet sheet, IconSet iconSet) {
+        public static CFRule12Record Create(HSSFSheet sheet, IconSet iconSet)
+        {
             Threshold[] ts = new Threshold[iconSet.num];
-            for (int i = 0; i < ts.Length; i++) {
+            for(int i = 0; i < ts.Length; i++)
+            {
                 ts[i] = new IconMultiStateThreshold();
             }
 
@@ -170,11 +177,13 @@ namespace NPOI.HSSF.Record
         /// </summary>
         /// <param name="sheet"></param>
         /// <returns></returns>
-        public static CFRule12Record CreateColorScale(HSSFSheet sheet) {
+        public static CFRule12Record CreateColorScale(HSSFSheet sheet)
+        {
             int numPoints = 3;
             ExtendedColorR[] colors = new ExtendedColorR[numPoints];
             ColorGradientThreshold[] ts = new ColorGradientThreshold[numPoints];
-            for (int i = 0; i < ts.Length; i++) {
+            for(int i = 0; i < ts.Length; i++)
+            {
                 ts[i] = new ColorGradientThreshold();
                 colors[i] = new ExtendedColorR();
             }
@@ -188,21 +197,26 @@ namespace NPOI.HSSF.Record
             return r;
         }
 
-        public CFRule12Record(RecordInputStream in1) {
+        public CFRule12Record(RecordInputStream in1)
+        {
             futureHeader = new FtrHeader(in1);
-            ConditionType = ((byte)in1.ReadByte());
-            ComparisonOperation = ((byte)in1.ReadByte());
+            ConditionType = ((byte) in1.ReadByte());
+            ComparisonOperation = ((byte) in1.ReadByte());
             int field_3_formula1_len = in1.ReadUShort();
             int field_4_formula2_len = in1.ReadUShort();
 
             ext_formatting_length = in1.ReadInt();
             ext_formatting_data = [];
-            if (ext_formatting_length == 0) {
+            if(ext_formatting_length == 0)
+            {
                 // 2 bytes reserved
                 in1.ReadUShort();
-            } else {
+            }
+            else
+            {
                 int len = ReadFormatOptions(in1);
-                if (len < ext_formatting_length) {
+                if(len < ext_formatting_length)
+                {
                     ext_formatting_data = IOUtils.SafelyAllocate(ext_formatting_length - len, MAX_RECORD_LENGTH);
                     in1.ReadFully(ext_formatting_data);
                 }
@@ -214,39 +228,52 @@ namespace NPOI.HSSF.Record
             int formula_scale_len = in1.ReadUShort();
             formula_scale = Formula.Read(formula_scale_len, in1);
 
-            ext_opts = (byte)in1.ReadByte();
+            ext_opts = (byte) in1.ReadByte();
             priority = in1.ReadUShort();
             template_type = in1.ReadUShort();
-            template_param_length = (byte)in1.ReadByte();
-            if (template_param_length == 0 || template_param_length == 16) {
+            template_param_length = (byte) in1.ReadByte();
+            if(template_param_length == 0 || template_param_length == 16)
+            {
                 template_params = IOUtils.SafelyAllocate(template_param_length, MAX_RECORD_LENGTH);
                 in1.ReadFully(template_params);
-            } else {
+            }
+            else
+            {
                 //logger.Log(POILogger.WARN, "CF Rule v12 template params length should be 0 or 16, found " + template_param_length);
                 in1.ReadRemainder();
             }
 
             byte type = ConditionType;
-            if (type == CONDITION_TYPE_COLOR_SCALE) {
+            if(type == CONDITION_TYPE_COLOR_SCALE)
+            {
                 color_gradient = new ColorGradientFormatting(in1);
-            } else if (type == CONDITION_TYPE_DATA_BAR) {
+            }
+            else if(type == CONDITION_TYPE_DATA_BAR)
+            {
                 data_bar = new DataBarFormatting(in1);
-            } else if (type == CONDITION_TYPE_FILTER) {
+            }
+            else if(type == CONDITION_TYPE_FILTER)
+            {
                 filter_data = in1.ReadRemainder();
-            } else if (type == CONDITION_TYPE_ICON_SET) {
+            }
+            else if(type == CONDITION_TYPE_ICON_SET)
+            {
                 multistate = new IconMultiStateFormatting(in1);
             }
         }
 
-        public bool ContainsDataBarBlock() {
+        public bool ContainsDataBarBlock()
+        {
             return (data_bar != null);
         }
         public DataBarFormatting DataBarFormatting
         {
             get { return data_bar; }
         }
-        public DataBarFormatting CreateDataBarFormatting() {
-            if (data_bar != null) return data_bar;
+        public DataBarFormatting CreateDataBarFormatting()
+        {
+            if(data_bar != null)
+                return data_bar;
 
             // Convert, Setup and return
             ConditionType = (CONDITION_TYPE_DATA_BAR);
@@ -254,15 +281,18 @@ namespace NPOI.HSSF.Record
             return data_bar;
         }
 
-        public bool ContainsMultiStateBlock() {
+        public bool ContainsMultiStateBlock()
+        {
             return (multistate != null);
         }
         public IconMultiStateFormatting MultiStateFormatting
         {
             get { return multistate; }
         }
-        public IconMultiStateFormatting CreateMultiStateFormatting() {
-            if (multistate != null) return multistate;
+        public IconMultiStateFormatting CreateMultiStateFormatting()
+        {
+            if(multistate != null)
+                return multistate;
 
             // Convert, Setup and return
             ConditionType = (CONDITION_TYPE_ICON_SET);
@@ -270,15 +300,18 @@ namespace NPOI.HSSF.Record
             return multistate;
         }
 
-        public bool ContainsColorGradientBlock() {
+        public bool ContainsColorGradientBlock()
+        {
             return (color_gradient != null);
         }
         public ColorGradientFormatting ColorGradientFormatting
         {
             get { return color_gradient; }
         }
-        public ColorGradientFormatting CreateColorGradientFormatting() {
-            if (color_gradient != null) return color_gradient;
+        public ColorGradientFormatting CreateColorGradientFormatting()
+        {
+            if(color_gradient != null)
+                return color_gradient;
 
             // Convert, Setup and return
             ConditionType = (CONDITION_TYPE_COLOR_SCALE);
@@ -321,7 +354,8 @@ namespace NPOI.HSSF.Record
          *
          * @param out the stream to write to
          */
-        public override void Serialize(ILittleEndianOutput out1) {
+        public override void Serialize(ILittleEndianOutput out1)
+        {
             futureHeader.Serialize(out1);
 
             int formula1Len = GetFormulaSize(Formula1);
@@ -333,10 +367,13 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(formula2Len);
 
             // TODO Update ext_formatting_length
-            if (ext_formatting_length == 0) {
+            if(ext_formatting_length == 0)
+            {
                 out1.WriteInt(0);
                 out1.WriteShort(0);
-            } else {
+            }
+            else
+            {
                 out1.WriteInt(ext_formatting_length);
                 SerializeFormattingBlock(out1);
                 out1.Write(ext_formatting_data);
@@ -354,13 +391,20 @@ namespace NPOI.HSSF.Record
             out1.Write(template_params);
 
             byte type = ConditionType;
-            if (type == CONDITION_TYPE_COLOR_SCALE) {
+            if(type == CONDITION_TYPE_COLOR_SCALE)
+            {
                 color_gradient.Serialize(out1);
-            } else if (type == CONDITION_TYPE_DATA_BAR) {
+            }
+            else if(type == CONDITION_TYPE_DATA_BAR)
+            {
                 data_bar.Serialize(out1);
-            } else if (type == CONDITION_TYPE_FILTER) {
+            }
+            else if(type == CONDITION_TYPE_FILTER)
+            {
                 out1.Write(filter_data);
-            } else if (type == CONDITION_TYPE_ICON_SET) {
+            }
+            else if(type == CONDITION_TYPE_ICON_SET)
+            {
                 multistate.Serialize(out1);
             }
         }
@@ -370,7 +414,7 @@ namespace NPOI.HSSF.Record
             get
             {
                 int len = FtrHeader.GetDataSize() + 6;
-                if (ext_formatting_length == 0)
+                if(ext_formatting_length == 0)
                 {
                     len += 6;
                 }
@@ -384,40 +428,44 @@ namespace NPOI.HSSF.Record
                 len += 6 + template_params.Length;
 
                 byte type = ConditionType;
-                if (type == CONDITION_TYPE_COLOR_SCALE)
+                if(type == CONDITION_TYPE_COLOR_SCALE)
                 {
                     len += color_gradient.DataLength;
                 }
-                else if (type == CONDITION_TYPE_DATA_BAR)
+                else if(type == CONDITION_TYPE_DATA_BAR)
                 {
                     len += data_bar.DataLength;
                 }
-                else if (type == CONDITION_TYPE_FILTER)
+                else if(type == CONDITION_TYPE_FILTER)
                 {
                     len += filter_data.Length;
                 }
-                else if (type == CONDITION_TYPE_ICON_SET)
+                else if(type == CONDITION_TYPE_ICON_SET)
                 {
                     len += multistate.DataLength;
                 }
                 return len;
             }
-            
+
         }
 
-        public override String ToString() {
+        public override String ToString()
+        {
             StringBuilder buffer = new StringBuilder();
             buffer.Append("[CFRULE12]\n");
             buffer.Append("    .condition_type=").Append(ConditionType).Append("\n");
             buffer.Append("    .dxfn12_length =0x").Append(HexDump.ToHex(ext_formatting_length)).Append("\n");
             buffer.Append("    .option_flags  =0x").Append(HexDump.ToHex(Options)).Append("\n");
-            if (ContainsFontFormattingBlock) {
+            if(ContainsFontFormattingBlock)
+            {
                 buffer.Append(_fontFormatting.ToString()).Append("\n");
             }
-            if (ContainsBorderFormattingBlock) {
+            if(ContainsBorderFormattingBlock)
+            {
                 buffer.Append(_borderFormatting.ToString()).Append("\n");
             }
-            if (ContainsPatternFormattingBlock) {
+            if(ContainsPatternFormattingBlock)
+            {
                 buffer.Append(_patternFormatting.ToString()).Append("\n");
             }
             buffer.Append("    .dxfn12_ext=").Append(HexDump.ToHex(ext_formatting_data)).Append("\n");
@@ -429,20 +477,24 @@ namespace NPOI.HSSF.Record
             buffer.Append("    .template_type  =").Append(template_type).Append("\n");
             buffer.Append("    .template_params=").Append(HexDump.ToHex(template_params)).Append("\n");
             buffer.Append("    .filter_data    =").Append(HexDump.ToHex(filter_data)).Append("\n");
-            if (color_gradient != null) {
+            if(color_gradient != null)
+            {
                 buffer.Append(color_gradient);
             }
-            if (multistate != null) {
+            if(multistate != null)
+            {
                 buffer.Append(multistate);
             }
-            if (data_bar != null) {
+            if(data_bar != null)
+            {
                 buffer.Append(data_bar);
             }
             buffer.Append("[/CFRULE12]\n");
             return buffer.ToString();
         }
 
-        public override Object Clone() {
+        public override Object Clone()
+        {
             CFRule12Record rec = new CFRule12Record(ConditionType, ComparisonOperation);
             rec.futureHeader.AssociatedRange = (/*setter*/futureHeader.AssociatedRange.Copy());
 
@@ -463,16 +515,20 @@ namespace NPOI.HSSF.Record
             rec.template_params = IOUtils.SafelyAllocate(template_param_length, MAX_RECORD_LENGTH);
             Array.Copy(template_params, 0, rec.template_params, 0, template_param_length);
 
-            if (color_gradient != null) {
-                rec.color_gradient = (ColorGradientFormatting)color_gradient.Clone();
+            if(color_gradient != null)
+            {
+                rec.color_gradient = (ColorGradientFormatting) color_gradient.Clone();
             }
-            if (multistate != null) {
-                rec.multistate = (IconMultiStateFormatting)multistate.Clone();
+            if(multistate != null)
+            {
+                rec.multistate = (IconMultiStateFormatting) multistate.Clone();
             }
-            if (data_bar != null) {
-                rec.data_bar = (DataBarFormatting)data_bar.Clone();
+            if(data_bar != null)
+            {
+                rec.data_bar = (DataBarFormatting) data_bar.Clone();
             }
-            if (filter_data != null) {
+            if(filter_data != null)
+            {
                 rec.filter_data = IOUtils.SafelyAllocate(filter_data.Length, MAX_RECORD_LENGTH);
                 Array.Copy(filter_data, 0, rec.filter_data, 0, filter_data.Length);
             }
@@ -480,13 +536,16 @@ namespace NPOI.HSSF.Record
             return rec;
         }
 
-        public short GetFutureRecordType() {
+        public short GetFutureRecordType()
+        {
             return futureHeader.RecordType;
         }
-        public FtrHeader GetFutureHeader() {
+        public FtrHeader GetFutureHeader()
+        {
             return futureHeader;
         }
-        public CellRangeAddress GetAssociatedRange() {
+        public CellRangeAddress GetAssociatedRange()
+        {
             return futureHeader.AssociatedRange;
         }
 
@@ -496,7 +555,8 @@ namespace NPOI.HSSF.Record
             {
                 return priority;
             }
-            set {
+            set
+            {
                 this.priority = value;
             }
         }

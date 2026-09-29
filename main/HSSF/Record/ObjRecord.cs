@@ -17,12 +17,11 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.Util;
-
-    using System.IO;
+    using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
 
     /**
@@ -77,7 +76,7 @@ namespace NPOI.HSSF.Record
             //int subSize = 0;
             byte[] subRecordData = in1.ReadRemainder();
 
-            if (LittleEndian.GetUShort(subRecordData, 0) != CommonObjectDataSubRecord.sid)
+            if(LittleEndian.GetUShort(subRecordData, 0) != CommonObjectDataSubRecord.sid)
             {
                 // seems to occur in just one junit on "OddStyleRecord.xls" (file created by CrystalReports)
                 // Excel tolerates the funny ObjRecord, and replaces it with a corrected version
@@ -92,28 +91,28 @@ namespace NPOI.HSSF.Record
             //    throw new RecordFormatException(msg);
             //}
             subrecords = new List<SubRecord>();
-            using (MemoryStream bais = RecyclableMemory.GetStream(subRecordData))
+            using(MemoryStream bais = RecyclableMemory.GetStream(subRecordData))
             {
                 LittleEndianInputStream subRecStream = new LittleEndianInputStream(bais);
                 CommonObjectDataSubRecord cmo = (CommonObjectDataSubRecord)SubRecord.CreateSubRecord(subRecStream, 0);
                 subrecords.Add(cmo);
-                while (true)
+                while(true)
                 {
                     SubRecord subRecord = SubRecord.CreateSubRecord(subRecStream, cmo.ObjectType);
                     subrecords.Add(subRecord);
-                    if (subRecord.IsTerminating)
+                    if(subRecord.IsTerminating)
                     {
                         break;
                     }
                 }
                 int nRemainingBytes = subRecStream.Available();
-                if (nRemainingBytes > 0)
+                if(nRemainingBytes > 0)
                 {
                     // At present (Oct-2008), most unit test samples have (subRecordData.length % 2 == 0)
                     _isPaddedToQuadByteMultiple = subRecordData.Length % MAX_PAD_ALIGNMENT == 0;
-                    if (nRemainingBytes >= (_isPaddedToQuadByteMultiple ? MAX_PAD_ALIGNMENT : NORMAL_PAD_ALIGNMENT))
+                    if(nRemainingBytes >= (_isPaddedToQuadByteMultiple ? MAX_PAD_ALIGNMENT : NORMAL_PAD_ALIGNMENT))
                     {
-                        if (!CanPaddingBeDiscarded(subRecordData, nRemainingBytes))
+                        if(!CanPaddingBeDiscarded(subRecordData, nRemainingBytes))
                         {
                             String msg = "Leftover " + nRemainingBytes
                                 + " bytes in subrecord data " + HexDump.ToHex(subRecordData);
@@ -141,9 +140,9 @@ namespace NPOI.HSSF.Record
         private static bool CanPaddingBeDiscarded(byte[] data, int nRemainingBytes)
         {
             // make sure none of the padding looks important
-            for (int i = data.Length - nRemainingBytes; i < data.Length; i++)
+            for(int i = data.Length - nRemainingBytes; i < data.Length; i++)
             {
-                if (data[i] != 0x00)
+                if(data[i] != 0x00)
                 {
                     return false;
                 }
@@ -156,7 +155,7 @@ namespace NPOI.HSSF.Record
             StringBuilder sb = new StringBuilder();
 
             sb.Append("[OBJ]\n");
-            for (int i = 0; i < subrecords.Count; i++)
+            for(int i = 0; i < subrecords.Count; i++)
             {
                 SubRecord record = subrecords[i];
                 sb.Append("SUBRECORD: ").Append(record.ToString());
@@ -165,7 +164,7 @@ namespace NPOI.HSSF.Record
             return sb.ToString();
         }
 
-        public override int Serialize(int offset, byte [] data)
+        public override int Serialize(int offset, byte[] data)
         {
             int recSize = RecordSize;
             int dataSize = recSize - 4;
@@ -175,16 +174,16 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(sid);
             out1.WriteShort(dataSize);
 
-            if (_uninterpretedData == null)
+            if(_uninterpretedData == null)
             {
-                for (int i = 0; i < subrecords.Count; i++)
+                for(int i = 0; i < subrecords.Count; i++)
                 {
                     SubRecord record = subrecords[i];
                     record.Serialize(out1);
                 }
                 int expectedEndIx = offset + dataSize;
                 // padding
-                while (out1.WriteIndex < expectedEndIx)
+                while(out1.WriteIndex < expectedEndIx)
                 {
                     out1.WriteByte(0);
                 }
@@ -203,26 +202,26 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (_uninterpretedData != null)
+                if(_uninterpretedData != null)
                 {
                     return _uninterpretedData.Length + 4;
                 }
                 int size = 0;
-                for (int i = subrecords.Count - 1; i >= 0; i--)
+                for(int i = subrecords.Count - 1; i >= 0; i--)
                 {
                     SubRecord record = subrecords[i];
                     size += record.DataSize + 4;
                 }
-                if (_isPaddedToQuadByteMultiple)
+                if(_isPaddedToQuadByteMultiple)
                 {
-                    while (size % MAX_PAD_ALIGNMENT != 0)
+                    while(size % MAX_PAD_ALIGNMENT != 0)
                     {
                         size++;
                     }
                 }
                 else
                 {
-                    while (size % NORMAL_PAD_ALIGNMENT != 0)
+                    while(size % NORMAL_PAD_ALIGNMENT != 0)
                     {
                         size++;
                     }
@@ -263,10 +262,10 @@ namespace NPOI.HSSF.Record
         {
             ObjRecord rec = new ObjRecord();
 
-            for (int i = 0; i < subrecords.Count; i++)
+            for(int i = 0; i < subrecords.Count; i++)
             {
                 SubRecord record = subrecords[i];
-                rec.AddSubRecord((SubRecord)record.Clone());
+                rec.AddSubRecord((SubRecord) record.Clone());
             }
 
             return rec;

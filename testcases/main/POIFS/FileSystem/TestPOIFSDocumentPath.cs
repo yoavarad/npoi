@@ -26,16 +26,15 @@
  * ==============================================================*/
 
 
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.FileSystem;
-using NPOI.Util;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
 
 
 namespace TestCases.POIFS.FileSystem
@@ -79,11 +78,11 @@ namespace TestCases.POIFS.FileSystem
         {
             string[] components = { "foo", "bar", "foobar", "fubar" };
 
-            for (int j = 0; j < components.Length; j++)
+            for(int j = 0; j < components.Length; j++)
             {
                 string[] pms = new string[j];
 
-                for (int k = 0; k < j; k++)
+                for(int k = 0; k < j; k++)
                 {
                     pms[k] = components[k];
                 }
@@ -91,11 +90,11 @@ namespace TestCases.POIFS.FileSystem
                 POIFSDocumentPath path = new POIFSDocumentPath(pms);
 
                 ClassicAssert.AreEqual(j, path.Length);
-                for (int k = 0; k < j; k++)
+                for(int k = 0; k < j; k++)
                 {
                     ClassicAssert.AreEqual(components[k], path.GetComponent(k));
                 }
-                if (j == 0)
+                if(j == 0)
                     ClassicAssert.IsNull(path.Parent);
                 else
                 {
@@ -103,7 +102,7 @@ namespace TestCases.POIFS.FileSystem
 
                     ClassicAssert.IsNotNull(parent);
                     ClassicAssert.AreEqual(j - 1, parent.Length);
-                    for (int k = 0; k < j - 1; k++)
+                    for(int k = 0; k < j - 1; k++)
                         ClassicAssert.AreEqual(components[k], parent.GetComponent(k));
                 }
             }
@@ -115,7 +114,7 @@ namespace TestCases.POIFS.FileSystem
                 new POIFSDocumentPath(new string[] { "fu", "" });
                 Assert.Fail("Should have caught IllegalArgumentException");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
             }
             try
@@ -123,7 +122,7 @@ namespace TestCases.POIFS.FileSystem
                 new POIFSDocumentPath(new string[] { "fu", null });
                 Assert.Fail("Should have caught IllegalArgumentException");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
             }
         }
@@ -136,37 +135,37 @@ namespace TestCases.POIFS.FileSystem
         {
             string[] initialComponents = { "a", "b", "c" };
 
-            for (int n = 0; n < initialComponents.Length; n++)
+            for(int n = 0; n < initialComponents.Length; n++)
             {
                 String[] initialParams = new String[n];
 
-                for (int k = 0; k < n; k++)
+                for(int k = 0; k < n; k++)
                     initialParams[k] = initialComponents[k];
 
                 POIFSDocumentPath b = new POIFSDocumentPath(initialParams);
                 string[] components = { "foo", "bar", "foobar", "fubar" };
 
-                for (int j = 0; j < components.Length; j++)
+                for(int j = 0; j < components.Length; j++)
                 {
                     String[] params1 = new String[j];
 
-                    for (int k = 0; k < j; k++)
+                    for(int k = 0; k < j; k++)
                     {
                         params1[k] = components[k];
                     }
                     POIFSDocumentPath path = new POIFSDocumentPath(b, params1);
 
                     ClassicAssert.AreEqual(j + n, path.Length);
-                    for (int k = 0; k < n; k++)
+                    for(int k = 0; k < n; k++)
                     {
                         ClassicAssert.AreEqual(initialComponents[k],
                                      path.GetComponent(k));
                     }
-                    for (int k = 0; k < j; k++)
+                    for(int k = 0; k < j; k++)
                     {
                         ClassicAssert.AreEqual(components[k], path.GetComponent(k + n));
                     }
-                    if ((j + n) == 0)
+                    if((j + n) == 0)
                     {
                         ClassicAssert.IsNull(path.Parent);
                     }
@@ -176,7 +175,7 @@ namespace TestCases.POIFS.FileSystem
 
                         ClassicAssert.IsNotNull(parent);
                         ClassicAssert.AreEqual(j + n - 1, parent.Length);
-                        for (int k = 0; k < (j + n - 1); k++)
+                        for(int k = 0; k < (j + n - 1); k++)
                         {
                             ClassicAssert.AreEqual(path.GetComponent(k), parent.GetComponent(k));
                         }
@@ -196,7 +195,7 @@ namespace TestCases.POIFS.FileSystem
                     new POIFSDocumentPath(b, new string[] { "fu", null });
                     Assert.Fail("should have caught ArgumentException");
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                 }
                 try
@@ -204,7 +203,7 @@ namespace TestCases.POIFS.FileSystem
                     new POIFSDocumentPath(b, new string[] { "fu", null });
                     Assert.Fail("should have caught ArgumentException");
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                 }
             }
@@ -224,9 +223,9 @@ namespace TestCases.POIFS.FileSystem
 
             POIFSDocumentPath[] paths = { a1, a2, a3, a4, a5 };
 
-            for (int j = 0; j < paths.Length; j++)
+            for(int j = 0; j < paths.Length; j++)
             {
-                for (int k = 0; k < paths.Length; k++)
+                for(int k = 0; k < paths.Length; k++)
                     ClassicAssert.AreEqual(paths[j], paths[k], j + "<>" + k);
             }
 
@@ -246,11 +245,11 @@ namespace TestCases.POIFS.FileSystem
                     new POIFSDocumentPath(new string[]{"foo", "bar", "fubar", "foobar"})
             };
 
-            for (int k = 0; k < builtUpPaths.Length; k++)
+            for(int k = 0; k < builtUpPaths.Length; k++)
             {
-                for (int j = 0; j < fullPaths.Length; j++)
+                for(int j = 0; j < fullPaths.Length; j++)
                 {
-                    if (k == j)
+                    if(k == j)
                         ClassicAssert.AreEqual(fullPaths[j], builtUpPaths[k], j + "<>" + k);
                     else
                         ClassicAssert.IsTrue(!(fullPaths[j].Equals(builtUpPaths[k])), j + "<>" + k);
@@ -265,9 +264,9 @@ namespace TestCases.POIFS.FileSystem
 
             };
 
-            for (int k = 0; k < builtUpPaths.Length; k++)
+            for(int k = 0; k < builtUpPaths.Length; k++)
             {
-                for (int j = 0; j < badPaths.Length; j++)
+                for(int j = 0; j < badPaths.Length; j++)
                     ClassicAssert.IsTrue(!(fullPaths[k].Equals(badPaths[j])), j + "<>" + k);
             }
         }

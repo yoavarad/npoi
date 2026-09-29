@@ -51,19 +51,20 @@ namespace NPOI.HSSF.UserModel
             short[] newPos =
                 new short[workbook.Workbook.NumberOfFontRecords + 1];
             bool[] zapRecords = new bool[newPos.Length];
-            for (int i = 0; i < newPos.Length; i++)
+            for(int i = 0; i < newPos.Length; i++)
             {
-                newPos[i] = (short)i;
+                newPos[i] = (short) i;
                 zapRecords[i] = false;
             }
 
             // Get each font record, so we can do deletes
             //  without Getting confused
             FontRecord[] frecs = new FontRecord[newPos.Length];
-            for (int i = 0; i < newPos.Length; i++)
+            for(int i = 0; i < newPos.Length; i++)
             {
                 // There is no 4!
-                if (i == 4) continue;
+                if(i == 4)
+                    continue;
 
                 frecs[i] = workbook.Workbook.GetFontRecordAt(i);
             }
@@ -73,26 +74,27 @@ namespace NPOI.HSSF.UserModel
             //  later duplicate copy to the earlier one, and 
             //  mark the later one as needing deleting
             // Note - don't change built in fonts (those before 5)
-            for (int i = 5; i < newPos.Length; i++)
+            for(int i = 5; i < newPos.Length; i++)
             {
                 // Check this one for being a duplicate
                 //  of an earlier one
                 int earlierDuplicate = -1;
-                for (int j = 0; j < i && earlierDuplicate == -1; j++)
+                for(int j = 0; j < i && earlierDuplicate == -1; j++)
                 {
-                    if (j == 4) continue;
+                    if(j == 4)
+                        continue;
 
                     FontRecord frCheck = workbook.Workbook.GetFontRecordAt(j);
-                    if (frCheck.SameProperties(frecs[i]))
+                    if(frCheck.SameProperties(frecs[i]))
                     {
                         earlierDuplicate = j;
                     }
                 }
 
                 // If we got a duplicate, mark it as such
-                if (earlierDuplicate != -1)
+                if(earlierDuplicate != -1)
                 {
-                    newPos[i] = (short)earlierDuplicate;
+                    newPos[i] = (short) earlierDuplicate;
                     zapRecords[i] = true;
                 }
             }
@@ -101,15 +103,16 @@ namespace NPOI.HSSF.UserModel
             //  deletes that have occurred between
             //  the start and them
             // Only need to worry about user fonts
-            for (int i = 5; i < newPos.Length; i++)
+            for(int i = 5; i < newPos.Length; i++)
             {
                 // Find the number deleted to that
                 //  point, and adjust
                 short preDeletePos = newPos[i];
                 short newPosition = preDeletePos;
-                for (int j = 0; j < preDeletePos; j++)
+                for(int j = 0; j < preDeletePos; j++)
                 {
-                    if (zapRecords[j]) newPosition--;
+                    if(zapRecords[j])
+                        newPosition--;
                 }
 
                 // Update the new position
@@ -117,9 +120,9 @@ namespace NPOI.HSSF.UserModel
             }
 
             // Zap the un-needed user font records
-            for (int i = 5; i < newPos.Length; i++)
+            for(int i = 5; i < newPos.Length; i++)
             {
-                if (zapRecords[i])
+                if(zapRecords[i])
                 {
                     workbook.Workbook.RemoveFontRecord(
                             frecs[i]
@@ -133,7 +136,7 @@ namespace NPOI.HSSF.UserModel
 
             // Update the cell styles to point at the 
             //  new locations of the fonts
-            for (int i = 0; i < workbook.Workbook.NumExFormats; i++)
+            for(int i = 0; i < workbook.Workbook.NumExFormats; i++)
             {
                 ExtendedFormatRecord xfr = workbook.Workbook.GetExFormatAt(i);
                 xfr.FontIndex = (
@@ -146,31 +149,31 @@ namespace NPOI.HSSF.UserModel
             // Remember that one underlying unicode string
             //  may be shared by multiple RichTextStrings!
             ArrayList doneUnicodeStrings = new ArrayList();
-            for (int sheetNum = 0; sheetNum < workbook.NumberOfSheets; sheetNum++)
+            for(int sheetNum = 0; sheetNum < workbook.NumberOfSheets; sheetNum++)
             {
                 NPOI.SS.UserModel.ISheet s = workbook.GetSheetAt(sheetNum);
                 //IEnumerator rIt = s.GetRowEnumerator();
                 //while (rIt.MoveNext())
-                foreach (IRow row in s) 
+                foreach(IRow row in s)
                 {
                     //HSSFRow row = (HSSFRow)rIt.Current;
                     //IEnumerator cIt = row.GetEnumerator();
                     //while (cIt.MoveNext())
-                    foreach (ICell cell in row) 
+                    foreach(ICell cell in row)
                     {
                         //ICell cell = (HSSFCell)cIt.Current;
-                        if (cell.CellType == NPOI.SS.UserModel.CellType.String)
+                        if(cell.CellType == NPOI.SS.UserModel.CellType.String)
                         {
                             HSSFRichTextString rtr = (HSSFRichTextString)cell.RichStringCellValue;
                             UnicodeString u = rtr.RawUnicodeString;
 
                             // Have we done this string already?
-                            if (!doneUnicodeStrings.Contains(u))
+                            if(!doneUnicodeStrings.Contains(u))
                             {
                                 // Update for each new position
-                                for (short i = 5; i < newPos.Length; i++)
+                                for(short i = 5; i < newPos.Length; i++)
                                 {
-                                    if (i != newPos[i])
+                                    if(i != newPos[i])
                                     {
                                         u.SwapFontUse(i, newPos[i]);
                                     }
@@ -200,17 +203,17 @@ namespace NPOI.HSSF.UserModel
                 new short[workbook.Workbook.NumExFormats];
             bool[] isUsed = new bool[newPos.Length];
             bool[] zapRecords = new bool[newPos.Length];
-            for (int i = 0; i < newPos.Length; i++)
+            for(int i = 0; i < newPos.Length; i++)
             {
                 isUsed[i] = false;
-                newPos[i] = (short)i;
+                newPos[i] = (short) i;
                 zapRecords[i] = false;
             }
 
             // Get each style record, so we can do deletes
             //  without Getting confused
             ExtendedFormatRecord[] xfrs = new ExtendedFormatRecord[newPos.Length];
-            for (int i = 0; i < newPos.Length; i++)
+            for(int i = 0; i < newPos.Length; i++)
             {
                 xfrs[i] = workbook.Workbook.GetExFormatAt(i);
             }
@@ -299,9 +302,9 @@ namespace NPOI.HSSF.UserModel
                 }
             }
             // Mark any that aren't used as needing zapping
-            for (int i = 21; i < isUsed.Length; i++)
+            for(int i = 21; i < isUsed.Length; i++)
             {
-                if (!isUsed[i])
+                if(!isUsed[i])
                 {
                     // Un-used style, can be removed
                     zapRecords[i] = true;
@@ -312,15 +315,16 @@ namespace NPOI.HSSF.UserModel
             //  deletes that have occurred between
             //  the start and them
             // Only work on user added ones, which come after 20
-            for (int i = 21; i < newPos.Length; i++)
+            for(int i = 21; i < newPos.Length; i++)
             {
                 // Find the number deleted to that
                 //  point, and adjust
                 short preDeletePos = newPos[i];
                 short newPosition = preDeletePos;
-                for (int j = 0; j < preDeletePos; j++)
+                for(int j = 0; j < preDeletePos; j++)
                 {
-                    if (zapRecords[j]) newPosition--;
+                    if(zapRecords[j])
+                        newPosition--;
                 }
 
                 // Update the new position
@@ -346,9 +350,9 @@ namespace NPOI.HSSF.UserModel
             // styles we did not intend to (the ones that _were_ duplicated and not the duplicates)
             int max = newPos.Length;
             int removed = 0; // to adjust index after deletion
-            for (int i = 21; i < max; i++)
+            for(int i = 21; i < max; i++)
             {
-                if (zapRecords[i + removed])
+                if(zapRecords[i + removed])
                 {
                     workbook.Workbook.RemoveExFormatRecord(i);
                     i--;

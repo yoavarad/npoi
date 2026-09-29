@@ -16,16 +16,14 @@
 ==================================================================== */
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.Web;
-    using System.IO;
-    using NPOI.Util;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Util;
-
-
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Web;
 
     /**
      * Test HyperlinkRecord
@@ -114,9 +112,9 @@ namespace TestCases.HSSF.Record
                      //standard 28-byte tail of a file link
                      (byte)0xFF, (byte)0xFF, (byte)0xAD, (byte)0xDE, 0x00, 0x00, 0x00, 0x00,
                      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                     0x00, 0x00, 0x00, 0x00, 
-                     
-                     0x00, 0x00, 0x00, 0x00   
+                     0x00, 0x00, 0x00, 0x00,
+
+                     0x00, 0x00, 0x00, 0x00
                     };
 
         // mailto:ebgans@mail.ru?subject=Hello,%20Ebgans!
@@ -440,7 +438,7 @@ namespace TestCases.HSSF.Record
         public void TestClone()
         {
             byte[][] data = { data1, data2, data3, data4 };
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
             {
                 RecordInputStream is1 = TestcaseRecordInputStream.Create(HyperlinkRecord.sid, data[i]);
                 HyperlinkRecord link = new HyperlinkRecord(is1);
@@ -467,7 +465,7 @@ namespace TestCases.HSSF.Record
             HyperlinkRecord hr = new HyperlinkRecord(in1);
             byte[] ser = hr.Serialize();
             TestcaseRecordInputStream.ConfirmRecordEncoding(HyperlinkRecord.sid, dataLinkToWorkbook, ser);
-            if ("YEARFR~1.XLS".Equals(hr.Address))
+            if("YEARFR~1.XLS".Equals(hr.Address))
             {
                 throw new AssertionException("Identified bug in reading workbook link");
             }
@@ -486,7 +484,7 @@ namespace TestCases.HSSF.Record
             {
                 hr.ToString();
             }
-            catch (NullReferenceException)
+            catch(NullReferenceException)
             {
                 Assert.Fail("Identified bug with option URL and UNC set at same time");
             }
@@ -496,11 +494,11 @@ namespace TestCases.HSSF.Record
         {
             GUID g;
             g = GUID.Parse("3F2504E0-4F89-11D3-9A0C-0305E82C3301");
-            ConfirmGUID(g, 0x3F2504E0, 0x4F89, 0x11D3, unchecked((long)0x9A0C0305E82C3301L));
+            ConfirmGUID(g, 0x3F2504E0, 0x4F89, 0x11D3, unchecked((long) 0x9A0C0305E82C3301L));
             ClassicAssert.AreEqual("3F2504E0-4F89-11D3-9A0C-0305E82C3301", g.FormatAsString());
 
             g = GUID.Parse("13579BDF-0246-8ACE-0123-456789ABCDEF");
-            ConfirmGUID(g, 0x13579BDF, 0x0246, 0x8ACE, unchecked((long)0x0123456789ABCDEFL));
+            ConfirmGUID(g, 0x13579BDF, 0x0246, 0x8ACE, unchecked((long) 0x0123456789ABCDEFL));
             ClassicAssert.AreEqual("13579BDF-0246-8ACE-0123-456789ABCDEF", g.FormatAsString());
 
             byte[] buf = new byte[16];

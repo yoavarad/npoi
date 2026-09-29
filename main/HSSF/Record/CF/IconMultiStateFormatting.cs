@@ -50,14 +50,14 @@ namespace NPOI.HSSF.Record.CF
             int num = in1.ReadByte();
             int set = in1.ReadByte();
             iconSet = IconSet.ById(set);
-            if (iconSet.num != num)
+            if(iconSet.num != num)
             {
                 //log.Log(POILogger.WARN, "Inconsistent Icon Set defintion, found " + iconSet + " but defined as " + num + " entries");
             }
-            options = (byte)in1.ReadByte();
+            options = (byte) in1.ReadByte();
 
             thresholds = new Threshold[iconSet.num];
-            for (int i = 0; i < thresholds.Length; i++)
+            for(int i = 0; i < thresholds.Length; i++)
             {
                 thresholds[i] = new IconMultiStateThreshold(in1);
             }
@@ -72,7 +72,7 @@ namespace NPOI.HSSF.Record.CF
         public Threshold[] Thresholds
         {
             get { return thresholds; }
-            set { this.thresholds = (value == null) ? null : (Threshold[])value.Clone(); }
+            set { this.thresholds = (value == null) ? null : (Threshold[]) value.Clone(); }
         }
 
         public bool IsIconOnly
@@ -105,7 +105,7 @@ namespace NPOI.HSSF.Record.CF
             buffer.Append("          .icon_set = ").Append(iconSet).Append("\n");
             buffer.Append("          .icon_only= ").Append(IsIconOnly).Append("\n");
             buffer.Append("          .reversed = ").Append(IsReversed).Append("\n");
-            foreach (Threshold t in thresholds)
+            foreach(Threshold t in thresholds)
             {
                 buffer.Append(t.ToString());
             }
@@ -128,7 +128,7 @@ namespace NPOI.HSSF.Record.CF
             get
             {
                 int len = 6;
-                foreach (Threshold t in thresholds)
+                foreach(Threshold t in thresholds)
                 {
                     len += t.DataLength;
                 }
@@ -143,7 +143,7 @@ namespace NPOI.HSSF.Record.CF
             out1.WriteByte(iconSet.num);
             out1.WriteByte(iconSet.id);
             out1.WriteByte(options);
-            foreach (Threshold t in thresholds)
+            foreach(Threshold t in thresholds)
             {
                 t.Serialize(out1);
             }

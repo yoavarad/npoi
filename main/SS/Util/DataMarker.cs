@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -17,8 +17,8 @@
  * ====================================================================
  */
 
-using System;
 using NPOI.SS.UserModel;
+using System;
 namespace NPOI.SS.Util
 {
     /// <summary>
@@ -81,7 +81,7 @@ namespace NPOI.SS.Util
         public String FormatAsString()
         {
             String sheetName = (sheet == null) ? (null) : (sheet.SheetName);
-            if (range == null)
+            if(range == null)
             {
                 return null;
             }

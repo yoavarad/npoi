@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
     using NPOI.DDF;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     /**
      * Various Tests for HSSFClientAnchor.
      *
@@ -41,24 +42,24 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(12.7, p, 0.001);
 
             sheet.CreateRow(0).HeightInPoints = (14);
-            a = new HSSFClientAnchor(0, 0, 1023, 255, (short)0, 0, (short)0, 0);
+            a = new HSSFClientAnchor(0, 0, 1023, 255, (short) 0, 0, (short) 0, 0);
             p = a.GetAnchorHeightInPoints(sheet);
             ClassicAssert.AreEqual(13.945, p, 0.001);
 
-            a = new HSSFClientAnchor(0, 0, 1023, 127, (short)0, 0, (short)0, 0);
+            a = new HSSFClientAnchor(0, 0, 1023, 127, (short) 0, 0, (short) 0, 0);
             p = a.GetAnchorHeightInPoints(sheet);
             ClassicAssert.AreEqual(6.945, p, 0.001);
 
-            a = new HSSFClientAnchor(0, 126, 1023, 127, (short)0, 0, (short)0, 0);
+            a = new HSSFClientAnchor(0, 126, 1023, 127, (short) 0, 0, (short) 0, 0);
             p = a.GetAnchorHeightInPoints(sheet);
             ClassicAssert.AreEqual(0.054, p, 0.001);
 
-            a = new HSSFClientAnchor(0, 0, 1023, 0, (short)0, 0, (short)0, 1);
+            a = new HSSFClientAnchor(0, 0, 1023, 0, (short) 0, 0, (short) 0, 1);
             p = a.GetAnchorHeightInPoints(sheet);
             ClassicAssert.AreEqual(14.0, p, 0.001);
 
             sheet.CreateRow(0).HeightInPoints = (12);
-            a = new HSSFClientAnchor(0, 127, 1023, 127, (short)0, 0, (short)0, 1);
+            a = new HSSFClientAnchor(0, 127, 1023, 127, (short) 0, 0, (short) 0, 1);
             p = a.GetAnchorHeightInPoints(sheet);
             ClassicAssert.AreEqual(12.372, p, 0.001);
 
@@ -77,7 +78,7 @@ namespace TestCases.HSSF.UserModel
             new HSSFClientAnchor( 100 , 0 , 900 , 255 ,(short)0, 1,(short)1,3),
             new HSSFClientAnchor( 900 , 0 , 100 , 255 ,(short)0, 1,(short)1,3)
         };
-            for (int i = 0; i < anchor.Length; i++)
+            for(int i = 0; i < anchor.Length; i++)
             {
                 EscherClientAnchorRecord record = (EscherClientAnchorRecord)ConvertAnchor.CreateAnchor(anchor[i]);
                 ClassicAssert.AreEqual(anchor[i].Dx1, record.Dx1);
@@ -104,7 +105,7 @@ namespace TestCases.HSSF.UserModel
             new HSSFClientAnchor( 0 , 0 , 0 , 128 ,(short)0, 1,(short)1, 3),
         };
             float[] ref1 = { 25.5f, 19.125f, 25.5f, 31.875f };
-            for (int i = 0; i < anchor.Length; i++)
+            for(int i = 0; i < anchor.Length; i++)
             {
                 float height = anchor[i].GetAnchorHeightInPoints(sheet);
                 ClassicAssert.AreEqual(ref1[i], height, 0);
@@ -142,10 +143,10 @@ namespace TestCases.HSSF.UserModel
         {
             try
             {
-                new HSSFClientAnchor(0, 0, 0, 0, (short)0, 65536, (short)0, 65536);
+                new HSSFClientAnchor(0, 0, 0, 0, (short) 0, 65536, (short) 0, 65536);
                 Assert.Fail("Expected IllegalArgumentException to be thrown");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // pass
             }
@@ -173,7 +174,7 @@ namespace TestCases.HSSF.UserModel
                 new HSSFClientAnchor().Row1 = (65536);
                 Assert.Fail("Expected IllegalArgumentException to be thrown");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // pass
             }
@@ -187,7 +188,7 @@ namespace TestCases.HSSF.UserModel
                 new HSSFClientAnchor().Row2 = (65536);
                 Assert.Fail("Expected IllegalArgumentException to be thrown");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // pass
             }

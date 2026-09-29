@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -204,11 +204,11 @@ namespace NPOI.OpenXml4Net.OPC
         /**
 	     * Dublin Core Terms URI.
 	     */
-	    public static String NAMESPACE_DCTERMS = "http://purl.org/dc/terms/";
-	
-	    /**
+        public static String NAMESPACE_DCTERMS = "http://purl.org/dc/terms/";
+
+        /**
 	     * Dublin Core namespace URI.
 	     */
-	    public static String NAMESPACE_DC = "http://purl.org/dc/elements/1.1/";
+        public static String NAMESPACE_DC = "http://purl.org/dc/elements/1.1/";
     }
 }

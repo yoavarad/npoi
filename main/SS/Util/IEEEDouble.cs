@@ -1,4 +1,4 @@
-﻿namespace NPOI.SS.Util
+namespace NPOI.SS.Util
 {
     public class IEEEDouble
     {
@@ -18,7 +18,7 @@
          */
         public static int GetBiasedExponent(long rawBits)
         {
-            return (int)((rawBits & EXPONENT_MASK) >> EXPONENT_SHIFT);
+            return (int) ((rawBits & EXPONENT_MASK) >> EXPONENT_SHIFT);
         }
     }
 }

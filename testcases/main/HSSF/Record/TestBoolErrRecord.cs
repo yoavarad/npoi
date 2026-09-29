@@ -18,11 +18,12 @@
 
 namespace TestCases.HSSF.Record
 {
+    using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.HSSF.Record;
-    using NPOI.Util;
-    using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
 
     /**
      * Tests for {@link BoolErrRecord}
@@ -70,9 +71,9 @@ namespace TestCases.HSSF.Record
             {
                 hasMore = in1.HasNextRecord;
             }
-            catch (LeftoverDataException e)
+            catch(LeftoverDataException e)
             {
-                if ("Initialisation of record 0x205 left 1 bytes remaining still to be Read.".Equals(e.Message))
+                if("Initialisation of record 0x205 left 1 bytes remaining still to be Read.".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 47479");
                 }
@@ -93,5 +94,3 @@ namespace TestCases.HSSF.Record
         }
     }
 }
-
-

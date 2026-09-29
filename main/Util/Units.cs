@@ -72,7 +72,7 @@ namespace NPOI.Util
         /// <returns>EMUs</returns>
         public static int ToEMU(double value)
         {
-            return (int)Math.Round(EMU_PER_POINT * value);
+            return (int) Math.Round(EMU_PER_POINT * value);
         }
         /// <summary>
         /// Converts pixels to EMUs
@@ -91,7 +91,7 @@ namespace NPOI.Util
         /// <return>points</return>
         public static double ToPoints(long emu)
         {
-            return (double)emu / EMU_PER_POINT;
+            return (double) emu / EMU_PER_POINT;
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace NPOI.Util
             points *= MASTER_DPI;
             points /= POINT_DPI;
             //return (int)Math.rint(points);
-            return (int)Math.Round(points, MidpointRounding.ToEven);
+            return (int) Math.Round(points, MidpointRounding.ToEven);
         }
 
         public static int PointsToPixel(double points)
@@ -144,7 +144,7 @@ namespace NPOI.Util
             points *= PIXEL_DPI;
             points /= POINT_DPI;
             //return (int)Math.rint(points);
-            return (int)Math.Round(points, MidpointRounding.ToEven);
+            return (int) Math.Round(points, MidpointRounding.ToEven);
         }
 
         public static double PixelToPoints(int pixel)
@@ -157,7 +157,7 @@ namespace NPOI.Util
 
         public static int CharactersToEMU(double characters)
         {
-            return (int)characters * EMU_PER_CHARACTER;
+            return (int) characters * EMU_PER_CHARACTER;
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace NPOI.Util
         /// <return>equivalent EMUs</return>
         public static int TwipsToEMU(short twips)
         {
-            return (int)(twips / 20d * EMU_PER_POINT);
+            return (int) (twips / 20d * EMU_PER_POINT);
         }
     }
 }

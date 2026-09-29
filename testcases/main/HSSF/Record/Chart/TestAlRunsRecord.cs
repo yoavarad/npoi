@@ -17,17 +17,17 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
+    using NPOI.HSSF.EventUserModel;
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.Record.Chart;
+    using NPOI.HSSF.UserModel;
+    using NPOI.POIFS.FileSystem;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
     using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using TestCases.HSSF;
-    using NPOI.HSSF.Record;
-    using NPOI.HSSF.EventUserModel;
-    using NPOI.HSSF.UserModel;
-    using NPOI.POIFS.FileSystem;
-    using NPOI.HSSF.Record.Chart;
     /**
      * 
      */
@@ -72,7 +72,7 @@ namespace TestCases.HSSF.Record.Chart
 
             public void ProcessRecord(Record record)
             {
-                if (record is AlRunsRecord)
+                if(record is AlRunsRecord)
                 {
                     chartTitleFormatRecords.Add(
                             record

@@ -18,11 +18,11 @@
 
 namespace NPOI.SS.Formula
 {
+    using NPOI.Util;
     using System;
+    using System.Globalization;
     using System.Text;
     using System.Text.RegularExpressions;
-    using NPOI.Util;
-    using System.Globalization;
 
     /**
      * Formats sheet names for use in formula expressions.
@@ -66,7 +66,7 @@ namespace NPOI.SS.Formula
         public static void AppendFormat(StringBuilder out1, String rawSheetName)
         {
             bool needsQuotes = NeedsDelimiting(rawSheetName);
-            if (needsQuotes)
+            if(needsQuotes)
             {
                 out1.Append(DELIMITER);
                 AppendAndEscape(out1, rawSheetName);
@@ -81,7 +81,7 @@ namespace NPOI.SS.Formula
         public static void AppendFormat(StringBuilder out1, String workbookName, String rawSheetName)
         {
             bool needsQuotes = NeedsDelimiting(workbookName) || NeedsDelimiting(rawSheetName);
-            if (needsQuotes)
+            if(needsQuotes)
             {
                 out1.Append(DELIMITER);
                 out1.Append('[');
@@ -102,10 +102,10 @@ namespace NPOI.SS.Formula
         private static void AppendAndEscape(StringBuilder sb, String rawSheetName)
         {
             int len = rawSheetName.Length;
-            for (int i = 0; i < len; i++)
+            for(int i = 0; i < len; i++)
             {
                 char ch = rawSheetName[i];
-                if (ch == DELIMITER)
+                if(ch == DELIMITER)
                 {
                     // single quotes (') are encoded as ('')
                     sb.Append(DELIMITER);
@@ -117,33 +117,33 @@ namespace NPOI.SS.Formula
         private static bool NeedsDelimiting(String rawSheetName)
         {
             int len = rawSheetName.Length;
-            if (len < 1)
+            if(len < 1)
             {
                 throw new Exception("Zero Length string is an invalid sheet name");
             }
-            if (Char.IsDigit(rawSheetName[0]))
+            if(Char.IsDigit(rawSheetName[0]))
             {
                 // sheet name with digit in the first position always requires delimiting
                 return true;
             }
-            for (int i = 0; i < len; i++)
+            for(int i = 0; i < len; i++)
             {
                 char ch = rawSheetName[i];
-                if (IsSpecialChar(ch))
+                if(IsSpecialChar(ch))
                 {
                     return true;
                 }
             }
-            if (Char.IsLetter(rawSheetName[0])
+            if(Char.IsLetter(rawSheetName[0])
                     && Char.IsDigit(rawSheetName[len - 1]))
             {
                 // note - values like "A$1:$C$20" don't Get this far 
-                if (NameLooksLikePlainCellReference(rawSheetName))
+                if(NameLooksLikePlainCellReference(rawSheetName))
                 {
                     return true;
                 }
             }
-            if (NameLooksLikeBooleanLiteral(rawSheetName))
+            if(NameLooksLikeBooleanLiteral(rawSheetName))
             {
                 return true;
             }
@@ -151,7 +151,7 @@ namespace NPOI.SS.Formula
         }
         private static bool NameLooksLikeBooleanLiteral(String rawSheetName)
         {
-            switch (rawSheetName[0])
+            switch(rawSheetName[0])
             {
                 case 'T':
                 case 't':
@@ -171,11 +171,11 @@ namespace NPOI.SS.Formula
         static bool IsSpecialChar(char ch)
         {
             // note - Char.IsJavaIdentifierPart() would allow dollars '$'
-            if (Char.IsLetterOrDigit(ch))
+            if(Char.IsLetterOrDigit(ch))
             {
                 return false;
             }
-            switch (ch)
+            switch(ch)
             {
                 case '.': // dot is OK
                 case '_': // Underscore is ok
@@ -244,7 +244,7 @@ namespace NPOI.SS.Formula
         public static bool NameLooksLikePlainCellReference(String rawSheetName)
         {
             Regex matcher = new Regex(CELL_REF_PATTERN);
-            if (!matcher.IsMatch(rawSheetName))
+            if(!matcher.IsMatch(rawSheetName))
             {
                 return false;
             }

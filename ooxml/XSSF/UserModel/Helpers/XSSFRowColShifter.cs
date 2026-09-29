@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.Formula;
 using NPOI.SS.UserModel;
 using NPOI.SS.UserModel.Helpers;
@@ -20,15 +20,15 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
         {
             IWorkbook wb = sheet.Workbook;
             XSSFEvaluationWorkbook fpb = XSSFEvaluationWorkbook.Create(wb);
-            foreach (IName name in wb.GetAllNames())
+            foreach(IName name in wb.GetAllNames())
             {
                 string formula = name.RefersToFormula;
                 int sheetIndex = name.SheetIndex;
 
-                SS.Formula.PTG.Ptg[] ptgs = 
+                SS.Formula.PTG.Ptg[] ptgs =
                     FormulaParser.Parse(formula, fpb, FormulaType.NamedRange, sheetIndex, -1);
 
-                if (shifter.AdjustFormula(ptgs, sheetIndex))
+                if(shifter.AdjustFormula(ptgs, sheetIndex))
                 {
                     string shiftedFmla = FormulaRenderer.ToFormulaString(fpb, ptgs);
                     name.RefersToFormula = shiftedFmla;
@@ -48,9 +48,9 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
 
             //update formulas on other sheets
             IWorkbook wb = sheet.Workbook;
-            foreach (XSSFSheet sh in wb)
+            foreach(XSSFSheet sh in wb)
             {
-                if (sheet == sh)
+                if(sheet == sh)
                 {
                     continue;
                 }
@@ -61,7 +61,7 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
 
         public static void UpdateSheetFormulas(ISheet sh, FormulaShifter Shifter)
         {
-            foreach (IRow r in sh)
+            foreach(IRow r in sh)
             {
                 XSSFRow row = (XSSFRow)r;
                 UpdateRowFormulas(row, Shifter);
@@ -77,22 +77,22 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
         public static void UpdateRowFormulas(IRow row, FormulaShifter Shifter)
         {
             XSSFSheet sheet = (XSSFSheet)row.Sheet;
-            foreach (ICell c in row)
+            foreach(ICell c in row)
             {
                 XSSFCell cell = (XSSFCell)c;
 
                 CT_Cell ctCell = cell.GetCTCell();
-                if (ctCell.IsSetF())
+                if(ctCell.IsSetF())
                 {
                     CT_CellFormula f = ctCell.f;
                     string formula = f.Value;
-                    if (formula.Length > 0)
+                    if(formula.Length > 0)
                     {
                         string ShiftedFormula = ShiftFormula(row, formula, Shifter);
-                        if (ShiftedFormula != null)
+                        if(ShiftedFormula != null)
                         {
                             f.Value = ShiftedFormula;
-                            if (f.t == ST_CellFormulaType.shared)
+                            if(f.t == ST_CellFormulaType.shared)
                             {
                                 int si = (int)f.si;
                                 CT_CellFormula sf = sheet.GetSharedFormula(si);
@@ -111,11 +111,12 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
 
         private static void UpdateRefInCTCellFormula(IRow row, FormulaShifter Shifter, CT_CellFormula f)
         {
-            if (f.isSetRef())
+            if(f.isSetRef())
             {
                 string ref1 = f.@ref;
                 string shiftedRef = ShiftFormula(row, ref1, Shifter);
-                if (shiftedRef != null) f.@ref = shiftedRef;
+                if(shiftedRef != null)
+                    f.@ref = shiftedRef;
             }
         }
 
@@ -137,20 +138,20 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
             XSSFEvaluationWorkbook fpb = XSSFEvaluationWorkbook.Create(wb);
             try
             {
-                SS.Formula.PTG.Ptg[] ptgs = 
+                SS.Formula.PTG.Ptg[] ptgs =
                     FormulaParser.Parse(formula, fpb, FormulaType.Cell, sheetIndex, -1);
                 string ShiftedFmla = null;
-                if (Shifter.AdjustFormula(ptgs, sheetIndex))
+                if(Shifter.AdjustFormula(ptgs, sheetIndex))
                 {
                     ShiftedFmla = FormulaRenderer.ToFormulaString(fpb, ptgs);
                 }
 
                 return ShiftedFmla;
             }
-            catch (FormulaParseException fpe)
+            catch(FormulaParseException fpe)
             {
                 // Log, but don't change, rather than breaking
-                Console.WriteLine("Error shifting formula on row " + 
+                Console.WriteLine("Error shifting formula on row " +
                     row.RowNum + ", " + fpe);
                 return formula;
             }
@@ -166,22 +167,22 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
         {
             XSSFSheet sheet = (XSSFSheet)column.Sheet;
 
-            foreach (ICell c in column)
+            foreach(ICell c in column)
             {
                 XSSFCell cell = (XSSFCell)c;
 
                 CT_Cell ctCell = cell.GetCTCell();
-                if (ctCell.IsSetF())
+                if(ctCell.IsSetF())
                 {
                     CT_CellFormula f = ctCell.f;
                     string formula = f.Value;
-                    if (formula.Length > 0)
+                    if(formula.Length > 0)
                     {
                         string ShiftedFormula = ShiftFormula(column, formula, Shifter);
-                        if (ShiftedFormula != null)
+                        if(ShiftedFormula != null)
                         {
                             f.Value = ShiftedFormula;
-                            if (f.t == ST_CellFormulaType.shared)
+                            if(f.t == ST_CellFormulaType.shared)
                             {
                                 int si = (int)f.si;
                                 CT_CellFormula sf = sheet.GetSharedFormula(si);
@@ -190,12 +191,12 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
                         }
                     }
 
-                    if (f.isSetRef())
+                    if(f.isSetRef())
                     {
                         //Range of cells which the formula applies to.
                         string ref1 = f.@ref;
                         string ShiftedRef = ShiftFormula(column, ref1, Shifter);
-                        if (ShiftedRef != null)
+                        if(ShiftedRef != null)
                         {
                             f.@ref = ShiftedRef;
                         }
@@ -222,17 +223,17 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
             XSSFEvaluationWorkbook fpb = XSSFEvaluationWorkbook.Create(wb);
             try
             {
-                SS.Formula.PTG.Ptg[] ptgs = 
+                SS.Formula.PTG.Ptg[] ptgs =
                     FormulaParser.Parse(formula, fpb, FormulaType.Cell, sheetIndex, -1);
                 string ShiftedFmla = null;
-                if (Shifter.AdjustFormula(ptgs, sheetIndex))
+                if(Shifter.AdjustFormula(ptgs, sheetIndex))
                 {
                     ShiftedFmla = FormulaRenderer.ToFormulaString(fpb, ptgs);
                 }
 
                 return ShiftedFmla;
             }
-            catch (FormulaParseException fpe)
+            catch(FormulaParseException fpe)
             {
                 // Log, but don't change, rather than breaking
                 Console.WriteLine($"Error shifting formula on column {column.ColumnNum}, {fpe}");
@@ -251,15 +252,15 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
             int sheetIndex = xsheet.GetWorkbook().GetSheetIndex(sheet);
             List<IHyperlink> hyperlinkList = sheet.GetHyperlinkList();
 
-            foreach (IHyperlink hyperlink1 in hyperlinkList)
+            foreach(IHyperlink hyperlink1 in hyperlinkList)
             {
                 XSSFHyperlink hyperlink = hyperlink1 as XSSFHyperlink;
                 string cellRef = hyperlink.CellRef;
                 CellRangeAddress cra = CellRangeAddress.ValueOf(cellRef);
-                CellRangeAddress shiftedRange = 
+                CellRangeAddress shiftedRange =
                     BaseRowColShifter.ShiftRange(shifter, cra, sheetIndex);
 
-                if (shiftedRange != null && shiftedRange != cra)
+                if(shiftedRange != null && shiftedRange != cra)
                 {
                     // shiftedRange should not be null. If shiftedRange is null, that means
                     // that a hyperlink wasn't deleted at the beginning of shiftRows when
@@ -276,55 +277,55 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
             int sheetIndex = wb.GetSheetIndex(sheet);
             XSSFEvaluationWorkbook fpb = XSSFEvaluationWorkbook.Create(wb);
             CT_Worksheet ctWorksheet = xsheet.GetCTWorksheet();
-            List<CT_ConditionalFormatting> conditionalFormattingArray = 
+            List<CT_ConditionalFormatting> conditionalFormattingArray =
                 ctWorksheet.conditionalFormatting;
 
             // iterate backwards due to possible calls to ctWorksheet.removeConditionalFormatting(j)
-            for (int j = conditionalFormattingArray.Count - 1; j >= 0; j--)
+            for(int j = conditionalFormattingArray.Count - 1; j >= 0; j--)
             {
                 CT_ConditionalFormatting cf = conditionalFormattingArray[j];
                 List<CellRangeAddress> cellRanges = new List<CellRangeAddress>();
                 string[] regions = cf.sqref.Split(' ');
 
-                for (int i = 0; i < regions.Length; i++)
+                for(int i = 0; i < regions.Length; i++)
                 {
                     cellRanges.Add(CellRangeAddress.ValueOf(regions[i]));
                 }
 
                 bool Changed = false;
                 List<CellRangeAddress> temp = new List<CellRangeAddress>();
-                for (int i = 0; i < cellRanges.Count; i++)
+                for(int i = 0; i < cellRanges.Count; i++)
                 {
                     CellRangeAddress craOld = cellRanges[i];
-                    CellRangeAddress craNew = 
+                    CellRangeAddress craNew =
                         BaseRowColShifter.ShiftRange(Shifter, craOld, sheetIndex);
 
-                    if (craNew == null)
+                    if(craNew == null)
                     {
                         Changed = true;
                         continue;
                     }
 
                     temp.Add(craNew);
-                    if (craNew != craOld)
+                    if(craNew != craOld)
                     {
                         Changed = true;
                     }
                 }
 
-                if (Changed)
+                if(Changed)
                 {
                     int nRanges = temp.Count;
-                    if (nRanges == 0)
+                    if(nRanges == 0)
                     {
                         conditionalFormattingArray.RemoveAt(j);
                         continue;
                     }
 
                     string refs = string.Empty;
-                    foreach (CellRangeAddress a in temp)
+                    foreach(CellRangeAddress a in temp)
                     {
-                        if (refs.Length == 0)
+                        if(refs.Length == 0)
                         {
                             refs = a.FormatAsString();
                         }
@@ -337,16 +338,16 @@ namespace NPOI.OOXML.XSSF.UserModel.Helpers
                     cf.sqref = refs;
                 }
 
-                foreach (CT_CfRule cfRule in cf.cfRule)
+                foreach(CT_CfRule cfRule in cf.cfRule)
                 {
                     List<string> formulas = cfRule.formula;
-                    for (int i = 0; i < formulas.Count; i++)
+                    for(int i = 0; i < formulas.Count; i++)
                     {
                         string formula = formulas[i];
-                        SS.Formula.PTG.Ptg[] ptgs = 
+                        SS.Formula.PTG.Ptg[] ptgs =
                             FormulaParser.Parse(formula, fpb, FormulaType.Cell, sheetIndex, -1);
 
-                        if (Shifter.AdjustFormula(ptgs, sheetIndex))
+                        if(Shifter.AdjustFormula(ptgs, sheetIndex))
                         {
                             string ShiftedFmla = FormulaRenderer.ToFormulaString(fpb, ptgs);
                             formulas[i] = ShiftedFmla;

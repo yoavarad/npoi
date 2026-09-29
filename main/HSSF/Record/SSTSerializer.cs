@@ -56,13 +56,13 @@ namespace NPOI.HSSF.Record
             out1.WriteInt(_numStrings);
             out1.WriteInt(_numUniqueStrings);
 
-            for (int k = 0; k < strings.Size; k++)
+            for(int k = 0; k < strings.Size; k++)
             {
-                if (k % ExtSSTRecord.DEFAULT_BUCKET_SIZE == 0)
+                if(k % ExtSSTRecord.DEFAULT_BUCKET_SIZE == 0)
                 {
                     int rOff = out1.TotalSize;
                     int index = k / ExtSSTRecord.DEFAULT_BUCKET_SIZE;
-                    if (index < ExtSSTRecord.MAX_BUCKETS)
+                    if(index < ExtSSTRecord.MAX_BUCKETS)
                     {
                         //Excel only indexes the first 128 buckets.
                         bucketAbsoluteOffsets[index] = rOff;
@@ -82,7 +82,7 @@ namespace NPOI.HSSF.Record
 
         private static UnicodeString GetUnicodeString(IntMapper<UnicodeString> strings, int index)
         {
-            return (UnicodeString)strings[index];
+            return (UnicodeString) strings[index];
         }
 
         public int[] BucketAbsoluteOffsets

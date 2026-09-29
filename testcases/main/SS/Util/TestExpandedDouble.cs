@@ -16,10 +16,11 @@
 ==================================================================== */
 
 using NPOI.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Text;
-using NPOI.Util;
 namespace TestCases.SS.Util
 {
     /**
@@ -37,7 +38,7 @@ namespace TestCases.SS.Util
         {
             ExpandedDouble hd = new ExpandedDouble(unchecked((long)0xC010000000000000L));
 
-            if (hd.GetBinaryExponent() == -2046)
+            if(hd.GetBinaryExponent() == -2046)
             {
                 throw new AssertionException("identified bug - sign bit not masked out of exponent");
             }
@@ -51,7 +52,7 @@ namespace TestCases.SS.Util
         {
             ExpandedDouble hd = new ExpandedDouble(0x0000000000000001L);
 
-            if (hd.GetBinaryExponent() == -1023)
+            if(hd.GetBinaryExponent() == -1023)
             {
                 throw new AssertionException("identified bug - subnormal numbers not decoded properly");
             }
@@ -68,30 +69,30 @@ namespace TestCases.SS.Util
         public void TestRoundTripShifting()
         {
             long[] rawValues = {
-				0x4010000000000004L,
-				0x7010000000000004L,
-				0x1010000000000004L,
-				0x0010000000000001L, // near lowest normal number
+                0x4010000000000004L,
+                0x7010000000000004L,
+                0x1010000000000004L,
+                0x0010000000000001L, // near lowest normal number
 				0x0010000000000000L, // lowest normal number
 				0x000FFFFFFFFFFFFFL, // highest subnormal number
 				0x0008000000000000L, // subnormal number
 
 				unchecked((long)0xC010000000000004L),
-				unchecked((long)0xE230100010001004L),
-				0x403CE0FFFFFFFFF2L,
-				0x0000000000000001L, // smallest non-zero number (subnormal)
+                unchecked((long)0xE230100010001004L),
+                0x403CE0FFFFFFFFF2L,
+                0x0000000000000001L, // smallest non-zero number (subnormal)
 				0x6230100010000FFEL,
-				0x6230100010000FFFL,
-				0x6230100010001000L,
-				0x403CE0FFFFFFFFF0L, // has single digit round trip error
+                0x6230100010000FFFL,
+                0x6230100010001000L,
+                0x403CE0FFFFFFFFF0L, // has single digit round trip error
 				0x2B2BFFFF10001079L,
-		    };
+            };
             bool success = true;
-            for (int i = 0; i < rawValues.Length; i++)
+            for(int i = 0; i < rawValues.Length; i++)
             {
                 success &= ConfirmRoundTrip(i, rawValues[i]);
             }
-            if (!success)
+            if(!success)
             {
                 throw new AssertionException("One or more Test examples failed.  See stderr.");
             }
@@ -99,7 +100,7 @@ namespace TestCases.SS.Util
         public static bool ConfirmRoundTrip(int i, long rawBitsA)
         {
             double a = BitConverter.Int64BitsToDouble(rawBitsA);
-            if (a == 0.0)
+            if(a == 0.0)
             {
                 // Can't represent 0.0 or -0.0 with NormalisedDecimal
                 return true;
@@ -115,27 +116,27 @@ namespace TestCases.SS.Util
 
                 ed3 = nd2.NormaliseBaseTwo();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.WriteLine("example[" + i + "] ("
                         + FormatDoubleAsHex(a) + ") exception: " + e.Message);
                 return false;
             }
-            if (ed3.GetBinaryExponent() != ed1.GetBinaryExponent())
+            if(ed3.GetBinaryExponent() != ed1.GetBinaryExponent())
             {
                 Console.WriteLine("example[" + i + "] ("
                         + FormatDoubleAsHex(a) + ") bin exp mismatch");
                 return false;
             }
             BigInteger diff = ed3.GetSignificand() - (ed1.GetSignificand()).Abs();
-            if (diff.Signum() == 0)
+            if(diff.Signum() == 0)
             {
                 return true;
             }
             // original quantity only has 53 bits of precision
             // these quantities may have errors in the 64th bit, which hopefully don't make any difference
 
-            if (diff.BitCount() < 2)
+            if(diff.BitCount() < 2)
             {
                 // errors in the 64th bit happen from time to time
                 // this is well below the 53 bits of precision required
@@ -146,11 +147,11 @@ namespace TestCases.SS.Util
             Console.WriteLine("example[" + i + "] ("
                     + FormatDoubleAsHex(a) + ") frac mismatch: " + diff.ToString());
 
-            for (int j = -2; j < 3; j++)
+            for(int j = -2; j < 3; j++)
             {
                 Console.WriteLine((j < 0 ? "" : "+") + j + ": " + GetNearby(ed1, j));
             }
-            for (int j = -2; j < 3; j++)
+            for(int j = -2; j < 3; j++)
             {
                 Console.WriteLine((j < 0 ? "" : "+") + j + ": " + GetNearby(nd2, j));
             }
@@ -193,14 +194,14 @@ namespace TestCases.SS.Util
             int gg = 64 + nExtraBits - binExp - 1;
 
             decimal bd = new decimal(newFrac.LongValue());
-            if (gg > 0)
+            if(gg > 0)
             {
                 bd = bd/(new decimal((BigInteger.One << gg).LongValue()));
             }
             else
             {
                 BigInteger frac = newFrac;
-                while (frac.BitLength() + binExp < 180)
+                while(frac.BitLength() + binExp < 180)
                 {
                     frac = frac*(BigInteger.TEN);
                 }
@@ -221,7 +222,7 @@ namespace TestCases.SS.Util
         {
             String sigDigs = result.GetSignificantDecimalDigits();
             BigInteger frac = orig.GetSignificand();
-            while (frac.BitLength() + orig.GetBinaryExponent() < 200)
+            while(frac.BitLength() + orig.GetBinaryExponent() < 200)
             {
                 frac = frac * (BIG_POW_10);
             }
@@ -229,7 +230,7 @@ namespace TestCases.SS.Util
 
             String origDigs = (frac << (binaryExp + 1)).ToString(10);
 
-            if (!origDigs.StartsWith(sigDigs))
+            if(!origDigs.StartsWith(sigDigs))
             {
                 throw new AssertionException("Expected '" + origDigs + "' but got '" + sigDigs + "'.");
             }
@@ -239,12 +240,12 @@ namespace TestCases.SS.Util
             BigInteger subDigsO = new BigInteger((int)(dO * 32768 + 0.5));
             BigInteger subDigsB = new BigInteger((int)(d1 * 32768 + 0.5));
 
-            if (subDigsO.Equals(subDigsB))
+            if(subDigsO.Equals(subDigsB))
             {
                 return;
             }
             BigInteger diff = (subDigsB - subDigsO).Abs();
-            if (diff.IntValue() > 100)
+            if(diff.IntValue() > 100)
             {
                 // 100/32768 ~= 0.003
                 throw new AssertionException("minor mistake");
@@ -260,4 +261,3 @@ namespace TestCases.SS.Util
         }
     }
 }
-

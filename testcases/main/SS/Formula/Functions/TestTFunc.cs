@@ -19,9 +19,10 @@ namespace TestCases.SS.Formula.Functions
 {
 
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
 
     /**
@@ -36,7 +37,7 @@ namespace TestCases.SS.Formula.Functions
         /**
          * @return the result of calling function T() with the specified argument
          */
-        
+
         private static ValueEval invokeT(ValueEval arg)
         {
             ValueEval[] args = { arg, };
@@ -90,7 +91,7 @@ namespace TestCases.SS.Formula.Functions
         private static void ConfirmString(ValueEval eval, String expected)
         {
             ClassicAssert.IsTrue(eval is StringEval);
-            ClassicAssert.AreEqual(expected, ((StringEval)eval).StringValue);
+            ClassicAssert.AreEqual(expected, ((StringEval) eval).StringValue);
         }
 
         private static void ConfirmOther(ValueEval arg)
@@ -127,9 +128,9 @@ namespace TestCases.SS.Formula.Functions
         public void TestAreaArg()
         {
             ValueEval[] areaValues = new ValueEval[] {
-			new StringEval("abc"), new StringEval("def"),
-			new StringEval("ghi"), new StringEval("jkl"),
-		};
+            new StringEval("abc"), new StringEval("def"),
+            new StringEval("ghi"), new StringEval("jkl"),
+        };
             AreaEval ae = EvalFactory.CreateAreaEval("C10:D11", areaValues);
 
             ValueEval ve;

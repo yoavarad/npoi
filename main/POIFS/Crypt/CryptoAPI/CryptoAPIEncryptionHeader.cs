@@ -17,10 +17,10 @@
 
 namespace NPOI.POIFS.Crypt.CryptoAPI
 {
-    using System;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.Standard;
     using NPOI.Util;
+    using System;
 
     public class CryptoAPIEncryptionHeader : StandardEncryptionHeader
     {
@@ -34,7 +34,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 ChainingMode chainingMode)
             : base(cipherAlgorithm, hashAlgorithm, keyBits, blockSize, chainingMode)
         {
-            
+
         }
 
         public void SetKeySize(int keyBits)
@@ -42,20 +42,20 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             // Microsoft Base Cryptographic Provider is limited up to 40 bits
             // http://msdn.microsoft.com/en-us/library/windows/desktop/aa375599(v=vs.85).aspx
             bool found = false;
-            foreach (int size in CipherAlgorithm.allowedKeySize)
+            foreach(int size in CipherAlgorithm.allowedKeySize)
             {
-                if (size == keyBits)
+                if(size == keyBits)
                 {
                     found = true;
                     break;
                 }
             }
-            if (!found)
+            if(!found)
             {
                 throw new EncryptedDocumentException("invalid keysize " + keyBits + " for cipher algorithm " + CipherAlgorithm);
             }
             base.KeySize = (keyBits);
-            if (keyBits > 40)
+            if(keyBits > 40)
             {
                 CspName = ("Microsoft Enhanced Cryptographic Provider v1.0");
             }

@@ -1,4 +1,4 @@
-﻿using System.Security;
+using System.Security;
 
 #if NETSTANDARD2_1 || NET6_0_OR_GREATER || NETSTANDARD2_0 || NET40
 [assembly: AllowPartiallyTrustedCallers]

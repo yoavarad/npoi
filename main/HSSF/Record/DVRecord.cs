@@ -17,15 +17,13 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
+    using NPOI.SS.Util;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.SS.Util;
 
-    using NPOI.Util;
-
-    using NPOI.SS.Formula.PTG;
-    using NPOI.SS.Formula;
-    
 
 
     /**
@@ -94,20 +92,20 @@ namespace NPOI.HSSF.Record
             CellRangeAddressList regions)
         {
             // check length-limits
-            if (promptTitle != null && promptTitle.Length > 32)
+            if(promptTitle != null && promptTitle.Length > 32)
             {
                 throw new ArgumentOutOfRangeException("Prompt-title cannot be longer than 32 characters, but had: " + promptTitle);
             }
-            if (promptText != null && promptText.Length > 255)
+            if(promptText != null && promptText.Length > 255)
             {
                 throw new ArgumentOutOfRangeException("Prompt-text cannot be longer than 255 characters, but had: " + promptText);
             }
 
-            if (errorTitle != null && errorTitle.Length > 32)
+            if(errorTitle != null && errorTitle.Length > 32)
             {
                 throw new ArgumentOutOfRangeException("Error-title cannot be longer than 32 characters, but had: " + errorTitle);
             }
-            if (errorText != null && errorText.Length > 255)
+            if(errorText != null && errorText.Length > 255)
             {
                 throw new ArgumentOutOfRangeException("Error-text cannot be longer than 255 characters, but had: " + errorText);
             }
@@ -169,7 +167,7 @@ namespace NPOI.HSSF.Record
          */
         private static UnicodeString ResolveTitleText(String str)
         {
-            if (str == null || str.Length < 1)
+            if(str == null || str.Length < 1)
             {
                 return NULL_TEXT_STRING;
             }
@@ -178,7 +176,7 @@ namespace NPOI.HSSF.Record
 
         private static String ResolveTitleString(UnicodeString us)
         {
-            if (us == null || us.Equals(NULL_TEXT_STRING))
+            if(us == null || us.Equals(NULL_TEXT_STRING))
             {
                 return null;
             }
@@ -205,7 +203,7 @@ namespace NPOI.HSSF.Record
 
         public override bool Equals(object obj)
         {
-            if (obj == null || obj is not DVRecord dv)
+            if(obj == null || obj is not DVRecord dv)
             {
                 return false;
             }
@@ -222,14 +220,14 @@ namespace NPOI.HSSF.Record
                    && PromptText == dv.PromptText
                    && ErrorTitle == dv.ErrorTitle
                    && ErrorText == dv.ErrorText
-                   && ((Formula1 == null && dv.Formula1 == null) 
-                       || Formula1 != null && dv.Formula1 != null 
+                   && ((Formula1 == null && dv.Formula1 == null)
+                       || Formula1 != null && dv.Formula1 != null
                                            && Formula1.ToString() == dv.Formula1.ToString())
-                   && ((Formula2 == null && dv.Formula2 == null) 
-                       || Formula2 != null && dv.Formula2 != null 
+                   && ((Formula2 == null && dv.Formula2 == null)
+                       || Formula2 != null && dv.Formula2 != null
                                            && Formula2.ToString() == dv.Formula2.ToString())
                    && (CellRangeAddress == null && dv.CellRangeAddress == null
-                       || CellRangeAddress != null && dv.CellRangeAddress != null 
+                       || CellRangeAddress != null && dv.CellRangeAddress != null
                                                    && CellRangeAddress.ToString() == dv.CellRangeAddress.ToString());
         }
 
@@ -380,7 +378,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return  Formula.GetTokens(_formula2);
+                return Formula.GetTokens(_formula2);
             }
         }
 
@@ -419,9 +417,9 @@ namespace NPOI.HSSF.Record
             AppendFormula(sb, "Formula 2:", _formula2);
             sb.Append("Regions: ");
             int nRegions = _regions.CountRanges();
-            for (int i = 0; i < nRegions; i++)
+            for(int i = 0; i < nRegions; i++)
             {
-                if (i > 0)
+                if(i > 0)
                 {
                     sb.Append(", ");
                 }
@@ -437,7 +435,7 @@ namespace NPOI.HSSF.Record
         private static String FormatTextTitle(UnicodeString us)
         {
             String str = us.String;
-            if (str.Length == 1 && str[0] == '\0')
+            if(str.Length == 1 && str[0] == '\0')
             {
                 return "'\\0'";
             }
@@ -448,14 +446,14 @@ namespace NPOI.HSSF.Record
         {
             sb.Append(label);
 
-            if (f == null)
+            if(f == null)
             {
                 sb.Append("<empty>\n");
                 return;
             }
             Ptg[] ptgs = f.Tokens;
             sb.Append('\n');
-            foreach (Ptg ptg in ptgs)
+            foreach(Ptg ptg in ptgs)
             {
                 sb.Append('\t').Append(ptg.ToString()).Append('\n');
             }

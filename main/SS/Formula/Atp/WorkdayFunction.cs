@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,10 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
+using System;
 
 namespace NPOI.SS.Formula.Atp
 {
@@ -54,7 +54,7 @@ namespace NPOI.SS.Formula.Atp
          */
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length < 2 || args.Length > 3)
+            if(args.Length < 2 || args.Length > 3)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -68,12 +68,12 @@ namespace NPOI.SS.Formula.Atp
             try
             {
                 start = ArgumentsEvaluator.EvaluateDateArg(args[0], srcCellRow, srcCellCol);
-                days = (int)Math.Floor(ArgumentsEvaluator.EvaluateNumberArg(args[1], srcCellRow, srcCellCol));
+                days = (int) Math.Floor(ArgumentsEvaluator.EvaluateNumberArg(args[1], srcCellRow, srcCellCol));
                 ValueEval holidaysCell = args.Length == 3 ? args[2] : null;
                 holidays = ArgumentsEvaluator.EvaluateDatesArg(holidaysCell, srcCellRow, srcCellCol);
                 return new NumberEval(DateUtil.GetExcelDate(WorkdayCalculator.instance.CalculateWorkdays(start, days, holidays)));
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }

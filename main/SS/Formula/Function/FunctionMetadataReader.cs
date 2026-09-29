@@ -17,15 +17,15 @@
 
 namespace NPOI.SS.Formula.Function
 {
+    using NPOI.SS.Formula.PTG;
+    using NPOI.Util;
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Text.RegularExpressions;
-    using NPOI.SS.Formula.PTG;
     using System.Globalization;
+    using System.IO;
     using System.Text;
-    using NPOI.Util;
+    using System.Text.RegularExpressions;
 
     /**
      * Converts the text meta-data file into a <c>FunctionMetadataRegistry</c>
@@ -55,24 +55,24 @@ namespace NPOI.SS.Formula.Function
 
         public static FunctionMetadataRegistry CreateRegistry()
         {
-            using (StreamReader br = new StreamReader (typeof (FunctionMetadataReader).Assembly.GetManifestResourceStream (METADATA_FILE_NAME)))
+            using(StreamReader br = new StreamReader(typeof(FunctionMetadataReader).Assembly.GetManifestResourceStream(METADATA_FILE_NAME)))
             {
 
                 FunctionDataBuilder fdb = new FunctionDataBuilder(400);
 
-                while (true)
+                while(true)
                 {
                     String line = br.ReadLine();
-                    if (line == null)
+                    if(line == null)
                     {
                         break;
                     }
-                    if (line.Length < 1 || line[0] == '#')
+                    if(line.Length < 1 || line[0] == '#')
                     {
                         continue;
                     }
                     String TrimLine = line.Trim();
-                    if (TrimLine.Length < 1)
+                    if(TrimLine.Length < 1)
                     {
                         continue;
                     }
@@ -88,7 +88,7 @@ namespace NPOI.SS.Formula.Function
 
             Regex regex = new Regex(TAB_DELIM_PATTERN);
             String[] parts = regex.Split(line);
-            if (parts.Length != 8)
+            if(parts.Length != 8)
             {
                 throw new Exception("Bad line format '" + line + "' - expected 8 data fields");
             }
@@ -110,7 +110,7 @@ namespace NPOI.SS.Formula.Function
 
         private static byte ParseReturnTypeCode(String code)
         {
-            if (code.Length == 0)
+            if(code.Length == 0)
             {
                 return Ptg.CLASS_REF; // happens for GetPIVOTDATA
             }
@@ -119,11 +119,11 @@ namespace NPOI.SS.Formula.Function
 
         private static byte[] ParseOperandTypeCodes(String codes)
         {
-            if (codes.Length < 1)
+            if(codes.Length < 1)
             {
                 return EMPTY_BYTE_ARRAY; // happens for GetPIVOTDATA
             }
-            if (IsDash(codes))
+            if(IsDash(codes))
             {
                 // '-' means empty:
                 return EMPTY_BYTE_ARRAY;
@@ -131,14 +131,14 @@ namespace NPOI.SS.Formula.Function
             Regex regex = new Regex(SPACE_DELIM_PATTERN);
             String[] array = regex.Split(codes);
             int nItems = array.Length;
-            if (ELLIPSIS.Equals(array[nItems - 1]))
+            if(ELLIPSIS.Equals(array[nItems - 1]))
             {
                 // ellipsis is optional, and ignored
                 // (all Unspecified params are assumed to be the same as the last)
                 nItems--;
             }
             byte[] result = IOUtils.SafelyAllocate(nItems, MAX_RECORD_LENGTH);
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 result[i] = ParseOperandTypeCode(array[i]);
             }
@@ -147,9 +147,9 @@ namespace NPOI.SS.Formula.Function
 
         private static bool IsDash(String codes)
         {
-            if (codes.Length == 1)
+            if(codes.Length == 1)
             {
-                switch (codes[0])
+                switch(codes[0])
                 {
                     case '-':
                         return true;
@@ -160,17 +160,20 @@ namespace NPOI.SS.Formula.Function
 
         private static byte ParseOperandTypeCode(String code)
         {
-            if (code.Length != 1)
+            if(code.Length != 1)
             {
                 throw new Exception("Bad operand type code format '" + code + "' expected single char");
             }
-            switch (code[0])
+            switch(code[0])
             {
-                case 'V': return Ptg.CLASS_VALUE;
-                case 'R': return Ptg.CLASS_REF;
-                case 'A': return Ptg.CLASS_ARRAY;
+                case 'V':
+                    return Ptg.CLASS_VALUE;
+                case 'R':
+                    return Ptg.CLASS_REF;
+                case 'A':
+                    return Ptg.CLASS_ARRAY;
             }
-            throw new ArgumentException("Unexpected operand type code '" + code + "' (" + (int)code[0] + ")");
+            throw new ArgumentException("Unexpected operand type code '" + code + "' (" + (int) code[0] + ")");
         }
 
         /**
@@ -181,19 +184,19 @@ namespace NPOI.SS.Formula.Function
         {
             int len = functionName.Length;
             int ix = len - 1;
-            if (!Char.IsDigit(functionName[ix]))
+            if(!Char.IsDigit(functionName[ix]))
             {
                 return;
             }
-            while (ix >= 0)
+            while(ix >= 0)
             {
-                if (!Char.IsDigit(functionName[ix]))
+                if(!Char.IsDigit(functionName[ix]))
                 {
                     break;
                 }
                 ix--;
             }
-            if (DIGIT_ENDING_FUNCTION_NAMES_Set.Contains(functionName))
+            if(DIGIT_ENDING_FUNCTION_NAMES_Set.Contains(functionName))
             {
                 return;
             }

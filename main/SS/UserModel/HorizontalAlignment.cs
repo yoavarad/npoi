@@ -71,7 +71,7 @@ namespace NPOI.SS.UserModel
          * </ol>
          * </p>
          */
-        Fill =4 ,
+        Fill =4,
 
 
 

@@ -20,8 +20,8 @@ using System.Text;
 
 namespace NPOI.DDF
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /// <summary>
     /// A simple property is of fixed Length and as a property number in Addition
@@ -39,7 +39,7 @@ namespace NPOI.DDF
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="propertyValue">The property value.</param>
-        public EscherSimpleProperty(short id, int propertyValue):base(id)
+        public EscherSimpleProperty(short id, int propertyValue) : base(id)
         {
             this.propertyValue = propertyValue;
         }
@@ -52,9 +52,9 @@ namespace NPOI.DDF
         /// <param name="isComplex">if set to <c>true</c> [is complex].</param>
         /// <param name="isBlipId">if set to <c>true</c> [is blip id].</param>
         /// <param name="propertyValue">The property value.</param>
-        public EscherSimpleProperty(short propertyNumber, bool isComplex, bool isBlipId, int propertyValue):base(propertyNumber, isComplex, isBlipId)
+        public EscherSimpleProperty(short propertyNumber, bool isComplex, bool isBlipId, int propertyValue) : base(propertyNumber, isComplex, isBlipId)
         {
-            
+
             this.propertyValue = propertyValue;
         }
 
@@ -100,11 +100,15 @@ namespace NPOI.DDF
         /// <returns></returns>
         public override bool Equals(Object o)
         {
-            if (this == o) return true;
-            if (o is not EscherSimpleProperty escherSimpleProperty) return false;
+            if(this == o)
+                return true;
+            if(o is not EscherSimpleProperty escherSimpleProperty)
+                return false;
 
-            if (propertyValue != escherSimpleProperty.propertyValue) return false;
-            if (Id != escherSimpleProperty.Id) return false;
+            if(propertyValue != escherSimpleProperty.propertyValue)
+                return false;
+            if(Id != escherSimpleProperty.Id)
+                return false;
 
             return true;
         }

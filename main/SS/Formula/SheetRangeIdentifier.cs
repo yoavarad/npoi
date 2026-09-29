@@ -47,7 +47,7 @@ namespace NPOI.SS.Formula
         {
             base.AsFormulaString(sb);
             sb.Append(':');
-            if (_lastSheetIdentifier.IsQuoted)
+            if(_lastSheetIdentifier.IsQuoted)
             {
                 sb.Append("'").Append(_lastSheetIdentifier.Name).Append("'");
             }

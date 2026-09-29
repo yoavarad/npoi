@@ -17,11 +17,10 @@
 
 namespace NPOI.SS.Formula
 {
-    using System;
-
+    using Cysharp.Text;
     using NPOI.SS.Formula.Eval;
-    using System.Text; 
-using Cysharp.Text;
+    using System;
+    using System.Text;
 
     /**
      * Evaluator for returning cells or sheets for a range of sheets
@@ -34,27 +33,27 @@ using Cysharp.Text;
 
         public SheetRangeEvaluator(int firstSheetIndex, int lastSheetIndex, SheetRefEvaluator[] sheetEvaluators)
         {
-            if (firstSheetIndex < 0)
+            if(firstSheetIndex < 0)
             {
                 throw new ArgumentException("Invalid firstSheetIndex: " + firstSheetIndex + ".");
             }
-            if (lastSheetIndex < firstSheetIndex)
+            if(lastSheetIndex < firstSheetIndex)
             {
                 throw new ArgumentException("Invalid lastSheetIndex: " + lastSheetIndex + " for firstSheetIndex: " + firstSheetIndex + ".");
             }
             _firstSheetIndex = firstSheetIndex;
             _lastSheetIndex = lastSheetIndex;
-            _sheetEvaluators = (SheetRefEvaluator[])sheetEvaluators.Clone();
+            _sheetEvaluators = (SheetRefEvaluator[]) sheetEvaluators.Clone();
         }
         public SheetRangeEvaluator(int onlySheetIndex, SheetRefEvaluator sheetEvaluator)
             : this(onlySheetIndex, onlySheetIndex, new SheetRefEvaluator[] { sheetEvaluator })
         {
-            
+
         }
 
         public SheetRefEvaluator GetSheetEvaluator(int sheetIndex)
         {
-            if (sheetIndex < _firstSheetIndex || sheetIndex > _lastSheetIndex)
+            if(sheetIndex < _firstSheetIndex || sheetIndex > _lastSheetIndex)
             {
                 throw new ArgumentException("Invalid SheetIndex: " + sheetIndex +
                         " - Outside range " + _firstSheetIndex + " : " + _lastSheetIndex);
@@ -88,7 +87,7 @@ using Cysharp.Text;
                 using var sb = ZString.CreateStringBuilder();
 
                 sb.Append(GetSheetName(_firstSheetIndex));
-                if (_firstSheetIndex != _lastSheetIndex)
+                if(_firstSheetIndex != _lastSheetIndex)
                 {
                     sb.Append(':');
                     sb.Append(GetSheetName(_lastSheetIndex));

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace NPOI.Util
@@ -34,13 +34,13 @@ namespace NPOI.Util
 
         public override long Position
         {
-            get { return inner.Position;}
-            set { inner.Position = value;}
+            get { return inner.Position; }
+            set { inner.Position = value; }
         }
 
         public override int Available()
         {
-            return (int)(inner.Length - inner.Position);
+            return (int) (inner.Length - inner.Position);
         }
 
         public override void Flush()
@@ -80,7 +80,7 @@ namespace NPOI.Util
 
         public override void Close()
         {
-            if (inner != null)
+            if(inner != null)
                 inner.Close();
         }
     }

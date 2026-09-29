@@ -18,8 +18,9 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.Formula.Functions;
 
     /**
@@ -34,8 +35,8 @@ namespace TestCases.SS.Formula.Eval
         private static void Confirm(ValueEval arg0, ValueEval arg1, double expectedResult)
         {
             ValueEval[] args = {
-			arg0, arg1,
-		};
+            arg0, arg1,
+        };
 
             double result = NumericFunctionInvoker.Invoke(EvalInstances.Divide, args, 0, 0);
 
@@ -44,8 +45,8 @@ namespace TestCases.SS.Formula.Eval
         [Test]
         public void TestBasic()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US"); 
-            
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
             Confirm(new NumberEval(5), new NumberEval(2), 2.5);
             Confirm(new NumberEval(3), new NumberEval(16), 0.1875);
             Confirm(new NumberEval(-150), new NumberEval(-15), 10.0);
@@ -63,8 +64,8 @@ namespace TestCases.SS.Formula.Eval
         public void TestDivZero()
         {
             ValueEval[] args = {
-			new NumberEval(5), NumberEval.ZERO,
-		};
+            new NumberEval(5), NumberEval.ZERO,
+        };
             ValueEval result = EvalInstances.Divide.Evaluate(args, 0, (short)0);
             ClassicAssert.AreEqual(ErrorEval.DIV_ZERO, result);
         }

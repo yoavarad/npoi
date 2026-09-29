@@ -16,9 +16,9 @@
 ==================================================================== */
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.SS.UserModel;
+    using System;
 
     /// <summary>
     /// Represents an Excel hyperlink.
@@ -44,7 +44,7 @@ namespace NPOI.HSSF.UserModel
         {
             this.link_type = type;
             record = new HyperlinkRecord();
-            switch (type)
+            switch(type)
             {
                 case HyperlinkType.Url:
                 case HyperlinkType.Email:
@@ -75,17 +75,17 @@ namespace NPOI.HSSF.UserModel
         {
             HyperlinkType link_type;
             // Figure out the type
-            if (record.IsFileLink)
+            if(record.IsFileLink)
             {
                 link_type = HyperlinkType.File;
             }
-            else if (record.IsDocumentLink)
+            else if(record.IsDocumentLink)
             {
                 link_type = HyperlinkType.Document;
             }
             else
             {
-                if (record.Address != null &&
+                if(record.Address != null &&
                         record.Address.StartsWith("mailto:"))
                 {
                     link_type = HyperlinkType.Email;
@@ -100,7 +100,7 @@ namespace NPOI.HSSF.UserModel
 
         public HSSFHyperlink(IHyperlink other)
         {
-            if (other is HSSFHyperlink hlink)
+            if(other is HSSFHyperlink hlink)
             {
                 record = hlink.record.Clone() as HyperlinkRecord;
                 link_type = getType(record);
@@ -200,7 +200,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return record.Label;
             }
-            set 
+            set
             {
                 record.Label=value;
             }
@@ -212,7 +212,7 @@ namespace NPOI.HSSF.UserModel
         /// <value>the type of this hyperlink</value>
         public HyperlinkType Type
         {
-            get { return (HyperlinkType)link_type; }
+            get { return (HyperlinkType) link_type; }
         }
 
         /**
@@ -220,8 +220,10 @@ namespace NPOI.HSSF.UserModel
          */
         public override bool Equals(Object other)
         {
-            if (this == other) return true;
-            if (other is not HSSFHyperlink otherLink) return false;
+            if(this == other)
+                return true;
+            if(other is not HSSFHyperlink otherLink)
+                return false;
             return record == otherLink.record;
         }
 

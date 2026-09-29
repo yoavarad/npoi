@@ -73,8 +73,3 @@ namespace NPOI.SS.Formula
     }
 
 }
-
-
-
-
-

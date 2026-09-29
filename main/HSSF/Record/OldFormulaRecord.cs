@@ -17,11 +17,11 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Text;
 
     /**
      * Formula Record (0x0006 / 0x0206 / 0x0406) - holds a formula in
@@ -44,7 +44,7 @@ namespace NPOI.HSSF.Record
         {
             ;
 
-            if (IsBiff2)
+            if(IsBiff2)
             {
                 field_4_value = ris.ReadDouble();
             }
@@ -52,15 +52,15 @@ namespace NPOI.HSSF.Record
             {
                 long valueLongBits = ris.ReadLong();
                 specialCachedValue = SpecialCachedValue.Create(valueLongBits);
-                if (specialCachedValue == null)
+                if(specialCachedValue == null)
                 {
                     field_4_value = BitConverter.Int64BitsToDouble(valueLongBits);
                 }
             }
 
-            if (IsBiff2)
+            if(IsBiff2)
             {
-                field_5_options = (short)ris.ReadUByte();
+                field_5_options = (short) ris.ReadUByte();
             }
             else
             {
@@ -74,7 +74,7 @@ namespace NPOI.HSSF.Record
 
         public CellType GetCachedResultType()
         {
-            if (specialCachedValue == null)
+            if(specialCachedValue == null)
             {
                 return CellType.Numeric;
             }

@@ -1,10 +1,10 @@
-﻿using System;
 using NPOI.Util;
+using System;
 
 namespace NPOI.HSSF.Record.AutoFilter
 {
-    public enum DOPERComparisonCode:byte
-    { 
+    public enum DOPERComparisonCode : byte
+    {
         Unknown=0,
         Less=1,
         Equal=2,
@@ -13,8 +13,8 @@ namespace NPOI.HSSF.Record.AutoFilter
         NotEqual=5,
         GreaterThan=6
     }
-    public enum DOPERType:byte
-    { 
+    public enum DOPERType : byte
+    {
         FilterCondition=0,
         RKNumber=0x02,
         IEEENumber=0x04,
@@ -25,7 +25,7 @@ namespace NPOI.HSSF.Record.AutoFilter
     }
 
     public enum DOPERErrorValue : byte
-    { 
+    {
         NULL=0,     //#NULL!
         DIV0=0x07,  //#DIV/0!
         VALUE=0x0F, //#VALUE!
@@ -50,35 +50,35 @@ namespace NPOI.HSSF.Record.AutoFilter
         private byte bBoolErr;
 
         public DOPERRecord()
-        { 
-        
+        {
+
         }
 
         public DOPERRecord(RecordInputStream in1)
         {
-            vt=(DOPERType)in1.ReadByte();
-            switch (vt)
-            { 
+            vt=(DOPERType) in1.ReadByte();
+            switch(vt)
+            {
                 case DOPERType.RKNumber:
-                    grbitSgn = (byte)in1.ReadByte();
+                    grbitSgn = (byte) in1.ReadByte();
                     _RK = new RKRecord(in1);
                     in1.ReadInt();  //reserved
                     break;
                 case DOPERType.IEEENumber:
-                    grbitSgn = (byte)in1.ReadByte();
+                    grbitSgn = (byte) in1.ReadByte();
                     _IEEENumber = in1.ReadDouble();
-                    break;          
+                    break;
                 case DOPERType.String:
-                    grbitSgn = (byte)in1.ReadByte();
+                    grbitSgn = (byte) in1.ReadByte();
                     in1.ReadInt();  //reserved
-                    CCH = (byte)in1.ReadByte();
+                    CCH = (byte) in1.ReadByte();
                     in1.ReadByte();     //reserved
                     in1.ReadShort();    //reserved
                     break;
                 case DOPERType.BooleanOrErrors:
-                    grbitSgn = (byte)in1.ReadByte();
-                    fError=(byte)in1.ReadByte();
-                    bBoolErr=(byte)in1.ReadByte();
+                    grbitSgn = (byte) in1.ReadByte();
+                    fError=(byte) in1.ReadByte();
+                    bBoolErr=(byte) in1.ReadByte();
                     in1.ReadShort();    //reserved
                     in1.ReadInt();      //reserved
                     break;
@@ -98,8 +98,8 @@ namespace NPOI.HSSF.Record.AutoFilter
         }
         public int Serialize(ILittleEndianOutput out1)
         {
-            out1.WriteByte((byte)vt);
-            switch (vt)
+            out1.WriteByte((byte) vt);
+            switch(vt)
             {
                 case DOPERType.RKNumber:
                     out1.WriteByte(grbitSgn);
@@ -129,7 +129,7 @@ namespace NPOI.HSSF.Record.AutoFilter
                     out1.WriteLong(0);      //reserved
                     break;
             }
-            return this.RecordSize;            
+            return this.RecordSize;
         }
         public virtual Record CloneViaReserialise()
         {
@@ -139,7 +139,7 @@ namespace NPOI.HSSF.Record.AutoFilter
         {
             LittleEndianByteArrayOutputStream out1 = new LittleEndianByteArrayOutputStream(data, offset,this.RecordSize);
             int result=this.Serialize(out1);
-            if (out1.WriteIndex - offset != this.RecordSize)
+            if(out1.WriteIndex - offset != this.RecordSize)
             {
                 throw new InvalidOperationException("Error in serialization of (" + this.GetType().Name + "): "
                         + "Incorrect number of bytes written - expected "
@@ -156,14 +156,15 @@ namespace NPOI.HSSF.Record.AutoFilter
 
         public DOPERComparisonCode ComparisonCode
         {
-            get { return (DOPERComparisonCode)grbitSgn;}
-            set { grbitSgn = (byte)value; }
+            get { return (DOPERComparisonCode) grbitSgn; }
+            set { grbitSgn = (byte) value; }
         }
 
         public Double IEEENumber
         {
             get { return _IEEENumber; }
-            set { 
+            set
+            {
                 _IEEENumber = value;
                 vt = DOPERType.IEEENumber;
             }
@@ -174,7 +175,8 @@ namespace NPOI.HSSF.Record.AutoFilter
         public RKRecord RK
         {
             get { return _RK; }
-            set { 
+            set
+            {
                 _RK = value;
                 vt = DOPERType.RKNumber;
             }
@@ -185,8 +187,9 @@ namespace NPOI.HSSF.Record.AutoFilter
         public byte LengthOfString
         {
             get { return CCH; }
-            set {
-                if (value > 252)
+            set
+            {
+                if(value > 252)
                     throw new ArgumentOutOfRangeException("The length of string must be less than or equal to 252");
                 CCH = value;
                 vt = DOPERType.String;
@@ -212,8 +215,9 @@ namespace NPOI.HSSF.Record.AutoFilter
         public bool BooleanValue
         {
             get { return bBoolErr == 1; }
-            set {
-                bBoolErr = value ? (byte)1 : (byte)0;
+            set
+            {
+                bBoolErr = value ? (byte) 1 : (byte) 0;
                 fError = 0;
                 vt = DOPERType.BooleanOrErrors;
             }
@@ -223,11 +227,13 @@ namespace NPOI.HSSF.Record.AutoFilter
         /// </summary>
         public DOPERErrorValue ErrorValue
         {
-            get {
-                 return (DOPERErrorValue)bBoolErr; 
+            get
+            {
+                return (DOPERErrorValue) bBoolErr;
             }
-            set {
-                bBoolErr = (byte)value;
+            set
+            {
+                bBoolErr = (byte) value;
                 fError = 1;
                 vt = DOPERType.BooleanOrErrors;
             }

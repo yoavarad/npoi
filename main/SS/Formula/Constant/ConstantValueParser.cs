@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Constant
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /**
      * To support Constant Values (2.5.7) as required by the CRN record.
@@ -50,7 +50,7 @@ namespace NPOI.SS.Formula.Constant
         public static object[] Parse(ILittleEndianInput in1, int nValues)
         {
             object[] result = new Object[nValues];
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
             {
                 result[i]=ReadAConstantValue(in1);
             }
@@ -60,7 +60,7 @@ namespace NPOI.SS.Formula.Constant
         private static object ReadAConstantValue(ILittleEndianInput in1)
         {
             byte grbit = (byte)in1.ReadByte();
-            switch (grbit)
+            switch(grbit)
             {
                 case TYPE_EMPTY:
                     in1.ReadLong(); // 8 byte 'not used' field
@@ -84,7 +84,7 @@ namespace NPOI.SS.Formula.Constant
         private static bool ReadBoolean(ILittleEndianInput in1)
         {
             byte val = (byte)in1.ReadLong(); // 7 bytes 'not used'
-            switch (val)
+            switch(val)
             {
                 case FALSE_ENCODING:
                     return false;
@@ -99,7 +99,7 @@ namespace NPOI.SS.Formula.Constant
         {
             // start with one byte 'type' code for each value
             int result = values.Length * 1;
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
                 result += GetEncodedSize(values.GetValue(i));
             }
@@ -111,13 +111,13 @@ namespace NPOI.SS.Formula.Constant
          */
         private static int GetEncodedSize(Object obj)
         {
-            if (obj == EMPTY_REPRESENTATION)
+            if(obj == EMPTY_REPRESENTATION)
             {
                 return 8;
             }
             Type cls = obj.GetType();
 
-            if (cls == typeof(bool) || cls == typeof(double) || cls == typeof(ErrorConstant))
+            if(cls == typeof(bool) || cls == typeof(double) || cls == typeof(ErrorConstant))
             {
                 return 8;
             }
@@ -127,7 +127,7 @@ namespace NPOI.SS.Formula.Constant
 
         public static void Encode(ILittleEndianOutput out1, Array values)
         {
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
                 EncodeSingleValue(out1, values.GetValue(i));
             }
@@ -135,32 +135,32 @@ namespace NPOI.SS.Formula.Constant
 
         private static void EncodeSingleValue(ILittleEndianOutput out1, Object value)
         {
-            if (value == EMPTY_REPRESENTATION)
+            if(value == EMPTY_REPRESENTATION)
             {
                 out1.WriteByte(TYPE_EMPTY);
                 out1.WriteLong(0L);
                 return;
             }
-            if (value is bool bVal)
+            if(value is bool bVal)
             {
                 out1.WriteByte(TYPE_BOOLEAN);
                 long longVal = bVal ? 1L : 0L;
                 out1.WriteLong(longVal);
                 return;
             }
-            if (value is double dVal)
+            if(value is double dVal)
             {
                 out1.WriteByte(TYPE_NUMBER);
                 out1.WriteDouble(dVal);
                 return;
             }
-            if (value is String val)
+            if(value is String val)
             {
                 out1.WriteByte(TYPE_STRING);
                 StringUtil.WriteUnicodeString(out1, val);
                 return;
             }
-            if (value is ErrorConstant ecVal)
+            if(value is ErrorConstant ecVal)
             {
                 out1.WriteByte(TYPE_ERROR_CODE);
                 long longVal = ecVal.ErrorCode;

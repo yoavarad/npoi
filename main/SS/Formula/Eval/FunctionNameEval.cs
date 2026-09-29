@@ -30,7 +30,8 @@ namespace NPOI.SS.Formula.Eval
         /**
          * Creates a NameEval representing a function name
          */
-        public FunctionNameEval(String functionName) {
+        public FunctionNameEval(String functionName)
+        {
             _functionName = functionName;
         }
 

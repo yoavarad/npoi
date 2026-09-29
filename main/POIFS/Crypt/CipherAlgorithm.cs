@@ -75,20 +75,29 @@ namespace NPOI.POIFS.Crypt
         public String xmlId;
         public bool needsBouncyCastle;
         private string name;
-        
+
         public static CipherAlgorithm ValueOf(string alg)
         {
-            switch (alg.ToLower())
+            switch(alg.ToLower())
             {
-                case "rc4": return rc4;
-                case "rc2": return rc2;
-                case "aes128": return aes128;
-                case "aes192": return aes192;
-                case "aes256": return aes256;
-                case "des": return des;
-                case "des3": return des3;
-                case "des3_112": return des3_112;
-                case "rsa": return rsa;
+                case "rc4":
+                    return rc4;
+                case "rc2":
+                    return rc2;
+                case "aes128":
+                    return aes128;
+                case "aes192":
+                    return aes192;
+                case "aes256":
+                    return aes256;
+                case "des":
+                    return des;
+                case "des3":
+                    return des3;
+                case "des3_112":
+                    return des3_112;
+                case "rsa":
+                    return rsa;
                 default:
                     throw new ArgumentException(string.Format("not found definition of cipher algorithm {0}", alg));
             }
@@ -106,7 +115,7 @@ namespace NPOI.POIFS.Crypt
             this.jceId = jceId;
             this.ecmaId = ecmaId;
             this.defaultKeySize = defaultKeySize;
-            this.allowedKeySize = (int[])allowedKeySize.Clone();
+            this.allowedKeySize = (int[]) allowedKeySize.Clone();
             this.blockSize = blockSize;
             this.encryptedVerifierHashLength = encryptedVerifierHashLength;
             this.xmlId = xmlId;
@@ -115,21 +124,24 @@ namespace NPOI.POIFS.Crypt
 
         public static CipherAlgorithm FromEcmaId(int ecmaId)
         {
-            foreach (CipherAlgorithm ca in CipherAlgorithm.Values)
+            foreach(CipherAlgorithm ca in CipherAlgorithm.Values)
             {
-                if (ca.ecmaId == ecmaId) return ca;
+                if(ca.ecmaId == ecmaId)
+                    return ca;
             }
             throw new EncryptedDocumentException("cipher algorithm " + ecmaId + " not found");
         }
 
         public static CipherAlgorithm FromXmlId(String xmlId, int keySize)
         {
-            foreach (CipherAlgorithm ca in CipherAlgorithm.Values)
+            foreach(CipherAlgorithm ca in CipherAlgorithm.Values)
             {
-                if (!ca.xmlId.Equals(xmlId)) continue;
-                foreach (int ks in ca.allowedKeySize)
+                if(!ca.xmlId.Equals(xmlId))
+                    continue;
+                foreach(int ks in ca.allowedKeySize)
                 {
-                    if (ks == keySize) return ca;
+                    if(ks == keySize)
+                        return ca;
                 }
             }
             throw new EncryptedDocumentException("cipher algorithm " + xmlId + "/" + keySize + " not found");

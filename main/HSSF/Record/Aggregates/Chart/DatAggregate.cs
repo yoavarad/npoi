@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations Under the License.
 ==================================================================== */
 
-using NPOI.HSSF.Record.Chart;
 using NPOI.HSSF.Model;
+using NPOI.HSSF.Record.Chart;
 using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
@@ -32,7 +32,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public DatAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_DAT, container)
         {
-            dat = (DatRecord)rs.GetNext();
+            dat = (DatRecord) rs.GetNext();
             rs.GetNext();
             ld = new LDAggregate(rs, this);
 

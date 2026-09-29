@@ -16,11 +16,10 @@
 ==================================================================== */
 namespace NPOI.XWPF.Model
 {
-    using System;
-
-    using NPOI.XWPF.UserModel;
-    using System.Text;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using NPOI.XWPF.UserModel;
+    using System;
+    using System.Text;
 
     /**
      * Decorator class for XWPFParagraph allowing to add comments 
@@ -33,7 +32,7 @@ namespace NPOI.XWPF.Model
     {
         private StringBuilder commentText;
 
-        public XWPFCommentsDecorator(XWPFParagraphDecorator nextDecorator):
+        public XWPFCommentsDecorator(XWPFParagraphDecorator nextDecorator) :
             this(nextDecorator.paragraph, nextDecorator)
         {
         }
@@ -45,9 +44,9 @@ namespace NPOI.XWPF.Model
             XWPFComment comment;
             commentText = new StringBuilder();
 
-            foreach (CT_MarkupRange anchor in paragraph.GetCTP().GetCommentRangeStartList())
+            foreach(CT_MarkupRange anchor in paragraph.GetCTP().GetCommentRangeStartList())
             {
-                if ((comment = paragraph.Document.GetCommentByID(anchor.id)) != null)
+                if((comment = paragraph.Document.GetCommentByID(anchor.id)) != null)
                     commentText.Append("\tComment by " + comment.Author + ": " + comment.Text);
             }
         }

@@ -17,16 +17,15 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using NPOI.HSSF.UserModel;
-
-    using NPOI.SS.UserModel;
     using NPOI.HSSF.Record.Cont;
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using System;
     using System.Globalization;
+    using System.Text;
 
     public class TextObjectRecord : ContinuableRecord
     {
@@ -78,29 +77,30 @@ namespace NPOI.HSSF.Record
             int field_7_formattingDataLength = in1.ReadUShort();
             field_8_reserved7 = in1.ReadInt();
 
-            if (in1.Remaining > 0)
+            if(in1.Remaining > 0)
             {
                 // Text Objects can have simple reference formulas
                 // (This bit not mentioned in the MS document)
-                if (in1.Remaining < 11)
+                if(in1.Remaining < 11)
                 {
                     throw new RecordFormatException("Not enough remaining data for a link formula");
                 }
                 int formulaSize = in1.ReadUShort();
                 _unknownPreFormulaInt = in1.ReadInt();
                 Ptg[] ptgs = Ptg.ReadTokens(formulaSize, in1);
-                if (ptgs.Length != 1)
+                if(ptgs.Length != 1)
                 {
                     throw new RecordFormatException("Read " + ptgs.Length
                             + " tokens but expected exactly 1");
                 }
-                if(!(ptgs[0] is OperandPtg)) {
+                if(!(ptgs[0] is OperandPtg))
+                {
                     throw new ArgumentException("Had unexpected type of ptg at index 0: " + ptgs[0].GetType());
                 }
-                _linkRefPtg = (OperandPtg)ptgs[0];
-                if (in1.Remaining > 0)
+                _linkRefPtg = (OperandPtg) ptgs[0];
+                if(in1.Remaining > 0)
                 {
-                    _unknownPostFormulaByte = (byte)in1.ReadByte();
+                    _unknownPostFormulaByte = (byte) in1.ReadByte();
                 }
                 else
                 {
@@ -111,13 +111,13 @@ namespace NPOI.HSSF.Record
             {
                 _linkRefPtg = null;
             }
-            if (in1.Remaining > 0)
+            if(in1.Remaining > 0)
             {
                 throw new RecordFormatException("Unused " + in1.Remaining + " bytes at end of record");
             }
 
             String text;
-            if (field_6_textLength > 0)
+            if(field_6_textLength > 0)
             {
                 text = ReadRawString(in1, field_6_textLength);
             }
@@ -127,7 +127,7 @@ namespace NPOI.HSSF.Record
             }
             _text = new HSSFRichTextString(text);
 
-            if (field_7_formattingDataLength > 0)
+            if(field_7_formattingDataLength > 0)
             {
                 ProcessFontRuns(in1, _text, field_7_formattingDataLength);
             }
@@ -135,13 +135,13 @@ namespace NPOI.HSSF.Record
         private static void ProcessFontRuns(RecordInputStream in1, IRichTextString str,
             int formattingRunDataLength)
         {
-            if (formattingRunDataLength % FORMAT_RUN_ENCODED_SIZE != 0)
+            if(formattingRunDataLength % FORMAT_RUN_ENCODED_SIZE != 0)
             {
                 throw new RecordFormatException("Bad format run data length " + formattingRunDataLength
                         + ")");
             }
             int nRuns = formattingRunDataLength / FORMAT_RUN_ENCODED_SIZE;
-            for (int i = 0; i < nRuns; i++)
+            for(int i = 0; i < nRuns; i++)
             {
                 short index = in1.ReadShort();
                 short iFont = in1.ReadShort();
@@ -154,13 +154,13 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (_text.Length < 1)
+                if(_text.Length < 1)
                 {
                     return 0;
                 }
                 int encodedTextSize = 0;
                 int textBytesLength = _text.Length * LittleEndianConsts.SHORT_SIZE;
-                while (textBytesLength > 0)
+                while(textBytesLength > 0)
                 {
                     int chunkSize = Math.Min(RecordInputStream.MAX_RECORD_DATA_SIZE - 2, textBytesLength);
                     textBytesLength -= chunkSize;
@@ -179,7 +179,7 @@ namespace NPOI.HSSF.Record
             int nRuns = str.NumFormattingRuns;
             byte[] result = new byte[(nRuns + 1) * FORMAT_RUN_ENCODED_SIZE];
             int pos = 0;
-            for (int i = 0; i < nRuns; i++)
+            for(int i = 0; i < nRuns; i++)
             {
                 LittleEndian.PutUShort(result, pos, str.GetIndexOfFormattingRun(i));
                 pos += 2;
@@ -202,13 +202,13 @@ namespace NPOI.HSSF.Record
             out1.WriteContinue();
             out1.WriteStringData(_text.String);
             out1.WriteContinue();
-            WriteFormatData(out1,_text);
+            WriteFormatData(out1, _text);
         }
 
         private static void WriteFormatData(ContinuableRecordOutput out1, IRichTextString str)
         {
             int nRuns = str.NumFormattingRuns;
-            for (int i = 0; i < nRuns; i++)
+            for(int i = 0; i < nRuns; i++)
             {
                 out1.WriteShort(str.GetIndexOfFormattingRun(i));
                 int fontIndex = ((HSSFRichTextString)str).GetFontOfFormattingRun(i);
@@ -225,7 +225,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (_text.Length < 1)
+                if(_text.Length < 1)
                 {
                     // important - no formatting data if text is empty 
                     return 0;
@@ -245,14 +245,14 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(FormattingDataLength);
             out1.WriteInt(field_8_reserved7);
 
-            if (_linkRefPtg != null)
+            if(_linkRefPtg != null)
             {
                 int formulaSize = _linkRefPtg.Size;
                 out1.WriteShort(formulaSize);
                 out1.WriteInt(_unknownPreFormulaInt);
                 _linkRefPtg.Write(out1);
 
-                if (_unknownPostFormulaByte != null)
+                if(_unknownPostFormulaByte != null)
                 {
                     out1.WriteByte(Convert.ToByte(_unknownPostFormulaByte, CultureInfo.InvariantCulture));
                 }
@@ -264,7 +264,7 @@ namespace NPOI.HSSF.Record
         {
             SerializeTXORecord(out1);
 
-            if (_text.String.Length > 0)
+            if(_text.String.Length > 0)
             {
                 SerializeTrailingRecords(out1);
             }
@@ -272,7 +272,7 @@ namespace NPOI.HSSF.Record
 
         private void ProcessFontRuns(RecordInputStream in1)
         {
-            while (in1.Remaining > 0)
+            while(in1.Remaining > 0)
             {
                 short index = in1.ReadShort();
                 short iFont = in1.ReadShort();
@@ -287,7 +287,7 @@ namespace NPOI.HSSF.Record
         {
             byte compressByte = (byte)in1.ReadByte();
             bool isCompressed = (compressByte & 0x01) == 0;
-            if (isCompressed)
+            if(isCompressed)
             {
                 return in1.ReadCompressedUnicode(textLength);
             }
@@ -324,10 +324,12 @@ namespace NPOI.HSSF.Record
  */
         public HorizontalTextAlignment HorizontalTextAlignment
         {
-            get {
-                return (HorizontalTextAlignment)_HorizontalTextAlignment.GetValue(field_1_options);
+            get
+            {
+                return (HorizontalTextAlignment) _HorizontalTextAlignment.GetValue(field_1_options);
             }
-            set {
+            set
+            {
                 field_1_options = _HorizontalTextAlignment.SetValue(field_1_options, (int) value);
             }
         }
@@ -336,10 +338,12 @@ namespace NPOI.HSSF.Record
  */
         public VerticalTextAlignment VerticalTextAlignment
         {
-            get {
-                return (VerticalTextAlignment)_VerticalTextAlignment.GetValue(field_1_options);
+            get
+            {
+                return (VerticalTextAlignment) _VerticalTextAlignment.GetValue(field_1_options);
             }
-            set {
+            set
+            {
                 field_1_options = _VerticalTextAlignment.SetValue(field_1_options, (int) value);
             }
         }
@@ -379,9 +383,9 @@ namespace NPOI.HSSF.Record
 
             sb.Append("    .string = ").Append(_text).Append('\n');
 
-            for (int i = 0; i < _text.NumFormattingRuns; i++)
+            for(int i = 0; i < _text.NumFormattingRuns; i++)
             {
-                sb.Append("    .textrun = ").Append(((HSSFRichTextString)_text).GetFontOfFormattingRun(i)).Append('\n');
+                sb.Append("    .textrun = ").Append(((HSSFRichTextString) _text).GetFontOfFormattingRun(i)).Append('\n');
 
             }
             sb.Append("[/TXO]\n");
@@ -403,7 +407,7 @@ namespace NPOI.HSSF.Record
 
             rec._text = _text; // clone needed?
 
-            if (_linkRefPtg != null)
+            if(_linkRefPtg != null)
             {
                 rec._unknownPreFormulaInt = _unknownPreFormulaInt;
                 rec._linkRefPtg = _linkRefPtg.Copy();

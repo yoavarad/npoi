@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Licensed to the Apache Software Foundation (ASF) Under one or more
 * contributor license agreements.  See the NOTICE file distributed with
 * this work for Additional information regarding copyright ownership.
@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
+    using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NPOI.SS.Formula;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -36,7 +36,7 @@ namespace NPOI.SS.Formula.Functions
 
         public override ValueEval GetItem(int index)
         {
-            if (index != 0)
+            if(index != 0)
             {
                 throw new ArgumentException("Invalid index ("
                         + index + ") only zero is allowed");
@@ -94,14 +94,14 @@ namespace NPOI.SS.Formula.Functions
 
             double match_type = 1; // default
 
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 3:
                     try
                     {
                         match_type = EvaluateMatchTypeArg(args[2], srcCellRow, srcCellCol);
                     }
-                    catch (EvaluationException)
+                    catch(EvaluationException)
                     {
                         // Excel/MATCH() seems to have slightly abnormal handling of errors with
                         // the last parameter.  Errors do not propagate up.  Every error Gets
@@ -127,7 +127,7 @@ namespace NPOI.SS.Formula.Functions
                 int index = FindIndexOfValue(lookupValue, lookupRange, matchExact, FindLargestLessThanOrEqual);
                 return new NumberEval(index + 1); // +1 to Convert to 1-based
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -135,9 +135,9 @@ namespace NPOI.SS.Formula.Functions
 
         private static ValueVector EvaluateLookupRange(ValueEval eval)
         {
-            if (eval is RefEval re)
+            if(eval is RefEval re)
             {
-                if (re.NumberOfSheets == 1)
+                if(re.NumberOfSheets == 1)
                 {
                     return new SingleValueVector(re.GetInnerValueEval(re.FirstSheetIndex));
                 }
@@ -146,10 +146,10 @@ namespace NPOI.SS.Formula.Functions
                     return LookupUtils.CreateVector(re);
                 }
             }
-            if (eval is TwoDEval dEval)
+            if(eval is TwoDEval dEval)
             {
                 ValueVector result = LookupUtils.CreateVector(dEval);
-                if (result == null)
+                if(result == null)
                 {
                     throw new EvaluationException(ErrorEval.NA);
                 }
@@ -157,14 +157,14 @@ namespace NPOI.SS.Formula.Functions
             }
 
             // Error handling for lookup_range arg Is also Unusual
-            if (eval is NumericValueEval)
+            if(eval is NumericValueEval)
             {
                 throw new EvaluationException(ErrorEval.NA);
             }
-            if (eval is StringEval se)
+            if(eval is StringEval se)
             {
                 double d = OperandResolver.ParseDouble(se.StringValue);
-                if (double.IsNaN(d))
+                if(double.IsNaN(d))
                 {
                     // plain string
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
@@ -172,7 +172,7 @@ namespace NPOI.SS.Formula.Functions
                 // else looks like a number
                 throw new EvaluationException(ErrorEval.NA);
             }
-            if (eval is ErrorEval errorEval)
+            if(eval is ErrorEval errorEval)
             {
                 throw new EvaluationException(errorEval);
             }
@@ -185,18 +185,18 @@ namespace NPOI.SS.Formula.Functions
         {
             ValueEval match_type = OperandResolver.GetSingleValue(arg, srcCellRow, srcCellCol);
 
-            if (match_type is ErrorEval eval)
+            if(match_type is ErrorEval eval)
             {
                 throw new EvaluationException(eval);
             }
-            if (match_type is NumericValueEval ne)
+            if(match_type is NumericValueEval ne)
             {
                 return ne.NumberValue;
             }
-            if (match_type is StringEval se)
+            if(match_type is StringEval se)
             {
                 double d = OperandResolver.ParseDouble(se.StringValue);
-                if (double.IsNaN(d))
+                if(double.IsNaN(d))
                 {
                     // plain string
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
@@ -204,7 +204,7 @@ namespace NPOI.SS.Formula.Functions
                 // if the string parses as a number, it is OK
                 return d;
             }
-            if (match_type is MissingArgEval || match_type is BlankEval)
+            if(match_type is MissingArgEval || match_type is BlankEval)
             {
                 // Excel-Online ignores a missing match-type and
                 // uses the default-value instead
@@ -223,11 +223,11 @@ namespace NPOI.SS.Formula.Functions
             LookupValueComparer lookupComparer = CreateLookupComparer(lookupValue, matchExact);
 
             int size = lookupRange.Size;
-            if (matchExact)
+            if(matchExact)
             {
-                for (int i = 0; i < size; i++)
+                for(int i = 0; i < size; i++)
                 {
-                    if (lookupComparer.CompareTo(lookupRange.GetItem(i)).IsEqual)
+                    if(lookupComparer.CompareTo(lookupRange.GetItem(i)).IsEqual)
                     {
                         return i;
                     }
@@ -235,17 +235,17 @@ namespace NPOI.SS.Formula.Functions
                 throw new EvaluationException(ErrorEval.NA);
             }
 
-            if (FindLargestLessThanOrEqual)
+            if(FindLargestLessThanOrEqual)
             {
                 // Note - backward iteration
-                for (int i = size - 1; i >= 0; i--)
+                for(int i = size - 1; i >= 0; i--)
                 {
                     CompareResult cmp = lookupComparer.CompareTo(lookupRange.GetItem(i));
-                    if (cmp.IsTypeMismatch)
+                    if(cmp.IsTypeMismatch)
                     {
                         continue;
                     }
-                    if (!cmp.IsLessThan)
+                    if(!cmp.IsLessThan)
                     {
                         return i;
                     }
@@ -255,16 +255,16 @@ namespace NPOI.SS.Formula.Functions
 
             // else - Find smallest greater than or equal to
             // TODO - Is binary search used for (match_type==+1) ?
-            for (int i = 0; i < size; i++)
+            for(int i = 0; i < size; i++)
             {
                 CompareResult cmp = lookupComparer.CompareTo(lookupRange.GetItem(i));
-                if (cmp.IsEqual)
+                if(cmp.IsEqual)
                 {
                     return i;
                 }
-                if (cmp.IsGreaterThan)
+                if(cmp.IsGreaterThan)
                 {
-                    if (i < 1)
+                    if(i < 1)
                     {
                         throw new EvaluationException(ErrorEval.NA);
                     }

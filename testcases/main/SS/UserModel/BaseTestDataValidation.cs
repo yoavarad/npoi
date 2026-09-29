@@ -17,16 +17,15 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
+    using NPOI.HSSF.Util;
     using NPOI.SS;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
-    using NPOI.HSSF.Util;
 
     /**
      * Class for Testing Excel's data validation mechanism
@@ -105,7 +104,7 @@ namespace TestCases.SS.UserModel
                 _sheet.AddValidationData(dv);
                 WriteDataValidationSettings(_sheet, _style_1, _style_2, ruleDescr, allowEmpty,
                         inputBox, errorBox);
-                if (_cellStyle != null)
+                if(_cellStyle != null)
                 {
                     IRow row = _sheet.GetRow(_sheet.PhysicalNumberOfRows - 1);
                     ICell cell = row.CreateCell(0);
@@ -116,36 +115,36 @@ namespace TestCases.SS.UserModel
             private IDataValidationConstraint CreateConstraint(IDataValidationHelper dataValidationHelper, int operatorType, String firstFormula,
                     String secondFormula, String[] explicitListValues)
             {
-                if (_validationType == ValidationType.LIST)
+                if(_validationType == ValidationType.LIST)
                 {
-                    if (explicitListValues != null)
+                    if(explicitListValues != null)
                     {
                         return dataValidationHelper.CreateExplicitListConstraint(explicitListValues);
                     }
                     return dataValidationHelper.CreateFormulaListConstraint(firstFormula);
                 }
-                if (_validationType == ValidationType.TIME)
+                if(_validationType == ValidationType.TIME)
                 {
                     return dataValidationHelper.CreateTimeConstraint(operatorType, firstFormula, secondFormula);
                 }
-                if (_validationType == ValidationType.DATE)
+                if(_validationType == ValidationType.DATE)
                 {
                     return dataValidationHelper.CreateDateConstraint(operatorType, firstFormula, secondFormula, null);
                 }
-                if (_validationType == ValidationType.FORMULA)
+                if(_validationType == ValidationType.FORMULA)
                 {
                     return dataValidationHelper.CreateCustomConstraint(firstFormula);
                 }
 
-                if (_validationType == ValidationType.INTEGER)
+                if(_validationType == ValidationType.INTEGER)
                 {
                     return dataValidationHelper.CreateintConstraint(operatorType, firstFormula, secondFormula);
                 }
-                if (_validationType == ValidationType.DECIMAL)
+                if(_validationType == ValidationType.DECIMAL)
                 {
                     return dataValidationHelper.CreateDecimalConstraint(operatorType, firstFormula, secondFormula);
                 }
-                if (_validationType == ValidationType.TEXT_LENGTH)
+                if(_validationType == ValidationType.TEXT_LENGTH)
                 {
                     return dataValidationHelper.CreateTextLengthConstraint(operatorType, firstFormula, secondFormula);
                 }
@@ -296,15 +295,15 @@ namespace TestCases.SS.UserModel
             {
                 ISheet sheet = _currentSheet;
                 IRow row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
-                row.Height = (/*setter*/(short)400);
-                for (int i = 0; i < 6; i++)
+                row.Height = (/*setter*/(short) 400);
+                for(int i = 0; i < 6; i++)
                 {
                     row.CreateCell(i).CellStyle = (/*setter*/_style_4);
-                    if (i == 2 || i == 3 || i == 4)
+                    if(i == 2 || i == 3 || i == 4)
                     {
                         sheet.SetColumnWidth(i, 3500);
                     }
-                    else if (i == 5)
+                    else if(i == 5)
                     {
                         sheet.SetColumnWidth(i, 10000);
                     }
@@ -435,13 +434,13 @@ namespace TestCases.SS.UserModel
             va.AddListValidation(null, strFormula, strFormula, false, false);
 
             // add list data on same sheet
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 IRow currRow = fSheet.CreateRow(i + 29);
                 SetCellValue(currRow.CreateCell(0), cellStrValue);
             }
             // add list data on another sheet
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 IRow currRow = dataSheet.CreateRow(i + 0);
                 SetCellValue(currRow.CreateCell(0), "Data a" + i);

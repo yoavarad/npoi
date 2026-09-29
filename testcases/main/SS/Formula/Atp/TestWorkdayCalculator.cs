@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,11 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using NPOI.SS.Formula.Atp;
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TestCases.SS.Formula.Atp
 {
@@ -109,28 +110,28 @@ namespace TestCases.SS.Formula.Atp
         {
             double A_WEDNESDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 7));
             double A_SUNDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 11));
-            ClassicAssert.AreEqual(1, WorkdayCalculator.instance.PastDaysOfWeek(A_WEDNESDAY, A_SUNDAY,  DayOfWeek.Saturday));
+            ClassicAssert.AreEqual(1, WorkdayCalculator.instance.PastDaysOfWeek(A_WEDNESDAY, A_SUNDAY, DayOfWeek.Saturday));
         }
         [Test]
         public void TestPastDaysOfWeekShouldReturn2Past2Saturdays()
         {
             double A_THURSDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 8));
             double A_MONDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 19));
-            ClassicAssert.AreEqual(2, WorkdayCalculator.instance.PastDaysOfWeek(A_THURSDAY, A_MONDAY,  DayOfWeek.Saturday));
+            ClassicAssert.AreEqual(2, WorkdayCalculator.instance.PastDaysOfWeek(A_THURSDAY, A_MONDAY, DayOfWeek.Saturday));
         }
         [Test]
         public void TestPastDaysOfWeekShouldReturn1BeginningFromASaturday()
         {
             double A_SATURDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 10));
             double A_SUNDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 11));
-            ClassicAssert.AreEqual(1, WorkdayCalculator.instance.PastDaysOfWeek(A_SATURDAY, A_SUNDAY,  DayOfWeek.Saturday));
+            ClassicAssert.AreEqual(1, WorkdayCalculator.instance.PastDaysOfWeek(A_SATURDAY, A_SUNDAY, DayOfWeek.Saturday));
         }
         [Test]
         public void TestPastDaysOfWeekShouldReturn1EndingAtASaturday()
         {
             double A_THURSDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 8));
             double A_SATURDAY = DateUtil.GetExcelDate(new DateTime(2011, December, 10));
-            ClassicAssert.AreEqual(1, WorkdayCalculator.instance.PastDaysOfWeek(A_THURSDAY, A_SATURDAY,  DayOfWeek.Saturday));
+            ClassicAssert.AreEqual(1, WorkdayCalculator.instance.PastDaysOfWeek(A_THURSDAY, A_SATURDAY, DayOfWeek.Saturday));
         }
 
         [Test]

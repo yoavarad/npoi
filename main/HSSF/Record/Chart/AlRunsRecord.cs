@@ -21,10 +21,10 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Collections;
     using System.Text;
-    using NPOI.Util;
 
 
     /*
@@ -88,11 +88,11 @@ namespace NPOI.HSSF.Record.Chart
             m_recs = in1.ReadUShort();
             int idx;
             CTFormat ctf;
-            if (m_formats == null)
+            if(m_formats == null)
             {
                 m_formats = new ArrayList(m_recs);
             }
-            for (idx = 0; idx < m_recs; idx++)
+            for(idx = 0; idx < m_recs; idx++)
             {
                 ctf = new CTFormat(in1.ReadShort(), in1.ReadShort());
                 m_formats.Add(ctf);
@@ -101,9 +101,9 @@ namespace NPOI.HSSF.Record.Chart
         public override void Serialize(ILittleEndianOutput out1)
         {
             out1.WriteShort(m_formats.Count);
-            for (int i = 0; i < m_formats.Count; i++)
+            for(int i = 0; i < m_formats.Count; i++)
             {
-                ((CTFormat)m_formats[i]).Serialize(out1);
+                ((CTFormat) m_formats[i]).Serialize(out1);
             }
         }
 
@@ -125,17 +125,17 @@ namespace NPOI.HSSF.Record.Chart
         public void ModifyFormatRun(short oldPos, short newLen)
         {
             short shift = (short)0;
-            for (int idx = 0; idx < m_formats.Count; idx++)
+            for(int idx = 0; idx < m_formats.Count; idx++)
             {
                 CTFormat ctf = (CTFormat)m_formats[idx];
-                if (shift != 0)
+                if(shift != 0)
                 {
-                    ctf.Offset = ((short)(ctf.Offset + shift));
+                    ctf.Offset = ((short) (ctf.Offset + shift));
                 }
-                else if ((oldPos == ctf.Offset) && (idx < (m_formats.Count - 1)))
+                else if((oldPos == ctf.Offset) && (idx < (m_formats.Count - 1)))
                 {
                     CTFormat nextCTF = (CTFormat)m_formats[idx + 1];
-                    shift = (short)(newLen - (nextCTF.Offset - ctf.Offset));
+                    shift = (short) (newLen - (nextCTF.Offset - ctf.Offset));
                 }
             }
         }
@@ -149,9 +149,9 @@ namespace NPOI.HSSF.Record.Chart
                 .Append("\n");
             int idx;
             CTFormat ctf;
-            for (idx = 0; idx < m_formats.Count; idx++)
+            for(idx = 0; idx < m_formats.Count; idx++)
             {
-                ctf = (CTFormat)m_formats[idx];
+                ctf = (CTFormat) m_formats[idx];
                 buffer.Append("       .char_offset= ").Append(ctf.Offset);
                 buffer.Append(",.fontidx= ").Append(ctf.FontIndex);
                 buffer.Append("\n");

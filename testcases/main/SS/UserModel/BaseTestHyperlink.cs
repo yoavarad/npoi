@@ -15,10 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.SS.UserModel;
-using System.Collections.Generic;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
+using System.Collections.Generic;
 
 namespace TestCases.SS.UserModel
 {
@@ -51,21 +52,21 @@ namespace TestCases.SS.UserModel
             ISheet sheet = wb1.CreateSheet("Hyperlinks");
 
             //URL
-            cell = sheet.CreateRow(0).CreateCell((short)0);
+            cell = sheet.CreateRow(0).CreateCell((short) 0);
             cell.SetCellValue("URL Link");
             link = CreateHelper.CreateHyperlink(HyperlinkType.Url);
             link.Address = ("http://poi.apache.org/");
             cell.Hyperlink = (link);
 
             //link to a file in the current directory
-            cell = sheet.CreateRow(1).CreateCell((short)0);
+            cell = sheet.CreateRow(1).CreateCell((short) 0);
             cell.SetCellValue("File Link");
             link = CreateHelper.CreateHyperlink(HyperlinkType.File);
             link.Address = ("hyperinks-beta4-dump.txt");
             cell.Hyperlink = (link);
 
             //e-mail link
-            cell = sheet.CreateRow(2).CreateCell((short)0);
+            cell = sheet.CreateRow(2).CreateCell((short) 0);
             cell.SetCellValue("Email Link");
             link = CreateHelper.CreateHyperlink(HyperlinkType.Email);
             //note, if subject Contains white spaces, make sure they are url-encoded
@@ -76,9 +77,9 @@ namespace TestCases.SS.UserModel
 
             //create a target sheet and cell
             ISheet sheet2 = wb1.CreateSheet("Target Sheet");
-            sheet2.CreateRow(0).CreateCell((short)0).SetCellValue("Target Cell");
+            sheet2.CreateRow(0).CreateCell((short) 0).SetCellValue("Target Cell");
 
-            cell = sheet.CreateRow(3).CreateCell((short)0);
+            cell = sheet.CreateRow(3).CreateCell((short) 0);
             cell.SetCellValue("Worksheet Link");
             link = CreateHelper.CreateHyperlink(HyperlinkType.Document);
             link.Address = ("'Target Sheet'!A1");
@@ -145,5 +146,3 @@ namespace TestCases.SS.UserModel
     }
 
 }
-
-

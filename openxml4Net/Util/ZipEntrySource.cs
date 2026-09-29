@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Text;
-using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using System;
+using System.Collections;
+using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.Util
 {

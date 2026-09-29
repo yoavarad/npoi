@@ -18,8 +18,8 @@
 namespace NPOI.HSSF.UserModel
 {
     using System;
-    using System.Text;
     using System.Collections;
+    using System.Text;
 
     /**
      * Instances of this class keep track of multiple dependent cell evaluations due
@@ -46,11 +46,11 @@ namespace NPOI.HSSF.UserModel
 
             public CellEvaluationFrame(HSSFWorkbook workbook, HSSFSheet sheet, int srcRowNum, int srcColNum)
             {
-                if (workbook == null)
+                if(workbook == null)
                 {
                     throw new ArgumentException("workbook must not be null");
                 }
-                if (sheet == null)
+                if(sheet == null)
                 {
                     throw new ArgumentException("sheet must not be null");
                 }
@@ -63,28 +63,28 @@ namespace NPOI.HSSF.UserModel
             public override bool Equals(Object obj)
             {
                 CellEvaluationFrame other = (CellEvaluationFrame)obj;
-                if (_workbook != other._workbook)
+                if(_workbook != other._workbook)
                 {
                     return false;
                 }
-                if (_sheet != other._sheet)
+                if(_sheet != other._sheet)
                 {
                     return false;
                 }
-                if (_srcRowNum != other._srcRowNum)
+                if(_srcRowNum != other._srcRowNum)
                 {
                     return false;
                 }
-                if (_srcColNum != other._srcColNum)
+                if(_srcColNum != other._srcColNum)
                 {
                     return false;
                 }
                 return true;
             }
 
-            public override int GetHashCode ()
+            public override int GetHashCode()
             {
-                return _workbook.GetHashCode () ^ _sheet.GetHashCode () ^
+                return _workbook.GetHashCode() ^ _sheet.GetHashCode() ^
                     _srcRowNum ^ _srcColNum;
             }
 
@@ -131,7 +131,7 @@ namespace NPOI.HSSF.UserModel
         public bool StartEvaluate(HSSFWorkbook workbook, HSSFSheet sheet, int srcRowNum, int srcColNum)
         {
             CellEvaluationFrame cef = new CellEvaluationFrame(workbook, sheet, srcRowNum, srcColNum);
-            if (_evaluationFrames.Contains(cef))
+            if(_evaluationFrames.Contains(cef))
             {
                 return false;
             }
@@ -154,7 +154,7 @@ namespace NPOI.HSSF.UserModel
         public void EndEvaluate(HSSFWorkbook workbook, HSSFSheet sheet, int srcRowNum, int srcColNum)
         {
             int nFrames = _evaluationFrames.Count;
-            if (nFrames < 1)
+            if(nFrames < 1)
             {
                 throw new InvalidOperationException("Call to endEvaluate without matching call to startEvaluate");
             }
@@ -162,7 +162,7 @@ namespace NPOI.HSSF.UserModel
             nFrames--;
             CellEvaluationFrame cefExpected = (CellEvaluationFrame)_evaluationFrames[nFrames];
             CellEvaluationFrame cefActual = new CellEvaluationFrame(workbook, sheet, srcRowNum, srcColNum);
-            if (!cefActual.Equals(cefExpected))
+            if(!cefActual.Equals(cefExpected))
             {
                 throw new Exception("Wrong cell specified. "
                         + "Corresponding startEvaluate() call was for cell {"

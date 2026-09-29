@@ -21,7 +21,8 @@ namespace TestCases.SS.Formula.Functions
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Test cases for SUMPRODUCT()
@@ -43,7 +44,7 @@ namespace TestCases.SS.Formula.Functions
 
         private static void ConfirmDouble(double expected, ValueEval actualEval)
         {
-            if (!(actualEval is NumericValueEval))
+            if(!(actualEval is NumericValueEval))
             {
                 throw new AssertionException("Expected numeric result");
             }
@@ -99,10 +100,10 @@ namespace TestCases.SS.Formula.Functions
             arg1 = EvalFactory.CreateAreaEval("A2:D2", arg1values); // single row range
 
             ve = invokeSumif(0, 2, arg0, arg1);  // invoking from cell C1
-            if (ve is NumberEval)
+            if(ve is NumberEval)
             {
                 NumberEval ne = (NumberEval)ve;
-                if (ne.NumberValue == 30.0)
+                if(ne.NumberValue == 30.0)
                 {
                     throw new AssertionException("identified error in SUMIF - criteria arg not Evaluated properly");
                 }

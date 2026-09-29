@@ -17,16 +17,15 @@
 
 namespace NPOI.HSSF.Extractor
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
-
+    using Cysharp.Text;
+    using NPOI;
     using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
-    using NPOI;
+    using NPOI.SS.Extractor;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
-    using NPOI.SS.Extractor;
+    using System;
+    using System.Text;
 
     /// <summary>
     /// A text extractor for Excel files.
@@ -67,10 +66,12 @@ using Cysharp.Text;
         /// </summary>
         public bool IncludeHeadersFooters
         {
-            get {
+            get
+            {
                 return this.includeHeadersFooters;
             }
-            set {
+            set
+            {
                 this.includeHeadersFooters = value;
             }
         }
@@ -80,7 +81,8 @@ using Cysharp.Text;
         /// <value>if set to <c>true</c> [include sheet names].</value>
         public bool IncludeSheetNames
         {
-            get {
+            get
+            {
                 return this.includeSheetNames;
             }
             set
@@ -95,7 +97,7 @@ using Cysharp.Text;
         /// <value>if set to <c>true</c> [formulas not results].</value>
         public bool FormulasNotResults
         {
-            get 
+            get
             {
                 return this.formulasNotResults;
             }
@@ -154,15 +156,16 @@ using Cysharp.Text;
                 wb.MissingCellPolicy = MissingCellPolicy.RETURN_BLANK_AS_NULL;
 
                 // Process each sheet in turn
-                for (int i = 0; i < wb.NumberOfSheets; i++)
+                for(int i = 0; i < wb.NumberOfSheets; i++)
                 {
                     HSSFSheet sheet = (HSSFSheet)wb.GetSheetAt(i);
-                    if (sheet == null) { continue; }
+                    if(sheet == null)
+                    { continue; }
 
-                    if (includeSheetNames)
+                    if(includeSheetNames)
                     {
                         String name = wb.GetSheetName(i);
-                        if (name != null)
+                        if(name != null)
                         {
                             text.Append(name);
                             text.Append("\n");
@@ -170,7 +173,7 @@ using Cysharp.Text;
                     }
 
                     // Header text, if there is any
-                    if (sheet.Header != null && includeHeadersFooters)
+                    if(sheet.Header != null && includeHeadersFooters)
                     {
                         text.Append(
                                 ExtractHeaderFooter(sheet.Header)
@@ -179,32 +182,33 @@ using Cysharp.Text;
 
                     int firstRow = sheet.FirstRowNum;
                     int lastRow = sheet.LastRowNum;
-                    for (int j = firstRow; j <= lastRow; j++)
+                    for(int j = firstRow; j <= lastRow; j++)
                     {
                         IRow row = sheet.GetRow(j);
-                        if (row == null) { continue; }
+                        if(row == null)
+                        { continue; }
 
                         // Check each cell in turn
                         int firstCell = row.FirstCellNum;
                         int lastCell = row.LastCellNum;
-                        if (includeBlankCells)
+                        if(includeBlankCells)
                         {
                             firstCell = 0;
                         }
 
-                        for (int k = firstCell; k < lastCell; k++)
+                        for(int k = firstCell; k < lastCell; k++)
                         {
                             ICell cell = row.GetCell(k);
                             bool outputContents = true;
 
-                            if (cell == null)
+                            if(cell == null)
                             {
                                 // Only output if requested
                                 outputContents = includeBlankCells;
                             }
                             else
                             {
-                                switch (cell.CellType)
+                                switch(cell.CellType)
                                 {
                                     case CellType.String:
                                         text.Append(cell.RichStringCellValue.String);
@@ -221,17 +225,17 @@ using Cysharp.Text;
                                         text.Append(ErrorEval.GetText(cell.ErrorCellValue));
                                         break;
                                     case CellType.Formula:
-                                        if (formulasNotResults)
+                                        if(formulasNotResults)
                                         {
                                             text.Append(cell.CellFormula);
                                         }
                                         else
                                         {
-                                            switch (cell.CachedFormulaResultType)
+                                            switch(cell.CachedFormulaResultType)
                                             {
                                                 case CellType.String:
                                                     IRichTextString str = cell.RichStringCellValue;
-                                                    if (str != null && str.Length > 0)
+                                                    if(str != null && str.Length > 0)
                                                     {
                                                         text.Append(str.ToString());
                                                     }
@@ -239,7 +243,7 @@ using Cysharp.Text;
                                                 case CellType.Numeric:
                                                     //text.Append(cell.NumericCellValue);
                                                     HSSFCellStyle style = (HSSFCellStyle)cell.CellStyle;
-                                                    if (style == null)
+                                                    if(style == null)
                                                     {
                                                         text.Append(cell.NumericCellValue);
                                                     }
@@ -270,7 +274,7 @@ using Cysharp.Text;
 
                                 // Output the comment, if requested and exists
                                 NPOI.SS.UserModel.IComment comment = cell.CellComment;
-                                if (includeCellComments && comment != null)
+                                if(includeCellComments && comment != null)
                                 {
                                     // Replace any newlines with spaces, otherwise it
                                     //  breaks the output
@@ -280,7 +284,7 @@ using Cysharp.Text;
                             }
 
                             // Output a tab if we're not on the last cell
-                            if (outputContents && k < (lastCell - 1))
+                            if(outputContents && k < (lastCell - 1))
                             {
                                 text.Append("\t");
                             }
@@ -291,7 +295,7 @@ using Cysharp.Text;
                     }
 
                     // Finally Feader text, if there is any
-                    if (sheet.Footer != null && includeHeadersFooters)
+                    if(sheet.Footer != null && includeHeadersFooters)
                     {
                         text.Append(
                                 ExtractHeaderFooter(sheet.Footer)
@@ -312,23 +316,23 @@ using Cysharp.Text;
         {
             using var text = ZString.CreateStringBuilder();
 
-            if (hf.Left != null)
+            if(hf.Left != null)
             {
                 text.Append(hf.Left);
             }
-            if (hf.Center != null)
+            if(hf.Center != null)
             {
-                if (text.Length > 0)
+                if(text.Length > 0)
                     text.Append("\t");
                 text.Append(hf.Center);
             }
-            if (hf.Right != null)
+            if(hf.Right != null)
             {
-                if (text.Length > 0)
+                if(text.Length > 0)
                     text.Append("\t");
                 text.Append(hf.Right);
             }
-            if (text.Length > 0)
+            if(text.Length > 0)
                 text.Append("\n");
 
             return text.ToString();

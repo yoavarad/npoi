@@ -18,14 +18,12 @@
 namespace NPOI.SS.Formula.PTG
 {
 
-    using System;
-    using System.Text; 
-using Cysharp.Text;
-    using NPOI.Util;
-
-
-    using NPOI.SS.Util;
+    using Cysharp.Text;
     using NPOI.SS.Formula.Constant;
+    using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * ArrayPtg - handles arrays
@@ -68,7 +66,7 @@ using Cysharp.Text;
             _reserved2Byte = reserved2;
             _nColumns = nColumns;
             _nRows = nRows;
-            _arrayValues = (object[])arrayValues.Clone();
+            _arrayValues = (object[]) arrayValues.Clone();
         }
         /**
          * @param values2d array values arranged in rows
@@ -78,14 +76,14 @@ using Cysharp.Text;
             int nColumns = values2d[0].Length;
             int nRows = values2d.Length;
             // convert 2-d to 1-d array (row by row according to getValueIndex())
-            _nColumns = (short)nColumns;
-            _nRows = (short)nRows;
+            _nColumns = (short) nColumns;
+            _nRows = (short) nRows;
 
             Object[] vv = new Object[_nColumns * _nRows];
-            for (int r = 0; r < nRows; r++)
+            for(int r = 0; r < nRows; r++)
             {
                 Object[] rowData = values2d[r];
-                for (int c = 0; c < nColumns; c++)
+                for(int c = 0; c < nColumns; c++)
                 {
                     vv[GetValueIndex(c, r)] = rowData[c];
                 }
@@ -98,16 +96,16 @@ using Cysharp.Text;
         }
         public Object[][] GetTokenArrayValues()
         {
-            if (_arrayValues == null)
+            if(_arrayValues == null)
             {
                 throw new InvalidOperationException("array values not read yet");
             }
             Object[][] result = new Object[_nRows][];
-            for (int r = 0; r < _nRows; r++)
+            for(int r = 0; r < _nRows; r++)
             {
                 result[r] = new object[_nColumns];
                 object[] rowData = result[r];
-                for (int c = 0; c < _nColumns; c++)
+                for(int c = 0; c < _nColumns; c++)
                 {
                     rowData[c] = _arrayValues[GetValueIndex(c, r)];
                 }
@@ -127,9 +125,9 @@ using Cysharp.Text;
 
             buffer.Append("columns = ").Append(ColumnCount).Append("\n");
             buffer.Append("rows = ").Append(RowCount).Append("\n");
-            for (int x = 0; x < ColumnCount; x++)
+            for(int x = 0; x < ColumnCount; x++)
             {
-                for (int y = 0; y < RowCount; y++)
+                for(int y = 0; y < RowCount; y++)
                 {
                     Object o = _arrayValues.GetValue(GetValueIndex(x, y));
                     buffer.Append("[").Append(x).Append("][").Append(y).Append("] = ").Append(o).Append("\n");
@@ -145,12 +143,12 @@ using Cysharp.Text;
         /* package */
         public int GetValueIndex(int colIx, int rowIx)
         {
-            if (colIx < 0 || colIx >= _nColumns)
+            if(colIx < 0 || colIx >= _nColumns)
             {
                 throw new ArgumentException("Specified colIx (" + colIx
                         + ") is outside the allowed range (0.." + (_nColumns - 1) + ")");
             }
-            if (rowIx < 0 || rowIx >= _nRows)
+            if(rowIx < 0 || rowIx >= _nRows)
             {
                 throw new ArgumentException("Specified rowIx (" + rowIx
                         + ") is outside the allowed range (0.." + (_nRows - 1) + ")");
@@ -204,17 +202,17 @@ using Cysharp.Text;
 
         public override String ToFormulaString()
         {
-           using var b= ZString.CreateStringBuilder();
+            using var b= ZString.CreateStringBuilder();
             b.Append("{");
-            for (int y = 0; y < _nRows; y++)
+            for(int y = 0; y < _nRows; y++)
             {
-                if (y > 0)
+                if(y > 0)
                 {
                     b.Append(";");
                 }
-                for (int x = 0; x < _nColumns; x++)
+                for(int x = 0; x < _nColumns; x++)
                 {
-                    if (x > 0)
+                    if(x > 0)
                     {
                         b.Append(",");
                     }
@@ -229,23 +227,23 @@ using Cysharp.Text;
         private static String GetConstantText(Object o)
         {
 
-            if (o == null)
+            if(o == null)
             {
                 return ""; // TODO - how is 'empty value' represented in formulas?
             }
-            if (o is String s)
+            if(o is String s)
             {
                 return "\"" + s + "\"";
             }
-            if (o is Double || o is double)
+            if(o is Double || o is double)
             {
-                return NumberToTextConverter.ToText((Double)o);
+                return NumberToTextConverter.ToText((Double) o);
             }
-            if (o is bool || o is Boolean)
+            if(o is bool || o is Boolean)
             {
-                return ((bool)o).ToString().ToUpper();
+                return ((bool) o).ToString().ToUpper();
             }
-            if (o is ErrorConstant constant)
+            if(o is ErrorConstant constant)
             {
                 return constant.Text;
             }

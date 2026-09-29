@@ -17,8 +17,6 @@
 
 namespace TestCases.XSSF.UserModel.Charts
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.XDDF.UserModel.Chart;
@@ -26,6 +24,8 @@ namespace TestCases.XSSF.UserModel.Charts
     using NPOI.XSSF.UserModel;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * Test Get/set chart title.

@@ -1,5 +1,6 @@
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.IO;
 using System.Threading;
 
@@ -57,9 +58,10 @@ namespace TestCases.Util
             }
             finally
             {
-                if (Directory.Exists(isolatedDir))
+                if(Directory.Exists(isolatedDir))
                 {
-                    try { Directory.Delete(isolatedDir, true); }
+                    try
+                    { Directory.Delete(isolatedDir, true); }
                     catch { /* best effort cleanup */ }
                 }
             }

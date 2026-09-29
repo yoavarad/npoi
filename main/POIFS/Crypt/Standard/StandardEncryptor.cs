@@ -15,12 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.IO;
-
 using NPOI.POIFS.EventFileSystem;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
+using System;
+using System.IO;
 
 namespace NPOI.POIFS.Crypt.Standard
 {
@@ -80,7 +79,7 @@ namespace NPOI.POIFS.Crypt.Standard
                 ver.SetEncryptedVerifier(encryptedVerifier);
                 ver.SetEncryptedVerifierHash(encryptedVerifierHash);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new EncryptedDocumentException("Password Confirmation failed", e);
             }
@@ -118,7 +117,7 @@ namespace NPOI.POIFS.Crypt.Standard
                 this.dir = dir;
                 tempFile = TempFile.CreateTempFile("encrypted_package", "crypt");
                 cipherOut = new FileStream(tempFile.FullName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-                
+
                 // although not documented, we need the same padding as with agile encryption
                 // and instead of calculating the missing bytes for the block size ourselves
                 // we leave it up to the CipherOutputStream, which generates/saves them on close()
@@ -205,7 +204,7 @@ namespace NPOI.POIFS.Crypt.Standard
                         IOUtils.Copy(cipherOut, leos.out1);
                     }
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new EncryptedDocumentException(e);
                 }

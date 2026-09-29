@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
@@ -39,46 +39,46 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public SeriesFormatAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_SERIESFORMAT, container)
         {
-            series = (SeriesRecord)rs.GetNext();
+            series = (SeriesRecord) rs.GetNext();
             rs.GetNext();
             LinkedDataRecord ai;
             SeriesTextRecord sText;
-            while (rs.PeekNextChartSid() == LinkedDataRecord.sid)
+            while(rs.PeekNextChartSid() == LinkedDataRecord.sid)
             {
                 sText = null;
-                ai = (LinkedDataRecord)rs.GetNext();
-                if (rs.PeekNextChartSid() == SeriesTextRecord.sid)
-                    sText = (SeriesTextRecord)rs.GetNext();
+                ai = (LinkedDataRecord) rs.GetNext();
+                if(rs.PeekNextChartSid() == SeriesTextRecord.sid)
+                    sText = (SeriesTextRecord) rs.GetNext();
                 dic4AI.Add(ai, sText);
             }
-            if (rs.PeekNextChartSid() == DataFormatRecord.sid)
+            if(rs.PeekNextChartSid() == DataFormatRecord.sid)
             {
-                while (rs.PeekNextChartSid() == DataFormatRecord.sid)
+                while(rs.PeekNextChartSid() == DataFormatRecord.sid)
                     ssList.Add(new SSAggregate(rs, this));
             }
-            if (rs.PeekNextChartSid() == SerToCrtRecord.sid)
+            if(rs.PeekNextChartSid() == SerToCrtRecord.sid)
             {
-                serToCrt = (SerToCrtRecord)rs.GetNext();
+                serToCrt = (SerToCrtRecord) rs.GetNext();
             }
             else
             {
-                if (rs.PeekNextChartSid() == SerParentRecord.sid)
+                if(rs.PeekNextChartSid() == SerParentRecord.sid)
                 {
-                    serParent = (SerParentRecord)rs.GetNext();
-                    if (rs.PeekNextChartSid() == SerAuxTrendRecord.sid)
+                    serParent = (SerParentRecord) rs.GetNext();
+                    if(rs.PeekNextChartSid() == SerAuxTrendRecord.sid)
                     {
-                        serAuxTrend = (SerAuxTrendRecord)rs.GetNext();
+                        serAuxTrend = (SerAuxTrendRecord) rs.GetNext();
                     }
                     else
                     {
-                        serAuxErrBar = (SerAuxErrBarRecord)rs.GetNext();
+                        serAuxErrBar = (SerAuxErrBarRecord) rs.GetNext();
                     }
                 }
             }
 
-            if (rs.PeekNextChartSid() == LegendExceptionRecord.sid)
+            if(rs.PeekNextChartSid() == LegendExceptionRecord.sid)
             {
-                while (rs.PeekNextChartSid() == LegendExceptionRecord.sid)
+                while(rs.PeekNextChartSid() == LegendExceptionRecord.sid)
                 {
                     leList.Add(new LegendExceptionAggregate(rs, this));
                 }
@@ -96,25 +96,25 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             foreach(KeyValuePair<LinkedDataRecord, SeriesTextRecord> kv in dic4AI)
             {
                 rv.VisitRecord(kv.Key);
-                if (kv.Value != null)
+                if(kv.Value != null)
                     rv.VisitRecord(kv.Value);
             }
-            foreach (SSAggregate ss in ssList)
+            foreach(SSAggregate ss in ssList)
                 ss.VisitContainedRecords(rv);
-            if (serToCrt != null)
+            if(serToCrt != null)
             {
                 rv.VisitRecord(serToCrt);
             }
             else
             {
-                if (serParent != null)
+                if(serParent != null)
                     rv.VisitRecord(serParent);
-                if (serAuxTrend != null)
+                if(serAuxTrend != null)
                     rv.VisitRecord(serAuxTrend);
                 else
                     rv.VisitRecord(serAuxErrBar);
             }
-            foreach (LegendExceptionAggregate le in leList)
+            foreach(LegendExceptionAggregate le in leList)
             {
                 le.VisitContainedRecords(rv);
             }
@@ -143,12 +143,12 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             public LegendExceptionAggregate(RecordStream rs, ChartRecordAggregate container)
                 : base(RuleName_LEGENDEXCEPTION, container)
             {
-                legendException = (LegendExceptionRecord)rs.GetNext();
-                if (rs.PeekNextChartSid() == BeginRecord.sid)
+                legendException = (LegendExceptionRecord) rs.GetNext();
+                if(rs.PeekNextChartSid() == BeginRecord.sid)
                 {
                     rs.GetNext();
                     attachedLabel = new AttachedLabelAggregate(rs, this);
-                    if (rs.PeekNextChartSid() == TextPropsStreamRecord.sid || 
+                    if(rs.PeekNextChartSid() == TextPropsStreamRecord.sid ||
                         rs.PeekNextChartSid() == RichTextStreamRecord.sid)
                     {
                         textProps = new TextPropsAggregate(rs, this);
@@ -160,11 +160,11 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             public override void VisitContainedRecords(RecordVisitor rv)
             {
                 rv.VisitRecord(legendException);
-                if (attachedLabel != null)
+                if(attachedLabel != null)
                 {
                     rv.VisitRecord(BeginRecord.instance);
                     attachedLabel.VisitContainedRecords(rv);
-                    if (textProps != null)
+                    if(textProps != null)
                         textProps.VisitContainedRecords(rv);
 
                     WriteEndBlock(rv);

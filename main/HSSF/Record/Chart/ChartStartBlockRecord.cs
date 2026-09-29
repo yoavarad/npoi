@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.IO;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -41,7 +41,7 @@ namespace NPOI.HSSF.Record.Chart
 
         public ChartStartBlockRecord()
         { }
-        
+
         public ChartStartBlockRecord(RecordInputStream in1)
         {
             rt = in1.ReadShort();

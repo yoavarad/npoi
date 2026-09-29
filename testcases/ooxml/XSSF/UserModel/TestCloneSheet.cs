@@ -1,4 +1,4 @@
-﻿using NPOI.XSSF;
+using NPOI.XSSF;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using System.IO;
@@ -13,7 +13,7 @@ namespace TestCases.XSSF.UserModel
         {
             using(var workbook = XSSFTestDataSamples.OpenSampleWorkbook("1370_clonesheet_withhyperlink.xlsx"))
             {
-                workbook.CloneSheet(0,"Sheet2");
+                workbook.CloneSheet(0, "Sheet2");
             }
         }
     }

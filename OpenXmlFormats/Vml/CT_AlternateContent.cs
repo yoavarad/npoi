@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -14,11 +14,11 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         public static CT_AlternateContent Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
 
             var ac = new CT_AlternateContent();
-            if (string.IsNullOrEmpty(node.InnerXml))
+            if(string.IsNullOrEmpty(node.InnerXml))
             {
                 return ac;
             }
@@ -29,7 +29,7 @@ namespace NPOI.OpenXmlFormats.Vml
         {
             sw.WriteStart("mc", nodeName);
             sw.WriteAttribute("xmlns:mc", "http://schemas.openxmlformats.org/markup-compatibility/2006");
-            if (this.InnerXml == null)
+            if(this.InnerXml == null)
             {
                 sw.Write("/>");
             }

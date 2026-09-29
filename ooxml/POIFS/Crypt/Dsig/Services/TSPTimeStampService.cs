@@ -57,12 +57,16 @@ namespace NPOI.POIFS.Crypt.Dsig.Services
          */
         public DerObjectIdentifier mapDigestAlgoToOID(HashAlgorithm digestAlgo)
         {
-            switch (digestAlgo.jceId)
+            switch(digestAlgo.jceId)
             {
-                case "sha1": return X509ObjectIdentifiers.IdSha1;
-                case "sha256": return NistObjectIdentifiers.IdSha256;
-                case "sha384": return NistObjectIdentifiers.IdSha384;
-                case "sha512": return NistObjectIdentifiers.IdSha512;
+                case "sha1":
+                    return X509ObjectIdentifiers.IdSha1;
+                case "sha256":
+                    return NistObjectIdentifiers.IdSha256;
+                case "sha384":
+                    return NistObjectIdentifiers.IdSha384;
+                case "sha512":
+                    return NistObjectIdentifiers.IdSha512;
                 default:
                     throw new ArgumentException("unsupported digest algo: " + digestAlgo);
             }

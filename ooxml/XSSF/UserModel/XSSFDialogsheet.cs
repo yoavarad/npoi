@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
-using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -42,7 +42,7 @@ namespace NPOI.XSSF.UserModel
 
         protected CT_HeaderFooter GetSheetTypeHeaderFooter()
         {
-            if (dialogsheet.headerFooter == null)
+            if(dialogsheet.headerFooter == null)
             {
                 dialogsheet.headerFooter = (new CT_HeaderFooter());
             }
@@ -51,7 +51,7 @@ namespace NPOI.XSSF.UserModel
 
         protected CT_SheetPr GetSheetTypeSheetPr()
         {
-            if (dialogsheet.sheetPr == null)
+            if(dialogsheet.sheetPr == null)
             {
                 dialogsheet.sheetPr = (new CT_SheetPr());
             }
@@ -65,7 +65,7 @@ namespace NPOI.XSSF.UserModel
 
         protected CT_SheetFormatPr GetSheetTypeSheetFormatPr()
         {
-            if (dialogsheet.sheetFormatPr == null)
+            if(dialogsheet.sheetFormatPr == null)
             {
                 dialogsheet.sheetFormatPr = (new CT_SheetFormatPr());
             }
@@ -74,7 +74,7 @@ namespace NPOI.XSSF.UserModel
 
         protected CT_PageMargins GetSheetTypePageMargins()
         {
-            if (dialogsheet.pageMargins == null)
+            if(dialogsheet.pageMargins == null)
             {
                 dialogsheet.pageMargins = (new CT_PageMargins());
             }
@@ -88,7 +88,7 @@ namespace NPOI.XSSF.UserModel
 
         protected CT_SheetViews GetSheetTypeSheetViews()
         {
-            if (dialogsheet.sheetViews == null)
+            if(dialogsheet.sheetViews == null)
             {
                 dialogsheet.sheetViews = (new CT_SheetViews());
                 dialogsheet.sheetViews.AddNewSheetView();
@@ -98,7 +98,7 @@ namespace NPOI.XSSF.UserModel
 
         protected CT_PrintOptions GetSheetTypePrintOptions()
         {
-            if (dialogsheet.printOptions == null)
+            if(dialogsheet.printOptions == null)
             {
                 dialogsheet.printOptions = (new CT_PrintOptions());
             }
@@ -107,7 +107,7 @@ namespace NPOI.XSSF.UserModel
 
         protected CT_SheetProtection GetSheetTypeProtection()
         {
-            if (dialogsheet.sheetProtection == null)
+            if(dialogsheet.sheetProtection == null)
             {
                 dialogsheet.sheetProtection = (new CT_SheetProtection());
             }
@@ -689,5 +689,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-
-

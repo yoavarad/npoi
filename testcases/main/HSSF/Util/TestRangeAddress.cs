@@ -20,9 +20,10 @@
 namespace TestCases.HSSF.Util
 {
 
-    using System;
     using NPOI.HSSF.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the Range Address Utility Functionality

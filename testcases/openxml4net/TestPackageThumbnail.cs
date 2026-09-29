@@ -16,10 +16,11 @@
 ==================================================================== */
 
 using NPOI.OpenXml4Net.OPC;
-using TestCases.OpenXml4Net;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.IO;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using TestCases.OpenXml4Net;
 namespace TestCases.OpenXml4Net.OPC
 {
 
@@ -45,12 +46,12 @@ namespace TestCases.OpenXml4Net.OPC
             FileInfo outputFile = OpenXml4NetTestDataSamples.GetOutputFile("TestPackageThumbnailOUTPUT.docx");
 
             // Open namespace
-            using (Stream inputfile = File.OpenRead(inputPath))
+            using(Stream inputfile = File.OpenRead(inputPath))
             {
                 OPCPackage p = OPCPackage.Open(inputfile);
                 try
                 {
-                    using (FileStream fs = outputFile.OpenWrite())
+                    using(FileStream fs = outputFile.OpenWrite())
                     {
                         p.AddThumbnail(imagePath);
                         // Save the namespace in the output directory
@@ -62,7 +63,7 @@ namespace TestCases.OpenXml4Net.OPC
                     OPCPackage p2 = OPCPackage.Open(outputFile.FullName, PackageAccess.READ);
                     try
                     {
-                        if (p2.GetRelationshipsByType(PackageRelationshipTypes.THUMBNAIL)
+                        if(p2.GetRelationshipsByType(PackageRelationshipTypes.THUMBNAIL)
                                 .Size == 0)
                             Assert.Fail("Thumbnail not added to the namespace !");
                         p2.Revert();
@@ -84,4 +85,3 @@ namespace TestCases.OpenXml4Net.OPC
 
 
 }
-

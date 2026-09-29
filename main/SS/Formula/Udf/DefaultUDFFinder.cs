@@ -18,9 +18,9 @@
 namespace NPOI.SS.Formula.UDF
 {
 
+    using NPOI.SS.Formula.Functions;
     using System;
     using System.Collections.Generic;
-    using NPOI.SS.Formula.Functions;
 
     /**
      * Default UDF Finder - for Adding your own user defined functions.
@@ -34,13 +34,13 @@ namespace NPOI.SS.Formula.UDF
         public DefaultUDFFinder(String[] functionNames, FreeRefFunction[] functionImpls)
         {
             int nFuncs = functionNames.Length;
-            if (functionImpls.Length != nFuncs)
+            if(functionImpls.Length != nFuncs)
             {
                 throw new ArgumentException(
                         "Mismatch in number of function names and implementations");
             }
             Dictionary<String, FreeRefFunction> m = new Dictionary<String, FreeRefFunction>(nFuncs * 3 / 2);
-            for (int i = 0; i < functionImpls.Length; i++)
+            for(int i = 0; i < functionImpls.Length; i++)
             {
                 m[functionNames[i].ToUpper()]= functionImpls[i];
             }
@@ -49,7 +49,7 @@ namespace NPOI.SS.Formula.UDF
 
         public override FreeRefFunction FindFunction(String name)
         {
-            if (!_functionsByName.ContainsKey(name.ToUpper()))
+            if(!_functionsByName.ContainsKey(name.ToUpper()))
                 return null;
 
             return _functionsByName[name.ToUpper()];

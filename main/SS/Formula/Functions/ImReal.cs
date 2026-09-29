@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,10 +17,9 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using NPOI.SS.Formula.Eval;
-
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * Implementation for Excel ImReal() function.<p/>
@@ -51,7 +50,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(inumberVE, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -62,27 +61,27 @@ namespace NPOI.SS.Formula.Functions
             bool result = m.Success && !string.IsNullOrEmpty(m.Groups[0].Value);
 
             String real = "";
-            if (result == true)
+            if(result == true)
             {
                 String realGroup = m.Groups[(2)].Value;
                 bool hasRealPart = realGroup.Length != 0;
 
-                if (realGroup.Length == 0)
+                if(realGroup.Length == 0)
                 {
                     return new StringEval(Convert.ToString(0));
                 }
 
-                if (hasRealPart)
+                if(hasRealPart)
                 {
                     String sign = "";
                     String realSign = m.Groups[(Imaginary.GROUP1_REAL_SIGN)].Value;
-                    if (realSign.Length != 0 && !(realSign.Equals("+")))
+                    if(realSign.Length != 0 && !(realSign.Equals("+")))
                     {
                         sign = realSign;
                     }
 
                     String groupRealNumber = m.Groups[(Imaginary.GROUP2_IMAGINARY_INTEGER_OR_DOUBLE)].Value;
-                    if (groupRealNumber.Length != 0)
+                    if(groupRealNumber.Length != 0)
                     {
                         real = sign + groupRealNumber;
                     }
@@ -102,7 +101,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }

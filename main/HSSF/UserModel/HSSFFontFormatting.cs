@@ -55,11 +55,11 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                return (FontSuperScript)fontFormatting.EscapementType;
+                return (FontSuperScript) fontFormatting.EscapementType;
             }
             set
             {
-                switch (value)
+                switch(value)
                 {
                     case FontSuperScript.Sub:
                     case FontSuperScript.Super:
@@ -95,9 +95,9 @@ namespace NPOI.HSSF.UserModel
             set
             {
                 HSSFColor hcolor = HSSFColor.ToHSSFColor(value);
-                if (hcolor == null)
+                if(hcolor == null)
                 {
-                    fontFormatting.FontColorIndex = ((short)0);
+                    fontFormatting.FontColorIndex = ((short) 0);
                 }
                 else
                 {
@@ -153,11 +153,11 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                return (FontUnderlineType)fontFormatting.UnderlineType;
+                return (FontUnderlineType) fontFormatting.UnderlineType;
             }
             set
             {
-                switch (value)
+                switch(value)
                 {
                     case FontUnderlineType.Single:
                     case FontUnderlineType.Double:
@@ -194,7 +194,8 @@ namespace NPOI.HSSF.UserModel
          */
         public bool IsEscapementTypeModified
         {
-            get{
+            get
+            {
                 return fontFormatting.IsEscapementTypeModified;
             }
             set { fontFormatting.IsEscapementTypeModified=value; }
@@ -205,8 +206,9 @@ namespace NPOI.HSSF.UserModel
          */
         public bool IsFontCancellationModified
         {
-            get{
-            return fontFormatting.IsFontCancellationModified;
+            get
+            {
+                return fontFormatting.IsFontCancellationModified;
             }
             set { fontFormatting.IsFontCancellationModified=(value); }
         }
@@ -276,7 +278,7 @@ namespace NPOI.HSSF.UserModel
          */
         public bool IsShadowOn
         {
-            get{return fontFormatting.IsFontOutlineModified && fontFormatting.IsShadowOn;}
+            get { return fontFormatting.IsFontOutlineModified && fontFormatting.IsShadowOn; }
             set
             {
                 fontFormatting.IsShadowOn=value;
@@ -306,7 +308,7 @@ namespace NPOI.HSSF.UserModel
          */
         public bool IsUnderlineTypeModified
         {
-            get{return fontFormatting.IsUnderlineTypeModified;}
+            get { return fontFormatting.IsUnderlineTypeModified; }
             set { fontFormatting.IsUnderlineTypeModified=value; }
         }
 
@@ -315,7 +317,8 @@ namespace NPOI.HSSF.UserModel
          */
         public bool IsFontWeightModified
         {
-            get{
+            get
+            {
                 return fontFormatting.IsFontWeightModified;
             }
 
@@ -345,7 +348,7 @@ namespace NPOI.HSSF.UserModel
             SetFontStyle(false, false);
         }
 
- 
+
 
 
 

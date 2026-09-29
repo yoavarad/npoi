@@ -18,11 +18,12 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using TestCases.HSSF;
 
     /**
@@ -90,7 +91,7 @@ namespace TestCases.SS.Formula.Eval
             cell = row.CreateCell(3); // D5
             cell.CellFormula = ("IF(ISNUMBER(b1),b1,b2)");
 #if !HIDE_UNREACHABLE_CODE
-            if (false)
+            if(false)
             { // Set true to check excel file manually
                 // bug report mentions 'Editing the formula in excel "fixes" the problem.'
                 try
@@ -99,7 +100,7 @@ namespace TestCases.SS.Formula.Eval
                     wb.Write(fileOut, false);
                     fileOut.Close();
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new SystemException(e.Message);
                 }
@@ -141,7 +142,7 @@ namespace TestCases.SS.Formula.Eval
             {
                 cell.CellFormula = (inputFormula);
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 throw new AssertionException("Identified bug 42448");
             }

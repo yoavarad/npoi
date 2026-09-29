@@ -17,9 +17,9 @@
 namespace TestCases.HSSF.UserModel
 {
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.UserModel;
 
     /**
@@ -28,18 +28,18 @@ namespace TestCases.HSSF.UserModel
      * @author Yegor Kozlov (yegor at apache.org)
      */
     [TestFixture]
-    public class TestHSSFFont:BaseTestFont
+    public class TestHSSFFont : BaseTestFont
     {
         public TestHSSFFont()
             : base(HSSFITestDataProvider.Instance)
         {
-            
+
         }
 
         [Test]
         public void TestDefaultFont()
         {
-            BaseTestDefaultFont(HSSFFont.FONT_ARIAL, (short)200, (short)FontColor.Normal);
+            BaseTestDefaultFont(HSSFFont.FONT_ARIAL, (short) 200, (short) FontColor.Normal);
         }
     }
 }

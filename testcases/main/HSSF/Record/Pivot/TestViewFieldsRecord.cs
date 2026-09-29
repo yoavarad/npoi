@@ -17,14 +17,13 @@
 
 namespace TestCases.HSSF.Record.Pivot
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record.PivotTable;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF.Record;
 
     /**
      * Tests for {@link ViewFieldsRecord}
@@ -41,7 +40,7 @@ namespace TestCases.HSSF.Record.Pivot
             byte[] data = HexRead.ReadFromString("01 00 01 00 01 00 04 00 05 00 00 6D 61 72 63 6F");
             RecordInputStream in1 = TestcaseRecordInputStream.Create(ViewFieldsRecord.sid, data);
             ViewFieldsRecord rec = new ViewFieldsRecord(in1);
-            if (in1.Remaining == 1)
+            if(in1.Remaining == 1)
             {
                 throw new AssertionException("Identified bug 46693b");
             }

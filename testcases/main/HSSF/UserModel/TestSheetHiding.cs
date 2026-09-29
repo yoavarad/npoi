@@ -18,14 +18,15 @@
 
 namespace TestCases.HSSF.UserModel
 {
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
 
     [TestFixture]
-    public class TestSheetHiding:BaseTestSheetHiding
+    public class TestSheetHiding : BaseTestSheetHiding
     {
-        public TestSheetHiding():base(HSSFITestDataProvider.Instance,
+        public TestSheetHiding() : base(HSSFITestDataProvider.Instance,
                     "TwoSheetsOneHidden.xls", "TwoSheetsNoneHidden.xls")
         {
 

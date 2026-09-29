@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -14,8 +14,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using System;
 using NPOI.Util;
+using System;
 namespace NPOI.SS.Format
 {
     public class SimpleFraction
@@ -83,16 +83,16 @@ namespace NPOI.SS.Format
             long overflow = long.MaxValue;
             double r0 = value;
             long a0 = (long)Math.Floor(r0);
-            if (a0 > overflow)
+            if(a0 > overflow)
             {
                 throw new ArgumentException("Overflow trying to convert " + value + " to fraction (" + a0 + "/" + 1L + ")");
             }
 
             // check for (almost) integer arguments, which should not go
             // to iterations.
-            if (Math.Abs(a0 - value) < epsilon)
+            if(Math.Abs(a0 - value) < epsilon)
             {
-                return new SimpleFraction((int)a0, 1);
+                return new SimpleFraction((int) a0, 1);
             }
 
             long p0 = 1;
@@ -113,19 +113,19 @@ namespace NPOI.SS.Format
                 p2 = (a1 * p1) + p0;
                 q2 = (a1 * q1) + q0;
                 //MATH-996/POI-55419
-                if (epsilon == 0.0f && maxDenominator > 0 && Math.Abs(q2) > maxDenominator &&
+                if(epsilon == 0.0f && maxDenominator > 0 && Math.Abs(q2) > maxDenominator &&
                         Math.Abs(q1) < maxDenominator)
                 {
 
-                    return new SimpleFraction((int)p1, (int)q1);
+                    return new SimpleFraction((int) p1, (int) q1);
                 }
-                if ((p2 > overflow) || (q2 > overflow))
+                if((p2 > overflow) || (q2 > overflow))
                 {
                     throw new RuntimeException("Overflow trying to convert " + value + " to fraction (" + p2 + "/" + q2 + ")");
                 }
 
                 double convergent = (double)p2 / (double)q2;
-                if (n < maxIterations && Math.Abs(convergent - value) > epsilon && q2 < maxDenominator)
+                if(n < maxIterations && Math.Abs(convergent - value) > epsilon && q2 < maxDenominator)
                 {
                     p0 = p1;
                     p1 = p2;
@@ -138,20 +138,20 @@ namespace NPOI.SS.Format
                 {
                     stop = true;
                 }
-            } while (!stop);
+            } while(!stop);
 
-            if (n >= maxIterations)
+            if(n >= maxIterations)
             {
                 throw new RuntimeException("Unable to convert " + value + " to fraction after " + maxIterations + " iterations");
             }
 
-            if (q2 < maxDenominator)
+            if(q2 < maxDenominator)
             {
-                return new SimpleFraction((int)p2, (int)q2);
+                return new SimpleFraction((int) p2, (int) q2);
             }
             else
             {
-                return new SimpleFraction((int)p1, (int)q1);
+                return new SimpleFraction((int) p1, (int) q1);
             }
 
         }

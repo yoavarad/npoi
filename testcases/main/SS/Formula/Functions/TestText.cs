@@ -19,10 +19,11 @@ namespace TestCases.SS.Formula.Functions
 {
 
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System;
-    using NPOI.SS.Util;
     using NPOI.SS.Formula.Functions;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.Globalization;
 
     /**
@@ -58,7 +59,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval[] args = { refArg, formatArg };
             ValueEval result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType());
-            ClassicAssert.AreEqual("07/04/2026", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("07/04/2026", ((StringEval) result).StringValue);
         }
         [Test]
         public void TestTextWithDeciamlFormatSecondArg()
@@ -70,10 +71,11 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
             //char groupSeparator = new DecimalFormatSymbols(Locale.GetDefault()).GetGroupingSeparator();
             //char decimalSeparator = new DecimalFormatSymbols(Locale.GetDefault()).GetDecimalSeparator();
-            
+
             NumberFormatInfo fs = CultureInfo.GetCultureInfo("en-US").NumberFormat;
             string groupSeparator = fs.NumberGroupSeparator;
-            string decimalSeparator = fs.NumberDecimalSeparator; ;
+            string decimalSeparator = fs.NumberDecimalSeparator;
+            ;
 
             ValueEval testResult = new StringEval("321" + groupSeparator + "321" + decimalSeparator + "32100");
             ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
@@ -81,13 +83,13 @@ namespace TestCases.SS.Formula.Functions
             formatArg = new StringEval("00000.00000");
             args[0] = numArg;
             args[1] = formatArg;
-            result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
+            result = TextFunction.TEXT.Evaluate(args, -1, (short) -1);
             testResult = new StringEval("00321" + decimalSeparator + "32100");
             ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
 
             formatArg = new StringEval("$#.#");
             args[1] = formatArg;
-            result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
+            result = TextFunction.TEXT.Evaluate(args, -1, (short) -1);
             testResult = new StringEval("$321" + decimalSeparator + "3");
             ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
         }
@@ -105,13 +107,13 @@ namespace TestCases.SS.Formula.Functions
 
             formatArg = new StringEval("# #/##");
             args[1] = formatArg;
-            result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
+            result = TextFunction.TEXT.Evaluate(args, -1, (short) -1);
             testResult = new StringEval("321 26/81");
             ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
 
             formatArg = new StringEval("#/##");
             args[1] = formatArg;
-            result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
+            result = TextFunction.TEXT.Evaluate(args, -1, (short) -1);
             testResult = new StringEval("26027/81");
             ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
         }
@@ -130,26 +132,26 @@ namespace TestCases.SS.Formula.Functions
             // Excel also supports "m before h is month"
             formatArg = new StringEval("dd:mm:yyyy hh:mm:ss");
             args[1] = formatArg;
-            result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
+            result = TextFunction.TEXT.Evaluate(args, -1, (short) -1);
             testResult = new StringEval("16:11:1900 07:42:14");
             //ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
 
             // this line is intended to compute how "November" would look like in the current locale
             String november = new SimpleDateFormat("MMMM").Format(new DateTime(2010, 11, 15), CultureInfo.CurrentCulture);
-            
+
             // Again with Java style
             formatArg = new StringEval("MMMM dd, yyyy");
             args[1] = formatArg;
             //fix error in non-en Culture
             NPOI.SS.Formula.Functions.Text.Formatter = new NPOI.SS.UserModel.DataFormatter(CultureInfo.CurrentCulture);
-            result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
+            result = TextFunction.TEXT.Evaluate(args, -1, (short) -1);
             testResult = new StringEval(november + " 16, 1900");
             ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
 
             // And Excel style
             formatArg = new StringEval("mmmm dd, yyyy");
             args[1] = formatArg;
-            result = TextFunction.TEXT.Evaluate(args, -1, (short)-1);
+            result = TextFunction.TEXT.Evaluate(args, -1, (short) -1);
             testResult = new StringEval(november + " 16, 1900");
             ClassicAssert.AreEqual(testResult.ToString(), result.ToString());
         }

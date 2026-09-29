@@ -17,10 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    
-    using NPOI.Util;
 
 
     /**
@@ -43,7 +42,7 @@ namespace NPOI.SS.Formula.PTG
          * totally different, so don't look there!
          */
         private int field_1_Length;
-        private byte field_2_options;      
+        private byte field_2_options;
 
         private bool _is16bitUnicode;
         private String field_3_string;
@@ -52,9 +51,9 @@ namespace NPOI.SS.Formula.PTG
         public StringPtg(ILittleEndianInput in1)
         {
             int field_1_length = in1.ReadUByte();
-			field_2_options = (byte)in1.ReadByte();
+            field_2_options = (byte) in1.ReadByte();
             _is16bitUnicode = (field_2_options & 0x01) != 0;
-            if (_is16bitUnicode)
+            if(_is16bitUnicode)
             {
                 field_3_string = StringUtil.ReadUnicodeLE(in1, field_1_length);
             }
@@ -74,7 +73,7 @@ namespace NPOI.SS.Formula.PTG
          */
         public StringPtg(String value)
         {
-            if (value.Length > 255)
+            if(value.Length > 255)
             {
                 throw new ArgumentException(
                         "String literals in formulas can't be bigger than 255 Chars ASCII");
@@ -94,7 +93,7 @@ namespace NPOI.SS.Formula.PTG
             out1.WriteByte(sid + PtgClass);
             out1.WriteByte(field_3_string.Length); // Note - nChars is 8-bit
             out1.WriteByte(_is16bitUnicode ? 0x01 : 0x00);
-            if (_is16bitUnicode)
+            if(_is16bitUnicode)
             {
                 StringUtil.PutUnicodeLE(field_3_string, out1);
             }
@@ -119,10 +118,10 @@ namespace NPOI.SS.Formula.PTG
             StringBuilder sb = new StringBuilder(len + 4);
             sb.Append(FORMULA_DELIMITER);
 
-            for (int i = 0; i < len; i++)
+            for(int i = 0; i < len; i++)
             {
                 char c = value[i];
-                if (c == FORMULA_DELIMITER)
+                if(c == FORMULA_DELIMITER)
                 {
                     sb.Append(FORMULA_DELIMITER);
                 }

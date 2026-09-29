@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXmlFormats.Spreadsheet;
 using System.Xml;
 
 namespace NPOI.XSSF.Model
@@ -97,19 +97,19 @@ namespace NPOI.XSSF.Model
             int id = -1;
             List<CT_CalcCell> c = chain.c;
 
-            for (int i = 0; i < c.Count; i++)
+            for(int i = 0; i < c.Count; i++)
             {
                 //If sheet Id  is omitted, it is assumed to be the same as the value of the previous cell.
-                if (c[i].iSpecified)
+                if(c[i].iSpecified)
                 {
                     id = c[i].i;
                 }
 
-                if (id == sheetId && c[i].r.Equals(ref1))
+                if(id == sheetId && c[i].r.Equals(ref1))
                 {
                     //if (c[i].IsSetI() && i < c.Length - 1 && !c[i + 1].IsSetI())
                     //if (i < c.Count - 1)
-                    if (c[i].iSpecified && i < c.Count - 1 && !c[i + 1].iSpecified)
+                    if(c[i].iSpecified && i < c.Count - 1 && !c[i + 1].iSpecified)
                     {
                         c[i + 1].i = id;
                         c[i + 1].iSpecified = true;

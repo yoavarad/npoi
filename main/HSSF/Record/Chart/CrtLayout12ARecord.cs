@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
+using NPOI.Util;
 using System;
 using System.Text;
-using NPOI.Util;
 
 namespace NPOI.HSSF.Record.Chart
 {
@@ -51,7 +51,7 @@ namespace NPOI.HSSF.Record.Chart
 
         public CrtLayout12ARecord()
         {
-            frtHeader.rt = (ushort)sid;
+            frtHeader.rt = (ushort) sid;
             frtHeader.grbitFrt = 0;
         }
 
@@ -101,8 +101,8 @@ namespace NPOI.HSSF.Record.Chart
         }
         public CrtLayout12ARecord(RecordInputStream ris)
         {
-            frtHeader.rt = (ushort)ris.ReadUShort();
-            frtHeader.grbitFrt = (ushort)ris.ReadUShort();
+            frtHeader.rt = (ushort) ris.ReadUShort();
+            frtHeader.grbitFrt = (ushort) ris.ReadUShort();
             ris.ReadLong();
             field_1_dwCheckSum = ris.ReadInt();
             field_2_option = ris.ReadShort();
@@ -209,32 +209,32 @@ namespace NPOI.HSSF.Record.Chart
         /// </summary>
         public CrtLayout12Mode XMode
         {
-            get { return (CrtLayout12Mode)field_7_wXMode; }
-            set { field_7_wXMode = (short)value; }
+            get { return (CrtLayout12Mode) field_7_wXMode; }
+            set { field_7_wXMode = (short) value; }
         }
         /// <summary>
         /// A CrtLayout12Mode structure that specifies the meaning of y.
         /// </summary>
         public CrtLayout12Mode YMode
         {
-            get { return (CrtLayout12Mode)field_8_wYMode; }
-            set { field_8_wYMode = (short)value; }
+            get { return (CrtLayout12Mode) field_8_wYMode; }
+            set { field_8_wYMode = (short) value; }
         }
         /// <summary>
         /// A CrtLayout12Mode structure that specifies the meaning of dx.
         /// </summary>
         public CrtLayout12Mode WidthMode
         {
-            get { return (CrtLayout12Mode)field_9_wWidthMode; }
-            set { field_9_wWidthMode = (short)value; }
+            get { return (CrtLayout12Mode) field_9_wWidthMode; }
+            set { field_9_wWidthMode = (short) value; }
         }
         /// <summary>
         /// A CrtLayout12Mode structure that specifies the meaning of dy.
         /// </summary>
         public CrtLayout12Mode HeightMode
         {
-            get { return (CrtLayout12Mode)field_10_wHeightMode; }
-            set { field_10_wHeightMode = (short)value; }
+            get { return (CrtLayout12Mode) field_10_wHeightMode; }
+            set { field_10_wHeightMode = (short) value; }
         }
         /// <summary>
         /// An Xnum (section 2.5.342) value that specifies a horizontal offset. The meaning is determined by wXMode.

@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.Eval
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.SS.Formula.Functions;
+    using System;
+    using System.Text;
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
      *  
@@ -43,7 +43,7 @@ using Cysharp.Text;
                 ve0 = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 ve1 = OperandResolver.GetSingleValue(arg1, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -56,11 +56,11 @@ using Cysharp.Text;
 
         private static string GetText(ValueEval ve)
         {
-            if (ve is StringValueEval sve)
+            if(ve is StringValueEval sve)
             {
                 return sve.StringValue;
             }
-            if (ve == BlankEval.instance)
+            if(ve == BlankEval.instance)
             {
                 return "";
             }

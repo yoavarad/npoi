@@ -15,10 +15,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-        
 
-using System;
+
 using NPOI.POIFS.EventFileSystem;
+using System;
 namespace TestCases.POIFS.EventFileSystem
 {
     /**

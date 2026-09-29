@@ -24,7 +24,8 @@ namespace TestCases.XSSF.Streaming
     using NPOI.XSSF;
     using NPOI.XSSF.Streaming;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.SS.UserModel;
 
@@ -35,12 +36,13 @@ namespace TestCases.XSSF.Streaming
         public TestSXSSFSheet()
             : base(SXSSFITestDataProvider.instance)
         {
-            
+
         }
 
 
         [TearDown]
-        public void TearDown() {
+        public void TearDown()
+        {
             //SXSSFITestDataProvider.instance.Cleanup();
         }
 
@@ -55,21 +57,25 @@ namespace TestCases.XSSF.Streaming
          */
 
         [Test]
-        public override void CloneSheet() {
+        public override void CloneSheet()
+        {
             //thrown.Expect(typeof(Exception));
             //thrown.ExpectMessage("NotImplemented");
-            Assert.Throws<RuntimeException>(() => {
+            Assert.Throws<RuntimeException>(() =>
+            {
                 base.CloneSheet();
             });
-            
+
         }
 
 
         [Test]
-        public override void CloneSheetMultipleTimes() {
+        public override void CloneSheetMultipleTimes()
+        {
             //thrown.Expect(typeof(Exception));
             //thrown.ExpectMessage("NotImplemented");
-            Assert.Throws<RuntimeException>(() => {
+            Assert.Throws<RuntimeException>(() =>
+            {
                 base.CloneSheetMultipleTimes();
             });
         }
@@ -79,11 +85,13 @@ namespace TestCases.XSSF.Streaming
          */
 
         [Test]
-        public override void ShiftMerged() {
+        public override void ShiftMerged()
+        {
             //thrown.Expect(typeof(Exception));
             //thrown.ExpectMessage("NotImplemented");
-            
-            Assert.Throws<NotImplementedException>(() => {
+
+            Assert.Throws<NotImplementedException>(() =>
+            {
                 base.ShiftMerged();
             });
         }
@@ -95,65 +103,83 @@ namespace TestCases.XSSF.Streaming
          */
 
         [Test]
-        public override void Bug35084() {
+        public override void Bug35084()
+        {
             //thrown.Expect(typeof(Exception));
             //thrown.ExpectMessage("NotImplemented");
-            
-            Assert.Throws<RuntimeException>(() => {
+
+            Assert.Throws<RuntimeException>(() =>
+            {
                 base.Bug35084();
             });
         }
 
         [Test]
-        public override void GetCellComment() {
+        public override void GetCellComment()
+        {
             // TODO: Reading cell comments via Sheet does not work currently as it tries 
             // to access the underlying sheet for this, but comments are stored as
             // properties on Cells...
         }
 
         [Test]
-        public void OverrideFlushedRows() {
+        public void OverrideFlushedRows()
+        {
             IWorkbook wb = new SXSSFWorkbook(3);
-            try {
+            try
+            {
                 ISheet sheet = wb.CreateSheet();
 
                 sheet.CreateRow(1);
                 sheet.CreateRow(2);
                 sheet.CreateRow(3);
                 sheet.CreateRow(4);
-                ((SXSSFSheet)sheet).FlushRows();
+                ((SXSSFSheet) sheet).FlushRows();
 
-                Assert.Throws<ArgumentException>(() => {
+                Assert.Throws<ArgumentException>(() =>
+                {
                     sheet.CreateRow(1);
                 }, "Attempting to write a row[1] in the range [0,1] that is already written to disk.");
-            } finally {
+            }
+            finally
+            {
                 wb.Close();
             }
         }
 
         [Test]
-        public void OverrideRowsInTemplate() {
+        public void OverrideRowsInTemplate()
+        {
             XSSFWorkbook template = new XSSFWorkbook();
             template.CreateSheet().CreateRow(1);
 
             IWorkbook wb = new SXSSFWorkbook(template);
-            try {
+            try
+            {
                 ISheet sheet = wb.GetSheetAt(0);
 
-                try {
+                try
+                {
                     sheet.CreateRow(1);
                     Assert.Fail("expected exception");
-                } catch (Exception e) {
+                }
+                catch(Exception e)
+                {
                     ClassicAssert.AreEqual("Attempting to write a row[1] in the range [0,1] that is already written to disk.", e.Message);
                 }
-                try {
+                try
+                {
                     sheet.CreateRow(0);
                     Assert.Fail("expected exception");
-                } catch (Exception e) {
+                }
+                catch(Exception e)
+                {
                     ClassicAssert.AreEqual("Attempting to write a row[0] in the range [0,1] that is already written to disk.", e.Message);
                 }
                 sheet.CreateRow(2);
-            } finally {
+            }
+            finally
+            {
                 wb.Close();
                 template.Close();
             }

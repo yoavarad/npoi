@@ -17,12 +17,12 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -50,7 +50,8 @@ namespace NPOI.HSSF.Record
 
             SetDefaults();
         }
-        private void SetDefaults() {
+        private void SetDefaults()
+        {
             // Set modification flags to 1: by default options are not modified
             formatting_options = modificationBits.SetValue(formatting_options, -1);
             // Set formatting block flags to 0 (no formatting blocks)
@@ -58,7 +59,7 @@ namespace NPOI.HSSF.Record
             formatting_options = undocumented.Clear(formatting_options);
             unchecked
             {
-                formatting_not_used = (short)0x8002; // Excel seems to write this value, but it doesn't seem to care what it Reads
+                formatting_not_used = (short) 0x8002; // Excel seems to write this value, but it doesn't seem to care what it Reads
             }
 
             _fontFormatting = null;
@@ -69,7 +70,8 @@ namespace NPOI.HSSF.Record
         /**
          * Creates a new comparison operation rule
          */
-        public static CFRuleRecord Create(HSSFSheet sheet, String formulaText) {
+        public static CFRuleRecord Create(HSSFSheet sheet, String formulaText)
+        {
             Ptg[] formula1 = ParseFormula(formulaText, sheet);
             return new CFRuleRecord(CONDITION_TYPE_FORMULA, ComparisonOperator.NO_COMPARISON,
                     formula1, null);
@@ -78,15 +80,17 @@ namespace NPOI.HSSF.Record
          * Creates a new comparison operation rule
          */
         public static CFRuleRecord Create(HSSFSheet sheet, byte comparisonOperation,
-                String formulaText1, String formulaText2) {
+                String formulaText1, String formulaText2)
+        {
             Ptg[] formula1 = ParseFormula(formulaText1, sheet);
             Ptg[] formula2 = ParseFormula(formulaText2, sheet);
             return new CFRuleRecord(CONDITION_TYPE_CELL_VALUE_IS, comparisonOperation, formula1, formula2);
         }
 
-        public CFRuleRecord(RecordInputStream in1) {
-            ConditionType = ((byte)in1.ReadByte());
-            ComparisonOperation = ((byte)in1.ReadByte());
+        public CFRuleRecord(RecordInputStream in1)
+        {
+            ConditionType = ((byte) in1.ReadByte());
+            ComparisonOperation = ((byte) in1.ReadByte());
             int field_3_formula1_len = in1.ReadUShort();
             int field_4_formula2_len = in1.ReadUShort();
             ReadFormatOptions(in1);
@@ -108,7 +112,8 @@ namespace NPOI.HSSF.Record
          *
          * @param out the stream to write to
          */
-        public override void Serialize(ILittleEndianOutput out1) {
+        public override void Serialize(ILittleEndianOutput out1)
+        {
             int formula1Len = GetFormulaSize(Formula1);
             int formula2Len = GetFormulaSize(Formula2);
 
@@ -131,21 +136,25 @@ namespace NPOI.HSSF.Record
                    GetFormulaSize(Formula1) +
                    GetFormulaSize(Formula2);
             }
-            
+
         }
 
-        public override String ToString() {
+        public override String ToString()
+        {
             StringBuilder buffer = new StringBuilder();
             buffer.Append("[CFRULE]\n");
             buffer.Append("    .condition_type   =").Append(ConditionType).Append("\n");
             buffer.Append("    OPTION FLAGS=0x").Append(HexDump.ToHex(Options)).Append("\n");
-            if (ContainsFontFormattingBlock) {
+            if(ContainsFontFormattingBlock)
+            {
                 buffer.Append(_fontFormatting.ToString()).Append("\n");
             }
-            if (ContainsBorderFormattingBlock) {
+            if(ContainsBorderFormattingBlock)
+            {
                 buffer.Append(_borderFormatting.ToString()).Append("\n");
             }
-            if (ContainsPatternFormattingBlock) {
+            if(ContainsPatternFormattingBlock)
+            {
                 buffer.Append(_patternFormatting.ToString()).Append("\n");
             }
             buffer.Append("    Formula 1 =").Append(Arrays.ToString(Formula1.Tokens)).Append("\n");
@@ -154,7 +163,8 @@ namespace NPOI.HSSF.Record
             return buffer.ToString();
         }
 
-        public override Object Clone() {
+        public override Object Clone()
+        {
             CFRuleRecord rec = new CFRuleRecord(ConditionType, ComparisonOperation);
             base.CopyTo(rec);
             return rec;

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 namespace NPOI.SS.Util
 {
-    using NPOI.Util;
     using NPOI.HSSF.Record;
+    using NPOI.Util;
 
     public class CellRangeAddress8Bit : CellRangeAddressBase
     {
@@ -23,7 +23,7 @@ namespace NPOI.SS.Util
 
         private static int ReadUShortAndCheck(RecordInputStream in1)
         {
-            if (in1.Remaining < ENCODED_SIZE)
+            if(in1.Remaining < ENCODED_SIZE)
             {
                 // Ran out of data
                 throw new Exception("Ran out of data reading CellRangeAddress");

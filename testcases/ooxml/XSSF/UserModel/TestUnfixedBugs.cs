@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -22,7 +22,8 @@ using NPOI.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.Streaming;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -88,19 +89,19 @@ namespace TestCases.XSSF.UserModel
             IRow title = sheet.GetRow(0);
 
             DateTime? prev = null;
-            for (int row = 1; row < rows; row++)
+            for(int row = 1; row < rows; row++)
             {
                 IRow rowObj = sheet.GetRow(row);
-                for (int col = 0; col < 1; col++)
+                for(int col = 0; col < 1; col++)
                 {
                     String titleName = title.GetCell(col).ToString();
                     ICell cell = rowObj.GetCell(col);
-                    if (titleName.StartsWith("time"))
+                    if(titleName.StartsWith("time"))
                     {
                         // here the output will produce ...59 or ...58 for the rows, probably POI is
                         // doing some different rounding or some other small difference...
                         //Console.WriteLine("==Time:" + cell.DateCellValue);
-                        if (prev != null)
+                        if(prev != null)
                         {
                             ClassicAssert.AreEqual(prev, cell.DateCellValue);
                             prev = cell.DateCellValue;
@@ -172,7 +173,7 @@ namespace TestCases.XSSF.UserModel
             ICell cell = row.CreateCell(0);
 
             IRichTextString str = new XSSFRichTextString("Test rich text string");
-            str.ApplyFont(2, 4, (short)0);
+            str.ApplyFont(2, 4, (short) 0);
             ClassicAssert.AreEqual(3, str.NumFormattingRuns);
             cell.SetCellValue(str);
 
@@ -199,10 +200,10 @@ namespace TestCases.XSSF.UserModel
             {
                 ISheet sheet = wb.CreateSheet("test");
 
-                for (int i = 0; i < 4; i++)
+                for(int i = 0; i < 4; i++)
                 {
                     IRow row = sheet.CreateRow(i);
-                    for (int j = 0; j < 2; j++)
+                    for(int j = 0; j < 2; j++)
                     {
                         ICell cell = row.CreateCell(j);
                         cell.CellStyle = (wb.CreateCellStyle());
@@ -321,7 +322,7 @@ namespace TestCases.XSSF.UserModel
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             try
             {
-                ((XSSFSheet)testSheet).Write(stream);
+                ((XSSFSheet) testSheet).Write(stream);
             }
             finally
             {
@@ -392,11 +393,10 @@ namespace TestCases.XSSF.UserModel
             foreach(CT_Row ctRow in sheet.GetCTWorksheet().sheetData.GetRowArray())
             {
                 long rowNum = ctRow.r; //1-based
-                ClassicAssert.IsTrue(rowNum > maxSeenRowNum, 
+                ClassicAssert.IsTrue(rowNum > maxSeenRowNum,
                     "Row " + rowNum + " (1-based) is not in ascending order; previously saw " + maxSeenRowNum);
                 maxSeenRowNum = rowNum;
             }
         }
     }
 }
-

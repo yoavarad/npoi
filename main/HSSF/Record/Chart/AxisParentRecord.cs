@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -109,7 +109,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         protected override int DataSize
         {
-            get { return  2 + 4 + 4 + 4 + 4; }
+            get { return 2 + 4 + 4 + 4 + 4; }
         }
 
         public override short Sid
@@ -183,5 +183,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-

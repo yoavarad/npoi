@@ -20,10 +20,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the SeriesListRecord
@@ -49,8 +50,8 @@ namespace TestCases.HSSF.Record.Chart
         {
 
             SeriesListRecord record = new SeriesListRecord(TestcaseRecordInputStream.Create(0x1016, data));
-            ClassicAssert.AreEqual((short)0x2001, record.SeriesNumbers[0]);
-            ClassicAssert.AreEqual(unchecked((short)0xf0ff), record.SeriesNumbers[1]);
+            ClassicAssert.AreEqual((short) 0x2001, record.SeriesNumbers[0]);
+            ClassicAssert.AreEqual(unchecked((short) 0xf0ff), record.SeriesNumbers[1]);
             ClassicAssert.AreEqual(2, record.SeriesNumbers.Length);
 
             ClassicAssert.AreEqual(4 + 6, record.RecordSize);
@@ -62,7 +63,7 @@ namespace TestCases.HSSF.Record.Chart
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

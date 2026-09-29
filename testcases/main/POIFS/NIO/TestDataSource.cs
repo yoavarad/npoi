@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,14 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.POIFS.NIO;
-using System.IO;
 using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace TestCases.POIFS.NIO
 {
@@ -181,7 +181,7 @@ namespace TestCases.POIFS.NIO
             //ClassicAssert.IsNotNull(ds.Channel);
 
             // rewriting changes the size
-            if (writeable)
+            if(writeable)
             {
                 ClassicAssert.IsTrue(ds.Size == 8192 || ds.Size == 8198, "Had: " + ds.Size);
             }
@@ -195,21 +195,21 @@ namespace TestCases.POIFS.NIO
             bs = ds.Read(4, 0);
             ClassicAssert.AreEqual(4, bs.Length);
             //ClassicAssert.AreEqual(0, bs
-            ClassicAssert.AreEqual(unchecked((byte)0xd0 - (byte)256), bs[0]);
-            ClassicAssert.AreEqual(unchecked((byte)0xcf - (byte)256), bs[1]);
-            ClassicAssert.AreEqual(unchecked((byte)0x11 - 0), bs[2]);
-            ClassicAssert.AreEqual(unchecked((byte)0xe0 - (byte)256), bs[3]);
+            ClassicAssert.AreEqual(unchecked((byte) 0xd0 - (byte) 256), bs[0]);
+            ClassicAssert.AreEqual(unchecked((byte) 0xcf - (byte) 256), bs[1]);
+            ClassicAssert.AreEqual(unchecked((byte) 0x11 - 0), bs[2]);
+            ClassicAssert.AreEqual(unchecked((byte) 0xe0 - (byte) 256), bs[3]);
 
             bs = ds.Read(8, 0x400);
             ClassicAssert.AreEqual(8, bs.Length);
             //ClassicAssert.AreEqual(0, bs.position());
-            ClassicAssert.AreEqual((byte)'R', bs[0]);
+            ClassicAssert.AreEqual((byte) 'R', bs[0]);
             ClassicAssert.AreEqual(0, bs[1]);
-            ClassicAssert.AreEqual((byte)'o', bs[2]);
+            ClassicAssert.AreEqual((byte) 'o', bs[2]);
             ClassicAssert.AreEqual(0, bs[3]);
-            ClassicAssert.AreEqual((byte)'o', bs[4]);
+            ClassicAssert.AreEqual((byte) 'o', bs[4]);
             ClassicAssert.AreEqual(0, bs[5]);
-            ClassicAssert.AreEqual((byte)'t', bs[6]);
+            ClassicAssert.AreEqual((byte) 't', bs[6]);
             ClassicAssert.AreEqual(0, bs[7]);
 
             // Can go to the end, but not past it
@@ -220,12 +220,12 @@ namespace TestCases.POIFS.NIO
             try
             {
                 bs = ds.Read(4, 8192);
-                if (!writeable)
+                if(!writeable)
                 {
                     Assert.Fail("Shouldn't be able to read off the end of the file");
                 }
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
             }
         }
@@ -235,9 +235,9 @@ namespace TestCases.POIFS.NIO
         public void TestByteArray()
         {
             byte[] data = new byte[256];
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
             {
-                data[i] = (byte)i;
+                data[i] = (byte) i;
             }
 
             ByteArrayBackedDataSource ds = new ByteArrayBackedDataSource(data);
@@ -259,21 +259,21 @@ namespace TestCases.POIFS.NIO
             ClassicAssert.AreEqual(103, bs.Read());
 
             bs = ds.Read(4, 252);
-            ClassicAssert.AreEqual(unchecked((byte)-4), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-3), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-2), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-1), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -4), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -3), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -2), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -1), bs.Read());
 
             // Off the end
             bs = ds.Read(4, 254);
-            ClassicAssert.AreEqual(unchecked((byte)-2), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-1), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -2), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -1), bs.Read());
             try
             {
                 //bs.get();
                 //fail("Shouldn't be able to read off the end");
             }
-            catch (Exception) { }
+            catch(Exception) { }
 
             // Past the end
             try
@@ -281,7 +281,7 @@ namespace TestCases.POIFS.NIO
                 ds.Read(4, 256);
                 Assert.Fail("Shouldn't be able to read off the end");
             }
-            catch (IndexOutOfRangeException) { }
+            catch(IndexOutOfRangeException) { }
 
 
             // Overwrite
@@ -294,20 +294,20 @@ namespace TestCases.POIFS.NIO
             //bs.Write(1, unchecked((byte)-54));
             //bs.Write(2, unchecked((byte)-53));
             //bs.Write(3, unchecked((byte)-52));
-            bs[0] = unchecked((byte)-55);
-            bs[1] = unchecked((byte)-54);
-            bs[2] = unchecked((byte)-53);
-            bs[3] = unchecked((byte)-52);
+            bs[0] = unchecked((byte) -55);
+            bs[1] = unchecked((byte) -54);
+            bs[2] = unchecked((byte) -53);
+            bs[3] = unchecked((byte) -52);
 
             ClassicAssert.AreEqual(256, ds.Size);
             ds.Write(bs, 40);
             ClassicAssert.AreEqual(256, ds.Size);
             bs = ds.Read(4, 40);
 
-            ClassicAssert.AreEqual(unchecked((byte)-55), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-54), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-53), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-52), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -55), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -54), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -53), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -52), bs.Read());
 
             // Append
             //bs = ByteBuffer.allocate(4);
@@ -316,10 +316,10 @@ namespace TestCases.POIFS.NIO
             //bs.Write(1, unchecked((byte)-54));
             //bs.Write(2, unchecked((byte)-53));
             //bs.Write(3, unchecked((byte)-52));
-            bs[0] = unchecked((byte)-55);
-            bs[1] = unchecked((byte)-54);
-            bs[2] = unchecked((byte)-53);
-            bs[3] = unchecked((byte)-52);
+            bs[0] = unchecked((byte) -55);
+            bs[1] = unchecked((byte) -54);
+            bs[2] = unchecked((byte) -53);
+            bs[3] = unchecked((byte) -52);
 
             //bs[0] = unchecked((byte)-55);
             //bs[1] = unchecked((byte)-54);
@@ -332,10 +332,10 @@ namespace TestCases.POIFS.NIO
 
             bs = ds.Read(4, 256);
             ClassicAssert.AreEqual(256, bs.Position);
-            ClassicAssert.AreEqual(unchecked((byte)-55), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-54), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-53), bs.Read());
-            ClassicAssert.AreEqual(unchecked((byte)-52), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -55), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -54), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -53), bs.Read());
+            ClassicAssert.AreEqual(unchecked((byte) -52), bs.Read());
 
         }
     }

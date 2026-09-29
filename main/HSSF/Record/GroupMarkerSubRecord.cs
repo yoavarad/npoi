@@ -20,9 +20,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
 
@@ -93,7 +93,7 @@ namespace NPOI.HSSF.Record
         {
             GroupMarkerSubRecord rec = new GroupMarkerSubRecord();
             rec.reserved = new byte[reserved.Length];
-            for (int i = 0; i < reserved.Length; i++)
+            for(int i = 0; i < reserved.Length; i++)
                 rec.reserved[i] = reserved[i];
             return rec;
         }

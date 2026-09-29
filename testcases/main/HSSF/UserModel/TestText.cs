@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,17 +14,18 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
+using NPOI.HSSF.Model;
+using NPOI.HSSF.Record;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NPOI.HSSF.Model;
 using TestCases.HSSF.Model;
-using NPOI.Util;
-using NPOI.HSSF.Record;
 using static TestCases.POIFS.Storage.RawDataUtil;
 
 namespace TestCases.HSSF.UserModel
@@ -108,9 +109,9 @@ namespace TestCases.HSSF.UserModel
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
 
             ClassicAssert.AreEqual(patriarch.Children.Count, 3);
-            ClassicAssert.AreEqual(((HSSFTextbox)patriarch.Children[0]).String.String, "just for Test");
-            ClassicAssert.AreEqual(((HSSFTextbox)patriarch.Children[1]).String.String, "just for Test2");
-            ClassicAssert.AreEqual(((HSSFTextbox)patriarch.Children[2]).String.String, "text3");
+            ClassicAssert.AreEqual(((HSSFTextbox) patriarch.Children[0]).String.String, "just for Test");
+            ClassicAssert.AreEqual(((HSSFTextbox) patriarch.Children[1]).String.String, "just for Test2");
+            ClassicAssert.AreEqual(((HSSFTextbox) patriarch.Children[2]).String.String, "text3");
 
             wb3.Close();
         }
@@ -124,11 +125,11 @@ namespace TestCases.HSSF.UserModel
             textbox.String = (new HSSFRichTextString("test"));
             ClassicAssert.AreEqual(textbox.String.String, "test");
 
-            textbox.HorizontalAlignment=((HorizontalTextAlignment)5);
-            ClassicAssert.AreEqual((HorizontalTextAlignment)5, textbox.HorizontalAlignment);
+            textbox.HorizontalAlignment=((HorizontalTextAlignment) 5);
+            ClassicAssert.AreEqual((HorizontalTextAlignment) 5, textbox.HorizontalAlignment);
 
-            textbox.VerticalAlignment=((VerticalTextAlignment)6);
-            ClassicAssert.AreEqual( (VerticalTextAlignment)6,textbox.VerticalAlignment);
+            textbox.VerticalAlignment=((VerticalTextAlignment) 6);
+            ClassicAssert.AreEqual((VerticalTextAlignment) 6, textbox.VerticalAlignment);
 
             textbox.MarginBottom=(7);
             ClassicAssert.AreEqual(textbox.MarginBottom, 7);
@@ -147,10 +148,10 @@ namespace TestCases.HSSF.UserModel
 
             sh = wb2.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
-            textbox = (HSSFTextbox)patriarch.Children[0];
+            textbox = (HSSFTextbox) patriarch.Children[0];
             ClassicAssert.AreEqual(textbox.String.String, "test");
-            ClassicAssert.AreEqual(textbox.HorizontalAlignment, (HorizontalTextAlignment)5);
-            ClassicAssert.AreEqual(textbox.VerticalAlignment, (VerticalTextAlignment)6);
+            ClassicAssert.AreEqual(textbox.HorizontalAlignment, (HorizontalTextAlignment) 5);
+            ClassicAssert.AreEqual(textbox.VerticalAlignment, (VerticalTextAlignment) 6);
             ClassicAssert.AreEqual(textbox.MarginBottom, 7);
             ClassicAssert.AreEqual(textbox.MarginLeft, 8);
             ClassicAssert.AreEqual(textbox.MarginRight, 9);
@@ -177,7 +178,7 @@ namespace TestCases.HSSF.UserModel
 
             sh = wb3.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
-            textbox = (HSSFTextbox)patriarch.Children[0];
+            textbox = (HSSFTextbox) patriarch.Children[0];
 
             ClassicAssert.AreEqual(textbox.String.String, "test1");
             ClassicAssert.AreEqual(textbox.HorizontalAlignment, HorizontalTextAlignment.Center);

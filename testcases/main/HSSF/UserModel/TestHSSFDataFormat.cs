@@ -16,13 +16,13 @@
 */
 namespace TestCases.HSSF.UserModel
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
     using TestCases.SS.UserModel;
-    using NPOI.SS.UserModel;
-    using NPOI.HSSF.UserModel;
-    using System;
 
     /**
      * Test <c>HSSFPicture</c>.
@@ -75,17 +75,17 @@ namespace TestCases.HSSF.UserModel
         public void Test51378()
         {
             IWorkbook wb = HSSFTestDataSamples.OpenSampleWorkbook("12561-1.xls");
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 ISheet sheet = wb.GetSheetAt(i);
-                foreach (IRow row in sheet)
+                foreach(IRow row in sheet)
                 {
-                    foreach (ICell cell in row)
+                    foreach(ICell cell in row)
                     {
                         ICellStyle style = cell.CellStyle;
 
                         String fmt = style.GetDataFormatString();
-                        if (fmt == null)
+                        if(fmt == null)
                         {
                             //_logger.Log(POILogger.WARN, cell + ": " + fmt);
                         }

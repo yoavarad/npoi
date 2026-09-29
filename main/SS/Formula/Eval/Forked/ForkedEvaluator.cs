@@ -15,13 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Reflection;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.UDF;
 using NPOI.SS.UserModel;
+using System;
+using System.Reflection;
 namespace NPOI.SS.Formula.Eval.Forked
 {
 
@@ -49,7 +49,7 @@ namespace NPOI.SS.Formula.Eval.Forked
         }
         private static IEvaluationWorkbook CreateEvaluationWorkbook(IWorkbook wb)
         {
-            if (wb is HSSFWorkbook workbook)
+            if(wb is HSSFWorkbook workbook)
             {
                 return HSSFEvaluationWorkbook.Create(workbook);
             }
@@ -61,9 +61,9 @@ namespace NPOI.SS.Formula.Eval.Forked
                     Type evalWB = Type.GetType("NPOI.XSSF.UserModel.XSSFEvaluationWorkbook");
                     Type xssfWB = Type.GetType("NPOI.XSSF.UserMode.XSSFWorkbook");
                     MethodInfo createM = evalWB.GetMethod("create", new Type[] { xssfWB });
-                    return (IEvaluationWorkbook)createM.Invoke(null, new object[] { wb });
+                    return (IEvaluationWorkbook) createM.Invoke(null, new object[] { wb });
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     throw new ArgumentException("Unexpected workbook type (" + wb.GetType().Name
                         + ") - check for poi-ooxml and poi-ooxml schemas jar in the classpath", e);
@@ -119,7 +119,7 @@ namespace NPOI.SS.Formula.Eval.Forked
         {
             IEvaluationCell cell = _sewb.GetEvaluationCell(sheetName, rowIndex, columnIndex);
 
-            switch (cell.CellType)
+            switch(cell.CellType)
             {
                 case CellType.Boolean:
                     return BoolEval.ValueOf(cell.BooleanCellValue);
@@ -146,7 +146,7 @@ namespace NPOI.SS.Formula.Eval.Forked
         public static void SetupEnvironment(String[] workbookNames, ForkedEvaluator[] Evaluators)
         {
             WorkbookEvaluator[] wbEvals = new WorkbookEvaluator[Evaluators.Length];
-            for (int i = 0; i < wbEvals.Length; i++)
+            for(int i = 0; i < wbEvals.Length; i++)
             {
                 wbEvals[i] = Evaluators[i]._evaluator;
             }

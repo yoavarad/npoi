@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -33,11 +33,12 @@ namespace NPOI.SS.Formula.Functions
         }
         public override double CalculateFromNumberList(List<double> list)
         {
-            if (list.Count == 1) throw new EvaluationException(ErrorEval.DIV_ZERO);
+            if(list.Count == 1)
+                throw new EvaluationException(ErrorEval.DIV_ZERO);
             var average = list.Average();
             var sum = 0.0;
 
-            foreach (var item in list)
+            foreach(var item in list)
             {
                 sum += Math.Pow(item - average, 2);
             }

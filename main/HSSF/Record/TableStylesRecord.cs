@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
     using NPOI.Util;
+    using System;
     using System.Text;
 
 
@@ -102,6 +102,3 @@ namespace NPOI.HSSF.Record
         }
     }
 }
-
-
-

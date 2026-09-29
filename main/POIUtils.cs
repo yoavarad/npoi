@@ -15,10 +15,10 @@
    limitations under the License.
 ==================================================================== */
 using NPOI.POIFS.FileSystem;
+using SkiaSharp;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
-using SkiaSharp;
 
 namespace NPOI.Util
 {
@@ -34,20 +34,20 @@ namespace NPOI.Util
             // System.err.println("copyNodeRecursively called with "+entry.GetName()+
             // ","+tarGet.getName());
             DirectoryEntry newTarget = null;
-            if (entry.IsDirectoryEntry)
+            if(entry.IsDirectoryEntry)
             {
                 newTarget = target.CreateDirectory(entry.Name);
                 IEnumerator entries = ((DirectoryEntry)entry).Entries;
 
-                while (entries.MoveNext())
+                while(entries.MoveNext())
                 {
-                    CopyNodeRecursively((Entry)entries.Current, newTarget);
+                    CopyNodeRecursively((Entry) entries.Current, newTarget);
                 }
             }
             else
             {
                 DocumentEntry dentry = (DocumentEntry)entry;
-                using (DocumentInputStream dstream = new DocumentInputStream(dentry))
+                using(DocumentInputStream dstream = new DocumentInputStream(dentry))
                 {
                     target.CreateDocument(dentry.Name, dstream);
                     //now part of usings call to Dispose: dstream.Close();
@@ -69,10 +69,10 @@ namespace NPOI.Util
                 DirectoryEntry targetRoot, List<String> excepts)
         {
             IEnumerator entries = sourceRoot.Entries;
-            while (entries.MoveNext())
+            while(entries.MoveNext())
             {
                 Entry entry = (Entry)entries.Current;
-                if (!excepts.Contains(entry.Name))
+                if(!excepts.Contains(entry.Name))
                 {
                     CopyNodeRecursively(entry, targetRoot);
                 }

@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     public abstract class SingleArgTextFunc : TextFunction
     {
@@ -32,7 +32,7 @@ namespace NPOI.SS.Formula.Functions
         }
         public override ValueEval EvaluateFunc(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -60,7 +60,8 @@ namespace NPOI.SS.Formula.Functions
             ValueEval ve = OperandResolver.GetSingleValue(arg, srcCellRow, srcCellCol);
             return OperandResolver.CoerceValueToInt(ve);
         }
-        public static double EvaluateDoubleArg(ValueEval arg, int srcCellRow, int srcCellCol) {
+        public static double EvaluateDoubleArg(ValueEval arg, int srcCellRow, int srcCellCol)
+        {
             ValueEval ve = OperandResolver.GetSingleValue(arg, srcCellRow, srcCellCol);
             return OperandResolver.CoerceValueToDouble(ve);
         }
@@ -71,7 +72,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 return EvaluateFunc(args, srcCellRow, srcCellCol);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

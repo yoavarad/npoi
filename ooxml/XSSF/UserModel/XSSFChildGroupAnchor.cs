@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,14 +14,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.OpenXmlFormats.Dml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NPOI.OpenXmlFormats.Dml;
 
-namespace NPOI.XSSF.UserModel {
+namespace NPOI.XSSF.UserModel
+{
     public class XSSFChildGroupAnchor : XSSFAnchor
     {
         private CT_GroupTransform2D gt2d;
@@ -37,8 +38,10 @@ namespace NPOI.XSSF.UserModel {
             off.y = Math.Min(y, cy);
             ext.cx = Math.Abs(cx - x);
             ext.cy = Math.Abs(cy - y);
-            if (x > cx) gt2d.flipH = true;
-            if (y > cy) gt2d.flipV = true;
+            if(x > cx)
+                gt2d.flipH = true;
+            if(y > cy)
+                gt2d.flipV = true;
 
             chOff.x = off.x;
             chOff.y = off.y;
@@ -61,10 +64,10 @@ namespace NPOI.XSSF.UserModel {
         {
             get
             {
-                return (int)gt2d.off.x;
+                return (int) gt2d.off.x;
 
             }
-            set 
+            set
             {
                 gt2d.off.y = (value);
             }
@@ -74,9 +77,9 @@ namespace NPOI.XSSF.UserModel {
         {
             get
             {
-                return (int)gt2d.off.y;
+                return (int) gt2d.off.y;
             }
-            set 
+            set
             {
                 gt2d.off.y = (value);
             }
@@ -86,9 +89,9 @@ namespace NPOI.XSSF.UserModel {
         {
             get
             {
-                return (int)(Dy1 + gt2d.ext.cy);
+                return (int) (Dy1 + gt2d.ext.cy);
             }
-            set 
+            set
             {
                 gt2d.ext.cy = (value - Dy1);
             }
@@ -98,9 +101,9 @@ namespace NPOI.XSSF.UserModel {
         {
             get
             {
-                return (int)(Dx1 + gt2d.ext.cx);
+                return (int) (Dx1 + gt2d.ext.cx);
             }
-            set 
+            set
             {
                 gt2d.ext.cx = (value - Dx1);
             }

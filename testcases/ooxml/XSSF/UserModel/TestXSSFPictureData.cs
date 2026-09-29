@@ -15,15 +15,16 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System.Collections.Generic;
-using System;
-using NPOI.Util;
 using NPOI.SS.UserModel;
-using System.Collections;
-using System.Text;
-using NPOI.XSSF.UserModel;
+using NPOI.Util;
 using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -44,10 +45,10 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(5, pictures.Count);
             String[] ext = { "jpeg", "emf", "png", "emf", "wmf" };
             String[] mimetype = { "image/jpeg", "image/x-emf", "image/png", "image/x-emf", "image/x-wmf" };
-            for (int i = 0; i < pictures.Count; i++)
+            for(int i = 0; i < pictures.Count; i++)
             {
-                ClassicAssert.AreEqual(ext[i], ((XSSFPictureData)pictures[i]).SuggestFileExtension());
-                ClassicAssert.AreEqual(mimetype[i], ((XSSFPictureData)pictures[i]).MimeType);
+                ClassicAssert.AreEqual(ext[i], ((XSSFPictureData) pictures[i]).SuggestFileExtension());
+                ClassicAssert.AreEqual(mimetype[i], ((XSSFPictureData) pictures[i]).MimeType);
             }
 
             int num = pictures.Count;
@@ -78,18 +79,18 @@ namespace TestCases.XSSF.UserModel
 
             int jpegIdx = wb.AddPicture(jpegData, PictureType.JPEG);
             ClassicAssert.AreEqual(1, pictures.Count);
-            ClassicAssert.AreEqual("jpeg", ((XSSFPictureData)pictures[jpegIdx]).SuggestFileExtension());
-            ClassicAssert.IsTrue(Arrays.Equals(jpegData, ((XSSFPictureData)pictures[jpegIdx]).Data));
+            ClassicAssert.AreEqual("jpeg", ((XSSFPictureData) pictures[jpegIdx]).SuggestFileExtension());
+            ClassicAssert.IsTrue(Arrays.Equals(jpegData, ((XSSFPictureData) pictures[jpegIdx]).Data));
 
             int wmfIdx = wb.AddPicture(wmfData, PictureType.WMF);
             ClassicAssert.AreEqual(2, pictures.Count);
-            ClassicAssert.AreEqual("wmf", ((XSSFPictureData)pictures[wmfIdx]).SuggestFileExtension());
-            ClassicAssert.IsTrue(Arrays.Equals(wmfData, ((XSSFPictureData)pictures[wmfIdx]).Data));
+            ClassicAssert.AreEqual("wmf", ((XSSFPictureData) pictures[wmfIdx]).SuggestFileExtension());
+            ClassicAssert.IsTrue(Arrays.Equals(wmfData, ((XSSFPictureData) pictures[wmfIdx]).Data));
 
             int pngIdx = wb.AddPicture(pngData, PictureType.PNG);
             ClassicAssert.AreEqual(3, pictures.Count);
-            ClassicAssert.AreEqual("png", ((XSSFPictureData)pictures[pngIdx]).SuggestFileExtension());
-            ClassicAssert.IsTrue(Arrays.Equals(pngData, ((XSSFPictureData)pictures[pngIdx]).Data));
+            ClassicAssert.AreEqual("png", ((XSSFPictureData) pictures[pngIdx]).SuggestFileExtension());
+            ClassicAssert.IsTrue(Arrays.Equals(pngData, ((XSSFPictureData) pictures[pngIdx]).Data));
 
             //TODO finish usermodel API for XSSFPicture
             XSSFPicture p1 = (XSSFPicture)Drawing.CreatePicture(new XSSFClientAnchor(), jpegIdx);
@@ -100,18 +101,18 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsNotNull(p1);
 
             //check that the Added pictures are accessible After write
-            wb = (XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(wb);
+            wb = (XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(wb);
             IList pictures2 = wb.GetAllPictures();
             ClassicAssert.AreEqual(3, pictures2.Count);
-            
-            ClassicAssert.AreEqual("jpeg", ((XSSFPictureData)pictures2[jpegIdx]).SuggestFileExtension());
-            ClassicAssert.IsTrue(Arrays.Equals(jpegData, ((XSSFPictureData)pictures2[jpegIdx]).Data));
 
-            ClassicAssert.AreEqual("wmf", ((XSSFPictureData)pictures2[wmfIdx]).SuggestFileExtension());
-            ClassicAssert.IsTrue(Arrays.Equals(wmfData, ((XSSFPictureData)pictures2[wmfIdx]).Data));
+            ClassicAssert.AreEqual("jpeg", ((XSSFPictureData) pictures2[jpegIdx]).SuggestFileExtension());
+            ClassicAssert.IsTrue(Arrays.Equals(jpegData, ((XSSFPictureData) pictures2[jpegIdx]).Data));
 
-            ClassicAssert.AreEqual("png", ((XSSFPictureData)pictures2[pngIdx]).SuggestFileExtension());
-            ClassicAssert.IsTrue(Arrays.Equals(pngData, ((XSSFPictureData)pictures2[pngIdx]).Data));
+            ClassicAssert.AreEqual("wmf", ((XSSFPictureData) pictures2[wmfIdx]).SuggestFileExtension());
+            ClassicAssert.IsTrue(Arrays.Equals(wmfData, ((XSSFPictureData) pictures2[wmfIdx]).Data));
+
+            ClassicAssert.AreEqual("png", ((XSSFPictureData) pictures2[pngIdx]).SuggestFileExtension());
+            ClassicAssert.IsTrue(Arrays.Equals(pngData, ((XSSFPictureData) pictures2[pngIdx]).Data));
 
         }
 
@@ -131,13 +132,13 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsNotNull(shapes1);
             ClassicAssert.AreEqual(5, shapes1.Count);
 
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 XSSFSheet sheet = wb.GetSheetAt(i) as XSSFSheet;
                 XSSFDrawing Drawing = sheet.CreateDrawingPatriarch() as XSSFDrawing;
-                foreach (XSSFShape shape in Drawing.GetShapes())
+                foreach(XSSFShape shape in Drawing.GetShapes())
                 {
-                    if (shape is XSSFPicture)
+                    if(shape is XSSFPicture)
                     {
                         XSSFPicture pic = (XSSFPicture)shape;
                         XSSFPictureData picData = pic.PictureData as XSSFPictureData;

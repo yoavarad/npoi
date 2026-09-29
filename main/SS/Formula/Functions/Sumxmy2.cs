@@ -32,7 +32,7 @@ namespace NPOI.SS.Formula.Functions
     public class Sumxmy2 : XYNumericFunction
     {
 
-        public class Accumulator1:Accumulator
+        public class Accumulator1 : Accumulator
         {
             public double Accumulate(double x, double y)
             {

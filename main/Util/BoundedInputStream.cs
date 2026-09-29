@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -55,7 +55,7 @@ namespace NPOI.Util
         /// <exception cref="IOException">if an I/O error occurs</exception>
         public override int Read()
         {
-            if (max >= 0 && pos == max)
+            if(max >= 0 && pos == max)
             {
                 return -1;
             }
@@ -69,14 +69,14 @@ namespace NPOI.Util
         }
         public override int Read(byte[] b, int off, int len)
         {
-            if (max >= 0 && pos >= max)
+            if(max >= 0 && pos >= max)
             {
                 return -1;
             }
             long maxRead = max >= 0 ? Math.Min(len, max - pos) : len;
             int bytesRead = in1.Read(b, off, (int)maxRead);
 
-            if (bytesRead == -1)
+            if(bytesRead == -1)
             {
                 return -1;
             }
@@ -84,10 +84,10 @@ namespace NPOI.Util
             pos += bytesRead;
             return bytesRead;
         }
-        
+
         public override void Close()
         {
-            if (IsPropagateClose)
+            if(IsPropagateClose)
             {
                 in1.Close();
             }

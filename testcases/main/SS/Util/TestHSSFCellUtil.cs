@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,7 +15,8 @@
    limitations under the License.
    ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using TestCases.HSSF;
 
 namespace TestCases.SS.Util
@@ -26,7 +27,7 @@ namespace TestCases.SS.Util
         public TestHSSFCellUtil()
             : base(HSSFITestDataProvider.Instance)
         {
-            
+
         }
     }
 }

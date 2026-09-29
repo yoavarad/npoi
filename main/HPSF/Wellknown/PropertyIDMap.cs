@@ -275,13 +275,13 @@ namespace NPOI.HPSF.Wellknown
         /// re-evaluated.
         /// </summary>
         public const int PID_LINKSDIRTY = 0x10;
-    
+
         /// <summary>
         /// The entry specifies an estimate of the number of characters
         ///  in the document, including whitespace, as an integer
         /// </summary>
         public const int PID_CCHWITHSPACES = 0x11;
-    
+
         // 0x12 Unused
         // 0x13 GKPIDDSI_SHAREDDOC - Must be False
         // 0x14 GKPIDDSI_LINKBASE - Must not be written
@@ -293,44 +293,44 @@ namespace NPOI.HPSF.Wellknown
         ///  hyperlinks should be updated on document load.
         /// </summary>
         public const int PID_HYPERLINKSCHANGED = 0x16;
-    
+
         /// <summary>
         /// This entry contains the version of the Application which wrote the
         ///  Property Set, stored with the two high order bytes having the major
         ///  version number, and the two low order bytes the minor version number.
         /// </summary>
         public const int PID_VERSION = 0x17;
-    
+
         /// <summary>
         /// This entry contains the VBA digital signature for the VBA project
         ///  embedded in the document.
         /// </summary>
         public const int PID_DIGSIG = 0x18;
-    
+
         // 0x19 Unused
-    
+
         /// <summary>
         /// This entry contains a string of the content type of the file.
         /// </summary>
         public const int PID_CONTENTTYPE = 0x1A;
-    
+
         /// <summary>
         /// This entry contains a string of the document status.
         /// </summary>
         public const int PID_CONTENTSTATUS = 0x1B;
-    
+
         /// <summary>
         /// This entry contains a string of the document language, but
         ///  normally should be empty.
         /// </summary>
         public const int PID_LANGUAGE = 0x1C;
-    
+
         /// <summary>
         /// This entry contains a string of the document version, but
         ///  normally should be empty
         /// </summary>
         public const int PID_DOCVERSION = 0x1D;
-    
+
         /// <summary>
         /// The highest well-known property ID. Applications are free to use
         ///  higher values for custom purposes. (This value is based on Office 12,
@@ -466,9 +466,9 @@ namespace NPOI.HPSF.Wellknown
         private PropertyIDMap(object[][] idValues)
         {
             Dictionary<long,String> m = new Dictionary<long,String>(idValues.Length);
-            foreach (object[] idValue in idValues)
+            foreach(object[] idValue in idValues)
             {
-                m.Add((long)idValue[0], (String)idValue[1]);
+                m.Add((long) idValue[0], (String) idValue[1]);
             }
             idMap = m;
         }
@@ -568,7 +568,7 @@ namespace NPOI.HPSF.Wellknown
             {
                 lock(summaryInformationIdValues)
                 {
-                    if (summaryInformationProperties == null)
+                    if(summaryInformationProperties == null)
                     {
                         summaryInformationProperties = new PropertyIDMap(summaryInformationIdValues);
                     }
@@ -591,12 +591,12 @@ namespace NPOI.HPSF.Wellknown
             {
                 lock(documentSummaryInformationIdValues)
                 {
-                    if (documentSummaryInformationProperties == null)
+                    if(documentSummaryInformationProperties == null)
                     {
                         documentSummaryInformationProperties = new PropertyIDMap(documentSummaryInformationIdValues);
                     }
                 }
-                
+
                 return documentSummaryInformationProperties;
             }
         }
@@ -611,15 +611,15 @@ namespace NPOI.HPSF.Wellknown
             {
                 lock(fallbackIdValues)
                 {
-                    if (fallbackProperties == null)
+                    if(fallbackProperties == null)
                     {
                         fallbackProperties = new PropertyIDMap(fallbackIdValues);
                     }
                 }
-                
+
                 return fallbackProperties;
             }
-            
+
         }
 
         public ICollection<long> Keys => idMap.Keys;

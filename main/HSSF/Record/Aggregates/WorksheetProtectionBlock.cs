@@ -56,7 +56,7 @@ namespace NPOI.HSSF.Record.Aggregates
          */
         public static bool IsComponentRecord(int sid)
         {
-            switch (sid)
+            switch(sid)
             {
                 case ProtectRecord.sid:
                 case ObjectProtectRecord.sid:
@@ -69,8 +69,8 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private bool ReadARecord(RecordStream rs)
         {
-            
-            switch (rs.PeekNextSid())
+
+            switch(rs.PeekNextSid())
             {
                 case ProtectRecord.sid:
                     CheckNotPresent(_protectRecord);
@@ -97,7 +97,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private static void CheckNotPresent(Record rec)
         {
-            if (rec != null)
+            if(rec != null)
             {
                 throw new RecordFormatException("Duplicate WorksheetProtectionBlock record (sid=0x"
                         + StringUtil.ToHexString(rec.Sid) + ")");
@@ -116,7 +116,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private static void VisitIfPresent(Record r, RecordVisitor rv)
         {
-            if (r != null)
+            if(r != null)
             {
                 rv.VisitRecord(r);
             }
@@ -150,9 +150,9 @@ namespace NPOI.HSSF.Record.Aggregates
          */
         public void AddRecords(RecordStream rs)
         {
-            while (true)
+            while(true)
             {
-                if (!ReadARecord(rs))
+                if(!ReadARecord(rs))
                 {
                     break;
                 }
@@ -166,7 +166,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             get
             {
-                if (_protectRecord == null)
+                if(_protectRecord == null)
                 {
                     _protectRecord = new ProtectRecord(false);
                 }
@@ -180,7 +180,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             get
             {
-                if (_passwordRecord == null)
+                if(_passwordRecord == null)
                 {
                     _passwordRecord = CreatePassword();
                 }
@@ -197,7 +197,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public void ProtectSheet(String password, bool shouldProtectObjects,
                 bool shouldProtectScenarios)
         {
-            if (password == null)
+            if(password == null)
             {
                 _passwordRecord = null;
                 _protectRecord = null;
@@ -209,14 +209,14 @@ namespace NPOI.HSSF.Record.Aggregates
             ProtectRecord prec = this.Protect;
             PasswordRecord pass = this.Password;
             prec.Protect = true;
-            pass.Password = (short)CryptoFunctions.CreateXorVerifier1(password);
-            if (_objectProtectRecord == null && shouldProtectObjects)
+            pass.Password = (short) CryptoFunctions.CreateXorVerifier1(password);
+            if(_objectProtectRecord == null && shouldProtectObjects)
             {
                 ObjectProtectRecord rec = CreateObjectProtect();
                 rec.Protect = (true);
                 _objectProtectRecord = rec;
             }
-            if (_scenarioProtectRecord == null && shouldProtectScenarios)
+            if(_scenarioProtectRecord == null && shouldProtectScenarios)
             {
                 ScenarioProtectRecord srec = CreateScenarioProtect();
                 srec.Protect = (true);
@@ -234,7 +234,8 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public bool IsObjectProtected
         {
-            get{
+            get
+            {
                 return _objectProtectRecord != null && _objectProtectRecord.Protect;
             }
         }
@@ -251,20 +252,22 @@ namespace NPOI.HSSF.Record.Aggregates
         /// Creates an ObjectProtect record with protect set to false.
         /// </summary>
         /// <returns></returns>
-        private static ObjectProtectRecord CreateObjectProtect() {
-		ObjectProtectRecord retval = new ObjectProtectRecord();
-		retval.Protect = (false);
-		return retval;
-	}
+        private static ObjectProtectRecord CreateObjectProtect()
+        {
+            ObjectProtectRecord retval = new ObjectProtectRecord();
+            retval.Protect = (false);
+            return retval;
+        }
         /// <summary>
         /// Creates a ScenarioProtect record with protect set to false.
         /// </summary>
         /// <returns></returns>
-        private static ScenarioProtectRecord CreateScenarioProtect() {
-		ScenarioProtectRecord retval = new ScenarioProtectRecord();
-		retval.Protect = (false);
-		return retval;
-	}
+        private static ScenarioProtectRecord CreateScenarioProtect()
+        {
+            ScenarioProtectRecord retval = new ScenarioProtectRecord();
+            retval.Protect = (false);
+            return retval;
+        }
 
         /// <summary>
         ///Creates a Password record with password set to 0x0000.
@@ -279,7 +282,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             get
             {
-                if (_passwordRecord == null)
+                if(_passwordRecord == null)
                 {
                     return 0;
                 }
@@ -288,6 +291,3 @@ namespace NPOI.HSSF.Record.Aggregates
         }
     }
 }
-
-
-

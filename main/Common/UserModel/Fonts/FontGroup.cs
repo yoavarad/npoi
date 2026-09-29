@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
 Licensed to the Apache Software Foundation (ASF) under one or more
 contributor license agreements.  See the NOTICE file distributed with
 this work for additional information regarding copyright ownership.
@@ -142,7 +142,7 @@ namespace NPOI.Common.UserModel.Fonts
 
                 // don't switch the font group for a few default characters supposedly available in all fonts
                 FontGroup tt;
-                if(ttrLast != null && " \n\r".IndexOf((char)cp) > -1)
+                if(ttrLast != null && " \n\r".IndexOf((char) cp) > -1)
                 {
                     tt = ttrLast.fontGroup;
                 }
@@ -178,5 +178,3 @@ namespace NPOI.Common.UserModel.Fonts
         }
     }
 }
-
-

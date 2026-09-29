@@ -20,10 +20,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the ObjectLinkRecord
@@ -37,7 +38,7 @@ namespace TestCases.HSSF.Record.Chart
     public class TestObjectLinkRecord
     {
         byte[] data = new byte[] {
-	(byte)0x03,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00
+    (byte)0x03,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00
     };
 
         public TestObjectLinkRecord()
@@ -50,11 +51,11 @@ namespace TestCases.HSSF.Record.Chart
             ObjectLinkRecord record = new ObjectLinkRecord(TestcaseRecordInputStream.Create((short)0x1027, data));
 
 
-            ClassicAssert.AreEqual((short)3, record.AnchorId);
+            ClassicAssert.AreEqual((short) 3, record.AnchorId);
 
-            ClassicAssert.AreEqual((short)0x00, record.Link1);
+            ClassicAssert.AreEqual((short) 0x00, record.Link1);
 
-            ClassicAssert.AreEqual((short)0x00, record.Link2);
+            ClassicAssert.AreEqual((short) 0x00, record.Link2);
 
 
             ClassicAssert.AreEqual(10, record.RecordSize);
@@ -66,16 +67,16 @@ namespace TestCases.HSSF.Record.Chart
 
 
 
-            record.AnchorId=((short)3);
+            record.AnchorId=((short) 3);
 
-            record.Link1=((short)0x00);
+            record.Link1=((short) 0x00);
 
-            record.Link2=((short)0x00);
+            record.Link2=((short) 0x00);
 
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

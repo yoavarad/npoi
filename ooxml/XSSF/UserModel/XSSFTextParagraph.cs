@@ -14,15 +14,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System.Collections.Generic;
+using Cysharp.Text;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Spreadsheet;
-using System;
-using System.Text; 
-using Cysharp.Text;
-using NPOI.XSSF.Model;
 using NPOI.Util;
+using NPOI.XSSF.Model;
 using SkiaSharp;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -41,20 +41,20 @@ namespace NPOI.XSSF.UserModel
             _p = p;
             _shape = ctShape;
             _Runs = new List<XSSFTextRun>();
-            foreach (object ch in _p.r)
+            foreach(object ch in _p.r)
             {
-                if (ch is CT_RegularTextRun run)
+                if(ch is CT_RegularTextRun run)
                 {
                     _Runs.Add(new XSSFTextRun(run, this));
                 }
-                else if (ch is CT_TextLineBreak br)
+                else if(ch is CT_TextLineBreak br)
                 {
                     CT_RegularTextRun r = new CT_RegularTextRun();
                     r.rPr = (br.rPr);
                     r.t=("\n");
                     _Runs.Add(new XSSFTextRun(r, this));
                 }
-                else if (ch is CT_TextField field)
+                else if(ch is CT_TextField field)
                 {
                     CT_RegularTextRun r = new CT_RegularTextRun();
                     r.rPr = (field.rPr);
@@ -87,7 +87,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 using var out1 = ZString.CreateStringBuilder();
-                foreach (XSSFTextRun r in _Runs)
+                foreach(XSSFTextRun r in _Runs)
                 {
                     out1.Append(r.Text);
                 }
@@ -142,7 +142,7 @@ namespace NPOI.XSSF.UserModel
         {
             CT_TextLineBreak br = _p.AddNewBr();
             CT_TextCharacterProperties brProps = br.AddNewRPr();
-            if (_Runs.Count > 0)
+            if(_Runs.Count > 0)
             {
                 // by default line break has the font size of the last text run
                 CT_TextCharacterProperties prevRun = _Runs[_Runs.Count - 1].GetRPr();
@@ -173,24 +173,25 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
-                if (value == TextAlign.None)
+                if(value == TextAlign.None)
                 {
-                    if (pr.IsSetAlgn()) pr.UnsetAlgn();
+                    if(pr.IsSetAlgn())
+                        pr.UnsetAlgn();
                 }
                 else
                 {
-                    pr.algn = (ST_TextAlignType)(value - 1);
+                    pr.algn = (ST_TextAlignType) (value - 1);
                 }
             }
         }
         private sealed class ParagraphPropertyTextAlignFetcher : ParagraphPropertyFetcher<TextAlign?>
         {
-            public ParagraphPropertyTextAlignFetcher(int level) : base(level) 
+            public ParagraphPropertyTextAlignFetcher(int level) : base(level)
             {
             }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetAlgn())
+                if(props.IsSetAlgn())
                 {
                     TextAlign val = (TextAlign)(props.algn + 1); //TextAlign.values()[props.GetAlgn().intValue() - 1];
                     SetValue(val);
@@ -225,18 +226,19 @@ namespace NPOI.XSSF.UserModel
                 //};
                 ParagraphPropertyFetcherTextFontAlign fetcher = new ParagraphPropertyFetcherTextFontAlign(Level);
                 fetchParagraphProperty(fetcher);
-                return fetcher.GetValue() == null ? TextFontAlign.BASELINE : fetcher.GetValue().Value;        
+                return fetcher.GetValue() == null ? TextFontAlign.BASELINE : fetcher.GetValue().Value;
             }
             set
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
-                if (value == TextFontAlign.None)
+                if(value == TextFontAlign.None)
                 {
-                    if (pr.IsSetFontAlgn()) pr.UnsetFontAlgn();
+                    if(pr.IsSetFontAlgn())
+                        pr.UnsetFontAlgn();
                 }
                 else
                 {
-                    pr.fontAlgn = (ST_TextFontAlignType)(value - 1);
+                    pr.fontAlgn = (ST_TextFontAlignType) (value - 1);
                 }
             }
         }
@@ -245,7 +247,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherTextFontAlign(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetFontAlgn())
+                if(props.IsSetFontAlgn())
                 {
                     TextFontAlign val = (TextFontAlign)(props.fontAlgn + 1);
                     SetValue(val);
@@ -286,7 +288,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherBulletFont(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuFont())
+                if(props.IsSetBuFont())
                 {
                     SetValue(props.buFont.typeface);
                     return true;
@@ -326,7 +328,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherBulletCharacter(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuChar())
+                if(props.IsSetBuChar())
                 {
                     SetValue(props.buChar.@char);
                     return true;
@@ -373,13 +375,13 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherBulletFontColor(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuClr())
+                if(props.IsSetBuClr())
                 {
-                    if (props.buClr.IsSetSrgbClr())
+                    if(props.buClr.IsSetSrgbClr())
                     {
                         CT_SRgbColor clr = props.buClr.srgbClr;
                         byte[] rgb = clr.val;
-                        SetValue(new SKColor((byte)(0xFF & rgb[0]), (byte)(0xFF & rgb[1]), (byte)(0xFF & rgb[2])));
+                        SetValue(new SKColor((byte) (0xFF & rgb[0]), (byte) (0xFF & rgb[1]), (byte) (0xFF & rgb[2])));
                         return true;
                     }
                 }
@@ -421,21 +423,23 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
 
-                if (value >= 0)
+                if(value >= 0)
                 {
                     // percentage
                     CT_TextBulletSizePercent pt = pr.IsSetBuSzPct() ? pr.buSzPct : pr.AddNewBuSzPct();
-                    pt.val = ((int)(value * 1000));
+                    pt.val = ((int) (value * 1000));
                     // unset points if percentage is now Set
-                    if (pr.IsSetBuSzPts()) pr.UnsetBuSzPts();
+                    if(pr.IsSetBuSzPts())
+                        pr.UnsetBuSzPts();
                 }
                 else
                 {
                     // points
                     CT_TextBulletSizePoint pt = pr.IsSetBuSzPts() ? pr.buSzPts : pr.AddNewBuSzPts();
-                    pt.val = ((int)(-value * 100));
+                    pt.val = ((int) (-value * 100));
                     // unset percentage if points is now Set
-                    if (pr.IsSetBuSzPct()) pr.UnsetBuSzPct();
+                    if(pr.IsSetBuSzPct())
+                        pr.UnsetBuSzPct();
                 }
             }
         }
@@ -444,12 +448,12 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherBulletFontSize(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuSzPct())
+                if(props.IsSetBuSzPct())
                 {
                     SetValue(props.buSzPct.val * 0.001);
                     return true;
                 }
-                if (props.IsSetBuSzPts())
+                if(props.IsSetBuSzPts())
                 {
                     SetValue(-props.buSzPts.val * 0.01);
                     return true;
@@ -481,9 +485,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
-                if (value == -1)
+                if(value == -1)
                 {
-                    if (pr.IsSetIndent()) pr.UnsetIndent();
+                    if(pr.IsSetIndent())
+                        pr.UnsetIndent();
                 }
                 else
                 {
@@ -497,7 +502,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherIndent(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetIndent())
+                if(props.IsSetIndent())
                 {
                     SetValue(Units.ToPoints(props.indent));
                     return true;
@@ -535,9 +540,10 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
-                if (value == -1)
+                if(value == -1)
                 {
-                    if (pr.IsSetMarL()) pr.UnsetMarL();
+                    if(pr.IsSetMarL())
+                        pr.UnsetMarL();
                 }
                 else
                 {
@@ -550,7 +556,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherLeftMargin(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetMarL())
+                if(props.IsSetMarL())
                 {
                     double val = Units.ToPoints(props.marL);
                     SetValue(val);
@@ -583,14 +589,15 @@ namespace NPOI.XSSF.UserModel
                 ParagraphPropertyFetcherRightMargin fetcher = new ParagraphPropertyFetcherRightMargin(Level);
                 fetchParagraphProperty(fetcher);
                 // if the marL attribute is omitted, then a value of 347663 is implied
-                return fetcher.GetValue();        
+                return fetcher.GetValue();
             }
             set
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
-                if (value == -1)
+                if(value == -1)
                 {
-                    if (pr.IsSetMarR()) pr.UnsetMarR();
+                    if(pr.IsSetMarR())
+                        pr.UnsetMarR();
                 }
                 else
                 {
@@ -603,7 +610,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherRightMargin(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetMarR())
+                if(props.IsSetMarR())
                 {
                     double val = Units.ToPoints(props.marR);
                     SetValue(val);
@@ -640,7 +647,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherDefaultTabSize(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetDefTabSz())
+                if(props.IsSetDefTabSz())
                 {
                     double val = Units.ToPoints(props.defTabSz);
                     SetValue(val);
@@ -676,10 +683,10 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherTabStop(int level, int idx) : base(level) { this.idx = idx; }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetTabLst())
+                if(props.IsSetTabLst())
                 {
                     CT_TextTabStopList tabStops = props.tabLst;
-                    if (idx < tabStops.SizeOfTabArray())
+                    if(idx < tabStops.SizeOfTabArray())
                     {
                         CT_TextTabStop ts = tabStops.GetTabArray(idx);
                         double val = Units.ToPoints(ts.pos);
@@ -753,11 +760,11 @@ namespace NPOI.XSSF.UserModel
                 fetchParagraphProperty(fetcher);
 
                 double lnSpc = fetcher.GetValue() == null ? 100 : fetcher.GetValue().Value;
-                if (lnSpc > 0)
+                if(lnSpc > 0)
                 {
                     // check if the percentage value is scaled
                     CT_TextNormalAutofit normAutofit = _shape.txBody.bodyPr.normAutofit;
-                    if (normAutofit != null)
+                    if(normAutofit != null)
                     {
                         double scale = 1 - (double)normAutofit.lnSpcReduction / 100000;
                         lnSpc *= scale;
@@ -770,8 +777,10 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
                 CT_TextSpacing spc = new CT_TextSpacing();
-                if (value >= 0) spc.AddNewSpcPct().val = ((int)(value * 1000));
-                else spc.AddNewSpcPts().val = ((int)(-value * 100));
+                if(value >= 0)
+                    spc.AddNewSpcPct().val = ((int) (value * 1000));
+                else
+                    spc.AddNewSpcPts().val = ((int) (-value * 100));
                 pr.lnSpc = (spc);
             }
         }
@@ -780,12 +789,14 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherLineSpacing(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetLnSpc())
+                if(props.IsSetLnSpc())
                 {
                     CT_TextSpacing spc = props.lnSpc;
 
-                    if (spc.IsSetSpcPct()) SetValue(spc.spcPct.val * 0.001);
-                    else if (spc.IsSetSpcPts()) SetValue(-spc.spcPts.val * 0.01);
+                    if(spc.IsSetSpcPct())
+                        SetValue(spc.spcPct.val * 0.001);
+                    else if(spc.IsSetSpcPts())
+                        SetValue(-spc.spcPts.val * 0.01);
                     return true;
                 }
                 return false;
@@ -845,8 +856,10 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
                 CT_TextSpacing spc = new CT_TextSpacing();
-                if (value >= 0) spc.AddNewSpcPct().val = ((int)(value * 1000));
-                else spc.AddNewSpcPts().val = ((int)(-value * 100));
+                if(value >= 0)
+                    spc.AddNewSpcPct().val = ((int) (value * 1000));
+                else
+                    spc.AddNewSpcPts().val = ((int) (-value * 100));
                 pr.spcBef = (spc);
             }
         }
@@ -855,11 +868,14 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherSpaceBefore(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if(props.IsSetSpcBef()){
+                if(props.IsSetSpcBef())
+                {
                     CT_TextSpacing spc = props.spcBef;
 
-                    if (spc.IsSetSpcPct()) SetValue(spc.spcPct.val * 0.001);
-                    else if (spc.IsSetSpcPts()) SetValue(-spc.spcPts.val * 0.01);
+                    if(spc.IsSetSpcPct())
+                        SetValue(spc.spcPct.val * 0.001);
+                    else if(spc.IsSetSpcPts())
+                        SetValue(-spc.spcPts.val * 0.01);
                     return true;
                 }
                 return false;
@@ -917,8 +933,10 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
                 CT_TextSpacing spc = new CT_TextSpacing();
-                if (value >= 0) spc.AddNewSpcPct().val = ((int)(value * 1000));
-                else spc.AddNewSpcPts().val = ((int)(-value * 100));
+                if(value >= 0)
+                    spc.AddNewSpcPct().val = ((int) (value * 1000));
+                else
+                    spc.AddNewSpcPts().val = ((int) (-value * 100));
                 pr.spcAft = (spc);
             }
         }
@@ -927,12 +945,14 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherSpaceAfter(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetSpcAft())
+                if(props.IsSetSpcAft())
                 {
                     CT_TextSpacing spc = props.spcAft;
 
-                    if (spc.IsSetSpcPct()) SetValue(spc.spcPct.val * 0.001);
-                    else if (spc.IsSetSpcPts()) SetValue(-spc.spcPts.val * 0.01);
+                    if(spc.IsSetSpcPct())
+                        SetValue(spc.spcPct.val * 0.001);
+                    else if(spc.IsSetSpcPts())
+                        SetValue(-spc.spcPts.val * 0.01);
                     return true;
                 }
                 return false;
@@ -957,7 +977,8 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_TextParagraphProperties pr = _p.pPr;
-                if(pr == null) return 0;
+                if(pr == null)
+                    return 0;
 
                 return pr.lvl;
             }
@@ -1002,45 +1023,59 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                if(IsBullet == value) return;
+                if(IsBullet == value)
+                    return;
 
                 CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
-                if (!value)
+                if(!value)
                 {
                     pr.AddNewBuNone();
 
-                    if (pr.IsSetBuAutoNum()) pr.UnsetBuAutoNum();
-                    if (pr.IsSetBuBlip()) pr.UnsetBuBlip();
-                    if (pr.IsSetBuChar()) pr.UnsetBuChar();
-                    if (pr.IsSetBuClr()) pr.UnsetBuClr();
-                    if (pr.IsSetBuClrTx()) pr.UnsetBuClrTx();
-                    if (pr.IsSetBuFont()) pr.UnsetBuFont();
-                    if (pr.IsSetBuFontTx()) pr.UnsetBuFontTx();
-                    if (pr.IsSetBuSzPct()) pr.UnsetBuSzPct();
-                    if (pr.IsSetBuSzPts()) pr.UnsetBuSzPts();
-                    if (pr.IsSetBuSzTx()) pr.UnsetBuSzTx();
+                    if(pr.IsSetBuAutoNum())
+                        pr.UnsetBuAutoNum();
+                    if(pr.IsSetBuBlip())
+                        pr.UnsetBuBlip();
+                    if(pr.IsSetBuChar())
+                        pr.UnsetBuChar();
+                    if(pr.IsSetBuClr())
+                        pr.UnsetBuClr();
+                    if(pr.IsSetBuClrTx())
+                        pr.UnsetBuClrTx();
+                    if(pr.IsSetBuFont())
+                        pr.UnsetBuFont();
+                    if(pr.IsSetBuFontTx())
+                        pr.UnsetBuFontTx();
+                    if(pr.IsSetBuSzPct())
+                        pr.UnsetBuSzPct();
+                    if(pr.IsSetBuSzPts())
+                        pr.UnsetBuSzPts();
+                    if(pr.IsSetBuSzTx())
+                        pr.UnsetBuSzTx();
                 }
                 else
                 {
-                    if (pr.IsSetBuNone()) pr.UnsetBuNone();
-                    if (!pr.IsSetBuFont()) pr.AddNewBuFont().typeface = ("Arial");
-                    if (!pr.IsSetBuAutoNum()) pr.AddNewBuChar().@char = ("\u2022");
+                    if(pr.IsSetBuNone())
+                        pr.UnsetBuNone();
+                    if(!pr.IsSetBuFont())
+                        pr.AddNewBuFont().typeface = ("Arial");
+                    if(!pr.IsSetBuAutoNum())
+                        pr.AddNewBuChar().@char = ("\u2022");
                 }
             }
         }
         class ParagraphPropertyFetcherBullet : ParagraphPropertyFetcher<bool?>
         {
-            public ParagraphPropertyFetcherBullet(int level) : base(level){}
+            public ParagraphPropertyFetcherBullet(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuNone())
+                if(props.IsSetBuNone())
                 {
                     SetValue(false);
                     return true;
                 }
-                if (props.IsSetBuFont())
+                if(props.IsSetBuFont())
                 {
-                    if (props.IsSetBuChar() || props.IsSetBuAutoNum())
+                    if(props.IsSetBuChar() || props.IsSetBuAutoNum())
                     {
                         SetValue(true);
                         return true;
@@ -1062,29 +1097,43 @@ namespace NPOI.XSSF.UserModel
          */
         public void SetBullet(bool flag)
         {
-            if (IsBullet == flag) return;
+            if(IsBullet == flag)
+                return;
 
             CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
-            if (!flag)
+            if(!flag)
             {
                 pr.AddNewBuNone();
 
-                if (pr.IsSetBuAutoNum()) pr.UnsetBuAutoNum();
-                if (pr.IsSetBuBlip()) pr.UnsetBuBlip();
-                if (pr.IsSetBuChar()) pr.UnsetBuChar();
-                if (pr.IsSetBuClr()) pr.UnsetBuClr();
-                if (pr.IsSetBuClrTx()) pr.UnsetBuClrTx();
-                if (pr.IsSetBuFont()) pr.UnsetBuFont();
-                if (pr.IsSetBuFontTx()) pr.UnsetBuFontTx();
-                if (pr.IsSetBuSzPct()) pr.UnsetBuSzPct();
-                if (pr.IsSetBuSzPts()) pr.UnsetBuSzPts();
-                if (pr.IsSetBuSzTx()) pr.UnsetBuSzTx();
+                if(pr.IsSetBuAutoNum())
+                    pr.UnsetBuAutoNum();
+                if(pr.IsSetBuBlip())
+                    pr.UnsetBuBlip();
+                if(pr.IsSetBuChar())
+                    pr.UnsetBuChar();
+                if(pr.IsSetBuClr())
+                    pr.UnsetBuClr();
+                if(pr.IsSetBuClrTx())
+                    pr.UnsetBuClrTx();
+                if(pr.IsSetBuFont())
+                    pr.UnsetBuFont();
+                if(pr.IsSetBuFontTx())
+                    pr.UnsetBuFontTx();
+                if(pr.IsSetBuSzPct())
+                    pr.UnsetBuSzPct();
+                if(pr.IsSetBuSzPts())
+                    pr.UnsetBuSzPts();
+                if(pr.IsSetBuSzTx())
+                    pr.UnsetBuSzTx();
             }
             else
             {
-                if (pr.IsSetBuNone()) pr.UnsetBuNone();
-                if (!pr.IsSetBuFont()) pr.AddNewBuFont().typeface = "Arial";
-                if (!pr.IsSetBuAutoNum()) pr.AddNewBuChar().@char = "\u2022";
+                if(pr.IsSetBuNone())
+                    pr.UnsetBuNone();
+                if(!pr.IsSetBuFont())
+                    pr.AddNewBuFont().typeface = "Arial";
+                if(!pr.IsSetBuAutoNum())
+                    pr.AddNewBuChar().@char = "\u2022";
             }
         }
         /**
@@ -1096,17 +1145,22 @@ namespace NPOI.XSSF.UserModel
          */
         public void SetBullet(ListAutoNumber scheme, int startAt)
         {
-            if (startAt < 1) throw new ArgumentException("Start Number must be greater or equal that 1");
+            if(startAt < 1)
+                throw new ArgumentException("Start Number must be greater or equal that 1");
             CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
             CT_TextAutonumberBullet lst = pr.IsSetBuAutoNum() ? pr.buAutoNum : pr.AddNewBuAutoNum();
-            lst.type = (ST_TextAutonumberScheme)(int)scheme;
+            lst.type = (ST_TextAutonumberScheme) (int) scheme;
             lst.startAt = (startAt);
 
-            if (!pr.IsSetBuFont()) pr.AddNewBuFont().typeface = ("Arial");
-            if (pr.IsSetBuNone()) pr.UnsetBuNone();
+            if(!pr.IsSetBuFont())
+                pr.AddNewBuFont().typeface = ("Arial");
+            if(pr.IsSetBuNone())
+                pr.UnsetBuNone();
             // remove these elements if present as it results in invalid content when opening in Excel.
-            if (pr.IsSetBuBlip()) pr.UnsetBuBlip();
-            if (pr.IsSetBuChar()) pr.UnsetBuChar();        
+            if(pr.IsSetBuBlip())
+                pr.UnsetBuBlip();
+            if(pr.IsSetBuChar())
+                pr.UnsetBuChar();
         }
 
         /**
@@ -1118,13 +1172,17 @@ namespace NPOI.XSSF.UserModel
         {
             CT_TextParagraphProperties pr = _p.IsSetPPr() ? _p.pPr : _p.AddNewPPr();
             CT_TextAutonumberBullet lst = pr.IsSetBuAutoNum() ? pr.buAutoNum : pr.AddNewBuAutoNum();
-            lst.type = (ST_TextAutonumberScheme)(int)scheme;
+            lst.type = (ST_TextAutonumberScheme) (int) scheme;
 
-            if (!pr.IsSetBuFont()) pr.AddNewBuFont().typeface = ("Arial");
-            if (pr.IsSetBuNone()) pr.UnsetBuNone();
+            if(!pr.IsSetBuFont())
+                pr.AddNewBuFont().typeface = ("Arial");
+            if(pr.IsSetBuNone())
+                pr.UnsetBuNone();
             // remove these elements if present as it results in invalid content when opening in Excel.
-            if (pr.IsSetBuBlip()) pr.UnsetBuBlip();
-            if (pr.IsSetBuChar()) pr.UnsetBuChar();
+            if(pr.IsSetBuBlip())
+                pr.UnsetBuBlip();
+            if(pr.IsSetBuChar())
+                pr.UnsetBuChar();
         }
 
         /**
@@ -1153,7 +1211,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherIsBulletAutoNumber(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuAutoNum())
+                if(props.IsSetBuAutoNum())
                 {
                     SetValue(true);
                     return true;
@@ -1188,7 +1246,7 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherBulletAutoNumberStart(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuAutoNum() && props.buAutoNum.IsSetStartAt())
+                if(props.IsSetBuAutoNum() && props.buAutoNum.IsSetStartAt())
                 {
                     SetValue(props.buAutoNum.startAt);
                     return true;
@@ -1227,9 +1285,9 @@ namespace NPOI.XSSF.UserModel
             public ParagraphPropertyFetcherBulletAutoNumberScheme(int level) : base(level) { }
             public override bool Fetch(CT_TextParagraphProperties props)
             {
-                if (props.IsSetBuAutoNum())
+                if(props.IsSetBuAutoNum())
                 {
-                    SetValue((ListAutoNumber)(int)props.buAutoNum.type);
+                    SetValue((ListAutoNumber) (int) props.buAutoNum.type);
                     return true;
                 }
                 return false;
@@ -1239,9 +1297,10 @@ namespace NPOI.XSSF.UserModel
         {
             bool ok = false;
 
-            if (_p.IsSetPPr()) ok = visitor.Fetch(_p.pPr);
+            if(_p.IsSetPPr())
+                ok = visitor.Fetch(_p.pPr);
 
-            if (!ok)
+            if(!ok)
             {
                 ok = visitor.Fetch(_shape);
             }

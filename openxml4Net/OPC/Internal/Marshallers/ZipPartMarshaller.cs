@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using NPOI.OpenXml4Net.OPC;
-using System.Xml;
 using ICSharpCode.SharpZipLib.Zip;
+using NPOI.OpenXml4Net.OPC;
 using NPOI.Util;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml;
 
 namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
 {
@@ -26,9 +26,9 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         public bool Marshall(PackagePart part, Stream os)
         {
-            if (os is not ZipOutputStream zos)
+            if(os is not ZipOutputStream zos)
             {
-                logger.Log(POILogger.ERROR,"Unexpected class " + os.GetType().Name);
+                logger.Log(POILogger.ERROR, "Unexpected class " + os.GetType().Name);
                 throw new OpenXml4NetException("ZipOutputStream expected !");
                 // Normally should happen only in developement phase, so just throw
                 // exception
@@ -36,7 +36,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
 
             // check if there is anything to save for some parts. We don't do this for all parts as some code
             // might depend on empty parts being saved, e.g. some unit tests verify this currently.
-            if (part.Size == 0 && part.PartName.Name.Equals("/xl/sharedStrings.xml"))
+            if(part.Size == 0 && part.PartName.Name.Equals("/xl/sharedStrings.xml"))
             {
                 return true;
             }
@@ -54,10 +54,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
                 Stream ins = part.GetInputStream();
                 byte[] buff = new byte[ZipHelper.READ_WRITE_FILE_BUFFER_SIZE];
                 int totalRead = 0;
-                while (true)
+                while(true)
                 {
                     int resultRead = ins.Read(buff, 0, buff.Length);
-                    if (resultRead == 0)
+                    if(resultRead == 0)
                     {
                         // End of file reached
                         break;
@@ -67,14 +67,14 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
                 }
                 zos.CloseEntry();
             }
-            catch (IOException ioe)
+            catch(IOException ioe)
             {
                 logger.Log(POILogger.ERROR, "Cannot write: " + part.PartName + ": in ZIP", ioe);
                 return false;
             }
 
             // Saving relationship part
-            if (part.HasRelationships)
+            if(part.HasRelationships)
             {
                 PackagePartName relationshipPartName = PackagingUriHelper
                         .GetRelationshipPartName(part.PartName);
@@ -119,7 +119,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             Uri sourcePartURI = PackagingUriHelper
                     .GetSourcePartUriFromRelationshipPartUri(relPartName.URI);
 
-            foreach (PackageRelationship rel in rels)
+            foreach(PackageRelationship rel in rels)
             {
                 // the relationship element
                 XmlElement relElem = xmlOutDoc.CreateElement(PackageRelationship.RELATIONSHIP_TAG_NAME,PackageNamespaces.RELATIONSHIPS);
@@ -134,7 +134,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
                 // the relationship Target
                 String targetValue;
                 Uri uri = rel.TargetUri;
-                if (rel.TargetMode == TargetMode.External)
+                if(rel.TargetMode == TargetMode.External)
                 {
                     // Save the target as-is - we don't need to validate it,
                     //  alter it etc
@@ -170,9 +170,9 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
                 StreamHelper.SaveXmlInStream(xmlOutDoc, zos);
                 zos.CloseEntry();
             }
-            catch (IOException e)
+            catch(IOException e)
             {
-                logger.Log(POILogger.ERROR,"Cannot create zip entry " + relPartName, e);
+                logger.Log(POILogger.ERROR, "Cannot create zip entry " + relPartName, e);
                 return false;
             }
             return true; // success

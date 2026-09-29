@@ -17,18 +17,18 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-
-    using TestCases.HSSF;
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Formula.PTG;
-    using NPOI.HSSF.Model;
-    using NPOI.SS.Formula;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
     /**
      * @author Andrew C. Oliver (acoliver at apache dot org)
      * @author Avik Sengupta
@@ -156,7 +156,7 @@ namespace TestCases.HSSF.UserModel
             String[] operation = new String[] {
                             "+", "-", "*", "/", "^", "&"
                            };
-            for (int k = 0; k < operation.Length; k++)
+            for(int k = 0; k < operation.Length; k++)
             {
                 OperationRefTest(operation[k]);
             }
@@ -188,11 +188,11 @@ namespace TestCases.HSSF.UserModel
             c = r.CreateCell(1);
             c.CellFormula = ("" + float.MinValue + operator1 + float.MinValue);
 
-            for (int x = 1; x < short.MaxValue && x > 0; x = (short)(x * 2))
+            for(int x = 1; x < short.MaxValue && x > 0; x = (short) (x * 2))
             {
                 r = s.CreateRow(x);
 
-                for (int y = 1; y < 256 && y > 0; y = (short)(y + 2))
+                for(int y = 1; y < 256 && y > 0; y = (short) (y + 2))
                 {
 
                     c = r.CreateCell(y);
@@ -201,7 +201,7 @@ namespace TestCases.HSSF.UserModel
 
                 }
             }
-            if (s.LastRowNum < short.MaxValue)
+            if(s.LastRowNum < short.MaxValue)
             {
                 r = s.CreateRow(0);
                 c = r.CreateCell(0);
@@ -219,11 +219,11 @@ namespace TestCases.HSSF.UserModel
 
             // don't know how to Check correct result .. for the moment, we just verify that the file can be read.
 
-            for (int x = 1; x < short.MaxValue && x > 0; x = (short)(x * 2))
+            for(int x = 1; x < short.MaxValue && x > 0; x = (short) (x * 2))
             {
                 IRow r = s.GetRow(x);
 
-                for (int y = 1; y < 256 && y > 0; y = (short)(y + 2))
+                for(int y = 1; y < 256 && y > 0; y = (short) (y + 2))
                 {
 
                     ICell c = r.GetCell(y);
@@ -268,11 +268,11 @@ namespace TestCases.HSSF.UserModel
             c = r.CreateCell(1);
             c.CellFormula = ("A2" + operator1 + "A3");
 
-            for (int x = 1; x < short.MaxValue && x > 0; x = (short)(x * 2))
+            for(int x = 1; x < short.MaxValue && x > 0; x = (short) (x * 2))
             {
                 r = s.CreateRow(x);
 
-                for (int y = 1; y < 256 && y > 0; y++)
+                for(int y = 1; y < 256 && y > 0; y++)
                 {
 
                     String ref1 = null;
@@ -281,26 +281,26 @@ namespace TestCases.HSSF.UserModel
                     short refy1 = 0;
                     short refx2 = 0;
                     short refy2 = 0;
-                    if (x + 50 < short.MaxValue)
+                    if(x + 50 < short.MaxValue)
                     {
-                        refx1 = (short)(x + 50);
-                        refx2 = (short)(x + 46);
+                        refx1 = (short) (x + 50);
+                        refx2 = (short) (x + 46);
                     }
                     else
                     {
-                        refx1 = (short)(x - 4);
-                        refx2 = (short)(x - 3);
+                        refx1 = (short) (x - 4);
+                        refx2 = (short) (x - 3);
                     }
 
-                    if (y + 50 < 255)
+                    if(y + 50 < 255)
                     {
-                        refy1 = (short)(y + 50);
-                        refy2 = (short)(y + 49);
+                        refy1 = (short) (y + 50);
+                        refy2 = (short) (y + 49);
                     }
                     else
                     {
-                        refy1 = (short)(y - 4);
-                        refy2 = (short)(y - 3);
+                        refy1 = (short) (y - 4);
+                        refy2 = (short) (y - 3);
                     }
 
                     c = r.GetCell(y);
@@ -318,7 +318,7 @@ namespace TestCases.HSSF.UserModel
             }
 
             //make sure we do the maximum value of the Int operator
-            if (s.LastRowNum < short.MaxValue)
+            if(s.LastRowNum < short.MaxValue)
             {
                 r = s.GetRow(0);
                 c = r.CreateCell(0);
@@ -347,18 +347,18 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(("A2" + operator1 + "A3").Equals(c.CellFormula), "minval Formula is as expected A2" + operator1 + "A3 != " + c.CellFormula);
 
 
-            for (int x = 1; x < short.MaxValue && x > 0; x = (short)(x * 2))
+            for(int x = 1; x < short.MaxValue && x > 0; x = (short) (x * 2))
             {
                 r = s.GetRow(x);
 
-                for (int y = 1; y < 256 && y > 0; y++)
+                for(int y = 1; y < 256 && y > 0; y++)
                 {
 
                     int refx1;
                     int refy1;
                     int refx2;
                     int refy2;
-                    if (x + 50 < short.MaxValue)
+                    if(x + 50 < short.MaxValue)
                     {
                         refx1 = x + 50;
                         refx2 = x + 46;
@@ -369,7 +369,7 @@ namespace TestCases.HSSF.UserModel
                         refx2 = x - 3;
                     }
 
-                    if (y + 50 < 255)
+                    if(y + 50 < 255)
                     {
                         refy1 = y + 50;
                         refy2 = y + 49;
@@ -446,11 +446,11 @@ namespace TestCases.HSSF.UserModel
             c = r.CreateCell(1);
             c.CellFormula = (1 + operator1 + 1);
 
-            for (int x = 1; x < short.MaxValue && x > 0; x = (short)(x * 2))
+            for(int x = 1; x < short.MaxValue && x > 0; x = (short) (x * 2))
             {
                 r = s.CreateRow(x);
 
-                for (int y = 1; y < 256 && y > 0; y++)
+                for(int y = 1; y < 256 && y > 0; y++)
                 {
 
                     c = r.CreateCell(y);
@@ -460,7 +460,7 @@ namespace TestCases.HSSF.UserModel
             }
 
             //make sure we do the maximum value of the Int operator
-            if (s.LastRowNum < short.MaxValue)
+            if(s.LastRowNum < short.MaxValue)
             {
                 r = s.GetRow(0);
                 c = r.CreateCell(0);
@@ -486,11 +486,11 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(("1" + operator1 + "1").Equals(c.CellFormula),
             "minval Formula is as expected 1" + operator1 + "1 != " + c.CellFormula);
 
-            for (int x = 1; x < short.MaxValue && x > 0; x = (short)(x * 2))
+            for(int x = 1; x < short.MaxValue && x > 0; x = (short) (x * 2))
             {
                 r = s.GetRow(x);
 
-                for (int y = 1; y < 256 && y > 0; y++)
+                for(int y = 1; y < 256 && y > 0; y++)
                 {
 
                     c = r.GetCell(y);
@@ -643,14 +643,19 @@ namespace TestCases.HSSF.UserModel
             IRow r = null;
             ICell c = null;
             r = s.CreateRow(0);
-            c = r.CreateCell(0); c.SetCellValue(1);
-            c = r.CreateCell(1); c.SetCellValue(2);
+            c = r.CreateCell(0);
+            c.SetCellValue(1);
+            c = r.CreateCell(1);
+            c.SetCellValue(2);
 
             s = wb.CreateSheet("B");
             r = s.CreateRow(0);
-            c = r.CreateCell(0); c.CellFormula = ("AVERAGE(A!A1:B1)");
-            c = r.CreateCell(1); c.CellFormula = ("A!A1+A!B1");
-            c = r.CreateCell(2); c.CellFormula = ("A!$A$1+A!$B1");
+            c = r.CreateCell(0);
+            c.CellFormula = ("AVERAGE(A!A1:B1)");
+            c = r.CreateCell(1);
+            c.CellFormula = ("A!A1+A!B1");
+            c = r.CreateCell(2);
+            c.CellFormula = ("A!$A$1+A!$B1");
 
             wb = HSSFTestDataSamples.WriteOutAndReadBack(wb);
 
@@ -694,8 +699,12 @@ namespace TestCases.HSSF.UserModel
             c = r.CreateCell(7);
             c.CellFormula = ("SUM(A2,A3)");
 
-            r = s.CreateRow(1); c = r.CreateCell(0); c.SetCellValue(2.0);
-            r = s.CreateRow(2); c = r.CreateCell(0); c.SetCellValue(3.0);
+            r = s.CreateRow(1);
+            c = r.CreateCell(0);
+            c.SetCellValue(2.0);
+            r = s.CreateRow(2);
+            c = r.CreateCell(0);
+            c.SetCellValue(3.0);
 
             wb.Write(out1);
             out1.Close();
@@ -709,9 +718,12 @@ namespace TestCases.HSSF.UserModel
             IRow r = null;
             ICell c = null;
             r = s.CreateRow(0);
-            c = r.CreateCell(1); c.CellFormula = ("UPPER(\"abc\")");
-            c = r.CreateCell(2); c.CellFormula = ("LOWER(\"ABC\")");
-            c = r.CreateCell(3); c.CellFormula = ("CONCATENATE(\" my \",\" name \")");
+            c = r.CreateCell(1);
+            c.CellFormula = ("UPPER(\"abc\")");
+            c = r.CreateCell(2);
+            c.CellFormula = ("LOWER(\"ABC\")");
+            c = r.CreateCell(3);
+            c.CellFormula = ("CONCATENATE(\" my \",\" name \")");
 
             HSSFTestDataSamples.WriteOutAndReadBack(wb);
 
@@ -730,7 +742,8 @@ namespace TestCases.HSSF.UserModel
             IRow r = null;
             ICell c = null;
             r = s.CreateRow(0);
-            c = r.CreateCell(1); c.CellFormula = ("IF(A1<A2,B1,B2)");
+            c = r.CreateCell(1);
+            c.CellFormula = ("IF(A1<A2,B1,B2)");
 
             wb = HSSFTestDataSamples.WriteOutAndReadBack(wb);
             s = wb.GetSheetAt(0);
@@ -757,7 +770,7 @@ namespace TestCases.HSSF.UserModel
             // ClassicAssert.AreEqual("Checking hour = " + hour, date.GetTime().GetTime(),
             //              NPOI.SS.UserModel.DateUtil.GetJavaDate(excelDate).GetTime());
 
-            for (int k = 1; k < 100; k++)
+            for(int k = 1; k < 100; k++)
             {
                 r = s.CreateRow(k);
                 c = r.CreateCell(0);
@@ -776,10 +789,14 @@ namespace TestCases.HSSF.UserModel
             IRow r = null;
             ICell c = null;
             r = s.CreateRow(0);
-            c = r.CreateCell(1); c.SetCellValue(1);
-            c = r.CreateCell(2); c.SetCellValue(2);
-            c = r.CreateCell(3); c.CellFormula = ("MAX(A1:B1)");
-            c = r.CreateCell(4); c.CellFormula = ("IF(A1=D1,\"A1\",\"B1\")");
+            c = r.CreateCell(1);
+            c.SetCellValue(1);
+            c = r.CreateCell(2);
+            c.SetCellValue(2);
+            c = r.CreateCell(3);
+            c.CellFormula = ("MAX(A1:B1)");
+            c = r.CreateCell(4);
+            c.CellFormula = ("IF(A1=D1,\"A1\",\"B1\")");
 
             wb = HSSFTestDataSamples.WriteOutAndReadBack(wb);
             s = wb.GetSheetAt(0);
@@ -802,7 +819,8 @@ namespace TestCases.HSSF.UserModel
             r = null;
             c = null;
             r = s.CreateRow(0);
-            c = r.CreateCell(0); c.CellFormula = ("IF(1=1,0,1)");
+            c = r.CreateCell(0);
+            c.CellFormula = ("IF(1=1,0,1)");
 
             HSSFTestDataSamples.WriteOutAndReadBack(wb);
 
@@ -848,28 +866,39 @@ namespace TestCases.HSSF.UserModel
             s = wb.CreateSheet();
 
             r = s.CreateRow(0);
-            c = r.CreateCell(0); c.SetCellValue(1000);
-            c = r.CreateCell(1); c.SetCellValue(1);
+            c = r.CreateCell(0);
+            c.SetCellValue(1000);
+            c = r.CreateCell(1);
+            c.SetCellValue(1);
 
 
             r = s.CreateRow(1);
-            c = r.CreateCell(0); c.SetCellValue(2000);
-            c = r.CreateCell(1); c.SetCellValue(2);
+            c = r.CreateCell(0);
+            c.SetCellValue(2000);
+            c = r.CreateCell(1);
+            c.SetCellValue(2);
 
             r = s.CreateRow(2);
-            c = r.CreateCell(0); c.SetCellValue(3000);
-            c = r.CreateCell(1); c.SetCellValue(3);
+            c = r.CreateCell(0);
+            c.SetCellValue(3000);
+            c = r.CreateCell(1);
+            c.SetCellValue(3);
 
             r = s.CreateRow(3);
-            c = r.CreateCell(0); c.SetCellValue(4000);
-            c = r.CreateCell(1); c.SetCellValue(4);
+            c = r.CreateCell(0);
+            c.SetCellValue(4000);
+            c = r.CreateCell(1);
+            c.SetCellValue(4);
 
             r = s.CreateRow(4);
-            c = r.CreateCell(0); c.SetCellValue(5000);
-            c = r.CreateCell(1); c.SetCellValue(5);
+            c = r.CreateCell(0);
+            c.SetCellValue(5000);
+            c = r.CreateCell(1);
+            c.SetCellValue(5);
 
             r = s.GetRow(0);
-            c = r.CreateCell(2); c.CellFormula = (function);
+            c = r.CreateCell(2);
+            c.CellFormula = (function);
 
             HSSFTestDataSamples.WriteOutAndReadBack(wb);
         }
@@ -1088,7 +1117,7 @@ namespace TestCases.HSSF.UserModel
             {
                 wb.Close();
             }
-            
+
         }
     }
 

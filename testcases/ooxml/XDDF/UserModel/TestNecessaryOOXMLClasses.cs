@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -26,12 +26,11 @@ namespace TestCases.XDDF.UserModel
 {
 
 
-    using NPOI.OpenXmlFormats.Dml.Chart;
-
+    using EnumsNET;
     using NPOI.OpenXmlFormats.Dml;
+    using NPOI.OpenXmlFormats.Dml.Chart;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
-    using EnumsNET;
 
 
     // aim is to Get these classes loaded and included in poi-ooxml-schemas.jar

@@ -16,10 +16,11 @@
 ==================================================================== */
 namespace TestCases.XSSF.UserModel
 {
-    using System;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestXSSFDataValidationConstraint

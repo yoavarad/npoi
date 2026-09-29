@@ -16,11 +16,10 @@
    limitations Under the License.
 ==================================================================== */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-
 using NPOI.Util;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace NPOI.HSSF.Record
 {
@@ -129,7 +128,7 @@ namespace NPOI.HSSF.Record
 
             int nItems = in1.ReadShort();
 
-            for (int i = 0; i < nItems; ++i)
+            for(int i = 0; i < nItems; ++i)
             {
                 RefSubRecord rec = new RefSubRecord(in1);
 
@@ -174,14 +173,14 @@ namespace NPOI.HSSF.Record
         public int GetRefIxForSheet(int externalBookIndex, int firstSheetIndex, int lastSheetIndex)
         {
             int nItems = _list.Count;
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 RefSubRecord ref1 = GetRef(i);
-                if (ref1.ExtBookIndex != externalBookIndex)
+                if(ref1.ExtBookIndex != externalBookIndex)
                 {
                     continue;
                 }
-                if (ref1.FirstSheetIndex == firstSheetIndex && ref1.LastSheetIndex == lastSheetIndex)
+                if(ref1.FirstSheetIndex == firstSheetIndex && ref1.LastSheetIndex == lastSheetIndex)
                 {
                     return i;
                 }
@@ -198,7 +197,7 @@ namespace NPOI.HSSF.Record
                 return _list.Count;
             }
         }
-    
+
         /**  
  * @return number of REF structures
  */
@@ -220,22 +219,22 @@ namespace NPOI.HSSF.Record
         }
         private RefSubRecord GetRef(int i)
         {
-            return (RefSubRecord)_list[i];
+            return (RefSubRecord) _list[i];
         }
 
         public void RemoveSheet(int sheetIdx)
         {
             int nItems = _list.Count;
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 RefSubRecord refSubRecord = _list[(i)];
-                if (refSubRecord.FirstSheetIndex == sheetIdx &&
+                if(refSubRecord.FirstSheetIndex == sheetIdx &&
                         refSubRecord.LastSheetIndex == sheetIdx)
                 {
                     // removing the entry would mess up the sheet index in Formula of NameRecord
                     _list[i] = new RefSubRecord(refSubRecord.ExtBookIndex, -1, -1);
                 }
-                else if (refSubRecord.FirstSheetIndex > sheetIdx &&
+                else if(refSubRecord.FirstSheetIndex > sheetIdx &&
                       refSubRecord.LastSheetIndex > sheetIdx)
                 {
                     _list[i] =(new RefSubRecord(refSubRecord.ExtBookIndex, refSubRecord.FirstSheetIndex - 1, refSubRecord.LastSheetIndex - 1));
@@ -257,9 +256,9 @@ namespace NPOI.HSSF.Record
         public int FindRefIndexFromExtBookIndex(int extBookIndex)
         {
             int nItems = _list.Count;
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
-                if (GetRef(i).ExtBookIndex == extBookIndex)
+                if(GetRef(i).ExtBookIndex == extBookIndex)
                 {
                     return i;
                 }
@@ -269,11 +268,11 @@ namespace NPOI.HSSF.Record
         public static ExternSheetRecord Combine(ExternSheetRecord[] esrs)
         {
             ExternSheetRecord result = new ExternSheetRecord();
-            for (int i = 0; i < esrs.Length; i++)
+            for(int i = 0; i < esrs.Length; i++)
             {
                 ExternSheetRecord esr = esrs[i];
                 int nRefs = esr.NumOfREFRecords;
-                for (int j = 0; j < nRefs; j++)
+                for(int j = 0; j < nRefs; j++)
                 {
                     result.AddREFRecord(esr.GetRef(j));
                 }
@@ -301,7 +300,7 @@ namespace NPOI.HSSF.Record
         {
             return GetRef(extRefIndex).LastSheetIndex;
         }
-    
+
         public override String ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -309,7 +308,7 @@ namespace NPOI.HSSF.Record
             int nItems = _list.Count;
             sb.Append("[EXTERNSHEET]\n");
             sb.Append("   numOfRefs     = ").Append(nItems).Append("\n");
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 sb.Append("refrec         #").Append(i).Append(": ");
                 sb.Append(GetRef(i).ToString());
@@ -335,7 +334,7 @@ namespace NPOI.HSSF.Record
 
             out1.WriteShort(nItems);
 
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 GetRef(i).Serialize(out1);
             }
@@ -343,8 +342,9 @@ namespace NPOI.HSSF.Record
 
         protected override int DataSize
         {
-            get { 
-                return 2 + _list.Count * RefSubRecord.ENCODED_SIZE; 
+            get
+            {
+                return 2 + _list.Count * RefSubRecord.ENCODED_SIZE;
             }
         }
 

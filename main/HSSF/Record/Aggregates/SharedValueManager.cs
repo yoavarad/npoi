@@ -20,11 +20,11 @@ using NPOI.Util;
 
 namespace NPOI.HSSF.Record.Aggregates
 {
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
     using NPOI.HSSF.Record;
     using NPOI.SS.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// Manages various auxiliary records while constructing a RowRecordsAggregate
@@ -51,7 +51,7 @@ namespace NPOI.HSSF.Record.Aggregates
             }
             public SharedFormulaGroup(SharedFormulaRecord sfr, CellReference firstCell)
             {
-                if (!sfr.IsInRange(firstCell.Row, firstCell.Col))
+                if(!sfr.IsInRange(firstCell.Row, firstCell.Col))
                 {
                     throw new ArgumentException("First formula cell " + firstCell.FormatAsString()
                             + " is not shared formula range " + sfr.Range.ToString() + ".");
@@ -66,14 +66,14 @@ namespace NPOI.HSSF.Record.Aggregates
 
             public void Add(FormulaRecordAggregate agg)
             {
-                if (_numberOfFormulas == 0)
+                if(_numberOfFormulas == 0)
                 {
-                    if (_firstCell.Row != agg.Row || _firstCell.Col != agg.Column)
+                    if(_firstCell.Row != agg.Row || _firstCell.Col != agg.Column)
                     {
                         throw new InvalidOperationException("shared formula coding error");
                     }
                 }
-                if (_numberOfFormulas >= _frAggs.Length)
+                if(_numberOfFormulas >= _frAggs.Length)
                 {
                     throw new Exception("Too many formula records for shared formula group");
                 }
@@ -82,7 +82,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
             public void UnlinkSharedFormulas()
             {
-                for (int i = 0; i < _numberOfFormulas; i++)
+                for(int i = 0; i < _numberOfFormulas; i++)
                 {
                     _frAggs[i].UnlinkSharedFormula();
                 }
@@ -130,7 +130,7 @@ namespace NPOI.HSSF.Record.Aggregates
                 CellReference[] firstCells, List<ArrayRecord> arrayRecords, List<TableRecord> tableRecords)
         {
             int nShF = sharedFormulaRecords.Length;
-            if (nShF != firstCells.Length)
+            if(nShF != firstCells.Length)
             {
                 throw new ArgumentException("array sizes don't match: " + nShF + "!=" + firstCells.Length + ".");
             }
@@ -138,7 +138,7 @@ namespace NPOI.HSSF.Record.Aggregates
             _arrayRecords.AddRange(arrayRecords);
             _tableRecords = tableRecords;
             Dictionary<SharedFormulaRecord, SharedFormulaGroup> m = new Dictionary<SharedFormulaRecord, SharedFormulaGroup>(nShF * 3 / 2);
-            for (int i = 0; i < nShF; i++)
+            for(int i = 0; i < nShF; i++)
             {
                 SharedFormulaRecord sfr = sharedFormulaRecords[i];
                 m[sfr] = new SharedFormulaGroup(sfr, firstCells[i]);
@@ -162,7 +162,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public static SharedValueManager Create(SharedFormulaRecord[] sharedFormulaRecords,
                 CellReference[] firstCells, List<ArrayRecord> arrayRecords, List<TableRecord> tableRecords)
         {
-            if (sharedFormulaRecords.Length + firstCells.Length + arrayRecords.Count + tableRecords.Count < 1)
+            if(sharedFormulaRecords.Length + firstCells.Length + arrayRecords.Count + tableRecords.Count < 1)
             {
                 return EMPTY;
             }
@@ -178,7 +178,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
 
             SharedFormulaGroup result = FindFormulaGroupForCell(firstCell);
-            if (null == result)
+            if(null == result)
             {
                 throw new RuntimeException("Failed to find a matching shared formula record");
             }
@@ -188,21 +188,21 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private SharedFormulaGroup FindFormulaGroupForCell(CellReference cellRef)
         {
-            if (null == _groupsCache)
+            if(null == _groupsCache)
             {
                 _groupsCache = new Dictionary<int, SharedFormulaGroup>(_groupsBySharedFormulaRecord.Count);
-                foreach (SharedFormulaGroup group in _groupsBySharedFormulaRecord.Values)
+                foreach(SharedFormulaGroup group in _groupsBySharedFormulaRecord.Values)
                 {
                     _groupsCache.Add(SharedValueManager.GetKeyForCache(group.FirstCell), group);
                 }
             }
             int key=SharedValueManager.GetKeyForCache(cellRef);
             SharedFormulaGroup sfg = null;
-            if (_groupsCache.TryGetValue(key, out SharedFormulaGroup value))
+            if(_groupsCache.TryGetValue(key, out SharedFormulaGroup value))
             {
                 sfg = value;
             }
-            
+
             return sfg;
         }
 
@@ -255,12 +255,12 @@ namespace NPOI.HSSF.Record.Aggregates
 
                 int cmp;
                 cmp = rangeA.FirstRow - rangeB.FirstRow;
-                if (cmp != 0)
+                if(cmp != 0)
                 {
                     return cmp;
                 }
                 cmp = rangeA.FirstColumn - rangeB.FirstColumn;
-                if (cmp != 0)
+                if(cmp != 0)
                 {
                     return cmp;
                 }
@@ -285,7 +285,7 @@ namespace NPOI.HSSF.Record.Aggregates
             CellReference firstCell = agg.FormulaRecord.Formula.ExpReference;
             // perhaps this could be optimised by consulting the (somewhat unreliable) isShared flag
             // and/or distinguishing between tExp and tTbl.
-            if (firstCell == null)
+            if(firstCell == null)
             {
                 // not a shared/array/table formula
                 return null;
@@ -294,7 +294,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
             int row = firstCell.Row;
             int column = firstCell.Col;
-            if (agg.Row != row || agg.Column != column)
+            if(agg.Row != row || agg.Column != column)
             {
                 // not the first formula cell in the group
                 return null;
@@ -310,10 +310,10 @@ namespace NPOI.HSSF.Record.Aggregates
             //        return sfg.SFR;
             //    }
             //}
-            if (!(_groupsBySharedFormulaRecord.Count==0))
+            if(!(_groupsBySharedFormulaRecord.Count==0))
             {
                 SharedFormulaGroup sfg = FindFormulaGroupForCell(firstCell);
-                if (null != sfg)
+                if(null != sfg)
                 {
                     return sfg.SFR;
                 }
@@ -322,17 +322,17 @@ namespace NPOI.HSSF.Record.Aggregates
             // The first cell will be the top left in the range.  So we can match the
             // ARRAY/TABLE record directly.
 
-            for (int i = 0; i < _tableRecords.Count; i++)
+            for(int i = 0; i < _tableRecords.Count; i++)
             {
                 TableRecord tr = _tableRecords[i];
-                if (tr.IsFirstCell(row, column))
+                if(tr.IsFirstCell(row, column))
                 {
                     return tr;
                 }
             }
-            foreach (ArrayRecord ar in _arrayRecords)
+            foreach(ArrayRecord ar in _arrayRecords)
             {
-                if (ar.IsFirstCell(row, column))
+                if(ar.IsFirstCell(row, column))
                 {
                     return ar;
                 }
@@ -349,7 +349,7 @@ namespace NPOI.HSSF.Record.Aggregates
             SharedFormulaGroup svg = _groupsBySharedFormulaRecord[sharedFormulaRecord];
             _groupsBySharedFormulaRecord.Remove(sharedFormulaRecord);
             _groupsCache = null; // be sure to reset cached value
-            if (svg == null)
+            if(svg == null)
             {
                 throw new InvalidOperationException("Failed to find formulas for shared formula");
             }
@@ -372,9 +372,9 @@ namespace NPOI.HSSF.Record.Aggregates
          */
         public CellRangeAddress8Bit RemoveArrayFormula(int rowIndex, int columnIndex)
         {
-            foreach (ArrayRecord ar in _arrayRecords)
+            foreach(ArrayRecord ar in _arrayRecords)
             {
-                if (ar.IsInRange(rowIndex, columnIndex))
+                if(ar.IsInRange(rowIndex, columnIndex))
                 {
                     _arrayRecords.Remove(ar);
                     return ar.Range;
@@ -390,9 +390,9 @@ namespace NPOI.HSSF.Record.Aggregates
          */
         public ArrayRecord GetArrayRecord(int firstRow, int firstColumn)
         {
-            foreach (ArrayRecord ar in _arrayRecords)
+            foreach(ArrayRecord ar in _arrayRecords)
             {
-                if (ar.IsFirstCell(firstRow, firstColumn))
+                if(ar.IsFirstCell(firstRow, firstColumn))
                 {
                     return ar;
                 }

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using NPOI.OpenXml4Net.Exceptions;
-using NPOI.OpenXml4Net.OPC.Internal.Marshallers;
 using NPOI.OpenXml4Net.OPC.Internal;
+using NPOI.OpenXml4Net.OPC.Internal.Marshallers;
 using NPOI.OpenXml4Net.OPC.Internal.Unmarshallers;
-using NPOI.Util;
-using System.Text.RegularExpressions;
 using NPOI.OpenXml4Net.Util;
+using NPOI.Util;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NPOI.OpenXml4Net.OPC
 {
@@ -18,7 +18,7 @@ namespace NPOI.OpenXml4Net.OPC
      * @author Julien Chable, CDubet
      * @version 0.1
      */
-    public abstract class OPCPackage : RelationshipSource, ICloseable,IDisposable
+    public abstract class OPCPackage : RelationshipSource, ICloseable, IDisposable
     {
 
         /**
@@ -94,7 +94,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public OPCPackage(PackageAccess access)
         {
-            if (GetType() != typeof(ZipPackage))
+            if(GetType() != typeof(ZipPackage))
             {
                 throw new ArgumentException("PackageBase may not be subclassed");
             }
@@ -124,7 +124,7 @@ namespace NPOI.OpenXml4Net.OPC
                         ContentTypes.CORE_PROPERTIES_PART),
                         new ZipPackagePropertiesMarshaller());
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 // Should never happen
                 throw new OpenXml4NetException(
@@ -178,19 +178,19 @@ namespace NPOI.OpenXml4Net.OPC
             OPCPackage pack = new ZipPackage(zipEntry, PackageAccess.READ);
             try
             {
-                if (pack.partList == null)
+                if(pack.partList == null)
                 {
                     pack.GetParts();
                 }
                 // pack.originalPackagePath = file.AbsolutePath;
                 return pack;
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 IOUtils.CloseQuietly(pack);
                 throw;
             }
-            catch (RuntimeException)
+            catch(RuntimeException)
             {
                 IOUtils.CloseQuietly(pack);
                 throw;
@@ -213,16 +213,16 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public static OPCPackage Open(String path, PackageAccess access)
         {
-            if (path == null || "".Equals(path.Trim()))
+            if(path == null || "".Equals(path.Trim()))
                 throw new ArgumentException("'path' must be given");
 
-            if (new DirectoryInfo(path).Exists)
+            if(new DirectoryInfo(path).Exists)
                 throw new ArgumentException("path must not be a directory");
 
 
             OPCPackage pack = new ZipPackage(path, access);
             bool success = false;
-            if (pack.partList == null && access != PackageAccess.WRITE)
+            if(pack.partList == null && access != PackageAccess.WRITE)
             {
                 try
                 {
@@ -231,7 +231,7 @@ namespace NPOI.OpenXml4Net.OPC
                 }
                 finally
                 {
-                    if (!success)
+                    if(!success)
                     {
                         IOUtils.CloseQuietly(pack);
                     }
@@ -256,27 +256,27 @@ namespace NPOI.OpenXml4Net.OPC
         */
         public static OPCPackage Open(FileInfo file, PackageAccess access)
         {
-            if (file == null)
+            if(file == null)
                 throw new ArgumentNullException("'file' must be given");
-            if (new DirectoryInfo(file.FullName).Exists)
+            if(new DirectoryInfo(file.FullName).Exists)
                 throw new ArgumentException("file must not be a directory");
 
             OPCPackage pack = new ZipPackage(file, access);
             try
             {
-                if (pack.partList == null && access != PackageAccess.WRITE)
+                if(pack.partList == null && access != PackageAccess.WRITE)
                 {
                     pack.GetParts();
                 }
                 pack.originalPackagePath = file.FullName;
                 return pack;
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 IOUtils.CloseQuietly(pack);
                 throw;
             }
-            catch (RuntimeException)
+            catch(RuntimeException)
             {
                 IOUtils.CloseQuietly(pack);
                 throw;
@@ -299,17 +299,17 @@ namespace NPOI.OpenXml4Net.OPC
             OPCPackage pack = new ZipPackage(stream, PackageAccess.READ_WRITE);
             try
             {
-                if (pack.partList == null)
+                if(pack.partList == null)
                 {
                     pack.GetParts();
                 }
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 IOUtils.CloseQuietly(pack);
                 throw;
             }
-            catch (RuntimeException)
+            catch(RuntimeException)
             {
                 IOUtils.CloseQuietly(pack);
                 throw;
@@ -317,10 +317,10 @@ namespace NPOI.OpenXml4Net.OPC
             return pack;
         }
 
-        public static OPCPackage Open(Stream stream,bool readOnly)
+        public static OPCPackage Open(Stream stream, bool readOnly)
         {
             OPCPackage pack = new ZipPackage(stream, readOnly ? PackageAccess.READ : PackageAccess.READ_WRITE);
-            if (pack.partList == null)
+            if(pack.partList == null)
             {
                 pack.GetParts();
             }
@@ -340,7 +340,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public static OPCPackage OpenOrCreate(string path)
         {
-            if (File.Exists(path))
+            if(File.Exists(path))
             {
                 return Open(path);
             }
@@ -359,10 +359,10 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public static OPCPackage Create(string path)
         {
-            if (new DirectoryInfo(path).Exists)
+            if(new DirectoryInfo(path).Exists)
                 throw new ArgumentException("file");
 
-            if (File.Exists(path))
+            if(File.Exists(path))
             {
                 throw new InvalidOperationException(
                         "This package (or file) already exists : use the open() method or delete the file.");
@@ -416,7 +416,7 @@ namespace NPOI.OpenXml4Net.OPC
         {
             ThrowExceptionIfReadOnly();
 
-            if (this.packageProperties != null)
+            if(this.packageProperties != null)
             {
                 this.packageProperties.Flush();
             }
@@ -432,14 +432,14 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void Close()
         {
-            if (this.packageAccess == PackageAccess.READ)
+            if(this.packageAccess == PackageAccess.READ)
             {
-                logger.Log(POILogger.WARN, 
+                logger.Log(POILogger.WARN,
                     "The close() method is intended to SAVE a package. This package is open in READ ONLY mode, use the revert() method instead !");
                 Revert();
                 return;
             }
-            if (this.contentTypeManager == null)
+            if(this.contentTypeManager == null)
             {
                 logger.Log(POILogger.WARN,
                         "Unable to call close() on a package that hasn't been fully opened yet");
@@ -451,12 +451,13 @@ namespace NPOI.OpenXml4Net.OPC
             try
             {
                 //l.writeLock().lock();
-                if (this.originalPackagePath != null
+                if(this.originalPackagePath != null
                         && !"".Equals(this.originalPackagePath.Trim()))
                 {
                     FileInfo targetFile = new FileInfo(this.originalPackagePath);
-                    if (!File.Exists(this.originalPackagePath)|| !(this.originalPackagePath
-                                .Equals(targetFile.FullName, StringComparison.InvariantCultureIgnoreCase))) {
+                    if(!File.Exists(this.originalPackagePath)|| !(this.originalPackagePath
+                                .Equals(targetFile.FullName, StringComparison.InvariantCultureIgnoreCase)))
+                    {
 
                         // Case of a package Created from scratch
                         Save(originalPackagePath);
@@ -466,7 +467,7 @@ namespace NPOI.OpenXml4Net.OPC
                         CloseImpl();
                     }
                 }
-                else if (this.output != null)
+                else if(this.output != null)
                 {
                     Save(this.output);
                 }
@@ -501,7 +502,7 @@ namespace NPOI.OpenXml4Net.OPC
         public void AddThumbnail(String path)
         {
             // Check parameter
-            if (string.IsNullOrEmpty(path))
+            if(string.IsNullOrEmpty(path))
                 throw new ArgumentException("path");
             String name = path.Substring(path.LastIndexOf(Path.DirectorySeparatorChar) + 1);
 
@@ -522,10 +523,10 @@ namespace NPOI.OpenXml4Net.OPC
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="data"></param>
-        public void AddThumbnail(String filename, Stream data) 
+        public void AddThumbnail(String filename, Stream data)
         {
             // Check parameter
-            if (string.IsNullOrEmpty(filename))
+            if(string.IsNullOrEmpty(filename))
                 throw new ArgumentException("filename");
 
             // Create the thumbnail part name
@@ -537,7 +538,7 @@ namespace NPOI.OpenXml4Net.OPC
                 thumbnailPartName = PackagingUriHelper.CreatePartName("/docProps/"
                         + filename);
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 String partName = "/docProps/thumbnail" +
                          filename.Substring(filename.LastIndexOf('.') + 1);
@@ -545,7 +546,7 @@ namespace NPOI.OpenXml4Net.OPC
                 {
                     thumbnailPartName = PackagingUriHelper.CreatePartName(partName);
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     throw new InvalidOperationException(
                             "Can't add a thumbnail file named '" + filename + "'");
@@ -553,7 +554,7 @@ namespace NPOI.OpenXml4Net.OPC
             }
 
             // Check if part already exist
-            if (this.GetPart(thumbnailPartName) != null)
+            if(this.GetPart(thumbnailPartName) != null)
                 throw new InvalidOperationException(
                         "You already add a thumbnail named '" + filename + "'");
 
@@ -579,7 +580,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         internal void ThrowExceptionIfReadOnly()
         {
-            if (packageAccess == PackageAccess.READ)
+            if(packageAccess == PackageAccess.READ)
                 throw new InvalidOperationException(
                         "Operation not allowed, document open in read only mode!");
         }
@@ -594,7 +595,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         internal void ThrowExceptionIfWriteOnly()
         {
-            if (packageAccess == PackageAccess.WRITE)
+            if(packageAccess == PackageAccess.WRITE)
                 throw new InvalidOperationException(
                         "Operation not allowed, document open in write only mode!");
         }
@@ -608,7 +609,7 @@ namespace NPOI.OpenXml4Net.OPC
         {
             this.ThrowExceptionIfWriteOnly();
             // If no properties part has been found then we Create one
-            if (this.packageProperties == null)
+            if(this.packageProperties == null)
             {
                 this.packageProperties = new PackagePropertiesPart(this,
                         PackagingUriHelper.CORE_PROPERTIES_PART_NAME);
@@ -618,7 +619,7 @@ namespace NPOI.OpenXml4Net.OPC
 
         public bool PartExists(Uri uri)
         {
-            if (uri.IsAbsoluteUri)
+            if(uri.IsAbsoluteUri)
                 return false;
 
             PackagePart pp = GetPartImpl(new PackagePartName(uri.OriginalString, true));
@@ -628,17 +629,17 @@ namespace NPOI.OpenXml4Net.OPC
         {
             ThrowExceptionIfWriteOnly();
             PackagePartName partName = new PackagePartName(uri.ToString(), true);
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("PartName");
 
             // If the partlist is null, then we parse the package.
-            if (partList == null)
+            if(partList == null)
             {
                 try
                 {
                     GetParts();
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     return null;
                 }
@@ -656,17 +657,17 @@ namespace NPOI.OpenXml4Net.OPC
         {
             ThrowExceptionIfWriteOnly();
 
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("PartName");
 
             // If the partlist is null, then we parse the package.
-            if (partList == null)
+            if(partList == null)
             {
                 try
                 {
                     GetParts();
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     return null;
                 }
@@ -684,9 +685,9 @@ namespace NPOI.OpenXml4Net.OPC
         public List<PackagePart> GetPartsByContentType(String contentType)
         {
             List<PackagePart> retArr = new List<PackagePart>();
-            foreach (PackagePart part in partList.Values)
+            foreach(PackagePart part in partList.Values)
             {
-                if (part.ContentType.Equals(contentType))
+                if(part.ContentType.Equals(contentType))
                     retArr.Add(part);
             }
             retArr.Sort();
@@ -705,13 +706,13 @@ namespace NPOI.OpenXml4Net.OPC
         public List<PackagePart> GetPartsByRelationshipType(
                 String relationshipType)
         {
-            if (relationshipType == null)
+            if(relationshipType == null)
                 throw new ArgumentException("relationshipType");
             List<PackagePart> retArr = new List<PackagePart>();
-            foreach (PackageRelationship rel in GetRelationshipsByType(relationshipType))
+            foreach(PackageRelationship rel in GetRelationshipsByType(relationshipType))
             {
                 PackagePart part = GetPart(rel);
-                if (part != null)
+                if(part != null)
                 {
                     retArr.Add(part);
                 }
@@ -729,16 +730,16 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public List<PackagePart> GetPartsByName(Regex namePattern)
         {
-            if (namePattern == null)
+            if(namePattern == null)
             {
                 throw new ArgumentException("name pattern must not be null");
             }
             List<PackagePart> result = new List<PackagePart>();
-            foreach (PackagePart part in partList.Values)
+            foreach(PackagePart part in partList.Values)
             {
                 PackagePartName partName = part.PartName;
                 String name = partName.Name;
-                if (namePattern.IsMatch(name))
+                if(namePattern.IsMatch(name))
                     result.Add(part);
             }
             result.Sort();
@@ -755,16 +756,16 @@ namespace NPOI.OpenXml4Net.OPC
         {
             PackagePart retPart = null;
             EnsureRelationships();
-            foreach (PackageRelationship rel in relationships)
+            foreach(PackageRelationship rel in relationships)
             {
-                if (rel.RelationshipType.Equals(partRel.RelationshipType))
+                if(rel.RelationshipType.Equals(partRel.RelationshipType))
                 {
                     try
                     {
                         retPart = GetPart(PackagingUriHelper.CreatePartName(rel
                                 .TargetUri));
                     }
-                    catch (InvalidFormatException)
+                    catch(InvalidFormatException)
                     {
                         continue;
                     }
@@ -791,7 +792,7 @@ namespace NPOI.OpenXml4Net.OPC
             ThrowExceptionIfWriteOnly();
 
             // If the part list is null, we parse the package to retrieve all parts.
-            if (partList == null)
+            if(partList == null)
             {
                 /* Variables use to validate OPC Compliance */
 
@@ -803,19 +804,19 @@ namespace NPOI.OpenXml4Net.OPC
 
                 PackagePart[] parts = this.GetPartsImpl();
                 this.partList = new PackagePartCollection();
-                foreach (PackagePart part in parts)
+                foreach(PackagePart part in parts)
                 {
                     bool pnFound = false;
-                    foreach (PackagePartName pn in partList.Keys)
+                    foreach(PackagePartName pn in partList.Keys)
                     {
-                        if (part.PartName.Name.StartsWith(pn.Name))
+                        if(part.PartName.Name.StartsWith(pn.Name))
                         {
                             pnFound = true;
                             break;
                         }
                     }
 
-                    if (pnFound)
+                    if(pnFound)
                         throw new InvalidFormatException(
                                 "A part with the name '"
                                         + part.PartName +
@@ -824,10 +825,10 @@ namespace NPOI.OpenXml4Net.OPC
                                     "nor recognize packages with equivalent part names. [M1.12]");
 
                     // Check OPC compliance rule M4.1
-                    if (part.ContentType.Equals(
+                    if(part.ContentType.Equals(
                             ContentTypes.CORE_PROPERTIES_PART))
                     {
-                        if (!hasCorePropertiesPart)
+                        if(!hasCorePropertiesPart)
                             hasCorePropertiesPart = true;
                         else
                             Console.WriteLine(
@@ -835,7 +836,7 @@ namespace NPOI.OpenXml4Net.OPC
                                     "POI will use only the first, but other software may reject this file.");
                     }
 
-                    if (partUnmarshallers.TryGetValue(part._contentType, out PartUnmarshaller partUnmarshaller))
+                    if(partUnmarshallers.TryGetValue(part._contentType, out PartUnmarshaller partUnmarshaller))
                     {
                         UnmarshallContext context = new UnmarshallContext(this,
                                 part.PartName);
@@ -847,7 +848,7 @@ namespace NPOI.OpenXml4Net.OPC
 
                             // Core properties case-- use first CoreProperties part we come across
                             // and ignore any subsequent ones
-                            if (unmarshallPart is PackagePropertiesPart propertiesPart &&
+                            if(unmarshallPart is PackagePropertiesPart propertiesPart &&
                                     hasCorePropertiesPart &&
                                     needCorePropertiesPart)
                             {
@@ -855,13 +856,13 @@ namespace NPOI.OpenXml4Net.OPC
                                 needCorePropertiesPart = false;
                             }
                         }
-                        catch (IOException)
+                        catch(IOException)
                         {
                             logger.Log(POILogger.WARN, "Unmarshall operation : IOException for "
                                     + part.PartName);
                             continue;
                         }
-                        catch (InvalidOperationException invoe)
+                        catch(InvalidOperationException invoe)
                         {
                             throw new InvalidFormatException(invoe.Message);
                         }
@@ -872,7 +873,7 @@ namespace NPOI.OpenXml4Net.OPC
                         {
                             partList[part.PartName] = part;
                         }
-                        catch (InvalidOperationException e)
+                        catch(InvalidOperationException e)
                         {
                             throw new InvalidFormatException(e.Message);
                         }
@@ -928,23 +929,23 @@ namespace NPOI.OpenXml4Net.OPC
                 bool loadRelationships)
         {
             ThrowExceptionIfReadOnly();
-            if (partName == null)
+            if(partName == null)
             {
                 throw new ArgumentException("PartName");
             }
 
-            if (contentType == null || contentType == "")
+            if(contentType == null || contentType == "")
             {
                 throw new ArgumentException("contentType");
             }
             bool pnFound = false;
             bool pnDeleted = false;
-            foreach (PackagePartName pn in partList.Keys)
+            foreach(PackagePartName pn in partList.Keys)
             {
-                if (partName.Name.StartsWith(pn.Name))
+                if(partName.Name.StartsWith(pn.Name))
                 {
                     pnFound = true;
-                    if (partList[pn].IsDeleted)
+                    if(partList[pn].IsDeleted)
                     {
                         pnDeleted = true;
                     }
@@ -952,7 +953,7 @@ namespace NPOI.OpenXml4Net.OPC
                 }
             }
             // Check if the specified part name already exists
-            if (pnFound
+            if(pnFound
                     && !pnDeleted)
             {
                 throw new PartAlreadyExistsException(
@@ -971,9 +972,9 @@ namespace NPOI.OpenXml4Net.OPC
             // relationship shall target the Core Properties part.
             // Note - POI will read files with more than one Core Properties, which
             //  Office sometimes produces, but is strict on generation
-            if (contentType == ContentTypes.CORE_PROPERTIES_PART)
+            if(contentType == ContentTypes.CORE_PROPERTIES_PART)
             {
-                if (this.packageProperties != null)
+                if(this.packageProperties != null)
                     throw new InvalidOperationException(
                             "OPC Compliance error [M4.1]: you try to add more than one core properties relationship in the package !");
             }
@@ -1007,26 +1008,26 @@ namespace NPOI.OpenXml4Net.OPC
                 MemoryStream content)
         {
             PackagePart AddedPart = this.CreatePart(partName, contentType);
-            if (AddedPart == null)
+            if(AddedPart == null)
             {
                 return null;
             }
             // Extract the zip entry content to put it in the part content
-            if (content != null)
+            if(content != null)
             {
                 try
                 {
                     Stream partOutput = AddedPart.GetOutputStream();
-                    if (partOutput == null)
+                    if(partOutput == null)
                     {
                         return null;
                     }
 
-                    partOutput.Write(content.TryGetBuffer(out var buf) ? buf.Array : content.ToArray(), 0, (int)content.Length);
+                    partOutput.Write(content.TryGetBuffer(out var buf) ? buf.Array : content.ToArray(), 0, (int) content.Length);
                     partOutput.Close();
 
                 }
-                catch (IOException)
+                catch(IOException)
                 {
                     return null;
                 }
@@ -1054,14 +1055,14 @@ namespace NPOI.OpenXml4Net.OPC
         protected PackagePart AddPackagePart(PackagePart part)
         {
             ThrowExceptionIfReadOnly();
-            if (part == null)
+            if(part == null)
             {
                 throw new ArgumentException("part");
             }
 
-            if (partList.TryGetValue(part.PartName, out PackagePart value))
+            if(partList.TryGetValue(part.PartName, out PackagePart value))
             {
-                if (!value.IsDeleted)
+                if(!value.IsDeleted)
                 {
                     throw new InvalidOperationException(
                             "A part with the name '"
@@ -1089,7 +1090,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void RemovePart(PackagePart part)
         {
-            if (part != null)
+            if(part != null)
             {
                 RemovePart(part.PartName);
             }
@@ -1105,11 +1106,11 @@ namespace NPOI.OpenXml4Net.OPC
         public void RemovePart(PackagePartName PartName)
         {
             ThrowExceptionIfReadOnly();
-            if (PartName == null || !this.ContainPart(PartName))
+            if(PartName == null || !this.ContainPart(PartName))
                 throw new ArgumentException("PartName");
 
             // Delete the specified part from the package.
-            if (this.partList.TryGetValue(PartName, out PackagePart value))
+            if(this.partList.TryGetValue(PartName, out PackagePart value))
             {
                 value.IsDeleted = (true);
                 this.RemovePartImpl(PartName);
@@ -1125,7 +1126,7 @@ namespace NPOI.OpenXml4Net.OPC
 
             // If this part is a relationship part, then delete all relationships of
             // the source part.
-            if (PartName.IsRelationshipPartURI())
+            if(PartName.IsRelationshipPartURI())
             {
                 Uri sourceURI = PackagingUriHelper
                         .GetSourcePartUriFromRelationshipPartUri(PartName.URI);
@@ -1134,7 +1135,7 @@ namespace NPOI.OpenXml4Net.OPC
                 {
                     sourcePartName = PackagingUriHelper.CreatePartName(sourceURI);
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     logger
                             .Log(POILogger.ERROR, "Part name URI '"
@@ -1142,15 +1143,15 @@ namespace NPOI.OpenXml4Net.OPC
                                     + "' is not valid ! This message is not intended to be displayed !");
                     return;
                 }
-                if (sourcePartName.URI.Equals(
+                if(sourcePartName.URI.Equals(
                         PackagingUriHelper.PACKAGE_ROOT_URI))
                 {
                     ClearRelationships();
                 }
-                else if (ContainPart(sourcePartName))
+                else if(ContainPart(sourcePartName))
                 {
                     PackagePart part = GetPart(sourcePartName);
-                    if (part != null)
+                    if(part != null)
                         part.ClearRelationships();
                 }
             }
@@ -1177,11 +1178,11 @@ namespace NPOI.OpenXml4Net.OPC
             // Retrieves PackagePart object from the package
             PackagePart partToRemove = this.partList[PartName];
 
-            if (relPart != null)
+            if(relPart != null)
             {
                 PackageRelationshipCollection partRels = new PackageRelationshipCollection(
                         partToRemove);
-                foreach (PackageRelationship rel in partRels)
+                foreach(PackageRelationship rel in partRels)
                 {
                     PackagePartName PartNameToRemove = PackagingUriHelper
                             .CreatePartName(PackagingUriHelper.ResolvePartUri(rel
@@ -1199,7 +1200,7 @@ namespace NPOI.OpenXml4Net.OPC
         public void DeletePart(Uri uri)
         {
             PackagePartName partName = new PackagePartName(uri.ToString(), true);
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("PartName");
 
             // Remove the part
@@ -1218,7 +1219,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void DeletePart(PackagePartName partName)
         {
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("PartName");
 
             // Remove the part
@@ -1239,7 +1240,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void DeletePartRecursive(PackagePartName partName)
         {
-            if (partName == null || !this.ContainPart(partName))
+            if(partName == null || !this.ContainPart(partName))
                 throw new ArgumentException("PartName");
 
             PackagePart partToDelete = this.GetPart(partName);
@@ -1248,7 +1249,7 @@ namespace NPOI.OpenXml4Net.OPC
             // Remove all relationship parts associated
             try
             {
-                foreach (PackageRelationship relationship in partToDelete
+                foreach(PackageRelationship relationship in partToDelete
                         .Relationships)
                 {
                     PackagePartName targetPartName = PackagingUriHelper
@@ -1257,7 +1258,7 @@ namespace NPOI.OpenXml4Net.OPC
                     this.DeletePartRecursive(targetPartName);
                 }
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 logger.Log(POILogger.WARN, "An exception occurs while deleting part '"
                         + partName.Name
@@ -1268,7 +1269,7 @@ namespace NPOI.OpenXml4Net.OPC
             // Remove the relationships part
             PackagePartName relationshipPartName = PackagingUriHelper
                     .GetRelationshipPartName(partName);
-            if (relationshipPartName != null && ContainPart(relationshipPartName))
+            if(relationshipPartName != null && ContainPart(relationshipPartName))
                 this.RemovePart(relationshipPartName);
         }
 
@@ -1320,7 +1321,7 @@ namespace NPOI.OpenXml4Net.OPC
             // A format consumer shall consider more than one core properties
             // relationship for a package to be an error. If present, the
             // relationship shall target the Core Properties part.
-            if (relationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES)
+            if(relationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES)
                     && this.packageProperties != null)
                 throw new InvalidOperationException(
                         "OPC Compliance error [M4.1]: can't add another core properties part ! Use the built-in package method instead.");
@@ -1331,7 +1332,7 @@ namespace NPOI.OpenXml4Net.OPC
              * requirement upon the attempt to Create such a relationship and shall
              * treat any such relationship as invalid.
              */
-            if (targetPartName.IsRelationshipPartURI())
+            if(targetPartName.IsRelationshipPartURI())
             {
                 throw new InvalidOperationException(
                         "Rule M1.25: The Relationships part shall not have relationships to any other part.");
@@ -1405,11 +1406,11 @@ namespace NPOI.OpenXml4Net.OPC
         public PackageRelationship AddExternalRelationship(String target,
                 String relationshipType, String id)
         {
-            if (target == null)
+            if(target == null)
             {
                 throw new ArgumentException("target");
             }
-            if (relationshipType == null)
+            if(relationshipType == null)
             {
                 throw new ArgumentException("relationshipType");
             }
@@ -1417,9 +1418,9 @@ namespace NPOI.OpenXml4Net.OPC
             Uri targetURI;
             try
             {
-                targetURI = PackagingUriHelper.ParseUri(target,UriKind.Absolute);
+                targetURI = PackagingUriHelper.ParseUri(target, UriKind.Absolute);
             }
-            catch (UriFormatException e)
+            catch(UriFormatException e)
             {
                 throw new ArgumentException("Invalid target - " + e);
             }
@@ -1439,7 +1440,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void RemoveRelationship(String id)
         {
-            if (relationships != null)
+            if(relationships != null)
             {
                 relationships.RemoveRelationship(id);
                 this.isDirty = true;
@@ -1472,7 +1473,7 @@ namespace NPOI.OpenXml4Net.OPC
                 String relationshipType)
         {
             ThrowExceptionIfWriteOnly();
-            if (relationshipType == null)
+            if(relationshipType == null)
             {
                 throw new ArgumentException("relationshipType");
             }
@@ -1498,7 +1499,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void ClearRelationships()
         {
-            if (relationships != null)
+            if(relationships != null)
             {
                 relationships.Clear();
                 this.isDirty = true;
@@ -1510,13 +1511,13 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void EnsureRelationships()
         {
-            if (this.relationships == null)
+            if(this.relationships == null)
             {
                 try
                 {
                     this.relationships = new PackageRelationshipCollection(this);
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     this.relationships = new PackageRelationshipCollection();
                 }
@@ -1547,9 +1548,9 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public bool IsRelationshipExists(PackageRelationship rel)
         {
-            foreach (PackageRelationship r in relationships)
+            foreach(PackageRelationship r in relationships)
             {
-                if (r == rel)
+                if(r == rel)
                     return true;
             }
             return false;
@@ -1569,7 +1570,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 partMarshallers[new ContentType(contentType)] = marshaller;
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 logger.Log(POILogger.WARN, "The specified content type is not valid: '"
                         + e.Message + "'. The marshaller will not be Added !");
@@ -1591,7 +1592,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 partUnmarshallers[new ContentType(contentType)] = unmarshaller;
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 logger.Log(POILogger.WARN, "The specified content type is not valid: '"
                         + e.Message
@@ -1654,7 +1655,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public void Save(string path)
         {
-            if (path == null)
+            if(path == null)
                 throw new ArgumentException("targetFile");
 
             this.ThrowExceptionIfReadOnly();
@@ -1663,7 +1664,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 fos = new FileStream(path, FileMode.OpenOrCreate);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new IOException(e.Message, e);
             }
@@ -1789,9 +1790,9 @@ namespace NPOI.OpenXml4Net.OPC
         {
             bool success = false;
             List<PackagePart> list = GetPartsByContentType(oldContentType);
-            foreach (PackagePart packagePart in list)
+            foreach(PackagePart packagePart in list)
             {
-                if (packagePart.ContentType.Equals(oldContentType))
+                if(packagePart.ContentType.Equals(oldContentType))
                 {
                     PackagePartName partName = packagePart.PartName;
                     contentTypeManager.AddContentType(partName, newContentType);

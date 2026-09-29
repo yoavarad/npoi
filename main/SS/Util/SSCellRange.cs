@@ -17,9 +17,8 @@
 
 namespace NPOI.SS.Util
 {
-    using System;
-
     using NPOI.SS.UserModel;
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
 
@@ -28,7 +27,7 @@ namespace NPOI.SS.Util
      *
      * @author Josh Micich
      */
-    public class SSCellRange<K> : ICellRange<K> where K:ICell
+    public class SSCellRange<K> : ICellRange<K> where K : ICell
     {
 
         private readonly int _height;
@@ -43,13 +42,13 @@ namespace NPOI.SS.Util
             _firstColumn = firstColumn;
             _height = height;
             _width = width;
-            _flattenedArray = (K[])flattenedArray.Clone();
+            _flattenedArray = (K[]) flattenedArray.Clone();
         }
 
         public static SSCellRange<K> Create(int firstRow, int firstColumn, int height, int width, List<K> flattenedList, Type cellClass)
         {
             int nItems = flattenedList.Count;
-            if (height * width != nItems)
+            if(height * width != nItems)
             {
                 throw new ArgumentException("Array size mismatch.");
             }
@@ -63,12 +62,12 @@ namespace NPOI.SS.Util
 
         public K GetCell(int relativeRowIndex, int relativeColumnIndex)
         {
-            if (relativeRowIndex < 0 || relativeRowIndex >= _height)
+            if(relativeRowIndex < 0 || relativeRowIndex >= _height)
             {
                 throw new IndexOutOfRangeException("Specified row " + relativeRowIndex
                         + " is outside the allowable range (0.." + (_height - 1) + ").");
             }
-            if (relativeColumnIndex < 0 || relativeColumnIndex >= _width)
+            if(relativeColumnIndex < 0 || relativeColumnIndex >= _width)
             {
                 throw new IndexOutOfRangeException("Specified colummn " + relativeColumnIndex
                         + " is outside the allowable range (0.." + (_width - 1) + ").");
@@ -77,7 +76,7 @@ namespace NPOI.SS.Util
             return _flattenedArray[flatIndex];
         }
 
-        internal sealed class ArrayIterator<T> :IEnumerator<T>
+        internal sealed class ArrayIterator<T> : IEnumerator<T>
         {
 
             private readonly T[] _array;
@@ -85,7 +84,7 @@ namespace NPOI.SS.Util
 
             public ArrayIterator(T[] array)
             {
-                _array = (T[])array.Clone();
+                _array = (T[]) array.Clone();
                 _index = 0;
             }
 
@@ -101,14 +100,14 @@ namespace NPOI.SS.Util
             }
 
             public void Reset()
-            { 
+            {
             }
 
             public T Current
             {
                 get
                 {
-                    if (_index >= _array.Length)
+                    if(_index >= _array.Length)
                     {
                         throw new ArgumentNullException(_index.ToString(CultureInfo.CurrentCulture));
                     }
@@ -148,20 +147,22 @@ namespace NPOI.SS.Util
 
         public K[] FlattenedCells
         {
-            get {
-                return (K[])_flattenedArray.Clone();
+            get
+            {
+                return (K[]) _flattenedArray.Clone();
             }
         }
 
         public K[][] Cells
         {
-            get {
+            get
+            {
                 Type itemCls = _flattenedArray.GetType();
                 K[][] result = (K[][])Array.CreateInstance(itemCls, _height);
                 itemCls = itemCls.GetElementType();
-                for (int r = _height - 1; r >= 0; r--)
+                for(int r = _height - 1; r >= 0; r--)
                 {
-                    result[r] = (K[])Array.CreateInstance(itemCls, _width);
+                    result[r] = (K[]) Array.CreateInstance(itemCls, _width);
                     int flatIndex = _width * r;
                     Array.Copy(_flattenedArray, flatIndex, result[r], 0, _width);
                 }
@@ -223,6 +224,3 @@ namespace NPOI.SS.Util
         #endregion
     }
 }
-
-
-

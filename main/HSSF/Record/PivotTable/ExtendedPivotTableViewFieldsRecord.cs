@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.PivotTable
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -53,24 +53,25 @@ namespace NPOI.HSSF.Record.PivotTable
             isxdiSort = in1.ReadUShort();
             isxdiShow = in1.ReadUShort();
             // This record seems to have different valid encodings
-		    switch (in1.Remaining) {
-			    case 0:
-				    // as per "Microsoft Excel Developer's Kit" book
-				    // older version of SXVDEX - doesn't seem to have a sub-total name
-				    reserved1 = 0;
-				    reserved2 = 0;
-				    subName = null;
-				    return;
-			    case 10:
-				    // as per "MICROSOFT OFFICE EXCEL 97-2007 BINARY FILE FORMAT SPECIFICATION" pdf
-				    break;
-			    default:
-				    throw new RecordFormatException("Unexpected remaining size (" + in1.Remaining + ")");
-		    }
+            switch(in1.Remaining)
+            {
+                case 0:
+                    // as per "Microsoft Excel Developer's Kit" book
+                    // older version of SXVDEX - doesn't seem to have a sub-total name
+                    reserved1 = 0;
+                    reserved2 = 0;
+                    subName = null;
+                    return;
+                case 10:
+                    // as per "MICROSOFT OFFICE EXCEL 97-2007 BINARY FILE FORMAT SPECIFICATION" pdf
+                    break;
+                default:
+                    throw new RecordFormatException("Unexpected remaining size (" + in1.Remaining + ")");
+            }
             int cchSubName = in1.ReadUShort();
             reserved1 = in1.ReadInt();
             reserved2 = in1.ReadInt();
-            if (cchSubName != STRING_NOT_PRESENT_LEN)
+            if(cchSubName != STRING_NOT_PRESENT_LEN)
             {
                 subName = in1.ReadUnicodeLEString(cchSubName);
             }
@@ -86,7 +87,7 @@ namespace NPOI.HSSF.Record.PivotTable
             out1.WriteShort(isxdiSort);
             out1.WriteShort(isxdiShow);
 
-            if (subName == null)
+            if(subName == null)
             {
                 out1.WriteShort(STRING_NOT_PRESENT_LEN);
             }
@@ -97,7 +98,7 @@ namespace NPOI.HSSF.Record.PivotTable
 
             out1.WriteInt(reserved1);
             out1.WriteInt(reserved2);
-            if (subName != null)
+            if(subName != null)
             {
                 StringUtil.PutUnicodeLE(subName, out1);
             }

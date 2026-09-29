@@ -1,10 +1,11 @@
-﻿using System;
+using NPOI.HSSF.Record;
+using NPOI.SS.UserModel;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.HSSF.Record;
-using NPOI.Util;
-using NPOI.SS.UserModel;
 
 namespace TestCases.HSSF.Record
 {
@@ -64,14 +65,14 @@ namespace TestCases.HSSF.Record
             //      .fontname        = Arial
 
             FontRecord record = new FontRecord();
-            record.FontHeight = ((short)0xc8);
-            record.Attributes=((short)0);
-            record.ColorPaletteIndex=((short)0x7fff);
-            record.BoldWeight=((short)0x190);
-            record.SuperSubScript=((short)0);
-            record.Underline=((byte)0);
-            record.Family=((byte)0);
-            record.Charset=((byte)0);
+            record.FontHeight = ((short) 0xc8);
+            record.Attributes=((short) 0);
+            record.ColorPaletteIndex=((short) 0x7fff);
+            record.BoldWeight=((short) 0x190);
+            record.SuperSubScript=((short) 0);
+            record.Underline=((byte) 0);
+            record.Family=((byte) 0);
+            record.Charset=((byte) 0);
             record.FontName = ("Arial");
 
             byte[] recordBytes = record.Serialize();
@@ -87,7 +88,7 @@ namespace TestCases.HSSF.Record
 
             byte[] recordBytes = other.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
         [Test]
@@ -103,9 +104,9 @@ namespace TestCases.HSSF.Record
             f2.FontName = ("Arial");
             ClassicAssert.IsTrue(f1.SameProperties(f2));
 
-            f2.FontHeight = ((short)11);
+            f2.FontHeight = ((short) 11);
             ClassicAssert.IsFalse(f1.SameProperties(f2));
-            f2.FontHeight = ((short)0xc8);
+            f2.FontHeight = ((short) 0xc8);
             ClassicAssert.IsTrue(f1.SameProperties(f2));
         }
 
@@ -125,7 +126,7 @@ namespace TestCases.HSSF.Record
 
             RecordInputStream in1 = TestcaseRecordInputStream.Create(SID, emptyNameData);
             FontRecord fr = new FontRecord(in1);
-            if (in1.Available() == 1)
+            if(in1.Available() == 1)
             {
                 throw new AssertionException("Identified bug 47250");
             }

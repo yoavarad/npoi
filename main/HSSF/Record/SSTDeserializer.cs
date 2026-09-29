@@ -44,11 +44,11 @@ namespace NPOI.HSSF.Record
          */
         public void ManufactureStrings(int stringCount, RecordInputStream in1)
         {
-            for (int i = 0; i < stringCount; i++)
+            for(int i = 0; i < stringCount; i++)
             {
                 // Extract exactly the count of strings from the SST record.
                 UnicodeString str;
-                if (in1.Available() == 0 && (!in1.HasNextRecord || in1.GetNextSid() != ContinueRecord.sid))
+                if(in1.Available() == 0 && (!in1.HasNextRecord || in1.GetNextSid() != ContinueRecord.sid))
                 {
                     System.Console.WriteLine("Ran out of data before creating all the strings! String at index " + i + "");
                     str = new UnicodeString("");

@@ -118,7 +118,7 @@ namespace TestCases.XSSF.UserModel
                 comment.String = (new HSSFRichTextString(TEST_RICHTEXTSTRING));
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Only XSSFRichTextString argument is supported", e.Message);
             }
@@ -158,7 +158,7 @@ namespace TestCases.XSSF.UserModel
             CT_RPrElt rPr = richText.GetCTRst().GetRArray(0).rPr;
             ClassicAssert.AreEqual(true, rPr.GetIArray(0).val);
             ClassicAssert.AreEqual(8.5, rPr.GetSzArray(0).val);
-            ClassicAssert.AreEqual(IndexedColors.BlueGrey.Index, (short)rPr.GetColorArray(0).indexed);
+            ClassicAssert.AreEqual(IndexedColors.BlueGrey.Index, (short) rPr.GetColorArray(0).indexed);
             ClassicAssert.AreEqual("Tahoma", rPr.GetRFontArray(0).val);
 
             ClassicAssert.IsNotNull(XSSFTestDataSamples.WriteOutAndReadBack(wb));
@@ -206,7 +206,7 @@ namespace TestCases.XSSF.UserModel
                 XSSFVMLDrawing vml = (((SXSSFWorkbook)wb).XssfWorkbook
                         .GetSheetAt(0) as XSSFSheet).GetVMLDrawing(true);
                 CT_Shape vmlShape1 = vml.newCommentShape();
-                if (ca.IsSet())
+                if(ca.IsSet())
                 {
                     String position = ca.Col1 + ", 0, " + ca.Row1
                             + ", 0, " + ca.Col2 + ", 0, " + ca.Row2
@@ -219,7 +219,7 @@ namespace TestCases.XSSF.UserModel
                 shape1.Column = (ca.Col1);
                 shape1.Row = (ca.Row1);
                 CT_Shape vmlShape2 = vml.newCommentShape();
-                if (ca.IsSet())
+                if(ca.IsSet())
                 {
                     String position = ca.Col1 + ", 0, " + ca.Row1
                             + ", 0, " + ca.Col2 + ", 0, " + ca.Row2
@@ -243,7 +243,7 @@ namespace TestCases.XSSF.UserModel
                 ClassicAssert.AreEqual(table1.NumberOfComments, table2.NumberOfComments);
                 ClassicAssert.AreEqual(table1.Relations, table2.Relations);*/
 
-                ClassicAssert.AreEqual(vmlShape1.ToString().Replace("_x0000_s\\d+", "_x0000_s0000"), 
+                ClassicAssert.AreEqual(vmlShape1.ToString().Replace("_x0000_s\\d+", "_x0000_s0000"),
                     vmlShape2.ToString().Replace("_x0000_s\\d+", "_x0000_s0000"),
                     "The vmlShapes should have equal content afterwards");
             }
@@ -340,7 +340,8 @@ namespace TestCases.XSSF.UserModel
             catch(Exception)
             {
                 wb.Close();
-            };
+            }
+            ;
         }
 
         [Test]

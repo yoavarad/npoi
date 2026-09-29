@@ -19,13 +19,13 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Text;
     [TestFixture]
     public class TestEscherSplitMenuColorsRecord
     {
@@ -86,7 +86,7 @@ namespace TestCases.DDF
         private EscherSplitMenuColorsRecord CreateRecord()
         {
             EscherSplitMenuColorsRecord r = new EscherSplitMenuColorsRecord();
-            r.Options=(short)0x0040;
+            r.Options=(short) 0x0040;
             r.RecordId=EscherSplitMenuColorsRecord.RECORD_ID;
             r.Color1=0x402;
             r.Color2=0x2;

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,11 +16,11 @@
 ==================================================================== */
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Xml.XPath;
+using System.Text;
 using System.Xml;
 using System.Xml.Schema;
+using System.Xml.XPath;
 
 namespace NPOI.Util
 {
@@ -39,7 +39,7 @@ namespace NPOI.Util
             settings.XmlResolver = null;
             settings.DtdProcessing = DtdProcessing.Ignore;
             XmlReader xr = XmlReader.Create(stream, settings);
-            
+
             XPathDocument xpathdoc = new XPathDocument(xr);
             return xpathdoc;
         }
@@ -56,7 +56,7 @@ namespace NPOI.Util
             try
             {
                 XmlReader xr = XmlReader.Create(stream, settings);
-                
+
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.XmlResolver = null;
                 xmlDoc.PreserveWhitespace = true;
@@ -64,7 +64,7 @@ namespace NPOI.Util
 
                 return xmlDoc;
             }
-            catch (XmlException)
+            catch(XmlException)
             {
                 //try to load using xml string, see TestExternalEntities.TestFile
                 stream.Position = 0;

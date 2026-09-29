@@ -17,13 +17,12 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using NPOI.SS;
-    using TestCases.SS;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.SS;
 
     /**
      */
@@ -84,7 +83,7 @@ namespace TestCases.SS.UserModel
                 wb.SetSheetHidden(0, -1);
                 Assert.Fail("expectd exception");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // ok
             }
@@ -93,7 +92,7 @@ namespace TestCases.SS.UserModel
                 wb.SetSheetHidden(0, 3);
                 Assert.Fail("expectd exception");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // ok
             }
@@ -180,7 +179,7 @@ namespace TestCases.SS.UserModel
         [Test]
         public void TestHide()
         {
-            wbU.SetSheetHidden(0,SheetVisibility.Hidden);
+            wbU.SetSheetHidden(0, SheetVisibility.Hidden);
             ClassicAssert.IsTrue(wbU.IsSheetHidden(0));
             ClassicAssert.IsFalse(wbU.IsSheetHidden(1));
             IWorkbook wb2 = _testDataProvider.WriteOutAndReadBack(wbU);
@@ -197,7 +196,7 @@ namespace TestCases.SS.UserModel
         [Test]
         public void TestUnHide()
         {
-            wbH.SetSheetHidden(0,SheetVisibility.Visible);
+            wbH.SetSheetHidden(0, SheetVisibility.Visible);
             ClassicAssert.IsFalse(wbH.IsSheetHidden(0));
             ClassicAssert.IsFalse(wbH.IsSheetHidden(1));
             IWorkbook wb2 = _testDataProvider.WriteOutAndReadBack(wbH);

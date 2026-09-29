@@ -14,10 +14,10 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-using System;
 using NPOI.DDF;
 using NPOI.HSSF.Record;
 using NPOI.SS.UserModel;
+using System;
 
 namespace NPOI.HSSF.UserModel
 {
@@ -51,9 +51,9 @@ namespace NPOI.HSSF.UserModel
             EscherClientDataRecord clientData = new EscherClientDataRecord();
 
             spContainer.RecordId = (EscherContainerRecord.SP_CONTAINER);
-            spContainer.Options = ((short)0x000F);
+            spContainer.Options = ((short) 0x000F);
             sp.RecordId = (EscherSpRecord.RECORD_ID);
-            sp.Options = ((short)((EscherAggregate.ST_HOSTCONTROL << 4) | 0x2));
+            sp.Options = ((short) ((EscherAggregate.ST_HOSTCONTROL << 4) | 0x2));
 
             sp.Flags = (EscherSpRecord.FLAG_HAVEANCHOR | EscherSpRecord.FLAG_HASSHAPETYPE);
             opt.RecordId = (EscherOptRecord.RECORD_ID);
@@ -63,10 +63,10 @@ namespace NPOI.HSSF.UserModel
             opt.AddEscherProperty(new EscherSimpleProperty(EscherProperties.GROUPSHAPE__PRINT, 0x00020000));
 
             HSSFClientAnchor userAnchor = (HSSFClientAnchor)Anchor;
-            userAnchor.AnchorType = (AnchorType)(1);
+            userAnchor.AnchorType = (AnchorType) (1);
             EscherRecord anchor = userAnchor.GetEscherAnchor();
             clientData.RecordId = (EscherClientDataRecord.RECORD_ID);
-            clientData.Options = ((short)0x0000);
+            clientData.Options = ((short) 0x0000);
 
             spContainer.AddChildRecord(sp);
             spContainer.AddChildRecord(opt);

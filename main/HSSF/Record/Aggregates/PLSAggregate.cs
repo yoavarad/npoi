@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
 using NPOI.HSSF.Model;
+using System.Collections.Generic;
 
 namespace NPOI.HSSF.Record.Aggregates
 {
@@ -18,12 +18,12 @@ namespace NPOI.HSSF.Record.Aggregates
         public PLSAggregate(RecordStream rs)
         {
             _pls = rs.GetNext();
-            if (rs.PeekNextSid() == ContinueRecord.sid)
+            if(rs.PeekNextSid() == ContinueRecord.sid)
             {
                 List<ContinueRecord> temp = new List<ContinueRecord>();
-                while (rs.PeekNextSid() == ContinueRecord.sid)
+                while(rs.PeekNextSid() == ContinueRecord.sid)
                 {
-                    temp.Add((ContinueRecord)rs.GetNext());
+                    temp.Add((ContinueRecord) rs.GetNext());
                 }
                 _plsContinues = new ContinueRecord[temp.Count];
                 _plsContinues = temp.ToArray();
@@ -37,7 +37,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public override void VisitContainedRecords(RecordVisitor rv)
         {
             rv.VisitRecord(_pls);
-            for (int i = 0; i < _plsContinues.Length; i++)
+            for(int i = 0; i < _plsContinues.Length; i++)
             {
                 rv.VisitRecord(_plsContinues[i]);
             }

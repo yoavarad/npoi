@@ -15,16 +15,17 @@
 * limitations under the License.
 */
 
-using System;
-using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using TestCases.SS.Formula.Functions;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.Util;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 using System.IO;
 using TestCases.HSSF;
-using NPOI.Util;
-using NPOI.SS.Util;
-using NPOI.XSSF.UserModel;
+using TestCases.SS.Formula.Functions;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -101,7 +102,7 @@ namespace TestCases.XSSF.UserModel
 
         private static ICell GetExpectedValueCell(IRow row, short columnIndex)
         {
-            if (row == null)
+            if(row == null)
             {
                 return null;
             }
@@ -111,16 +112,16 @@ namespace TestCases.XSSF.UserModel
 
         private static void ConfirmExpectedResult(String msg, ICell expected, CellValue actual)
         {
-            if (expected == null)
+            if(expected == null)
             {
                 throw new AssertionException(msg + " - Bad Setup data expected value is null");
             }
-            if (actual == null)
+            if(actual == null)
             {
                 throw new AssertionException(msg + " - actual value was null");
             }
 
-            switch (expected.CellType)
+            switch(expected.CellType)
             {
                 case CellType.Blank:
                     ClassicAssert.AreEqual(CellType.Blank, actual.CellType, msg);
@@ -156,7 +157,7 @@ namespace TestCases.XSSF.UserModel
         [SetUp]
         public void SetUp()
         {
-            if (workbook == null)
+            if(workbook == null)
             {
                 Stream is1 = HSSFTestDataSamples.OpenSampleFileStream(SS.FILENAME);
                 OPCPackage pkg = OPCPackage.Open(is1);
@@ -197,7 +198,7 @@ namespace TestCases.XSSF.UserModel
             String successMsg = "There were "
                     + _EvaluationSuccessCount + " successful Evaluation(s) and "
                     + _functionSuccessCount + " function(s) without error";
-            if (_functionFailureCount > 0)
+            if(_functionFailureCount > 0)
             {
                 String msg = _functionFailureCount + " function(s) failed in "
                 + _EvaluationFailureCount + " Evaluation(s).  " + successMsg;
@@ -220,36 +221,40 @@ namespace TestCases.XSSF.UserModel
             IFormulaEvaluator evaluator = new XSSFFormulaEvaluator(workbook);
 
             int rowIndex = startRowIndex;
-            while (true)
+            while(true)
             {
                 IRow r = sheet.GetRow(rowIndex);
                 String targetFunctionName = GetTargetFunctionName(r);
-                if (targetFunctionName == null)
+                if(targetFunctionName == null)
                 {
                     throw new AssertionException("Test spreadsheet cell empty on row ("
                             + (rowIndex + 1) + "). Expected function name or '"
                             + SS.FUNCTION_NAMES_END_SENTINEL + "'");
                 }
-                if (targetFunctionName.Equals(SS.FUNCTION_NAMES_END_SENTINEL))
+                if(targetFunctionName.Equals(SS.FUNCTION_NAMES_END_SENTINEL))
                 {
                     // found end of functions list
                     break;
                 }
-                if (testFocusFunctionName == null || targetFunctionName.Equals(testFocusFunctionName, StringComparison.OrdinalIgnoreCase))
+                if(testFocusFunctionName == null || targetFunctionName.Equals(testFocusFunctionName, StringComparison.OrdinalIgnoreCase))
                 {
 
                     // expected results are on the row below
                     IRow expectedValuesRow = sheet.GetRow(rowIndex + 1);
-                    if (expectedValuesRow == null)
+                    if(expectedValuesRow == null)
                     {
                         int missingRowNum = rowIndex + 2; //+1 for 1-based, +1 for next row
                         throw new AssertionException("Missing expected values row for function '"
                                 + targetFunctionName + " (row " + missingRowNum + ")");
                     }
-                    switch (ProcessFunctionRow(evaluator, targetFunctionName, r, expectedValuesRow))
+                    switch(ProcessFunctionRow(evaluator, targetFunctionName, r, expectedValuesRow))
                     {
-                        case Result.ALL_EVALUATIONS_SUCCEEDED: _functionSuccessCount++; break;
-                        case Result.SOME_EVALUATIONS_FAILED: _functionFailureCount++; break;
+                        case Result.ALL_EVALUATIONS_SUCCEEDED:
+                            _functionSuccessCount++;
+                            break;
+                        case Result.SOME_EVALUATIONS_FAILED:
+                            _functionFailureCount++;
+                            break;
                         case Result.NO_EVALUATIONS_FOUND: // do nothing
                             break;
                         default:
@@ -274,14 +279,14 @@ namespace TestCases.XSSF.UserModel
             short endcolnum = formulasRow.LastCellNum;
 
             // iterate across the row for all the Evaluation cases
-            for (short colnum = SS.COLUMN_INDEX_FIRST_TEST_VALUE; colnum < endcolnum; colnum++)
+            for(short colnum = SS.COLUMN_INDEX_FIRST_TEST_VALUE; colnum < endcolnum; colnum++)
             {
                 ICell c = formulasRow.GetCell(colnum);
-                if (c == null || c.CellType != CellType.Formula)
+                if(c == null || c.CellType != CellType.Formula)
                 {
                     continue;
                 }
-                if (IsIgnoredFormulaTestCase(c.CellFormula))
+                if(IsIgnoredFormulaTestCase(c.CellFormula))
                 {
                     continue;
                 }
@@ -291,7 +296,7 @@ namespace TestCases.XSSF.UserModel
                 {
                     actualValue = Evaluator.Evaluate(c);
                 }
-                catch (RuntimeException e)
+                catch(RuntimeException e)
                 {
                     _EvaluationFailureCount++;
                     PrintshortStackTrace(System.Console.Error, e);
@@ -305,12 +310,12 @@ namespace TestCases.XSSF.UserModel
                     ConfirmExpectedResult("Function '" + targetFunctionName + "': Formula: " + c.CellFormula + " @ " + formulasRow.RowNum + ":" + colnum,
                             expectedValueCell, actualValue);
                     _EvaluationSuccessCount++;
-                    if (result != Result.SOME_EVALUATIONS_FAILED)
+                    if(result != Result.SOME_EVALUATIONS_FAILED)
                     {
                         result = Result.ALL_EVALUATIONS_SUCCEEDED;
                     }
                 }
-                catch (AssertionException e)
+                catch(AssertionException e)
                 {
                     _EvaluationFailureCount++;
                     PrintshortStackTrace(System.Console.Error, e);
@@ -325,14 +330,14 @@ namespace TestCases.XSSF.UserModel
          */
         private static bool IsIgnoredFormulaTestCase(String cellFormula)
         {
-            if ("COLUMN(1:2)".Equals(cellFormula) || "ROW(2:3)".Equals(cellFormula))
+            if("COLUMN(1:2)".Equals(cellFormula) || "ROW(2:3)".Equals(cellFormula))
             {
                 // full row ranges are not Parsed properly yet.
                 // These cases currently work in svn tRunk because of another bug which causes the 
                 // formula to Get rendered as COLUMN($A$1:$IV$2) or ROW($A$2:$IV$3) 
                 return true;
             }
-            if ("ISREF(currentcell())".Equals(cellFormula))
+            if("ISREF(currentcell())".Equals(cellFormula))
             {
                 // currently throws NPE because unknown function "currentcell" causes name lookup 
                 // Name lookup requires some equivalent object of the Workbook within xSSFWorkbook.
@@ -381,22 +386,22 @@ namespace TestCases.XSSF.UserModel
          */
         private static String GetTargetFunctionName(IRow r)
         {
-            if (r == null)
+            if(r == null)
             {
                 System.Console.WriteLine("Warning - given null row, can't figure out function name");
                 return null;
             }
             ICell cell = r.GetCell(SS.COLUMN_INDEX_FUNCTION_NAME);
-            if (cell == null)
+            if(cell == null)
             {
                 System.Console.WriteLine("Warning - Row " + r.RowNum + " has no cell " + SS.COLUMN_INDEX_FUNCTION_NAME + ", can't figure out function name");
                 return null;
             }
-            if (cell.CellType == CellType.Blank)
+            if(cell.CellType == CellType.Blank)
             {
                 return null;
             }
-            if (cell.CellType == CellType.String)
+            if(cell.CellType == CellType.String)
             {
                 return cell.RichStringCellValue.String;
             }

@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * This record refers to a category or series axis and is used to specify label/tickmark frequency.<p/>
@@ -197,9 +197,9 @@ namespace NPOI.HSSF.Record.Chart
             set
             {
                 field_4_options = valueAxisCrossing.SetShortBoolean(field_4_options, value);
-            }   
+            }
         }
-        
+
         /**
          * axis crosses at the far right
          * @return  the crosses far right field value.

@@ -128,29 +128,49 @@ namespace NPOI.HPSF
         /// <returns>the property that was stored under the specified name before, or
         /// <c>null</c> if there was no such property before.
         /// </returns>
-        public object Put(string key, object value) {
+        public object Put(string key, object value)
+        {
             int variantType;
-            if (value is String) {
+            if(value is String)
+            {
                 variantType = Variant.VT_LPSTR;
-            } else if (value is short) {
+            }
+            else if(value is short)
+            {
                 variantType = Variant.VT_I2;
-            } else if (value is int) {
+            }
+            else if(value is int)
+            {
                 variantType = Variant.VT_I4;
-            } else if (value is long) {
+            }
+            else if(value is long)
+            {
                 variantType = Variant.VT_I8;
-            } else if (value is float) {
+            }
+            else if(value is float)
+            {
                 variantType = Variant.VT_R4;
-            } else if (value is Double) {
+            }
+            else if(value is Double)
+            {
                 variantType = Variant.VT_R8;
-            } else if (value is Boolean) {
+            }
+            else if(value is Boolean)
+            {
                 variantType = Variant.VT_BOOL;
-            } else if (value is BigInteger
-                && ((BigInteger)value).BitLength() <= 64
-                && ((BigInteger)value).CompareTo(BigInteger.ZERO) >= 0) {
+            }
+            else if(value is BigInteger
+                && ((BigInteger) value).BitLength() <= 64
+                && ((BigInteger) value).CompareTo(BigInteger.ZERO) >= 0)
+            {
                 variantType = Variant.VT_UI8;
-            } else if (value is DateTime) {
+            }
+            else if(value is DateTime)
+            {
                 variantType = Variant.VT_FILETIME;
-            } else {
+            }
+            else
+            {
                 throw new InvalidOperationException("unsupported datatype - currently String,short,int,Long,Float,Double,Boolean,Bigint(unsigned long),Date can be processed.");
             }
             Property p = new MutableProperty(-1, variantType, value);
@@ -199,15 +219,17 @@ namespace NPOI.HPSF
         {
             return props.GetHashCode();
         }
-        public override bool Equals(object obj) {
-            if (!(obj is CustomProperties)) {
+        public override bool Equals(object obj)
+        {
+            if(!(obj is CustomProperties))
+            {
                 return false;
             }
-            return props.Equals(((CustomProperties)obj).props);
+            return props.Equals(((CustomProperties) obj).props);
         }
         public void PutAll(Dictionary<string, object> m)
         {
-            foreach (KeyValuePair<string, object> me in m)
+            foreach(KeyValuePair<string, object> me in m)
             {
                 Put(me.Key, me.Value);
             }
@@ -221,7 +243,8 @@ namespace NPOI.HPSF
         public List<CustomProperty> Properties()
         {
             List<CustomProperty> list = new List<CustomProperty>(props.Count);
-            foreach (long l in dictionary.Keys) {
+            foreach(long l in dictionary.Keys)
+            {
                 list.Add(props[l]);
             }
             return list;
@@ -233,15 +256,16 @@ namespace NPOI.HPSF
         public ICollection<object> Values()
         {
             List<object> list = new List<object>(props.Count);
-            foreach (long l in dictionary.Keys)
+            foreach(long l in dictionary.Keys)
             {
                 list.Add(props[l].Value);
             }
             return list;
         }
-        public Dictionary<String, object> entrySet() {
+        public Dictionary<String, object> entrySet()
+        {
             Dictionary<String,object> set = new Dictionary<String,object>(props.Count);
-            foreach (KeyValuePair<long,String> se in dictionary)
+            foreach(KeyValuePair<long, String> se in dictionary)
             {
                 set.Add(se.Value, props[se.Key].Value);
             }
@@ -286,7 +310,7 @@ namespace NPOI.HPSF
             this.codepage = codepage;
         }
 
-        public int GetCodepage() 
+        public int GetCodepage()
         {
             return codepage;
         }
@@ -390,23 +414,25 @@ namespace NPOI.HPSF
         private void checkCodePage(String value)
         {
             int cp = GetCodepage();
-            if (cp == -1)
+            if(cp == -1)
             {
                 cp = Property.DEFAULT_CODEPAGE;
             }
-            if (cp == CodePageUtil.CP_UNICODE)
+            if(cp == CodePageUtil.CP_UNICODE)
             {
                 return;
             }
             String cps = "";
-            try 
+            try
             {
                 cps = CodePageUtil.CodepageToEncoding(cp);
-            } catch (UnsupportedEncodingException e) {
+            }
+            catch(UnsupportedEncodingException e)
+            {
                 //LOG.log(POILogger.ERROR, "Codepage '"+cp+"' can't be found.");
             }
-            if (!string.IsNullOrEmpty(cps) && CodePageUtil.CanEncode(cps, value))
-                //&& Charset.forName(cps).newEncoder().canEncode(value)) 
+            if(!string.IsNullOrEmpty(cps) && CodePageUtil.CanEncode(cps, value))
+            //&& Charset.forName(cps).newEncoder().canEncode(value)) 
             {
                 return;
             }
@@ -415,4 +441,3 @@ namespace NPOI.HPSF
         }
     }
 }
-

@@ -19,7 +19,8 @@ namespace TestCases.POIFS.Crypt
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -35,15 +36,19 @@ namespace TestCases.POIFS.Crypt
         public HashAlgorithm ha;
         public ChainingMode cm;
 
-    public static List<Object[]> data() {
+        public static List<Object[]> data()
+        {
             CipherAlgorithm[] caList = { CipherAlgorithm.aes128, CipherAlgorithm.aes192, CipherAlgorithm.aes256, CipherAlgorithm.rc2, CipherAlgorithm.des, CipherAlgorithm.des3 };
             HashAlgorithm[] haList = { HashAlgorithm.sha1, HashAlgorithm.sha256, HashAlgorithm.sha384, HashAlgorithm.sha512, HashAlgorithm.md5 };
             ChainingMode[] cmList = { ChainingMode.cbc, ChainingMode.cfb };
 
             List<Object[]> data = new List<Object[]>();
-            foreach (CipherAlgorithm ca in caList) {
-                foreach (HashAlgorithm ha in haList) {
-                    foreach (ChainingMode cm in cmList) {
+            foreach(CipherAlgorithm ca in caList)
+            {
+                foreach(HashAlgorithm ha in haList)
+                {
+                    foreach(ChainingMode cm in cmList)
+                    {
                         data.Add(new Object[] { ca, ha, cm });
                     }
                 }
@@ -53,7 +58,8 @@ namespace TestCases.POIFS.Crypt
         }
 
         [OneTimeSetUp]
-        public void TestData() {
+        public void TestData()
+        {
             Stream testFile = POIDataSamples.GetDocumentInstance().OpenResourceAsStream("SampleDoc.docx");
             testData = IOUtils.ToByteArray(testFile);
             testFile.Close();
@@ -61,7 +67,8 @@ namespace TestCases.POIFS.Crypt
 
         [Test]
         [Ignore("TODO FIX CI TESTS")]
-        public void TestAgileEncryptionModes() {
+        public void TestAgileEncryptionModes()
+        {
             int maxKeyLen = Cipher.GetMaxAllowedKeyLength(ca.jceId);
             Assume.That(maxKeyLen >= ca.defaultKeySize, "Please install JCE Unlimited Strength Jurisdiction Policy files");
 

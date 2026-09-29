@@ -355,7 +355,7 @@ namespace NPOI.SS.UserModel
 
         public CellCopyPolicy Clone()
         {
-            return (CellCopyPolicy)this.MemberwiseClone();
+            return (CellCopyPolicy) this.MemberwiseClone();
         }
     }
 

@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        A sub Record for Extern Sheet 
@@ -127,7 +127,7 @@ namespace NPOI.HSSF.Record
          * @param data byte array containing instance data
          * @return number of bytes written
          */
-        public override int Serialize(int offset, byte [] data)
+        public override int Serialize(int offset, byte[] data)
         {
             LittleEndian.PutShort(data, 0 + offset, GetIndexToSupBook());
             LittleEndian.PutShort(data, 2 + offset, GetIndexToFirstSupBook());

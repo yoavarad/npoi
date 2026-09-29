@@ -29,13 +29,12 @@
 namespace TestCases.Util
 {
 
-    using System;
-
-    using NUnit.Framework;
-    using System.IO;
-    using NPOI.Util;
     using NPOI.HPSF;
+    using NPOI.Util;
+    using NUnit.Framework;
     using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
 
     /**
      * Tests ClassID structure.
@@ -98,7 +97,7 @@ namespace TestCases.Util
             {
                 clsidTest.Write(new byte[15], 0);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 bExceptionOccurred = true;
             }
@@ -109,7 +108,7 @@ namespace TestCases.Util
             {
                 clsidTest.Write(new byte[16], 1);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 bExceptionOccurred = true;
             }
@@ -122,7 +121,7 @@ namespace TestCases.Util
                 clsidTest.Write(new byte[16], 0);
                 clsidTest.Write(new byte[17], 1);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 bExceptionOccurred = true;
             }

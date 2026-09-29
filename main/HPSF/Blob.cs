@@ -1,4 +1,4 @@
-﻿using NPOI.Util;
+using NPOI.Util;
 
 namespace NPOI.HPSF
 {

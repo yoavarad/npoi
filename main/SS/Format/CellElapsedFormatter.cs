@@ -17,8 +17,8 @@
 namespace NPOI.SS.Format
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
+    using System.Text;
     using System.Text.RegularExpressions;
     /**
      * This class : printing out an elapsed time format.
@@ -57,14 +57,14 @@ namespace NPOI.SS.Format
             public long ValueFor(double elapsed)
             {
                 double val;
-                if (modBy == 0)
+                if(modBy == 0)
                     val = elapsed / factor;
                 else
                     val = elapsed / factor % modBy;
-                if (type == '0')
-                    return (long)Math.Round(val);
+                if(type == '0')
+                    return (long) Math.Round(val);
                 else
-                    return (long)val;
+                    return (long) val;
             }
         }
 
@@ -85,12 +85,12 @@ namespace NPOI.SS.Format
 
                 int pos = desc.Length;
                 char firstCh = part[0];
-                switch (firstCh)
+                switch(firstCh)
                 {
                     case '[':
-                        if (part.Length < 3)
+                        if(part.Length < 3)
                             break;
-                        if (_formatter.topmost != null)
+                        if(_formatter.topmost != null)
                             throw new ArgumentException(
                                     "Duplicate '[' times in format");
                         part = part.ToLower();
@@ -118,7 +118,7 @@ namespace NPOI.SS.Format
                         break;
 
                     case '*':
-                        if (part.Length > 1)
+                        if(part.Length > 1)
                             part = CellFormatPart.ExpandChar(part);
                         break;
 
@@ -149,14 +149,14 @@ namespace NPOI.SS.Format
 
             //ListIterator<TimeSpec> it = specs.ListIterator(specs.Count);
             //while (it.HasPrevious())
-            for(int i=specs.Count-1;i>=0;i--)
+            for(int i = specs.Count-1; i>=0; i--)
             {
                 //TimeSpec spec = it.Previous();
                 TimeSpec spec = specs[i];
                 //desc.Replace(spec.pos, spec.pos + spec.len, "%0" + spec.len + "d");
                 desc.Remove(spec.pos, spec.len);
                 desc.Insert(spec.pos, "D" + spec.len);
-                if (spec.type != topmost.type)
+                if(spec.type != topmost.type)
                 {
                     spec.modBy = modFor(spec.type, spec.len);
                 }
@@ -174,7 +174,7 @@ namespace NPOI.SS.Format
 
         private static double factorFor(char type, int len)
         {
-            switch (type)
+            switch(type)
             {
                 case 'h':
                     return HOUR__FACTOR;
@@ -192,7 +192,7 @@ namespace NPOI.SS.Format
 
         private static double modFor(char type, int len)
         {
-            switch (type)
+            switch(type)
             {
                 case 'h':
                     return 24;
@@ -213,15 +213,15 @@ namespace NPOI.SS.Format
         {
             double elapsed = ((double)value);
 
-            if (elapsed < 0)
+            if(elapsed < 0)
             {
                 toAppendTo.Append('-');
                 elapsed = -elapsed;
             }
 
             long[] parts = new long[specs.Count];
-            
-            for (int i = 0; i < specs.Count; i++)
+
+            for(int i = 0; i < specs.Count; i++)
             {
                 parts[i] = specs[(i)].ValueFor(elapsed);
             }
@@ -233,17 +233,17 @@ namespace NPOI.SS.Format
             int pos = 0;
             int index = 0;
             Regex regFmt = new Regex("D\\d+");
-            foreach (string fmt in fmtPart)
+            foreach(string fmt in fmtPart)
             {
                 pos += fmt.Length;
-                if (pos < printfFmt.Length)
+                if(pos < printfFmt.Length)
                 {
                     split = printfFmt[pos].ToString();
                     pos++;
                 }
                 else
                     split = string.Empty;
-                if (regFmt.IsMatch(fmt))
+                if(regFmt.IsMatch(fmt))
                 {
                     toAppendTo.Append(parts[index].ToString(fmt)).Append(split);
                     index++;

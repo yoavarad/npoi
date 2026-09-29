@@ -21,9 +21,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
 
@@ -56,7 +56,7 @@ namespace NPOI.HSSF.Record.Chart
 
         public AreaRecord(RecordInputStream in1)
         {
-               field_1_formatFlags = in1.ReadShort();
+            field_1_formatFlags = in1.ReadShort();
         }
 
         public override String ToString()
@@ -148,7 +148,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-
-
-

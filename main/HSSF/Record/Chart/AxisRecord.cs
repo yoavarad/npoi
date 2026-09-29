@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -97,7 +97,7 @@ namespace NPOI.HSSF.Record.Chart
         }
 
         public override void Serialize(ILittleEndianOutput out1)
-        {            
+        {
             out1.WriteShort(field_1_axisType);
             out1.WriteInt(field_2_reserved1);
             out1.WriteInt(field_3_reserved2);
@@ -186,6 +186,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-
-

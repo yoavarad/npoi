@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text; 
 using Cysharp.Text;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.OPC
 {
@@ -76,13 +76,13 @@ namespace NPOI.OpenXml4Net.OPC
                 Uri targetUri, TargetMode targetMode, String relationshipType,
                 String id)
         {
-            if (pkg == null)
+            if(pkg == null)
                 throw new ArgumentException("pkg");
-            if (targetUri == null)
+            if(targetUri == null)
                 throw new ArgumentException("targetUri");
-            if (relationshipType == null)
+            if(relationshipType == null)
                 throw new ArgumentException("relationshipType");
-            if (id == null)
+            if(id == null)
                 throw new ArgumentException("id");
 
             this.container = pkg;
@@ -96,7 +96,7 @@ namespace NPOI.OpenXml4Net.OPC
 
         public override bool Equals(Object obj)
         {
-            if (obj is not PackageRelationship rel)
+            if(obj is not PackageRelationship rel)
             {
                 return false;
             }
@@ -178,7 +178,7 @@ namespace NPOI.OpenXml4Net.OPC
         {
             get
             {
-                if (source == null)
+                if(source == null)
                 {
                     return PackagingUriHelper.PACKAGE_ROOT_URI;
                 }
@@ -208,7 +208,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 // If it's an external target, we don't
                 //  need to apply our normal validation rules
-                if (targetMode == OPC.TargetMode.External)
+                if(targetMode == OPC.TargetMode.External)
                 {
                     return targetUri;
                 }
@@ -216,7 +216,7 @@ namespace NPOI.OpenXml4Net.OPC
                 // Internal target
                 // If it isn't absolute, resolve it relative
                 //  to ourselves
-                if (!targetUri.ToString().StartsWith('/'))
+                if(!targetUri.ToString().StartsWith('/'))
                 {
                     // So it's a relative part name, try to resolve it
                     return PackagingUriHelper.ResolvePartUri(SourceUri, targetUri);

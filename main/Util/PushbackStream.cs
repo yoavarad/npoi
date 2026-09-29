@@ -31,16 +31,16 @@ namespace NPOI.Util
     using System;
     using System.IO;
 
-	public class PushbackStream:Stream
-	{
-		private int buf = -1;
+    public class PushbackStream : Stream
+    {
+        private int buf = -1;
 
         private Stream s;
-		public PushbackStream(
-			Stream s)
-		{
+        public PushbackStream(
+            Stream s)
+        {
             this.s = s;
-		}
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -62,16 +62,16 @@ namespace NPOI.Util
         /// Methods were called after the stream was closed.
         /// </exception>
 		public override int ReadByte()
-		{
-			if (buf != -1)
-			{
-				int tmp = buf;
-				buf = -1;
-				return tmp;
-			}
+        {
+            if(buf != -1)
+            {
+                int tmp = buf;
+                buf = -1;
+                return tmp;
+            }
 
-			return s.ReadByte();
-		}
+            return s.ReadByte();
+        }
 
         /// <summary>
         /// When overridden in a derived class, reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.
@@ -101,30 +101,30 @@ namespace NPOI.Util
         /// Methods were called after the stream was closed.
         /// </exception>
 		public override int Read(byte[] buffer, int offset, int count)
-		{
-			if (buf != -1 && count > 0)
-			{
-				// TODO Can this case be made more efficient?
-				buffer[offset] = (byte) buf;
-				buf = -1;
-				return 1;
-			}
+        {
+            if(buf != -1 && count > 0)
+            {
+                // TODO Can this case be made more efficient?
+                buffer[offset] = (byte) buf;
+                buf = -1;
+                return 1;
+            }
 
-			return s.Read(buffer, offset, count);
-		}
+            return s.Read(buffer, offset, count);
+        }
 
         /// <summary>
         /// Unreads the specified b.
         /// </summary>
         /// <param name="b">The b.</param>
 		public virtual void Unread(int b)
-		{
-			if (buf != -1)
-				throw new InvalidOperationException("Can only push back one byte");
+        {
+            if(buf != -1)
+                throw new InvalidOperationException("Can only push back one byte");
 
-			buf = b & 0xFF;
+            buf = b & 0xFF;
             s.Position -= b;
-		}
+        }
         /// <summary>
         /// When overridden in a derived class, gets a value indicating whether the current stream supports reading.
         /// </summary>
@@ -293,5 +293,5 @@ namespace NPOI.Util
         {
             s.WriteByte(value);
         }
-	}
+    }
 }

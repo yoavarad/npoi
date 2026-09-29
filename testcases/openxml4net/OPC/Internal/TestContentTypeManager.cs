@@ -1,9 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.OpenXml4Net.OPC.Internal;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC.Internal;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TestCases.OpenXml4Net.OPC.Internal
 {
@@ -28,7 +29,7 @@ namespace TestCases.OpenXml4Net.OPC.Internal
 
             ClassicAssert.AreEqual("application/vnd.openxmlformats-package.core-properties+xml", coreDocument.ContentType);
             // TODO - finish writing this test
-            Assume.That(false,"finish writing this test");
+            Assume.That(false, "finish writing this test");
 
             ContentTypeManager ctm = new ZipContentTypeManager(coreDocument.GetInputStream(), p);
         }

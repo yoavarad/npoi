@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,15 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.XDDF.UserModel.Chart;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NPOI.XDDF.UserModel.Chart;
-using NPOI.XSSF.UserModel;
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
 
 namespace TestCases.XSSF.UserModel
 {

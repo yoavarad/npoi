@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.Distributions;
+using MathNet.Numerics.Distributions;
 using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
@@ -24,50 +24,50 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 Double number1 = evaluateValue(arg1, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(number1))
+                if(double.IsNaN(number1))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
-                else if (number1 < 0)
+                else if(number1 < 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
                 Double number2 = evaluateValue(arg2, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(number2))
+                if(double.IsNaN(number2))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 int degreesOfFreedom = (int)number2;
-                if (degreesOfFreedom < 1)
+                if(degreesOfFreedom < 1)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
                 Double number3 = evaluateValue(arg3, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(number3))
+                if(double.IsNaN(number3))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 int tails = (int)number3;
-                if (!(tails == 1 || tails == 2))
+                if(!(tails == 1 || tails == 2))
                 {
                     return ErrorEval.NUM_ERROR;
                 }
 
-                if (tails == 2)
+                if(tails == 2)
                 {
                     return new NumberEval(tdistTwoTails(number1, degreesOfFreedom));
                 }
 
                 return new NumberEval(tdistOneTail(number1, degreesOfFreedom));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 3)
+            if(args.Length == 3)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], args[2]);
             }

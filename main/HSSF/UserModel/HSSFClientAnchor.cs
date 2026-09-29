@@ -78,16 +78,16 @@ namespace NPOI.HSSF.UserModel
             CheckRange(row1, 0, MAX_ROW, "row1");
             CheckRange(row2, 0, MAX_ROW, "row2");
 
-            Col1 = ((short)Math.Min(col1, col2));
-            Col2 = ((short)Math.Max(col1, col2));
+            Col1 = ((short) Math.Min(col1, col2));
+            Col2 = ((short) Math.Max(col1, col2));
             Row1 = Math.Min(row1, row2);
             Row2 = Math.Max(row1, row2);
 
-            if (col1 > col2)
+            if(col1 > col2)
             {
                 _isHorizontallyFlipped = true;
             }
-            if (row1 > row2)
+            if(row1 > row2)
             {
                 _isVerticallyFlipped = true;
             }
@@ -106,14 +106,14 @@ namespace NPOI.HSSF.UserModel
             int row2 = Math.Max(Row1, Row2);
 
             float points = 0;
-            if (row1 == row2)
+            if(row1 == row2)
             {
                 points = ((y2 - y1) / 256.0f) * GetRowHeightInPoints(sheet, row2);
             }
             else
             {
                 points += ((256.0f - y1) / 256.0f) * GetRowHeightInPoints(sheet, row1);
-                for (int i = row1 + 1; i < row2; i++)
+                for(int i = row1 + 1; i < row2; i++)
                 {
                     points += GetRowHeightInPoints(sheet, i);
                 }
@@ -132,7 +132,7 @@ namespace NPOI.HSSF.UserModel
         private static float GetRowHeightInPoints(NPOI.SS.UserModel.ISheet sheet, int rowNum)
         {
             NPOI.SS.UserModel.IRow row = sheet.GetRow(rowNum);
-            if (row == null)
+            if(row == null)
                 return sheet.DefaultRowHeightInPoints;
             else
                 return row.HeightInPoints;
@@ -148,7 +148,7 @@ namespace NPOI.HSSF.UserModel
             set
             {
                 CheckRange(value, 0, MAX_COL, "col1");
-                _escherClientAnchor.Col1 = (short)value;
+                _escherClientAnchor.Col1 = (short) value;
             }
         }
 
@@ -162,7 +162,7 @@ namespace NPOI.HSSF.UserModel
             set
             {
                 CheckRange(value, 0, MAX_COL, "col2");
-                _escherClientAnchor.Col2 = (short)value;
+                _escherClientAnchor.Col2 = (short) value;
             }
         }
 
@@ -176,7 +176,7 @@ namespace NPOI.HSSF.UserModel
             set
             {
                 CheckRange(value, 0, MAX_ROW, "row1");
-                _escherClientAnchor.Row1 = (short)value; 
+                _escherClientAnchor.Row1 = (short) value;
             }
         }
 
@@ -190,7 +190,7 @@ namespace NPOI.HSSF.UserModel
             set
             {
                 CheckRange(value, 0, MAX_ROW, "row2");
-                _escherClientAnchor.Row2 = (short)value;
+                _escherClientAnchor.Row2 = (short) value;
             }
         }
 
@@ -266,8 +266,8 @@ namespace NPOI.HSSF.UserModel
         /// <value>The type of the anchor.</value>
         public AnchorType AnchorType
         {
-            get { return (AnchorType)_escherClientAnchor.Flag; }
-            set { this._escherClientAnchor.Flag = (short)value; }
+            get { return (AnchorType) _escherClientAnchor.Flag; }
+            set { this._escherClientAnchor.Flag = (short) value; }
         }
 
 
@@ -280,7 +280,7 @@ namespace NPOI.HSSF.UserModel
         /// <param name="varName">Name of the variable.</param>
         private static void CheckRange(int value, int minRange, int maxRange, String varName)
         {
-            if (value < minRange || value > maxRange)
+            if(value < minRange || value > maxRange)
                 throw new ArgumentOutOfRangeException(varName + " must be between " + minRange + " and " + maxRange + ", but was: " + value);
         }
 
@@ -307,11 +307,11 @@ namespace NPOI.HSSF.UserModel
 
         public override bool Equals(Object obj)
         {
-            if (obj == null)
+            if(obj == null)
                 return false;
-            if (obj == this)
+            if(obj == this)
                 return true;
-            if (obj.GetType() != GetType())
+            if(obj.GetType() != GetType())
                 return false;
             HSSFClientAnchor anchor = (HSSFClientAnchor)obj;
 
@@ -333,7 +333,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                _escherClientAnchor.Dx1 = (short)value;
+                _escherClientAnchor.Dx1 = (short) value;
             }
         }
         public override int Dx2
@@ -344,7 +344,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                _escherClientAnchor.Dx2 = (short)value;
+                _escherClientAnchor.Dx2 = (short) value;
             }
         }
         public override int Dy1
@@ -355,7 +355,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                _escherClientAnchor.Dy1 = (short)value;
+                _escherClientAnchor.Dy1 = (short) value;
             }
         }
         public override int Dy2
@@ -366,7 +366,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                _escherClientAnchor.Dy2 = (short)value;
+                _escherClientAnchor.Dy2 = (short) value;
             }
         }
     }

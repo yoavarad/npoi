@@ -17,12 +17,12 @@
 
 namespace NPOI.SS.Formula.Eval
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using System.Collections.Generic;
     using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
 
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
@@ -62,7 +62,7 @@ namespace NPOI.SS.Formula.Eval
         public static ErrorEval ValueOf(int errorCode)
         {
             FormulaError error = FormulaError.ForInt(errorCode);
-            if (evals.TryGetValue(error, out ErrorEval of))
+            if(evals.TryGetValue(error, out ErrorEval of))
                 return of;
 
             throw new RuntimeException("Unhandled error type  for code " + errorCode);
@@ -75,7 +75,7 @@ namespace NPOI.SS.Formula.Eval
          */
         public static String GetText(int errorCode)
         {
-            if (FormulaError.IsValidCode(errorCode))
+            if(FormulaError.IsValidCode(errorCode))
             {
                 return FormulaError.ForInt(errorCode).String;
             }
@@ -84,16 +84,16 @@ namespace NPOI.SS.Formula.Eval
         }
 
         private readonly FormulaError _error;
- 
+
         private ErrorEval(FormulaError error)
         {
             _error = error;
-            if (!evals.ContainsKey(error))
+            if(!evals.ContainsKey(error))
                 evals.Add(error, this);
         }
         public int ErrorCode
         {
-            get{return _error.LongCode;}
+            get { return _error.LongCode; }
         }
         public String ErrorString
         {

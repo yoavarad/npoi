@@ -16,13 +16,13 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Agile
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
     using NPOI.OpenXmlFormats.Encryption;
     using NPOI.POIFS.Crypt;
     using Org.BouncyCastle.Asn1.X509;
     using Org.BouncyCastle.X509;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
 
     /**
      * Used when Checking if a key is valid for a document 
@@ -42,7 +42,7 @@ namespace NPOI.POIFS.Crypt.Agile
         public AgileEncryptionVerifier(String descriptor)
             : this(AgileEncryptionInfoBuilder.ParseDescriptor(descriptor))
         {
-            
+
         }
 
         protected internal AgileEncryptionVerifier(EncryptionDocument ed)
@@ -54,12 +54,12 @@ namespace NPOI.POIFS.Crypt.Agile
                 //keyData = encList.Next().EncryptedPasswordKey;
                 encList.MoveNext();
                 keyData = encList.Current.Item as CT_PasswordKeyEncryptor;
-                if (keyData == null)
+                if(keyData == null)
                 {
                     throw new NullReferenceException("encryptedKey not Set");
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new EncryptedDocumentException("Unable to parse keyData", e);
             }
@@ -74,23 +74,23 @@ namespace NPOI.POIFS.Crypt.Agile
             HashAlgorithm ha = HashAlgorithm.FromEcmaId(keyData.hashAlgorithm.ToString());
             HashAlgorithm = (ha);
 
-            if (HashAlgorithm.hashSize != hashSize)
+            if(HashAlgorithm.hashSize != hashSize)
             {
                 throw new EncryptedDocumentException("Unsupported hash algorithm: " +
                         keyData.hashAlgorithm + " @ " + hashSize + " bytes");
             }
 
-            SpinCount = (int)(keyData.spinCount);
+            SpinCount = (int) (keyData.spinCount);
             EncryptedVerifier = (keyData.encryptedVerifierHashInput);
             Salt = (keyData.saltValue);
             EncryptedKey = (keyData.encryptedKeyValue);
             EncryptedVerifierHash = (keyData.encryptedVerifierHashValue);
 
             int saltSize = (int)keyData.saltSize;
-            if (saltSize != Salt.Length)
+            if(saltSize != Salt.Length)
                 throw new EncryptedDocumentException("Invalid salt size");
 
-            switch (keyData.cipherChaining)
+            switch(keyData.cipherChaining)
             {
                 case ST_CipherChaining.ChainingModeCBC:
                     ChainingMode = (ChainingMode.cbc);
@@ -106,7 +106,7 @@ namespace NPOI.POIFS.Crypt.Agile
             try
             {
                 //CertificateFactory cf = CertificateFactory.GetInstance("X.509");
-                while (encList.MoveNext())
+                while(encList.MoveNext())
                 {
                     CT_CertificateKeyEncryptor certKey = encList.Current.Item as CT_CertificateKeyEncryptor;
                     AgileCertificateEntry ace = new AgileCertificateEntry();
@@ -116,7 +116,7 @@ namespace NPOI.POIFS.Crypt.Agile
                     certList.Add(ace);
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new EncryptedDocumentException("can't parse X509 certificate", e);
             }
@@ -132,7 +132,7 @@ namespace NPOI.POIFS.Crypt.Agile
 
         protected void SetSalt(byte[] salt)
         {
-            if (salt == null || salt.Length != CipherAlgorithm.blockSize)
+            if(salt == null || salt.Length != CipherAlgorithm.blockSize)
             {
                 throw new EncryptedDocumentException("invalid verifier salt");
             }

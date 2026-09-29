@@ -30,7 +30,7 @@ namespace NPOI.Util
     public class RecordFormatException
         : RuntimeException
     {
-        public RecordFormatException(String exception):
+        public RecordFormatException(String exception) :
             base(exception)
         {
         }
@@ -41,7 +41,7 @@ namespace NPOI.Util
 
         }
 
-        public RecordFormatException(Exception ex):
+        public RecordFormatException(Exception ex) :
             base(ex)
         {
         }
@@ -56,7 +56,7 @@ namespace NPOI.Util
          */
         public static void Check(bool assertTrue, String message)
         {
-            if (! assertTrue)
+            if(!assertTrue)
             {
                 throw new RecordFormatException(message);
             }

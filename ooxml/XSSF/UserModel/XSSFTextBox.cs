@@ -172,5 +172,3 @@ namespace NPOI.XSSF.UserModel
         //}
     }
 }
-
-

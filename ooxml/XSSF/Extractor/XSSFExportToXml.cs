@@ -15,18 +15,18 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using NPOI.XSSF.UserModel;
-using System.Xml;
-using System.Collections.Generic;
-using System.IO;
-using NPOI.XSSF.UserModel.Helpers;
-using System.Text.RegularExpressions;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
-using System.Text;
 using NPOI.SS.Util;
 using NPOI.Util;
+using NPOI.XSSF.UserModel;
+using NPOI.XSSF.UserModel.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml;
 namespace NPOI.XSSF.Extractor
 {
 
@@ -106,9 +106,9 @@ namespace NPOI.XSSF.Extractor
 
             XmlElement root = null;
 
-            if (IsNamespaceDeclared())
+            if(IsNamespaceDeclared())
             {
-                root = doc.CreateElement(rootElement,this.GetNamespace());
+                root = doc.CreateElement(rootElement, this.GetNamespace());
             }
             else
             {
@@ -121,12 +121,12 @@ namespace NPOI.XSSF.Extractor
             Dictionary<String, XSSFSingleXmlCell> SingleXmlCellsMappings = new Dictionary<String, XSSFSingleXmlCell>();
             Dictionary<String, XSSFTable> tableMappings = new Dictionary<String, XSSFTable>();
 
-            foreach (XSSFSingleXmlCell simpleXmlCell in SingleXMLCells)
+            foreach(XSSFSingleXmlCell simpleXmlCell in SingleXMLCells)
             {
                 xpaths.Add(simpleXmlCell.GetXpath());
                 SingleXmlCellsMappings[simpleXmlCell.GetXpath()] = simpleXmlCell;
             }
-            foreach (XSSFTable table in tables)
+            foreach(XSSFTable table in tables)
             {
                 String commonXPath = table.GetCommonXpath();
                 xpaths.Add(commonXPath);
@@ -136,28 +136,28 @@ namespace NPOI.XSSF.Extractor
 
             xpaths.Sort();
 
-            foreach (String xpath in xpaths)
+            foreach(String xpath in xpaths)
             {
 
                 XSSFSingleXmlCell simpleXmlCell;
-                if (SingleXmlCellsMappings.TryGetValue(xpath, out XSSFSingleXmlCell mapping))
+                if(SingleXmlCellsMappings.TryGetValue(xpath, out XSSFSingleXmlCell mapping))
                     simpleXmlCell = mapping;
                 else
                     simpleXmlCell=null;
                 XSSFTable table;
-                if (tableMappings.TryGetValue(xpath, out XSSFTable tableMapping))
+                if(tableMappings.TryGetValue(xpath, out XSSFTable tableMapping))
                     table = tableMapping;
                 else
                     table = null;
 
-                if (!Regex.IsMatch(xpath, ".*\\[.*"))
+                if(!Regex.IsMatch(xpath, ".*\\[.*"))
                 {
 
                     // Exports elements and attributes mapped with simpleXmlCell
-                    if (simpleXmlCell != null)
+                    if(simpleXmlCell != null)
                     {
                         XSSFCell cell = (XSSFCell)simpleXmlCell.GetReferencedCell();
-                        if (cell != null)
+                        if(cell != null)
                         {
                             XmlNode currentNode = GetNodeByXPath(xpath, doc.FirstChild, doc, false);
                             XSSFExportToXml.mapCellOnNode(cell, currentNode);
@@ -165,7 +165,7 @@ namespace NPOI.XSSF.Extractor
                     }
 
                     // Exports elements and attributes mapped with tables
-                    if (table != null)
+                    if(table != null)
                     {
 
                         List<XSSFTableColumn> tableColumns = table.GetColumns();
@@ -178,7 +178,7 @@ namespace NPOI.XSSF.Extractor
 
                         int endRow = table.EndCellReference.Row;
 
-                        for (int i = startRow; i <= endRow; i++)
+                        for(int i = startRow; i <= endRow; i++)
                         {
                             XSSFRow row = (XSSFRow)sheet.GetRow(i);
 
@@ -186,13 +186,13 @@ namespace NPOI.XSSF.Extractor
 
                             short startColumnIndex = table.StartCellReference.Col;
 
-                            foreach (XSSFTableColumn tableColumn in tableColumns)
+                            foreach(XSSFTableColumn tableColumn in tableColumns)
                             {
                                 XSSFCell cell = (XSSFCell)row.GetCell(startColumnIndex + tableColumn.ColumnIndex);
-                                if (cell != null)
+                                if(cell != null)
                                 {
                                     XSSFXmlColumnPr xmlColumnPr = tableColumn.GetXmlColumnPr();
-                                    if (xmlColumnPr != null)
+                                    if(xmlColumnPr != null)
                                     {
                                         String localXPath = xmlColumnPr.LocalXPath;
                                         XmlNode currentNode = GetNodeByXPath(localXPath,tableRootNode,doc,false);
@@ -212,14 +212,14 @@ namespace NPOI.XSSF.Extractor
             }
 
             bool isValid = true;
-            if (validate)
+            if(validate)
             {
                 isValid = IsValid(doc);
             }
 
 
 
-            if (isValid)
+            if(isValid)
             {
 
                 /////////////////
@@ -229,7 +229,7 @@ namespace NPOI.XSSF.Extractor
                 settings.Indent=true;
                 settings.Encoding=Encoding.GetEncoding(encoding);
                 //create string from xml tree
-                using (XmlWriter xmlWriter = XmlWriter.Create(os, settings))
+                using(XmlWriter xmlWriter = XmlWriter.Create(os, settings))
                 {
                     doc.WriteTo(xmlWriter);
                 }
@@ -273,12 +273,18 @@ namespace NPOI.XSSF.Extractor
         {
 
             String value = "";
-            switch (cell.CellType)
+            switch(cell.CellType)
             {
 
-                case CellType.String: value = cell.StringCellValue; break;
-                case CellType.Boolean: value += cell.BooleanCellValue; break;
-                case CellType.Error: value = cell.ErrorCellString; break;
+                case CellType.String:
+                    value = cell.StringCellValue;
+                    break;
+                case CellType.Boolean:
+                    value += cell.BooleanCellValue;
+                    break;
+                case CellType.Error:
+                    value = cell.ErrorCellString;
+                    break;
                 case CellType.Formula:
                     if(cell.CachedFormulaResultType== CellType.String)
                     {
@@ -313,7 +319,7 @@ namespace NPOI.XSSF.Extractor
                 default:
                     break;
             }
-            if (node is XmlElement currentElement)
+            if(node is XmlElement currentElement)
             {
                 currentElement.InnerText = value;
             }
@@ -325,7 +331,7 @@ namespace NPOI.XSSF.Extractor
 
         private static String RemoveNamespace(String elementName)
         {
-            return Regex.IsMatch(elementName,".*:.*") ? elementName.Split(':')[1] : elementName;
+            return Regex.IsMatch(elementName, ".*:.*") ? elementName.Split(':')[1] : elementName;
         }
 
         private static String GetFormattedDate(XSSFCell cell)
@@ -342,24 +348,24 @@ namespace NPOI.XSSF.Extractor
 
             XmlNode currentNode = rootNode;
             // The first token is empty, the second is the root node
-            for (int i = 2; i < xpathTokens.Length; i++)
+            for(int i = 2; i < xpathTokens.Length; i++)
             {
 
                 String axisName = RemoveNamespace(xpathTokens[i]);
 
 
-                if (!axisName.StartsWith('@'))
+                if(!axisName.StartsWith('@'))
                 {
 
                     XmlNodeList list = currentNode.ChildNodes;
 
                     XmlNode selectedNode = null;
-                    if (!(CreateMultipleInstances && i == xpathTokens.Length - 1))
+                    if(!(CreateMultipleInstances && i == xpathTokens.Length - 1))
                     {
                         // select the last child node only if we need to map to a single cell
                         selectedNode = selectNode(axisName, list);
                     }
-                    if (selectedNode == null)
+                    if(selectedNode == null)
                     {
                         selectedNode = CreateElement(doc, currentNode, axisName);
                     }
@@ -382,7 +388,7 @@ namespace NPOI.XSSF.Extractor
             String attributeName = axisName.Substring(1);
             XmlAttributeCollection attributesMap = currentNode.Attributes;
             XmlNode attribute = attributesMap.GetNamedItem(attributeName);
-            if (attribute == null)
+            if(attribute == null)
             {
                 attribute = doc.CreateAttribute(attributeName);
                 attributesMap.SetNamedItem(attribute);
@@ -393,7 +399,7 @@ namespace NPOI.XSSF.Extractor
         private XmlNode CreateElement(XmlDocument doc, XmlNode currentNode, String axisName)
         {
             XmlNode selectedNode;
-            if (IsNamespaceDeclared())
+            if(IsNamespaceDeclared())
             {
                 selectedNode = doc.CreateElement(axisName, this.GetNamespace());
             }
@@ -408,10 +414,10 @@ namespace NPOI.XSSF.Extractor
         private static XmlNode selectNode(String axisName, XmlNodeList list)
         {
             XmlNode selectedNode = null;
-            for (int j = 0; j < list.Count; j++)
+            for(int j = 0; j < list.Count; j++)
             {
                 XmlNode node = list[j];
-                if (node.Name.Equals(axisName))
+                if(node.Name.Equals(axisName))
                 {
                     selectedNode = node;
                     break;
@@ -454,26 +460,27 @@ namespace NPOI.XSSF.Extractor
             XmlNode localComplexTypeRootNode = doc.DocumentElement;
 
 
-            for (int i = 1; i < minLength; i++)
+            for(int i = 1; i < minLength; i++)
             {
 
                 String leftElementName = leftTokens[i];
                 String rightElementName = rightTokens[i];
 
-                if (leftElementName.Equals(rightElementName))
+                if(leftElementName.Equals(rightElementName))
                 {
-                    localComplexTypeRootNode = GetComplexTypeForElement(leftElementName,doc.DocumentElement, localComplexTypeRootNode);
+                    localComplexTypeRootNode = GetComplexTypeForElement(leftElementName, doc.DocumentElement, localComplexTypeRootNode);
                 }
                 else
                 {
                     int leftIndex = XSSFExportToXml.IndexOfElementInComplexType(leftElementName, localComplexTypeRootNode);
                     int rightIndex = XSSFExportToXml.IndexOfElementInComplexType(rightElementName, localComplexTypeRootNode);
-                    if (leftIndex != -1 && rightIndex != -1)
+                    if(leftIndex != -1 && rightIndex != -1)
                     {
-                        if (leftIndex < rightIndex)
+                        if(leftIndex < rightIndex)
                         {
                             result = -1;
-                        } if (leftIndex > rightIndex)
+                        }
+                        if(leftIndex > rightIndex)
                         {
                             result = 1;
                         }
@@ -502,7 +509,8 @@ namespace NPOI.XSSF.Extractor
 
             while(node != null)
             {
-                if(node is XmlElement && "element".Equals(node.LocalName)) {
+                if(node is XmlElement && "element".Equals(node.LocalName))
+                {
                     XmlNode element = GetNameOrRefElement(node);
                     if(element.Value.Equals(elementNameWithoutNamespace))
                     {

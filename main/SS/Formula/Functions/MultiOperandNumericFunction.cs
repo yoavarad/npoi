@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
@@ -49,12 +49,12 @@ namespace NPOI.SS.Formula.Functions
                 double[] values = GetNumberArray(args);
                 d = Evaluate(values);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
 
-            if (Double.IsNaN(d) || Double.IsInfinity(d))
+            if(Double.IsNaN(d) || Double.IsInfinity(d))
                 return ErrorEval.NUM_ERROR;
 
             return new NumberEval(d);
@@ -73,7 +73,7 @@ namespace NPOI.SS.Formula.Functions
 
             public double[] ToArray()
             {
-                if (_Count < 1)
+                if(_Count < 1)
                 {
                     return EMPTY_DOUBLE_ARRAY;
                 }
@@ -92,7 +92,7 @@ namespace NPOI.SS.Formula.Functions
 
             private void EnsureCapacity(int reqSize)
             {
-                if (reqSize > _array.Length)
+                if(reqSize > _array.Length)
                 {
                     int newSize = reqSize * 3 / 2; // grow with 50% extra
                     double[] newArr = new double[newSize];
@@ -137,91 +137,93 @@ namespace NPOI.SS.Formula.Functions
      */
         private void CollectValues(ValueEval operand, DoubleList temp)
         {
-            if (operand is ThreeDEval eval)
+            if(operand is ThreeDEval eval)
             {
-                for (int sIx = eval.FirstSheetIndex; sIx <= eval.LastSheetIndex; sIx++)
+                for(int sIx = eval.FirstSheetIndex; sIx <= eval.LastSheetIndex; sIx++)
                 {
                     int width = eval.Width;
                     int height = eval.Height;
-                    for (int rrIx = 0; rrIx < height; rrIx++)
+                    for(int rrIx = 0; rrIx < height; rrIx++)
                     {
-                        for (int rcIx = 0; rcIx < width; rcIx++)
+                        for(int rcIx = 0; rcIx < width; rcIx++)
                         {
                             ValueEval ve = eval.GetValue(sIx, rrIx, rcIx);
-                            if (!IsSubtotalCounted && eval.IsSubTotal(rrIx, rcIx)) continue;
+                            if(!IsSubtotalCounted && eval.IsSubTotal(rrIx, rcIx))
+                                continue;
                             CollectValue(ve, true, temp);
                         }
                     }
                 }
                 return;
             }
-            if (operand is TwoDEval ae)
+            if(operand is TwoDEval ae)
             {
                 int width = ae.Width;
                 int height = ae.Height;
-                for (int rrIx = 0; rrIx < height; rrIx++)
+                for(int rrIx = 0; rrIx < height; rrIx++)
                 {
-                    for (int rcIx = 0; rcIx < width; rcIx++)
+                    for(int rcIx = 0; rcIx < width; rcIx++)
                     {
                         ValueEval ve = ae.GetValue(rrIx, rcIx);
-                        if (!IsSubtotalCounted && ae.IsSubTotal(rrIx, rcIx)) continue;
+                        if(!IsSubtotalCounted && ae.IsSubTotal(rrIx, rcIx))
+                            continue;
                         CollectValue(ve, true, temp);
                     }
                 }
                 return;
             }
-            if (operand is RefEval re)
+            if(operand is RefEval re)
             {
-                for (int sIx = re.FirstSheetIndex; sIx <= re.LastSheetIndex; sIx++)
+                for(int sIx = re.FirstSheetIndex; sIx <= re.LastSheetIndex; sIx++)
                 {
                     CollectValue(re.GetInnerValueEval(sIx), true, temp);
                 }
                 return;
             }
-            CollectValue((ValueEval)operand, false, temp);
+            CollectValue((ValueEval) operand, false, temp);
         }
         private void CollectValue(ValueEval ve, bool isViaReference, DoubleList temp)
         {
-            if (ve == null)
+            if(ve == null)
             {
                 throw new ArgumentException("ve must not be null");
             }
-            if (ve is BoolEval boolEval)
+            if(ve is BoolEval boolEval)
             {
-                if (!isViaReference || _isReferenceBoolCounted)
+                if(!isViaReference || _isReferenceBoolCounted)
                 {
                     temp.Add(boolEval.NumberValue);
                 }
                 return;
             }
-            if (ve is NumberEval ne)
+            if(ve is NumberEval ne)
             {
                 temp.Add(ne.NumberValue);
                 return;
             }
-            if (ve is StringEval eval)
+            if(ve is StringEval eval)
             {
-                if (isViaReference)
+                if(isViaReference)
                 {
                     // ignore all ref strings
                     return;
                 }
                 String s = eval.StringValue;
                 Double d = OperandResolver.ParseDouble(s);
-                if (double.IsNaN(d))
+                if(double.IsNaN(d))
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
                 temp.Add(d);
                 return;
             }
-            if (ve is ErrorEval errorEval)
+            if(ve is ErrorEval errorEval)
             {
                 throw new EvaluationException(errorEval);
             }
-            if (ve == BlankEval.instance)
+            if(ve == BlankEval.instance)
             {
-                if (_isBlankCounted)
+                if(_isBlankCounted)
                 {
                     temp.Add(0.0);
                 }
@@ -241,13 +243,13 @@ namespace NPOI.SS.Formula.Functions
          */
         protected double[] GetNumberArray(ValueEval[] operands)
         {
-            if (operands.Length > MaxNumOperands)
+            if(operands.Length > MaxNumOperands)
             {
                 throw EvaluationException.InvalidValue();
             }
             DoubleList retval = new DoubleList();
 
-            for (int i = 0, iSize = operands.Length; i < iSize; i++)
+            for(int i = 0, iSize = operands.Length; i < iSize; i++)
             {
                 CollectValues(operands[i], retval);
             }
@@ -260,26 +262,26 @@ namespace NPOI.SS.Formula.Functions
         protected static bool AreSubArraysConsistent(double[][] values)
         {
 
-            if (values == null || values.Length < 1)
+            if(values == null || values.Length < 1)
             {
                 // TODO this doesn't seem right.  Fix or Add comment.
                 return true;
             }
 
-            if (values[0] == null)
+            if(values[0] == null)
             {
                 return false;
             }
             int outerMax = values.Length;
             int innerMax = values[0].Length;
-            for (int i = 1; i < outerMax; i++)
+            for(int i = 1; i < outerMax; i++)
             { // note - 'i=1' start at second sub-array
                 double[] subArr = values[i];
-                if (subArr == null)
+                if(subArr == null)
                 {
                     return false;
                 }
-                if (innerMax != subArr.Length)
+                if(innerMax != subArr.Length)
                 {
                     return false;
                 }

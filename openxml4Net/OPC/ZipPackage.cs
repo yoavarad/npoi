@@ -1,4 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Zip;
 using NPOI.Openxml4Net.Exceptions;
 using NPOI.OpenXml4Net.Exceptions;
 using NPOI.OpenXml4Net.OPC.Internal;
@@ -41,7 +41,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 this.contentTypeManager = new ZipContentTypeManager(null, this);
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 logger.Log(POILogger.WARN, "Could not parse ZipPackage", e);
             }
@@ -96,10 +96,10 @@ namespace NPOI.OpenXml4Net.OPC
                 ZipFile zipFile = ZipHelper.OpenZipFile(file);
                 ze = new ZipFileZipEntrySource(zipFile);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 // probably not happening with write access - not sure how to handle the default read-write access ...
-                if (access == PackageAccess.WRITE)
+                if(access == PackageAccess.WRITE)
                 {
                     throw new InvalidOperationException("Can't open the specified file: '" + file + "'", e);
                 }
@@ -118,27 +118,27 @@ namespace NPOI.OpenXml4Net.OPC
                     zis = ZipHelper.OpenZipStream(fis);
                     ze = new ZipInputStreamZipEntrySource(zis);
                 }
-                catch (IOException e2)
+                catch(IOException e2)
                 {
-                    if (zis != null)
+                    if(zis != null)
                     {
                         try
                         {
                             zis.Close();
                         }
-                        catch (IOException)
+                        catch(IOException)
                         {
                             throw new InvalidOperationException("Can't open the specified file: '" + file + "'" +
                                     " and couldn't close the file input stream", e);
                         }
                     }
-                    else if (fis != null)
+                    else if(fis != null)
                     {
                         try
                         {
                             fis.Close();
                         }
-                        catch (IOException)
+                        catch(IOException)
                         {
                             throw new InvalidOperationException("Can't open the specified file: '" + file + "'" +
                                     " and couldn't close the file input stream", e);
@@ -177,14 +177,14 @@ namespace NPOI.OpenXml4Net.OPC
          */
         protected override PackagePart[] GetPartsImpl()
         {
-            if (this.partList == null)
+            if(this.partList == null)
             {
                 // The package has just been created, we create an empty part
                 // list.
                 this.partList = new PackagePartCollection();
             }
 
-            if (this.zipArchive == null)
+            if(this.zipArchive == null)
             {
                 PackagePart[] pp = new PackagePart[this.partList.Values.Count];
                 this.partList.Values.CopyTo(pp, 0);
@@ -192,10 +192,10 @@ namespace NPOI.OpenXml4Net.OPC
             }
             // First we need to parse the content type part
             IEnumerator entries = this.zipArchive.Entries;
-            while (entries.MoveNext())
+            while(entries.MoveNext())
             {
                 ZipEntry entry = (ZipEntry)entries.Current;
-                if (entry.Name.ToLower().Equals(
+                if(entry.Name.ToLower().Equals(
                         ContentTypeManager.CONTENT_TYPES_PART_NAME.ToLower()))
                 {
                     try
@@ -203,7 +203,7 @@ namespace NPOI.OpenXml4Net.OPC
                         this.contentTypeManager = new ZipContentTypeManager(
                                 ZipArchive.GetInputStream(entry), this);
                     }
-                    catch (IOException e)
+                    catch(IOException e)
                     {
                         throw new InvalidFormatException(e.Message, e);
                     }
@@ -212,33 +212,33 @@ namespace NPOI.OpenXml4Net.OPC
             }
 
             // At this point, we should have loaded the content type part
-            if (this.contentTypeManager == null)
+            if(this.contentTypeManager == null)
             {
                 int numEntries = 0;
                 // Is it a different Zip-based format?
                 bool hasMimetype = false;
                 bool hasSettingsXML = false;
                 entries = this.zipArchive.Entries;
-                while (entries.MoveNext())
+                while(entries.MoveNext())
                 {
                     ZipEntry entry = entries.Current as ZipEntry;
-                    if (entry.Name.Equals(MIMETYPE))
+                    if(entry.Name.Equals(MIMETYPE))
                     {
                         hasMimetype = true;
                     }
-                    if (entry.Name.Equals(SETTINGS_XML))
+                    if(entry.Name.Equals(SETTINGS_XML))
                     {
                         hasSettingsXML = true;
                     }
                     numEntries++;
                 }
-                if (hasMimetype && hasSettingsXML)
+                if(hasMimetype && hasSettingsXML)
                 {
                     throw new ODFNotOfficeXmlFileException(
                        "The supplied data appears to be in ODF (Open Document) Format. " +
                        "Formats like these (eg ODS, ODP) are not supported, try Apache ODFToolkit");
                 }
-                if (numEntries == 0)
+                if(numEntries == 0)
                 {
                     throw new NotOfficeXmlFileException(
                        "No valid entries or contents found, this is not a valid OOXML " +
@@ -254,22 +254,23 @@ namespace NPOI.OpenXml4Net.OPC
             //  parts, otherwise we might create a part before
             //  its relationship exists, and then it won't tie up)
             entries = this.zipArchive.Entries;
-            while (entries.MoveNext())
+            while(entries.MoveNext())
             {
                 ZipEntry entry = (ZipEntry)entries.Current;
                 PackagePartName partName = BuildPartName(entry);
-                if (partName == null) continue;
+                if(partName == null)
+                    continue;
 
                 // Only proceed for Relationships at this stage
                 String contentType = contentTypeManager.GetContentType(partName);
-                if (contentType != null && contentType.Equals(ContentTypes.RELATIONSHIPS_PART))
+                if(contentType != null && contentType.Equals(ContentTypes.RELATIONSHIPS_PART))
                 {
                     try
                     {
                         PackagePart part = new ZipPackagePart(this, entry, partName, contentType);
                         partList[partName] = part;
                     }
-                    catch (InvalidOperationException e)
+                    catch(InvalidOperationException e)
                     {
                         throw new InvalidFormatException(e.Message, e);
                     }
@@ -278,25 +279,26 @@ namespace NPOI.OpenXml4Net.OPC
 
             // Then we can go through all the other parts
             entries = this.zipArchive.Entries;
-            while (entries.MoveNext())
+            while(entries.MoveNext())
             {
                 ZipEntry entry = entries.Current as ZipEntry;
                 PackagePartName partName = BuildPartName(entry);
-                if (partName == null) continue;
+                if(partName == null)
+                    continue;
 
                 String contentType = contentTypeManager.GetContentType(partName);
-                if (contentType != null && contentType.Equals(ContentTypes.RELATIONSHIPS_PART))
+                if(contentType != null && contentType.Equals(ContentTypes.RELATIONSHIPS_PART))
                 {
                     // Already handled
                 }
-                else if (contentType != null)
+                else if(contentType != null)
                 {
                     try
                     {
                         PackagePart part = new ZipPackagePart(this, entry, partName, contentType);
                         partList[partName] = part;
                     }
-                    catch (InvalidOperationException e)
+                    catch(InvalidOperationException e)
                     {
                         throw new InvalidFormatException(e.Message, e);
                     }
@@ -324,7 +326,7 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 // We get an error when we parse [Content_Types].xml
                 // because it's not a valid URI.
-                if (entry.Name.ToLower().Equals(
+                if(entry.Name.ToLower().Equals(
                         ContentTypeManager.CONTENT_TYPES_PART_NAME.ToLower()))
                 {
                     return null;
@@ -356,10 +358,10 @@ namespace NPOI.OpenXml4Net.OPC
         protected override PackagePart CreatePartImpl(PackagePartName partName,
                 String contentType, bool loadRelationships)
         {
-            if (contentType == null)
+            if(contentType == null)
                 throw new ArgumentException("contentType");
 
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("partName");
 
             try
@@ -367,7 +369,7 @@ namespace NPOI.OpenXml4Net.OPC
                 return new MemoryPackagePart(this, partName, contentType,
                         loadRelationships);
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 // TODO - don't use system.err.  Is it valid to return null when this exception occurs?
                 //System.err.println(e);
@@ -384,7 +386,7 @@ namespace NPOI.OpenXml4Net.OPC
 
         protected override void RemovePartImpl(PackagePartName partName)
         {
-            if (partName == null)
+            if(partName == null)
                 throw new ArgumentException("partUri");
         }
 
@@ -409,10 +411,10 @@ namespace NPOI.OpenXml4Net.OPC
             Flush();
 
             // Save the content
-            if (this.originalPackagePath != null
+            if(this.originalPackagePath != null
                     && !"".Equals(this.originalPackagePath))
             {
-                if (File.Exists(this.originalPackagePath))
+                if(File.Exists(this.originalPackagePath))
                 {
                     // Case of a package previously open
                     string tempfilePath=GenerateTempFileName(FileHelper
@@ -428,7 +430,7 @@ namespace NPOI.OpenXml4Net.OPC
                     {
                         try
                         {
-                            if (zipArchive != null)
+                            if(zipArchive != null)
                                 this.zipArchive.Close(); // Close the zip archive to be
                                                          // able to delete it
                             FileHelper.CopyFile(fi.FullName, this.originalPackagePath);
@@ -470,7 +472,7 @@ namespace NPOI.OpenXml4Net.OPC
             + "OpenXml4Net" + System.DateTime.Now.Ticks;
 
                 tmpFilename = new FileInfo(path);
-            } while (File.Exists(path));
+            } while(File.Exists(path));
 
             return tmpFilename.Name; //FileHelper.getFilename(tmpFilename.Name);
         }
@@ -484,10 +486,10 @@ namespace NPOI.OpenXml4Net.OPC
         {
             try
             {
-                if (this.zipArchive != null)
+                if(this.zipArchive != null)
                     this.zipArchive.Close();
             }
-            catch (IOException)
+            catch(IOException)
             {
                 // Do nothing, user dont have to know
             }
@@ -503,7 +505,7 @@ namespace NPOI.OpenXml4Net.OPC
 
         protected override PackagePart GetPartImpl(PackagePartName partName)
         {
-            if (partList.TryGetValue(partName, out PackagePart impl))
+            if(partList.TryGetValue(partName, out PackagePart impl))
             {
                 return impl;
             }
@@ -528,7 +530,7 @@ namespace NPOI.OpenXml4Net.OPC
 
             try
             {
-                if (outputStream is not ZipOutputStream stream)
+                if(outputStream is not ZipOutputStream stream)
                     zos = new ZipOutputStream(outputStream);
                 else
                     zos = stream;
@@ -536,7 +538,7 @@ namespace NPOI.OpenXml4Net.OPC
                 zos.UseZip64 = UseZip64.Off;
                 // If the core properties part does not exist in the part list,
                 // we save it as well
-                if (this.GetPartsByRelationshipType(PackageRelationshipTypes.CORE_PROPERTIES).Count == 0 &&
+                if(this.GetPartsByRelationshipType(PackageRelationshipTypes.CORE_PROPERTIES).Count == 0 &&
                 this.GetPartsByRelationshipType(PackageRelationshipTypes.CORE_PROPERTIES_ECMA376).Count == 0)
                 {
                     logger.Log(POILogger.DEBUG, "Save core properties part");
@@ -552,7 +554,7 @@ namespace NPOI.OpenXml4Net.OPC
                             .PartName.URI, TargetMode.Internal,
                             PackageRelationshipTypes.CORE_PROPERTIES, null);
                     // ... and the content if it has not been added yet.
-                    if (!this.contentTypeManager
+                    if(!this.contentTypeManager
                             .IsContentTypeRegister(ContentTypes.CORE_PROPERTIES_PART))
                     {
                         this.contentTypeManager.AddContentType(
@@ -572,19 +574,19 @@ namespace NPOI.OpenXml4Net.OPC
                         zos);
 
                 // Save parts.
-                foreach (PackagePart part in GetParts())
+                foreach(PackagePart part in GetParts())
                 {
                     // If the part is a relationship part, we don't save it, it's
                     // the source part that will do the job.
-                    if (part.IsRelationshipPart)
+                    if(part.IsRelationshipPart)
                         continue;
 
                     logger.Log(POILogger.DEBUG, "Save part '"
                             + ZipHelper.GetZipItemNameFromOPCName(part
                                     .PartName.Name) + "'");
-                    if (partMarshallers.TryGetValue(part._contentType, out PartMarshaller marshaller))
+                    if(partMarshallers.TryGetValue(part._contentType, out PartMarshaller marshaller))
                     {
-                        if (!marshaller.Marshall(part, zos))
+                        if(!marshaller.Marshall(part, zos))
                         {
                             throw new OpenXml4NetException(
                                     "The part "
@@ -595,7 +597,7 @@ namespace NPOI.OpenXml4Net.OPC
                     }
                     else
                     {
-                        if (!defaultPartMarshaller.Marshall(part, zos))
+                        if(!defaultPartMarshaller.Marshall(part, zos))
                             throw new OpenXml4NetException(
                                     "The part "
                                             + part.PartName.URI
@@ -604,17 +606,17 @@ namespace NPOI.OpenXml4Net.OPC
                     }
                 }
                 //Finishes writing the contents of the ZIP output stream without closing the underlying stream.
-                if (isStream)
+                if(isStream)
                     zos.Finish();   //instead of use zos.Close, it will close the stream
                 else
                     zos.Close();
             }
-            catch (OpenXML4NetRuntimeException)
+            catch(OpenXML4NetRuntimeException)
             {
                 // no need to wrap this type of Exception
                 throw;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new OpenXML4NetRuntimeException(
                     "Fail to save: an error occurs while saving the package : "

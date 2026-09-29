@@ -17,14 +17,13 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-
-    using NPOI.HSSF.Util;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.SS.Util;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record;
+    using NPOI.HSSF.Util;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF.Record;
 
     /**
      * Tests the serialization and deserialization of the TableRecord
@@ -35,10 +34,10 @@ namespace TestCases.HSSF.Record
     public class TestTableRecord
     {
         byte[] header = new byte[] {
-			0x36, 02, 0x10, 00, // sid=x236, 16 bytes long
+            0x36, 02, 0x10, 00, // sid=x236, 16 bytes long
 	};
         byte[] data = new byte[] {
-			03, 00,  // from row 3 
+            03, 00,  // from row 3 
 			8, 00,   // to row 8
 			04,      // from col 4
 			06,      // to col 6
@@ -88,7 +87,7 @@ namespace TestCases.HSSF.Record
 
             CellRangeAddress8Bit crab = new CellRangeAddress8Bit(3, 8, 4, 6);
             TableRecord record = new TableRecord(crab);
-            record.Flags = (/*setter*/(byte)0);
+            record.Flags = (/*setter*/(byte) 0);
             record.RowInputRow = (/*setter*/4);
             record.ColInputRow = (/*setter*/1);
             record.RowInputCol = (/*setter*/0x4076);
@@ -96,7 +95,7 @@ namespace TestCases.HSSF.Record
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

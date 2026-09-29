@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 
@@ -21,19 +21,19 @@ public class RangeValuesBenchmark
         var workbook = new XSSFWorkbook();
         var worksheet = workbook.CreateSheet("poi");
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.CreateRow(r);
-            for (var c = 0; c < ColumnCount; c++)
+            for(var c = 0; c < ColumnCount; c++)
             {
                 row.CreateCell(c).SetCellValue(r + c);
             }
         }
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.GetRow(r);
-            for (var c = 0; c < ColumnCount; c++)
+            for(var c = 0; c < ColumnCount; c++)
             {
                 var d = row.GetCell(c).NumericCellValue;
             }
@@ -51,19 +51,19 @@ public class RangeValuesBenchmark
         var random = new Random();
         const string alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.CreateRow(r);
-            for (var c = 0; c < ColumnCount; c++)
+            for(var c = 0; c < ColumnCount; c++)
             {
                 row.CreateCell(c).SetCellValue(alphaNumericString[random.Next(25)].ToString());
             }
         }
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.GetRow(r);
-            for (var c = 0; c < ColumnCount; c++)
+            for(var c = 0; c < ColumnCount; c++)
             {
                 var s = row.GetCell(c).StringCellValue;
             }
@@ -78,19 +78,19 @@ public class RangeValuesBenchmark
         var workbook = new XSSFWorkbook();
         var worksheet = workbook.CreateSheet("poi");
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.CreateRow(r);
-            for (var c = 0; c < ColumnCount; c++)
+            for(var c = 0; c < ColumnCount; c++)
             {
                 row.CreateCell(c).SetCellValue(DateTime.Now);
             }
         }
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.GetRow(r);
-            for (var c = 0; c < ColumnCount; c++)
+            for(var c = 0; c < ColumnCount; c++)
             {
                 var d = row.GetCell(c).DateCellValue;
             }
@@ -105,19 +105,19 @@ public class RangeValuesBenchmark
         var workbook = new XSSFWorkbook();
         var worksheet = workbook.CreateSheet("poi");
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.CreateRow(r);
-            for (var c = 0; c < 2; c++)
+            for(var c = 0; c < 2; c++)
             {
                 row.CreateCell(c).SetCellValue(r + c);
             }
         }
 
-        for (var r = 0; r < RowCount; r++)
+        for(var r = 0; r < RowCount; r++)
         {
             var row = worksheet.GetRow(r);
-            for (var c = 2; c < ColumnCount + 2; c++)
+            for(var c = 2; c < ColumnCount + 2; c++)
             {
                 var cell = row.CreateCell(c);
                 var reference1 = new CellReference(r, c - 2);

@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.Record.CF
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record.CF;
     using NPOI.HSSF.Util;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests CellRange operations.
@@ -52,7 +53,7 @@ namespace TestCases.HSSF.Record.CF
         /*box10x10   */ {false,      false,    false,    true ,    true ,      false,  true},	
         /*box9x9     */ {false,      false,    false,    false,    true ,      false, false},	
         /*box10to20c */ {false,      false,    false,    false,    false,      true ,  true},	
-        /*oneCell    */ {false,      false,    false,    false,    false,      false,  true},	
+        /*oneCell    */ {false,      false,    false,    false,    false,      false,  true},
         };
 
         /**
@@ -73,9 +74,9 @@ namespace TestCases.HSSF.Record.CF
         public void TestContainsMethod()
         {
             CellRangeAddress[] ranges = sampleRanges;
-            for (int i = 0; i != ranges.Length; i++)
+            for(int i = 0; i != ranges.Length; i++)
             {
-                for (int j = 0; j != ranges.Length; j++)
+                for(int j = 0; j != ranges.Length; j++)
                 {
                     bool expectedResult = containsExpectedResults[i, j];
                     ClassicAssert.AreEqual(expectedResult, CellRangeUtil.Contains(ranges[i], ranges[j]), "(" + i + "," + j + "): ");
@@ -176,9 +177,9 @@ namespace TestCases.HSSF.Record.CF
             {
                 cr = CreateCR(9, -1, 1, 1); // $B$65536
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if (e.Message.StartsWith("invalid cell range"))
+                if(e.Message.StartsWith("invalid cell range"))
                 {
                     throw new AssertionException("Identified bug 44739");
                 }
@@ -240,15 +241,15 @@ namespace TestCases.HSSF.Record.CF
             CellRangeTest(new String[] { "A1:C3", "B2:D2" }, new String[] { "A1:C3", "B2:D2" });
             CellRangeTest(new String[] { "C9:D30", "C7:C31" }, new String[] { "C9:D30", "C7:C31" });
         }
-    
-    //    public void testResolveRangeOverlap() {
-    //        resolveRangeOverlapTest("C1:D2", "C2:C3");
-    //    }
+
+        //    public void testResolveRangeOverlap() {
+        //        resolveRangeOverlapTest("C1:D2", "C2:C3");
+        //    }
 
         private void CellRangeTest(String[] input, params string[] expectedOutput)
         {
             CellRangeAddress[] inputArr = new CellRangeAddress[input.Length];
-            for (int i = 0; i < input.Length; i++)
+            for(int i = 0; i < input.Length; i++)
             {
                 inputArr[i] = CellRangeAddress.ValueOf(input[i]);
             }
@@ -256,18 +257,18 @@ namespace TestCases.HSSF.Record.CF
             VerifyExpectedResult(result, expectedOutput);
         }
 
-//    private void resolveRangeOverlapTest(String a, String b, String...expectedOutput) {
-//        CellRangeAddress rangeA = CellRangeAddress.valueOf(a);
-//        CellRangeAddress rangeB = CellRangeAddress.valueOf(b);
-//        CellRangeAddress[] result = CellRangeUtil.resolveRangeOverlap(rangeA, rangeB);
-//        verifyExpectedResult(result, expectedOutput);
-//    }
+        //    private void resolveRangeOverlapTest(String a, String b, String...expectedOutput) {
+        //        CellRangeAddress rangeA = CellRangeAddress.valueOf(a);
+        //        CellRangeAddress rangeB = CellRangeAddress.valueOf(b);
+        //        CellRangeAddress[] result = CellRangeUtil.resolveRangeOverlap(rangeA, rangeB);
+        //        verifyExpectedResult(result, expectedOutput);
+        //    }
 
         private void VerifyExpectedResult(CellRangeAddress[] result, params string[] expectedOutput)
         {
             ClassicAssert.AreEqual(expectedOutput.Length, result.Length,
                 "\nExpected: " + Arrays.ToString(expectedOutput) + "\nHad: " + Arrays.ToString(result));
-            for (int i = 0; i < expectedOutput.Length; i++)
+            for(int i = 0; i < expectedOutput.Length; i++)
             {
                 ClassicAssert.AreEqual(expectedOutput[i], result[i].FormatAsString(),
                     "\nExpected: " + Arrays.ToString(expectedOutput) + "\nHad: " + Arrays.ToString(result));

@@ -1,4 +1,4 @@
-﻿
+
 using System;
 namespace NPOI.SS.Formula.Eval
 {
@@ -11,7 +11,7 @@ namespace NPOI.SS.Formula.Eval
 
         protected RefEvalBase(ISheetRange sheetRange, int rowIndex, int columnIndex)
         {
-            if (sheetRange == null)
+            if(sheetRange == null)
             {
                 throw new ArgumentException("sheetRange must not be null");
             }

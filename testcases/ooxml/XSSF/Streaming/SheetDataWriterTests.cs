@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -18,7 +18,8 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.Streaming;
 using NPOI.XSSF.UserModel;
 using NSubstitute;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -47,11 +48,11 @@ namespace TestCases.XSSF.Streaming
         [TearDown]
         public void CleanUp()
         {
-            if (_objectToTest != null)
+            if(_objectToTest != null)
             {
                 _objectToTest.Dispose();
 
-                if (File.Exists(_objectToTest.TemporaryFilePath()))
+                if(File.Exists(_objectToTest.TemporaryFilePath()))
                     File.Delete(_objectToTest.TemporaryFilePath());
             }
 
@@ -216,7 +217,7 @@ namespace TestCases.XSSF.Streaming
         public void IfCellTypeIsBlankShouldWriteBlankCellXml()
         {
             _objectToTest = new SheetDataWriter();
-            _cell.CellStyle.Index.Returns((short)0);
+            _cell.CellStyle.Index.Returns((short) 0);
             _cell.CellType.Returns(CellType.Blank);
 
             _objectToTest.WriteCell(0, _cell);
@@ -233,7 +234,7 @@ namespace TestCases.XSSF.Streaming
         public void IfCellTypeIsFormulaShouldWriteFormulaCellXml()
         {
             _objectToTest = new SheetDataWriter();
-            _cell.CellStyle.Index.Returns((short)0);
+            _cell.CellStyle.Index.Returns((short) 0);
             _cell.CellType.Returns(CellType.Formula);
             _cell.CellFormula.Returns("SUM(A1:A3)");
             _cell.CachedFormulaResultType.Returns(CellType.Numeric);
@@ -253,7 +254,7 @@ namespace TestCases.XSSF.Streaming
         public void IfCellTypeIsNumericShouldWriteNumericCellXml()
         {
             _objectToTest = new SheetDataWriter();
-            _cell.CellStyle.Index.Returns((short)0);
+            _cell.CellStyle.Index.Returns((short) 0);
             _cell.CellType.Returns(CellType.Numeric);
             _cell.NumericCellValue.Returns(1);
 
@@ -271,7 +272,7 @@ namespace TestCases.XSSF.Streaming
         public void IfCellTypeIsBooleanTrueShouldWriteBooleanCellTrueXml()
         {
             _objectToTest = new SheetDataWriter();
-            _cell.CellStyle.Index.Returns((short)0);
+            _cell.CellStyle.Index.Returns((short) 0);
             _cell.CellType.Returns(CellType.Boolean);
             _cell.BooleanCellValue.Returns(true);
 
@@ -289,7 +290,7 @@ namespace TestCases.XSSF.Streaming
         public void IfCellTypeIsBooleanFalseShouldWriteBooleanCellFalseXml()
         {
             _objectToTest = new SheetDataWriter();
-            _cell.CellStyle.Index.Returns((short)0);
+            _cell.CellStyle.Index.Returns((short) 0);
             _cell.CellType.Returns(CellType.Boolean);
             _cell.BooleanCellValue.Returns(false);
 
@@ -307,9 +308,9 @@ namespace TestCases.XSSF.Streaming
         public void IfCellTypeIsErrorShouldWriteErrorCellXml()
         {
             _objectToTest = new SheetDataWriter();
-            _cell.CellStyle.Index.Returns((short)0);
+            _cell.CellStyle.Index.Returns((short) 0);
             _cell.CellType.Returns(CellType.Error);
-            _cell.ErrorCellValue.Returns((byte)0x00);
+            _cell.ErrorCellValue.Returns((byte) 0x00);
 
             _objectToTest.WriteCell(0, _cell);
             _objectToTest.Close();
@@ -325,7 +326,7 @@ namespace TestCases.XSSF.Streaming
         public void IfCellTypeIsStringShouldWriteStringCellXml()
         {
             _objectToTest = new SheetDataWriter();
-            _cell.CellStyle.Index.Returns((short)0);
+            _cell.CellStyle.Index.Returns((short) 0);
             _cell.CellType.Returns(CellType.String);
             _cell.StringCellValue.Returns("''<>\t\n\r&\"?         test:SLDFKj    ");
 

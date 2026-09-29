@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -46,7 +46,7 @@ namespace NPOI.Util
         public static BitField GetInstance(int mask)
         {
             BitField f = (BitField)instances[mask];
-            if (f == null)
+            if(f == null)
             {
                 f = new BitField(mask);
                 instances[mask] = f;

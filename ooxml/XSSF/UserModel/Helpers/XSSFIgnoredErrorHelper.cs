@@ -17,20 +17,20 @@
 
 namespace NPOI.XSSF.UserModel.Helpers
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * XSSF-specific code for working with ignored errors
      */
     public class XSSFIgnoredErrorHelper
     {
-        
+
         public static bool IsSet(IgnoredErrorType errorType, CT_IgnoredError error)
         {
-            switch (errorType)
+            switch(errorType)
             {
                 case IgnoredErrorType.CalculatedColumn:
                     return error.calculatedColumn;
@@ -57,7 +57,7 @@ namespace NPOI.XSSF.UserModel.Helpers
 
         public static void Set(IgnoredErrorType errorType, CT_IgnoredError error)
         {
-            switch (errorType)
+            switch(errorType)
             {
                 case IgnoredErrorType.CalculatedColumn:
                     error.calculatedColumn = true;
@@ -95,7 +95,7 @@ namespace NPOI.XSSF.UserModel.Helpers
         {
             err.sqref.Clear();
             err.sqref.Add(ref1);
-            foreach (IgnoredErrorType errType in ignoredErrorTypes)
+            foreach(IgnoredErrorType errType in ignoredErrorTypes)
             {
                 XSSFIgnoredErrorHelper.Set(errType, err);
             }
@@ -104,9 +104,9 @@ namespace NPOI.XSSF.UserModel.Helpers
         public static ISet<IgnoredErrorType> GetErrorTypes(CT_IgnoredError err)
         {
             HashSet<IgnoredErrorType> result = [];
-            foreach (IgnoredErrorType errType in IgnoredErrorTypeValues.Values)
+            foreach(IgnoredErrorType errType in IgnoredErrorTypeValues.Values)
             {
-                if (IsSet(errType, err))
+                if(IsSet(errType, err))
                 {
                     result.Add(errType);
                 }

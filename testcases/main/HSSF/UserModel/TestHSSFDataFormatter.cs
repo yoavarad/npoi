@@ -17,18 +17,17 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF;
-    using NPOI.SS.UserModel;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.Collections;
-    using TestCases.HSSF;
-    using NPOI.SS.Util;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
+    using TestCases.HSSF;
 
     /**
      * Unit Tests for HSSFDataFormatter.java
@@ -102,7 +101,7 @@ namespace TestCases.HSSF.UserModel
            "HH:MM;HH:MM;HH:MM", 
            // This is fun - blue if positive time,
            //  red if negative time or green for zero!
-         "[BLUE]HH:MM;[RED]HH:MM;[GREEN]HH:MM", 
+         "[BLUE]HH:MM;[RED]HH:MM;[GREEN]HH:MM",
            "yyyy-mm-dd hh:mm",
          "yyyy-mm-dd hh:mm:ss",
         };
@@ -137,7 +136,7 @@ namespace TestCases.HSSF.UserModel
             };
 
             // create cells with good date patterns
-            for (int i = 0; i < goodDatePatterns.Length; i++)
+            for(int i = 0; i < goodDatePatterns.Length; i++)
             {
                 ICell cell = row.CreateCell(i);
                 cell.SetCellValue(dateNum);
@@ -148,7 +147,7 @@ namespace TestCases.HSSF.UserModel
             row = sheet.CreateRow(1);
 
             // create cells with time patterns
-            for (int i = 0; i < goodTimePatterns.Length; i++)
+            for(int i = 0; i < goodTimePatterns.Length; i++)
             {
                 ICell cell = row.CreateCell(i);
                 cell.SetCellValue(timeNum);
@@ -159,7 +158,7 @@ namespace TestCases.HSSF.UserModel
             row = sheet.CreateRow(2);
 
             // create cells with num patterns
-            for (int i = 0; i < goodNumPatterns.Length; i++)
+            for(int i = 0; i < goodNumPatterns.Length; i++)
             {
                 ICell cell = row.CreateCell(i);
                 cell.SetCellValue(-1234567890.12345);
@@ -170,7 +169,7 @@ namespace TestCases.HSSF.UserModel
             row = sheet.CreateRow(3);
 
             // create cells with bad num patterns
-            for (int i = 0; i < badNumPatterns.Length; i++)
+            for(int i = 0; i < badNumPatterns.Length; i++)
             {
                 ICell cell = row.CreateCell(i);
                 //cell.SetCellValue(1234567890.12345);
@@ -225,7 +224,7 @@ namespace TestCases.HSSF.UserModel
                 ICell cell = row.CreateCell(0);
                 cell.SetCellValue(1234567890.12345);
                 ICellStyle cellStyle = wb.CreateCellStyle();
-                cellStyle.DataFormat = format.GetFormat("#,##0.00 ����.;-#,##0.00 [$����.-419]");
+                cellStyle.DataFormat = format.GetFormat("#,##0.00 §â§å§Ò.;-#,##0.00 [$§â§å§Ò.-419]");
                 cell.CellStyle = (/*setter*/cellStyle);
             }
         }
@@ -240,7 +239,7 @@ namespace TestCases.HSSF.UserModel
             IRow row = wb.GetSheetAt(0).GetRow(0);
             IEnumerator it = row.GetEnumerator();
             log("==== VALID DATE FORMATS ====");
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 ICell cell = (ICell)it.Current;
                 String fmtval = formatter.FormatCellValue(cell);
@@ -256,7 +255,7 @@ namespace TestCases.HSSF.UserModel
                 // this line is intended to compute how "July" would look like in the current locale
                 String jul = new SimpleDateFormat(monthPtrn).Format(new DateTime(2010, 7, 15), CultureInfo.CurrentCulture);
                 // special case for MMMMM = 1st letter of month name
-                if (fmt.IndexOf("mmmmm") > -1)
+                if(fmt.IndexOf("mmmmm") > -1)
                 {
                     jul = jul.Substring(0, 1);
                 }
@@ -268,7 +267,7 @@ namespace TestCases.HSSF.UserModel
             row = wb.GetSheetAt(0).GetRow(1);
             it = row.GetEnumerator();
             log("==== VALID TIME FORMATS ====");
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 ICell cell = (ICell)it.Current;
                 String fmt = cell.CellStyle.GetDataFormatString();
@@ -288,7 +287,7 @@ namespace TestCases.HSSF.UserModel
             row = wb.GetSheetAt(0).GetRow(1);
             it = row.GetEnumerator();
             log("\n==== VALID NUMBER FORMATS ====");
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 ICell cell = (ICell)it.Current;
                 string formatted = formatter.FormatCellValue(cell);
@@ -302,7 +301,7 @@ namespace TestCases.HSSF.UserModel
             row = wb.GetSheetAt(0).GetRow(3);
             it = row.GetEnumerator();
             log("\n==== INVALID NUMBER FORMATS ====");
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 ICell cell = (ICell)it.Current;
                 log(formatter.FormatCellValue(cell));

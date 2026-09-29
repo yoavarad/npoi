@@ -17,10 +17,10 @@
 
 namespace NPOI.POIFS.Crypt.BinaryRC4
 {
-    using System;
-    using System.Diagnostics;
     using NPOI.POIFS.Crypt;
     using NPOI.Util;
+    using System;
+    using System.Diagnostics;
 
     public class BinaryRC4EncryptionInfoBuilder : IEncryptionInfoBuilder
     {

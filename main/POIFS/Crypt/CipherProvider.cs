@@ -30,16 +30,17 @@ namespace NPOI.POIFS.Crypt
 
         public static CipherProvider FromEcmaId(int ecmaId)
         {
-            foreach (CipherProvider cp in CipherProvider.Values)
+            foreach(CipherProvider cp in CipherProvider.Values)
             {
-                if (cp.ecmaId == ecmaId) return cp;
+                if(cp.ecmaId == ecmaId)
+                    return cp;
             }
             throw new EncryptedDocumentException("cipher provider not found");
         }
 
-        public String jceId { get;set;}
-        public int ecmaId { get;set;}
-        public String cipherProviderName { get;set;}
+        public String jceId { get; set; }
+        public int ecmaId { get; set; }
+        public String cipherProviderName { get; set; }
 
         public CipherProvider(String jceId, int ecmaId, String cipherProviderName)
         {

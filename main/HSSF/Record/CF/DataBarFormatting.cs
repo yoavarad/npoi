@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.CF
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record.Common;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -47,15 +47,15 @@ namespace NPOI.HSSF.Record.CF
         {
             in1.ReadShort(); // Ignored
             in1.ReadByte();  // Reserved
-            options = (byte)in1.ReadByte();
+            options = (byte) in1.ReadByte();
 
-            percentMin = (byte)in1.ReadByte();
-            percentMax = (byte)in1.ReadByte();
-            if (percentMin < 0 || percentMin > 100)
+            percentMin = (byte) in1.ReadByte();
+            percentMax = (byte) in1.ReadByte();
+            if(percentMin < 0 || percentMin > 100)
                 //log.Log(POILogger.WARN, "Inconsistent Minimum Percentage found " + percentMin);
                 Console.WriteLine("Inconsistent Minimum Percentage found " + percentMin);
 
-            if (percentMax < 0 || percentMax > 100)
+            if(percentMax < 0 || percentMax > 100)
                 //log.Log(POILogger.WARN, "Inconsistent Minimum Percentage found " + percentMin);
                 Console.WriteLine("Inconsistent Maximum Percentage found " + percentMax);
 
@@ -137,9 +137,9 @@ namespace NPOI.HSSF.Record.CF
             rec.options = options;
             rec.percentMin = percentMin;
             rec.percentMax = percentMax;
-            rec.color = (ExtendedColor)color.Clone();
-            rec.thresholdMin = (DataBarThreshold)thresholdMin.Clone();
-            rec.thresholdMax = (DataBarThreshold)thresholdMax.Clone();
+            rec.color = (ExtendedColor) color.Clone();
+            rec.thresholdMin = (DataBarThreshold) thresholdMin.Clone();
+            rec.thresholdMax = (DataBarThreshold) thresholdMax.Clone();
             return rec;
         }
 
@@ -151,7 +151,7 @@ namespace NPOI.HSSF.Record.CF
                    thresholdMin.DataLength +
                    thresholdMax.DataLength;
             }
-            
+
         }
 
         public void Serialize(ILittleEndianOutput out1)

@@ -19,13 +19,13 @@
 namespace NPOI.HSSF.Record
 {
 
-    using System;
-    using System.Text;
-    using System.Collections;
     using NPOI.DDF;
-    using NPOI.Util;
-    using System.Collections.Generic;
     using NPOI.HSSF.Util;
+    using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Text;
 
     /**
      * The escher container record is used to hold escher records.  It is abstract and
@@ -68,7 +68,7 @@ namespace NPOI.HSSF.Record
         public AbstractEscherHolderRecord(RecordInputStream in1)
         {
             escherRecords = new List<EscherRecord>();
-            if (!DESERIALISE)
+            if(!DESERIALISE)
             {
                 rawDataContainer.Concatenate(in1.ReadRemainder());
             }
@@ -82,7 +82,7 @@ namespace NPOI.HSSF.Record
 
         protected void ConvertRawBytesToEscherRecords()
         {
-            if (!DESERIALISE)
+            if(!DESERIALISE)
             {
                 byte[] rawData = RawData;
                 ConvertToEscherRecords(0, rawData.Length, rawData);
@@ -93,7 +93,7 @@ namespace NPOI.HSSF.Record
             escherRecords.Clear();
             DefaultEscherRecordFactory recordFactory = new();
             int pos = offset;
-            while (pos < offset + size)
+            while(pos < offset + size)
             {
                 EscherRecord r = recordFactory.CreateRecord(data, pos);
                 int bytesRead = r.FillFields(data, pos, recordFactory);
@@ -108,9 +108,9 @@ namespace NPOI.HSSF.Record
 
             String nl = Environment.NewLine;
             buffer.Append('[' + RecordName + ']' + nl);
-            if (escherRecords.Count == 0)
+            if(escherRecords.Count == 0)
                 buffer.Append("No Escher Records Decoded" + nl);
-            foreach (EscherRecord r in escherRecords)
+            foreach(EscherRecord r in escherRecords)
             {
                 buffer.Append(r.ToString());
             }
@@ -124,20 +124,20 @@ namespace NPOI.HSSF.Record
         public override int Serialize(int offset, byte[] data)
         {
             LittleEndian.PutShort(data, 0 + offset, Sid);
-            LittleEndian.PutShort(data, 2 + offset, (short)(RecordSize - 4));
+            LittleEndian.PutShort(data, 2 + offset, (short) (RecordSize - 4));
             byte[] rawData = RawData;
-            if (escherRecords.Count == 0 && rawData != null)
+            if(escherRecords.Count == 0 && rawData != null)
             {
                 LittleEndian.PutShort(data, 0 + offset, Sid);
-                LittleEndian.PutShort(data, 2 + offset, (short)(RecordSize - 4));
+                LittleEndian.PutShort(data, 2 + offset, (short) (RecordSize - 4));
                 Array.Copy(rawData, 0, data, 4 + offset, rawData.Length);
                 return rawData.Length + 4;
             }
             LittleEndian.PutShort(data, 0 + offset, Sid);
-            LittleEndian.PutShort(data, 2 + offset, (short)(RecordSize - 4));
+            LittleEndian.PutShort(data, 2 + offset, (short) (RecordSize - 4));
 
             int pos = offset + 4;
-            foreach (EscherRecord r in escherRecords)
+            foreach(EscherRecord r in escherRecords)
             {
                 pos += r.Serialize(pos, data, new NullEscherSerializationListener());
             }
@@ -154,14 +154,14 @@ namespace NPOI.HSSF.Record
             get
             {
                 byte[] rawData = RawData;
-                if (escherRecords.Count == 0 && rawData != null)
+                if(escherRecords.Count == 0 && rawData != null)
                 {
                     return rawData.Length + 4;
                 }
                 else
                 {
                     int size = 4;
-                    foreach (EscherRecord r in escherRecords)
+                    foreach(EscherRecord r in escherRecords)
                     {
                         //EscherRecord r = (EscherRecord)iterator.Current;
                         size += r.RecordSize;
@@ -233,10 +233,10 @@ namespace NPOI.HSSF.Record
          */
         public EscherContainerRecord GetEscherContainer()
         {
-            for (IEnumerator it = escherRecords.GetEnumerator(); it.MoveNext(); )
+            for(IEnumerator it = escherRecords.GetEnumerator(); it.MoveNext();)
             {
                 Object er = it.Current;
-                if (er is EscherContainerRecord record)
+                if(er is EscherContainerRecord record)
                 {
                     return record;
                 }
@@ -257,24 +257,24 @@ namespace NPOI.HSSF.Record
         private static EscherRecord FindFirstWithId(short id, List<EscherRecord> records)
         {
             // Check at our level
-            for (IEnumerator it = records.GetEnumerator(); it.MoveNext(); )
+            for(IEnumerator it = records.GetEnumerator(); it.MoveNext();)
             {
                 EscherRecord r = (EscherRecord)it.Current;
-                if (r.RecordId == id)
+                if(r.RecordId == id)
                 {
                     return r;
                 }
             }
 
             // Then Check our children in turn
-            for (IEnumerator it = records.GetEnumerator(); it.MoveNext(); )
+            for(IEnumerator it = records.GetEnumerator(); it.MoveNext();)
             {
                 EscherRecord r = (EscherRecord)it.Current;
-                if (r.IsContainerRecord)
+                if(r.IsContainerRecord)
                 {
                     EscherRecord found =
                         FindFirstWithId(id, r.ChildRecords);
-                    if (found != null)
+                    if(found != null)
                     {
                         return found;
                     }
@@ -320,7 +320,7 @@ namespace NPOI.HSSF.Record
          */
         public void Decode()
         {
-            if (null == escherRecords || 0 == escherRecords.Count)
+            if(null == escherRecords || 0 == escherRecords.Count)
             {
                 byte[] rawData = RawData;
                 ConvertToEscherRecords(0, rawData.Length, rawData);
@@ -330,5 +330,3 @@ namespace NPOI.HSSF.Record
     }
 
 }
-
-

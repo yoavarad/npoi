@@ -24,18 +24,17 @@
  * Contributors:
  * 
  * ==============================================================*/
-        
+
+using NPOI.POIFS.Common;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.Storage;
-using NPOI.Util;
-using NPOI.POIFS.Common;
+using System.Text;
 
 namespace TestCases.POIFS.Storage
 {
@@ -79,12 +78,12 @@ namespace TestCases.POIFS.Storage
             byte[] data = new byte[512];
             int offset = 0;
 
-            for (int k = start; k <= end; k++)
+            for(int k = start; k <= end; k++)
             {
                 LittleEndian.PutInt(data, offset, k);
                 offset += LittleEndianConsts.INT_SIZE;
             }
-            while (offset != 508)
+            while(offset != 508)
             {
                 LittleEndian.PutInt(data, offset, -1);
                 offset += LittleEndianConsts.INT_SIZE;
@@ -106,15 +105,15 @@ namespace TestCases.POIFS.Storage
             byte[] data = new byte[512];
             int offset = 0;
 
-            for (int j = 0; j < 128; j++)
+            for(int j = 0; j < 128; j++)
             {
                 int index = start_index + j;
 
-                if (index % 256 == 0)
+                if(index % 256 == 0)
                 {
                     LittleEndian.PutInt(data, offset, -1);
                 }
-                else if (index % 256 == 255)
+                else if(index % 256 == 255)
                 {
                     LittleEndian.PutInt(data, offset, -2);
                 }
@@ -139,7 +138,7 @@ namespace TestCases.POIFS.Storage
         {
             int limit = 128 * count;
 
-            for (int j = _list.Count; j < limit; j++)
+            for(int j = _list.Count; j < limit; j++)
             {
                 Add(new RawDataBlock(new MemoryStream(new byte[0])));
             }
@@ -174,18 +173,18 @@ namespace TestCases.POIFS.Storage
             try
             {
                 rvalue = _array[index];
-                if (rvalue == null)
+                if(rvalue == null)
                 {
                     throw new IOException("index " + index + " Is null");
                 }
                 _array[index] = null;
             }
-            catch (IndexOutOfRangeException )
+            catch(IndexOutOfRangeException)
             {
                 throw new IOException("Cannot Remove block[ " + index
                                       + " ]; out of range");
             }
-            return (ListManagedBlock)rvalue;
+            return (ListManagedBlock) rvalue;
         }
 
         /**
@@ -198,7 +197,7 @@ namespace TestCases.POIFS.Storage
         public override void Zap(int index)
         {
             EnsureArrayExists();
-            if ((index >= 0) && (index < _array.Length))
+            if((index >= 0) && (index < _array.Length))
             {
                 _array[index] = null;
             }
@@ -206,7 +205,7 @@ namespace TestCases.POIFS.Storage
 
         private void EnsureArrayExists()
         {
-            if (_array == null)
+            if(_array == null)
             {
                 _array = _list.ToArray();
             }

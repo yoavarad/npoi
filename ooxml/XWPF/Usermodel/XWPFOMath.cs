@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,18 +16,18 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
+    using NPOI.OpenXmlFormats.Shared;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using NPOI.OpenXmlFormats.Shared;
 
     public class XWPFOMath : MathContainer
     {
-        protected CT_OMath oMath { get { return (CT_OMath)container; } }
-        
-        public XWPFOMath(CT_OMath oMath, IRunBody p):base(oMath, p)
+        protected CT_OMath oMath { get { return (CT_OMath) container; } }
+
+        public XWPFOMath(CT_OMath oMath, IRunBody p) : base(oMath, p)
         {
         }
     }

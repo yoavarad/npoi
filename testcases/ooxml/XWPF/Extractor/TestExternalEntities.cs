@@ -19,7 +19,8 @@ namespace TestCases.XWPF.Extractor
 {
     using NPOI.XWPF.Extractor;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.XWPF;
 

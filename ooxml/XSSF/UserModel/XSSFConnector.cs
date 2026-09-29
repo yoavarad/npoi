@@ -53,44 +53,44 @@ namespace NPOI.XSSF.UserModel
         public static CT_Connector Prototype()
         {
 
-                CT_Connector shape = new CT_Connector();
-                CT_ConnectorNonVisual nv = shape.AddNewNvCxnSpPr();
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualDrawingProps nvp = nv.AddNewCNvPr();
-                nvp.id = (1);
-                nvp.name = ("Shape 1");
-                nv.AddNewCNvCxnSpPr();
+            CT_Connector shape = new CT_Connector();
+            CT_ConnectorNonVisual nv = shape.AddNewNvCxnSpPr();
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualDrawingProps nvp = nv.AddNewCNvPr();
+            nvp.id = (1);
+            nvp.name = ("Shape 1");
+            nv.AddNewCNvCxnSpPr();
 
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties sp = shape.AddNewSpPr();
-                CT_Transform2D t2d = sp.AddNewXfrm();
-                CT_PositiveSize2D p1 = t2d.AddNewExt();
-                p1.cx = (0);
-                p1.cy = (0);
-                CT_Point2D p2 = t2d.AddNewOff();
-                p2.x =(0);
-                p2.y=(0);
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties sp = shape.AddNewSpPr();
+            CT_Transform2D t2d = sp.AddNewXfrm();
+            CT_PositiveSize2D p1 = t2d.AddNewExt();
+            p1.cx = (0);
+            p1.cy = (0);
+            CT_Point2D p2 = t2d.AddNewOff();
+            p2.x =(0);
+            p2.y=(0);
 
-                CT_PresetGeometry2D geom = sp.AddNewPrstGeom();
-                geom.prst = (ST_ShapeType.line);
-                geom.AddNewAvLst();
+            CT_PresetGeometry2D geom = sp.AddNewPrstGeom();
+            geom.prst = (ST_ShapeType.line);
+            geom.AddNewAvLst();
 
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeStyle style = shape.AddNewStyle();
-                CT_SchemeColor scheme = style.AddNewLnRef().AddNewSchemeClr();
-                scheme.val = (ST_SchemeColorVal.accent1);
-                style.lnRef.idx = (1);
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeStyle style = shape.AddNewStyle();
+            CT_SchemeColor scheme = style.AddNewLnRef().AddNewSchemeClr();
+            scheme.val = (ST_SchemeColorVal.accent1);
+            style.lnRef.idx = (1);
 
-                CT_StyleMatrixReference fillref = style.AddNewFillRef();
-                fillref.idx = (0);
-                fillref.AddNewSchemeClr().val=(ST_SchemeColorVal.accent1);
+            CT_StyleMatrixReference fillref = style.AddNewFillRef();
+            fillref.idx = (0);
+            fillref.AddNewSchemeClr().val=(ST_SchemeColorVal.accent1);
 
-                CT_StyleMatrixReference effectRef = style.AddNewEffectRef();
-                effectRef.idx = (0);
-                effectRef.AddNewSchemeClr().val = (ST_SchemeColorVal.accent1);
+            CT_StyleMatrixReference effectRef = style.AddNewEffectRef();
+            effectRef.idx = (0);
+            effectRef.AddNewSchemeClr().val = (ST_SchemeColorVal.accent1);
 
-                CT_FontReference fontRef = style.AddNewFontRef();
-                fontRef.idx = (ST_FontCollectionIndex.minor);
-                fontRef.AddNewSchemeClr().val = (ST_SchemeColorVal.tx1);
+            CT_FontReference fontRef = style.AddNewFontRef();
+            fontRef.idx = (ST_FontCollectionIndex.minor);
+            fontRef.AddNewSchemeClr().val = (ST_SchemeColorVal.tx1);
 
-                prototype = shape;
+            prototype = shape;
 
             return prototype;
         }
@@ -113,7 +113,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return ctShape.spPr.prstGeom.prst;
             }
-            set 
+            set
             {
                 ctShape.spPr.prstGeom.prst = value;
             }
@@ -137,6 +137,3 @@ namespace NPOI.XSSF.UserModel
         public override string ShapeName => ctShape.nvCxnSpPr.cNvPr.name;
     }
 }
-
-
-

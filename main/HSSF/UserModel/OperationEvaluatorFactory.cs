@@ -85,7 +85,8 @@ namespace NPOI.HSSF.UserModel
             FreeRefFunction udfFunc = null;
             if(result == null)
             {
-                if(ptg is AbstractFunctionPtg) {
+                if(ptg is AbstractFunctionPtg)
+                {
                     AbstractFunctionPtg fptg = (AbstractFunctionPtg)ptg;
                     int functionIndex = fptg.FunctionIndex;
                     switch(functionIndex)
@@ -108,10 +109,10 @@ namespace NPOI.HSSF.UserModel
                 IEvaluationSheet evalSheet = ec.GetWorkbook().GetSheet(ec.SheetIndex);
                 IEvaluationCell evalCell = evalSheet.GetCell(ec.RowIndex, ec.ColumnIndex);
 
-                if(evalCell != null && (evalCell.IsPartOfArrayFormulaGroup || ec.IsArraymode) 
+                if(evalCell != null && (evalCell.IsPartOfArrayFormulaGroup || ec.IsArraymode)
                     && result is ArrayFunction)
 
-                return ((IArrayFunction) result).EvaluateArray(args, ec.RowIndex, ec.ColumnIndex);
+                    return ((IArrayFunction) result).EvaluateArray(args, ec.RowIndex, ec.ColumnIndex);
 
                 return result.Evaluate(args, ec.RowIndex, ec.ColumnIndex);
             }

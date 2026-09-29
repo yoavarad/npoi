@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.SS.Util;
+using System;
 
 namespace NPOI.SS
 {
@@ -70,7 +70,7 @@ namespace NPOI.SS
                 return _name;
             }
         }
-        
+
         /**
          * @return the default file extension of spReadsheet
          */

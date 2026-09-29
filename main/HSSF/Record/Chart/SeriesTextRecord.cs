@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Defines a series name
@@ -63,7 +63,7 @@ namespace NPOI.HSSF.Record.Chart
             field_1_id = in1.ReadShort();
             int field_2_textLength = (byte)in1.ReadByte();
             is16bit = (in1.ReadUByte() & 0x01) != 0;
-            if (is16bit)
+            if(is16bit)
             {
                 field_4_text = in1.ReadUnicodeLEString(field_2_textLength);
             }
@@ -99,7 +99,7 @@ namespace NPOI.HSSF.Record.Chart
         {
             out1.WriteShort(field_1_id);
             out1.WriteByte(field_4_text.Length);
-            if (is16bit)
+            if(is16bit)
             {
                 // Excel (2007) seems to choose 16bit regardless of whether it is needed
                 out1.WriteByte(0x01);
@@ -162,7 +162,7 @@ namespace NPOI.HSSF.Record.Chart
             }
             set
             {
-                if (value.Length > MAX_LEN)
+                if(value.Length > MAX_LEN)
                 {
                     throw new ArgumentException("Text is too long ("
                             + value.Length + ">" + MAX_LEN + ")");

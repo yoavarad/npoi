@@ -17,12 +17,12 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-    using System.Collections;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
-    using System.Collections.Generic;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// <para>

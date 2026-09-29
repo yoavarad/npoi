@@ -1,5 +1,5 @@
-﻿using System.Text;
 using NPOI.Util;
+using System.Text;
 
 namespace NPOI.HSSF.Record.Chart
 {
@@ -11,7 +11,7 @@ namespace NPOI.HSSF.Record.Chart
     /// <remarks>
     /// author: Antony liu (antony.apollo at gmail.com)
     /// </remarks>
-    public class Chart3dRecord: StandardRecord
+    public class Chart3dRecord : StandardRecord
     {
         public const short sid = 0x103A;
 
@@ -74,11 +74,13 @@ namespace NPOI.HSSF.Record.Chart
         public int Rotation
         {
             get { return field_1_anRot; }
-            set 
+            set
             {
-                if (value < 0) value = 0;
-                if (value > 360) value = 360;
-                field_1_anRot = (short)value; 
+                if(value < 0)
+                    value = 0;
+                if(value > 360)
+                    value = 360;
+                field_1_anRot = (short) value;
             }
         }
 
@@ -92,9 +94,11 @@ namespace NPOI.HSSF.Record.Chart
             get { return field_2_anElev; }
             set
             {
-                if (value < -90) value = -90;
-                if (value > 90) value = 90;
-                field_2_anElev = (short)value;
+                if(value < -90)
+                    value = -90;
+                if(value > 90)
+                    value = 90;
+                field_2_anElev = (short) value;
             }
         }
         /// <summary>
@@ -106,9 +110,11 @@ namespace NPOI.HSSF.Record.Chart
             get { return field_3_pcDist; }
             set
             {
-                if (value < 0) value = 0;
-                if (value > 200) value = 200;
-                field_3_pcDist = (short)value;
+                if(value < 0)
+                    value = 0;
+                if(value > 200)
+                    value = 200;
+                field_3_pcDist = (short) value;
             }
         }
         /// <summary>
@@ -118,8 +124,9 @@ namespace NPOI.HSSF.Record.Chart
         public int Height
         {
             get { return field_4_pcHeight; }
-            set {
-                field_4_pcHeight = (short)value;
+            set
+            {
+                field_4_pcHeight = (short) value;
             }
         }
 
@@ -130,7 +137,7 @@ namespace NPOI.HSSF.Record.Chart
         public int Depth
         {
             get { return field_5_pcDepth; }
-            set { field_5_pcDepth = (short)value; }
+            set { field_5_pcDepth = (short) value; }
         }
 
         /// <summary>
@@ -142,7 +149,7 @@ namespace NPOI.HSSF.Record.Chart
         public int Gap
         {
             get { return field_6_pcGap; }
-            set { field_6_pcGap = (short)value; }
+            set { field_6_pcGap = (short) value; }
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -49,39 +49,39 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
 
         public static CT_LineSer Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LineSer ctObj = new CT_LineSer();
             ctObj.dPt = new List<CT_DPt>();
             ctObj.trendline = new List<CT_Trendline>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "idx")
+                if(childNode.LocalName == "idx")
                     ctObj.idx = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "order")
+                else if(childNode.LocalName == "order")
                     ctObj.order = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tx")
+                else if(childNode.LocalName == "tx")
                     ctObj.tx = CT_SerTx.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "marker")
+                else if(childNode.LocalName == "marker")
                     ctObj.marker = CT_Marker.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dLbls")
+                else if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "errBars")
+                else if(childNode.LocalName == "errBars")
                     ctObj.errBars = CT_ErrBars.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cat")
+                else if(childNode.LocalName == "cat")
                     ctObj.cat = CT_AxDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "val")
+                else if(childNode.LocalName == "val")
                     ctObj.val = CT_NumDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "smooth")
+                else if(childNode.LocalName == "smooth")
                     ctObj.smooth = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dPt")
+                else if(childNode.LocalName == "dPt")
                     ctObj.dPt.Add(CT_DPt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "trendline")
+                else if(childNode.LocalName == "trendline")
                     ctObj.trendline.Add(CT_Trendline.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -93,43 +93,43 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.idx != null)
+            if(this.idx != null)
                 this.idx.Write(sw, "idx");
-            if (this.order != null)
+            if(this.order != null)
                 this.order.Write(sw, "order");
-            if (this.tx != null)
+            if(this.tx != null)
                 this.tx.Write(sw, "tx");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.marker != null)
+            if(this.marker != null)
                 this.marker.Write(sw, "marker");
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.errBars != null)
+            if(this.errBars != null)
                 this.errBars.Write(sw, "errBars");
-            if (this.cat != null)
+            if(this.cat != null)
                 this.cat.Write(sw, "cat");
-            if (this.val != null)
+            if(this.val != null)
                 this.val.Write(sw, "val");
-            if (this.smooth != null)
+            if(this.smooth != null)
                 this.smooth.Write(sw, "smooth");
-            if (this.dPt != null)
+            if(this.dPt != null)
             {
-                foreach (CT_DPt x in this.dPt)
+                foreach(CT_DPt x in this.dPt)
                 {
                     x.Write(sw, "dPt");
                 }
             }
-            if (this.trendline != null)
+            if(this.trendline != null)
             {
-                foreach (CT_Trendline x in this.trendline)
+                foreach(CT_Trendline x in this.trendline)
                 {
                     x.Write(sw, "trendline");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -542,29 +542,29 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_Line3DChart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Line3DChart ctObj = new CT_Line3DChart();
             ctObj.ser = new List<CT_LineSer>();
             ctObj.axId = new List<CT_UnsignedInt>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "grouping")
+                if(childNode.LocalName == "grouping")
                     ctObj.grouping = CT_Grouping.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "varyColors")
+                else if(childNode.LocalName == "varyColors")
                     ctObj.varyColors = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dLbls")
+                else if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dropLines")
+                else if(childNode.LocalName == "dropLines")
                     ctObj.dropLines = CT_ChartLines.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gapDepth")
+                else if(childNode.LocalName == "gapDepth")
                     ctObj.gapDepth = CT_GapAmount.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ser")
+                else if(childNode.LocalName == "ser")
                     ctObj.ser.Add(CT_LineSer.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "axId")
+                else if(childNode.LocalName == "axId")
                     ctObj.axId.Add(CT_UnsignedInt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -576,33 +576,33 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.grouping != null)
+            if(this.grouping != null)
                 this.grouping.Write(sw, "grouping");
-            if (this.varyColors != null)
+            if(this.varyColors != null)
                 this.varyColors.Write(sw, "varyColors");
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.dropLines != null)
+            if(this.dropLines != null)
                 this.dropLines.Write(sw, "dropLines");
-            if (this.gapDepth != null)
+            if(this.gapDepth != null)
                 this.gapDepth.Write(sw, "gapDepth");
-            if (this.ser != null)
+            if(this.ser != null)
             {
-                foreach (CT_LineSer x in this.ser)
+                foreach(CT_LineSer x in this.ser)
                 {
                     x.Write(sw, "ser");
                 }
             }
-            if (this.axId != null)
+            if(this.axId != null)
             {
-                foreach (CT_UnsignedInt x in this.axId)
+                foreach(CT_UnsignedInt x in this.axId)
                 {
                     x.Write(sw, "axId");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -636,19 +636,19 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_UpDownBars Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_UpDownBars ctObj = new CT_UpDownBars();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "gapWidth")
+                if(childNode.LocalName == "gapWidth")
                     ctObj.gapWidth = CT_GapAmount.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "upBars")
+                else if(childNode.LocalName == "upBars")
                     ctObj.upBars = CT_UpDownBar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "downBars")
+                else if(childNode.LocalName == "downBars")
                     ctObj.downBars = CT_UpDownBar.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -660,15 +660,15 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.gapWidth != null)
+            if(this.gapWidth != null)
                 this.gapWidth.Write(sw, "gapWidth");
-            if (this.upBars != null)
+            if(this.upBars != null)
                 this.upBars.Write(sw, "upBars");
-            if (this.downBars != null)
+            if(this.downBars != null)
                 this.downBars.Write(sw, "downBars");
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -742,12 +742,12 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         private CT_ShapeProperties spPrField;
         public static CT_UpDownBar Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_UpDownBar ctObj = new CT_UpDownBar();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "spPr")
+                if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -759,7 +759,7 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
             sw.WriteEndElement("c", nodeName);
         }
@@ -806,27 +806,27 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_StockChart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_StockChart ctObj = new CT_StockChart();
             ctObj.ser = new List<CT_LineSer>();
             ctObj.axId = new List<CT_UnsignedInt>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "dLbls")
+                if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dropLines")
+                else if(childNode.LocalName == "dropLines")
                     ctObj.dropLines = CT_ChartLines.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hiLowLines")
+                else if(childNode.LocalName == "hiLowLines")
                     ctObj.hiLowLines = CT_ChartLines.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "upDownBars")
+                else if(childNode.LocalName == "upDownBars")
                     ctObj.upDownBars = CT_UpDownBars.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ser")
+                else if(childNode.LocalName == "ser")
                     ctObj.ser.Add(CT_LineSer.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "axId")
+                else if(childNode.LocalName == "axId")
                     ctObj.axId.Add(CT_UnsignedInt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -838,31 +838,31 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.dropLines != null)
+            if(this.dropLines != null)
                 this.dropLines.Write(sw, "dropLines");
-            if (this.hiLowLines != null)
+            if(this.hiLowLines != null)
                 this.hiLowLines.Write(sw, "hiLowLines");
-            if (this.upDownBars != null)
+            if(this.upDownBars != null)
                 this.upDownBars.Write(sw, "upDownBars");
-            if (this.ser != null)
+            if(this.ser != null)
             {
-                foreach (CT_LineSer x in this.ser)
+                foreach(CT_LineSer x in this.ser)
                 {
                     x.Write(sw, "ser");
                 }
             }
-            if (this.axId != null)
+            if(this.axId != null)
             {
-                foreach (CT_UnsignedInt x in this.axId)
+                foreach(CT_UnsignedInt x in this.axId)
                 {
                     x.Write(sw, "axId");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -1002,35 +1002,35 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_LineChart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LineChart ctObj = new CT_LineChart();
             ctObj.ser = new List<CT_LineSer>();
             ctObj.axId = new List<CT_UnsignedInt>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "grouping")
+                if(childNode.LocalName == "grouping")
                     ctObj.grouping = CT_Grouping.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "varyColors")
+                else if(childNode.LocalName == "varyColors")
                     ctObj.varyColors = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dLbls")
+                else if(childNode.LocalName == "dLbls")
                     ctObj.dLbls = CT_DLbls.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dropLines")
+                else if(childNode.LocalName == "dropLines")
                     ctObj.dropLines = CT_ChartLines.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hiLowLines")
+                else if(childNode.LocalName == "hiLowLines")
                     ctObj.hiLowLines = CT_ChartLines.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "upDownBars")
+                else if(childNode.LocalName == "upDownBars")
                     ctObj.upDownBars = CT_UpDownBars.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "marker")
+                else if(childNode.LocalName == "marker")
                     ctObj.marker = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "smooth")
+                else if(childNode.LocalName == "smooth")
                     ctObj.smooth = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ser")
+                else if(childNode.LocalName == "ser")
                     ctObj.ser.Add(CT_LineSer.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "axId")
+                else if(childNode.LocalName == "axId")
                     ctObj.axId.Add(CT_UnsignedInt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -1042,40 +1042,40 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.grouping != null)
+            if(this.grouping != null)
                 this.grouping.Write(sw, "grouping");
-            if (this.varyColors != null)
+            if(this.varyColors != null)
                 this.varyColors.Write(sw, "varyColors");
-            if (this.ser != null)
+            if(this.ser != null)
             {
-                foreach (CT_LineSer x in this.ser)
+                foreach(CT_LineSer x in this.ser)
                 {
                     x.Write(sw, "ser");
                 }
             }
-            if (this.dLbls != null)
+            if(this.dLbls != null)
                 this.dLbls.Write(sw, "dLbls");
-            if (this.dropLines != null)
+            if(this.dropLines != null)
                 this.dropLines.Write(sw, "dropLines");
-            if (this.hiLowLines != null)
+            if(this.hiLowLines != null)
                 this.hiLowLines.Write(sw, "hiLowLines");
-            if (this.upDownBars != null)
+            if(this.upDownBars != null)
                 this.upDownBars.Write(sw, "upDownBars");
-            if (this.marker != null)
+            if(this.marker != null)
                 this.marker.Write(sw, "marker");
-            if (this.smooth != null)
+            if(this.smooth != null)
                 this.smooth.Write(sw, "smooth");
 
-            if (this.axId != null)
+            if(this.axId != null)
             {
-                foreach (CT_UnsignedInt x in this.axId)
+                foreach(CT_UnsignedInt x in this.axId)
                 {
                     x.Write(sw, "axId");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -1238,7 +1238,7 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         public CT_LineSer AddNewSer()
         {
             CT_LineSer newSer = new  CT_LineSer();
-            if (this.serField == null)
+            if(this.serField == null)
             {
                 this.serField = new List<CT_LineSer>();
             }
@@ -1255,7 +1255,7 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         public CT_UnsignedInt AddNewAxId()
         {
             CT_UnsignedInt si = new CT_UnsignedInt();
-            if (this.axIdField == null)
+            if(this.axIdField == null)
                 this.axIdField = new List<CT_UnsignedInt>();
             axIdField.Add(si);
             return si;

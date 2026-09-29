@@ -98,7 +98,7 @@ namespace NPOI.SS.UserModel
         /// @since 3.17 beta 1
         /// </remarks>
         int TotalsRowCount { get; }
-    
+
         /// <summary>
         /// </summary>
         /// <returns>0 for no header rows, 1 for table headers shown.

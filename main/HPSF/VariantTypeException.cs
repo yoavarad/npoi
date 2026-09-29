@@ -51,9 +51,9 @@ namespace NPOI.HPSF
         /// <param name="value">The value who's variant type causes the problem</param>
         /// <param name="msg">A message text describing the problem</param>
         public VariantTypeException(long variantType, Object value,
-                                    String msg):base(msg)
+                                    String msg) : base(msg)
         {
-            
+
             this.variantType = variantType;
             this.value = value;
         }
@@ -73,7 +73,7 @@ namespace NPOI.HPSF
         /// <value>the value who's variant type caused the problem.</value>
         public Object Value
         {
-            get{return value;}
+            get { return value; }
         }
 
     }

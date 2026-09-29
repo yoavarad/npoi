@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -27,12 +27,12 @@
  * ==============================================================*/
 
 using System;
-using System.IO;
 using System.Globalization;
+using System.IO;
 
 namespace NPOI.Util
 {
-    public class IntegerField:FixedField
+    public class IntegerField : FixedField
     {
         private int _value;
         private readonly int _offset;
@@ -43,7 +43,7 @@ namespace NPOI.Util
         /// <param name="offset">offset of the field within its byte array.</param>
         public IntegerField(int offset)
         {
-            if (offset < 0)
+            if(offset < 0)
             {
                 throw new IndexOutOfRangeException("negative offset");
             }
@@ -56,7 +56,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="offset">offset of the field within its byte array</param>
         /// <param name="value">the initial value</param>
-        public IntegerField(int offset, int value):this(offset)
+        public IntegerField(int offset, int value) : this(offset)
         {
             this._value=value;
         }
@@ -93,10 +93,11 @@ namespace NPOI.Util
         /// <returns></returns>
         public int Value
         {
-            get{
+            get
+            {
                 return _value;
             }
-            set{ _value = value;}
+            set { _value = value; }
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="value">value to be Set</param>
         /// <param name="data">the byte array to write the value to</param>
-        public void Set(int value, byte [] data)
+        public void Set(int value, byte[] data)
         {
             _value = value;
             WriteToBytes(data);
@@ -115,7 +116,7 @@ namespace NPOI.Util
         /// Set the value from its offset into an array of bytes
         /// </summary>
         /// <param name="data">The data.</param>
-        public void ReadFromBytes(byte [] data)
+        public void ReadFromBytes(byte[] data)
         {
             _value = LittleEndian.GetInt(data, _offset);
         }
@@ -133,7 +134,7 @@ namespace NPOI.Util
         /// write the value out to an array of bytes at the appropriate offset
         /// </summary>
         /// <param name="data"> the array of bytes to which the value is to be written </param>
-        public void WriteToBytes(byte [] data)
+        public void WriteToBytes(byte[] data)
         {
             LittleEndian.PutInt(data, _offset, _value);
         }

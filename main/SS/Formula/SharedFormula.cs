@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -45,15 +45,15 @@ namespace NPOI.SS.Formula.PTG
 
             Ptg[] newPtgStack = new Ptg[ptgs.Length];
 
-            for (int k = 0; k < ptgs.Length; k++)
+            for(int k = 0; k < ptgs.Length; k++)
             {
                 Ptg ptg = ptgs[k];
                 byte originalOperandClass = unchecked((byte)-1);
-                if (!ptg.IsBaseToken)
+                if(!ptg.IsBaseToken)
                 {
                     originalOperandClass = ptg.PtgClass;
                 }
-                if (ptg is RefPtgBase refNPtg)
+                if(ptg is RefPtgBase refNPtg)
                 {
                     ptg = new RefPtg(FixupRelativeRow(formulaRow, refNPtg.Row, refNPtg.IsRowRelative),
                                          FixupRelativeColumn(formulaColumn, refNPtg.Column, refNPtg.IsColRelative),
@@ -61,7 +61,7 @@ namespace NPOI.SS.Formula.PTG
                                          refNPtg.IsColRelative);
                     ptg.PtgClass = (originalOperandClass);
                 }
-                else if (ptg is AreaPtgBase areaNPtg)
+                else if(ptg is AreaPtgBase areaNPtg)
                 {
                     ptg = new AreaPtg(FixupRelativeRow(formulaRow, areaNPtg.FirstRow, areaNPtg.IsFirstRowRelative),
                                     FixupRelativeRow(formulaRow, areaNPtg.LastRow, areaNPtg.IsLastRowRelative),
@@ -73,7 +73,7 @@ namespace NPOI.SS.Formula.PTG
                                     areaNPtg.IsLastColRelative);
                     ptg.PtgClass = (originalOperandClass);
                 }
-                else if (ptg is OperandPtg operandPtg)
+                else if(ptg is OperandPtg operandPtg)
                 {
                     // Any subclass of OperandPtg is mutable, so it's safest to not share these instances.
                     ptg = operandPtg.Copy();
@@ -89,7 +89,7 @@ namespace NPOI.SS.Formula.PTG
 
         private int FixupRelativeColumn(int currentcolumn, int column, bool relative)
         {
-            if (relative)
+            if(relative)
             {
                 // mask out upper bits to produce 'wrapping' at the maximum column ("IV" for .xls and  "XFD" for .xlsx)
                 return (column + currentcolumn) & _columnWrappingMask;
@@ -99,7 +99,7 @@ namespace NPOI.SS.Formula.PTG
 
         private int FixupRelativeRow(int currentrow, int row, bool relative)
         {
-            if (relative)
+            if(relative)
             {
                 return (row + currentrow) & _rowWrappingMask;
             }

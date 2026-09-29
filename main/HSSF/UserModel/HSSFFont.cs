@@ -20,16 +20,16 @@ using NPOI.HSSF.Util;
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.SS.UserModel;
+    using System;
 
     /// <summary>
     /// Represents a Font used in a workbook.
     /// @version 1.0-pre
     /// @author  Andrew C. Oliver
     /// </summary>
-    public class HSSFFont:NPOI.SS.UserModel.IFont
+    public class HSSFFont : NPOI.SS.UserModel.IFont
     {
         /**
          * Normal boldness (not bold)
@@ -91,7 +91,7 @@ namespace NPOI.HSSF.UserModel
         public double FontHeight
         {
             get { return font.FontHeight; }
-            set { font.FontHeight = (short)value; }
+            set { font.FontHeight = (short) value; }
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace NPOI.HSSF.UserModel
         public double FontHeightInPoints
         {
             get { return font.FontHeight / 20.0; }
-            set { font.FontHeight=(short)(value * 20); }
+            set { font.FontHeight=(short) (value * 20); }
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                if (value)
+                if(value)
                     font.BoldWeight = BOLDWEIGHT_BOLD;
                 else
                     font.BoldWeight = BOLDWEIGHT_NORMAL;
@@ -194,7 +194,7 @@ namespace NPOI.HSSF.UserModel
         public short Charset
         {
             get { return font.Charset; }
-            set { font.Charset = (byte)value; }
+            set { font.Charset = (byte) value; }
         }
 
         /// <summary>
@@ -237,18 +237,20 @@ namespace NPOI.HSSF.UserModel
         /// </exception>
         public override bool Equals(Object obj)
         {
-            if (this == obj) return true;
-            if (obj == null) return false;
-            if (obj is HSSFFont other)
+            if(this == obj)
+                return true;
+            if(obj == null)
+                return false;
+            if(obj is HSSFFont other)
             {
-                if (font == null)
+                if(font == null)
                 {
-                    if (other.font != null)
+                    if(other.font != null)
                         return false;
                 }
-                else if (!font.Equals(other.font))
+                else if(!font.Equals(other.font))
                     return false;
-                if (index != other.index)
+                if(index != other.index)
                     return false;
                 return true;
             }

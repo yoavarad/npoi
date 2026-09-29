@@ -107,7 +107,7 @@ namespace NPOI.Util
             buf = new byte[4096];
             pos = 0;
             int header = input.ReadByte();
-            if (header != 0x01)
+            if(header != 0x01)
             {
                 throw new ArgumentException(String.Format("Header byte 0x01 expected, received 0x{0:X2}", header & 0xFF));
             }
@@ -116,13 +116,13 @@ namespace NPOI.Util
 
         public override int Read()
         {
-            if (len == -1)
+            if(len == -1)
             {
                 return -1;
             }
-            if (pos >= len)
+            if(pos >= len)
             {
-                if ((len = ReadChunk()) == -1)
+                if((len = ReadChunk()) == -1)
                 {
                     return -1;
                 }
@@ -137,17 +137,17 @@ namespace NPOI.Util
 
         public override int Read(byte[] b, int off, int l)
         {
-            if (len == -1)
+            if(len == -1)
             {
                 return 0;
             }
             int offset = off;
             int length = l;
-            while (length > 0)
+            while(length > 0)
             {
-                if (pos >= len)
+                if(pos >= len)
                 {
-                    if ((len = ReadChunk()) == -1)
+                    if((len = ReadChunk()) == -1)
                     {
                         return offset > off ? offset - off : 0;
                     }
@@ -164,11 +164,11 @@ namespace NPOI.Util
         public override long Skip(long n)
         {
             long length = n;
-            while (length > 0)
+            while(length > 0)
             {
-                if (pos >= len)
+                if(pos >= len)
                 {
-                    if ((len = ReadChunk()) == -1)
+                    if((len = ReadChunk()) == -1)
                     {
                         return -1;
                     }
@@ -200,19 +200,19 @@ namespace NPOI.Util
         {
             pos = 0;
             int w = ReadShort(input);
-            if (w == -1)
+            if(w == -1)
             {
                 return -1;
             }
             int chunkSize = (w & 0x0FFF) + 1; // plus 3 bytes minus 2 for the length
-            if ((w & 0x7000) != 0x3000)
+            if((w & 0x7000) != 0x3000)
             {
                 throw new ArgumentException(String.Format("Chunksize header A should be 0x3000, received 0x{0:X4}", w & 0xE000));
             }
             bool rawChunk = (w & 0x8000) == 0;
-            if (rawChunk)
+            if(rawChunk)
             {
-                if (input.Read(buf, 0, chunkSize) < chunkSize)
+                if(input.Read(buf, 0, chunkSize) < chunkSize)
                 {
                     throw new InvalidOperationException(String.Format("Not enough bytes Read, expected {0}", chunkSize));
                 }
@@ -222,36 +222,36 @@ namespace NPOI.Util
             {
                 int inOffset = 0;
                 int outOffset = 0;
-                while (inOffset < chunkSize)
+                while(inOffset < chunkSize)
                 {
                     int tokenFlags = input.ReadByte();
                     inOffset++;
-                    if (tokenFlags == -1)
+                    if(tokenFlags == -1)
                     {
                         break;
                     }
-                    for (int n = 0; n < 8; n++)
+                    for(int n = 0; n < 8; n++)
                     {
-                        if (inOffset >= chunkSize)
+                        if(inOffset >= chunkSize)
                         {
                             break;
                         }
-                        if ((tokenFlags & POWER2[n]) == 0)
+                        if((tokenFlags & POWER2[n]) == 0)
                         {
                             // literal
                             int b = input.ReadByte();
-                            if (b == -1)
+                            if(b == -1)
                             {
                                 return -1;
                             }
-                            buf[outOffset++] = (byte)b;
+                            buf[outOffset++] = (byte) b;
                             inOffset++;
                         }
                         else
                         {
                             // compressed token
                             int token = ReadShort(input);
-                            if (token == -1)
+                            if(token == -1)
                             {
                                 return -1;
                             }
@@ -261,7 +261,7 @@ namespace NPOI.Util
                             int copyLen = (token & (POWER2[copyLenBits] - 1)) + 3;
                             int startPos = outOffset - copyOffset;
                             int endPos = startPos + copyLen;
-                            for (int i = startPos; i < endPos; i++)
+                            for(int i = startPos; i < endPos; i++)
                             {
                                 buf[outOffset++] = buf[i];
                             }
@@ -279,9 +279,9 @@ namespace NPOI.Util
         ///<returns>returns the number of bits in the copy token (a value between 4 and 12)</returns>
         private static int GetCopyLenBits(int offset)
         {
-            for (int n = 11; n >= 4; n--)
+            for(int n = 11; n >= 4; n--)
             {
-                if ((offset & POWER2[n]) != 0)
+                if((offset & POWER2[n]) != 0)
                 {
                     return 15 - n;
                 }
@@ -312,11 +312,11 @@ namespace NPOI.Util
         private static int ReadShort(Stream stream)
         {
             int b0, b1;
-            if ((b0 = stream.ReadByte()) == -1)
+            if((b0 = stream.ReadByte()) == -1)
             {
                 return -1;
             }
-            if ((b1 = stream.ReadByte()) == -1)
+            if((b1 = stream.ReadByte()) == -1)
             {
                 return -1;
             }
@@ -326,19 +326,19 @@ namespace NPOI.Util
         private static int ReadInt(RLEDecompressingInputStream stream)
         {
             int b0, b1, b2, b3;
-            if ((b0 = stream.Read()) == -1)
+            if((b0 = stream.Read()) == -1)
             {
                 return -1;
             }
-            if ((b1 = stream.Read()) == -1)
+            if((b1 = stream.Read()) == -1)
             {
                 return -1;
             }
-            if ((b2 = stream.Read()) == -1)
+            if((b2 = stream.Read()) == -1)
             {
                 return -1;
             }
-            if ((b3 = stream.Read()) == -1)
+            if((b3 = stream.Read()) == -1)
             {
                 return -1;
             }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace System.Collections.ObjectModel
@@ -63,16 +63,16 @@ namespace System.Collections.ObjectModel
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ICollection<TKey> IDictionary<TKey, TValue>.Keys => Keys;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         ICollection<TValue> IDictionary<TKey, TValue>.Values => Values;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => Keys;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => Values;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => true;
 
@@ -142,13 +142,13 @@ namespace System.Collections.ObjectModel
         void ICollection<KeyValuePair<TKey, TValue>>.Clear() => throw new NotSupportedException();
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item) =>
-            ((ICollection<KeyValuePair<TKey, TValue>>)_baseDictionary).Contains(item);
+            ((ICollection<KeyValuePair<TKey, TValue>>) _baseDictionary).Contains(item);
 
         void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
-            ((ICollection<KeyValuePair<TKey, TValue>>)_baseDictionary).CopyTo(array, arrayIndex);
+            ((ICollection<KeyValuePair<TKey, TValue>>) _baseDictionary).CopyTo(array, arrayIndex);
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
-            => ((IEnumerable<KeyValuePair<TKey, TValue>>)_baseDictionary).GetEnumerator();
+            => ((IEnumerable<KeyValuePair<TKey, TValue>>) _baseDictionary).GetEnumerator();
 
         #endregion
     }

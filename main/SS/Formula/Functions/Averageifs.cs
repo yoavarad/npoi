@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -17,7 +17,8 @@
  * ====================================================================
  */
 using NPOI.SS.Formula.Eval;
-namespace NPOI.SS.Formula.Functions {
+namespace NPOI.SS.Formula.Functions
+{
     /**
      * Implementation for the Excel function AverageIfs<br/>
      * <p>
@@ -45,7 +46,7 @@ namespace NPOI.SS.Formula.Functions {
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length < 3 || args.Length % 2 == 0)
+            if(args.Length < 3 || args.Length % 2 == 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -57,7 +58,7 @@ namespace NPOI.SS.Formula.Functions {
                 // collect pairs of ranges and criteria
                 AreaEval[] ae = new AreaEval[(args.Length - 1) / 2];
                 IMatchPredicate[] mp = new IMatchPredicate[ae.Length];
-                for (int i = 1, k = 0; i < args.Length; i += 2, k++)
+                for(int i = 1, k = 0; i < args.Length; i += 2, k++)
                 {
                     ae[k] = ConvertRangeArg(args[i]);
                     mp[k] = Countif.CreateCriteriaPredicate(args[i + 1], ec.RowIndex, ec.ColumnIndex);
@@ -69,7 +70,7 @@ namespace NPOI.SS.Formula.Functions {
                 double result = GetAvgFromMatchingCells(ae, mp, avgRange);
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -83,9 +84,9 @@ namespace NPOI.SS.Formula.Functions {
          */
         private static void ValidateCriteriaRanges(AreaEval[] criteriaRanges, AreaEval avgRange)
         {
-            foreach (AreaEval r in criteriaRanges)
+            foreach(AreaEval r in criteriaRanges)
             {
-                if (r.Height != avgRange.Height ||
+                if(r.Height != avgRange.Height ||
                    r.Width != avgRange.Width)
                 {
                     throw EvaluationException.InvalidValue();
@@ -108,18 +109,18 @@ namespace NPOI.SS.Formula.Functions {
 
             double sum = 0.0;
             int valuesCount = 0;
-            for (int r = 0; r < height; r++)
+            for(int r = 0; r < height; r++)
             {
-                for (int c = 0; c < width; c++)
+                for(int c = 0; c < width; c++)
                 {
 
                     bool matches = true;
-                    for (int i = 0; i < ranges.Length; i++)
+                    for(int i = 0; i < ranges.Length; i++)
                     {
                         AreaEval aeRange = ranges[i];
                         IMatchPredicate mp = predicates[i];
 
-                        if (!mp.Matches(aeRange.GetRelativeValue(r, c)))
+                        if(!mp.Matches(aeRange.GetRelativeValue(r, c)))
                         {
                             matches = false;
                             break;
@@ -127,17 +128,18 @@ namespace NPOI.SS.Formula.Functions {
 
                     }
 
-                    if (matches)
+                    if(matches)
                     { // sum only if all of the corresponding criteria specified are true for that cell.
                         var result = Accumulate(aeAvg, r, c);
-                        if(result == null) continue;
+                        if(result == null)
+                            continue;
                         sum += result.Value;
                         valuesCount++;
                     }
                 }
             }
 
-            if (valuesCount <= 0)
+            if(valuesCount <= 0)
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             return sum / valuesCount;
         }
@@ -147,7 +149,7 @@ namespace NPOI.SS.Formula.Functions {
         {
 
             ValueEval addend = aeSum.GetRelativeValue(relRowIndex, relColIndex);
-            if (addend is NumberEval eval)
+            if(addend is NumberEval eval)
             {
                 return eval.NumberValue;
             }
@@ -157,11 +159,11 @@ namespace NPOI.SS.Formula.Functions {
 
         private static AreaEval ConvertRangeArg(ValueEval eval)
         {
-            if (eval is AreaEval areaEval)
+            if(eval is AreaEval areaEval)
             {
                 return areaEval;
             }
-            if (eval is RefEval refEval)
+            if(eval is RefEval refEval)
             {
                 return refEval.Offset(0, 0, 0, 0);
             }

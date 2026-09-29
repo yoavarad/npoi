@@ -57,15 +57,20 @@ namespace NPOI.SS.UserModel
         {
             switch(family)
             {
-                case 0: return NOT_APPLICABLE;
-                case 1: return ROMAN;
-                case 2: return SWISS;
-                case 3: return MODERN;
-                case 4: return SCRIPT;
-                case 5: return DECORATIVE;
+                case 0:
+                    return NOT_APPLICABLE;
+                case 1:
+                    return ROMAN;
+                case 2:
+                    return SWISS;
+                case 3:
+                    return MODERN;
+                case 4:
+                    return SCRIPT;
+                case 5:
+                    return DECORATIVE;
             }
             return NOT_APPLICABLE;
         }
     }
 }
-

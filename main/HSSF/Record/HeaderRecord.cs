@@ -37,9 +37,9 @@ namespace NPOI.HSSF.Record
     {
         public const short sid = 0x14;
 
-        public HeaderRecord(String text):base(text)
+        public HeaderRecord(String text) : base(text)
         {
-            
+
         }
 
         /**
@@ -47,7 +47,7 @@ namespace NPOI.HSSF.Record
          * @param in the RecordInputstream to Read the record from
          */
 
-        public HeaderRecord(RecordInputStream in1):base(in1)
+        public HeaderRecord(RecordInputStream in1) : base(in1)
         {
         }
 

@@ -75,7 +75,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return beginPos.Run;
             }
-            set 
+            set
             {
                 beginPos.Run = value;
             }
@@ -89,7 +89,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return beginPos.Text;
             }
-            set 
+            set
             {
                 beginPos.Text = value;
             }
@@ -103,7 +103,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return beginPos.Char;
             }
-            set 
+            set
             {
                 beginPos.Char = value;
             }
@@ -114,7 +114,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return endPos.Run;
             }
-            set 
+            set
             {
                 endPos.Run = value;
             }
@@ -128,7 +128,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return endPos.Text;
             }
-            set 
+            set
             {
                 endPos.Text = value;
             }
@@ -142,7 +142,7 @@ namespace NPOI.XWPF.UserModel
             {
                 return endPos.Char;
             }
-            set 
+            set
             {
                 endPos.Char = value;
             }

@@ -20,7 +20,8 @@ using NPOI.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.Model;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.IO;
 namespace TestCases.XSSF.Model
 {
@@ -41,13 +42,13 @@ namespace TestCases.XSSF.Model
             MapInfo mapInfo = null;
             SingleXmlCells SingleXMLCells = null;
 
-            foreach (POIXMLDocumentPart p in wb.GetRelations())
+            foreach(POIXMLDocumentPart p in wb.GetRelations())
             {
 
 
-                if (p is MapInfo)
+                if(p is MapInfo)
                 {
-                    mapInfo = (MapInfo)p;
+                    mapInfo = (MapInfo) p;
 
 
                     CT_MapInfo ctMapInfo = mapInfo.GetCTMapInfo();
@@ -56,7 +57,7 @@ namespace TestCases.XSSF.Model
 
                     ClassicAssert.AreEqual(1, ctMapInfo.Schema.Count);
 
-                    foreach (XSSFMap map in mapInfo.GetAllXSSFMaps())
+                    foreach(XSSFMap map in mapInfo.GetAllXSSFMaps())
                     {
                         string xmlSchema = map.GetSchema();
                         ClassicAssert.IsNotNull(xmlSchema);
@@ -66,12 +67,12 @@ namespace TestCases.XSSF.Model
 
             XSSFSheet sheet1 = (XSSFSheet)wb.GetSheetAt(0);
 
-            foreach (POIXMLDocumentPart p in sheet1.GetRelations())
+            foreach(POIXMLDocumentPart p in sheet1.GetRelations())
             {
 
-                if (p is SingleXmlCells)
+                if(p is SingleXmlCells)
                 {
-                    SingleXMLCells = (SingleXmlCells)p;
+                    SingleXMLCells = (SingleXmlCells) p;
                 }
 
             }
@@ -124,7 +125,7 @@ namespace TestCases.XSSF.Model
                     ClassicAssert.IsTrue(map.DataBinding.FileBinding);
                     ClassicAssert.IsNull(map.DataBinding.DataBindingName);
                     ClassicAssert.IsNull(map.DataBinding.FileBindingName);
-                    ClassicAssert.AreEqual(1,map.DataBinding.DataBindingLoadMode);
+                    ClassicAssert.AreEqual(1, map.DataBinding.DataBindingLoadMode);
                 }
             }
         }

@@ -35,7 +35,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 ve = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 //if (false)
                 //{

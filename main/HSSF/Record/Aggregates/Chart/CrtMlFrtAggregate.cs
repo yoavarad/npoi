@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
-using NPOI.HSSF.Record.Chart;
 using NPOI.HSSF.Model;
+using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
 {
@@ -31,12 +31,12 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public CrtMlFrtAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_CRTMLFRT, container)
         {
-            crtmlFrt = (CrtMlFrtRecord)rs.GetNext();
-            if (rs.PeekNextChartSid() == CrtMlFrtContinueRecord.sid)
+            crtmlFrt = (CrtMlFrtRecord) rs.GetNext();
+            if(rs.PeekNextChartSid() == CrtMlFrtContinueRecord.sid)
             {
-                while (rs.PeekNextChartSid() == CrtMlFrtContinueRecord.sid)
+                while(rs.PeekNextChartSid() == CrtMlFrtContinueRecord.sid)
                 {
-                    continues.Add((CrtMlFrtContinueRecord)rs.GetNext());
+                    continues.Add((CrtMlFrtContinueRecord) rs.GetNext());
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         {
             WriteStartBlock(rv);
             rv.VisitRecord(crtmlFrt);
-            foreach (CrtMlFrtContinueRecord cr in continues)
+            foreach(CrtMlFrtContinueRecord cr in continues)
                 rv.VisitRecord(cr);
         }
     }

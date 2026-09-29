@@ -48,7 +48,7 @@ namespace NPOI.HSSF.Record.CF
                 : base(in1)
         {
 
-            equals = (byte)in1.ReadByte();
+            equals = (byte) in1.ReadByte();
             // Reserved, 4 bytes, all 0
             in1.ReadInt();
         }
@@ -89,4 +89,3 @@ namespace NPOI.HSSF.Record.CF
         }
     }
 }
-

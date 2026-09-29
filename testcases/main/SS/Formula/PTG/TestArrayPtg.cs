@@ -17,12 +17,12 @@
 
 namespace TestCases.SS.Formula.PTG
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
     using NPOI.Util;
-
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
     using TestCases.HSSF.Record;
     /**
@@ -35,11 +35,11 @@ namespace TestCases.SS.Formula.PTG
     {
 
         private static byte[] ENCODED_PTG_DATA = {
-		    0x40,
-		    0, 0, 0, 0, 0, 0, 0,
-	    };
+            0x40,
+            0, 0, 0, 0, 0, 0, 0,
+        };
         private static byte[] ENCODED_CONSTANT_DATA = {
-		    2,    // 3 columns
+            2,    // 3 columns
 		    1, 0, // 2 rows
 		    4, 1, 0, 0, 0, 0, 0, 0, 0, // TRUE
 		    2, 4, 0, 0, 65, 66, 67, 68, // "ABCD"
@@ -77,7 +77,7 @@ namespace TestCases.SS.Formula.PTG
             byte[] outBuf = new byte[ENCODED_CONSTANT_DATA.Length];
             ptg.WriteTokenValueBytes(new LittleEndianByteArrayOutputStream(outBuf, 0));
 
-            if (outBuf[0] == 4)
+            if(outBuf[0] == 4)
             {
                 throw new AssertionException("Identified bug 42564b");
             }
@@ -115,7 +115,7 @@ namespace TestCases.SS.Formula.PTG
             // The formula has an array with 3 rows and 5 columns
             String formula = wb.GetSheetAt(0).GetRow(0).GetCell(0).CellFormula;
 
-            if (formula.Equals("SUM({1,6,11;2,7,12;3,8,13;4,9,14;5,10,15})"))
+            if(formula.Equals("SUM({1,6,11;2,7,12;3,8,13;4,9,14;5,10,15})"))
             {
                 throw new AssertionException("Identified bug 42564 b");
             }
@@ -130,9 +130,9 @@ namespace TestCases.SS.Formula.PTG
             {
                 actualFormula = ptg.ToFormulaString();
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if (e.Message.Equals("Unexpected constant class (java.lang.Boolean)"))
+                if(e.Message.Equals("Unexpected constant class (java.lang.Boolean)"))
                 {
                     throw new AssertionException("Identified bug 45380");
                 }
@@ -157,7 +157,7 @@ namespace TestCases.SS.Formula.PTG
             byte[] fullData = concat(ENCODED_PTG_DATA, ENCODED_CONSTANT_DATA);
 
             // Force encoded operand class for tArray
-            fullData[0] = (byte)(ArrayPtg.sid + operandClass);
+            fullData[0] = (byte) (ArrayPtg.sid + operandClass);
 
             ILittleEndianInput in1 = TestcaseRecordInputStream.CreateLittleEndian(fullData);
 

@@ -17,10 +17,11 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System.IO;
-    using NPOI.Util;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System.IO;
 
     /**
      * 
@@ -35,8 +36,8 @@ namespace TestCases.HSSF.Record
 
             byte[] data = new byte[22];
             LittleEndian.PutShort(data, 0, DVALRecord.sid);
-            LittleEndian.PutShort(data, 2, (short)18);
-            LittleEndian.PutShort(data, 4, (short)55);
+            LittleEndian.PutShort(data, 2, (short) 18);
+            LittleEndian.PutShort(data, 4, (short) 55);
             LittleEndian.PutInt(data, 6, 56);
             LittleEndian.PutInt(data, 10, 57);
             LittleEndian.PutInt(data, 14, 58);
@@ -50,7 +51,7 @@ namespace TestCases.HSSF.Record
             ClassicAssert.AreEqual(56, dv.HorizontalPos);
             ClassicAssert.AreEqual(57, dv.VerticalPos);
             ClassicAssert.AreEqual(58, dv.ObjectID);
-            if (dv.DVRecNo == 0)
+            if(dv.DVRecNo == 0)
             {
                 Assert.Fail("Identified bug 44510");
             }

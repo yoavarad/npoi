@@ -1,9 +1,10 @@
-﻿using NPOI;
+using NPOI;
+using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
-using NPOI.HPSF;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,7 +97,8 @@ namespace TestCases
             doc3.Close();
         }
         [Test]
-        public void TestCreateNewProperties()        {
+        public void TestCreateNewProperties()
+        {
             POIDocument doc = new HSSFWorkbook();
 
             // New document won't have them

@@ -25,7 +25,7 @@ namespace NPOI.HSSF.Util
      *
      * @author Andrew C. Oliver (acoliver at apache dot org)
      * @author Glen Stampoultzis (glens at apache.org)
-     * @author Rolf-Jürgen Moll
+     * @author Rolf-JÃ¼rgen Moll
      *
      * @see org.apache.poi.hssf.record.MulRKRecord
      * @see org.apache.poi.hssf.record.RKRecord
@@ -47,11 +47,11 @@ namespace NPOI.HSSF.Util
             raw_number = raw_number >> 2;
             double rvalue = 0;
 
-            if ((number & 0x02) == 0x02)
+            if((number & 0x02) == 0x02)
             {
                 // ok, it's just a plain ol' int; we can handle this
                 // trivially by casting
-                rvalue = (double)(raw_number);
+                rvalue = (double) (raw_number);
             }
             else
             {
@@ -61,7 +61,7 @@ namespace NPOI.HSSF.Util
                 // to convert the resulting bit image to a double
                 rvalue = BitConverter.Int64BitsToDouble(raw_number << 34);
             }
-            if ((number & 0x01) == 0x01)
+            if((number & 0x01) == 0x01)
             {
 
                 // low-order bit says divide by 100, and so we do. Why?

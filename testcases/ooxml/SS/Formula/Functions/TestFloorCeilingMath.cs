@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -16,15 +16,16 @@
  *    limitations under the License.
  * ====================================================================
  */
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NPOI.SS.Formula.Functions;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using NPOI.SS.Formula.Functions;
-using NUnit.Framework.Constraints;
-using NPOI.SS.Util;
 
 namespace TestCases.SS.Formula.Functions
 {
@@ -54,15 +55,15 @@ namespace TestCases.SS.Formula.Functions
             public string SheetName
                 => (Function == FunctionTested.Ceiling ? "CEILING" : "FLOOR") + "," + Mode.ToString().ToUpperInvariant();
 
-            public FloorCeilingMathBase Evaluator 
-                => Function == FunctionTested.Ceiling ? CeilingMath.Instance : (FloorCeilingMathBase)FloorMath.Instance;
+            public FloorCeilingMathBase Evaluator
+                => Function == FunctionTested.Ceiling ? CeilingMath.Instance : (FloorCeilingMathBase) FloorMath.Instance;
 
             public double Evaluate(double number, double significance)
                 => Evaluator.Evaluate(number, significance, Mode);
             public override string ToString()
                 => SheetName;
         }
-        
+
         private XSSFWorkbook _workbook;
         [OneTimeSetUp]
         public void LoadData()
@@ -71,7 +72,7 @@ namespace TestCases.SS.Formula.Functions
             const string filename = "FloorCeilingMath.xlsx";
             var file = Path.Combine(fldr, filename);
 
-            using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using(var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 _workbook = new XSSFWorkbook(fs);
             }
@@ -101,18 +102,18 @@ namespace TestCases.SS.Formula.Functions
             Assert.Multiple(() =>
             {
                 var sheet = _workbook.GetSheet(function.SheetName);
-                for (var i = 1; i <= Count; i++)
+                for(var i = 1; i <= Count; i++)
                 {
                     var row = sheet.GetRow(i + StartRowIndex);
                     var significance = row.GetCell(StartColumnIndex).NumericCellValue;
 
-                    for (var j = 1; j <= Count; j++)
+                    for(var j = 1; j <= Count; j++)
                     {
                         var number = sheet.GetRow(StartRowIndex).GetCell(j + StartColumnIndex).NumericCellValue;
                         var expected = row.GetCell(j + StartColumnIndex).NumericCellValue;
 
                         var functionResult = function.Evaluate(number, significance);
-                        
+
                         ClassicAssert.AreEqual(expected, functionResult, Tolerance, $"{function}, {number}, {significance}");
                     }
                 }

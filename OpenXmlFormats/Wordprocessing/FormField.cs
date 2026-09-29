@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,10 +31,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_FFTextType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFTextType ctObj = new CT_FFTextType();
-            ctObj.valField = (ST_FFTextType)Enum.Parse(typeof(ST_FFTextType), XmlHelper.ReadString(node.Attributes["w:val"]));
+            ctObj.valField = (ST_FFTextType) Enum.Parse(typeof(ST_FFTextType), XmlHelper.ReadString(node.Attributes["w:val"]));
             return ctObj;
         }
 
@@ -52,22 +52,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_FFTextType
     {
 
-    
+
         regular,
 
-    
+
         number,
 
-    
+
         date,
 
-    
+
         currentTime,
 
-    
+
         currentDate,
 
-    
+
         calculated,
     }
 
@@ -96,7 +96,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_FFName Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFName ctObj = new CT_FFName();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
@@ -150,26 +150,26 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_FldChar Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FldChar ctObj = new CT_FldChar();
-            if (node.Attributes["w:fldCharType"] != null)
-                ctObj.fldCharType = (ST_FldCharType)Enum.Parse(typeof(ST_FldCharType), node.Attributes["w:fldCharType"].Value);
-            if (node.Attributes["w:fldLock"] != null)
-                ctObj.fldLock = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:fldLock"].Value,true);
-            if (node.Attributes["w:dirty"] != null)
-                ctObj.dirty = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:dirty"].Value,true);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["w:fldCharType"] != null)
+                ctObj.fldCharType = (ST_FldCharType) Enum.Parse(typeof(ST_FldCharType), node.Attributes["w:fldCharType"].Value);
+            if(node.Attributes["w:fldLock"] != null)
+                ctObj.fldLock = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:fldLock"].Value, true);
+            if(node.Attributes["w:dirty"] != null)
+                ctObj.dirty = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:dirty"].Value, true);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "ffData")
+                if(childNode.LocalName == "ffData")
                 {
                     ctObj.ffDataField = CT_FFData.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "fldData")
+                else if(childNode.LocalName == "fldData")
                 {
                     ctObj.fldDataField = CT_Text.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "numberingChange")
+                else if(childNode.LocalName == "numberingChange")
                 {
                     ctObj.numberingChangeField = CT_TrackChangeNumbering.Parse(childNode, namespaceManager);
                 }
@@ -185,24 +185,24 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:fldCharType", this.fldCharType.ToString());
             if(this.fldLock!= ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:fldLock", this.fldLock.ToString());
-            if (this.dirty != ST_OnOff.off)
+            if(this.dirty != ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:dirty", this.dirty.ToString());
-            if (this.ffDataField == null && this.fldDataField == null && this.numberingChangeField == null)
+            if(this.ffDataField == null && this.fldDataField == null && this.numberingChangeField == null)
             {
                 sw.Write("/>", nodeName);
             }
             else
             {
                 sw.Write('>');
-                if (this.ffDataField != null)
+                if(this.ffDataField != null)
                 {
                     this.ffDataField.Write(sw, "ffData");
                 }
-                if (this.fldDataField != null)
+                if(this.fldDataField != null)
                 {
                     this.fldDataField.Write(sw, "fldData");
                 }
-                if (this.numberingChangeField != null)
+                if(this.numberingChangeField != null)
                 {
                     this.numberingChangeField.Write(sw, "numberingChange");
                 }
@@ -335,53 +335,53 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         internal static CT_FFData Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFData ctObj = new CT_FFData();
 
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "name")
+                if(childNode.LocalName == "name")
                 {
-                    ctObj.AddNewObject(CT_FFName.Parse(childNode, namespaceManager) ,FFDataItemsType.name);
+                    ctObj.AddNewObject(CT_FFName.Parse(childNode, namespaceManager), FFDataItemsType.name);
                 }
                 //else if (childNode.LocalName == "tabIndex")
                 //{
 
                 //}
-                else if (childNode.LocalName == "enabled")
+                else if(childNode.LocalName == "enabled")
                 {
                     ctObj.AddNewObject(CT_OnOff.Parse(childNode, namespaceManager), FFDataItemsType.enabled);
                 }
-                else if (childNode.LocalName == "calcOnExit")
+                else if(childNode.LocalName == "calcOnExit")
                 {
                     ctObj.AddNewObject(CT_OnOff.Parse(childNode, namespaceManager), FFDataItemsType.calcOnExit);
                 }
-                else if (childNode.LocalName == "checkBox")
+                else if(childNode.LocalName == "checkBox")
                 {
                     ctObj.AddNewObject(CT_FFCheckBox.Parse(childNode, namespaceManager), FFDataItemsType.checkBox);
                 }
-                else if (childNode.LocalName == "ddList")
+                else if(childNode.LocalName == "ddList")
                 {
                     ctObj.AddNewObject(CT_FFDDList.Parse(childNode, namespaceManager), FFDataItemsType.ddList);
                 }
-                else if (childNode.LocalName == "entryMacro")
+                else if(childNode.LocalName == "entryMacro")
                 {
                     ctObj.AddNewObject(CT_MacroName.Parse(childNode, namespaceManager), FFDataItemsType.entryMacro);
                 }
-                else if (childNode.LocalName == "exitMacro")
+                else if(childNode.LocalName == "exitMacro")
                 {
                     ctObj.AddNewObject(CT_MacroName.Parse(childNode, namespaceManager), FFDataItemsType.exitMacro);
                 }
-                else if (childNode.LocalName == "helpText")
+                else if(childNode.LocalName == "helpText")
                 {
                     ctObj.AddNewObject(CT_FFHelpText.Parse(childNode, namespaceManager), FFDataItemsType.helpText);
                 }
-                else if (childNode.LocalName == "statusText")
+                else if(childNode.LocalName == "statusText")
                 {
                     ctObj.AddNewObject(CT_FFStatusText.Parse(childNode, namespaceManager), FFDataItemsType.statusText);
                 }
-                else if (childNode.LocalName == "textInput")
+                else if(childNode.LocalName == "textInput")
                 {
                     ctObj.AddNewObject(CT_FFTextInput.Parse(childNode, namespaceManager), FFDataItemsType.textInput);
                 }
@@ -393,27 +393,27 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             sw.Write('>');
 
-            for (int i=0;i<this.itemsElementNameField.Count;i++)
+            for(int i = 0; i<this.itemsElementNameField.Count; i++)
             {
-                if (this.itemsElementNameField[i] == FFDataItemsType.name)
+                if(this.itemsElementNameField[i] == FFDataItemsType.name)
                     (this.itemsField[i] as CT_FFName).Write(sw, "name");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.enabled)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.enabled)
                     (this.itemsField[i] as CT_OnOff).Write(sw, "enabled");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.calcOnExit)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.calcOnExit)
                     (this.itemsField[i] as CT_OnOff).Write(sw, "calcOnExit");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.ddList)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.ddList)
                     (this.itemsField[i] as CT_FFDDList).Write(sw, "ddList");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.checkBox)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.checkBox)
                     (this.itemsField[i] as CT_FFCheckBox).Write(sw, "checkBox");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.entryMacro)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.entryMacro)
                     (this.itemsField[i] as CT_MacroName).Write(sw, "entryMacro");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.exitMacro)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.exitMacro)
                     (this.itemsField[i] as CT_MacroName).Write(sw, "exitMacro");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.helpText)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.helpText)
                     (this.itemsField[i] as CT_FFHelpText).Write(sw, "helpText");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.statusText)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.statusText)
                     (this.itemsField[i] as CT_FFStatusText).Write(sw, "statusText");
-                else if (this.itemsElementNameField[i] == FFDataItemsType.textInput)
+                else if(this.itemsElementNameField[i] == FFDataItemsType.textInput)
                     (this.itemsField[i] as CT_FFTextInput).Write(sw, "textInput");
             }
 
@@ -432,12 +432,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         private List<T> GetObjectList<T>(FFDataItemsType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 List<T> list = new List<T>();
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         list.Add(itemsField[i] as T);
                 }
                 return list;
@@ -445,12 +445,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private int SizeOfObjectArray(FFDataItemsType type)
         {
-            lock (this)
+            lock(this)
             {
                 int size = 0;
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         size++;
                 }
                 return size;
@@ -458,10 +458,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private T GetObjectArray<T>(int p, FFDataItemsType type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return null;
                 return itemsField[pos] as T;
             }
@@ -469,7 +469,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T InsertNewObject<T>(FFDataItemsType type, int p) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
                 this.itemsElementNameField.Insert(pos, type);
@@ -480,7 +480,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private T AddNewObject<T>(FFDataItemsType type) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 this.itemsElementNameField.Add(type);
                 this.itemsField.Add(t);
@@ -489,12 +489,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void SetObjectArray<T>(FFDataItemsType type, int p, T obj) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
-                if (this.itemsField[pos] is T)
+                if(this.itemsField[pos] is T)
                     this.itemsField[pos] = obj;
                 else
                     throw new Exception(string.Format(@"object types are difference, itemsField[{0}] is {1}, and parameter obj is {2}",
@@ -505,11 +505,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             int index = -1;
             int pos = 0;
-            for (int i = 0; i < itemsElementNameField.Count; i++)
+            for(int i = 0; i < itemsElementNameField.Count; i++)
             {
-                if (itemsElementNameField[i] == type)
+                if(itemsElementNameField[i] == type)
                 {
-                    if (pos == p)
+                    if(pos == p)
                     {
                         //return itemsField[p] as T;
                         index = i;
@@ -523,10 +523,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         private void RemoveObject(FFDataItemsType type, int p)
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
                 itemsElementNameField.RemoveAt(pos);
                 itemsField.RemoveAt(pos);
@@ -602,24 +602,24 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_FFCheckBox Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFCheckBox ctObj = new CT_FFCheckBox();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "checked")
+                if(childNode.LocalName == "checked")
                 {
                     ctObj.checkedField = CT_OnOff.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "default")
+                else if(childNode.LocalName == "default")
                 {
                     ctObj.defaultField = CT_OnOff.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "size")
+                else if(childNode.LocalName == "size")
                 {
                     ctObj.itemField = CT_HpsMeasure.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "sizeAuto")
+                else if(childNode.LocalName == "sizeAuto")
                 {
                     ctObj.itemField = CT_OnOff.Parse(childNode, namespaceManager);
                 }
@@ -633,13 +633,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.defaultField != null)
+            if(this.defaultField != null)
                 this.defaultField.Write(sw, "default");
-            if (this.checkedField != null)
+            if(this.checkedField != null)
                 this.checkedField.Write(sw, "checked");
-            if (this.itemField != null)
+            if(this.itemField != null)
             {
-                if (this.itemField is CT_OnOff off)
+                if(this.itemField is CT_OnOff off)
                     off.Write(sw, "sizeAuto");
                 else
                     (this.itemField as CT_HpsMeasure).Write(sw, "size");
@@ -710,20 +710,20 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_FFDDList Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFDDList ctObj = new CT_FFDDList();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "result")
+                if(childNode.LocalName == "result")
                 {
                     ctObj.resultField = CT_DecimalNumber.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "default")
+                else if(childNode.LocalName == "default")
                 {
                     ctObj.defaultField = CT_DecimalNumber.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "listEntry")
+                else if(childNode.LocalName == "listEntry")
                 {
                     ctObj.listEntryField.Add(CT_String.Parse(childNode, namespaceManager));
                 }
@@ -737,11 +737,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.defaultField != null)
+            if(this.defaultField != null)
                 this.defaultField.Write(sw, "default");
-            if (this.resultField != null)
+            if(this.resultField != null)
                 this.resultField.Write(sw, "result");
-            foreach (CT_String str in listEntry)
+            foreach(CT_String str in listEntry)
             {
                 str.Write(sw, "listEntry");
             }
@@ -804,13 +804,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_FFHelpText Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFHelpText ctObj = new CT_FFHelpText();
-            if (node.Attributes["w:type"] != null)
+            if(node.Attributes["w:type"] != null)
             {
                 ctObj.typeFieldSpecified = true;
-                ctObj.typeField = (ST_InfoTextType)Enum.Parse(typeof(ST_InfoTextType), node.Attributes["w:type"].Value);
+                ctObj.typeField = (ST_InfoTextType) Enum.Parse(typeof(ST_InfoTextType), node.Attributes["w:type"].Value);
             }
             ctObj.valField = XmlHelper.ReadString(node.Attributes["w:val"]);
             return ctObj;
@@ -820,7 +820,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:val", this.valField);
-            if (this.typeFieldSpecified)
+            if(this.typeFieldSpecified)
             {
                 XmlHelper.WriteAttribute(sw, "w:type", this.typeField.ToString());
             }
@@ -834,10 +834,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_InfoTextType
     {
 
-    
+
         text,
 
-    
+
         autoText,
     }
 
@@ -896,13 +896,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_FFStatusText Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFStatusText ctObj = new CT_FFStatusText();
-            if (node.Attributes["w:type"] != null)
+            if(node.Attributes["w:type"] != null)
             {
                 ctObj.typeFieldSpecified = true;
-                ctObj.typeField = (ST_InfoTextType)Enum.Parse(typeof(ST_InfoTextType), node.Attributes["w:type"].Value);
+                ctObj.typeField = (ST_InfoTextType) Enum.Parse(typeof(ST_InfoTextType), node.Attributes["w:type"].Value);
             }
             ctObj.valField = XmlHelper.ReadString(node.Attributes["w:val"]);
             return ctObj;
@@ -912,7 +912,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:val", this.valField);
-            if (this.typeFieldSpecified)
+            if(this.typeFieldSpecified)
             {
                 XmlHelper.WriteAttribute(sw, "w:type", this.typeField.ToString());
             }
@@ -998,24 +998,24 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_FFTextInput Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FFTextInput ctObj = new CT_FFTextInput();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "type")
+                if(childNode.LocalName == "type")
                 {
                     ctObj.typeField = CT_FFTextType.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "default")
+                else if(childNode.LocalName == "default")
                 {
                     ctObj.defaultField = CT_String.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "format")
+                else if(childNode.LocalName == "format")
                 {
                     ctObj.formatField = CT_String.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "maxLength")
+                else if(childNode.LocalName == "maxLength")
                 {
                     ctObj.maxLengthField = CT_DecimalNumber.Parse(childNode, namespaceManager);
                 }
@@ -1029,15 +1029,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.typeField == null)
+            if(this.typeField == null)
                 this.typeField.Write(sw, "type");
-            if (this.defaultField != null)
+            if(this.defaultField != null)
                 this.defaultField.Write(sw, "default");
-            if (this.formatField != null)
+            if(this.formatField != null)
                 this.formatField.Write(sw, "format");
-            if (this.maxLengthField != null)
+            if(this.maxLengthField != null)
                 this.maxLengthField.Write(sw, "maxLength");
-            
+
             sw.WriteEndW(nodeName);
         }
     }
@@ -1048,34 +1048,34 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum FFDataItemsType
     {
 
-    
+
         calcOnExit,
 
-    
+
         checkBox,
 
-    
+
         ddList,
 
-    
+
         enabled,
 
-    
+
         entryMacro,
 
-    
+
         exitMacro,
 
-    
+
         helpText,
 
-    
+
         name,
 
-    
+
         statusText,
 
-    
+
         textInput,
     }
 
@@ -1085,13 +1085,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_FldCharType
     {
 
-    
+
         begin,
 
-    
+
         separate,
 
-    
+
         end,
     }
 

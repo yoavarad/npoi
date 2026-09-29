@@ -17,21 +17,22 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.Collections;
-    using System.Configuration;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.Configuration;
+    using System.IO;
     using TestCases.HSSF;
     using TestCases.SS.Formula;
-    using NPOI.HSSF.Record;
-    using NPOI.SS.Util;
 
     /**
 * 
@@ -76,7 +77,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(4.2 * 25, row.GetCell(3).NumericCellValue, 0.0001);
 
 
-            if (OUTPUT_TEST_FILES)
+            if(OUTPUT_TEST_FILES)
             {
                 // Save
                 FileStream existing = File.Open(tmpDirName + "44636-existing.xls", FileMode.Open);
@@ -101,7 +102,7 @@ namespace TestCases.HSSF.UserModel
             HSSFFormulaEvaluator.EvaluateAllFormulaCells(wb);
             ClassicAssert.AreEqual(5.4, row.GetCell(0).NumericCellValue, 0.0001);
 
-            if (OUTPUT_TEST_FILES)
+            if(OUTPUT_TEST_FILES)
             {
                 // Save
                 FileStream scratch = File.Open(tmpDirName + "44636-scratch.xls", FileMode.Open);
@@ -266,7 +267,7 @@ namespace TestCases.HSSF.UserModel
             {
                 fe.EvaluateInCell(cell);
             }
-            catch (FormatException)
+            catch(FormatException)
             {
                 Assert.Fail("Identified bug 44508");
             }
@@ -284,16 +285,16 @@ namespace TestCases.HSSF.UserModel
 
             // And via calls
             int numSheets = wb.NumberOfSheets;
-            for (int i = 0; i < numSheets; i++)
+            for(int i = 0; i < numSheets; i++)
             {
                 NPOI.SS.UserModel.ISheet s = wb.GetSheetAt(i);
                 HSSFFormulaEvaluator eval = new HSSFFormulaEvaluator(wb);
 
-                for (IEnumerator rows = s.GetRowEnumerator(); rows.MoveNext();)
+                for(IEnumerator rows = s.GetRowEnumerator(); rows.MoveNext();)
                 {
                     IRow r = (IRow)rows.Current;
 
-                    for (IEnumerator cells = r.GetEnumerator(); cells.MoveNext();)
+                    for(IEnumerator cells = r.GetEnumerator(); cells.MoveNext();)
                     {
                         ICell c = (ICell)cells.Current;
                         eval.EvaluateFormulaCell(c);
@@ -316,9 +317,9 @@ namespace TestCases.HSSF.UserModel
             {
                 fe.EvaluateInCell(cell);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.StartsWith("Cannot get a error value from"))
+                if(e.Message.StartsWith("Cannot get a error value from"))
                 {
                     Assert.Fail("Identified bug 44950 b");
                 }
@@ -375,7 +376,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb = new HSSFWorkbook();
             NPOI.SS.UserModel.ISheet sheet = wb.CreateSheet("Sheet1");
             IRow row = sheet.CreateRow(0);
-            for (int i = 1; i < 10; i++)
+            for(int i = 1; i < 10; i++)
             {
                 ICell cell = row.CreateCell(i);
                 char prevCol = (char)('A' + i - 1);
@@ -394,7 +395,7 @@ namespace TestCases.HSSF.UserModel
             WorkbookEvaluator evaluator = WorkbookEvaluatorTestHelper.CreateEvaluator(wb, evalListener);
             ValueEval ve = evaluator.Evaluate(HSSFEvaluationTestHelper.WrapCell(cell1));
             int evalCount = evalListener.GetCountCacheMisses();
-            if (evalCount > 10)
+            if(evalCount > 10)
             {
                 // Without caching, evaluating cell 'A9' takes 21845 evaluations which consumes
                 // much time (~3 sec on Core 2 Duo 2.2GHz)
@@ -518,13 +519,13 @@ namespace TestCases.HSSF.UserModel
 
             // Check the MID Ptgs in Row 2 have V RefPtgs for A1
             row = ws.GetRow(1) as HSSFRow;
-            for (int i = 1; i <= 4; i++)
+            for(int i = 1; i <= 4; i++)
             {
                 cell = row.GetCell(i) as HSSFCell;
                 Ptg[] ptgs = getPtgs(cell);
                 ClassicAssert.AreEqual(4, ptgs.Length);
                 ClassicAssert.AreEqual(typeof(FuncPtg), ptgs[3].GetType());
-                ClassicAssert.AreEqual("MID", ((FuncPtg)ptgs[3]).Name);
+                ClassicAssert.AreEqual("MID", ((FuncPtg) ptgs[3]).Name);
                 assertRefPtgA1('V', ptgs, 0);
             }
 
@@ -581,7 +582,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual("A", cell.StringCellValue);
 
             // Enable this to write out + check in Excel
-            if (OUTPUT_TEST_FILES)
+            if(OUTPUT_TEST_FILES)
             {
                 FileStream out1 = new FileStream("/tmp/test.xls", FileMode.Create, FileAccess.ReadWrite);
                 wb.Write(out1);
@@ -600,9 +601,9 @@ namespace TestCases.HSSF.UserModel
         {
             Ptg ptg = ptgs[at];
             ClassicAssert.AreEqual(typeof(RefPtg), ptg.GetType());
-            ClassicAssert.AreEqual(0, ((RefPtg)ptg).Row);
-            ClassicAssert.AreEqual(0, ((RefPtg)ptg).Column);
-            ClassicAssert.AreEqual(rv, ((RefPtg)ptg).RVAType);
+            ClassicAssert.AreEqual(0, ((RefPtg) ptg).Row);
+            ClassicAssert.AreEqual(0, ((RefPtg) ptg).Column);
+            ClassicAssert.AreEqual(rv, ((RefPtg) ptg).RVAType);
         }
 
     }

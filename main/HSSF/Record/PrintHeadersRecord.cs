@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -65,9 +65,9 @@ namespace NPOI.HSSF.Record
             {
                 return (field_1_print_headers == 1);
             }
-            set 
+            set
             {
-                field_1_print_headers = (short)((value == true) ?1:0);
+                field_1_print_headers = (short) ((value == true) ? 1 : 0);
             }
         }
 

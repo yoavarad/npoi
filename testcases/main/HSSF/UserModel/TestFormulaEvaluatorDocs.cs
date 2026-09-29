@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.UserModel
 {
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.SS.UserModel;
 
     /**
      * Tests to show that our documentation at
@@ -71,19 +72,19 @@ namespace TestCases.HSSF.UserModel
 
             // Do a full Evaluate, as per our docs
             // uses EvaluateFormulaCell()
-            for (int sheetNum = 0; sheetNum < wb.NumberOfSheets; sheetNum++)
+            for(int sheetNum = 0; sheetNum < wb.NumberOfSheets; sheetNum++)
             {
                 ISheet sheet = wb.GetSheetAt(sheetNum);
                 HSSFFormulaEvaluator evaluator = new HSSFFormulaEvaluator(wb);
 
-                for (IEnumerator rit = sheet.GetRowEnumerator(); rit.MoveNext(); )
+                for(IEnumerator rit = sheet.GetRowEnumerator(); rit.MoveNext();)
                 {
                     IRow r = (IRow)rit.Current;
 
-                    for (IEnumerator cit = r.GetEnumerator(); cit.MoveNext(); )
+                    for(IEnumerator cit = r.GetEnumerator(); cit.MoveNext();)
                     {
                         ICell c = (ICell)cit.Current;
-                        if (c.CellType == CellType.Formula)
+                        if(c.CellType == CellType.Formula)
                         {
                             evaluator.EvaluateFormulaCell(c);
 
@@ -110,15 +111,15 @@ namespace TestCases.HSSF.UserModel
 
             // Now do the alternate call, which zaps the formulas
             // uses EvaluateInCell()
-            foreach (ISheet sheet in wb)
+            foreach(ISheet sheet in wb)
             {
                 HSSFFormulaEvaluator evaluator = new HSSFFormulaEvaluator(wb);
 
-                foreach (IRow r in sheet)
+                foreach(IRow r in sheet)
                 {
-                    foreach (ICell c in r)
+                    foreach(ICell c in r)
                     {
-                        if (c.CellType == CellType.Formula)
+                        if(c.CellType == CellType.Formula)
                         {
                             evaluator.EvaluateInCell(c);
                         }

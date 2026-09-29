@@ -19,11 +19,10 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
-
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Title:        Selection Record
@@ -45,7 +44,7 @@ namespace NPOI.HSSF.Record
         private int field_2_row_active_cell;
         private int field_3_col_active_cell;
         private int field_4_ref_active_cell;
-        private CellRangeAddress8Bit[] field_6_refs;     
+        private CellRangeAddress8Bit[] field_6_refs;
 
         public SelectionRecord(int activeCellRow, int activeCellCol)
         {
@@ -64,15 +63,15 @@ namespace NPOI.HSSF.Record
         /// <param name="in1">the RecordInputstream to Read the record from</param>
         public SelectionRecord(RecordInputStream in1)
         {
-            field_1_pane = (byte)in1.ReadByte();
-            
+            field_1_pane = (byte) in1.ReadByte();
+
             field_2_row_active_cell = in1.ReadUShort();
             field_3_col_active_cell = in1.ReadShort();
             field_4_ref_active_cell = in1.ReadShort();
             int field_5_num_refs = in1.ReadUShort();
 
             field_6_refs = new CellRangeAddress8Bit[field_5_num_refs];
-            for (int i = 0; i < field_5_num_refs; i++)
+            for(int i = 0; i < field_5_num_refs; i++)
             {
                 field_6_refs[i] = new CellRangeAddress8Bit(in1);
             }
@@ -163,7 +162,7 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(ActiveCellRef);
             int nRefs = field_6_refs.Length;
             out1.WriteShort(nRefs);
-            for (int i = 0; i < field_6_refs.Length; i++)
+            for(int i = 0; i < field_6_refs.Length; i++)
             {
                 field_6_refs[i].Serialize(out1);
             }

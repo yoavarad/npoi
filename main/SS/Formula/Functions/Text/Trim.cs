@@ -16,8 +16,8 @@
 */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * An implementation of the TRIM function:

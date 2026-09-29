@@ -15,9 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.SS.Formula.Function;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 namespace TestCases.SS.Formula.Function
 {
     /**

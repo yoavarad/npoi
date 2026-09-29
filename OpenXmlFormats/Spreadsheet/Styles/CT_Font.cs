@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -41,7 +41,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Font Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Font ctObj = new CT_Font();
             ctObj.charset = new List<CT_IntProperty>();
@@ -54,37 +54,37 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.u = new List<CT_UnderlineProperty>();
             ctObj.vertAlign = new List<CT_VerticalAlignFontProperty>();
             ctObj.scheme = new List<CT_FontScheme>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "outline")
+                if(childNode.LocalName == "outline")
                     ctObj.outline = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shadow")
+                else if(childNode.LocalName == "shadow")
                     ctObj.shadow = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "condense")
+                else if(childNode.LocalName == "condense")
                     ctObj.condense = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extend")
+                else if(childNode.LocalName == "extend")
                     ctObj.extend = CT_BooleanProperty.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "name")
+                else if(childNode.LocalName == "name")
                     ctObj.name= CT_FontName.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "charset")
+                else if(childNode.LocalName == "charset")
                     ctObj.charset.Add(CT_IntProperty.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "family")
+                else if(childNode.LocalName == "family")
                     ctObj.family.Add(CT_IntProperty.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "b")
+                else if(childNode.LocalName == "b")
                     ctObj.b.Add(CT_BooleanProperty.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "i")
+                else if(childNode.LocalName == "i")
                     ctObj.i.Add(CT_BooleanProperty.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "strike")
+                else if(childNode.LocalName == "strike")
                     ctObj.strike.Add(CT_BooleanProperty.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "color")
+                else if(childNode.LocalName == "color")
                     ctObj.color.Add(CT_Color.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "sz")
+                else if(childNode.LocalName == "sz")
                     ctObj.sz.Add(CT_FontSize.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "u")
+                else if(childNode.LocalName == "u")
                     ctObj.u.Add(CT_UnderlineProperty.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "vertAlign")
+                else if(childNode.LocalName == "vertAlign")
                     ctObj.vertAlign.Add(CT_VerticalAlignFontProperty.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "scheme")
+                else if(childNode.LocalName == "scheme")
                     ctObj.scheme.Add(CT_FontScheme.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -96,86 +96,86 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.b != null)
+            if(this.b != null)
             {
-                foreach (CT_BooleanProperty x in this.b)
+                foreach(CT_BooleanProperty x in this.b)
                 {
                     x.Write(sw, "b");
                 }
             }
-            if (this.i != null)
+            if(this.i != null)
             {
-                foreach (CT_BooleanProperty x in this.i)
+                foreach(CT_BooleanProperty x in this.i)
                 {
                     x.Write(sw, "i");
                 }
             }
 
-            if (this.strike != null)
+            if(this.strike != null)
             {
-                foreach (CT_BooleanProperty x in this.strike)
+                foreach(CT_BooleanProperty x in this.strike)
                 {
                     x.Write(sw, "strike");
                 }
             }
-            if (this.condense != null)
+            if(this.condense != null)
                 this.condense.Write(sw, "condense");
-            if (this.extend != null)
+            if(this.extend != null)
                 this.extend.Write(sw, "extend");
-            if (this.outline != null)
+            if(this.outline != null)
                 this.outline.Write(sw, "outline");
-            if (this.shadow != null)
+            if(this.shadow != null)
                 this.shadow.Write(sw, "shadow");
-            if (this.u != null)
+            if(this.u != null)
             {
-                foreach (CT_UnderlineProperty x in this.u)
+                foreach(CT_UnderlineProperty x in this.u)
                 {
                     x.Write(sw, "u");
                 }
             }
-            if (this.vertAlign != null)
+            if(this.vertAlign != null)
             {
-                foreach (CT_VerticalAlignFontProperty x in this.vertAlign)
+                foreach(CT_VerticalAlignFontProperty x in this.vertAlign)
                 {
                     x.Write(sw, "vertAlign");
                 }
             }
 
-            if (this.sz != null)
+            if(this.sz != null)
             {
-                foreach (CT_FontSize x in this.sz)
+                foreach(CT_FontSize x in this.sz)
                 {
                     x.Write(sw, "sz");
                 }
             }
 
-            if (this.color != null)
+            if(this.color != null)
             {
-                foreach (CT_Color x in this.color)
+                foreach(CT_Color x in this.color)
                 {
                     x.Write(sw, "color");
                 }
             }
-            if (this.name != null)
+            if(this.name != null)
                 this.name.Write(sw, "name");
 
-            if (this.family != null)
+            if(this.family != null)
             {
-                foreach (CT_IntProperty x in this.family)
+                foreach(CT_IntProperty x in this.family)
                 {
                     x.Write(sw, "family");
                 }
             }
-            if (this.charset != null)
+            if(this.charset != null)
             {
-                foreach (CT_IntProperty x in this.charset)
+                foreach(CT_IntProperty x in this.charset)
                 {
                     x.Write(sw, "charset");
                 }
             }
-            if (this.scheme != null)
+            if(this.scheme != null)
             {
-                foreach (CT_FontScheme x in this.scheme)
+                foreach(CT_FontScheme x in this.scheme)
                 {
                     x.Write(sw, "scheme");
                 }
@@ -192,7 +192,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfNameArray()
         {
-            if (this.nameField == null)
+            if(this.nameField == null)
                 return 0;
             return 1;
         }
@@ -212,13 +212,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfCharsetArray()
         {
-            if (this.charsetField == null)
+            if(this.charsetField == null)
                 return 0;
             return this.charsetField.Count;
         }
         public CT_IntProperty AddNewCharset()
         {
-            if (this.charsetField == null)
+            if(this.charsetField == null)
                 this.charsetField = new List<CT_IntProperty>();
             CT_IntProperty prop = new CT_IntProperty();
             this.charsetField.Add(prop);
@@ -243,13 +243,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfFamilyArray()
         {
-            if (this.familyField == null)
+            if(this.familyField == null)
                 return 0;
             return this.familyField.Count;
         }
         public CT_IntProperty AddNewFamily()
         {
-            if (this.familyField == null)
+            if(this.familyField == null)
                 this.familyField = new List<CT_IntProperty>();
             CT_IntProperty newfamily = new CT_IntProperty();
             this.familyField.Add(newfamily);
@@ -274,13 +274,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int SizeOfBArray()
         {
-            if (this.bField == null)
+            if(this.bField == null)
                 return 0;
             return this.bField.Count;
         }
         public CT_BooleanProperty AddNewB()
         {
-            if (this.bField == null)
+            if(this.bField == null)
                 this.bField = new List<CT_BooleanProperty>();
             CT_BooleanProperty newB = new CT_BooleanProperty();
             this.bField.Add(newB);
@@ -309,13 +309,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfIArray()
         {
-            if (this.iField == null)
+            if(this.iField == null)
                 return 0;
             return this.iField.Count;
         }
         public CT_BooleanProperty AddNewI()
         {
-            if (this.iField == null)
+            if(this.iField == null)
                 this.iField = new List<CT_BooleanProperty>();
             CT_BooleanProperty newI = new CT_BooleanProperty();
             this.iField.Add(newI);
@@ -344,13 +344,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfStrikeArray()
         {
-            if (this.strikeField == null)
+            if(this.strikeField == null)
                 return 0;
             return this.strikeField.Count;
         }
         public CT_BooleanProperty AddNewStrike()
         {
-            if (this.strikeField == null)
+            if(this.strikeField == null)
                 this.strikeField = new List<CT_BooleanProperty>();
             CT_BooleanProperty prop = new CT_BooleanProperty();
             this.strikeField.Add(prop);
@@ -392,7 +392,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetOutlineArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.outlineField;
         }
         #endregion outline
@@ -415,7 +416,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetShadowArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.shadowField;
         }
         #endregion shadow
@@ -438,7 +440,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetCondenseArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.condenseField;
         }
         #endregion condense
@@ -461,7 +464,8 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BooleanProperty GetExtendArray(int index)
         {
-            if (0 != index) { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
+            if(0 != index)
+            { throw new IndexOutOfRangeException("Only an index of 0 is supported"); }
             return this.extendField;
         }
         #endregion extend
@@ -475,7 +479,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfColorArray()
         {
-            if (this.colorField == null)
+            if(this.colorField == null)
                 return 0;
             return this.colorField.Count;
         }
@@ -493,7 +497,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_Color AddNewColor()
         {
-            if (this.colorField == null)
+            if(this.colorField == null)
                 this.colorField = new List<CT_Color>();
             CT_Color newColor = new CT_Color();
             this.colorField.Add(newColor);
@@ -518,13 +522,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfSzArray()
         {
-            if (this.szField == null)
+            if(this.szField == null)
                 return 0;
             return this.szField.Count;
         }
         public CT_FontSize AddNewSz()
         {
-            if (this.szField == null)
+            if(this.szField == null)
                 this.szField = new List<CT_FontSize>();
             CT_FontSize newFs = new CT_FontSize();
             this.szField.Add(newFs);
@@ -553,13 +557,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfUArray()
         {
-            if (this.uField == null)
+            if(this.uField == null)
                 return 0;
             return this.uField.Count;
         }
         public CT_UnderlineProperty AddNewU()
         {
-            if (this.uField == null)
+            if(this.uField == null)
                 this.uField = new List<CT_UnderlineProperty>();
             CT_UnderlineProperty newU = new CT_UnderlineProperty();
             this.uField.Add(newU);
@@ -567,7 +571,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public void SetUArray(int index, CT_UnderlineProperty value)
         {
-            if (uField[index] != null)
+            if(uField[index] != null)
                 this.uField[index] = value;
             else
                 this.uField.Insert(index, value);
@@ -591,13 +595,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfVertAlignArray()
         {
-            if (this.vertAlignField == null)
+            if(this.vertAlignField == null)
                 return 0;
             return this.vertAlignField.Count;
         }
         public CT_VerticalAlignFontProperty AddNewVertAlign()
         {
-            if (this.vertAlignField == null)
+            if(this.vertAlignField == null)
                 this.vertAlignField = new List<CT_VerticalAlignFontProperty>();
             CT_VerticalAlignFontProperty prop = new CT_VerticalAlignFontProperty();
             this.vertAlignField.Add(prop);
@@ -626,13 +630,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public int sizeOfSchemeArray()
         {
-            if (this.schemeField == null)
+            if(this.schemeField == null)
                 return 0;
             return this.schemeField.Count;
         }
         public CT_FontScheme AddNewScheme()
         {
-            if (this.schemeField == null)
+            if(this.schemeField == null)
                 this.schemeField = new List<CT_FontScheme>();
             CT_FontScheme newScheme = new CT_FontScheme();
             this.schemeField.Add(newScheme);
@@ -650,7 +654,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public override string ToString()
         {
-            using (MemoryStream ms = new MemoryStream())
+            using(MemoryStream ms = new MemoryStream())
             {
                 StreamWriter sw = new StreamWriter(ms);
                 this.Write(sw, "font");
@@ -666,74 +670,74 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             CT_Font ctFont = new CT_Font();
 
-            if (this.name!=null)
+            if(this.name!=null)
             {
-                  CT_FontName newName = ctFont.AddNewName();
-                    newName.val = this.name.val;
+                CT_FontName newName = ctFont.AddNewName();
+                newName.val = this.name.val;
             }
-            if (this.charset!=null)
+            if(this.charset!=null)
             {
-                foreach (CT_IntProperty ctCharset in this.charset)
+                foreach(CT_IntProperty ctCharset in this.charset)
                 {
                     CT_IntProperty newCharset = ctFont.AddNewCharset();
                     newCharset.val = ctCharset.val;
                 }
             }
-            if (this.family!=null)
+            if(this.family!=null)
             {
-                foreach (CT_IntProperty ctFamily in this.family)
+                foreach(CT_IntProperty ctFamily in this.family)
                 {
                     CT_IntProperty newFamily = ctFont.AddNewFamily();
                     newFamily.val = ctFamily.val;
                 }
             }
-            if (this.b != null)
+            if(this.b != null)
             {
-                foreach (CT_BooleanProperty ctB in this.b)
+                foreach(CT_BooleanProperty ctB in this.b)
                 {
                     CT_BooleanProperty newB = ctFont.AddNewB();
                     newB.val = ctB.val;
                 }
             }
-            if (this.i != null)
+            if(this.i != null)
             {
-                foreach (CT_BooleanProperty ctI in this.i)
+                foreach(CT_BooleanProperty ctI in this.i)
                 {
                     CT_BooleanProperty newI = ctFont.AddNewI();
                     newI.val = ctI.val;
                 }
             }
-            if (this.strike != null)
+            if(this.strike != null)
             {
-                foreach (CT_BooleanProperty ctStrike in this.strike)
+                foreach(CT_BooleanProperty ctStrike in this.strike)
                 {
                     CT_BooleanProperty newstrike = ctFont.AddNewStrike();
                     newstrike.val = ctStrike.val;
                 }
             }
-            if (this.outline != null)
+            if(this.outline != null)
             {
                 ctFont.outline = new CT_BooleanProperty();
                 ctFont.outline.val = this.outline.val;
             }
-            if (this.shadow != null)
+            if(this.shadow != null)
             {
                 ctFont.shadow = new CT_BooleanProperty();
                 ctFont.shadow.val = this.shadow.val;
             }
-            if (this.condense != null)
+            if(this.condense != null)
             {
                 ctFont.condense = new CT_BooleanProperty();
                 ctFont.condense.val = this.condense.val;
             }
-            if (this.extend != null)
+            if(this.extend != null)
             {
                 ctFont.extend = new CT_BooleanProperty();
                 ctFont.extend.val = this.extend.val;
             }
-            if (this.color != null)
+            if(this.color != null)
             {
-                foreach (CT_Color ctColor in this.color)
+                foreach(CT_Color ctColor in this.color)
                 {
                     CT_Color newColor = ctFont.AddNewColor();
                     newColor.theme = ctColor.theme; //Forces themeSpecified to true even if a theme wasn't specified.
@@ -749,34 +753,34 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                     //potentially being different between two documents. (MSSQL Reporting Services did this in HSSF)
                 }
             }
-            if (this.sz != null)
+            if(this.sz != null)
             {
-                foreach (CT_FontSize ctSz in this.sz)
+                foreach(CT_FontSize ctSz in this.sz)
                 {
                     CT_FontSize newSz = ctFont.AddNewSz();
                     newSz.val = ctSz.val;
                 }
             }
-            if (this.u != null)
+            if(this.u != null)
             {
-                foreach (CT_UnderlineProperty ctU in this.u)
+                foreach(CT_UnderlineProperty ctU in this.u)
                 {
                     CT_UnderlineProperty newU = ctFont.AddNewU();
                     newU.val = ctU.val;
                 }
             }
-            if (this.vertAlign != null)
+            if(this.vertAlign != null)
             {
-                foreach (CT_VerticalAlignFontProperty ctVertAlign in this.vertAlign)
+                foreach(CT_VerticalAlignFontProperty ctVertAlign in this.vertAlign)
                 {
                     CT_VerticalAlignFontProperty newVertAlign = ctFont.AddNewVertAlign();
                     newVertAlign.val = ctVertAlign.val;
                 }
 
             }
-            if (this.scheme != null)
+            if(this.scheme != null)
             {
-                foreach (CT_FontScheme ctScheme in this.scheme)
+                foreach(CT_FontScheme ctScheme in this.scheme)
                 {
                     CT_FontScheme newScheme = ctFont.AddNewScheme();
                     newScheme.val = ctScheme.val;

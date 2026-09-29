@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using NPOI.OpenXml4Net.OPC.Internal.Unmarshallers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {

@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * FontFormatting.java
@@ -25,11 +25,11 @@
 
 namespace NPOI.HSSF.Record.CF
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -42,8 +42,8 @@ namespace NPOI.HSSF.Record.CF
     {
         public PatternFormatting()
         {
-            field_15_pattern_style = (short)0;
-            field_16_pattern_color_indexes = (short)0;
+            field_15_pattern_style = (short) 0;
+            field_16_pattern_color_indexes = (short) 0;
         }
 
         /** Creates new FontFormatting */
@@ -73,12 +73,15 @@ namespace NPOI.HSSF.Record.CF
          * @return Fill pattern
          */
 
-        public FillPattern FillPattern {
-            get {
-                return (FillPattern) FillPatternStyle.GetShortValue (field_15_pattern_style);
+        public FillPattern FillPattern
+        {
+            get
+            {
+                return (FillPattern) FillPatternStyle.GetShortValue(field_15_pattern_style);
             }
-            set {
-                field_15_pattern_style = FillPatternStyle.SetShortValue (field_15_pattern_style, (short) value); 
+            set
+            {
+                field_15_pattern_style = FillPatternStyle.SetShortValue(field_15_pattern_style, (short) value);
             }
         }
 
@@ -94,9 +97,10 @@ namespace NPOI.HSSF.Record.CF
             {
                 return patternBackgroundColorIndex.GetShortValue(field_16_pattern_color_indexes);
             }
-            set { 
-                field_16_pattern_color_indexes = 
-                    patternBackgroundColorIndex.SetShortValue(field_16_pattern_color_indexes, value); 
+            set
+            {
+                field_16_pattern_color_indexes =
+                    patternBackgroundColorIndex.SetShortValue(field_16_pattern_color_indexes, value);
             }
         }
 
@@ -111,7 +115,7 @@ namespace NPOI.HSSF.Record.CF
             {
                 return patternColorIndex.GetShortValue(field_16_pattern_color_indexes);
             }
-            set 
+            set
             {
                 field_16_pattern_color_indexes = patternColorIndex.SetShortValue(field_16_pattern_color_indexes, value);
             }

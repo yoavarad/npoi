@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace NPOI.SS.Util;
 
@@ -71,14 +71,14 @@ internal static class CellReferenceParser
         row = default;
         rowPrefix = char.MinValue;
 
-        if (input.Length == 0)
+        if(input.Length == 0)
         {
             return false;
         }
 
         // quick check for common case, alphabet + numbers, like A11
         var firstChar = input[0];
-        if (input.Length > 1
+        if(input.Length > 1
             && char.IsLetter(firstChar)
             && char.IsDigit(input[1])
             && TryParsePositiveInt32Fast(input.Slice(1), out _))
@@ -92,15 +92,15 @@ internal static class CellReferenceParser
         int cellEndIndex = input.Length - 1;
         int rowStartIndex = input.Length;
 
-        if (char.IsDigit(firstChar))
+        if(char.IsDigit(firstChar))
         {
             // no cell
             cellStartIndex = int.MaxValue;
             rowStartIndex = 0;
         }
-        else if (!char.IsLetter(firstChar))
+        else if(!char.IsLetter(firstChar))
         {
-            if (input.Length > 1 && char.IsDigit(input[1]))
+            if(input.Length > 1 && char.IsDigit(input[1]))
             {
                 // actually row starts now
                 rowStartIndex = 0;
@@ -113,11 +113,11 @@ internal static class CellReferenceParser
             }
         }
 
-        for (int i = cellStartIndex; i < input.Length; ++i)
+        for(int i = cellStartIndex; i < input.Length; ++i)
         {
             var c = input[i];
             cellEndIndex = i + 1;
-            if (!char.IsLetter(c))
+            if(!char.IsLetter(c))
             {
                 // end of cell information
                 rowStartIndex = i;
@@ -126,11 +126,11 @@ internal static class CellReferenceParser
             }
         }
 
-        for (int i = rowStartIndex; i < input.Length; ++i)
+        for(int i = rowStartIndex; i < input.Length; ++i)
         {
             var c = input[i];
 
-            if (!char.IsNumber(c) && i == rowStartIndex)
+            if(!char.IsNumber(c) && i == rowStartIndex)
             {
                 // first is allowed to be a prefix
                 rowPrefix = c;
@@ -138,7 +138,7 @@ internal static class CellReferenceParser
                 continue;
             }
 
-            if (!char.IsDigit(input[i]))
+            if(!char.IsDigit(input[i]))
             {
                 return false;
             }
@@ -146,7 +146,7 @@ internal static class CellReferenceParser
 
         // seems ok
         var cellStringLength = cellEndIndex - cellStartIndex;
-        if (cellStringLength > 0)
+        if(cellStringLength > 0)
         {
             column = input.Slice(cellStartIndex, cellStringLength);
         }
@@ -158,9 +158,9 @@ internal static class CellReferenceParser
     public static bool TryParsePositiveInt32Fast(ReadOnlySpan<char> s, out int result)
     {
         int value = 0;
-        foreach (var c in s)
+        foreach(var c in s)
         {
-            if (!char.IsDigit(c))
+            if(!char.IsDigit(c))
             {
                 result = -1;
                 return false;

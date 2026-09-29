@@ -19,7 +19,8 @@ namespace TestCases.XWPF.Model
 {
     using NPOI.XWPF.Model;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System.Linq;
 
     /**
@@ -81,7 +82,7 @@ namespace TestCases.XWPF.Model
             XWPFParagraph paragraph = footerhyperlink.Paragraphs[(0)];
             ClassicAssert.AreEqual("This is a test document.", paragraph.ParagraphText);
             ClassicAssert.AreEqual(2, paragraph.Runs.Count);
-            
+
             ClassicAssert.AreEqual(3, footerhyperlink.FooterList.Count);
 
             ClassicAssert.AreEqual(1, footerhyperlink.GetHyperlinks().Length);
@@ -120,10 +121,10 @@ namespace TestCases.XWPF.Model
         public void TestComments()
         {
             int numComments = 0;
-            foreach (XWPFParagraph p in comments.Paragraphs)
+            foreach(XWPFParagraph p in comments.Paragraphs)
             {
                 XWPFCommentsDecorator d = new XWPFCommentsDecorator(p, null);
-                if (d.GetCommentText().Length > 0)
+                if(d.GetCommentText().Length > 0)
                 {
                     numComments++;
                     ClassicAssert.AreEqual("\tComment by", d.GetCommentText().Substring(0, 11));

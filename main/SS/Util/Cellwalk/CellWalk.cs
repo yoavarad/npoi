@@ -75,22 +75,22 @@ namespace NPOI.SS.Util.CellWalk
             IRow currentRow = null;
             ICell currentCell = null;
 
-            for (ctx.rowNumber = firstRow; ctx.rowNumber <= lastRow; ++ctx.rowNumber)
+            for(ctx.rowNumber = firstRow; ctx.rowNumber <= lastRow; ++ctx.rowNumber)
             {
                 currentRow = sheet.GetRow(ctx.rowNumber);
-                if (currentRow == null)
+                if(currentRow == null)
                 {
                     continue;
                 }
-                for (ctx.colNumber = firstColumn; ctx.colNumber <= lastColumn; ++ctx.colNumber)
+                for(ctx.colNumber = firstColumn; ctx.colNumber <= lastColumn; ++ctx.colNumber)
                 {
                     currentCell = currentRow.GetCell(ctx.colNumber);
 
-                    if (currentCell == null)
+                    if(currentCell == null)
                     {
                         continue;
                     }
-                    if (IsEmpty(currentCell) && !traverseEmptyCells)
+                    if(IsEmpty(currentCell) && !traverseEmptyCells)
                     {
                         continue;
                     }

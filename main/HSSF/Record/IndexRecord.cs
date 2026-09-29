@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -57,7 +57,7 @@ namespace NPOI.HSSF.Record
         public IndexRecord(RecordInputStream in1)
         {
             field_1_zero = in1.ReadInt();
-            if (field_1_zero != 0)
+            if(field_1_zero != 0)
             {
                 throw new RecordFormatException("Expected zero for field 1 but got " + field_1_zero);
             }
@@ -68,7 +68,7 @@ namespace NPOI.HSSF.Record
             int nCells = in1.Remaining / 4;
             field_5_dbcells =
                 new IntList(nCells);   // initial capacity of 30
-            for (int i = 0; i < nCells; i++)
+            for(int i = 0; i < nCells; i++)
             {
                 field_5_dbcells.Add(in1.ReadInt());
             }
@@ -78,7 +78,7 @@ namespace NPOI.HSSF.Record
 
         public void AddDbcell(int cell)
         {
-            if (field_5_dbcells == null)
+            if(field_5_dbcells == null)
             {
                 field_5_dbcells = new IntList();
             }
@@ -113,7 +113,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (field_5_dbcells == null)
+                if(field_5_dbcells == null)
                 {
                     return 0;
                 }
@@ -135,7 +135,7 @@ namespace NPOI.HSSF.Record
                 .Append(StringUtil.ToHexString(FirstRow)).Append("\n");
             buffer.Append("    .lastrowadd1    = ")
                 .Append(StringUtil.ToHexString(LastRowAdd1)).Append("\n");
-            for (int k = 0; k < NumDbcells; k++)
+            for(int k = 0; k < NumDbcells; k++)
             {
                 buffer.Append("    .dbcell_" + k + "       = ")
                     .Append(StringUtil.ToHexString(GetDbcellAt(k))).Append("\n");
@@ -150,7 +150,7 @@ namespace NPOI.HSSF.Record
             out1.WriteInt(FirstRow);
             out1.WriteInt(LastRowAdd1);
             out1.WriteInt(field_4_zero);
-            for (int k = 0; k < NumDbcells; k++)
+            for(int k = 0; k < NumDbcells; k++)
             {
                 out1.WriteInt(GetDbcellAt(k));
             }

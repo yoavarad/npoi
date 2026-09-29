@@ -16,14 +16,15 @@
 ==================================================================== */
 namespace TestCases.POIFS.Crypt
 {
-    using System;
-    using System.IO;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.Agile;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using Org.BouncyCastle.X509;
+    using System;
+    using System.IO;
     using TestCases;
 
 

@@ -15,10 +15,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-        
 
-using System;
+
 using NPOI.POIFS.FileSystem;
+using System;
 namespace NPOI.POIFS.EventFileSystem
 {
 
@@ -108,7 +108,3 @@ namespace NPOI.POIFS.EventFileSystem
 
 
 }
-
-
-
-

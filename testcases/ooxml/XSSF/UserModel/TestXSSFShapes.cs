@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -20,7 +20,8 @@ using NPOI.SS.UserModel;
 using NPOI.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -129,11 +130,11 @@ namespace TestCases.XSSF.UserModel
             {
                 if(sp.Name == "shape1")
                 {
-                    ClassicAssert.AreEqual(true, ((XSSFSimpleShape)sp).WordWrap);
+                    ClassicAssert.AreEqual(true, ((XSSFSimpleShape) sp).WordWrap);
                     XSSFTestDataSamples.WriteOut(wb, "TestShapeTextWrap-1-");
-                    ((XSSFSimpleShape)sp).WordWrap = false;
+                    ((XSSFSimpleShape) sp).WordWrap = false;
                     XSSFWorkbook rbwb = (XSSFWorkbook)XSSFITestDataProvider.instance.WriteOutAndReadBack(wb);
-                    ClassicAssert.AreEqual(false, ((XSSFSimpleShape)sp).WordWrap);
+                    ClassicAssert.AreEqual(false, ((XSSFSimpleShape) sp).WordWrap);
                     XSSFTestDataSamples.WriteOut(wb, "TestShapeTextWrap-2-");
                 }
             }
@@ -445,7 +446,8 @@ namespace TestCases.XSSF.UserModel
                     for(int ct = 0; ct< cg.cxnLst.cxn.Count; ct++)
                     {
                         var cd = GetGeomGuide(cg.gdLst.gd, ct);
-                        if( cd != null){
+                        if(cd != null)
+                        {
                             cd.Add(new Coords(spPr.xfrm.off.x, spPr.xfrm.off.y));
                             bff.AddNode(cd);
                         }
@@ -534,7 +536,8 @@ namespace TestCases.XSSF.UserModel
         private Coords GetGeomGuide(
               List<CT_GeomGuide> ggs
             , int ct
-        ) {
+        )
+        {
             long x = 0;
             long y = 0;
 

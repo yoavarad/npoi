@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record.Crypto
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util;
-    using TestCases.Exceptions;
     using NPOI.HSSF.Record.Crypto;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.Exceptions;
 
     /**
      * Tests for {@link Biff8EncryptionKey}
@@ -42,7 +43,7 @@ namespace TestCases.HSSF.Record.Crypto
             byte[] docIdData = fromHex("17 F6 D1 6B 09 B1 5F 7B 4C 9D 03 B4 81 B5 B4 4A");
             byte[] keyDigest = Biff8EncryptionKey.CreateKeyDigest("MoneyForNothing", docIdData);
             byte[] expResult = fromHex("C2 D9 56 B2 6B");
-            if (!Arrays.Equals(expResult, keyDigest))
+            if(!Arrays.Equals(expResult, keyDigest))
             {
                 throw new ComparisonFailure("keyDigest mismatch", HexDump.ToHex(expResult), HexDump.ToHex(keyDigest));
             }
@@ -97,7 +98,7 @@ namespace TestCases.HSSF.Record.Crypto
 
 
             Biff8EncryptionKey key;
-            if (password == null)
+            if(password == null)
             {
                 key = Biff8EncryptionKey.Create(docId);
             }
@@ -106,7 +107,7 @@ namespace TestCases.HSSF.Record.Crypto
                 key = Biff8EncryptionKey.Create(password, docId);
             }
             bool actResult = key.Validate(saltData, saltHash);
-            if (expectedResult)
+            if(expectedResult)
             {
                 ClassicAssert.IsTrue(actResult, "validate failed");
             }

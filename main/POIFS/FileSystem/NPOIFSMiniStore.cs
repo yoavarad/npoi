@@ -18,11 +18,11 @@
 
 
 using NPOI.POIFS.Common;
-using NPOI.POIFS.Storage;
 using NPOI.POIFS.Properties;
-using System.Collections.Generic;
-using System;
+using NPOI.POIFS.Storage;
 using NPOI.Util;
+using System;
+using System.Collections.Generic;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -63,12 +63,12 @@ namespace NPOI.POIFS.FileSystem
             // Now locate the data block for it
             NPOIFSStream.StreamBlockByteBufferIterator it = _mini_stream.GetBlockIterator() as NPOIFSStream.StreamBlockByteBufferIterator;
 
-            for (int i = 0; i < bigBlockNumber; i++)
+            for(int i = 0; i < bigBlockNumber; i++)
             {
                 it.Next();
             }
-            
-            if (!it.HasNext())
+
+            if(!it.HasNext())
             {
                 if(throwIfNotFound)
                     throw new IndexOutOfRangeException("Big block " + bigBlockNumber + " outside stream");
@@ -116,15 +116,15 @@ namespace NPOI.POIFS.FileSystem
         {
             bool firstInStore = false;
             // If we are the first block to be allocated, initialise the stream
-            if (_mini_stream.GetStartBlock() == POIFSConstants.END_OF_CHAIN)
+            if(_mini_stream.GetStartBlock() == POIFSConstants.END_OF_CHAIN)
             {
                 firstInStore = true;
             }
 
             // Try to Get it without extending the stream
-            if (!firstInStore && TryGetBlockAt(offset, out var result))
-                return result;             
-            
+            if(!firstInStore && TryGetBlockAt(offset, out var result))
+                return result;
+
             // Need to extend the stream
             // TODO Replace this with proper append support
             // For now, do the extending by hand...
@@ -133,7 +133,7 @@ namespace NPOI.POIFS.FileSystem
             int newBigBlock = _filesystem.GetFreeBlock();
             _filesystem.CreateBlockIfNeeded(newBigBlock);
             // If we are the first block to be allocated, initialise the stream
-            if (firstInStore)
+            if(firstInStore)
             {
                 _filesystem.PropertyTable.Root.StartBlock = (newBigBlock);
                 _mini_stream = new NPOIFSStream(_filesystem, newBigBlock);
@@ -143,11 +143,11 @@ namespace NPOI.POIFS.FileSystem
                 // Tack it onto the end of our chain
                 ChainLoopDetector loopDetector = _filesystem.GetChainLoopDetector();
                 int block = _mini_stream.GetStartBlock();
-                while (true)
+                while(true)
                 {
                     loopDetector.Claim(block);
                     int next = _filesystem.GetNextBlock(block);
-                    if (next == POIFSConstants.END_OF_CHAIN)
+                    if(next == POIFSConstants.END_OF_CHAIN)
                     {
                         break;
                     }
@@ -159,7 +159,7 @@ namespace NPOI.POIFS.FileSystem
 
             // Now try again, to get the real small block
             return CreateBlockIfNeeded(offset);
-            
+
         }
 
         /**
@@ -201,17 +201,17 @@ namespace NPOI.POIFS.FileSystem
 
             // First up, do we have any spare ones?
             int offset = 0;
-            for (int i = 0; i < _sbat_blocks.Count; i++)
+            for(int i = 0; i < _sbat_blocks.Count; i++)
             {
                 // Check this one
                 BATBlock sbat = _sbat_blocks[i];
-                if (sbat.HasFreeSectors)
+                if(sbat.HasFreeSectors)
                 {
                     // Claim one of them and return it
-                    for (int j = 0; j < sectorsPerSBAT; j++)
+                    for(int j = 0; j < sectorsPerSBAT; j++)
                     {
                         int sbatValue = sbat.GetValueAt(j);
-                        if (sbatValue == POIFSConstants.UNUSED_BLOCK)
+                        if(sbatValue == POIFSConstants.UNUSED_BLOCK)
                         {
                             // Bingo
                             return offset + j;
@@ -233,7 +233,7 @@ namespace NPOI.POIFS.FileSystem
             newSBAT.OurBlockIndex = batForSBAT;
 
             // Are we the first SBAT?
-            if (_header.SBATCount == 0)
+            if(_header.SBATCount == 0)
             {
                 // Tell the header that we've got our first SBAT there
                 _header.SBATStart = batForSBAT;
@@ -244,11 +244,11 @@ namespace NPOI.POIFS.FileSystem
                 // Find the end of the SBAT stream, and add the sbat in there
                 ChainLoopDetector loopDetector = _filesystem.GetChainLoopDetector();
                 int batOffset = _header.SBATStart;
-                while (true)
+                while(true)
                 {
                     loopDetector.Claim(batOffset);
                     int nextBat = _filesystem.GetNextBlock(batOffset);
-                    if (nextBat == POIFSConstants.END_OF_CHAIN)
+                    if(nextBat == POIFSConstants.END_OF_CHAIN)
                     {
                         break;
                     }
@@ -289,11 +289,11 @@ namespace NPOI.POIFS.FileSystem
         public void SyncWithDataSource()
         {
             int blocksUsed = 0;
-            foreach (BATBlock sbat in _sbat_blocks)
+            foreach(BATBlock sbat in _sbat_blocks)
             {
                 ByteBuffer block = _filesystem.GetBlockAt(sbat.OurBlockIndex);
                 BlockAllocationTableWriter.WriteBlock(sbat, block);
-                if (!sbat.HasFreeSectors)
+                if(!sbat.HasFreeSectors)
                 {
                     blocksUsed += _filesystem.GetBigBlockSizeDetails().GetBATEntriesPerBlock();
                 }

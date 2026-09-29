@@ -18,10 +18,10 @@
 
 namespace NPOI.DDF
 {
-    using System;
-    using System.Text;
     using NPOI.Util;
+    using System;
     using System.IO;
+    using System.Text;
 
     /// <summary>
     /// The escher client anchor specifies which rows and cells the shape is bound to as well as
@@ -72,23 +72,32 @@ namespace NPOI.DDF
             int size = 0;
 
             // Always find 4 two byte entries. Sometimes find 9
-            if (bytesRemaining == 4) // Word format only 4 bytes
+            if(bytesRemaining == 4) // Word format only 4 bytes
             {
                 // Not sure exactly what the format is quite yet, likely a reference to a PLC
             }
             else
             {
-                field_1_flag = LittleEndian.GetShort(data, pos + size); size += 2;
-                field_2_col1 = LittleEndian.GetShort(data, pos + size); size += 2;
-                field_3_dx1 = LittleEndian.GetShort(data, pos + size); size += 2;
-                field_4_row1 = LittleEndian.GetShort(data, pos + size); size += 2;
-                if (bytesRemaining >= 18)
+                field_1_flag = LittleEndian.GetShort(data, pos + size);
+                size += 2;
+                field_2_col1 = LittleEndian.GetShort(data, pos + size);
+                size += 2;
+                field_3_dx1 = LittleEndian.GetShort(data, pos + size);
+                size += 2;
+                field_4_row1 = LittleEndian.GetShort(data, pos + size);
+                size += 2;
+                if(bytesRemaining >= 18)
                 {
-                    field_5_dy1 = LittleEndian.GetShort(data, pos + size); size += 2;
-                    field_6_col2 = LittleEndian.GetShort(data, pos + size); size += 2;
-                    field_7_dx2 = LittleEndian.GetShort(data, pos + size); size += 2;
-                    field_8_row2 = LittleEndian.GetShort(data, pos + size); size += 2;
-                    field_9_dy2 = LittleEndian.GetShort(data, pos + size); size += 2;
+                    field_5_dy1 = LittleEndian.GetShort(data, pos + size);
+                    size += 2;
+                    field_6_col2 = LittleEndian.GetShort(data, pos + size);
+                    size += 2;
+                    field_7_dx2 = LittleEndian.GetShort(data, pos + size);
+                    size += 2;
+                    field_8_row2 = LittleEndian.GetShort(data, pos + size);
+                    size += 2;
+                    field_9_dy2 = LittleEndian.GetShort(data, pos + size);
+                    size += 2;
                     shortRecord = false;
                 }
                 else
@@ -113,7 +122,8 @@ namespace NPOI.DDF
         {
             listener.BeforeRecordSerialize(offset, RecordId, this);
 
-            if (remainingData == null) remainingData = [];
+            if(remainingData == null)
+                remainingData = [];
             LittleEndian.PutShort(data, offset, Options);
             LittleEndian.PutShort(data, offset + 2, RecordId);
             int remainingBytes = remainingData.Length + (shortRecord ? 8 : 18);
@@ -122,7 +132,7 @@ namespace NPOI.DDF
             LittleEndian.PutShort(data, offset + 10, field_2_col1);
             LittleEndian.PutShort(data, offset + 12, field_3_dx1);
             LittleEndian.PutShort(data, offset + 14, field_4_row1);
-            if (!shortRecord)
+            if(!shortRecord)
             {
                 LittleEndian.PutShort(data, offset + 16, field_5_dy1);
                 LittleEndian.PutShort(data, offset + 18, field_6_col2);
@@ -174,7 +184,7 @@ namespace NPOI.DDF
         {
             String nl = Environment.NewLine;
             String extraData = HexDump.Dump(this.remainingData, 0, 0);
-            
+
             return GetType().Name + ":" + nl +
                     "  RecordId: 0x" + HexDump.ToHex(RECORD_ID) + nl +
                     "  Version: 0x" + HexDump.ToHex(Version) + nl +
@@ -189,7 +199,7 @@ namespace NPOI.DDF
                     "  Row2: " + field_8_row2 + nl +
                     "  DY2: " + field_9_dy2 + nl +
                     "  Extra Data:" + nl + extraData;
-            
+
         }
         public override String ToXml(String tab)
         {
@@ -330,14 +340,14 @@ namespace NPOI.DDF
             get { return remainingData; }
             set
             {
-                if (value == null)
+                if(value == null)
                 {
                     this.remainingData = [];
                 }
                 else
                 {
                     remainingData = new byte[value.Length];
-                    if (value.Length > 0)
+                    if(value.Length > 0)
                         Array.Copy(value, remainingData, value.Length);
                 }
             }

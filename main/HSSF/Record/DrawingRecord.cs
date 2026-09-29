@@ -17,8 +17,8 @@
 namespace NPOI.HSSF.Record
 {
 
-    using System;
     using NPOI.Util;
+    using System;
     /**
      * DrawingRecord (0x00EC)<p/>
      *
@@ -72,7 +72,7 @@ namespace NPOI.HSSF.Record
         }
         public void SetData(byte[] thedata)
         {
-            if (thedata == null)
+            if(thedata == null)
             {
                 throw new ArgumentException("data must not be null");
             }
@@ -86,10 +86,10 @@ namespace NPOI.HSSF.Record
         {
             DrawingRecord rec = new DrawingRecord();
 
-            rec.recordData = (byte[])recordData.Clone();// new byte[recordData.Length];
-            if (contd != null)
+            rec.recordData = (byte[]) recordData.Clone();// new byte[recordData.Length];
+            if(contd != null)
             {
-                rec.contd = (byte[])contd.Clone();
+                rec.contd = (byte[]) contd.Clone();
             }
 
             return rec;

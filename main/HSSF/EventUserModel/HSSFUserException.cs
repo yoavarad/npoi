@@ -64,7 +64,7 @@ namespace NPOI.HSSF.EventUserModel
         /// <param name="reason">The reason.</param>
         public HSSFUserException(Exception reason)
         {
-            
+
         }
 
         /// <summary>

@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
-using NPOI.Util;
 namespace TestCases.SS.Util
 {
     /**
@@ -126,7 +126,7 @@ namespace TestCases.SS.Util
             AddStepTransition(temp, 0x001000000000001BL);
             AddStepTransition(temp, 0x001000000000002FL);
 
-            foreach (ComparisonExample ce1 in new ComparisonExample[] {
+            foreach(ComparisonExample ce1 in new ComparisonExample[] {
 				// negative, and exponents differ by more than 1
 				ce(unchecked((long)0xBF30000000000000L), unchecked((long)0xBE60000000000000L), -1),
 
@@ -134,21 +134,21 @@ namespace TestCases.SS.Util
 				ce(unchecked((long)0x0000000000000000L), unchecked((long)0x8000000000000000L), +1),
 				// subnormal numbers compare without rounding for some reason
 				ce(0x0000000000000000L, 0x0000000000000001L, -1),
-				ce(0x0008000000000000L, 0x0008000000000001L, -1),
-				ce(0x000FFFFFFFFFFFFFL, 0x000FFFFFFFFFFFFEL, +1),
-				ce(0x000FFFFFFFFFFFFBL, 0x000FFFFFFFFFFFFCL, -1),
-				ce(0x000FFFFFFFFFFFFBL, 0x000FFFFFFFFFFFFEL, -1),
+                ce(0x0008000000000000L, 0x0008000000000001L, -1),
+                ce(0x000FFFFFFFFFFFFFL, 0x000FFFFFFFFFFFFEL, +1),
+                ce(0x000FFFFFFFFFFFFBL, 0x000FFFFFFFFFFFFCL, -1),
+                ce(0x000FFFFFFFFFFFFBL, 0x000FFFFFFFFFFFFEL, -1),
 
 				// across subnormal threshold (some mistakes when close)
 				ce(0x000FFFFFFFFFFFFFL, 0x0010000000000000L, +1),
-				ce(0x000FFFFFFFFFFFFBL, 0x0010000000000007L, +1),
-				ce(0x000FFFFFFFFFFFFAL, 0x0010000000000007L, 0),
+                ce(0x000FFFFFFFFFFFFBL, 0x0010000000000007L, +1),
+                ce(0x000FFFFFFFFFFFFAL, 0x0010000000000007L, 0),
 
 				// when a bit further apart - normal results
 				ce(0x000FFFFFFFFFFFF9L, 0x0010000000000007L, -1),
-				ce(0x000FFFFFFFFFFFFAL, 0x0010000000000008L, -1),
-				ce(0x000FFFFFFFFFFFFBL, 0x0010000000000008L, -1),
-		})
+                ce(0x000FFFFFFFFFFFFAL, 0x0010000000000008L, -1),
+                ce(0x000FFFFFFFFFFFFBL, 0x0010000000000008L, -1),
+        })
             {
                 temp.Add(ce1);
             }
@@ -165,11 +165,11 @@ namespace TestCases.SS.Util
 
         private static void AddStepTransition(List<ComparisonExample> temp, long rawBits)
         {
-            foreach (ComparisonExample ce1 in new ComparisonExample[] {
-				ce(rawBits-1, rawBits+0, 0),
-				ce(rawBits+0, rawBits+1, -1),
-				ce(rawBits+1, rawBits+2, 0),
-		})
+            foreach(ComparisonExample ce1 in new ComparisonExample[] {
+                ce(rawBits-1, rawBits+0, 0),
+                ce(rawBits+0, rawBits+1, -1),
+                ce(rawBits+1, rawBits+2, 0),
+        })
             {
                 temp.Add(ce1);
             }
@@ -188,7 +188,7 @@ namespace TestCases.SS.Util
             ComparisonExample[] result = new ComparisonExample[examples.Length];
             Array.Copy(examples, result, examples.Length);
 
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
             {
                 int ha = ("a" + i).GetHashCode();
                 double a = ha * Math.Pow(0.75, ha % 100);

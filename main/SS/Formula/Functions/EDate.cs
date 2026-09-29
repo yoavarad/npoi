@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -18,8 +18,8 @@
 namespace NPOI.SS.Formula.Functions
 {
     using NPOI.SS.Formula.Eval;
-    using System;
     using NPOI.SS.UserModel;
+    using System;
 
 
     /**
@@ -48,7 +48,7 @@ namespace NPOI.SS.Formula.Functions
         {
             double result;
 
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -64,18 +64,18 @@ namespace NPOI.SS.Formula.Functions
                 {
                     startDate = DateUtil.GetJavaDate(startDateAsNumber);
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
 
                 DateTime resultDate = startDate.AddMonths(offsetInMonthAsNumber);
                 result = DateUtil.GetExcelDate(resultDate);
-                    
+
                 NumericFunction.CheckValue(result);
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -83,28 +83,28 @@ namespace NPOI.SS.Formula.Functions
 
         private static double GetValue(ValueEval arg)
         {
-            if (arg is NumberEval eval)
+            if(arg is NumberEval eval)
             {
                 return eval.NumberValue;
             }
-            if (arg is BlankEval)
+            if(arg is BlankEval)
             {
                 return 0;
             }
-            if (arg is RefEval refEval)
+            if(arg is RefEval refEval)
             {
-                if (refEval.NumberOfSheets > 1)
+                if(refEval.NumberOfSheets > 1)
                 {
                     // Multi-Sheet references are not supported
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
 
                 ValueEval innerValueEval = refEval.GetInnerValueEval(refEval.FirstSheetIndex);
-                if (innerValueEval is NumberEval numberEval)
+                if(innerValueEval is NumberEval numberEval)
                 {
                     return numberEval.NumberValue;
                 }
-                if (innerValueEval is BlankEval)
+                if(innerValueEval is BlankEval)
                 {
                     return 0;
                 }

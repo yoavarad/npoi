@@ -24,17 +24,16 @@
  * Contributors:
  * 
  * ==============================================================*/
- 
- using System;
-using System.Text;
-using System.Collections;
-using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
 
 using NPOI.POIFS.Common;
-using NPOI.POIFS.Storage;
 using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
+using System.IO;
+using System.Text;
 using TestCases.POIFS.Storage;
 
 namespace TestCases.POIFS.Properties
@@ -79,37 +78,37 @@ namespace TestCases.POIFS.Properties
             _testblock = new byte[128];
             int index = 0;
 
-            for (; index < 0x40; index++)
+            for(; index < 0x40; index++)
             {
-                _testblock[index] = (byte)0;
+                _testblock[index] = (byte) 0;
             }
             String name = "Root Entry";
             int limit = Math.Min(31, name.Length);
 
-            _testblock[index++] = (byte)(2 * (limit + 1));
-            _testblock[index++] = (byte)0;
-            _testblock[index++] = (byte)5;
-            _testblock[index++] = (byte)1;
-            for (; index < 0x50; index++)
+            _testblock[index++] = (byte) (2 * (limit + 1));
+            _testblock[index++] = (byte) 0;
+            _testblock[index++] = (byte) 5;
+            _testblock[index++] = (byte) 1;
+            for(; index < 0x50; index++)
             {
-                _testblock[index] = (byte)0xff;
+                _testblock[index] = (byte) 0xff;
             }
-            for (; index < 0x74; index++)
+            for(; index < 0x74; index++)
             {
-                _testblock[index] = (byte)0;
+                _testblock[index] = (byte) 0;
             }
-            _testblock[index++] = unchecked((byte)POIFSConstants.END_OF_CHAIN);
-            for (; index < 0x78; index++)
+            _testblock[index++] = unchecked((byte) POIFSConstants.END_OF_CHAIN);
+            for(; index < 0x78; index++)
             {
-                _testblock[index] = (byte)0xff;
+                _testblock[index] = (byte) 0xff;
             }
-            for (; index < 0x80; index++)
+            for(; index < 0x80; index++)
             {
-                _testblock[index] = (byte)0;
+                _testblock[index] = (byte) 0;
             }
             byte[] name_bytes = System.Text.Encoding.UTF8.GetBytes(name);
 
-            for (index = 0; index < limit; index++)
+            for(index = 0; index < limit; index++)
             {
                 _testblock[index * 2] = name_bytes[index];
             }
@@ -123,7 +122,7 @@ namespace TestCases.POIFS.Properties
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(_testblock.Length, output.Length);
-            for (int j = 0; j < _testblock.Length; j++)
+            for(int j = 0; j < _testblock.Length; j++)
             {
                 ClassicAssert.AreEqual(_testblock[j],
                              output[j], "mismatch at offset " + j);
@@ -136,7 +135,7 @@ namespace TestCases.POIFS.Properties
         [Test]
         public void TestSetSize()
         {
-            for (int j = 0; j < 10; j++)
+            for(int j = 0; j < 10; j++)
             {
                 CreateBasicRootProperty();
                 _property.Size = j;
@@ -154,10 +153,10 @@ namespace TestCases.POIFS.Properties
         public void TestReadingConstructor()
         {
             string[] input = {
-			"52 00 6F 00 6F 00 74 00 20 00 45 00 6E 00 74 00 72 00 79 00 00 00 00 00 00 00 00 00 00 00 00 00",
-			"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
-			"16 00 05 01 FF FF FF FF FF FF FF FF 02 00 00 00 20 08 02 00 00 00 00 00 C0 00 00 00 00 00 00 46",
-			"00 00 00 00 00 00 00 00 00 00 00 00 C0 5C E8 23 9E 6B C1 01 FE FF FF FF 00 00 00 00 00 00 00 00",
+            "52 00 6F 00 6F 00 74 00 20 00 45 00 6E 00 74 00 72 00 79 00 00 00 00 00 00 00 00 00 00 00 00 00",
+            "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+            "16 00 05 01 FF FF FF FF FF FF FF FF 02 00 00 00 20 08 02 00 00 00 00 00 C0 00 00 00 00 00 00 46",
+            "00 00 00 00 00 00 00 00 00 00 00 00 C0 5C E8 23 9E 6B C1 01 FE FF FF FF 00 00 00 00 00 00 00 00",
         };
             VerifyReadingProperty(0, RawDataUtil.Decode(input), 0, "Root Entry", "{00020820-0000-0000-C000-000000000046}");
 
@@ -176,7 +175,7 @@ namespace TestCases.POIFS.Properties
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(128, output.Length);
-            for (int j = 0; j < 128; j++)
+            for(int j = 0; j < 128; j++)
             {
                 ClassicAssert.AreEqual(expected[j],
                              output[j], "mismatch at offset " + j);

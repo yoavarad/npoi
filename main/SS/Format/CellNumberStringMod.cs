@@ -79,7 +79,7 @@ namespace NPOI.SS.Format
         {
             try
             {
-                return CompareTo((CellNumberStringMod)that) == 0;
+                return CompareTo((CellNumberStringMod) that) == 0;
             }
             catch
             {

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,10 +14,10 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-using System;
-using System.Collections.Generic;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record.Chart;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
@@ -40,16 +40,16 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public AxesAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_AXES, container)
         {
-            if (rs.PeekNextChartSid() == AxisRecord.sid)
+            if(rs.PeekNextChartSid() == AxisRecord.sid)
             {
                 AxisRecord axis = (AxisRecord)rs.GetNext();
                 rs.GetNext();
                 int sid = rs.PeekNextChartSid();
-                if (sid == CatSerRangeRecord.sid)
+                if(sid == CatSerRangeRecord.sid)
                 {
                     ivaxis = new IVAxisAggregate(rs, this, axis);
                 }
-                else if (sid == ValueRangeRecord.sid)
+                else if(sid == ValueRangeRecord.sid)
                 {
                     dvaxis = new DVAxisAggregate(rs, this, axis);
                 }
@@ -58,17 +58,17 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
 
                 Debug.Assert(rs.PeekNextChartSid() == AxisRecord.sid);
                 dvaxisSecond = new DVAxisAggregate(rs, this, null);
-                if (rs.PeekNextChartSid() == AxisRecord.sid)
+                if(rs.PeekNextChartSid() == AxisRecord.sid)
                     seriesAxis = new SeriesAxisAggregate(rs, this);
 
-                while (rs.PeekNextChartSid() == TextRecord.sid)
+                while(rs.PeekNextChartSid() == TextRecord.sid)
                 {
                     attachedLabelList.Add(new AttachedLabelAggregate(rs, this));
                 }
-                if (rs.PeekNextChartSid() == PlotAreaRecord.sid)
+                if(rs.PeekNextChartSid() == PlotAreaRecord.sid)
                 {
-                    plotArea = (PlotAreaRecord)rs.GetNext();
-                    if (rs.PeekNextChartSid() == FrameRecord.sid)
+                    plotArea = (PlotAreaRecord) rs.GetNext();
+                    if(rs.PeekNextChartSid() == FrameRecord.sid)
                         frame = new FrameAggregate(rs, this);
                 }
             }
@@ -76,20 +76,20 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
 
         public override void VisitContainedRecords(RecordVisitor rv)
         {
-            if (ivaxis != null)
+            if(ivaxis != null)
                 ivaxis.VisitContainedRecords(rv);
-            if (dvaxis != null)
+            if(dvaxis != null)
                 dvaxis.VisitContainedRecords(rv);
             dvaxisSecond.VisitContainedRecords(rv);
-            if (seriesAxis != null)
+            if(seriesAxis != null)
                 seriesAxis.VisitContainedRecords(rv);
 
-            foreach (AttachedLabelAggregate al in attachedLabelList)
+            foreach(AttachedLabelAggregate al in attachedLabelList)
                 al.VisitContainedRecords(rv);
-            if (plotArea != null)
+            if(plotArea != null)
             {
                 rv.VisitRecord(plotArea);
-                if (frame != null)
+                if(frame != null)
                     frame.VisitContainedRecords(rv);
             }
         }

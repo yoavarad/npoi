@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,14 +63,14 @@ namespace NPOI.SS.UserModel
 
         public override bool Equals(object obj)
         {
-            if (obj == null || obj is not ConditionType other)
+            if(obj == null || obj is not ConditionType other)
                 return false;
             return this.Id == other.Id && this.Type == other.Type;
         }
 
         public static ConditionType ForId(byte id)
         {
-            return ForId((int)id);
+            return ForId((int) id);
         }
         public static ConditionType ForId(int id)
         {
@@ -79,7 +79,8 @@ namespace NPOI.SS.UserModel
 
         private ConditionType(int id, String type)
         {
-            this.Id = (byte)id; this.Type = type;
+            this.Id = (byte) id;
+            this.Type = type;
             lookup.Add(id, this);
         }
     }

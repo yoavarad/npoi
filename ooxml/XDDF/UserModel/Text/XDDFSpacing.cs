@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -22,10 +22,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace NPOI.XDDF.UserModel.Text {
-    using NPOI.Util;
+namespace NPOI.XDDF.UserModel.Text
+{
     using NPOI.OpenXmlFormats.Dml;
-    public abstract class XDDFSpacing {
+    using NPOI.Util;
+    public abstract class XDDFSpacing
+    {
         public enum Kind
         {
             Percent,

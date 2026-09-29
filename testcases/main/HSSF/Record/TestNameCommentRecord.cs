@@ -1,10 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.Util;
 using NPOI.HSSF.Record;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TestCases.HSSF.Record
 {

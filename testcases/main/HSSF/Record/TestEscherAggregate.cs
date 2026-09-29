@@ -17,14 +17,14 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.Collections;
-
     using NPOI.DDF;
-    using NPOI.Util;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     /**
@@ -85,7 +85,7 @@ namespace TestCases.HSSF.Record
             EscherAggregate aggregate = EscherAggregate.CreateAggregate(records, 0);
 
             ClassicAssert.AreEqual(1, aggregate.EscherRecords.Count);
-            ClassicAssert.AreEqual(unchecked((short)0xF002), aggregate.GetEscherRecord(0).RecordId);
+            ClassicAssert.AreEqual(unchecked((short) 0xF002), aggregate.GetEscherRecord(0).RecordId);
             ClassicAssert.AreEqual(2, aggregate.GetEscherRecord(0).ChildRecords.Count);
 
             //        System.out.println( "aggregate = " + aggregate );
@@ -104,12 +104,12 @@ namespace TestCases.HSSF.Record
             EscherClientDataRecord d2 = new EscherClientDataRecord();
             EscherClientDataRecord d3 = new EscherClientDataRecord();
 
-            container1.Options = ((short)0x000F);
-            spContainer1.Options = ((short)0x000F);
+            container1.Options = ((short) 0x000F);
+            spContainer1.Options = ((short) 0x000F);
             spContainer1.RecordId = (EscherContainerRecord.SP_CONTAINER);
-            spContainer2.Options = ((short)0x000F);
+            spContainer2.Options = ((short) 0x000F);
             spContainer2.RecordId = (EscherContainerRecord.SP_CONTAINER);
-            spContainer3.Options = ((short)0x000F);
+            spContainer3.Options = ((short) 0x000F);
             spContainer3.RecordId = (EscherContainerRecord.SP_CONTAINER);
             d2.RecordId = (EscherClientDataRecord.RECORD_ID);
             d2.RemainingData = (new byte[0]);

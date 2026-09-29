@@ -46,7 +46,7 @@ namespace NPOI.HSSF.Util
          */
         public void Concatenate(byte[] array)
         {
-            if (array == null)
+            if(array == null)
             {
                 throw new ArgumentException("array cannot be null");
             }
@@ -63,21 +63,21 @@ namespace NPOI.HSSF.Util
          */
         public byte[] ToArray()
         {
-            if (arrays.Count==0)
+            if(arrays.Count==0)
             {
                 return null;
             }
-            else if (arrays.Count > 1)
+            else if(arrays.Count > 1)
             {
                 int totalLength = 0;
-                foreach (byte[] array in arrays)
+                foreach(byte[] array in arrays)
                 {
                     totalLength += array.Length;
                 }
 
                 byte[] concatenated = new byte[totalLength];
                 int destPos = 0;
-                foreach (byte[] array in arrays)
+                foreach(byte[] array in arrays)
                 {
                     Array.Copy(array, 0, concatenated, destPos, array.Length);
                     destPos += array.Length;

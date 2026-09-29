@@ -16,7 +16,8 @@
 ==================================================================== */
 
 using NPOI.XSSF.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 namespace TestCases.XSSF.Util
 {
 

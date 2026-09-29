@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text; 
 using Cysharp.Text;
-using System.Text.RegularExpressions;
-
 using NPOI.OpenXml4Net.Exceptions;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {
@@ -30,7 +29,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
      * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">http://www.ietf.org/rfc/rfc2045.txt</a>
      * @see <a href="http://www.ietf.org/rfc/rfc2616.txt">http://www.ietf.org/rfc/rfc2616.txt</a>
      */
-    public class ContentType:IComparable
+    public class ContentType : IComparable
     {
 
         /**
@@ -127,10 +126,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal
         public ContentType(String contentType)
         {
             Match mMediaType = patternTypeSubType.Match(contentType);
-            if (!mMediaType.Success)
+            if(!mMediaType.Success)
                 // How about with parameters?
                 mMediaType = patternTypeSubTypeParams.Match(contentType);
-            if (!mMediaType.Success)
+            if(!mMediaType.Success)
             {
                 throw new InvalidFormatException(
                         "The specified content type '"
@@ -138,7 +137,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                                 + "' is not compliant with RFC 2616: malformed content type.");
             }
             // Type/subtype
-            if (mMediaType.Groups.Count >= 2)
+            if(mMediaType.Groups.Count >= 2)
             {
                 this.type = mMediaType.Groups[1].Value;
                 this.subType = mMediaType.Groups[2].Value;
@@ -146,10 +145,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                 this.parameters = new Dictionary<String, String>();
                 // Java RegExps are unhelpful, and won't do multiple group captures
                 // See http://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html#cg
-                if (mMediaType.Groups.Count >= 5)
+                if(mMediaType.Groups.Count >= 5)
                 {
                     Match mParams = patternParams.Match(contentType.Substring(mMediaType.Groups[2].Index + mMediaType.Groups[2].Length));
-                    while (mParams.Success)
+                    while(mParams.Success)
                     {
                         this.parameters.Add(mParams.Groups[1].Value, mParams.Groups[2].Value);
                         mParams = mParams.NextMatch();
@@ -174,9 +173,9 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             retVal.Append(this.Type);
             retVal.Append("/");
             retVal.Append(this.SubType);
-            if (withParameters)
+            if(withParameters)
             {
-                foreach (KeyValuePair<string, string> kv in parameters)
+                foreach(KeyValuePair<string, string> kv in parameters)
                 {
                     retVal.Append(";");
                     retVal.Append(kv.Key);
@@ -191,7 +190,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             using var retVal = ZString.CreateStringBuilder();
             retVal.Append(ToString());
 
-            foreach (String key in parameters.Keys)
+            foreach(String key in parameters.Keys)
             {
                 retVal.Append(";");
                 retVal.Append(key);
@@ -208,7 +207,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
                     || (this.ToString().Equals(obj.ToString(), StringComparison.InvariantCultureIgnoreCase));
         }
 
-        
+
 
 
         public override int GetHashCode()
@@ -257,7 +256,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public String[] GetParameterKeys()
         {
-            if (parameters == null)
+            if(parameters == null)
                 return [];
             List<string> keys = new List<string>();
             keys.AddRange(parameters.Keys);
@@ -280,10 +279,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal
 
         public int CompareTo(object obj)
         {
-            if (obj == null)
+            if(obj == null)
                 return -1;
 
-            if (this.Equals(obj))
+            if(this.Equals(obj))
                 return 0;
 
             return 1;

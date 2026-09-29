@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,12 +25,11 @@
  * 
  * ==============================================================*/
 
-using System.Collections.Generic;
-using System.IO;
-
 using NPOI.POIFS.Common;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
+using System.Collections.Generic;
+using System.IO;
 
 namespace NPOI.POIFS.Storage
 {
@@ -77,7 +76,7 @@ namespace NPOI.POIFS.Storage
             int xbat_blocks = 0;
             int bat_blocks  = 0;
 
-            while (true)
+            while(true)
             {
                 int calculated_bat_blocks  =
                     BATBlock.CalculateStorageRequirements(_bigBlockSize,
@@ -87,7 +86,7 @@ namespace NPOI.POIFS.Storage
                 int calculated_xbat_blocks =
                     HeaderBlockWriter.CalculateXBATStorageRequirements(_bigBlockSize,calculated_bat_blocks);
 
-                if ((bat_blocks == calculated_bat_blocks)
+                if((bat_blocks == calculated_bat_blocks)
                         && (xbat_blocks == calculated_xbat_blocks))
                 {
 
@@ -116,12 +115,12 @@ namespace NPOI.POIFS.Storage
         {
             int startBlock = _entries.Count;
 
-            if (blockCount > 0)
+            if(blockCount > 0)
             {
                 int limit = blockCount - 1;
                 int index = startBlock + 1;
 
-                for (int k = 0; k < limit; k++)
+                for(int k = 0; k < limit; k++)
                 {
                     _entries.Add(index++);
                 }
@@ -156,9 +155,9 @@ namespace NPOI.POIFS.Storage
         /// <param name="stream">the OutputStream to which the stored data should be written</param>
         public void WriteBlocks(Stream stream)
         {
-            for (int j = 0; j < _blocks.Length; j++)
+            for(int j = 0; j < _blocks.Length; j++)
             {
-                _blocks[ j ].WriteBlocks(stream);
+                _blocks[j].WriteBlocks(stream);
             }
         }
 

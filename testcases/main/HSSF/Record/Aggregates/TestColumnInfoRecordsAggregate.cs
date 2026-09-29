@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record.Aggregates
 {
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.Record.Aggregates;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.Record.Aggregates;
 
     /**
      * @author Glen Stampoultzis
@@ -58,8 +59,8 @@ namespace TestCases.HSSF.Record.Aggregates
         private static ColumnInfoRecord CreateColInfo(int firstCol, int lastCol)
         {
             ColumnInfoRecord columnInfoRecord = new ColumnInfoRecord();
-            columnInfoRecord.FirstColumn = ((short)firstCol);
-            columnInfoRecord.LastColumn = ((short)lastCol);
+            columnInfoRecord.FirstColumn = ((short) firstCol);
+            columnInfoRecord.LastColumn = ((short) lastCol);
             return columnInfoRecord;
         }
 
@@ -81,7 +82,7 @@ namespace TestCases.HSSF.Record.Aggregates
                 agg.VisitContainedRecords(circ);
                 ArrayList list = circ._list;
                 ColumnInfoRecord[] result = new ColumnInfoRecord[list.Count];
-                result = (ColumnInfoRecord[])list.ToArray(typeof(ColumnInfoRecord));
+                result = (ColumnInfoRecord[]) list.ToArray(typeof(ColumnInfoRecord));
                 return result;
             }
         }
@@ -95,7 +96,7 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 agg.GroupColumnRange(1, 15, true);
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 throw new AssertionException("Identified bug 45639");
             }
@@ -137,7 +138,7 @@ namespace TestCases.HSSF.Record.Aggregates
 
             cirs = CIRCollector.GetRecords(agg);
             ClassicAssert.AreEqual(4, cirs.Length);
-            if (!cirs[1].IsHidden)
+            if(!cirs[1].IsHidden)
             {
                 throw new AssertionException("Inner Group should still be hidden");
             }

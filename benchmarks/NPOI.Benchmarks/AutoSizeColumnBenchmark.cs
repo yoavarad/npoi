@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
@@ -31,10 +31,10 @@ est laborum.".Split(' ', '\r', '\n');
         workbook = new XSSFWorkbook();
         sheet1 = workbook.CreateSheet("Sheet1");
 
-        for (var rowNum = 1; rowNum <= RowCount; rowNum++)
+        for(var rowNum = 1; rowNum <= RowCount; rowNum++)
         {
             var row = sheet1.CreateRow(rowNum);
-            for (int col = 1; col <= ColumnCount; col++)
+            for(int col = 1; col <= ColumnCount; col++)
             {
                 row.CreateCell(col).SetCellValue(lorem[ipsum++ % lorem.Length]);
             }
@@ -44,7 +44,7 @@ est laborum.".Split(' ', '\r', '\n');
     [Benchmark(Baseline = true)]
     public void AutoSizeColumn()
     {
-        for (var col = 1; col <= ColumnCount; col++)
+        for(var col = 1; col <= ColumnCount; col++)
         {
             sheet1.AutoSizeColumn(col);
         }
@@ -83,21 +83,21 @@ labore et dolore magna aliqua.".Split(' ', '\r', '\n');
         workbook = new XSSFWorkbook();
         sheet1 = workbook.CreateSheet("Sheet1");
 
-        for (var rowNum = 0; rowNum < RowCount; rowNum++)
+        for(var rowNum = 0; rowNum < RowCount; rowNum++)
         {
             var row = sheet1.CreateRow(rowNum);
-            for (int col = 0; col < ColumnCount; col++)
+            for(int col = 0; col < ColumnCount; col++)
             {
                 row.CreateCell(col).SetCellValue(lorem[ipsum++ % lorem.Length]);
             }
         }
 
         // Add merged regions spanning 2 columns on evenly-spaced rows
-        if (MergedRegionCount > 0)
+        if(MergedRegionCount > 0)
         {
             int step = Math.Max(1, RowCount / MergedRegionCount);
             int added = 0;
-            for (int r = 0; r < RowCount && added < MergedRegionCount; r += step, added++)
+            for(int r = 0; r < RowCount && added < MergedRegionCount; r += step, added++)
             {
                 sheet1.AddMergedRegion(new CellRangeAddress(r, r, 0, 1));
             }
@@ -107,7 +107,7 @@ labore et dolore magna aliqua.".Split(' ', '\r', '\n');
     [Benchmark]
     public void AutoSizeColumnWithMergedCells()
     {
-        for (var col = 0; col < ColumnCount; col++)
+        for(var col = 0; col < ColumnCount; col++)
         {
             sheet1.AutoSizeColumn(col, true);
         }

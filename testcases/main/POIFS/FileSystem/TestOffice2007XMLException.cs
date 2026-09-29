@@ -27,13 +27,14 @@
 
 namespace TestCases.POIFS.FileSystem
 {
-    using System;
-    using System.Text;
-    using System.IO;
-    using TestCases.HSSF;
     using NPOI.POIFS.FileSystem;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Text;
+    using TestCases.HSSF;
 
 
     /**
@@ -59,7 +60,7 @@ namespace TestCases.POIFS.FileSystem
                 new POIFSFileSystem(in1).Close();
                 Assert.Fail("expected exception was not thrown");
             }
-            catch (OfficeXmlFileException e)
+            catch(OfficeXmlFileException e)
             {
                 // expected during successful Test
                 ClassicAssert.IsTrue(e.Message.IndexOf("The supplied data appears to be in the Office 2007+ XML") > -1);
@@ -76,7 +77,7 @@ namespace TestCases.POIFS.FileSystem
                 new POIFSFileSystem(in1).Close();
                 Assert.Fail("expected exception was not thrown");
             }
-            catch (NotOLE2FileException e)
+            catch(NotOLE2FileException e)
             {
                 // expected during successful test
                 ClassicAssert.IsTrue(e.Message.IndexOf("The supplied data appears to be a raw XML file") > -1);
@@ -100,7 +101,7 @@ namespace TestCases.POIFS.FileSystem
             // older biff formats aren't
             ConfirmIsPOIFS("testEXCEL_3.xls", false);
             ConfirmIsPOIFS("testEXCEL_4.xls", false);
-        
+
             // newer excel formats are
             ConfirmIsPOIFS("testEXCEL_5.xls", true);
             ConfirmIsPOIFS("testEXCEL_95.xls", true);
@@ -113,7 +114,7 @@ namespace TestCases.POIFS.FileSystem
             using(Stream fs = OpenSampleStream(sampleFileName))
             {
                 ClassicAssert.AreEqual(expectedResult, FileMagicContainer.ValueOf(fs) == FileMagic.OLE2);
-             }
+            }
         }
         [Test]
         public void TestFileCorruption()

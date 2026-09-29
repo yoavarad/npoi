@@ -1,19 +1,19 @@
-﻿
+
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
-    public class PrintSizeRecord:StandardRecord
+    public class PrintSizeRecord : StandardRecord
     {
         public const short sid = 0x33;
 
         private short printSize;
 
         public PrintSizeRecord()
-        { 
-        
+        {
+
         }
 
         public PrintSizeRecord(RecordInputStream in1)

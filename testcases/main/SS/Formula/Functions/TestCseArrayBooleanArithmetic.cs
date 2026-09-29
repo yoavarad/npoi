@@ -70,7 +70,7 @@ namespace TestCases.SS.Formula.Functions
             // Set up result column (C1:C5)
             double[] results = { 10, 20, 30, 40, 50 };
 
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 row.CreateCell(0).SetCellValue(col1[i]); // A
@@ -110,7 +110,7 @@ namespace TestCases.SS.Formula.Functions
             string[] col2 = { "X", "Y", "Y", "X", "X" };
             double[] values = { 100, 200, 300, 400, 500 };
 
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 row.CreateCell(0).SetCellValue(col1[i]);
@@ -166,7 +166,7 @@ namespace TestCases.SS.Formula.Functions
             string[] col2 = { "red", "blue" };
             double[] values = { 10, 20 };
 
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 2; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 row.CreateCell(0).SetCellValue(col1[i]);
@@ -232,7 +232,7 @@ namespace TestCases.SS.Formula.Functions
             int[] colC = { 10, 20, 30, 40 };
             int[] colD = { 10, 99, 30, 40 }; // matches C at rows 1, 3, 4
 
-            for (int i = 0; i < 4; i++)
+            for(int i = 0; i < 4; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 row.CreateCell(0).SetCellValue(colA[i]);

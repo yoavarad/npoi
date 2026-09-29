@@ -15,13 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.SS.UserModel;
 using NPOI.Util;
-using System.IO;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 namespace NPOI.XSSF.UserModel
 {
 
@@ -38,13 +38,13 @@ namespace NPOI.XSSF.UserModel
         internal static Dictionary<int, POIXMLRelation> RELATIONS;
         static XSSFPictureData()
         {
-            RELATIONS = new Dictionary<int,POIXMLRelation>(12);
-            RELATIONS[(int)PictureType.EMF] = XSSFRelation.IMAGE_EMF;
-            RELATIONS[(int)PictureType.WMF] = XSSFRelation.IMAGE_WMF;
-            RELATIONS[(int)PictureType.PICT] = XSSFRelation.IMAGE_PICT;
-            RELATIONS[(int)PictureType.JPEG] = XSSFRelation.IMAGE_JPEG;
-            RELATIONS[(int)PictureType.PNG] = XSSFRelation.IMAGE_PNG;
-            RELATIONS[(int)PictureType.DIB] = XSSFRelation.IMAGE_DIB;
+            RELATIONS = new Dictionary<int, POIXMLRelation>(12);
+            RELATIONS[(int) PictureType.EMF] = XSSFRelation.IMAGE_EMF;
+            RELATIONS[(int) PictureType.WMF] = XSSFRelation.IMAGE_WMF;
+            RELATIONS[(int) PictureType.PICT] = XSSFRelation.IMAGE_PICT;
+            RELATIONS[(int) PictureType.JPEG] = XSSFRelation.IMAGE_JPEG;
+            RELATIONS[(int) PictureType.PNG] = XSSFRelation.IMAGE_PNG;
+            RELATIONS[(int) PictureType.DIB] = XSSFRelation.IMAGE_DIB;
             RELATIONS[XSSFWorkbook.PICTURE_TYPE_GIF] = XSSFRelation.IMAGE_GIF;
             RELATIONS[XSSFWorkbook.PICTURE_TYPE_TIFF] = XSSFRelation.IMAGE_TIFF;
             RELATIONS[XSSFWorkbook.PICTURE_TYPE_EPS] = XSSFRelation.IMAGE_EPS;
@@ -110,9 +110,9 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 String contentType = GetPackagePart().ContentType;
-                foreach (PictureType relation in RELATIONS.Keys)
+                foreach(PictureType relation in RELATIONS.Keys)
                 {
-                    if (RELATIONS[(int)relation].ContentType.Equals(contentType))
+                    if(RELATIONS[(int) relation].ContentType.Equals(contentType))
                     {
                         return relation;
                     }
@@ -133,7 +133,7 @@ namespace NPOI.XSSF.UserModel
                 {
                     return IOUtils.ToByteArray(GetPackagePart().GetInputStream());
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new POIXMLException(e);
                 }
@@ -149,10 +149,9 @@ namespace NPOI.XSSF.UserModel
          * *PictureData objects store the actual content in the part directly without keeping a 
          * copy like all others therefore we need to handle them differently.
          */
-        protected internal override void PrepareForCommit() {
+        protected internal override void PrepareForCommit()
+        {
             // do not clear the part here
         }
     }
 }
-
-

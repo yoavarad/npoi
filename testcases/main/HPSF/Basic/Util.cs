@@ -19,14 +19,15 @@
 
 namespace TestCases.HPSF.Basic
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HPSF;
     using NPOI.POIFS.EventFileSystem;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
 
 
 
@@ -56,17 +57,17 @@ namespace TestCases.HPSF.Basic
             byte[] b = new byte[BUF_SIZE];
             int Read;
             bool eof = false;
-            while (!eof)
+            while(!eof)
             {
                 try
                 {
                     Read = in1.Read(b, 0, BUF_SIZE);
-                    if (Read > 0)
+                    if(Read > 0)
                         out1.Write(b, 0, Read);
                     else
                         eof = true;
                 }
-                catch 
+                catch
                 {
                     eof = true;
                 }
@@ -99,13 +100,13 @@ namespace TestCases.HPSF.Basic
             POIFSReader reader1 = new POIFSReader();
             //reader1.StreamReaded += new POIFSReaderEventHandler(reader1_StreamReaded);
             POIFSReaderListener pfl = new POIFSReaderListener0(files);
-            if (poiFiles == null || poiFiles.Length == 0)
+            if(poiFiles == null || poiFiles.Length == 0)
                 /* Register the listener for all POI files. */
                 reader1.RegisterListener(pfl);
             else
                 /* Register the listener for the specified POI files
                  * only. */
-                for (int i = 0; i < poiFiles.Length; i++)
+                for(int i = 0; i < poiFiles.Length; i++)
                     reader1.RegisterListener(pfl, poiFiles[i]);
 
             /* Read the POI filesystem. */
@@ -138,7 +139,7 @@ namespace TestCases.HPSF.Basic
                     f.SetBytes(IOUtils.ToByteArray(evt.Stream));
                     files.Add(f);
                 }
-                catch (IOException ex)
+                catch(IOException ex)
                 {
                     throw new RuntimeException(ex.Message);
                 }
@@ -183,7 +184,7 @@ namespace TestCases.HPSF.Basic
 
             return files;
         }
-        private class POIFSReaderListener1:POIFSReaderListener
+        private class POIFSReaderListener1 : POIFSReaderListener
         {
             #region POIFSReaderListener members
             private List<POIFile> files;
@@ -199,9 +200,9 @@ namespace TestCases.HPSF.Basic
                     f.SetName(e.Name);
                     f.SetPath(e.Path);
                     InputStream in1 = e.Stream;
-                    if (PropertySet.IsPropertySetStream(in1))
+                    if(PropertySet.IsPropertySetStream(in1))
                     {
-                        using (MemoryStream out1 = new MemoryStream())
+                        using(MemoryStream out1 = new MemoryStream())
                         {
                             Util.Copy(in1, out1);
                             //out1.Close();
@@ -210,7 +211,7 @@ namespace TestCases.HPSF.Basic
                         }
                     }
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     throw new RuntimeException(ex);
                 }
@@ -229,10 +230,10 @@ namespace TestCases.HPSF.Basic
         {
             IDictionary p = Environment.GetEnvironmentVariables();
             List<string> names = new List<string>();
-            for (IEnumerator i = p.GetEnumerator(); i.MoveNext(); )
+            for(IEnumerator i = p.GetEnumerator(); i.MoveNext();)
                 names.Add(i.Current.ToString());
             names.Sort();
-            for (IEnumerator<string> i = names.GetEnumerator(); i.MoveNext(); )
+            for(IEnumerator<string> i = names.GetEnumerator(); i.MoveNext();)
             {
                 String name = i.Current;
                 String value = (string)p[name];
