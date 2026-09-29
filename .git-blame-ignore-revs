@@ -1,0 +1,5 @@
+# Commits git blame should skip. Enable once per clone:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# chore(format): reformat whole repo with dotnet format (.editorconfig) -- task #46
+b92ea5659f30bf338aeb0f09f7e087c5f413210a
