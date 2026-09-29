@@ -184,7 +184,8 @@ namespace NPOI.POIFS.FileSystem
         public bool ChangeName(String oldName, String newName)
         {
             bool   rval  = false;
-            EntryNode child = (EntryNode)_byname[oldName];
+            _byname.TryGetValue(oldName, out Entry found);
+            EntryNode child = (EntryNode)found;
 
             if(child != null)
             {
