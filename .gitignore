@@ -176,3 +176,6 @@ BenchmarkDotNet.Artifacts
 .ydk/.verified
 .ydk/memory/
 .claude/settings.local.json
+
+# YDK per-run proofs
+.ydk/proofs/
