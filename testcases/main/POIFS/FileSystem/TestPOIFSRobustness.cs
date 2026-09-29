@@ -147,7 +147,15 @@ namespace TestCases.POIFS.FileSystem
         [Test]
         public void TestRoundTripAtBoundaries4096()
         {
-            NPOIFSFileSystem fs = new NPOIFSFileSystem(_inst.OpenResourceAsStream("BlockSize4096.zvi"));
+            // Share read/write: other fixtures may hold this sample open concurrently
+            MemoryStream sample = new MemoryStream();
+            using(FileStream s = new FileStream(_inst.GetFileInfo("BlockSize4096.zvi").FullName,
+                FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                s.CopyTo(sample);
+            }
+            sample.Position = 0;
+            NPOIFSFileSystem fs = new NPOIFSFileSystem(sample);
             ClassicAssert.AreEqual(4096, fs.GetBigBlockSize());
             Dictionary<string, byte[]> before = new Dictionary<string, byte[]>();
             Walk(fs.Root, "", before);
