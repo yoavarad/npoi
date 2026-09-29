@@ -16,6 +16,10 @@
 > For more information on who must pay the fee and other frequently asked questions, please see the [Open Source Maintenance Fee](https://opensourcemaintenancefee.org/consumers/) organisation page.
 
 
+About this fork
+===================
+This is `yoavarad/npoi`, a permanent fork of [nissl-lab/npoi](https://github.com/nissl-lab/npoi), built from its Apache-2.0 licensed source. It currently serves [ole-extractor](https://github.com/yoavarad/ole-extractor), which uses only `main/NPOI.Core.csproj` (HSSF, HPSF, POIFS); broader NPOI improvements will follow. Changes are not constrained by upstream acceptance, and upstream changes are merged in periodically. See [AGENTS.md](AGENTS.md) and [docs/project-rules.md](docs/project-rules.md) for contributor guidance.
+
 What's NPOI
 ===================
 This project is the .NET version of Apache POI project. With NPOI, you can read/write Office 2003/2007 files very easily.<br />
