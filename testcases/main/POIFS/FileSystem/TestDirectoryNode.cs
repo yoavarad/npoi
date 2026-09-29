@@ -252,5 +252,83 @@ namespace TestCases.POIFS.FileSystem
             fs.Close();
         }
 
+
+        [Test]
+        public void TestChangeNameMissingEntryReturnsFalse()
+        {
+            POIFSFileSystem fs = new POIFSFileSystem();
+            DirectoryNode root = fs.Root;
+            root.CreateDirectory("a");
+
+            ClassicAssert.IsFalse(root.ChangeName("missing", "b"));
+            ClassicAssert.AreEqual(1, root.EntryCount);
+            fs.Close();
+        }
+
+        [Test]
+        public void TestCountMatchesEnumerationAfterMutations()
+        {
+            POIFSFileSystem fs = new POIFSFileSystem();
+            DirectoryNode root = fs.Root;
+            root.CreateDirectory("a");
+            root.CreateDirectory("b");
+            root.ChangeName("a", "c");
+            root.DeleteEntry((EntryNode) root.GetEntry("b"));
+
+            int n = 0;
+            foreach(Entry e in root)
+            {
+                n++;
+            }
+            ClassicAssert.AreEqual(root.EntryCount, n);
+            ClassicAssert.AreEqual(root.EntryNames.Count, n);
+            ClassicAssert.IsTrue(root.HasEntry("c"));
+            ClassicAssert.IsFalse(root.HasEntry("a"));
+            ClassicAssert.IsFalse(root.HasEntry("b"));
+            fs.Close();
+        }
+
+        [Test]
+        public void TestEnumerateWhileDeletingThrows()
+        {
+            POIFSFileSystem fs = new POIFSFileSystem();
+            DirectoryNode root = fs.Root;
+            root.CreateDirectory("a");
+            root.CreateDirectory("b");
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                foreach(Entry e in root)
+                {
+                    root.DeleteEntry((EntryNode) e);
+                }
+            });
+            fs.Close();
+        }
+
+        [Test]
+        public void TestNPOIFSCreateDuplicateDocumentKeepsCountConsistent()
+        {
+            NPOIFSFileSystem fs = new NPOIFSFileSystem();
+            DirectoryNode root = fs.Root;
+            root.CreateDocument("doc", new MemoryStream(new byte[] { 1, 2, 3 }));
+            try
+            {
+                root.CreateDocument("doc", new MemoryStream(new byte[] { 4, 5 }));
+            }
+            catch(Exception)
+            {
+                // either rejecting or replacing is acceptable; the state must stay consistent
+            }
+
+            int n = 0;
+            foreach(Entry e in root)
+            {
+                n++;
+            }
+            ClassicAssert.AreEqual(root.EntryCount, n);
+            ClassicAssert.AreEqual(root.EntryNames.Count, n);
+            fs.Close();
+        }
     }
 }

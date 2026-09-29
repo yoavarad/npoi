@@ -1428,5 +1428,84 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsNotNull(sheet3);
             ClassicAssert.AreEqual("Sheet3", sheet3.SheetName);
         }
+
+        [Test]
+        public void TestCollectionContractIndexOfContainsCopyTo()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            ISheet s1 = wb.CreateSheet("A");
+            ISheet s2 = wb.CreateSheet("B");
+            HSSFWorkbook list = wb;
+
+            ClassicAssert.IsFalse(list.IsReadOnly);
+            ClassicAssert.AreEqual(1, list.IndexOf(s2));
+            ClassicAssert.IsTrue(list.Contains(s1));
+            ClassicAssert.IsFalse(list.Contains(new HSSFWorkbook().CreateSheet("A")));
+            ClassicAssert.AreEqual(-1, list.IndexOf(null));
+
+            ISheet[] arr = new ISheet[3];
+            list.CopyTo(arr, 1);
+            ClassicAssert.IsNull(arr[0]);
+            ClassicAssert.AreSame(s1, arr[1]);
+            ClassicAssert.AreSame(s2, arr[2]);
+            wb.Close();
+        }
+
+        [Test]
+        public void TestCollectionRemoveKeepsInternalWorkbookInSync()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            ISheet s1 = wb.CreateSheet("A");
+            wb.CreateSheet("B");
+            HSSFWorkbook coll = wb;
+
+            ClassicAssert.IsTrue(coll.Remove(s1));
+            ClassicAssert.AreEqual(1, coll.Count);
+            ClassicAssert.AreEqual(1, wb.NumberOfSheets);
+            ClassicAssert.AreEqual(0, wb.GetSheetIndex("B"));
+            ClassicAssert.AreEqual(-1, wb.GetSheetIndex("A"));
+            ClassicAssert.IsFalse(coll.Remove(s1));
+
+            HSSFWorkbook rt = HSSFTestDataSamples.WriteOutAndReadBack(wb);
+            ClassicAssert.AreEqual(1, rt.NumberOfSheets);
+            ClassicAssert.AreEqual("B", rt.GetSheetAt(0).SheetName);
+            wb.Close();
+        }
+
+        [Test]
+        public void TestCollectionRemoveAtAndClearKeepInternalWorkbookInSync()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            wb.CreateSheet("A");
+            wb.CreateSheet("B");
+            wb.CreateSheet("C");
+            HSSFWorkbook list = wb;
+
+            list.RemoveAt(1);
+            ClassicAssert.AreEqual(2, wb.NumberOfSheets);
+            ClassicAssert.AreEqual(1, wb.GetSheetIndex("C"));
+
+            list.Clear();
+            ClassicAssert.AreEqual(0, wb.NumberOfSheets);
+            ClassicAssert.AreEqual(0, list.Count);
+            HSSFWorkbook rt = HSSFTestDataSamples.WriteOutAndReadBack(wb);
+            ClassicAssert.AreEqual(0, rt.NumberOfSheets);
+            wb.Close();
+        }
+
+        [Test]
+        public void TestEnumerateWhileAddingSheetThrows()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            wb.CreateSheet("A");
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                foreach(ISheet s in wb)
+                {
+                    wb.CreateSheet("X");
+                }
+            });
+            wb.Close();
+        }
     }
 }

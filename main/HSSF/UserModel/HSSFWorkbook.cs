@@ -2436,7 +2436,7 @@ namespace NPOI.HSSF.UserModel
 
         public int IndexOf(ISheet item)
         {
-            throw new NotImplementedException();
+            return item is HSSFSheet sheet ? _sheets.IndexOf(sheet) : -1;
         }
 
         public void Insert(int index, ISheet item)
@@ -2446,7 +2446,7 @@ namespace NPOI.HSSF.UserModel
 
         public void RemoveAt(int index)
         {
-            this._sheets.RemoveAt(index);
+            RemoveSheetAt(index);
         }
 
         public ISheet this[int index]
@@ -2475,17 +2475,20 @@ namespace NPOI.HSSF.UserModel
 
         public void Clear()
         {
-            this._sheets.Clear();
+            while(_sheets.Count > 0)
+            {
+                RemoveSheetAt(_sheets.Count - 1);
+            }
         }
 
         public bool Contains(ISheet item)
         {
-            throw new NotImplementedException();
+            return IndexOf(item) >= 0;
         }
 
         public void CopyTo(ISheet[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _sheets.ToArray().CopyTo(array, arrayIndex);
         }
 
         public int Count
@@ -2495,12 +2498,18 @@ namespace NPOI.HSSF.UserModel
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public bool Remove(ISheet item)
         {
-            return this._sheets.Remove((HSSFSheet) item);
+            int index = IndexOf(item);
+            if(index < 0)
+            {
+                return false;
+            }
+            RemoveSheetAt(index);
+            return true;
         }
 
         /// <summary>
