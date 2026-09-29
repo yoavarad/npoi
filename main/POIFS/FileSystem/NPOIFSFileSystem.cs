@@ -39,7 +39,7 @@ namespace NPOI.POIFS.FileSystem
      * This is the new NIO version
      */
 
-    public class NPOIFSFileSystem : BlockStore, POIFSViewable, ICloseable
+    public class NPOIFSFileSystem : BlockStore, POIFSViewable, ICloseable, IDisposable
     {
         //arbitrarily selected; may need to increase
         private static int MAX_RECORD_LENGTH = 100_000;
@@ -847,6 +847,15 @@ namespace NPOI.POIFS.FileSystem
         public void Close()
         {
             _data.Close();
+        }
+
+        /// <summary>
+        /// Same as <see cref="Close"/>; lets callers use <c>using</c>.
+        /// Safe to call more than once.
+        /// </summary>
+        public void Dispose()
+        {
+            Close();
         }
         /**
          * Get the root entry
