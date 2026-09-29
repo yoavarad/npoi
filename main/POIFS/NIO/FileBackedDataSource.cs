@@ -56,13 +56,15 @@ namespace NPOI.POIFS.NIO
             if(!file.Exists)
                 throw new FileNotFoundException(file.FullName);
             this.fileinfo = file;
-            FileStream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
-            byte[] temp = new byte[stream.Length];
-            stream.Read(temp, 0, (int) stream.Length);
-            MemoryStream ms = new MemoryStream(temp, 0, temp.Length);
-            fileStream = ms;
+            // The data is copied into memory, so release the file handle straight away
+            using(FileStream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
+            {
+                byte[] temp = new byte[stream.Length];
+                IOUtils.ReadFully(stream, temp);
+                MemoryStream ms = new MemoryStream(temp, 0, temp.Length);
+                fileStream = ms;
+            }
             this.writable = !readOnly;
-            stream.Position = 0;
         }
         public FileBackedDataSource(FileStream stream, bool readOnly)
         {

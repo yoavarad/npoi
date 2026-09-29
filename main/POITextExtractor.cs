@@ -29,7 +29,7 @@ namespace NPOI
     /// @see org.apache.poi.hslf.extractor.PowerPointExtractor
     /// @see org.apache.poi.hdgf.extractor.VisioTextExtractor
     /// @see org.apache.poi.hwpf.extractor.WordExtractor
-    public abstract class POITextExtractor : ICloseable
+    public abstract class POITextExtractor : ICloseable, IDisposable
     {
         private ICloseable fsToClose = null;
         /// <summary>
@@ -63,7 +63,19 @@ namespace NPOI
             if(fsToClose != null)
             {
                 fsToClose.Close();
+                fsToClose = null;
             }
+        }
+
+        /// <summary>
+        /// Same as <see cref="Close"/>; lets callers use <c>using</c>.
+        /// Like <see cref="Close"/>, this closes the document or filesystem the
+        /// extractor was built from (including one supplied by the caller), so
+        /// do not keep using that document afterwards.
+        /// </summary>
+        public void Dispose()
+        {
+            Close();
         }
     }
 }

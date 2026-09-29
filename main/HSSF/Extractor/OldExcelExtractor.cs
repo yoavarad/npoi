@@ -37,7 +37,7 @@ namespace NPOI.HSSF.Extractor
      *  by Apache Tika, but not really intended for display to the user.
      * </p>
      */
-    public class OldExcelExtractor
+    public class OldExcelExtractor : IDisposable
     {
         private const int FILE_PASS_RECORD_SID = 0x2f;
         //arbitrarily selected; may need to increase
@@ -341,8 +341,18 @@ namespace NPOI.HSSF.Extractor
             if(toCloseStream != null)
             {
                 IOUtils.CloseQuietly(toCloseStream);
-                toClose = null;
+                toCloseStream = null;
             }
+        }
+
+        /// <summary>
+        /// Same as <see cref="Close"/>; lets callers use <c>using</c>.
+        /// Safe to call more than once. When built from a <see cref="Stream"/>,
+        /// this also closes that stream.
+        /// </summary>
+        public void Dispose()
+        {
+            Close();
         }
     }
 
