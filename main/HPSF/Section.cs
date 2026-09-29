@@ -34,6 +34,8 @@ namespace NPOI.HPSF
     /// </summary>
     public class Section
     {
+        private static readonly POILogger LOG = POILogFactory.GetLogger(typeof(Section));
+
         //arbitrarily selected; may need to increase
         private static int MAX_RECORD_LENGTH = 100_000;
         /// <summary>
@@ -243,7 +245,8 @@ namespace NPOI.HPSF
                         }
                         catch(RuntimeException e)
                         {
-                            //LOG.log(POILogger.INFO, "Dictionary fallback failed - ignoring property");
+                            // best-effort fallback for a misused PID 0; the property is dropped
+                            LOG.Log(POILogger.INFO, "Dictionary fallback failed - ignoring property", e);
                         }
                     }
                 }
@@ -961,7 +964,7 @@ namespace NPOI.HPSF
                 }
                 catch(RuntimeException ex)
                 {
-                    //LOG.log(POILogger.WARN, errMsg, ex);
+                    LOG.Log(POILogger.WARN, errMsg, ex);
                     isCorrupted = true;
                     break;
                 }

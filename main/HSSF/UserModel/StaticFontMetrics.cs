@@ -65,7 +65,10 @@ namespace NPOI.HSSF.UserModel
                     {
                         propFileName = ConfigurationManager.AppSettings["font.metrics.filename"];
                     }
-                    catch(Exception) { }
+                    catch(Exception)
+                    {
+                        // unreadable app config: use the embedded font metrics
+                    }
 
                     if (propFileName != null)
                     {
@@ -97,7 +100,7 @@ namespace NPOI.HSSF.UserModel
                         }
                         catch (IOException)
                         {
-                        
+                            // metrics already loaded (or load already failed); a close error changes nothing
                         }
                     }
                 }

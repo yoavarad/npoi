@@ -34,6 +34,7 @@ namespace NPOI.HSSF.Record
     using System.Globalization;
     using System.IO;
     using System.Reflection;
+    using System.Runtime.ExceptionServices;
 
     /**
      * Title:  Record Factory
@@ -74,9 +75,16 @@ namespace NPOI.HSSF.Record
                 {
                     return (Record) _c.Invoke(args);
                 }
+                catch(TargetInvocationException e) when(e.InnerException is RecordFormatException)
+                {
+                    // already describes the malformed record; do not hide it behind a generic wrapper
+                    ExceptionDispatchInfo.Capture(e.InnerException).Throw();
+                    throw;
+                }
                 catch(Exception e)
                 {
-                    throw new RecordFormatException("Unable to construct record instance", e.InnerException);
+                    // unwrap reflection wrappers, but keep the cause when there is none to unwrap
+                    throw new RecordFormatException("Unable to construct record instance", e.InnerException ?? e);
                 }
             }
             public Type GetRecordClass()
@@ -103,9 +111,16 @@ namespace NPOI.HSSF.Record
                 {
                     return (Record) _m.Invoke(null, args);
                 }
+                catch(TargetInvocationException e) when(e.InnerException is RecordFormatException)
+                {
+                    // already describes the malformed record; do not hide it behind a generic wrapper
+                    ExceptionDispatchInfo.Capture(e.InnerException).Throw();
+                    throw;
+                }
                 catch(Exception e)
                 {
-                    throw new RecordFormatException("Unable to construct record instance", e.InnerException);
+                    // unwrap reflection wrappers, but keep the cause when there is none to unwrap
+                    throw new RecordFormatException("Unable to construct record instance", e.InnerException ?? e);
                 }
             }
             public Type GetRecordClass()

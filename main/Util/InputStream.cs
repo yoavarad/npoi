@@ -183,6 +183,7 @@ namespace NPOI.Util
             }
             catch(IOException)
             {
+                // java.io.InputStream contract: after the first byte, an IOException ends the read early
             }
 
             return i;

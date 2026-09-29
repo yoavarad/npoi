@@ -146,14 +146,7 @@ namespace NPOI.Util
             {
                 throw new ArgumentException("Illegal Length");
             }
-            try
-            {
-                return Encoding.GetEncoding("UTF-16BE").GetString(str, offset, len * 2);
-            }
-            catch
-            {
-                throw new InvalidOperationException(); /*unreachable*/
-            }
+            return Encoding.GetEncoding("UTF-16BE").GetString(str, offset, len * 2);
         }
 
         /// <summary>
@@ -245,15 +238,8 @@ namespace NPOI.Util
             byte[] output,
             int offset)
         {
-            try
-            {
-                byte[] bytes = Encoding.GetEncoding("UTF-16BE").GetBytes(input);
-                Array.Copy(bytes, 0, output, offset, bytes.Length);
-            }
-            catch
-            {
-                throw new InvalidOperationException(); /*unreachable*/
-            }
+            byte[] bytes = Encoding.GetEncoding("UTF-16BE").GetBytes(input);
+            Array.Copy(bytes, 0, output, offset, bytes.Length);
         }
 
 

@@ -89,7 +89,10 @@ namespace NPOI.Util
                 {
                     _loggerClassName = ConfigurationManager.AppSettings["loggername"];
                 }
-                catch(Exception) { }
+                catch(Exception)
+                {
+                    // unreadable app config: fall back to the environment variable below
+                }
 #endif
                 if(_loggerClassName == null)
                 {

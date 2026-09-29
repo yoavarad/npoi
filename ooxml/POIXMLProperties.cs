@@ -205,7 +205,10 @@ namespace NPOI
                     long.Parse(value);
                     part.SetRevisionProperty(value);
                 }
-                catch(FormatException) { }
+                catch(FormatException)
+                {
+                    // non-numeric revision is ignored, as Apache POI does
+                }
             }
         }
 

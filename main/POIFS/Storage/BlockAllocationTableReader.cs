@@ -230,8 +230,9 @@ namespace NPOI.POIFS.Storage
             {
                 rval = _entries[index] != -1;
             }
-            catch(IndexOutOfRangeException)
+            catch(ArgumentOutOfRangeException)
             {
+                // _entries is a List<int>: an index beyond the table means the block is unused
             }
             return rval;
         }
