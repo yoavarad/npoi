@@ -20,3 +20,10 @@ Conventions, preferences, and domain knowledge.
 - **`dotnet-format` checks only `.cs` files ADDED by the branch.** This fork keeps merging from upstream, whose existing files violate `.editorconfig` (final newline, import order, whitespace); forcing whole-file reformatting on every edit would create merge conflicts. New files must match `.editorconfig`: CRLF line endings and **no** final newline.
 - **`dotnet-tdd-guard` (pre-commit) uses NPOI's layout:** a branch that changes production `.cs` under `main/`, `ooxml/` or `openxml4Net/` must also change a `.cs` under `testcases/`. `OpenXmlFormats/` is exempt (data-only). The stock guard's `<Stem>Tests.cs`-in-a-`Tests`-folder rule can never match NPOI.
 - **ydk quirks the plugins work around:** ydk derives `changed_files` with a hardcoded `git diff main...HEAD` (empty while the default branch was `master`; now `main`, so this may no longer bite), so plugins compute changed files themselves from the merge-base; and ydk's verification result cache hashes only `*.py` files, so a cached pass can be stale for C# changes -- use `ydk verify run --no-cache` when in doubt (task #33).
+
+## Knowledge Graph (graphify)
+
+- `graphify-out/` holds the code graph. Query it with `graphify query "<question>"`, `graphify path "A" "B"`, `graphify explain "X"`.
+- **Refresh after code changes:** run `graphify update .` from the repo root (AST-only, no API cost, ~4 min cold). Scope is set by `.graphifyignore` (excludes `bin/`, `obj/`, `testcases/`, `benchmarks/`, `scratchpad/`, `.ydk/`).
+- **`graph.json` (~68MB), `GRAPH_REPORT.md`, `graph.html`, `manifest.json` are committed on purpose** so exploration works on a fresh clone. `graphify-out/cache/`, dated snapshot dirs and `graphify-out/*.graphify_*` are gitignored. Expect large diffs when re-committing the graph; do it only occasionally.
+- `.claude/settings.json` has graphify `PreToolUse` hooks (`hook-guard search` / `read --strict`) that steer searches to the graph.
