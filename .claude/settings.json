@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "C:/Users/yoava/AppData/Roaming/uv/tools/ydk/Scripts/python.exe C:/Users/yoava/Projects/npoi/.claude/hooks/guard.py"
+            "command": "python .claude/hooks/guard.py"
           }
         ]
       },
