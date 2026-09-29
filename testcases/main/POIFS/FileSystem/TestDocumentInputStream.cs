@@ -221,9 +221,9 @@ namespace TestCases.POIFS.FileSystem
 
                 // Now read at various points
                 Arrays.Fill(small_buffer, (byte) 0);
-                stream.Read(small_buffer, 6, 8);
-                stream.Read(small_buffer, 100, 10);
-                stream.Read(small_buffer, 150, 12);
+                stream.ReadFully(small_buffer, 6, 8);
+                stream.ReadFully(small_buffer, 100, 10);
+                stream.ReadFully(small_buffer, 150, 12);
                 int pos = small_buffer.Length * 2;
                 for(int j = 0; j < small_buffer.Length; j++)
                 {
@@ -436,7 +436,7 @@ namespace TestCases.POIFS.FileSystem
             {
                 try
                 {
-                    stream.Read(null, 0, 1);
+                    _ = stream.Read(null, 0, 1);
                     Assert.Fail("Should have caught NullPointerException");
                 }
                 catch(ArgumentException)
@@ -447,7 +447,7 @@ namespace TestCases.POIFS.FileSystem
                 // test illegal offsets and lengths
                 try
                 {
-                    stream.Read(new byte[5], -4, 0);
+                    _ = stream.Read(new byte[5], -4, 0);
                     Assert.Fail("Should have caught IndexOutOfBoundsException");
                 }
                 catch(IndexOutOfRangeException)
@@ -456,7 +456,7 @@ namespace TestCases.POIFS.FileSystem
                 }
                 try
                 {
-                    stream.Read(new byte[5], 0, -4);
+                    _ = stream.Read(new byte[5], 0, -4);
                     Assert.Fail("Should have caught IndexOutOfBoundsException");
                 }
                 catch(IndexOutOfRangeException)
@@ -465,7 +465,7 @@ namespace TestCases.POIFS.FileSystem
                 }
                 try
                 {
-                    stream.Read(new byte[5], 0, 6);
+                    _ = stream.Read(new byte[5], 0, 6);
                     Assert.Fail("Should have caught IndexOutOfBoundsException");
                 }
                 catch(IndexOutOfRangeException)
@@ -526,7 +526,7 @@ namespace TestCases.POIFS.FileSystem
                 stream.Close();
                 try
                 {
-                    stream.Read(buffer, 0, 1);
+                    _ = stream.Read(buffer, 0, 1);
                     Assert.Fail("Should have caught IOException");
                 }
                 catch(IOException)

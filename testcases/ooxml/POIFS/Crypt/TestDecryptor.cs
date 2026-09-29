@@ -129,7 +129,7 @@ namespace TestCases.POIFS.Crypt
 
             byte[] buf = new byte[(int)len];
 
-            is1.Read(buf, 0, buf.Length);
+            is1.ReadFully(buf, 0, buf.Length);
 
             ZipInputStream zin = new ZipInputStream(new MemoryStream(buf));
             ZipOk(zin);

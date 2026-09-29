@@ -47,9 +47,6 @@ namespace TestCases.HPSF.Basic
 
         private static string POI_FS = "TestHPSFWritingFunctionality.doc";
 
-        private static int BYTE_ORDER = 0xfffe;
-        private static int FORMAT     = 0x0000;
-        private static int OS_VERSION = 0x00020A04;
         private static int[] SECTION_COUNT = {1, 2};
         private static bool[] IS_SUMMARY_INFORMATION = {true, false};
         private static bool[] IS_DOCUMENT_SUMMARY_INFORMATION = {false, true};
@@ -61,8 +58,6 @@ namespace TestCases.HPSF.Basic
             "8-bit-characters. You can achieve this by Setting the " +
             "LANG environment variable to a proper value, e.g. " +
             "\"de_DE\".";
-
-        POIFile[] poiFiles;
 
         [SetUp]
         public void SetUp()
@@ -431,7 +426,7 @@ namespace TestCases.HPSF.Basic
                     checkString(type, "\u00e4\u00f6\u00fc\u00c4\u00d6\u00dc\u00df", cp);
                     ClassicAssert.Fail("UnsupportedEncodingException for codepage " + cp + " expected.");
                 }
-                catch(UnsupportedEncodingException ex)
+                catch(UnsupportedEncodingException)
                 {
                     /* This is the expected behaviour. */
                 }
