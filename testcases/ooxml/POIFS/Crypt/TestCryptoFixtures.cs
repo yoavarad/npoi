@@ -48,10 +48,36 @@ namespace TestCases.POIFS.Crypt
         [TestCase("protected_sha512.xlsx", 4, 4)]
         public void EncryptionModeOfXlsx(string file, int major, int minor)
         {
-            var fs = new NPOI.POIFS.FileSystem.POIFSFileSystem(POIDataSamples.GetPOIFSInstance().OpenResourceAsStream(file));
+            using var fs = new NPOI.POIFS.FileSystem.POIFSFileSystem(POIDataSamples.GetPOIFSInstance().OpenResourceAsStream(file));
             var info = new EncryptionInfo(fs);
             ClassicAssert.AreEqual(major, info.VersionMajor);
             ClassicAssert.AreEqual(minor, info.VersionMinor);
+        }
+
+        [TestCase("protect.xlsx")]
+        [TestCase("protected_agile.docx")]
+        public void DecryptXlsxWithDefaultPasswordOpensPackage(string file)
+        {
+            using var fs = new NPOI.POIFS.FileSystem.POIFSFileSystem(POIDataSamples.GetPOIFSInstance().OpenResourceAsStream(file));
+            Decryptor d = Decryptor.GetInstance(new EncryptionInfo(fs));
+            ClassicAssert.IsTrue(d.VerifyPassword(Decryptor.DEFAULT_PASSWORD));
+            using var zin = new ICSharpCode.SharpZipLib.Zip.ZipInputStream(d.GetDataStream(fs.Root));
+            bool found = false;
+            ICSharpCode.SharpZipLib.Zip.ZipEntry e;
+            while((e = zin.GetNextEntry()) != null)
+            {
+                found |= e.Name == "[Content_Types].xml";
+            }
+            ClassicAssert.IsTrue(found);
+        }
+
+        [TestCase("protect.xlsx")]
+        [TestCase("protected_agile.docx")]
+        public void DecryptXlsxWithWrongPasswordFails(string file)
+        {
+            using var fs = new NPOI.POIFS.FileSystem.POIFSFileSystem(POIDataSamples.GetPOIFSInstance().OpenResourceAsStream(file));
+            Decryptor d = Decryptor.GetInstance(new EncryptionInfo(fs));
+            ClassicAssert.IsFalse(d.VerifyPassword("definitely-wrong"));
         }
 
         [TestCase("hello-world-signed.xlsx")]
