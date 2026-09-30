@@ -423,11 +423,21 @@ namespace TestCases.POIFS.FileSystem
             byte[] f = MalformedBase();
             switch(kind)
             {
-                case "BigSelfLoop": SetFat(f, StartOf(f, "Big"), StartOf(f, "Big")); break;
-                case "BigNextBeyondFile": SetFat(f, StartOf(f, "Big"), 100); break;
-                case "BigSizeLongerThanChain": SetSize(f, "Big", 50000); break;
-                case "MiniSelfLoop": SetSbat(f, StartOf(f, "Mini"), StartOf(f, "Mini")); break;
-                case "MiniNextBeyondMiniStream": SetSbat(f, StartOf(f, "Mini"), 100); break;
+                case "BigSelfLoop":
+                    SetFat(f, StartOf(f, "Big"), StartOf(f, "Big"));
+                    break;
+                case "BigNextBeyondFile":
+                    SetFat(f, StartOf(f, "Big"), 100);
+                    break;
+                case "BigSizeLongerThanChain":
+                    SetSize(f, "Big", 50000);
+                    break;
+                case "MiniSelfLoop":
+                    SetSbat(f, StartOf(f, "Mini"), StartOf(f, "Mini"));
+                    break;
+                case "MiniNextBeyondMiniStream":
+                    SetSbat(f, StartOf(f, "Mini"), 100);
+                    break;
             }
 
             Exception thrown = RunWithTimeout(() =>
