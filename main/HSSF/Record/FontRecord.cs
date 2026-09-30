@@ -193,7 +193,7 @@ namespace NPOI.HSSF.Record
         }
 
         /**
-         * Set the font family (TODO)
+         * Set the font family
          *
          * @param f family
          */

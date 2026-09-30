@@ -186,7 +186,6 @@ namespace NPOI.POIFS.Crypt.Standard
             {
                 int oleStreamSize = (int)(cipherOut.Length + LittleEndianConsts.LONG_SIZE);
                 dir.CreateDocument(DEFAULT_POIFS_ENTRY, oleStreamSize, this);
-                // TODO: any properties???
             }
 
             public void ProcessPOIFSWriterEvent(POIFSWriterEvent event1)
@@ -229,7 +228,6 @@ namespace NPOI.POIFS.Crypt.Standard
 
             DataSpaceMapUtils.CreateEncryptionEntry(dir, EncryptionInfo.ENCRYPTION_INFO_ENTRY, er);
 
-            // TODO: any properties???
         }
 
         private sealed class EncryptionRecordInternal : EncryptionRecord

@@ -110,8 +110,6 @@ namespace NPOI.HSSF.Record
             StringBuilder buffer = new StringBuilder();
             buffer.Append("[SHARED FEATURE]\n");
 
-            // TODO ...
-
             buffer.Append("[/SHARED FEATURE]\n");
             return buffer.ToString();
         }

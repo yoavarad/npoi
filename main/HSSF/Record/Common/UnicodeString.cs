@@ -33,7 +33,6 @@ namespace NPOI.HSSF.Record
      */
     public class UnicodeString : IComparable<UnicodeString>
     {
-        // TODO - make this when the compatibility version is Removed
         private static readonly POILogger _logger = POILogFactory.GetLogger(typeof(UnicodeString));
         //arbitrarily selected; may need to increase
         private static int MAX_RECORD_LENGTH = 100_000;

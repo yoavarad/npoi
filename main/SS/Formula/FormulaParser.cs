@@ -1072,12 +1072,10 @@ namespace NPOI.SS.Formula
                 return Function(name);
             }
 
-            //TODO Livshen's code
             if(look == '[')
             {
                 return ParseStructuredReference(name);
             }
-            //TODO End of Livshen's code
 
             if(name.Equals("TRUE", StringComparison.OrdinalIgnoreCase) || name.Equals("FALSE", StringComparison.OrdinalIgnoreCase))
             {
