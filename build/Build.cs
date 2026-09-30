@@ -125,8 +125,8 @@ partial class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetProjectFile(Solution)
                 .When(_ => Host is GitHubActions, settings => settings.SetLoggers("GitHubActions"))
-                .When(_ => !RuntimeInformation.IsOSPlatform(OSPlatform.Windows),
-                    settings => settings.SetFramework("net10.0"))
+                // net10.0 runs on Linux; net472 can only run on Windows
+                .SetFramework(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "net472" : "net10.0")
             );
         });
 

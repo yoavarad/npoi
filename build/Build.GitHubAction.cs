@@ -43,62 +43,7 @@ class CustomGitHubActionsAttribute : GitHubActionsAttribute
 
         job.Steps = newSteps.ToArray();
 
-        return new GitHubActionsJobContinueOnError(job) {
-            ContinueOnError = image == GitHubActionsImage.WindowsLatest
-        };
-    }
-}
-
-class GitHubActionsJobContinueOnError : GitHubActionsJob
-{
-    public GitHubActionsJobContinueOnError(GitHubActionsJob job)
-    {
-        Name = job.Name;
-        Image = job.Image;
-        TimeoutMinutes = job.TimeoutMinutes;
-        ConcurrencyGroup = job.ConcurrencyGroup;
-        ConcurrencyCancelInProgress = job.ConcurrencyCancelInProgress;
-        Steps = job.Steps;
-    }
-
-    public bool ContinueOnError { get; set; }
-
-    public override void Write(CustomFileWriter writer)
-    {
-        writer.WriteLine($"{Name}:");
-
-        using(writer.Indent())
-        {
-            writer.WriteLine($"name: {Name}");
-            writer.WriteLine($"runs-on: {Image.GetValue()}");
-
-            if(ContinueOnError)
-                writer.WriteLine("continue-on-error: true");
-
-            if(TimeoutMinutes > 0)
-                writer.WriteLine($"timeout-minutes: {TimeoutMinutes}");
-
-            if(!ConcurrencyGroup.IsNullOrWhiteSpace() || ConcurrencyCancelInProgress)
-            {
-                writer.WriteLine("concurrency:");
-                using(writer.Indent())
-                {
-                    var group = ConcurrencyGroup;
-                    if(group.IsNullOrWhiteSpace())
-                        group = "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}";
-
-                    writer.WriteLine($"group: {group}");
-                    if(ConcurrencyCancelInProgress)
-                        writer.WriteLine("cancel-in-progress: true");
-                }
-            }
-
-            writer.WriteLine("steps:");
-            using(writer.Indent())
-            {
-                Steps.ForEach(x => x.Write(writer));
-            }
-        }
+        return job;
     }
 }
 
