@@ -38,6 +38,8 @@ namespace NPOI.POIFS.FileSystem
         private int _marked_offset;
         /** and the block count for it */
         private int _marked_offset_count;
+        // Reused by the Read* helpers to avoid a per-call allocation (streams are not thread-safe)
+        private readonly byte[] _scratch = new byte[8];
 
         /** the Document's size */
         private readonly int _document_size;
@@ -138,7 +140,7 @@ namespace NPOI.POIFS.FileSystem
             {
                 return -1;
             }
-            byte[] b = new byte[1];
+            byte[] b = _scratch;
             int result = Read(b, 0, 1);
             if(result >= 0)
             {
@@ -331,7 +333,7 @@ namespace NPOI.POIFS.FileSystem
         public override long ReadLong()
         {
             CheckAvaliable(SIZE_LONG);
-            byte[] data = new byte[SIZE_LONG];
+            byte[] data = _scratch;
             ReadFully(data, 0, SIZE_LONG);
             return LittleEndian.GetLong(data, 0);
         }
@@ -344,7 +346,7 @@ namespace NPOI.POIFS.FileSystem
         public override short ReadShort()
         {
             CheckAvaliable(SIZE_SHORT);
-            byte[] data = new byte[SIZE_SHORT];
+            byte[] data = _scratch;
             ReadFully(data, 0, SIZE_SHORT);
             return LittleEndian.GetShort(data);
         }
@@ -352,7 +354,7 @@ namespace NPOI.POIFS.FileSystem
         public override int ReadInt()
         {
             CheckAvaliable(SIZE_INT);
-            byte[] data = new byte[SIZE_INT];
+            byte[] data = _scratch;
             ReadFully(data, 0, SIZE_INT);
             return LittleEndian.GetInt(data);
         }
@@ -360,7 +362,7 @@ namespace NPOI.POIFS.FileSystem
         public override int ReadUShort()
         {
             CheckAvaliable(SIZE_SHORT);
-            byte[] data = new byte[SIZE_SHORT];
+            byte[] data = _scratch;
             ReadFully(data, 0, SIZE_SHORT);
             return LittleEndian.GetUShort(data);
         }
@@ -368,7 +370,7 @@ namespace NPOI.POIFS.FileSystem
         public override int ReadUByte()
         {
             CheckAvaliable(1);
-            byte[] data = new byte[1];
+            byte[] data = _scratch;
             ReadFully(data, 0, 1);
             if(data[0] >= 0)
                 return data[0];
