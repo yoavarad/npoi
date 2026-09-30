@@ -123,6 +123,40 @@ namespace TestCases.POIFS.FileSystem
         }
 
         [Test]
+        public void TestOpenFromByteArrayIsZeroCopy()
+        {
+            byte[] data = _inst.ReadFile("BlockSize4096.zvi");
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(data))
+            {
+                Assert.IsNotNull(fs.Root);
+                // Mutation of caller's array is visible => no copy was made
+                Assert.AreSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource)fs.Data).GetBackingArray());
+            }
+        }
+
+        [Test]
+        public void TestOpenFromExposableMemoryStreamIsZeroCopy()
+        {
+            byte[] data = _inst.ReadFile("BlockSize4096.zvi");
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(new MemoryStream(data, 0, data.Length, false, true)))
+            {
+                Assert.IsNotNull(fs.Root);
+                Assert.AreSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource)fs.Data).GetBackingArray());
+            }
+        }
+
+        [Test]
+        public void TestOpenFromNonExposableMemoryStreamCopies()
+        {
+            byte[] data = _inst.ReadFile("BlockSize4096.zvi");
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(new MemoryStream(data)))
+            {
+                Assert.IsNotNull(fs.Root);
+                Assert.AreNotSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource)fs.Data).GetBackingArray());
+            }
+        }
+
+        [Test]
         public void TestBasicOpen()
         {
             NPOIFSFileSystem fsA, fsB;

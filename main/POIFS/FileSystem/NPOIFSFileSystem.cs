@@ -59,7 +59,7 @@ namespace NPOI.POIFS.FileSystem
         private NPropertyTable _property_table;
         private readonly List<BATBlock> _xbat_blocks;
         private readonly List<BATBlock> _bat_blocks;
-        private readonly HeaderBlock _header;
+        private HeaderBlock _header;
         private DirectoryNode _root;
 
         private DataSource _data;
@@ -249,6 +249,36 @@ namespace NPOI.POIFS.FileSystem
             }
         }
 
+        /// <summary>
+        /// Opens a file system over an existing byte array without copying it.
+        /// The array is used directly as the backing store: the caller must not modify it
+        /// while the file system is open (writes may modify it in place, or detach from it if the file grows). The MemoryStream(Stream) overload is zero-copy only for an exposable MemoryStream at position 0 whose capacity equals its length.
+        /// </summary>
+        /// <param name="data">the OLE2 file bytes</param>
+        public NPOIFSFileSystem(byte[] data)
+            : this(false)
+        {
+            if(data == null)
+                throw new ArgumentNullException(nameof(data));
+            InitFromBuffer(data);
+        }
+
+        private void InitFromBuffer(byte[] data)
+        {
+            if(data.Length < POIFSConstants.SMALLER_BIG_BLOCK_SIZE)
+                throw new IOException("Unable to read the OLE2 header: only " + data.Length + " bytes available");
+
+            ByteBuffer headerBuffer = ByteBuffer.CreateBuffer(POIFSConstants.SMALLER_BIG_BLOCK_SIZE);
+            Array.Copy(data, 0, headerBuffer.Buffer, 0, POIFSConstants.SMALLER_BIG_BLOCK_SIZE);
+            _header = new HeaderBlock(headerBuffer);
+            BlockAllocationTableReader.SanityCheckBlockCount(_header.BATCount);
+
+            long maxSize = BATBlock.CalculateMaximumSize(_header);
+            _data = new ByteArrayBackedDataSource(data, (int)Math.Min(data.Length, maxSize));
+
+            ReadCoreContents();
+        }
+
         /**
          * Create a POIFSFileSystem from an <tt>InputStream</tt>.  Normally the stream is read until
          * EOF.  The stream is always closed.<p/>
@@ -281,6 +311,17 @@ namespace NPOI.POIFS.FileSystem
         public NPOIFSFileSystem(Stream stream)
             : this(false)
         {
+            if(stream is MemoryStream ms && ms.Position == 0
+                && ms.TryGetBuffer(out ArraySegment<byte> seg)
+                && seg.Offset == 0 && seg.Array != null && seg.Count == seg.Array.Length)
+            {
+                // Zero-copy: wrap the MemoryStream's own buffer (caller must not modify it while open)
+                ms.Position = ms.Length;
+                ms.Close();
+                InitFromBuffer(seg.Array);
+                return;
+            }
+
 
             Stream channel = null;
             bool success = false;
