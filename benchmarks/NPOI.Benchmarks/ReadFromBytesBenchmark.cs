@@ -35,7 +35,7 @@ public class ReadFromBytesBenchmark
         largeXls = GenerateLargeXls();
     }
 
-    // ~10 MB: many rows, many distinct strings (large SST), plus numeric cells.
+    // ~16 MB: many rows, many distinct strings (large SST), plus numeric cells.
     private static byte[] GenerateLargeXls()
     {
         var wb = new HSSFWorkbook();
