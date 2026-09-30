@@ -62,15 +62,9 @@ namespace NPOI.POIFS.FileSystem
             long bigBlockNumber = byteOffset / _filesystem.GetBigBlockSize();
             int bigBlockOffset = (int) (byteOffset % _filesystem.GetBigBlockSize());
 
-            // Now locate the data block for it
-            NPOIFSStream.StreamBlockByteBufferIterator it = _mini_stream.GetBlockIterator() as NPOIFSStream.StreamBlockByteBufferIterator;
-
-            for(long i = 0; i < bigBlockNumber; i++)
-            {
-                it.Next();
-            }
-
-            if(!it.HasNext())
+            // Now locate the data block for it, using a cached chain so lookups are O(1)
+            List<int> chain = GetMiniStreamChain();
+            if(bigBlockNumber >= chain.Count)
             {
                 if(throwIfNotFound)
                     throw new IndexOutOfRangeException("Big block " + bigBlockNumber + " outside stream");
@@ -78,11 +72,34 @@ namespace NPOI.POIFS.FileSystem
             }
 
             // Position ourselves, and take a slice 
-            ByteBuffer dataBlock = it.Next();
+            ByteBuffer dataBlock = _filesystem.GetBlockAt(chain[(int) bigBlockNumber]);
             dataBlock.Position = dataBlock.Position + bigBlockOffset;
             ByteBuffer miniBuffer = dataBlock.Slice();
             miniBuffer.Limit = POIFSConstants.SMALL_BLOCK_SIZE;
             return miniBuffer;
+        }
+
+        private List<int> _chainCache;
+
+        private List<int> GetMiniStreamChain()
+        {
+            if(_chainCache != null)
+                return _chainCache;
+            List<int> chain = new List<int>();
+            int block = _mini_stream.GetStartBlock();
+            if(block != POIFSConstants.UNUSED_BLOCK)
+            {
+                ChainLoopDetector loopDetector = _filesystem.GetChainLoopDetector();
+                while(block != POIFSConstants.END_OF_CHAIN)
+                {
+                    loopDetector.Claim(block);
+                    _filesystem.GetBlockAt(block); // throws if the sector does not exist
+                    chain.Add(block);
+                    block = _filesystem.GetNextBlock(block);
+                }
+            }
+            _chainCache = chain;
+            return chain;
         }
 
         /**
@@ -118,7 +135,7 @@ namespace NPOI.POIFS.FileSystem
         {
             bool firstInStore = false;
             // If we are the first block to be allocated, initialise the stream
-            if(_mini_stream.GetStartBlock() == POIFSConstants.END_OF_CHAIN)
+            if(_mini_stream.GetStartBlock() < 0)
             {
                 firstInStore = true;
             }
@@ -130,6 +147,8 @@ namespace NPOI.POIFS.FileSystem
             // Need to extend the stream
             // TODO Replace this with proper append support
             // For now, do the extending by hand...
+
+            _chainCache = null;
 
             // Ask for another block
             int newBigBlock = _filesystem.GetFreeBlock();
