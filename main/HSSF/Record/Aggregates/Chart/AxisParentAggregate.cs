@@ -49,9 +49,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                 {
                     axes = new AxesAggregate(rs, this);
                 }
-                catch
+                catch(System.InvalidOperationException e)
                 {
-                    Debug.Print("not find axes rule records");
+                    Debug.Print("not find axes rule records: " + e.Message);
                     axes = null;
                 }
             }
