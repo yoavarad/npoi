@@ -185,7 +185,7 @@ namespace NPOI.POIFS.Crypt.Dsig
                     }
 
                     signer = signerCert;
-                    certChain = certificates.ConvertAll(c => (X509Certificate)c);
+                    certChain = certificates.ConvertAll(c => (X509Certificate) c);
                     return true;
                 }
                 catch(Exception e) when(e is XmlException || e is CryptographicException || e is IOException

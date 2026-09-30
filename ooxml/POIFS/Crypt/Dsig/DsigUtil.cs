@@ -88,7 +88,7 @@ namespace NPOI.POIFS.Crypt.Dsig
         {
             Transform t = CreateTransform(algorithm ?? C14N);
             t.LoadInput(doc);
-            using(Stream s = (Stream)t.GetOutput(typeof(Stream)))
+            using(Stream s = (Stream) t.GetOutput(typeof(Stream)))
             {
                 return ReadAll(s);
             }
@@ -152,7 +152,7 @@ namespace NPOI.POIFS.Crypt.Dsig
                     else if(t is XmlDsigC14NTransform || t is XmlDsigExcC14NTransform)
                     {
                         t.LoadInput(doc);
-                        using(Stream s = (Stream)t.GetOutput(typeof(Stream)))
+                        using(Stream s = (Stream) t.GetOutput(typeof(Stream)))
                         {
                             current = ReadAll(s);
                         }
