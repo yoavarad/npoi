@@ -1,0 +1,29 @@
+name: Format
+
+# Standalone (not NUKE-generated): a single Windows-only job, so it does not
+# fit the CI/PR matrix in build/Build.GitHubAction.cs and needs no regeneration.
+# Windows only because .editorconfig requires CRLF line endings.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    name: format (windows-latest)
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            10.0
+      - name: Format check
+        run: dotnet format solution/NPOI.Core.Test.sln --verify-no-changes
