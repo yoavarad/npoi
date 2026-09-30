@@ -94,6 +94,9 @@ dotnet build solution/NPOI.Core.sln
 # Run tests
 dotnet test solution/NPOI.Core.Test.sln
 
+# Fast dev loop: single TFM (see Directory.Build.targets); unset = full matrix
+dotnet test solution/NPOI.Core.Test.sln -p:NpoiDevTfm=net10.0
+
 # Run benchmarks
 dotnet run -c Release --project benchmarks/NPOI.Benchmarks/
 ```

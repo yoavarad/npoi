@@ -1,0 +1,8 @@
+<Project>
+  <!-- Dev build switch: -p:NpoiDevTfm=net10.0 builds/tests every project for that single TFM.
+       Lives in .targets (not .props) so it runs after each csproj sets TargetFrameworks.
+       Unset = full multi-target matrix (CI/release). -->
+  <PropertyGroup Condition=" '$(NpoiDevTfm)' != '' And '$(TargetFrameworks)' != '' ">
+    <TargetFrameworks>$(NpoiDevTfm)</TargetFrameworks>
+  </PropertyGroup>
+</Project>
