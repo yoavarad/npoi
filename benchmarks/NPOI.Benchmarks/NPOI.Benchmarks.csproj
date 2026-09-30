@@ -32,4 +32,11 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="../../testcases/test-data/spreadsheet/SimpleWithImages.xls" Link="data/read/SimpleWithImages.xls" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="../../testcases/test-data/spreadsheet/Images.xls" Link="data/read/Images.xls" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="../../testcases/test-data/spreadsheet/WithEmbeddedObjects.xls" Link="data/read/WithEmbeddedObjects.xls" CopyToOutputDirectory="PreserveNewest" />
+      <None Include="../../testcases/test-data/hpsf/TestBug52117.doc" Link="data/read/TestBug52117.doc" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
 </Project>

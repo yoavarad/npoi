@@ -34,3 +34,8 @@ Conventions, preferences, and domain knowledge.
 - **Refresh after code changes:** run `graphify update .` from the repo root (AST-only, no API cost, ~4 min cold). Scope is set by `.graphifyignore` (excludes `bin/`, `obj/`, `testcases/`, `benchmarks/`, `scratchpad/`, `.ydk/`).
 - **`graph.json` (~68MB), `GRAPH_REPORT.md`, `graph.html`, `manifest.json` are committed on purpose** so exploration works on a fresh clone. `graphify-out/cache/`, dated snapshot dirs and `graphify-out/*.graphify_*` are gitignored. Expect large diffs when re-committing the graph; do it only occasionally.
 - `.claude/settings.json` has graphify `PreToolUse` hooks (`hook-guard search` / `read --strict`) that steer searches to the graph.
+
+## Benchmarks
+
+- **Run from the csproj, not the folder:** `benchmarks/NPOI.Benchmarks` holds both a `.csproj` and a `.sln`; a bare `dotnet build`/`dotnet run` there picks the `.sln`, which maps the library projects to Debug, and BenchmarkDotNet then aborts on "non-optimized" dependencies. Use `dotnet build benchmarks/NPOI.Benchmarks/NPOI.Benchmarks.csproj -c Release` then `dotnet run --project benchmarks/NPOI.Benchmarks/NPOI.Benchmarks.csproj -c Release --no-build -- --filter '*ReadFromBytesBenchmark*' --job short`. Delete `benchmarks/NPOI.Benchmarks/bin` first if an earlier sln build left Debug DLLs there.
+- **Read-path baseline:** `ReadFromBytesBenchmark` (POIFS open/walk, HPSF, HSSF open, cell iteration, pictures, embedded objects; MemoryDiagnoser) has committed results in [docs/benchmarks/read-path-baseline.md](benchmarks/read-path-baseline.md). Re-run and compare allocated bytes and GC counts when changing the read path.
