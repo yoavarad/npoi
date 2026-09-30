@@ -24,6 +24,7 @@
 
 namespace TestCases.POIFS.Crypt
 {
+    using ICSharpCode.SharpZipLib.Zip;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.Dsig;
@@ -32,13 +33,12 @@ namespace TestCases.POIFS.Crypt
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using ICSharpCode.SharpZipLib.Zip;
     using System.Security.Cryptography;
     using System.Security.Cryptography.X509Certificates;
     using System.Text;
     using System.Xml;
-    using HashAlgorithm = NPOI.POIFS.Crypt.HashAlgorithm;
     using TestCases;
+    using HashAlgorithm = NPOI.POIFS.Crypt.HashAlgorithm;
 
     [TestFixture]
     public class TestSignatureInfo
