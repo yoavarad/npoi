@@ -2441,8 +2441,11 @@ namespace NPOI.HSSF.UserModel
 
         public void Insert(int index, ISheet item)
         {
-            this._sheets.Insert(index, (HSSFSheet) item);
+            throw new NotSupportedException(SheetMutationMessage);
         }
+
+        private const string SheetMutationMessage =
+            "HSSFWorkbook cannot accept externally created sheets; use CreateSheet or CloneSheet, which keep the internal workbook in sync.";
 
         public void RemoveAt(int index)
         {
@@ -2461,20 +2464,16 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                if(this._sheets[index] != null)
+                if(!ReferenceEquals(GetSheetAt(index), value))
                 {
-                    this._sheets[index] = (HSSFSheet) value;
-                }
-                else
-                {
-                    this._sheets.Insert(index, (HSSFSheet) value);
+                    throw new NotSupportedException(SheetMutationMessage);
                 }
             }
         }
 
         public void Add(ISheet item)
         {
-            this._sheets.Add((HSSFSheet) item);
+            throw new NotSupportedException(SheetMutationMessage);
         }
 
         public void Clear()

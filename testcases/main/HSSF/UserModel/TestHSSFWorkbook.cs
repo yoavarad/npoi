@@ -1517,5 +1517,26 @@ namespace TestCases.HSSF.UserModel
             Assert.Throws<ArgumentOutOfRangeException>(() => wb.RemoveAt(-1));
             wb.Close();
         }
+
+        [Test]
+        public void TestAddInsertIndexerSetRejectForeignSheets()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            wb.CreateSheet("A");
+            HSSFWorkbook other = new HSSFWorkbook();
+            ISheet foreign = other.CreateSheet("F");
+
+            Assert.Throws<NotSupportedException>(() => wb.Add(foreign));
+            Assert.Throws<NotSupportedException>(() => wb.Insert(0, foreign));
+            Assert.Throws<NotSupportedException>(() => wb[0] = foreign);
+
+            Assert.AreEqual(1, wb.NumberOfSheets);
+            Assert.AreEqual("A", wb[0].SheetName);
+            HSSFWorkbook rt = HSSFTestDataSamples.WriteOutAndReadBack(wb);
+            Assert.AreEqual(1, rt.NumberOfSheets);
+            Assert.AreEqual("A", rt.GetSheetAt(0).SheetName);
+            wb[0] = wb[0]; // same-instance set is a no-op
+            other.Close();
+        }
     }
 }
