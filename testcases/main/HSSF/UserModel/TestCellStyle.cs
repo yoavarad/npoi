@@ -529,6 +529,7 @@ namespace TestCases.HSSF.UserModel
             const int dop = 2;
 
             var time = DateTime.UtcNow.AddYears(-1);
+            time = new DateTime(time.Ticks - time.Ticks % TimeSpan.TicksPerSecond, time.Kind);
 
             Console.WriteLine($"Start time: {time:yyyy/MM/dd} {time:HH:mm:ss}");
 
