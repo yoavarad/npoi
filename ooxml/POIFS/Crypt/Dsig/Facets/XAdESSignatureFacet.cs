@@ -25,8 +25,12 @@
 namespace NPOI.POIFS.Crypt.Dsig.Facets
 {
     using NPOI.POIFS.Crypt;
+    using NPOI.POIFS.Crypt.Dsig.Services;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Numerics;
+    using System.Security.Cryptography.X509Certificates;
     using System.Security.Cryptography.Xml;
     using System.Xml;
 
@@ -52,189 +56,151 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
 
 
 
-        public void preSign(
+        public override void preSign(
               XmlDocument document
             , List<Reference> references
             , List<XmlNode> objects)
         {
-            ////LOG.Log(POILogger.DEBUG, "preSign");
+            // QualifyingProperties
+            XmlElement qualifyingProperties = document.CreateElement("xd", "QualifyingProperties", XADES_132_NS);
+            qualifyingProperties.SetAttribute("Target", "#" + signatureConfig.GetPackageSignatureId());
 
-            //// QualifyingProperties
-            //QualifyingPropertiesDocument qualDoc = QualifyingPropertiesDocument.Factory.NewInstance();
-            //QualifyingPropertiesType qualifyingProperties = qualDoc.AddNewQualifyingProperties();
-            //qualifyingProperties.Target = (/*setter*/"#" + signatureConfig.PackageSignatureId);
+            // SignedProperties
+            XmlElement signedProperties = AppendXades(qualifyingProperties, "SignedProperties");
+            signedProperties.SetAttribute("Id", signatureConfig.GetXadesSignatureId());
 
-            //// SignedProperties
-            //SignedPropertiesType signedProperties = qualifyingProperties.AddNewSignedProperties();
-            //signedProperties.Id = (/*setter*/signatureConfig.XadesSignatureId);
+            // SignedSignatureProperties
+            XmlElement signedSignatureProperties = AppendXades(signedProperties, "SignedSignatureProperties");
 
-            //// SignedSignatureProperties
-            //SignedSignaturePropertiesType signedSignatureProperties = signedProperties.AddNewSignedSignatureProperties();
+            // SigningTime
+            AppendXades(signedSignatureProperties, "SigningTime").InnerText =
+                signatureConfig.GetExecutionTime().ToUniversalTime()
+                    .ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture);
 
-            //// SigningTime
-            //Calendar xmlGregorianCalendar = Calendar.Instance;
-            //xmlGregorianCalendar.TimeZone = (/*setter*/TimeZone.GetTimeZone("Z"));
-            //xmlGregorianCalendar.Time = (/*setter*/signatureConfig.ExecutionTime);
-            //xmlGregorianCalendar.Clear(Calendar.MILLISECOND);
-            //signedSignatureProperties.SigningTime = (/*setter*/xmlGregorianCalendar);
+            // SigningCertificate
+            List<X509Certificate> chain = signatureConfig.GetSigningCertificateChain();
+            if(chain == null || chain.Count == 0)
+            {
+                throw new EncryptedDocumentException("no signing certificate chain available");
+            }
+            XmlElement signingCertificate = AppendXades(signedSignatureProperties, "SigningCertificate");
+            XmlElement certId = AppendXades(signingCertificate, "Cert");
+            SetCertID(certId, signatureConfig, signatureConfig.IsXadesIssuerNameNoReverseOrder(), chain[0]);
 
-            //// SigningCertificate
-            //if (signatureConfig.SigningCertificateChain == null
-            //    || signatureConfig.SigningCertificateChain.IsEmpty())
-            //{
-            //    throw new Exception("no signing certificate chain available");
-            //}
-            //CertIDListType signingCertificates = signedSignatureProperties.AddNewSigningCertificate();
-            //CertIDType certId = signingCertificates.AddNewCert();
-            //X509Certificate certificate = signatureConfig.SigningCertificateChain.Get(0);
-            //SetCertID(certId, signatureConfig, signatureConfig.IsXadesIssuerNameNoReverseOrder(), certificate);
+            // ClaimedRole
+            String role = signatureConfig.GetXadesRole();
+            if(!String.IsNullOrEmpty(role))
+            {
+                XmlElement signerRole = AppendXades(signedSignatureProperties, "SignerRole");
+                XmlElement claimedRoles = AppendXades(signerRole, "ClaimedRoles");
+                AppendXades(claimedRoles, "ClaimedRole").InnerText = role;
+            }
 
-            //// ClaimedRole
-            //String role = signatureConfig.XadesRole;
-            //if (role != null && !role.IsEmpty())
-            //{
-            //    SignerRoleType signerRole = signedSignatureProperties.AddNewSignerRole();
-            //    signedSignatureProperties.SignerRole = (/*setter*/signerRole);
-            //    ClaimedRolesListType claimedRolesList = signerRole.AddNewClaimedRoles();
-            //    AnyType claimedRole = claimedRolesList.AddNewClaimedRole();
-            //    XmlString roleString = XmlString.Factory.NewInstance();
-            //    roleString.StringValue = (/*setter*/role);
-            //    insertXChild(claimedRole, roleString);
-            //}
+            // XAdES-EPES
+            ISignaturePolicyService policyService = signatureConfig.GetSignaturePolicyService();
+            if(policyService != null)
+            {
+                XmlElement signaturePolicyIdentifier = AppendXades(signedSignatureProperties, "SignaturePolicyIdentifier");
+                XmlElement signaturePolicyId = AppendXades(signaturePolicyIdentifier, "SignaturePolicyId");
 
-            //// XAdES-EPES
-            //SignaturePolicyService policyService = signatureConfig.SignaturePolicyService;
-            //if (policyService != null)
-            //{
-            //    SignaturePolicyIdentifierType signaturePolicyIdentifier =
-            //        signedSignatureProperties.AddNewSignaturePolicyIdentifier();
+                XmlElement objectIdentifier = AppendXades(signaturePolicyId, "SigPolicyId");
+                AppendXades(objectIdentifier, "Identifier").InnerText = policyService.GetSignaturePolicyIdentifier();
+                String description = policyService.GetSignaturePolicyDescription();
+                if(description != null)
+                {
+                    AppendXades(objectIdentifier, "Description").InnerText = description;
+                }
 
-            //    SignaturePolicyIdType signaturePolicyId = signaturePolicyIdentifier.AddNewSignaturePolicyId();
+                XmlElement sigPolicyHash = AppendXades(signaturePolicyId, "SigPolicyHash");
+                SetDigestAlgAndValue(sigPolicyHash, policyService.GetSignaturePolicyDocument(), signatureConfig.GetDigestAlgo());
 
-            //    ObjectIdentifierType objectIdentifier = signaturePolicyId.AddNewSigPolicyId();
-            //    objectIdentifier.Description = (/*setter*/policyService.SignaturePolicyDescription);
+                String signaturePolicyDownloadUrl = policyService.GetSignaturePolicyDownloadUrl();
+                if(null != signaturePolicyDownloadUrl)
+                {
+                    XmlElement sigPolicyQualifiers = AppendXades(signaturePolicyId, "SigPolicyQualifiers");
+                    XmlElement sigPolicyQualifier = AppendXades(sigPolicyQualifiers, "SigPolicyQualifier");
+                    AppendXades(sigPolicyQualifier, "SPURI").InnerText = signaturePolicyDownloadUrl;
+                }
+            }
+            else if(signatureConfig.IsXadesSignaturePolicyImplied())
+            {
+                XmlElement signaturePolicyIdentifier = AppendXades(signedSignatureProperties, "SignaturePolicyIdentifier");
+                AppendXades(signaturePolicyIdentifier, "SignaturePolicyImplied");
+            }
 
-            //    IdentifierType identifier = objectIdentifier.AddNewIdentifier();
-            //    identifier.StringValue = (/*setter*/policyService.SignaturePolicyIdentifier);
+            // DataObjectFormat
+            if(dataObjectFormatMimeTypes.Count > 0)
+            {
+                XmlElement signedDataObjectProperties = AppendXades(signedProperties, "SignedDataObjectProperties");
+                foreach(KeyValuePair<String, String> dataObjectFormatMimeType in dataObjectFormatMimeTypes)
+                {
+                    XmlElement dataObjectFormat = AppendXades(signedDataObjectProperties, "DataObjectFormat");
+                    dataObjectFormat.SetAttribute("ObjectReference", "#" + dataObjectFormatMimeType.Key);
+                    AppendXades(dataObjectFormat, "MimeType").InnerText = dataObjectFormatMimeType.Value;
+                }
+            }
 
-            //    byte[] signaturePolicyDocumentData = policyService.SignaturePolicyDocument;
-            //    DigestAlgAndValueType sigPolicyHash = signaturePolicyId.AddNewSigPolicyHash();
-            //    SetDigestAlgAndValue(sigPolicyHash, signaturePolicyDocumentData, signatureConfig.DigestAlgo);
+            // add XAdES ds:Object
+            XmlElement xadesObject = document.CreateElement("Object", XML_DIGSIG_NS);
+            xadesObject.AppendChild(qualifyingProperties);
+            objects.Add(xadesObject);
 
-            //    String signaturePolicyDownloadUrl = policyService.SignaturePolicyDownloadUrl;
-            //    if (null != signaturePolicyDownloadUrl)
-            //    {
-            //        SigPolicyQualifiersListType sigPolicyQualifiers = signaturePolicyId.AddNewSigPolicyQualifiers();
-            //        AnyType sigPolicyQualifier = sigPolicyQualifiers.AddNewSigPolicyQualifier();
-            //        XmlString spUriElement = XmlString.Factory.NewInstance();
-            //        spUriElement.StringValue = (/*setter*/signaturePolicyDownloadUrl);
-            //        insertXChild(sigPolicyQualifier, spUriElement);
-            //    }
-            //}
-            //else if (signatureConfig.IsXadesSignaturePolicyImplied())
-            //{
-            //    SignaturePolicyIdentifierType signaturePolicyIdentifier =
-            //            signedSignatureProperties.AddNewSignaturePolicyIdentifier();
-            //    signaturePolicyIdentifier.AddNewSignaturePolicyImplied();
-            //}
+            // add XAdES ds:Reference
+            List<Transform> transforms = new List<Transform>();
+            transforms.Add(newTransform(signatureConfig.GetXadesCanonicalizationMethod()));
+            Reference reference = newReference
+                ("#" + signatureConfig.GetXadesSignatureId(), transforms, XADES_TYPE, null, null);
+            references.Add(reference);
+        }
 
-            //// DataObjectFormat
-            //if (!dataObjectFormatMimeTypes.IsEmpty())
-            //{
-            //    SignedDataObjectPropertiesType signedDataObjectProperties =
-            //        signedProperties.AddNewSignedDataObjectProperties();
+        private static XmlElement AppendXades(XmlElement parent, String localName)
+        {
+            XmlElement child = parent.OwnerDocument.CreateElement("xd", localName, XADES_132_NS);
+            parent.AppendChild(child);
+            return child;
+        }
 
-            //    List<DataObjectFormatType> dataObjectFormats = signedDataObjectProperties
-            //            .DataObjectFormatList;
-            //    foreach (Map.Entry<String, String> dataObjectFormatMimeType in this.dataObjectFormatMimeTypes
-            //            .entrySet())
-            //    {
-            //        DataObjectFormatType dataObjectFormat = DataObjectFormatType.Factory.NewInstance();
-            //        dataObjectFormat.ObjectReference = (/*setter*/"#" + dataObjectFormatMimeType.Key);
-            //        dataObjectFormat.MimeType = (/*setter*/dataObjectFormatMimeType.Value);
-            //        dataObjectFormats.Add(dataObjectFormat);
-            //    }
-            //}
-
-            //// add XAdES ds:Object
-            //List<XMLStructure> xadesObjectContent = new List<XMLStructure>();
-            //Element qualDocElSrc = (Element)qualifyingProperties.DomNode;
-            //Element qualDocEl = (Element)document.ImportNode(qualDocElSrc, true);
-            //xadesObjectContent.Add(new DOMStructure(qualDocEl));
-            //XMLObject xadesObject = GetSignatureFactory().newXMLObject(xadesObjectContent, null, null, null);
-            //objects.Add(xadesObject);
-
-            //// add XAdES ds:Reference
-            //List<Transform> transforms = new List<Transform>();
-            //Transform exclusiveTransform = newTransform(CanonicalizationMethod.INCLUSIVE);
-            //transforms.Add(exclusiveTransform);
-            //Reference reference = newReference
-            //    ("#" + signatureConfig.XadesSignatureId, transforms, XADES_TYPE, null, null);
-            //references.Add(reference);
-            throw new NotImplementedException();
+        private static XmlElement AppendDsig(XmlElement parent, String localName)
+        {
+            XmlElement child = parent.OwnerDocument.CreateElement(localName, XML_DIGSIG_NS);
+            parent.AppendChild(child);
+            return child;
         }
 
         /**
-         * Gives back the JAXB DigestAlgAndValue data structure.
+         * Adds the ds:DigestMethod and ds:DigestValue elements to the given DigestAlgAndValue parent.
          *
-         * @param digestAlgAndValue the parent for the new digest element 
+         * @param digestAlgAndValue the parent for the new digest element
          * @param data the data to be digested
          * @param digestAlgo the digest algorithm
          */
-        //protected static void SetDigestAlgAndValue(
-        //        DigestAlgAndValueType digestAlgAndValue,
-        //        byte[] data,
-        //        HashAlgorithm digestAlgo)
-        //{
-        //    DigestMethodType digestMethod = digestAlgAndValue.AddNewDigestMethod();
-        //    digestMethod.Algorithm = (/*setter*/SignatureConfig.GetDigestMethodUri(digestAlgo));
-
-        //    MessageDigest messageDigest = CryptoFunctions.GetMessageDigest(digestAlgo);
-        //    byte[] digestValue = messageDigest.Digest(data);
-        //    digestAlgAndValue.DigestValue = (/*setter*/digestValue);
-        //}
+        protected static void SetDigestAlgAndValue(
+                XmlElement digestAlgAndValue,
+                byte[] data,
+                HashAlgorithm digestAlgo)
+        {
+            String digestMethodUri = SignatureConfig.GetDigestMethodUri(digestAlgo);
+            AppendDsig(digestAlgAndValue, "DigestMethod").SetAttribute("Algorithm", digestMethodUri);
+            AppendDsig(digestAlgAndValue, "DigestValue").InnerText =
+                Convert.ToBase64String(DsigUtil.Digest(data, digestMethodUri));
+        }
 
         /**
-         * Gives back the JAXB CertID data structure.
+         * Fills the xades:Cert element (CertDigest and IssuerSerial) for the given certificate.
          */
-        //protected static void SetCertID
-        //    (CertIDType certId, SignatureConfig signatureConfig, bool IssuerNameNoReverseOrder, X509Certificate certificate)
-        //{
-        //    X509IssuerSerialType issuerSerial = certId.AddNewIssuerSerial();
-        //    String issuerName;
-        //    if (issuerNameNoReverseOrder)
-        //    {
-        //        /*
-        //         * Make sure the DN is encoded using the same order as present
-        //         * within the certificate. This is an Office2010 work-around.
-        //         * Should be reverted back.
-        //         * 
-        //         * XXX: not correct according to RFC 4514.
-        //         */
-        //        // TODO: check if issuerName is different on GetTBSCertificate
-        //        // issuerName = PrincipalUtil.GetIssuerX509Principal(certificate).Name.Replace(",", ", ");
-        //        issuerName = certificate.IssuerDN.Name.Replace(",", ", ");
-        //    }
-        //    else
-        //    {
-        //        issuerName = certificate.IssuerX500Principal.ToString();
-        //    }
-        //    issuerSerial.X509IssuerName = (/*setter*/issuerName);
-        //    issuerSerial.X509SerialNumber = (/*setter*/certificate.SerialNumber);
+        protected static void SetCertID
+            (XmlElement certId, SignatureConfig signatureConfig, bool issuerNameNoReverseOrder, X509Certificate certificate)
+        {
+            XmlElement certDigest = AppendXades(certId, "CertDigest");
+            SetDigestAlgAndValue(certDigest, certificate.GetRawCertData(), signatureConfig.GetXadesDigestAlgo());
 
-        //    byte[] encodedCertificate;
-        //    try
-        //    {
-        //        encodedCertificate = certificate.Encoded;
-        //    }
-        //    catch (CertificateEncodingException e)
-        //    {
-        //        throw new Exception("certificate encoding error: "
-        //                + e.Message, e);
-        //    }
-        //    DigestAlgAndValueType certDigest = certId.AddNewCertDigest();
-        //    SetDigestAlgAndValue(certDigest, encodedCertificate, signatureConfig.XadesDigestAlgo);
-        //}
+            XmlElement issuerSerial = AppendXades(certId, "IssuerSerial");
+            // .NET renders the issuer DN in the order of the certificate (RFC 2253 style separators)
+            AppendDsig(issuerSerial, "X509IssuerName").InnerText = certificate.Issuer;
+            AppendDsig(issuerSerial, "X509SerialNumber").InnerText = BigInteger.Parse(
+                "0" + certificate.GetSerialNumberString(), NumberStyles.HexNumber, CultureInfo.InvariantCulture)
+                .ToString(CultureInfo.InvariantCulture);
+        }
 
         /**
          * Adds a mime-type for the given ds:Reference (referred via its @URI). This
@@ -250,14 +216,7 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
 
         protected static void insertXChild(XmlNode root, XmlNode child)
         {
-            throw new NotImplementedException();
-            //XmlCursor rootCursor = root.NewCursor();
-            //rootCursor.ToEndToken();
-            //XmlCursor childCursor = child.NewCursor();
-            //childCursor.ToNextToken();
-            //childCursor.MoveXml(rootCursor);
-            //childCursor.Dispose();
-            //rootCursor.Dispose();
+            root.AppendChild(child.OwnerDocument == root.OwnerDocument ? child : root.OwnerDocument.ImportNode(child, true));
         }
 
     }

@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Compile Remove="POIFS\Crypt\Dsig\KeyInfoKeySelector.cs" />
-    <Compile Remove="POIFS\Crypt\Dsig\Services\RelationshipTransformService.cs" />
     <Compile Remove="Properties\AssemblyInfoDotnet2.cs" />
     <Compile Remove="XSSF\UserModel\Charts\XSSFAreaChartData.cs" />
     <Compile Remove="XSSF\UserModel\Charts\XSSFColumnChartData.cs" />

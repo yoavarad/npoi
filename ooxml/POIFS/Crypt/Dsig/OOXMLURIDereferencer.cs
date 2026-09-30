@@ -31,15 +31,12 @@ namespace NPOI.POIFS.Crypt.Dsig
     using System.Security.Cryptography.Xml;
 
     /**
-     * JSR105 URI dereferencer for Office Open XML documents.
+     * URI dereferencer for Office Open XML documents: resolves manifest reference
+     * URIs like "/word/document.xml?ContentType=..." to the package part data.
      */
     public class OOXMLURIDereferencer : IURIDereferencer, ISignatureConfigurable
     {
-
-        //private static POILogger LOG = POILogFactory.GetLogger(typeof(OOXMLURIDereferencer));
-
         private SignatureConfig signatureConfig;
-        private IURIDereferencer baseUriDereferencer;
 
         public void SetSignatureConfig(SignatureConfig signatureConfig)
         {
@@ -48,94 +45,89 @@ namespace NPOI.POIFS.Crypt.Dsig
 
         public IData dereference(IURIReference uriReference, SignedXml context)
         {
-            if(baseUriDereferencer == null)
-            {
-                //baseUriDereferencer = signatureConfig.GetSignatureFactory().URIDereferencer;
-                throw new NotImplementedException();
-            }
-
             if(null == uriReference)
             {
-                throw new NullReferenceException("URIReference cannot be null");
+                throw new ArgumentNullException(nameof(uriReference), "URIReference cannot be null");
             }
-            if(null == context)
+            String uri = uriReference.getURI();
+            Stream dataStream = Dereference(uri);
+            if(dataStream == null)
             {
-                throw new NullReferenceException("XMLCrytoContext cannot be null");
+                throw new EncryptedDocumentException("cannot resolve uri: " + uri);
             }
-
-            Uri uri;
-            try
-            {
-                uri = new Uri(uriReference.getURI());
-            }
-            catch(UriFormatException e)
-            {
-                throw new Exception("could not URL decode the uri: " + uriReference.getURI(), e);
-            }
-
-            PackagePart part = FindPart(uri);
-            if(part == null)
-            {
-                //LOG.Log(POILogger.DEBUG, "cannot Resolve, delegating to base DOM URI dereferencer", uri);
-                //return this.baseUriDereferencer.Dereference(uriReference, context);
-                throw new NotImplementedException();
-            }
-
-            Stream dataStream;
-            try
-            {
-                dataStream = part.GetInputStream();
-
-                // workaround for office 2007 pretty-printed .rels files
-                if(part.PartName.ToString().EndsWith(".rels"))
-                {
-                    // although xmlsec has an option to ignore line breaks, currently this
-                    // only affects .rels files, so we only modify these
-                    // http://stackoverflow.com/questions/4728300
-                    MemoryStream bos = new MemoryStream();
-                    //for (int ch; (ch = dataStream.Read()) != -1;)
-                    //{
-                    //    if (ch == 10 || ch == 13) continue;
-                    //    bos.Write(ch);
-                    //}
-                    dataStream = new MemoryStream(bos.ToArray());
-                    throw new NotImplementedException();
-                }
-            }
-            catch(IOException)
-            {
-                //throw new URIReferenceException("I/O error: " + e.Message, e);
-                throw new NotImplementedException();
-            }
-
-            //return new OctetStreamData(dataStream, uri.ToString(), null);
-            throw new NotImplementedException();
+            return new OctetStreamData(dataStream, uri);
         }
 
-        private PackagePart FindPart(Uri uri)
+        /**
+         * @return the data of the package part addressed by the uri, or null if there's no such part
+         */
+        public Stream Dereference(String uri)
         {
-            //Console.WriteLine(POILogger.DEBUG, "dereference", uri);
+            PackagePart part = FindPart(uri);
+            return part?.GetInputStream();
+        }
 
-            String path = uri.AbsolutePath;
-            if(path == null || "".Equals(path))
+        public PackagePart FindPart(String uri)
+        {
+            if(String.IsNullOrEmpty(uri))
             {
-                //Console.WriteLine(POILogger.DEBUG, "illegal part name (expected)", uri);
                 return null;
             }
 
-            PackagePartName ppn;
+            int query = uri.IndexOf('?');
+            String path = query >= 0 ? uri.Substring(0, query) : uri;
+            if(path.Length == 0 || path[0] == '#')
+            {
+                return null;
+            }
+            if(path[0] != '/')
+            {
+                path = "/" + path;
+            }
+
+            OPCPackage pkg = signatureConfig.GetOpcPackage();
+            PackagePart part = GetPart(pkg, path);
+            if(part == null)
+            {
+                String unescaped = Uri.UnescapeDataString(path);
+                if(unescaped != path)
+                {
+                    part = GetPart(pkg, unescaped);
+                }
+            }
+            return part;
+        }
+
+        private static PackagePart GetPart(OPCPackage pkg, String path)
+        {
             try
             {
-                ppn = PackagingUriHelper.CreatePartName(path);
+                return pkg.GetPart(PackagingUriHelper.CreatePartName(path));
             }
             catch(InvalidFormatException)
             {
-                //Console.WriteLine(POILogger.WARN, "illegal part name (not expected)", uri);
                 return null;
             }
-
-            return signatureConfig.GetOpcPackage().GetPart(ppn);
+            catch(UriFormatException)
+            {
+                return null;
+            }
         }
     }
 
+    /**
+     * Dereferenced octet stream data.
+     */
+    public class OctetStreamData : IData
+    {
+        public OctetStreamData(Stream octetStream, String uri)
+        {
+            OctetStream = octetStream;
+            Uri = uri;
+        }
+
+        public Stream OctetStream { get; }
+
+        public String Uri { get; }
+    }
 }

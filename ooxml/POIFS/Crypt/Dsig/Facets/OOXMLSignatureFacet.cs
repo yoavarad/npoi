@@ -25,9 +25,13 @@
 namespace NPOI.POIFS.Crypt.Dsig.Facets
 {
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.POIFS.Crypt.Dsig.Services;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
     using System.Security.Cryptography.Xml;
+    using System.Text.RegularExpressions;
     using System.Xml;
 
 
@@ -46,7 +50,6 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
             , List<Reference> references
             , List<XmlNode> objects)
         {
-            //LOG.Log(POILogger.DEBUG, "pre sign");
             AddManifestObject(document, references, objects);
             AddSignatureInfo(document, references, objects);
         }
@@ -59,20 +62,22 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
 
             List<Reference> manifestReferences = new List<Reference>();
             AddManifestReferences(manifestReferences);
-            //Manifest manifest = GetSignatureFactory().newManifest(manifestReferences);
+            XmlElement manifest = document.CreateElement("Manifest", XML_DIGSIG_NS);
+            foreach(Reference manifestReference in manifestReferences)
+            {
+                manifest.AppendChild(document.ImportNode(manifestReference.GetXml(), true));
+            }
 
-            //String objectId = "idPackageObject"; // really has to be this value.
-            //List<XMLStructure> objectContent = new List<XMLStructure>();
-            //objectContent.Add(manifest);
+            String objectId = "idPackageObject"; // really has to be this value.
+            List<XmlNode> objectContent = new List<XmlNode>();
+            objectContent.Add(manifest);
 
-            //AddSignatureTime(document, objectContent);
+            AddSignatureTime(document, objectContent);
 
-            //XMLObject xo = GetSignatureFactory().newXMLObject(objectContent, objectId, null, null);
-            //objects.Add(xo);
+            objects.Add(NewObject(document, objectId, objectContent));
 
-            //Reference reference = newReference("#" + objectId, null, XML_DIGSIG_NS + "Object", null, null);
-            //references.Add(reference);
-            throw new NotImplementedException();
+            Reference reference = newReference("#" + objectId, null, XML_DIGSIG_NS + "Object", null, null);
+            references.Add(reference);
         }
 
         protected void AddManifestReferences(List<Reference> manifestReferences)
@@ -81,98 +86,96 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
             OPCPackage ooxml = signatureConfig.GetOpcPackage();
             List<PackagePart> relsEntryNames = ooxml.GetPartsByContentType(ContentTypes.RELATIONSHIPS_PART);
 
+            OOXMLURIDereferencer dereferencer = new OOXMLURIDereferencer();
+            dereferencer.SetSignatureConfig(signatureConfig);
+            String digestMethodUri = signatureConfig.GetDigestMethodUri();
+
             HashSet<String> digestedPartNames = new HashSet<String>();
-            //foreach (PackagePart pp in relsEntryNames)
-            //{
-            //    String baseUri = pp.PartName.Name.ReplaceFirst("(.*)/_rels/.*", "$1");
+            foreach(PackagePart pp in relsEntryNames)
+            {
+                String relsPartName = pp.PartName.Name;
+                String baseUri = Regex.Replace(relsPartName, "(.*)/_rels/.*", "$1/");
 
-            //    PackageRelationshipCollection prc;
-            //    try
-            //    {
-            //        prc = new PackageRelationshipCollection(ooxml);
-            //        prc.ParseRelationshipsPart(pp);
-            //    }
-            //    catch (InvalidFormatException e)
-            //    {
-            //        throw new XMLSignatureException("Invalid relationship descriptor: " + pp.PartName.Name, e);
-            //    }
+                XmlDocument relsDoc;
+                using(Stream relsStream = pp.GetInputStream())
+                {
+                    relsDoc = DsigUtil.LoadXml(relsStream);
+                }
 
-            //    RelationshipTransformParameterSpec parameterSpec = new RelationshipTransformParameterSpec();
-            //    foreach (PackageRelationship relationship in prc)
-            //    {
-            //        String relationshipType = relationship.RelationshipType;
+                RelationshipTransformService.RelationshipTransformParameterSpec parameterSpec =
+                    new RelationshipTransformService.RelationshipTransformParameterSpec();
+                foreach(XmlNode node in relsDoc.DocumentElement.ChildNodes)
+                {
+                    if(!(node is XmlElement relationship)
+                        || relationship.LocalName != "Relationship"
+                        || relationship.NamespaceURI != PackageNamespaces.RELATIONSHIPS)
+                    {
+                        continue;
+                    }
+                    String relationshipType = relationship.GetAttribute("Type");
 
-            //        /*
-            //         * ECMA-376 Part 2 - 3rd edition
-            //         * 13.2.4.16 Manifest Element
-            //         * "The producer shall not create a Manifest element that references any data outside of the package."
-            //         */
-            //        if (TargetMode.EXTERNAL == relationship.TargetMode)
-            //        {
-            //            continue;
-            //        }
+                    /*
+                     * ECMA-376 Part 2 - 3rd edition
+                     * 13.2.4.16 Manifest Element
+                     * "The producer shall not create a Manifest element that references any data outside of the package."
+                     */
+                    if("External".Equals(relationship.GetAttribute("TargetMode"), StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
 
-            //        if (!isSignedRelationship(relationshipType)) continue;
+                    if(!IsSignedRelationship(relationshipType))
+                        continue;
 
-            //        parameterSpec.AddRelationshipReference(relationship.Id);
+                    String target = relationship.GetAttribute("Target");
+                    String partName = (target.Length > 0 && target[0] == '/')
+                        ? target
+                        : new Uri(new Uri("http://package" + baseUri), target).AbsolutePath;
 
-            //        // TODO: find a better way ...
-            //        String partName = baseUri + relationship.TargetURI.ToString();
-            //if (!partName.startsWith(baseUri))
-            //{
-            //    partName = baseUri + partName;
-            //}
-            //        try
-            //        {
-            //            partName = new URI(partName).normalize().Path.Replace('\\', '/');
-            //            LOG.Log(POILogger.DEBUG, "part name: " + partName);
-            //        }
-            //        catch (URISyntaxException e)
-            //        {
-            //            throw new XMLSignatureException(e);
-            //        }
+                    PackagePart pp2 = dereferencer.FindPart(partName);
+                    if(pp2 == null)
+                    {
+                        // dangling relationship - neither the relationship nor the part is signed
+                        continue;
+                    }
 
-            //        String contentType;
-            //        try
-            //        {
-            //            PackagePartName relName = PackagingURIHelper.CreatePartName(partName);
-            //            PackagePart pp2 = ooxml.GetPart(relName);
-            //            contentType = pp2.ContentType;
-            //        }
-            //        catch (InvalidFormatException e)
-            //        {
-            //            throw new XMLSignatureException(e);
-            //        }
+                    parameterSpec.AddRelationshipReference(relationship.GetAttribute("Id"));
+                    String contentType = pp2.ContentType;
 
-            //        if (relationshipType.EndsWith("customXml")
-            //            && !(contentType.Equals("inkml+xml") || contentType.Equals("text/xml")))
-            //        {
-            //            LOG.Log(POILogger.DEBUG, "skipping customXml with content type: " + contentType);
-            //            continue;
-            //        }
+                    if(relationshipType.EndsWith("customXml")
+                        && !(contentType.Equals("inkml+xml") || contentType.Equals("text/xml")))
+                    {
+                        continue;
+                    }
 
-            //        if (!digestedPartNames.Contains(partName))
-            //        {
-            //            // We only digest a part once.
-            //            String uri = partName + "?ContentType=" + contentType;
-            //            Reference reference = newReference(uri, null, null, null, null);
-            //            manifestReferences.Add(reference);
-            //            digestedPartNames.Add(partName);
-            //        }
-            //    }
+                    String canonicalPartName = pp2.PartName.Name;
+                    if(digestedPartNames.Add(canonicalPartName))
+                    {
+                        // We only digest a part once.
+                        String uri = canonicalPartName + "?ContentType=" + contentType;
+                        byte[] digestValue;
+                        using(Stream partStream = pp2.GetInputStream())
+                        {
+                            digestValue = DsigUtil.DigestReference(partStream, null, digestMethodUri);
+                        }
+                        manifestReferences.Add(newReference(uri, null, null, null, digestValue));
+                    }
+                }
 
-            //    if (parameterSpec.HasSourceIds())
-            //    {
-            //        List<Transform> transforms = new List<Transform>();
-            //        transforms.Add(newTransform(RelationshipTransformService.TRANSFORM_URI, parameterSpec));
-            //        transforms.Add(newTransform(CanonicalizationMethod.INCLUSIVE));
-            //        String uri = pp.PartName.Name
-            //            + "?ContentType=application/vnd.Openxmlformats-package.relationships+xml";
-            //        Reference reference = newReference(uri, transforms, null, null, null);
-            //        manifestReferences.Add(reference);
-            //    }
-            //}
-            throw new NotImplementedException();
+                if(parameterSpec.HasSourceIds())
+                {
+                    List<Transform> transforms = new List<Transform>();
+                    transforms.Add(new RelationshipTransformService(parameterSpec));
+                    transforms.Add(newTransform(DsigUtil.C14N));
+                    String uri = relsPartName + "?ContentType=" + ContentTypes.RELATIONSHIPS_PART;
+                    byte[] digestValue;
+                    using(Stream relsStream = pp.GetInputStream())
+                    {
+                        digestValue = DsigUtil.DigestReference(relsStream, transforms, digestMethodUri);
+                    }
+                    manifestReferences.Add(newReference(uri, transforms, null, null, digestValue));
+                }
+            }
         }
 
 
@@ -181,68 +184,69 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
             /*
              * SignatureTime
              */
-            //DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            //fmt.TimeZone = (/*setter*/TimeZone.GetTimeZone("UTC"));
-            //String nowStr = fmt.Format(signatureConfig.ExecutionTime);
-            //LOG.Log(POILogger.DEBUG, "now: " + nowStr);
+            String nowStr = signatureConfig.GetExecutionTime().ToUniversalTime()
+                .ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture);
 
-            //SignatureTimeDocument sigTime = SignatureTimeDocument.Factory.NewInstance();
-            //CTSignatureTime ctTime = sigTime.AddNewSignatureTime();
-            //ctTime.Format = (/*setter*/"YYYY-MM-DDThh:mm:ssTZD");
-            //ctTime.Value = (/*setter*/nowStr);
+            XmlElement sigTime = document.CreateElement("mdssi", "SignatureTime", OO_DIGSIG_NS);
+            XmlElement format = document.CreateElement("mdssi", "Format", OO_DIGSIG_NS);
+            format.InnerText = "YYYY-MM-DDThh:mm:ssTZD";
+            sigTime.AppendChild(format);
+            XmlElement value = document.CreateElement("mdssi", "Value", OO_DIGSIG_NS);
+            value.InnerText = nowStr;
+            sigTime.AppendChild(value);
 
-            //Element n = (Element)document.ImportNode(ctTime.DomNode, true);
-            //List<XMLStructure> signatureTimeContent = new List<XMLStructure>();
-            //signatureTimeContent.Add(new DOMStructure(n));
-            //SignatureProperty signatureTimeSignatureProperty = GetSignatureFactory()
-            //    .newSignatureProperty(signatureTimeContent, "#" + signatureConfig.PackageSignatureId,
-            //    "idSignatureTime");
-            //List<SignatureProperty> signaturePropertyContent = new List<SignatureProperty>();
-            //signaturePropertyContent.Add(signatureTimeSignatureProperty);
-            //SignatureProperties signatureProperties = GetSignatureFactory()
-            //    .newSignatureProperties(signaturePropertyContent,
-            //    "id-signature-time-" + signatureConfig.ExecutionTime);
-            //objectContent.Add(signatureProperties);
-            throw new NotImplementedException();
+            objectContent.Add(NewSignatureProperties(document, sigTime, "idSignatureTime"));
         }
 
         protected void AddSignatureInfo(XmlDocument document,
             List<Reference> references,
             List<XmlNode> objects)
         {
-            //List<XMLStructure> objectContent = new List<XMLStructure>();
+            XmlElement sigV1 = document.CreateElement("SignatureInfoV1", MS_DIGSIG_NS);
+            XmlElement manifestHashAlgorithm = document.CreateElement("ManifestHashAlgorithm", MS_DIGSIG_NS);
+            manifestHashAlgorithm.InnerText = signatureConfig.GetDigestMethodUri();
+            sigV1.AppendChild(manifestHashAlgorithm);
 
-            //SignatureInfoV1Document sigV1 = SignatureInfoV1Document.Factory.NewInstance();
-            //CTSignatureInfoV1 ctSigV1 = sigV1.AddNewSignatureInfoV1();
-            //ctSigV1.ManifestHashAlgorithm = (/*setter*/signatureConfig.DigestMethodUri);
-            //Element n = (Element)document.ImportNode(ctSigV1.DomNode, true);
-            //n.AttributeNS = (/*setter*/XML_NS, XMLConstants.XMLNS_ATTRIBUTE, MS_DIGSIG_NS);
+            List<XmlNode> objectContent = new List<XmlNode>();
+            objectContent.Add(NewSignatureProperties(document, sigV1, "idOfficeV1Details"));
 
-            //List<XMLStructure> signatureInfoContent = new List<XMLStructure>();
-            //signatureInfoContent.Add(new DOMStructure(n));
-            //SignatureProperty signatureInfoSignatureProperty = GetSignatureFactory()
-            //    .newSignatureProperty(signatureInfoContent, "#" + signatureConfig.PackageSignatureId,
-            //    "idOfficeV1Details");
+            String objectId = "idOfficeObject";
+            objects.Add(NewObject(document, objectId, objectContent));
 
-            //List<SignatureProperty> signaturePropertyContent = new List<SignatureProperty>();
-            //signaturePropertyContent.Add(signatureInfoSignatureProperty);
-            //SignatureProperties signatureProperties = GetSignatureFactory()
-            //    .newSignatureProperties(signaturePropertyContent, null);
-            //objectContent.Add(signatureProperties);
+            Reference reference = newReference("#" + objectId, null, XML_DIGSIG_NS + "Object", null, null);
+            references.Add(reference);
+        }
 
-            //String objectId = "idOfficeObject";
-            //objects.Add(getSignatureFactory().newXMLObject(objectContent, objectId, null, null));
+        private XmlElement NewSignatureProperties(XmlDocument document, XmlNode content, String propertyId)
+        {
+            XmlElement signatureProperty = document.CreateElement("SignatureProperty", XML_DIGSIG_NS);
+            signatureProperty.SetAttribute("Id", propertyId);
+            signatureProperty.SetAttribute("Target", "#" + signatureConfig.GetPackageSignatureId());
+            signatureProperty.AppendChild(content);
+            XmlElement signatureProperties = document.CreateElement("SignatureProperties", XML_DIGSIG_NS);
+            signatureProperties.AppendChild(signatureProperty);
+            return signatureProperties;
+        }
 
-            //Reference reference = newReference("#" + objectId, null, XML_DIGSIG_NS + "Object", null, null);
-            //references.Add(reference);
-            throw new NotImplementedException();
+        private static XmlElement NewObject(XmlDocument document, String objectId, List<XmlNode> content)
+        {
+            XmlElement xo = document.CreateElement("Object", XML_DIGSIG_NS);
+            if(objectId != null)
+            {
+                xo.SetAttribute("Id", objectId);
+            }
+            foreach(XmlNode n in content)
+            {
+                xo.AppendChild(n);
+            }
+            return xo;
         }
 
         protected static String GetRelationshipReferenceURI(String zipEntryName)
         {
             return "/"
                 + zipEntryName
-                + "?ContentType=application/vnd.Openxmlformats-package.relationships+xml";
+                + "?ContentType=application/vnd.openxmlformats-package.relationships+xml";
         }
 
         protected static String GetResourceReferenceURI(String resourceName, String contentType)
@@ -272,13 +276,13 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         /*
          * Word
          */
-        "application/vnd.Openxmlformats-officedocument.wordProcessingml.document.main+xml",
-        "application/vnd.Openxmlformats-officedocument.wordProcessingml.fontTable+xml",
-        "application/vnd.Openxmlformats-officedocument.wordProcessingml.Settings+xml",
-        "application/vnd.Openxmlformats-officedocument.wordProcessingml.styles+xml",
-        "application/vnd.Openxmlformats-officedocument.theme+xml",
-        "application/vnd.Openxmlformats-officedocument.wordProcessingml.webSettings+xml",
-        "application/vnd.Openxmlformats-officedocument.wordProcessingml.numbering+xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
+        "application/vnd.openxmlformats-officedocument.theme+xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.websettings+xml",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
 
         /*
          * Word 2010
@@ -288,25 +292,25 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         /*
          * Excel
          */
-        "application/vnd.Openxmlformats-officedocument.spreadsheetml.sharedStrings+xml",
-        "application/vnd.Openxmlformats-officedocument.spreadsheetml.worksheet+xml",
-        "application/vnd.Openxmlformats-officedocument.spreadsheetml.styles+xml",
-        "application/vnd.Openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
 
         /*
          * Powerpoint
          */
-        "application/vnd.Openxmlformats-officedocument.presentationml.presentation.main+xml",
-        "application/vnd.Openxmlformats-officedocument.presentationml.slideLayout+xml",
-        "application/vnd.Openxmlformats-officedocument.presentationml.slideMaster+xml",
-        "application/vnd.Openxmlformats-officedocument.presentationml.slide+xml",
-        "application/vnd.Openxmlformats-officedocument.presentationml.tableStyles+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.slide+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.tableStyles+xml",
 
         /*
          * Powerpoint 2010
          */
-        "application/vnd.Openxmlformats-officedocument.presentationml.viewProps+xml",
-        "application/vnd.Openxmlformats-officedocument.presentationml.presProps+xml"
+        "application/vnd.openxmlformats-officedocument.presentationml.viewProps+xml",
+        "application/vnd.openxmlformats-officedocument.presentationml.presProps+xml"
     };
 
         /**
@@ -345,8 +349,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         "ui/pressed", //
         "ui/progID", //
         "ui/ribbonID", //
-        "ui/ShowImage", //
-        "ui/ShowLabel", //
+        "ui/showImage", //
+        "ui/showLabel", //
         "ui/supertip", //
         "ui/target", //
         "ui/text", //
@@ -420,7 +424,7 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         "officeDocument", //
         "oleObject", //
         "package", //
-        "pivotCacheDefInition", //
+        "pivotCacheDefinition", //
         "pivotCacheRecords", //
         "pivotTable", //
         "presProps", //

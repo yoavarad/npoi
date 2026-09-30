@@ -92,8 +92,7 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
 
         protected Transform newTransform(String canonicalizationMethod)
         {
-            ///return newTransform(canonicalizationMethod, null);
-            throw new NotImplementedException();
+            return DsigUtil.CreateTransform(canonicalizationMethod);
         }
 
         ////protected Transform newTransform(String canonicalizationMethod, TransformParameterSpec paramSpec)
@@ -120,51 +119,30 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         {
             // the references appear in the package signature or the package object
             // so we can use the default digest algorithm
-            //String digestMethodUri = signatureConfig.DigestMethodUri;
-            //XMLSignatureFactory sigFac = signatureConfig.SignatureFactory;
-            //DigestMethod digestMethod;
-            //try {
-            //    digestMethod = sigFac.NewDigestMethod(digestMethodUri, null);
-            //} catch (SecurityException e) {
-            //    throw new XMLSignatureException("unknown digest method uri: " + digestMethodUri, e);
-            //}
-
-            //Reference reference;
-            //if (digestValue == null) {
-            //    reference = sigFac.NewReference(uri, digestMethod, transforms, type, id);
-            //} else {
-            //    reference = sigFac.NewReference(uri, digestMethod, transforms, type, id, digestValue);
-            //}
-
-            //brokenJvmWorkaround(reference);
-
-            //return reference;
-            throw new NotImplementedException();
+            Reference reference = new Reference(uri)
+            {
+                DigestMethod = signatureConfig.GetDigestMethodUri(),
+                Type = type,
+                Id = id
+            };
+            if(transforms != null)
+            {
+                foreach(Transform t in transforms)
+                {
+                    reference.AddTransform(t);
+                }
+            }
+            if(digestValue != null)
+            {
+                reference.DigestValue = digestValue;
+            }
+            return reference;
         }
 
         // helper method ... will be Removed soon
         public static void brokenJvmWorkaround(Reference reference)
         {
-            throw new NotImplementedException();
-            //DigestMethod digestMethod = reference.DigestMethod;
-            //String digestMethodUri = digestMethod.Algorithm;
-
-            //// workaround for https://bugzilla.redhat.com/Show_bug.cgi?id=1155012
-            //// overwrite standard message digest, if a digest <> SHA1 is used
-            //Provider bcProv = Security.GetProvider("BC");
-            //if (bcProv != null && !DigestMethod.SHA1.Equals(digestMethodUri)) {
-            //    try {
-            //        Method m = DOMDigestMethod.class.GetDeclaredMethod("getMessageDigestAlgorithm");
-            //        m.Accessible=(/*setter*/true);
-            //        String mdAlgo = (String)m.Invoke(digestMethod);
-            //        MessageDigest md = MessageDigest.GetInstance(mdAlgo, bcProv);
-            //        Field f = DOMReference.class.GetDeclaredField("md");
-            //        f.Accessible=(/*setter*/true);
-            //        f.Set(reference, md);
-            //    } catch (Exception e) {
-            //        LOG.Log(POILogger.WARN, "Can't overwrite message digest (workaround for https://bugzilla.redhat.com/Show_bug.cgi?id=1155012)", e);
-            //    }
-            //}
+            // JVM specific workaround (https://bugzilla.redhat.com/Show_bug.cgi?id=1155012), not needed on .NET
         }
     }
 }
