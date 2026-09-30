@@ -1,0 +1,39 @@
+name: Conventions
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  branch-name:
+    name: branch-name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          if [[ ! "$BRANCH" =~ ^(feat|fix|docs|chore|refactor|test|ci|perf|release|task)/[a-z0-9-]+$ ]]; then
+            echo "::error::Branch '$BRANCH' must match type/description (types: feat|fix|docs|chore|refactor|test|ci|perf|release|task; lowercase letters, digits, hyphens)."
+            exit 1
+          fi
+
+  commit-messages:
+    name: commit-messages
+    runs-on: ubuntu-latest
+    # Upstream-sync PRs carry nissl-lab/npoi commits, which are not conventional.
+    if: ${{ !startsWith(github.head_ref, 'chore/upstream-sync-') }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v5
+      - name: Install commitizen
+        run: uv tool install commitizen
+      - name: Check commit messages
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: cz check --rev-range "$BASE..$HEAD"
