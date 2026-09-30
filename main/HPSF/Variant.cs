@@ -334,22 +334,22 @@ namespace NPOI.HPSF
         public const int VT_BYREF = 0x4000;
 
         /**
-         * FIXME (3): Document this!
+         * Reserved type flag bit; must not be set.
          */
         public const int VT_RESERVED = 0x8000;
 
         /**
-         * FIXME (3): Document this!
+         * Illegal variant type marker.
          */
         public const int VT_ILLEGAL = 0xFFFF;
 
         /**
-         * FIXME (3): Document this!
+         * Illegal variant type with the flag bits masked off.
          */
         public const int VT_ILLEGALMASKED = 0xFFF;
 
         /**
-         * FIXME (3): Document this!
+         * Mask that strips the flag bits (VT_VECTOR, VT_ARRAY, VT_BYREF, VT_RESERVED) from a variant type.
          */
         public const int VT_TYPEMASK = 0xFFF;
 

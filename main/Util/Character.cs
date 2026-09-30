@@ -19,7 +19,8 @@ namespace NPOI.Util
             return -1;
         }
 
-        //TODO: this should work but maybe not.
+        // Note: unlike Java's Character.isWhitespace, char.IsWhiteSpace also treats
+        // non-breaking spaces (U+00A0, U+2007, U+202F) as whitespace.
         public static bool isWhitespace(char src)
         {
             return char.IsWhiteSpace(src);
