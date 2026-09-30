@@ -298,4 +298,4 @@ namespace NPOI.SS.Formula.Atp
             _functionsByName[name] = func;
         }
     }
-}
+}
