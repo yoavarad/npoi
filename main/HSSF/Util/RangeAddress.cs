@@ -325,7 +325,7 @@ namespace NPOI.HSSF.Util
                         result = WRONG_POS;
                     }
                 }
-                catch(Exception)
+                catch(Exception e) when(e is FormatException || e is OverflowException)
                 {
 
                     result = WRONG_POS;

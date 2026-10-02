@@ -468,7 +468,6 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             }
         }
 
-        // TODO is the following correct?
         [XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
         public string id
         {

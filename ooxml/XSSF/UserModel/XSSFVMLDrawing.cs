@@ -114,8 +114,6 @@ namespace NPOI.XSSF.UserModel
             StreamReader sr = new StreamReader(is1);
             string data = sr.ReadToEnd();
 
-            //Stream vmlsm = new EvilUnclosedBRFixingInputStream(is1); --TODO:: add later
-
             doc.LoadXml(
                  data.Replace("<br>", "<br/>").Replace("</br>", "<br/>")
            );
