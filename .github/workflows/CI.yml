@@ -35,8 +35,15 @@ jobs:
           dotnet-version: |
             10.0
       - uses: actions/checkout@v4
-      - name: 'Run: Clean, Test, Pack, RemoveNpoiPackFromPackage'
-        run: ./build.cmd Clean Test Pack RemoveNpoiPackFromPackage
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nuke/temp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/Directory.Packages.props', '**/*.csproj') }}
+      - name: 'Run: Test, Pack, RemoveNpoiPackFromPackage'
+        run: ./build.cmd Test Pack RemoveNpoiPackFromPackage
       - name: 'Publish: publish'
         uses: actions/upload-artifact@v4
         if: runner.os == 'Linux'
@@ -53,8 +60,15 @@ jobs:
           dotnet-version: |
             10.0
       - uses: actions/checkout@v4
-      - name: 'Run: Clean, Test, Pack, RemoveNpoiPackFromPackage'
-        run: ./build.cmd Clean Test Pack RemoveNpoiPackFromPackage
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
+        uses: actions/cache@v4
+        with:
+          path: |
+            .nuke/temp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/Directory.Packages.props', '**/*.csproj') }}
+      - name: 'Run: Test, Pack, RemoveNpoiPackFromPackage'
+        run: ./build.cmd Test Pack RemoveNpoiPackFromPackage
       - name: 'Publish: publish'
         uses: actions/upload-artifact@v4
         if: runner.os == 'Linux'

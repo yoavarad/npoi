@@ -109,6 +109,13 @@ partial class Build : NukeBuild
                 // 0  Turns off emission of all warning messages
                 // 1  Displays severe warning messages
                 .SetWarningLevel(IsServerBuild ? 0 : 1)
+                // Pack runs with --no-build, so versions must be stamped here
+                .When(_ => IsPublishBuild, settings => settings
+                    .SetAssemblyVersion(PublishVersion)
+                    .SetFileVersion(PublishVersion)
+                    .SetInformationalVersion(PublishVersion)
+                    .SetVersionSuffix(VersionSuffix)
+                    .SetVersionPrefix(PublishVersion))
             );
 
             // copy files from projects in order to get them to be part of pack
@@ -144,19 +151,21 @@ partial class Build : NukeBuild
         });
 
     Target Pack => _ => _
+        .DependsOn(Compile)
         .After(Test)
+        .OnlyWhenDynamic(() => ShouldPack)
         .Produces(ArtifactsDirectory / "**")
         .Executes(() =>
         {
-            // make sure we make fresh build
-            DeleteCompilationArtifacts();
-
             var packTarget = Solution.GetProject("NPOI.Pack");
 
             DotNetPack(_ =>
             {
                 var packSettings = _
                     .SetProject(packTarget)
+                    // reuse the Compile output instead of rebuilding
+                    .EnableNoBuild()
+                    .EnableNoRestore()
                     .SetConfiguration(Configuration)
                     .SetOutputDirectory(ArtifactsDirectory)
                     .SetDeterministic(IsServerBuild)
@@ -186,8 +195,12 @@ partial class Build : NukeBuild
             });
         });
 
+    // In CI only the Linux job packs (it is the one that uploads the artifact); locally always pack.
+    bool ShouldPack => Host is not GitHubActions || RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+
     Target RemoveNpoiPackFromPackage => _ =>
         _.DependsOn(Pack)
+        .OnlyWhenDynamic(() => ShouldPack)
         .Executes(() =>
         {
             var nupkg = ArtifactsDirectory.GlobFiles("*.nupkg").FirstOrDefault();
