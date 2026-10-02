@@ -1529,15 +1529,15 @@ namespace TestCases.HSSF.UserModel
                 {
                     string text = "s" + i;
                     byte[] data = new byte[13 + text.Length];
-                    data[0] = (byte)(LabelRecord.sid & 0xFF);
-                    data[1] = (byte)(LabelRecord.sid >> 8);
-                    data[2] = (byte)(9 + text.Length);
-                    data[4] = (byte)(i & 0xFF);
-                    data[5] = (byte)(i >> 8);
-                    data[10] = (byte)text.Length;
+                    data[0] = (byte) (LabelRecord.sid & 0xFF);
+                    data[1] = (byte) (LabelRecord.sid >> 8);
+                    data[2] = (byte) (9 + text.Length);
+                    data[4] = (byte) (i & 0xFF);
+                    data[5] = (byte) (i >> 8);
+                    data[10] = (byte) text.Length;
                     for(int c = 0; c < text.Length; c++)
                     {
-                        data[13 + c] = (byte)text[c];
+                        data[13 + c] = (byte) text[c];
                     }
                     RecordInputStream rin = new RecordInputStream(new MemoryStream(data));
                     rin.NextRecord();
