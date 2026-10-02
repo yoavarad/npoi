@@ -407,7 +407,6 @@ namespace NPOI.HSSF.UserModel
                 {
                     LabelRecord oldrec = (LabelRecord)rec;
 
-                    records.RemoveAt(k);
                     LabelSSTRecord newrec = new LabelSSTRecord();
                     int stringid =
                         workbook.AddSSTString(new HSSF.Record.UnicodeString(oldrec.Value));
@@ -416,7 +415,7 @@ namespace NPOI.HSSF.UserModel
                     newrec.Column = (oldrec.Column);
                     newrec.XFIndex = (oldrec.XFIndex);
                     newrec.SSTIndex = (stringid);
-                    records.Insert(k, newrec);
+                    records[k] = newrec;
                 }
             }
             //if (log.Check(POILogger.DEBUG))

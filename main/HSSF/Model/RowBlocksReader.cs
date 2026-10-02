@@ -34,7 +34,7 @@ namespace NPOI.HSSF.Model
     public class RowBlocksReader
     {
 
-        private readonly ArrayList _plainRecords;
+        private readonly List<Record> _plainRecords;
         private readonly SharedValueManager _sfm;
         private readonly MergeCellsRecord[] _mergedCellsRecords;
 
@@ -44,11 +44,11 @@ namespace NPOI.HSSF.Model
          */
         public RowBlocksReader(RecordStream rs)
         {
-            ArrayList plainRecords = new ArrayList();
-            ArrayList shFrmRecords = new ArrayList();
-            ArrayList arrayRecords = new ArrayList();
-            ArrayList tableRecords = new ArrayList();
-            ArrayList mergeCellRecords = new ArrayList();
+            List<Record> plainRecords = new List<Record>();
+            List<SharedFormulaRecord> shFrmRecords = new List<SharedFormulaRecord>();
+            List<ArrayRecord> arrayRecords = new List<ArrayRecord>();
+            List<TableRecord> tableRecords = new List<TableRecord>();
+            List<MergeCellsRecord> mergeCellRecords = new List<MergeCellsRecord>();
             List<CellReference> firstCellRefs = new List<CellReference>();
             Record prevRec = null;
 
@@ -64,49 +64,39 @@ namespace NPOI.HSSF.Model
 
                 }
                 Record rec = rs.GetNext();
-                ArrayList dest;
                 switch(rec.Sid)
                 {
                     case MergeCellsRecord.sid:
-                        dest = mergeCellRecords;
+                        mergeCellRecords.Add((MergeCellsRecord)rec);
                         break;
                     case SharedFormulaRecord.sid:
-                        dest = shFrmRecords;
                         if(prevRec is not FormulaRecord fr)
                         {
                             throw new Exception("Shared formula record should follow a FormulaRecord");
                         }
 
                         firstCellRefs.Add(new CellReference(fr.Row, fr.Column));
+                        shFrmRecords.Add((SharedFormulaRecord)rec);
 
                         break;
                     case ArrayRecord.sid:
-                        dest = arrayRecords;
+                        arrayRecords.Add((ArrayRecord)rec);
                         break;
                     case TableRecord.sid:
-                        dest = tableRecords;
+                        tableRecords.Add((TableRecord)rec);
                         break;
                     default:
-                        dest = plainRecords;
+                        plainRecords.Add(rec);
                         break;
                 }
-                dest.Add(rec);
                 prevRec = rec;
             }
-            SharedFormulaRecord[] sharedFormulaRecs = new SharedFormulaRecord[shFrmRecords.Count];
-            List<ArrayRecord> arrayRecs = new List<ArrayRecord>(arrayRecords.Count);
-            List<TableRecord> tableRecs = new List<TableRecord>(tableRecords.Count);
-            sharedFormulaRecs = (SharedFormulaRecord[]) shFrmRecords.ToArray(typeof(SharedFormulaRecord));
-
-            CellReference[] firstCells = new CellReference[firstCellRefs.Count];
-            firstCells=firstCellRefs.ToArray();
-            arrayRecs = new List<ArrayRecord>((ArrayRecord[]) arrayRecords.ToArray(typeof(ArrayRecord)));
-            tableRecs = new List<TableRecord>((TableRecord[]) tableRecords.ToArray(typeof(TableRecord)));
+            SharedFormulaRecord[] sharedFormulaRecs = shFrmRecords.ToArray();
+            CellReference[] firstCells = firstCellRefs.ToArray();
 
             _plainRecords = plainRecords;
-            _sfm = SharedValueManager.Create(sharedFormulaRecs, firstCells, arrayRecs, tableRecs);
-            _mergedCellsRecords = new MergeCellsRecord[mergeCellRecords.Count];
-            _mergedCellsRecords = (MergeCellsRecord[]) mergeCellRecords.ToArray(typeof(MergeCellsRecord));
+            _sfm = SharedValueManager.Create(sharedFormulaRecs, firstCells, arrayRecords, tableRecords);
+            _mergedCellsRecords = mergeCellRecords.ToArray();
         }
 
         /**
