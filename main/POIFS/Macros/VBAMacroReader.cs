@@ -447,4 +447,4 @@ namespace NPOI.POIFS.Macros
             //utf-16BE           1201      utf-16BE           utf-16BE           utf-16BE           Unicode (Big-Endian)
         }
     }
-}
+}
