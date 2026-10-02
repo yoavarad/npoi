@@ -172,7 +172,7 @@ namespace NPOI.POIFS.Crypt.Dsig
                     X509Certificate2 signerCert = null;
                     foreach(X509Certificate2 cert in certificates)
                     {
-                        if(signedXml.CheckSignature(cert, true))
+                        if(signedXml.CheckSignature(cert, true) || CheckLegacySignature(signedXml, cert))
                         {
                             signerCert = cert;
                             break;
@@ -192,6 +192,25 @@ namespace NPOI.POIFS.Crypt.Dsig
                     || e is FormatException || e is ArgumentException || e is NPOI.OpenXml4Net.Exceptions.InvalidFormatException)
                 {
                     throw new EncryptedDocumentException("error in marshalling and validating the signature", e);
+                }
+            }
+
+            /**
+             * Retries the validation with a key that also accepts the legacy DigestInfo
+             * encoding (without NULL parameters), which Windows accepts natively.
+             */
+            private static bool CheckLegacySignature(SignedXml signedXml, X509Certificate2 cert)
+            {
+                using(RSA rsa = cert.GetRSAPublicKey())
+                {
+                    if(rsa == null)
+                    {
+                        return false;
+                    }
+                    using(LegacyDigestInfoRsa legacyRsa = new LegacyDigestInfoRsa(rsa))
+                    {
+                        return signedXml.CheckSignature(legacyRsa);
+                    }
                 }
             }
 
