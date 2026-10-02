@@ -217,5 +217,34 @@ namespace TestCases.HPSF.Basic
             ClassicAssert.IsNotNull(cps2);
             ClassicAssert.AreEqual(text, cps2.Get(text));
         }
+
+        [Test]
+        public void DocumentStreamReadMatchesByteArrayRead()
+        {
+            using Stream inp = _samples.OpenResourceAsStream("TestBug44375.xls");
+            POIFSFileSystem fs = new POIFSFileSystem(inp);
+            try
+            {
+                string name = DocumentSummaryInformation.DEFAULT_STREAM_NAME;
+                byte[] raw;
+                using(DocumentInputStream d1 = fs.CreateDocumentInputStream(name))
+                {
+                    raw = new byte[d1.Available()];
+                    d1.ReadFully(raw);
+                }
+                PropertySet fromBytes = new PropertySet(raw);
+                PropertySet fromStream;
+                using(DocumentInputStream d2 = fs.CreateDocumentInputStream(name))
+                {
+                    fromStream = new PropertySet(d2);
+                    ClassicAssert.AreEqual(0, d2.Available());
+                }
+                ClassicAssert.AreEqual(fromBytes.SectionCount, fromStream.SectionCount);
+            }
+            finally
+            {
+                fs.Close();
+            }
+        }
     }
 }
