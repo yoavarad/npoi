@@ -97,8 +97,6 @@ namespace NPOI.HSSF.Record
             StringBuilder buffer = new StringBuilder();
             buffer.Append("[FEATURE HEADER]\n");
 
-            // TODO ...
-
             buffer.Append("[/FEATURE HEADER]\n");
             return buffer.ToString();
         }
