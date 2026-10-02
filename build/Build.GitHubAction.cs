@@ -10,18 +10,18 @@ using System.Collections.Generic;
     GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = ["main", "master", "release*", "poi/*"],
-    InvokedTargets = [nameof(Clean), nameof(Test), nameof(Pack), nameof(RemoveNpoiPackFromPackage)],
+    InvokedTargets = [nameof(Test), nameof(Pack), nameof(RemoveNpoiPackFromPackage)],
     TimeoutMinutes = 20,
-    CacheKeyFiles = [],
+    CacheKeyFiles = ["**/Directory.Packages.props", "**/*.csproj"],
     PublishCondition = "runner.os == 'Linux'"
 )]
 [CustomGitHubActions("PR",
     GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     On = [GitHubActionsTrigger.PullRequest],
-    InvokedTargets = [nameof(Clean), nameof(Test), nameof(Pack), nameof(RemoveNpoiPackFromPackage)],
+    InvokedTargets = [nameof(Test)],
     TimeoutMinutes = 20,
-    CacheKeyFiles = [],
+    CacheKeyFiles = ["**/Directory.Packages.props", "**/*.csproj"],
     ConcurrencyCancelInProgress = true,
     PublishCondition = "runner.os == 'Linux'"
 )]
