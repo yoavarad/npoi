@@ -118,6 +118,7 @@ namespace NPOI.Util
 
             // Fetch the right logger for them, creating
             //  it if that's required 
+            lock(_loggers)
             if(_loggers.ContainsKey(cat))
             {
                 logger = (POILogger) _loggers[cat];

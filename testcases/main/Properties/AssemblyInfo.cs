@@ -33,3 +33,7 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.2.5.0")]
 [assembly: AssemblyFileVersion("1.2.5.0")]
+
+// Run test fixtures in parallel; individual tests inside a fixture stay sequential.
+[assembly: NUnit.Framework.Parallelizable(NUnit.Framework.ParallelScope.Fixtures)]
+[assembly: NUnit.Framework.LevelOfParallelism(4)]

@@ -85,7 +85,7 @@ namespace NPOI.SS.Formula
         private bool _inIntersection;
 
         private readonly IFormulaParsingWorkbook _book;
-        private static SpreadsheetVersion _ssVersion;
+        private SpreadsheetVersion _ssVersion;
 
         private readonly int _sheetIndex;
         private readonly int _rowIndex; // 0-based
@@ -1180,7 +1180,7 @@ namespace NPOI.SS.Formula
             }
             return new ParseNode(ptg);
         }
-        private static AreaReference CreateAreaRef(SimpleRangePart part1, SimpleRangePart part2)
+        private AreaReference CreateAreaRef(SimpleRangePart part1, SimpleRangePart part2)
         {
             if(!part1.IsCompatibleForArea(part2))
             {

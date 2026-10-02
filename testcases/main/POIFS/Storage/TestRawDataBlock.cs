@@ -43,7 +43,7 @@ namespace TestCases.POIFS.Storage
      *
      * @author Marc Johnson
      */
-    [TestFixture]
+    [TestFixture, NonParallelizable] // shares the static DummyPOILogger
     public class TestRawDataBlock
     {
         public TestRawDataBlock()
