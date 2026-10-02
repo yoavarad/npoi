@@ -170,8 +170,17 @@ namespace NPOI.POIFS.Crypt.Standard
             {
                 if(closed)
                     return;
-                FinalizeCipherIfNeeded();
-                WriteToPOIFS();
+                try
+                {
+                    FinalizeCipherIfNeeded();
+                    WriteToPOIFS();
+                }
+                catch
+                {
+                    closed = true;
+                    ReleaseTempFile();
+                    throw;
+                }
                 closed = true;
                 base.Close();
                 // Cleanup only after POIFS has consumed the data
@@ -179,6 +188,19 @@ namespace NPOI.POIFS.Crypt.Standard
                 {
                     cipherOut.Close();
                     tempFile.Delete();
+                }
+            }
+
+            // Best effort: must not mask the original exception. One-shot: the filesystem can be written once.
+            private void ReleaseTempFile()
+            {
+                try
+                {
+                    cipherOut.Close();
+                    tempFile.Delete();
+                }
+                catch(Exception e) when(e is IOException || e is UnauthorizedAccessException)
+                {
                 }
             }
 
@@ -209,6 +231,7 @@ namespace NPOI.POIFS.Crypt.Standard
                 finally
                 {
                     poifsWritten = true;
+                    ReleaseTempFile();
                 }
             }
         }
