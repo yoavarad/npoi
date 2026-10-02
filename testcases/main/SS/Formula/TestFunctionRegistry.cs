@@ -45,7 +45,7 @@ namespace TestCases.SS.Formula
             HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(wb);
 
             HSSFCell cellA = (HSSFCell)row.CreateCell(0);
-            cellA.CellFormula = ("FISHER(A5)");
+            cellA.CellFormula = ("GAMMALN(A5)");
             CellValue cv;
             try
             {
@@ -60,7 +60,7 @@ namespace TestCases.SS.Formula
                 ;
             }
 
-            FunctionEval.RegisterFunction("FISHER", new Function1());/*Function() {
+            FunctionEval.RegisterFunction("GAMMALN", new Function1());/*Function() {
             public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex) {
                 return ErrorEval.NA;
             }
