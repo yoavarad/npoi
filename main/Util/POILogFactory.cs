@@ -119,28 +119,28 @@ namespace NPOI.Util
             // Fetch the right logger for them, creating
             //  it if that's required 
             lock(_loggers)
-            if(_loggers.ContainsKey(cat))
-            {
-                logger = (POILogger) _loggers[cat];
-            }
-            else
-            {
-                try
+                if(_loggers.ContainsKey(cat))
                 {
-                    //logger=assembly.CreateInstance(_loggerClassName) as POILogger;
-                    Type loggerClass = Type.GetType(_loggerClassName);
-                    logger =  Activator.CreateInstance(loggerClass) as POILogger;
-                    logger.Initialize(cat);
+                    logger = (POILogger) _loggers[cat];
                 }
-                catch(Exception)
+                else
                 {
-                    // Give up and use the null logger
-                    logger = _nullLogger;
-                }
+                    try
+                    {
+                        //logger=assembly.CreateInstance(_loggerClassName) as POILogger;
+                        Type loggerClass = Type.GetType(_loggerClassName);
+                        logger =  Activator.CreateInstance(loggerClass) as POILogger;
+                        logger.Initialize(cat);
+                    }
+                    catch(Exception)
+                    {
+                        // Give up and use the null logger
+                        logger = _nullLogger;
+                    }
 
-                // Save for next time
-                _loggers[cat] = logger;
-            }
+                    // Save for next time
+                    _loggers[cat] = logger;
+                }
             return logger;
         }
     }
