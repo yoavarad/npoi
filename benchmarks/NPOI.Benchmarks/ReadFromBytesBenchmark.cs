@@ -139,4 +139,4 @@ public class ReadFromBytesBenchmark
         using var wb = new HSSFWorkbook(new MemoryStream(embeddedXls));
         return wb.GetAllEmbeddedObjects().Count;
     }
-}
+}
