@@ -57,7 +57,6 @@ namespace NPOI.SS.Formula.Eval.Forked
             {
                 try
                 {
-                    // TODO: check if this is Java 9 compatible ...
                     Type evalWB = Type.GetType("NPOI.XSSF.UserModel.XSSFEvaluationWorkbook");
                     Type xssfWB = Type.GetType("NPOI.XSSF.UserMode.XSSFWorkbook");
                     MethodInfo createM = evalWB.GetMethod("create", new Type[] { xssfWB });
