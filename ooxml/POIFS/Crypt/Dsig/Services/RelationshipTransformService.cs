@@ -22,189 +22,205 @@
    Copyright (C) 2008-2014 FedICT.
    ================================================================= */
 
+
 namespace NPOI.POIFS.Crypt.Dsig.Services
 {
+    using NPOI.OpenXml4Net.OPC;
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Security.Cryptography.Xml;
+    using System.Xml;
 
     /**
-     * JSR105 implementation of the RelationshipTransform transformation.
-     * 
-     * <p>
-     * Specs: http://openiso.org/Ecma/376/Part2/12.2.4#26
-     * </p>
+     * Implementation of the OPC RelationshipTransform (ECMA-376 Part 2, 13.2.4.24).
+     *
+     * The transform keeps the relationships selected by SourceId / SourceType,
+     * removes all other content, defaults TargetMode to Internal and sorts the
+     * relationships by Id. The result is a node set, which is canonicalized by the
+     * following C14N transform.
      */
-    public class RelationshipTransformService : TransformService {
+    public class RelationshipTransformService : Transform
+    {
+        public const String TRANSFORM_URI = "http://schemas.openxmlformats.org/package/2006/RelationshipTransform";
 
-        public static String TRANSFORM_URI = "http://schemas.Openxmlformats.org/package/2006/RelationshipTransform";
+        private static readonly String[] KEPT_ATTRIBUTES = { "Id", "Target", "TargetMode", "Type" };
 
-        private List<String> sourceIds;
+        private readonly List<String> sourceIds = new List<String>();
+        private readonly List<String> sourceTypes = new List<String>();
+        private XmlDocument output;
 
-        //private static POILogger LOG = POILogFactory.GetLogger(typeof(RelationshipTransformService));
+        public RelationshipTransformService()
+        {
+            Algorithm = TRANSFORM_URI;
+        }
 
         /**
          * Relationship Transform parameter specification class.
          */
-        public class RelationshipTransformParameterSpec : TransformParameterSpec {
-            List<String> sourceIds = new List<String>();
-            public void AddRelationshipReference(String relationshipId) {
+        public class RelationshipTransformParameterSpec
+        {
+            internal readonly List<String> sourceIds = new List<String>();
+
+            public void AddRelationshipReference(String relationshipId)
+            {
                 sourceIds.Add(relationshipId);
             }
-            public bool HasSourceIds() {
-                return !sourceIds.IsEmpty();
+
+            public bool HasSourceIds()
+            {
+                return sourceIds.Count > 0;
             }
         }
 
-
-        public RelationshipTransformService() : base()
+        public RelationshipTransformService(RelationshipTransformParameterSpec spec) : this()
         {
-            //LOG.Log(POILogger.DEBUG, "constructor");
-            this.sourceIds = new List<String>();
+            if(spec != null)
+            {
+                sourceIds.AddRange(spec.sourceIds);
+            }
+        }
+
+        public List<String> SourceIds
+        {
+            get { return sourceIds; }
+        }
+
+        public List<String> SourceTypes
+        {
+            get { return sourceTypes; }
+        }
+
+        public override Type[] InputTypes
+        {
+            get { return new Type[] { typeof(Stream), typeof(XmlDocument) }; }
+        }
+
+        public override Type[] OutputTypes
+        {
+            get { return new Type[] { typeof(XmlDocument) }; }
+        }
+
+        public override void LoadInnerXml(XmlNodeList nodeList)
+        {
+            sourceIds.Clear();
+            sourceTypes.Clear();
+            if(nodeList == null)
+            {
+                return;
+            }
+            foreach(XmlNode node in nodeList)
+            {
+                if(!(node is XmlElement el) || el.NamespaceURI != PackageNamespaces.DIGITAL_SIGNATURE)
+                {
+                    continue;
+                }
+                if(el.LocalName == "RelationshipReference")
+                {
+                    sourceIds.Add(el.GetAttribute("SourceId"));
+                }
+                else if(el.LocalName == "RelationshipsGroupReference")
+                {
+                    sourceTypes.Add(el.GetAttribute("SourceType"));
+                }
+            }
+        }
+
+        protected override XmlNodeList GetInnerXml()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement holder = doc.CreateElement("holder");
+            foreach(String id in sourceIds)
+            {
+                XmlElement el = doc.CreateElement("mdssi", "RelationshipReference", PackageNamespaces.DIGITAL_SIGNATURE);
+                el.SetAttribute("SourceId", id);
+                holder.AppendChild(el);
+            }
+            foreach(String type in sourceTypes)
+            {
+                XmlElement el = doc.CreateElement("mdssi", "RelationshipsGroupReference", PackageNamespaces.DIGITAL_SIGNATURE);
+                el.SetAttribute("SourceType", type);
+                holder.AppendChild(el);
+            }
+            return holder.ChildNodes;
+        }
+
+        public override void LoadInput(object obj)
+        {
+            XmlDocument src;
+            if(obj is XmlDocument doc)
+            {
+                src = doc;
+            }
+            else if(obj is Stream stream)
+            {
+                src = DsigUtil.LoadXml(stream);
+            }
+            else
+            {
+                throw new ArgumentException("unsupported input type: " + obj?.GetType());
+            }
+            output = Transform(src, sourceIds, sourceTypes);
+        }
+
+        public override object GetOutput()
+        {
+            return output;
+        }
+
+        public override object GetOutput(Type type)
+        {
+            if(type != typeof(XmlDocument) && !type.IsSubclassOf(typeof(XmlDocument)))
+            {
+                throw new ArgumentException("unsupported output type: " + type);
+            }
+            return output;
         }
 
         /**
-         * Register the provider for this TransformService
-         * 
-         * @see javax.xml.Crypto.dsig.TransformService
+         * Applies the relationship transform to a relationships document.
          */
-        public static void registerDsigProvider() {
-            // the xml signature classes will try to find a special TransformerService,
-            // which is ofcourse unknown to JCE before ...
-            String dsigProvider = "POIXmlDsigProvider";
-            if (Security.GetProperty(dsigProvider) == null) {
-                //Provider p = new Provider(dsigProvider, 1.0, dsigProvider){
-                //    static long serialVersionUID = 1L;
-                //};
-                //p.Put("TransformService." + TRANSFORM_URI, RelationshipTransformService.class.Name);
-                //p.Put("TransformService." + TRANSFORM_URI + " MechanismType", "DOM");
-                //Security.AddProvider(p);
-                throw new NotImplementedException();
-            }
-        }
-
-
-
-        public void Init(TransformParameterSpec params1) {
-            //LOG.Log(POILogger.DEBUG, "Init(params)");
-            if (!(params1 is RelationshipTransformParameterSpec)) {
-                throw new InvalidAlgorithmParameterException();
-            }
-            RelationshipTransformParameterSpec relParams = (RelationshipTransformParameterSpec)params1;
-            foreach (String sourceId in relParams.sourceIds) {
-                this.sourceIds.Add(sourceId);
-            }
-        }
-
-
-        public void Init(XMLStructure parent, XMLCryptoContext context) {
-            LOG.Log(POILogger.DEBUG, "Init(parent,context)");
-            LOG.Log(POILogger.DEBUG, "parent java type: " + parent.Class.Name);
-            DOMStructure domParent = (DOMStructure)parent;
-            Node parentNode = domParent.Node;
-
-            try {
-                TransformDocument transDoc = TransformDocument.Factory.Parse(parentNode);
-                XmlObject[] xoList = transDoc.Transform.SelectChildren(RelationshipReferenceDocument.type.DocumentElementName);
-                if (xoList.Length == 0) {
-                    //LOG.Log(POILogger.WARN, "no RelationshipReference/@SourceId parameters present");
-                }
-                foreach (XmlObject xo in xoList) {
-                    String sourceId = ((CTRelationshipReference)xo).SourceId;
-                    LOG.Log(POILogger.DEBUG, "sourceId: ", sourceId);
-                    this.sourceIds.Add(sourceId);
-                }
-            } catch (XmlException e) {
-                throw new InvalidAlgorithmParameterException(e);
-            }
-        }
-
-
-        public void marshalParams(XMLStructure parent, XMLCryptoContext context) {
-            //LOG.Log(POILogger.DEBUG, "marshallParams(parent,context)");
-            DOMStructure domParent = (DOMStructure)parent;
-            Element parentNode = (Element)domParent.Node;
-            // parentNode.AttributeNS=(/*setter*/XML_NS, "xmlns:mdssi", XML_DIGSIG_NS);
-            Document doc = parentNode.OwnerDocument;
-
-            foreach (String sourceId in sourceIds) {
-                RelationshipReferenceDocument relRef = RelationshipReferenceDocument.Factory.NewInstance();
-                relRef.AddNewRelationshipReference().SourceId = (/*setter*/sourceId);
-                Node n = relRef.RelationshipReference.DomNode;
-                n = doc.ImportNode(n, true);
-                parentNode.AppendChild(n);
-            }
-        }
-
-        public AlgorithmParameterSpec GetParameterSpec() {
-            LOG.Log(POILogger.DEBUG, "getParameterSpec");
-            return null;
-        }
-
-        public Data transform(Data data, XMLCryptoContext context) {
-            LOG.Log(POILogger.DEBUG, "transform(data,context)");
-            LOG.Log(POILogger.DEBUG, "data java type: " + data.Class.Name);
-            OctetStreamData octetStreamData = (OctetStreamData)data;
-            LOG.Log(POILogger.DEBUG, "URI: " + octetStreamData.URI);
-            InputStream octetStream = octetStreamData.OctetStream;
-
-            RelationshipsDocument relDoc;
-            try {
-                relDoc = RelationshipsDocument.Factory.Parse(octetStream);
-            } catch (Exception e) {
-                throw new TransformException(e.Message, e);
-            }
-            LOG.Log(POILogger.DEBUG, "relationships document", relDoc);
-
-            CTRelationships rels = relDoc.Relationships;
-            List<CTRelationship> relList = rels.RelationshipList;
-            Iterator<CTRelationship> relIter = rels.RelationshipList.Iterator();
-            while (relIter.HasNext()) {
-                CTRelationship rel = relIter.Next();
-                /*
-                 * See: ISO/IEC 29500-2:2008(E) - 13.2.4.24 Relationships Transform
-                 * Algorithm.
-                 */
-                if (!this.sourceIds.Contains(rel.Id)) {
-                    LOG.Log(POILogger.DEBUG, "removing element: " + rel.Id);
-                    relIter.Remove();
-                } else {
-                    if (!rel.IsSetTargetMode()) {
-                        rel.TargetMode = (/*setter*/STTargetMode.INTERNAL);
+        public static XmlDocument Transform(XmlDocument src, ICollection<String> sourceIds, ICollection<String> sourceTypes)
+        {
+            SortedDictionary<String, XmlElement> selected = new SortedDictionary<String, XmlElement>(StringComparer.Ordinal);
+            XmlElement srcRoot = src.DocumentElement;
+            if(srcRoot != null)
+            {
+                foreach(XmlNode node in srcRoot.ChildNodes)
+                {
+                    if(!(node is XmlElement el) || el.LocalName != "Relationship" || el.NamespaceURI != PackageNamespaces.RELATIONSHIPS)
+                    {
+                        continue;
+                    }
+                    String id = el.GetAttribute("Id");
+                    if(sourceIds.Contains(id) || (sourceTypes != null && sourceTypes.Contains(el.GetAttribute("Type"))))
+                    {
+                        selected[id] = el;
                     }
                 }
             }
 
-            // TODO: remove non element nodes ???
-            LOG.Log(POILogger.DEBUG, "# Relationship elements", relList.Size());
-
-            //XmlSort.Sort(rels, new Comparator<XmlCursor>(){
-            //    public int Compare(XmlCursor c1, XmlCursor c2) {
-            //        String id1 = ((CTRelationship)c1.Object).Id;
-            //        String id2 = ((CTRelationship)c2.Object).Id;
-            //        return id1.CompareTo(id2);
-            //    }
-            //});
-
-            try {
-                MemoryStream bos = new MemoryStream();
-                XmlOptions xo = new XmlOptions();
-                xo.SaveNoXmlDecl;
-                relDoc.Save(bos, xo);
-                return new OctetStreamData(new MemoryStream(bos.ToByteArray()));
-            } catch (IOException e) {
-                throw new TransformException(e.Message, e);
+            XmlDocument result = new XmlDocument { PreserveWhitespace = true, XmlResolver = null };
+            XmlElement root = result.CreateElement("Relationships", PackageNamespaces.RELATIONSHIPS);
+            root.SetAttribute("xmlns", PackageNamespaces.RELATIONSHIPS);
+            result.AppendChild(root);
+            foreach(XmlElement el in selected.Values)
+            {
+                XmlElement rel = result.CreateElement("Relationship", PackageNamespaces.RELATIONSHIPS);
+                foreach(String name in KEPT_ATTRIBUTES)
+                {
+                    if(el.HasAttribute(name))
+                    {
+                        rel.SetAttribute(name, el.GetAttribute(name));
+                    }
+                }
+                if(!rel.HasAttribute("TargetMode"))
+                {
+                    rel.SetAttribute("TargetMode", "Internal");
+                }
+                root.AppendChild(rel);
             }
-        }
-
-        public Data transform(Data data, XMLCryptoContext context, OutputStream os) {
-            //LOG.Log(POILogger.DEBUG, "transform(data,context,os)");
-            return null;
-        }
-
-        public bool IsFeatureSupported(String feature) {
-            //LOG.Log(POILogger.DEBUG, "isFeatureSupported(feature)");
-            return false;
+            return result;
         }
     }
-
 }
