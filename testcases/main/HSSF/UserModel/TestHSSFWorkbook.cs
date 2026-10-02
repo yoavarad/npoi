@@ -1490,6 +1490,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(0, list.Count);
             HSSFWorkbook rt = HSSFTestDataSamples.WriteOutAndReadBack(wb);
             ClassicAssert.AreEqual(0, rt.NumberOfSheets);
+            rt.Close();
             wb.Close();
         }
 
@@ -1587,6 +1588,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook rt = HSSFTestDataSamples.WriteOutAndReadBack(wb);
             Assert.AreEqual(1, rt.NumberOfSheets);
             Assert.AreEqual("A", rt.GetSheetAt(0).SheetName);
+            rt.Close();
             wb[0] = wb[0]; // same-instance set is a no-op
             other.Close();
         }
