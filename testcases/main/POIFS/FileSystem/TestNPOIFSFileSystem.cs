@@ -130,7 +130,7 @@ namespace TestCases.POIFS.FileSystem
             {
                 Assert.IsNotNull(fs.Root);
                 // Mutation of caller's array is visible => no copy was made
-                Assert.AreSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource)fs.Data).GetBackingArray());
+                Assert.AreSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource) fs.Data).GetBackingArray());
             }
         }
 
@@ -141,7 +141,7 @@ namespace TestCases.POIFS.FileSystem
             using(NPOIFSFileSystem fs = new NPOIFSFileSystem(new MemoryStream(data, 0, data.Length, false, true)))
             {
                 Assert.IsNotNull(fs.Root);
-                Assert.AreSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource)fs.Data).GetBackingArray());
+                Assert.AreSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource) fs.Data).GetBackingArray());
             }
         }
 
@@ -152,7 +152,7 @@ namespace TestCases.POIFS.FileSystem
             using(NPOIFSFileSystem fs = new NPOIFSFileSystem(new MemoryStream(data)))
             {
                 Assert.IsNotNull(fs.Root);
-                Assert.AreNotSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource)fs.Data).GetBackingArray());
+                Assert.AreNotSame(data, ((NPOI.POIFS.NIO.ByteArrayBackedDataSource) fs.Data).GetBackingArray());
             }
         }
 

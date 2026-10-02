@@ -274,7 +274,7 @@ namespace NPOI.POIFS.FileSystem
             BlockAllocationTableReader.SanityCheckBlockCount(_header.BATCount);
 
             long maxSize = BATBlock.CalculateMaximumSize(_header);
-            _data = new ByteArrayBackedDataSource(data, (int)Math.Min(data.Length, maxSize));
+            _data = new ByteArrayBackedDataSource(data, (int) Math.Min(data.Length, maxSize));
 
             ReadCoreContents();
         }
