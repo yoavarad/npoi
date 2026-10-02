@@ -263,7 +263,7 @@ namespace NPOI.HSSF.Record
         }
         /**
          * Retrieves the region at the row/column indicated
-         * @param main FIXME: Document this!
+         * @param main the row or column index of the break
          * @return The Break or null if no break exists at the row/col specified.
          */
         public Break GetBreak(int main)

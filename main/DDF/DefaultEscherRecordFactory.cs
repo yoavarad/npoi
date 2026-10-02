@@ -143,10 +143,10 @@ namespace NPOI.DDF
                 {
                     sid = (short) recordType.GetField("RECORD_ID").GetValue(null);
                 }
-                catch
+                catch(Exception e)
                 {
                     throw new RecordFormatException(
-                            "Unable to determine record types");
+                            "Unable to determine record types", e);
                 }
                 ConstructorInfo ci;
                 try

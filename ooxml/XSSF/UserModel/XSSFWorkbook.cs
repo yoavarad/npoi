@@ -123,7 +123,7 @@ namespace NPOI.XSSF.UserModel
         private readonly IndexedUDFFinder _udfFinder = new IndexedUDFFinder(UDFFinder.GetDefault());
 
         /**
-         * TODO
+         * The workbook calculation chain part, if present.
          */
         private CalculationChain calcChain;
 

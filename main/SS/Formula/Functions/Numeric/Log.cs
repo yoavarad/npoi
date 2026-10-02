@@ -58,7 +58,7 @@ namespace NPOI.SS.Formula.Functions
                 double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                 double logE = Math.Log(d0);
                 double base1 = d1;
-                if(base1 == Math.E)  // TODO:  Double.compare(base, Math.E) == 0, , DOSE THE "==" operator equals Double.compare
+                if(base1 == Math.E)
                 {
                     result = logE;
                 }
