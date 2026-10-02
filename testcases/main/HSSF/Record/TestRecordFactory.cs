@@ -275,5 +275,18 @@ namespace TestCases.HSSF.Record
             Assert.That(ex.Message, Does.StartWith("Expected data size (112)"));
         }
 
+        [Test]
+        public void TestEverySidMapsToRecordClassDeclaringThatSid()
+        {
+            short[] sids = RecordFactory.GetAllKnownRecordSIDs();
+            ClassicAssert.IsNotEmpty(sids);
+            foreach(short sid in sids)
+            {
+                Type t = RecordFactory.GetRecordClass(sid);
+                ClassicAssert.IsNotNull(t, "sid 0x" + sid.ToString("X"));
+                ClassicAssert.AreEqual(sid, (short) t.GetField("sid").GetValue(null), t.Name);
+            }
+        }
+
     }
 }
