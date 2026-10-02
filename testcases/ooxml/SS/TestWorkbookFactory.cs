@@ -32,7 +32,7 @@ namespace TestCases.SS
     using TestCases;
     using TestCases.HSSF;
 
-    [TestFixture]
+    [TestFixture, NonParallelizable] // closing an HSSF workbook rewrites the shared sample file
     public class TestWorkbookFactory
     {
         private readonly String xls = "SampleSS.xls";
