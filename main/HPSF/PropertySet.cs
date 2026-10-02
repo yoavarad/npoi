@@ -205,7 +205,17 @@ namespace NPOI.HPSF
                 throw new NoPropertySetStreamException();
             }
 
-            byte[] buffer = IOUtils.ToByteArray(stream);
+            byte[] buffer;
+            if(stream is DocumentInputStream dis)
+            {
+                // length known: single exact-size allocation, read straight into it
+                buffer = new byte[dis.Available()];
+                dis.ReadFully(buffer);
+            }
+            else
+            {
+                buffer = IOUtils.ToByteArray(stream);
+            }
             Init(buffer, 0, buffer.Length);
         }
 
