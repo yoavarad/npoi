@@ -67,7 +67,7 @@ namespace NPOI.HSSF.Model
                 switch(rec.Sid)
                 {
                     case MergeCellsRecord.sid:
-                        mergeCellRecords.Add((MergeCellsRecord)rec);
+                        mergeCellRecords.Add((MergeCellsRecord) rec);
                         break;
                     case SharedFormulaRecord.sid:
                         if(prevRec is not FormulaRecord fr)
@@ -76,14 +76,14 @@ namespace NPOI.HSSF.Model
                         }
 
                         firstCellRefs.Add(new CellReference(fr.Row, fr.Column));
-                        shFrmRecords.Add((SharedFormulaRecord)rec);
+                        shFrmRecords.Add((SharedFormulaRecord) rec);
 
                         break;
                     case ArrayRecord.sid:
-                        arrayRecords.Add((ArrayRecord)rec);
+                        arrayRecords.Add((ArrayRecord) rec);
                         break;
                     case TableRecord.sid:
-                        tableRecords.Add((TableRecord)rec);
+                        tableRecords.Add((TableRecord) rec);
                         break;
                     default:
                         plainRecords.Add(rec);
