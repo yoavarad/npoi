@@ -281,7 +281,8 @@ namespace NPOI.POIFS.FileSystem
             public StreamBlockByteBufferIterator(NPOIFSStream pStream, int firstBlock)
             {
                 this.pStream = pStream;
-                this.nextBlock = firstBlock;
+                // A chain starting at UNUSED_BLOCK is an empty stream
+                this.nextBlock = firstBlock == POIFSConstants.UNUSED_BLOCK ? POIFSConstants.END_OF_CHAIN : firstBlock;
                 try
                 {
                     this.loopDetector = pStream.blockStore.GetChainLoopDetector();
@@ -351,20 +352,11 @@ namespace NPOI.POIFS.FileSystem
                     return false;
                 }
 
-                try
-                {
+                loopDetector.Claim(nextBlock);
+                current = pStream.blockStore.GetBlockAt(nextBlock);
+                nextBlock = pStream.blockStore.GetNextBlock(nextBlock);
 
-                    loopDetector.Claim(nextBlock);
-                    // byte[] data = blockStore.GetBlockAt(nextBlock);
-                    current = pStream.blockStore.GetBlockAt(nextBlock);
-                    nextBlock = pStream.blockStore.GetNextBlock(nextBlock);
-
-                    return true;
-                }
-                catch(IOException)
-                {
-                    return false;
-                }
+                return true;
             }
 
             public void Dispose()
