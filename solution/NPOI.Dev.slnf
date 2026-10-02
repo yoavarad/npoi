@@ -1,0 +1,14 @@
+{
+  "solution": {
+    "path": "NPOI.Core.Test.sln",
+    "projects": [
+      "..\\main\\NPOI.Core.csproj",
+      "..\\ooxml\\NPOI.OOXML.Core.csproj",
+      "..\\openxml4Net\\NPOI.OpenXml4Net.Core.csproj",
+      "..\\OpenXmlFormats\\NPOI.OpenXmlFormats.Core.csproj",
+      "..\\testcases\\main\\NPOI.TestCases.Core.csproj",
+      "..\\testcases\\ooxml\\NPOI.OOXML.TestCases.Core.csproj",
+      "..\\testcases\\openxml4net\\NPOI.OOXML4Net.TestCases.Core.csproj"
+    ]
+  }
+}
