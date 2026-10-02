@@ -388,5 +388,77 @@ namespace TestCases.POIFS.FileSystem
             Dictionary<string, byte[]> read = RunWithTimeout(() => ReadAll(file));
             ClassicAssert.AreEqual(0, read.Count);
         }
+
+        [Test]
+        public void TestEmptyRootMiniStreamStartingAtUnusedBlock()
+        {
+            byte[] file = BuildFile(("Big", 5000));
+            SetStart(file, "Root Entry", -1);
+
+            Dictionary<string, byte[]> read = RunWithTimeout(() => ReadAll(file));
+            CollectionAssert.AreEqual(Pattern(5000, 7), read["Big"]);
+        }
+
+        [Test]
+        public void TestMiniStreamRandomAccessOnLargeMiniStream()
+        {
+            // 400 docs of 64 bytes each spans many big blocks of mini stream
+            var docs = new List<(string, int)>();
+            for(int i = 0; i < 400; i++)
+                docs.Add(("D" + i, 64));
+            byte[] file = BuildFile(docs.ToArray());
+
+            Dictionary<string, byte[]> read = RunWithTimeout(() => ReadAll(file));
+            ClassicAssert.AreEqual(400, read.Count);
+            CollectionAssert.AreEqual(Pattern(64, 7), read["D399"]);
+        }
+
+        [TestCase("BigSelfLoop")]
+        [TestCase("BigNextBeyondFile")]
+        [TestCase("BigSizeLongerThanChain")]
+        [TestCase("MiniSelfLoop")]
+        [TestCase("MiniNextBeyondMiniStream")]
+        public void TestMalformedLegacyOPOIFS(string kind)
+        {
+            byte[] f = MalformedBase();
+            switch(kind)
+            {
+                case "BigSelfLoop":
+                    SetFat(f, StartOf(f, "Big"), StartOf(f, "Big"));
+                    break;
+                case "BigNextBeyondFile":
+                    SetFat(f, StartOf(f, "Big"), 100);
+                    break;
+                case "BigSizeLongerThanChain":
+                    SetSize(f, "Big", 50000);
+                    break;
+                case "MiniSelfLoop":
+                    SetSbat(f, StartOf(f, "Mini"), StartOf(f, "Mini"));
+                    break;
+                case "MiniNextBeyondMiniStream":
+                    SetSbat(f, StartOf(f, "Mini"), 100);
+                    break;
+            }
+
+            Exception thrown = RunWithTimeout(() =>
+            {
+                try
+                {
+                    OPOIFSFileSystem fs = new OPOIFSFileSystem(new MemoryStream(f));
+                    Walk(fs.Root, "", new Dictionary<string, byte[]>());
+                    return null;
+                }
+                catch(Exception e)
+                {
+                    return e;
+                }
+            });
+
+            // The legacy reader reports malformed chains with IOException, IndexOutOfRangeException
+            // or InvalidOperationException; it must fail cleanly and never hang.
+            ClassicAssert.IsNotNull(thrown, "Malformed input was read without error");
+            ClassicAssert.IsTrue(thrown is IOException || thrown is IndexOutOfRangeException
+                || thrown is InvalidOperationException, thrown.ToString());
+        }
     }
 }

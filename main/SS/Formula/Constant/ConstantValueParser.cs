@@ -34,7 +34,7 @@ namespace NPOI.SS.Formula.Constant
         private const int TYPE_NUMBER = 1;
         private const int TYPE_STRING = 2;
         private const int TYPE_BOOLEAN = 4;
-        private const int TYPE_ERROR_CODE = 16; // TODO - update OOO document to include this value
+        private const int TYPE_ERROR_CODE = 16;
 
         private const int TRUE_ENCODING = 1;
         private const int FALSE_ENCODING = 0;

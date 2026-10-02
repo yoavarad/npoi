@@ -161,7 +161,7 @@ namespace NPOI.HSSF.Util
                             newCell.SetCellType(CellType.Numeric);
                             newCell.SetCellValue(oldCell.NumericCellValue);
                         }
-                        catch
+                        catch(System.InvalidOperationException)
                         {
                             newCell.SetCellType(CellType.String);
                             newCell.SetCellValue(oldCell.ToString());

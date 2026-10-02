@@ -289,7 +289,6 @@ namespace NPOI.SS.Util
                     return NameType.Row;
                 }
             }
-            // TODO
             if(!NAMED_RANGE_NAME_PATTERN.IsMatch(str.ToString()))
             {
                 return NameType.BadCellOrNamedRange;

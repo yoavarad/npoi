@@ -117,7 +117,6 @@ namespace NPOI.SS.Converter
         public static XmlDocument Process(string excelFile)
         {
             HSSFWorkbook workbook = (HSSFWorkbook)WorkbookFactory.Create(excelFile, null);
-            //TODO: HSSFWorkbook workbook = ExcelToHtmlUtils.loadXls(xlsFile);
             try
             {
                 return ExcelToHtmlConverter.Process(workbook);
