@@ -283,7 +283,7 @@ namespace TestCases.HSSF.Record
             foreach(short sid in sids)
             {
                 Type t = RecordFactory.GetRecordClass(sid);
-                ClassicAssert.IsNotNull(t, "sid 0x" + sid.ToString("X"));
+                ClassicAssert.IsNotNull(t, "no record class for sid 0x" + sid.ToString("X"));
                 ClassicAssert.AreEqual(sid, (short) t.GetField("sid").GetValue(null), t.Name);
             }
         }
