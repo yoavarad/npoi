@@ -32,7 +32,7 @@ namespace NPOI.POIFS.Macros
      * @since 3.15-beta2
      */
 
-    public class VBAMacroReader : ICloseable
+    public class VBAMacroReader : ICloseable, IDisposable
     {
         protected static String VBA_PROJECT_OOXML = "vbaProject.bin";
         protected static String VBA_PROJECT_POIFS = "VBA";
@@ -100,8 +100,13 @@ namespace NPOI.POIFS.Macros
 
         public void Close()
         {
-            fs.Close();
+            fs?.Close();
             fs = null;
+        }
+
+        public void Dispose()
+        {
+            Close();
         }
 
         /**

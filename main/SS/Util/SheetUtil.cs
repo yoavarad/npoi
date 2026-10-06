@@ -955,7 +955,7 @@ namespace NPOI.SS.Util
 
         private static SKTypeface IFont2TypefaceImpl(FontCacheKey cacheKey)
         {
-            var fontStyle = new SKFontStyle(
+            using var fontStyle = new SKFontStyle(
                 cacheKey.IsBold ? SKFontStyleWeight.Bold : SKFontStyleWeight.Normal,
                 SKFontStyleWidth.Normal,
                 cacheKey.IsItalic ? SKFontStyleSlant.Italic : SKFontStyleSlant.Upright);
