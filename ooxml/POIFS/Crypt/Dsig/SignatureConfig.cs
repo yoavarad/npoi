@@ -45,7 +45,7 @@ namespace NPOI.POIFS.Crypt.Dsig
         private List<SignatureFacet> signatureFacets = new List<SignatureFacet>();
         private HashAlgorithm digestAlgo = HashAlgorithm.sha1;
         private DateTime executionTime = DateTime.Now;
-        private IPrivateKey key;
+        private System.Security.Cryptography.AsymmetricAlgorithm key;
         private List<X509Certificate> signingCertificateChain;
 
         /**
@@ -138,7 +138,7 @@ namespace NPOI.POIFS.Crypt.Dsig
          */
         protected internal void Init(bool onlyValidation)
         {
-            if(opcPackage == null)
+            if(opcPackage.Value == null)
             {
                 throw new EncryptedDocumentException("opcPackage is null");
             }
@@ -249,9 +249,9 @@ namespace NPOI.POIFS.Crypt.Dsig
         }
 
         /**
-         * @return the private key
+         * @return the private key (currently only RSA keys are supported)
          */
-        public IPrivateKey GetKey()
+        public System.Security.Cryptography.AsymmetricAlgorithm GetKey()
         {
             return key;
         }
@@ -259,7 +259,7 @@ namespace NPOI.POIFS.Crypt.Dsig
         /**
          * @param key the private key
          */
-        public void SetKey(IPrivateKey key)
+        public void SetKey(System.Security.Cryptography.AsymmetricAlgorithm key)
         {
             this.key = key;
         }
@@ -319,18 +319,18 @@ namespace NPOI.POIFS.Crypt.Dsig
         /**
          * @return the dereferencer used for Reference/@URI attributes, defaults to {@link OOXMLURIDereferencer}
          */
-        //public URIDereferencer GetUriDereferencer()
-        //{
-        //    return uriDereferencer;
-        //}
+        public IURIDereferencer GetUriDereferencer()
+        {
+            return uriDereferencer;
+        }
 
         /**
          * @param uriDereferencer the dereferencer used for Reference/@URI attributes
          */
-        //public void SetUriDereferencer(IURIDereferencer uriDereferencer)
-        //{
-        //    this.uriDereferencer = uriDereferencer;
-        //}
+        public void SetUriDereferencer(IURIDereferencer uriDereferencer)
+        {
+            this.uriDereferencer = uriDereferencer;
+        }
 
         /**
          * @return Gives back the human-readable description of what the citizen
@@ -746,6 +746,11 @@ namespace NPOI.POIFS.Crypt.Dsig
             this.namespacePrefixes = namespacePrefixes;
         }
 
+        private static String DigestKey(HashAlgorithm digestAlgo)
+        {
+            return digestAlgo == null ? "" : digestAlgo.ecmaString.ToLowerInvariant().Replace("-", "");
+        }
+
         /**
          * helper method for null/default value handling
          * @param value
@@ -767,7 +772,7 @@ namespace NPOI.POIFS.Crypt.Dsig
             // see https://www.ietf.org/rfc/rfc3110.txt
             // RSA/SHA1 SIG Resource Records
             byte[] result;
-            switch(GetDigestAlgo().jceId)
+            switch(DigestKey(GetDigestAlgo()))
             {
                 case "sha1":
                     result = new byte[]
@@ -822,7 +827,7 @@ namespace NPOI.POIFS.Crypt.Dsig
          */
         public String GetSignatureMethodUri()
         {
-            switch(GetDigestAlgo().jceId)
+            switch(DigestKey(GetDigestAlgo()))
             {
                 case "sha1":
                     return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA1;
@@ -856,7 +861,7 @@ namespace NPOI.POIFS.Crypt.Dsig
          */
         public static String GetDigestMethodUri(HashAlgorithm digestAlgo)
         {
-            switch(digestAlgo.jceId)
+            switch(DigestKey(digestAlgo))
             {
                 case "sha1":
                     return "http://www.w3.org/2000/09/xmldsig#sha1";
