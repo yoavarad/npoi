@@ -1,11 +1,11 @@
 namespace TestCases.HSSF.Util
 {
-    using System.Collections.Generic;
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
+    using System.Collections.Generic;
 
     [TestFixture]
     public class TestHSSFCellUtil
