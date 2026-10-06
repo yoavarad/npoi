@@ -107,6 +107,25 @@ namespace TestCases.HSSF.Record
         }
 
         [Test]
+        public void TestReadStringHighLatin1AndSurrogateAcrossContinues()
+        {
+            // compressed run with high bytes, continue (uncompressed) with unpaired surrogate, continue (compressed)
+            byte[] data = HexRead.ReadFromString(""
+                    + "AA AA "
+                    + "03 00 "
+                    + "E9 FF 80 " // 3 compressed chars: U+00E9 U+00FF U+0080
+                    + "3C 00 "
+                    + "05 00 "
+                    + "01 00 D8 41 00 " // uncompressed: U+D800 (unpaired) U+0041
+                    + "3C 00 "
+                    + "02 00 "
+                    + "00 7A " // compressed: 'z'
+                    );
+            RecordInputStream in1 = TestcaseRecordInputStream.Create(data);
+            String actual = in1.ReadCompressedUnicode(6);
+            ClassicAssert.AreEqual("éÿ\u0080\uD800Az", actual);
+        }
+        [Test]
         public void TestLeftoverDataException()
         {
             // just ensure that the exception is created correctly, even with unknown sids
