@@ -1,6 +1,5 @@
 namespace TestCases.HSSF.Record.Aggregates.Chart
 {
-    using System.Collections.Generic;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates.Chart;
@@ -8,6 +7,7 @@ namespace TestCases.HSSF.Record.Aggregates.Chart
     using NPOI.Util;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
+    using System.Collections.Generic;
 
     [TestFixture]
     public class TestAxisParentAggregate

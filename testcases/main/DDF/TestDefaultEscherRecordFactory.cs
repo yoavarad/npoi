@@ -1,12 +1,12 @@
 namespace TestCases.DDF
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
     using NPOI.DDF;
     using NPOI.Util;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
 
     [TestFixture]
     public class TestDefaultEscherRecordFactory
