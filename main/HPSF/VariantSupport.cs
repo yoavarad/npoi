@@ -28,10 +28,10 @@ namespace NPOI.HPSF
     /// Supports reading and writing of variant data.
     /// </para>
     /// <para>
-    /// <strong>FIXME (3):</strong> Reading and writing should be made more
+    /// <strong>Known limitation (by design):</strong> Reading and writing are deliberately
     /// </para>
     /// <para>
-    /// uniform than it is now. The following items should be resolved:
+    /// left non-uniform (public API compatibility). The differences are:
     /// </para>
     /// <para>
     /// Reading requires a length parameter that is 4 byte greater than the

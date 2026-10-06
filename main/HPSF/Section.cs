@@ -133,7 +133,11 @@ namespace NPOI.HPSF
 
             // some input files have a invalid (padded?) offset, which need to be fixed
             // search for beginning of size field
-            if(src[offFix] == 0)
+            if(offFix < 0 || offFix + 8 > src.Length)
+            {
+                throw new IllegalPropertySetDataException("Section offset " + offFix + " lies outside the stream.");
+            }
+            if(offFix + 16 <= src.Length && src[offFix] == 0)
             {
                 for(int i = 0; i<3 && src[offFix] == 0; i++, offFix++)
                     ;
@@ -155,6 +159,11 @@ namespace NPOI.HPSF
              * Read the number of properties.
              */
             int propertyCount = (int)leis.ReadUInt();
+            if(propertyCount < 0 || propertyCount > (src.Length - _offset) / (2 * LittleEndianConsts.INT_SIZE))
+            {
+                throw new IllegalPropertySetDataException("Property count " + propertyCount
+                    + " does not fit into the section's data.");
+            }
 
             /*
              * Read the properties. The offset is positioned at the first
@@ -190,6 +199,11 @@ namespace NPOI.HPSF
 
                 /* Offset from the section's start. */
                 long off = (int)leis.ReadUInt();
+                if(off < 0 || off >= src.Length - _offset)
+                {
+                    throw new IllegalPropertySetDataException("Property offset " + off
+                        + " lies outside the section data.");
+                }
 
                 offset2Id.Add(off, id);
             }
@@ -215,6 +229,8 @@ namespace NPOI.HPSF
                 Codepage = codepage;
             }
 
+            List<long> sortedOffsets = new List<long>(offset2Id.Keys);
+            sortedOffsets.Sort();
 
             /* Pass 2: Read all properties - including the codepage property,
              * if available. */
@@ -226,7 +242,7 @@ namespace NPOI.HPSF
                 {
                     continue;
                 }
-                int pLen = propLen(offset2Id, off, size);
+                int pLen = propLen(sortedOffsets, off, size);
                 leis.SetReadIndex((int) (this._offset + off));
 
                 if(id == PropertyIDMap.PID_DICTIONARY)
@@ -271,21 +287,15 @@ namespace NPOI.HPSF
         /// <param name="maxSize">the maximum offset/size of the section stream</param>
         /// <return>length of the current property</return>
         private static int propLen(
-            BidirectionalDictionary<long, long> offset2Id,
+            List<long> sortedOffsets,
             long entryOffset,
             long maxSize)
         {
-            long? nextKey = NextKey(offset2Id, entryOffset);
-            long begin = entryOffset;
-            long end = nextKey ?? maxSize;
-            return (int) (end - begin);
-        }
-
-        private static long? NextKey(BidirectionalDictionary<long, long> offset2Id, long entryOffset)
-        {
-            var list = offset2Id.Keys.Where(k => k > entryOffset).ToList();
-            list.Sort();
-            return list.Count == 0 ? null : list.First();
+            // first key strictly greater than entryOffset (binary search, keys are unique)
+            int idx = sortedOffsets.BinarySearch(entryOffset);
+            int next = idx >= 0 ? idx + 1 : ~idx;
+            long end = next < sortedOffsets.Count ? sortedOffsets[next] : maxSize;
+            return (int) (end - entryOffset);
         }
 
         /// <summary>

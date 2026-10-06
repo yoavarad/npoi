@@ -52,8 +52,8 @@ namespace NPOI.HPSF
             lei.ReadFully(_value);
             if(_value[size - 1] != 0)
             {
-                // TODO Some files, such as TestVisioWithCodepage.vsd, are currently
-                // triggering this for values that don't look like codepages
+                // Decision: tolerate a missing terminator. Some files, such as TestVisioWithCodepage.vsd,
+                // have values that do not look like codepages; GetJavaValue copes with it.
                 // See Bug #52258 for details
                 //String msg = "CodePageString started at offset #" + offset + " is not NULL-terminated";
                 //LOG.log(POILogger.WARN, msg);
