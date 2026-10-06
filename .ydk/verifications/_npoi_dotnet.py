@@ -16,13 +16,16 @@ import sys
 import time
 from pathlib import Path
 
-SOLUTION = "solution/NPOI.Core.Test.sln"
+# Slim solution filter: 4 libraries + 3 test projects (no Benchmarks, _build, Pack).
+SOLUTION = "solution/NPOI.Dev.slnf"
 TEST_PROJECTS = [
     "testcases/main/NPOI.TestCases.Core.csproj",
     "testcases/ooxml/NPOI.OOXML.TestCases.Core.csproj",
     "testcases/openxml4net/NPOI.OOXML4Net.TestCases.Core.csproj",
 ]
 TEST_FRAMEWORK = "net10.0"
+# Single-TFM dev switch (Directory.Build.targets). Build and test must pass the same value.
+DEV_TFM_ARG = f"-p:NpoiDevTfm={TEST_FRAMEWORK}"
 
 _DOTNET_SUFFIXES = (".cs", ".csproj", ".sln", ".props", ".targets")
 _DOTNET_NAMES = {"global.json", ".editorconfig", "nuget.config"}
@@ -66,6 +69,23 @@ def changed_files(context: dict) -> list[str] | None:
 def added_files(context: dict) -> list[str] | None:
     """Files newly added on this branch (ydk's changed_files carries no add/modify status)."""
     return _derive_changed(context["project_root"], "A")
+
+
+def owning_project(root: str, rel_file: str) -> str | None:
+    """Nearest ancestor .csproj of a repo-relative file, as a repo-relative posix path."""
+    base = Path(root)
+    for parent in Path(rel_file).parents:
+        found = sorted((base / parent).glob("*.csproj")) if (base / parent).is_dir() else []
+        if found:
+            return found[0].relative_to(base).as_posix()
+    return None
+
+
+def slnf_projects(root: str) -> set[str]:
+    """Repo-relative posix paths of the projects listed in SOLUTION (the slnf)."""
+    data = json.loads((Path(root) / SOLUTION).read_text(encoding="utf-8"))
+    base = (Path(root) / SOLUTION).parent
+    return {(base / p.replace("\\", "/")).resolve().relative_to(Path(root).resolve()).as_posix() for p in data["solution"]["projects"]}
 
 
 def is_dotnet_relevant(files: list[str]) -> bool:
@@ -115,10 +135,10 @@ def require_sdk(name: str, root: str, start: float) -> str:
     return dotnet
 
 
-def run(cmd: list[str], root: str, timeout: int) -> tuple[bool, str]:
+def run(cmd: list[str], root: str, timeout: int, env: dict | None = None) -> tuple[bool, str]:
     try:
         result = subprocess.run(
-            cmd, cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout, check=False
+            cmd, cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout, check=False, env=env
         )
     except subprocess.TimeoutExpired:
         return False, f"Timed out after {timeout}s: {' '.join(cmd[:3])} ..."
