@@ -73,6 +73,8 @@ Upstream Apache POI logs these; NPOI had the log calls commented out, so failure
 | main/Util/POILogFactory.cs:131 | E | leave | Logger bootstrap falls back to null logger (commented). |
 | main/Util/SystemOutLogger.cs:97 | B | leave | Bad level config falls back to DEBUG. |
 
+> Update (task #123): every row marked narrow/log/rethrow below, plus the deferred HSSF/DDF rows above, is now resolved. SheetDataWriter.Close() propagates errors.
+
 ## Remaining broad catches (non-priority areas)
 
 Pattern: E = `catch(Exception)`, B = bare `catch`, E when = filtered. Items marked narrow/log/rethrow are deferred to #69.

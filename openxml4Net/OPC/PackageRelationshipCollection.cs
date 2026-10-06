@@ -407,7 +407,7 @@ namespace NPOI.OpenXml4Net.OPC
             catch(Exception e)
             {
                 logger.Log(POILogger.ERROR, e);
-                throw new InvalidFormatException(e.Message);
+                throw new InvalidFormatException(e.Message, e);
             }
         }
 

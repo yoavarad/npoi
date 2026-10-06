@@ -42,9 +42,9 @@ namespace NPOI.POIFS.Crypt.Agile
                     throw new NullReferenceException("keyData not Set");
                 }
             }
-            catch
+            catch(NullReferenceException e)
             {
-                throw new EncryptedDocumentException("Unable to parse keyData");
+                throw new EncryptedDocumentException("Unable to parse keyData", e);
             }
 
             KeySize = ((int) keyData.keyBits);

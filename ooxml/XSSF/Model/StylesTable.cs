@@ -215,7 +215,7 @@ namespace NPOI.XSSF.Model
                 return XSSFBuiltinTableStyle.GetStyle(
                     (XSSFBuiltinTableStyleEnum) Enum.Parse(typeof(XSSFBuiltinTableStyleEnum), name));
             }
-            catch
+            catch(Exception e) when(e is ArgumentException || e is OverflowException)
             {
                 return GetExplicitTableStyle(name);
             }

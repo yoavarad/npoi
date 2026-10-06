@@ -773,7 +773,7 @@ namespace NPOI.XSSF.UserModel
                     return true;
                 }
             }
-            catch
+            catch(Exception e) when(e is NullReferenceException || e is IndexOutOfRangeException || e is ArgumentOutOfRangeException)
             {
                 return false;
             }

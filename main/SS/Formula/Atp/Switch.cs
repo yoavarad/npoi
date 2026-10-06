@@ -24,7 +24,7 @@ namespace NPOI.SS.Formula.Atp
             {
                 expression = OperandResolver.GetSingleValue(args[0], ec.RowIndex, ec.ColumnIndex);
             }
-            catch
+            catch(EvaluationException)
             {
                 return ErrorEval.NA;
             }

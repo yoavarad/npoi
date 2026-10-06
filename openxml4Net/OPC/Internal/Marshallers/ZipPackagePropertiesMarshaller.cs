@@ -1,4 +1,5 @@
 using ICSharpCode.SharpZipLib.Zip;
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,8 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
      */
     public class ZipPackagePropertiesMarshaller : PackagePropertiesMarshaller
     {
+        private static readonly POILogger logger = POILogFactory.GetLogger(typeof(ZipPackagePropertiesMarshaller));
+
         public override bool Marshall(PackagePart part, Stream out1)
         {
             if(out1 is not ZipOutputStream zos)
@@ -40,8 +43,9 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             {
                 throw new OpenXml4NetException(e.Message, e);
             }
-            catch
+            catch(Exception e)
             {
+                logger.Log(POILogger.WARN, "Can't marshall package properties part", e);
                 return false;
             }
             return true;

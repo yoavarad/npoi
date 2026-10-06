@@ -72,6 +72,7 @@ namespace NPOI.SS.Format
      */
     public class CellFormat
     {
+        private static readonly POILogger logger = POILogFactory.GetLogger(typeof(CellFormat));
         private CultureInfo locale;
         private readonly String format;
         private readonly CellFormatPart posNumFmt;
@@ -190,10 +191,10 @@ namespace NPOI.SS.Format
 
                     parts.Add(new CellFormatPart(locale, valueDesc));
                 }
-                catch
+                catch(Exception e)
                 {
-                    //CellFormatter.logger.Log(Level.WARNING,
-                    //        "Invalid format: " + CellFormatter.Quote(m.Group()), e);
+                    logger.Log(POILogger.WARN,
+                            "Invalid format: " + "\"" + m.Groups[0].Value + "\"", e);
                     parts.Add(null);
                 }
             }

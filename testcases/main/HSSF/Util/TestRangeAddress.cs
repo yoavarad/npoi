@@ -46,5 +46,18 @@ namespace TestCases.HSSF.Util
             ClassicAssert.AreEqual("Sheet2!A1:C3", ra.Address);
 
         }
+
+        [Test]
+        public void TestGetYPositionOutOfRangeFallsBackToWrongPos()
+        {
+            RangeAddress ra = new RangeAddress("Sheet1!A1");
+            ClassicAssert.AreEqual(5, ra.GetYPosition("A5"));
+            // above MAX_HEIGHT
+            ClassicAssert.AreEqual(-1, ra.GetYPosition("A70000"));
+            // int.Parse overflow
+            ClassicAssert.AreEqual(-1, ra.GetYPosition("A99999999999999"));
+            // no digits: int.Parse format failure
+            ClassicAssert.AreEqual(-1, ra.GetYPosition("ABC"));
+        }
     }
 }

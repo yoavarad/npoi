@@ -47,7 +47,7 @@ namespace NPOI.SS.Formula.Functions
                 String formattedStr = Formatter.FormatRawCellContents(s0, -1, s1);
                 return new StringEval(formattedStr);
             }
-            catch
+            catch(Exception e) when(e is FormatException || e is ArgumentException || e is InvalidOperationException || e is IndexOutOfRangeException || e is OverflowException)
             {
                 return ErrorEval.VALUE_INVALID;
             }

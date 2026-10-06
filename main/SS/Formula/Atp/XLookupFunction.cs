@@ -69,7 +69,7 @@ namespace NPOI.SS.Formula.Atp
                 {
                     return e.GetErrorEval();
                 }
-                catch(Exception)
+                catch(Exception e) when(e is ArgumentException || e is InvalidCastException)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
@@ -87,7 +87,7 @@ namespace NPOI.SS.Formula.Atp
                 {
                     return e.GetErrorEval();
                 }
-                catch
+                catch(ArgumentException)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }

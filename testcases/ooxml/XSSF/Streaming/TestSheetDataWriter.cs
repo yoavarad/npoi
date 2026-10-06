@@ -118,5 +118,72 @@ namespace TestCases.XSSF.Streaming
                 IOUtils.CloseQuietly(writer);
             }
         }
+
+        private class ThrowingWriteStream : Stream
+        {
+            private readonly Stream inner;
+            public ThrowingWriteStream(Stream inner) { this.inner = inner; }
+            public override bool CanRead => false;
+            public override bool CanSeek => false;
+            public override bool CanWrite => true;
+            public override long Length => throw new NotSupportedException();
+            public override long Position { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+            public override void Flush() { }
+            public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+            public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+            public override void SetLength(long value) => throw new NotSupportedException();
+            public override void Write(byte[] buffer, int offset, int count) => throw new IOException("disk full");
+            protected override void Dispose(bool disposing)
+            {
+                if(disposing)
+                    inner.Dispose();
+                base.Dispose(disposing);
+            }
+        }
+
+        private class FailingFlushWriter : SheetDataWriter
+        {
+            protected override Stream DecorateOutputStream(Stream fos)
+            {
+                return new ThrowingWriteStream(fos);
+            }
+        }
+
+        [Test]
+        public void TestCloseSurfacesFlushError()
+        {
+            FailingFlushWriter writer = new FailingFlushWriter();
+            string path = writer.TemporaryFilePath();
+            try
+            {
+                writer.OutputQuotedString("abc");
+                Assert.Throws<IOException>(() => writer.Close());
+            }
+            finally
+            {
+                try { writer.Close(); } catch(IOException) { }
+                try { File.Delete(path); } catch(IOException) { }
+            }
+        }
+
+        [Test]
+        public void TestDisposeReturnsFalseWhenTempFileCannotBeDeleted()
+        {
+            Assume.That(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                System.Runtime.InteropServices.OSPlatform.Windows));
+            SheetDataWriter writer = new SheetDataWriter();
+            string path = writer.TemporaryFilePath();
+            // exclusive handle without FileShare.Delete blocks deletion
+            FileStream blocker = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            try
+            {
+                ClassicAssert.IsFalse(writer.Dispose());
+            }
+            finally
+            {
+                blocker.Dispose();
+                File.Delete(path);
+            }
+        }
     }
 }

@@ -49,14 +49,7 @@ namespace NPOI.SS.Formula.Functions
 
         private static ValueEval GetSumRange(ValueEval[] args)
         {
-            try
-            {
-                return args[2];
-            }
-            catch
-            {
-                return args[0];
-            }
+            return args.Length > 2 ? args[2] : args[0];
         }
     }
 

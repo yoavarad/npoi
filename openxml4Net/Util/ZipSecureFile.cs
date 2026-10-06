@@ -12,6 +12,7 @@ namespace NPOI.OpenXml4Net.Util
 {
     public class ZipSecureFile : ZipFile
     {
+        private static readonly POILogger logger = POILogFactory.GetLogger(typeof(ZipSecureFile));
         private static double MIN_INFLATE_RATIO = 0.01d;
         private static long MAX_ENTRY_SIZE = 0xFFFFFFFFL;
 
@@ -166,7 +167,7 @@ namespace NPOI.OpenXml4Net.Util
                 }
                 catch(Exception ex)
                 {
-                    //logger.Log(POILogger.WARN, "SecurityManager doesn't allow manipulation via reflection for zipbomb detection - continue with original input stream", ex);
+                    logger.Log(POILogger.WARN, "SecurityManager doesn't allow manipulation via reflection for zipbomb detection - continue with original input stream", ex);
                     newInner = null;
                 }
             }

@@ -148,7 +148,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 Array.Copy(evalArgs, 0, args, 0, maxN);
             }
-            catch
+            catch(Exception e) when(e is InvalidCastException || e is ArrayTypeMismatchException)
             {
                 // one of the other args was not an AreaRef
                 return ErrorEval.VALUE_INVALID;

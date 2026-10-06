@@ -121,11 +121,10 @@ namespace NPOI.XSSF.Streaming
             try
             {
                 _out.Dispose();
-                OutputStream.Dispose();
             }
-            catch
+            finally
             {
-                // best-effort close kept for now; upstream propagates close errors (tracked in #69, see IDisposable audit #39)
+                OutputStream.Dispose();
             }
         }
 
@@ -515,8 +514,9 @@ namespace NPOI.XSSF.Streaming
                     ret = !File.Exists(TemporaryFileInfo.FullName);
                     TemporaryFileInfo.Refresh();
                 }
-                catch(Exception)
+                catch(Exception e) when(e is IOException || e is UnauthorizedAccessException)
                 {
+                    logger.Log(POILogger.WARN, "Can't delete temporary file: " + TemporaryFileInfo, e);
                     ret = false;
                 }
             }
