@@ -61,6 +61,20 @@ public class ReadFromBytesBenchmark
         return Walk(fs.Root);
     }
 
+    [Benchmark]
+    public int NPOIFSFileSystem_OpenAndWalk_ByteArray()
+    {
+        using var fs = new NPOIFSFileSystem(Xls);
+        return Walk(fs.Root);
+    }
+
+    [Benchmark]
+    public int NPOIFSFileSystem_OpenAndWalk_ExposableStream()
+    {
+        using var fs = new NPOIFSFileSystem(new MemoryStream(Xls, 0, Xls.Length, false, true));
+        return Walk(fs.Root);
+    }
+
     private static int Walk(DirectoryNode dir)
     {
         int n = 0;
