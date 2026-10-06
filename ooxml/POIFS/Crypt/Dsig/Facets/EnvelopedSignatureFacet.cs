@@ -43,16 +43,14 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
             , List<Reference> references
             , List<XmlNode> objects)
         {
-            //List<Transform> transforms = new List<Transform>();
-            //Transform envelopedTransform = newTransform(CanonicalizationMethod.ENVELOPED);
-            //transforms.Add(envelopedTransform);
-            //Transform exclusiveTransform = newTransform(CanonicalizationMethod.EXCLUSIVE);
-            //transforms.Add(exclusiveTransform);
+            List<Transform> transforms = new List<Transform>();
+            Transform envelopedTransform = newTransform(DsigUtil.ENVELOPED);
+            transforms.Add(envelopedTransform);
+            Transform exclusiveTransform = newTransform(DsigUtil.EXC_C14N);
+            transforms.Add(exclusiveTransform);
 
-            //Reference reference = newReference("", transforms, null, null, null);
-            //references.Add(reference);
-            throw new NotImplementedException();
+            Reference reference = newReference("", transforms, null, null, null);
+            references.Add(reference);
         }
     }
-
 }

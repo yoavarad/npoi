@@ -799,7 +799,15 @@ namespace NPOI.HSSF.UserModel
         {
             if(_sortedCellCache == null)
             {
-                _sortedCellCache = cells.OrderBy(kv => kv.Key).Select(kv => kv.Value).ToList();
+                int[] keys = new int[cells.Count];
+                cells.Keys.CopyTo(keys, 0);
+                Array.Sort(keys);
+                List<ICell> sorted = new List<ICell>(keys.Length);
+                foreach(int key in keys)
+                {
+                    sorted.Add(cells[key]);
+                }
+                _sortedCellCache = sorted;
             }
             return _sortedCellCache;
         }

@@ -1,5 +1,5 @@
 name: dotnet-build
-description: Build solution/NPOI.Core.Test.sln (skipped when no dotnet inputs changed)
+description: Build solution/NPOI.Dev.slnf, single net10.0 TFM (skipped when no dotnet inputs changed)
 trigger: git:pre-push
 parallel: false
 timeout: 900

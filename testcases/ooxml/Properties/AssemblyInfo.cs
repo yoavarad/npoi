@@ -35,3 +35,7 @@ using System.Security;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 //[assembly: AllowPartiallyTrustedCallers]
+
+// Run test fixtures in parallel; individual tests inside a fixture stay sequential.
+[assembly: NUnit.Framework.Parallelizable(NUnit.Framework.ParallelScope.Fixtures)]
+[assembly: NUnit.Framework.LevelOfParallelism(4)]

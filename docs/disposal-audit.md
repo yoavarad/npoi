@@ -52,3 +52,44 @@ Deferred items are marked; everything else is harmless because it only wraps in-
 | `POIDocument` (base of `HSSFWorkbook`) | `HSSFWorkbook` is already `IDisposable` through `IWorkbook`; `Dispose()` calls `Close()`, which closes the `NPOIFSFileSystem` it was opened from |
 | `Util/HexRead.cs:46`, `POIFS/FileSystem/POIFSFileSystem.cs:143`, `POIFS/Dev/*`, `DocumentFactoryHelper.cs:95`, `Util/TempFile.cs:37` | Closed with `try/finally` or `using` |
 | `POIFS/Crypt/Standard/StandardEncryptor.cs:119`, `POIFS/Crypt/ChunkedCipherOutputStream.cs:70` | **Deferred** to task #41 (crypto) |
+
+# Follow-up audit (task #71)
+
+Same method as above (CA2000 and CA1001 enabled locally on net10.0 only; no analyzer config change committed), run over `openxml4Net/` and `ooxml/` (`OpenXmlFormats/` had no findings).
+
+## Fixed in #71
+
+| Site | Problem | Fix | Test |
+|---|---|---|---|
+| `POIFS/Macros/VBAMacroReader.cs` | `Close()` only, no `IDisposable`; `Close()` threw on a second call | Implements `IDisposable`; `Close()` is null-safe and idempotent | `TestVBAMacroReader.UsingDisposesReader`, `DisposeIsIdempotent` |
+| `SS/Util/SheetUtil.cs` `IFont2TypefaceImpl` | `SKFontStyle` (native SkiaSharp object) never disposed | `using var` (`SKTypeface.FromFamilyName` does not take ownership) | Existing SheetUtil tests |
+| `POIFS/Crypt/Standard/StandardEncryptor.cs` `StandardCipherOutputStream` | The temp `FileStream` was closed only if `Close()` ran after the POIFS write event. The event fires later (on filesystem write), so the handle and temp file stayed until GC. It also leaked if finalizing the cipher threw | Close + delete the temp file at the end of `ProcessPOIFSWriterEvent`; close + delete on failure in `Close()` | Existing crypto suite |
+| `testcases/main/TestFileHandleRelease.cs` | `File.Delete` only fails on Windows while a handle is open | `AssertDeletable` first opens with `FileShare.None`, which fails on every platform | (the test itself) |
+
+## Decision: CA1001 on `NPOIFSStream`
+
+Not made `IDisposable`. Its only disposable field `outStream` is a `MemoryStream` subclass (`StreamBlockByteBuffer`), which owns no unmanaged resource, so `Dispose` would be a no-op. The class is public, so adding the interface would change the API for no gain in releasing handles.
+
+## Crypto FileStream sites (coordinated with #41, now closed)
+
+| Site | Verdict |
+|---|---|
+| `ChunkedCipherOutputStream.cs:70` | `out1` is closed in `Close()` before the checksum and again by `base.Close()`; fine |
+| `ChunkedCipherOutputStream.cs:363` | `using` |
+| `StandardEncryptor.cs:119` | **Fixed** (above) |
+| `CryptoAPIDecryptor.cs:245`, `CryptoAPIEncryptor.cs:111` | Harmless: in-memory streams |
+
+## openxml4Net / ooxml findings (CA2000, 11 + 18 unique)
+
+| Finding | Verdict |
+|---|---|
+| `openxml4Net/OPC/Internal/ZipHelper.cs:249` `File.OpenRead` passed to `ZipFile` | Harmless: `ZipFile` owns the stream by default and closes it with `Close()` |
+| `OPC/ZipPackage.cs:534`, `OPC/Internal/ZipContentTypeManager.cs:39` `ZipOutputStream` over the caller's stream | Harmless: the caller owns the output stream; disposing the zip would close it early |
+| `OPC/ZipHelper.cs:54`, `OPC/OPCPackage.cs:712,1183` relationship collections | Harmless: in-memory collections |
+| `OPC/StreamHelper.cs:39`, `Util/DocumentHelper.cs:41,58`, `Util/XmlHelper.cs:256,466` `XmlWriter` / `XmlReader` / `StringWriter` | Harmless: wrap the caller's stream or memory; disposing would close the caller's stream |
+| `ooxml/XSSF/Streaming/SheetDataWriter.cs:84,144` `FileStream` | Closed on the failure path; on success ownership passes to the returned stream, closed by `SheetDataWriter.Close()` |
+| `ooxml/SS/UserModel/WorkbookFactory.cs:90,134,208,216` `POIFSFileSystem` / `OPCPackage` | Ownership passes to the returned workbook, which closes them |
+| `ooxml/XSSF/EventUserModel/*`, `XSSFEventBasedExcelExtractor.cs:222`, `SharedStringsTable.cs:719`, `SXSSFWorkbook.cs:511,512`, `XSSFBuiltinTableStyle.cs:345`, `XSSFVMLDrawing.cs:114`, `XSSFObjectData.cs:189`, `XSSFWorkbook.cs:2635,2640`, `XWPFRun.cs:1487,1491` readers/writers over caller or in-memory streams | Harmless: wrapping caller-owned or in-memory streams |
+
+The `VBAMacroReader` and `SKFontStyle` rows in the first audit are no longer deferred.
+- Known limitation: StandardCipherOutputStream is one-shot (second POIFS write of same filesystem fails); handle leaks if never written.

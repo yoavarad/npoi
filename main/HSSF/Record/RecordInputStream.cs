@@ -27,6 +27,7 @@ namespace NPOI.HSSF.Record
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Text;
 
 
     [Serializable]
@@ -431,6 +432,41 @@ namespace NPOI.HSSF.Record
         {
             return ReadStringCommon(requestedLength, true);
         }
+        /// <summary>
+        /// Bulk-reads one run (within the current record) of chars: Latin-1 when compressed, UTF-16LE otherwise.
+        /// </summary>
+        private void ReadStringRun(char[] dest, int destOffset, int charCount, bool isCompressedEncoding)
+        {
+            if(charCount == 0)
+            {
+                return;
+            }
+            int byteCount = isCompressedEncoding ? charCount : charCount * LittleEndianConsts.SHORT_SIZE;
+            byte[] bytes = _stringScratch;
+            if(bytes == null || bytes.Length < byteCount)
+            {
+                bytes = _stringScratch = new byte[Math.Max(byteCount, 256)];
+            }
+            ReadFully(bytes, 0, byteCount);
+            if(isCompressedEncoding)
+            {
+                Latin1.GetChars(bytes, 0, byteCount, dest, destOffset);
+            }
+            else if(BitConverter.IsLittleEndian)
+            {
+                // raw copy (not Encoding.Unicode) so unpaired surrogates survive unchanged
+                Buffer.BlockCopy(bytes, 0, dest, destOffset * sizeof(char), byteCount);
+            }
+            else
+            {
+                for(int i = 0; i < charCount; i++)
+                {
+                    dest[destOffset + i] = (char) (bytes[2 * i] | (bytes[2 * i + 1] << 8));
+                }
+            }
+        }
+        private byte[] _stringScratch;
+        private static readonly Encoding Latin1 = Encoding.GetEncoding(28591);
         private String ReadStringCommon(int requestedLength, bool pIsCompressedEncoding)
         {
             // Sanity check to detect garbage string lengths
@@ -444,42 +480,14 @@ namespace NPOI.HSSF.Record
             while(true)
             {
                 int availableChars = isCompressedEncoding ? Remaining : Remaining / LittleEndianConsts.SHORT_SIZE;
-                if(requestedLength - curLen <= availableChars)
+                int runChars = Math.Min(requestedLength - curLen, availableChars);
+                ReadStringRun(buf, curLen, runChars, isCompressedEncoding);
+                curLen += runChars;
+                if(curLen == requestedLength)
                 {
-                    // enough space in current record, so just read it out
-                    while(curLen < requestedLength)
-                    {
-                        char ch;
-                        if(isCompressedEncoding)
-                        {
-                            ch = (char) ReadUByte();
-                        }
-                        else
-                        {
-                            ch = (char) ReadShort();
-                        }
-                        buf[curLen] = ch;
-                        curLen++;
-                    }
-                    return new String(buf);// Encoding.UTF8.GetChars(buf,0,buf.Length);
+                    return new String(buf);
                 }
                 // else string has been spilled into next continue record
-                // so read what's left of the current record
-                while(availableChars > 0)
-                {
-                    char ch;
-                    if(isCompressedEncoding)
-                    {
-                        ch = (char) ReadUByte();
-                    }
-                    else
-                    {
-                        ch = (char) ReadShort();
-                    }
-                    buf[curLen] = ch;
-                    curLen++;
-                    availableChars--;
-                }
                 if(!IsContinueNext)
                 {
                     throw new RecordFormatException("Expected to find a ContinueRecord in order to read remaining "

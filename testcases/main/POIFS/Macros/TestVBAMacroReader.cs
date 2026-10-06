@@ -83,6 +83,28 @@ namespace TestCases.POIFS.Macros
             expectedMacroContents = _expectedMacroContents;
         }
 
+        [Test]
+        public void UsingDisposesReader()
+        {
+            FileInfo file = POIDataSamples.GetSpreadSheetInstance().GetFileInfo("SimpleMacro.xls");
+            using(VBAMacroReader reader = new VBAMacroReader(file))
+            {
+                ClassicAssert.IsNotEmpty(reader.ReadMacros());
+            }
+            using(new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+            }
+        }
+
+        [Test]
+        public void DisposeIsIdempotent()
+        {
+            FileInfo file = POIDataSamples.GetSpreadSheetInstance().GetFileInfo("SimpleMacro.xls");
+            VBAMacroReader reader = new VBAMacroReader(file);
+            reader.Dispose();
+            reader.Dispose();
+        }
+
         //////////////////////////////// From Stream /////////////////////////////
         [Test]
         public void HSSFfromStream()

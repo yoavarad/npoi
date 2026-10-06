@@ -41,6 +41,12 @@ namespace NPOI.POIFS.NIO
             : this(data, data.Length)
         {
         }
+        /// <summary>Returns the underlying array (not a copy).</summary>
+        public byte[] GetBackingArray()
+        {
+            return buffer;
+        }
+
         public override ByteBuffer Read(int length, long position)
         {
             if(position >= size)
