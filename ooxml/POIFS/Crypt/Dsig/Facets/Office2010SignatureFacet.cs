@@ -42,38 +42,31 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
 
         public override void postSign(XmlDocument document)
         {
-            //// check for XAdES-BES
-            //XmlNodeList nl = document.GetElementsByTagNameNS(XADES_132_NS, "QualifyingProperties");
-            //if (nl.Length != 1)
-            //{
-            //    throw new MarshalException("no XAdES-BES extension present");
-            //}
+            // check for XAdES-BES
+            XmlNodeList nl = document.GetElementsByTagName("QualifyingProperties", XADES_132_NS);
+            if(nl.Count != 1)
+            {
+                throw new EncryptedDocumentException("no XAdES-BES extension present");
+            }
+            XmlElement qualProps = (XmlElement)nl.Item(0);
 
-            //QualifyingPropertiesType qualProps;
-            //try
-            //{
-            //    qualProps = QualifyingPropertiesType.Factory.Parse(nl.Item(0));
-            //}
-            //catch (XmlException e)
-            //{
-            //    throw new MarshalException(e);
-            //}
+            // create basic XML Container structure
+            XmlElement unsignedProps = GetOrAddChild(qualProps, "UnsignedProperties");
+            GetOrAddChild(unsignedProps, "UnsignedSignatureProperties");
+        }
 
-            //// create basic XML Container structure
-            //UnsignedPropertiesType unsignedProps = qualProps.UnsignedProperties;
-            //if (unsignedProps == null)
-            //{
-            //    unsignedProps = qualProps.AddNewUnsignedProperties();
-            //}
-            //UnsignedSignaturePropertiesType unsignedSigProps = unsignedProps.UnsignedSignatureProperties;
-            //if (unsignedSigProps == null)
-            //{
-            //    unsignedSigProps = unsignedProps.AddNewUnsignedSignatureProperties();
-            //}
-
-            //Node n = document.ImportNode(qualProps.DomNode.FirstChild, true);
-            //nl.Item(0).ParentNode.ReplaceChild(n, nl.Item(0));
-            throw new NotImplementedException();
+        private static XmlElement GetOrAddChild(XmlElement parent, String localName)
+        {
+            foreach(XmlNode child in parent.ChildNodes)
+            {
+                if(child is XmlElement el && el.LocalName == localName && el.NamespaceURI == XADES_132_NS)
+                {
+                    return el;
+                }
+            }
+            XmlElement newChild = parent.OwnerDocument.CreateElement(parent.Prefix, localName, XADES_132_NS);
+            parent.AppendChild(newChild);
+            return newChild;
         }
     }
 }

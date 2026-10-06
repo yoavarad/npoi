@@ -31,6 +31,10 @@ namespace TestCases
 
         private static void AssertDeletable(FileInfo file)
         {
+            // FileShare.None fails on any platform while a handle is still open (File.Delete only fails on Windows)
+            using(new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
+            {
+            }
             File.Delete(file.FullName);
             ClassicAssert.IsFalse(File.Exists(file.FullName), "file still exists: " + file.FullName);
         }

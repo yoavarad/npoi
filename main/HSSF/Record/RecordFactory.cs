@@ -33,8 +33,8 @@ namespace NPOI.HSSF.Record
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Linq.Expressions;
     using System.Reflection;
-    using System.Runtime.ExceptionServices;
 
     /**
      * Title:  Record Factory
@@ -60,73 +60,58 @@ namespace NPOI.HSSF.Record
             Type GetRecordClass();
         }
 
-        private sealed class ReflectionConstructorRecordCreator : I_RecordCreator
+        private abstract class CompiledRecordCreator : I_RecordCreator
         {
+            private Func<RecordInputStream, Record> _factory;
 
-            private readonly ConstructorInfo _c;
-            public ReflectionConstructorRecordCreator(ConstructorInfo c)
-            {
-                _c = c;
-            }
+            protected abstract Expression Build(ParameterExpression arg);
+            public abstract Type GetRecordClass();
+
             public Record Create(RecordInputStream in1)
             {
-                Object[] args = { in1 };
+                // compiled lazily on first use so unused record types cost nothing at startup
+                Func<RecordInputStream, Record> f = _factory ?? (_factory = Compile());
                 try
                 {
-                    return (Record) _c.Invoke(args);
+                    return f(in1);
                 }
-                catch(TargetInvocationException e) when(e.InnerException is RecordFormatException)
+                catch(RecordFormatException)
                 {
                     // already describes the malformed record; do not hide it behind a generic wrapper
-                    ExceptionDispatchInfo.Capture(e.InnerException).Throw();
                     throw;
                 }
                 catch(Exception e)
                 {
-                    // unwrap reflection wrappers, but keep the cause when there is none to unwrap
-                    throw new RecordFormatException("Unable to construct record instance", e.InnerException ?? e);
+                    throw new RecordFormatException("Unable to construct record instance", e);
                 }
             }
-            public Type GetRecordClass()
+
+            private Func<RecordInputStream, Record> Compile()
             {
-                return _c.DeclaringType;
+                ParameterExpression arg = Expression.Parameter(typeof(RecordInputStream), "in1");
+                return Expression.Lambda<Func<RecordInputStream, Record>>(
+                    Expression.Convert(Build(arg), typeof(Record)), arg).Compile();
             }
         }
+
+        private sealed class ConstructorRecordCreator : CompiledRecordCreator
+        {
+            private readonly ConstructorInfo _c;
+            public ConstructorRecordCreator(ConstructorInfo c) { _c = c; }
+            protected override Expression Build(ParameterExpression arg) { return Expression.New(_c, arg); }
+            public override Type GetRecordClass() { return _c.DeclaringType; }
+        }
+
         /**
          * A "create" method is used instead of the usual constructor if the created record might
          * be of a different class to the declaring class.
          */
-        private sealed class ReflectionMethodRecordCreator : I_RecordCreator
+        private sealed class MethodRecordCreator : CompiledRecordCreator
         {
-
             private readonly MethodInfo _m;
-            public ReflectionMethodRecordCreator(MethodInfo m)
-            {
-                _m = m;
-            }
-            public Record Create(RecordInputStream in1)
-            {
-                Object[] args = { in1 };
-                try
-                {
-                    return (Record) _m.Invoke(null, args);
-                }
-                catch(TargetInvocationException e) when(e.InnerException is RecordFormatException)
-                {
-                    // already describes the malformed record; do not hide it behind a generic wrapper
-                    ExceptionDispatchInfo.Capture(e.InnerException).Throw();
-                    throw;
-                }
-                catch(Exception e)
-                {
-                    // unwrap reflection wrappers, but keep the cause when there is none to unwrap
-                    throw new RecordFormatException("Unable to construct record instance", e.InnerException ?? e);
-                }
-            }
-            public Type GetRecordClass()
-            {
-                return _m.DeclaringType;
-            }
+            public MethodRecordCreator(MethodInfo m) { _m = m; }
+            protected override Expression Build(ParameterExpression arg) { return Expression.Call(_m, arg); }
+            public override Type GetRecordClass() { return _m.DeclaringType; }
         }
         #endregion
 
@@ -671,7 +656,7 @@ namespace NPOI.HSSF.Record
                 ConstructorInfo constructor;
                 constructor = recClass.GetConstructor(CONSTRUCTOR_ARGS);
                 if(constructor != null)
-                    return new ReflectionConstructorRecordCreator(constructor);
+                    return new ConstructorRecordCreator(constructor);
             }
             catch
             {
@@ -680,7 +665,7 @@ namespace NPOI.HSSF.Record
             try
             {
                 MethodInfo m = recClass.GetMethod("Create", CONSTRUCTOR_ARGS);
-                return new ReflectionMethodRecordCreator(m);
+                return new MethodRecordCreator(m);
             }
             catch
             {

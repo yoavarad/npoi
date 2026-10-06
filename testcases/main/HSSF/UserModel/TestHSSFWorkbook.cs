@@ -1490,6 +1490,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(0, list.Count);
             HSSFWorkbook rt = HSSFTestDataSamples.WriteOutAndReadBack(wb);
             ClassicAssert.AreEqual(0, rt.NumberOfSheets);
+            rt.Close();
             wb.Close();
         }
 
@@ -1519,6 +1520,58 @@ namespace TestCases.HSSF.UserModel
         }
 
         [Test]
+        public void TestConvertLabelRecordsKeepsOrder()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            List<Record> records = new List<Record>();
+            for(int i = 0; i < 2000; i++)
+            {
+                if(i % 2 == 0)
+                {
+                    string text = "s" + i;
+                    byte[] data = new byte[13 + text.Length];
+                    data[0] = (byte) (LabelRecord.sid & 0xFF);
+                    data[1] = (byte) (LabelRecord.sid >> 8);
+                    data[2] = (byte) (9 + text.Length);
+                    data[4] = (byte) (i & 0xFF);
+                    data[5] = (byte) (i >> 8);
+                    data[10] = (byte) text.Length;
+                    for(int c = 0; c < text.Length; c++)
+                    {
+                        data[13 + c] = (byte) text[c];
+                    }
+                    RecordInputStream rin = new RecordInputStream(new MemoryStream(data));
+                    rin.NextRecord();
+                    records.Add(new LabelRecord(rin));
+                }
+                else
+                {
+                    BlankRecord br = new BlankRecord();
+                    br.Row = i;
+                    br.Column = 0;
+                    records.Add(br);
+                }
+            }
+            typeof(HSSFWorkbook)
+                .GetMethod("ConvertLabelRecords", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Invoke(wb, new object[] { records, 0 });
+            ClassicAssert.AreEqual(2000, records.Count);
+            for(int i = 0; i < 2000; i++)
+            {
+                CellValueRecordInterface rec = (CellValueRecordInterface)records[i];
+                ClassicAssert.AreEqual(i, rec.Row);
+                if(i % 2 == 0)
+                {
+                    ClassicAssert.IsInstanceOf<LabelSSTRecord>(records[i]);
+                }
+                else
+                {
+                    ClassicAssert.IsInstanceOf<BlankRecord>(records[i]);
+                }
+            }
+        }
+
+        [Test]
         public void TestAddInsertIndexerSetRejectForeignSheets()
         {
             HSSFWorkbook wb = new HSSFWorkbook();
@@ -1535,6 +1588,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook rt = HSSFTestDataSamples.WriteOutAndReadBack(wb);
             Assert.AreEqual(1, rt.NumberOfSheets);
             Assert.AreEqual("A", rt.GetSheetAt(0).SheetName);
+            rt.Close();
             wb[0] = wb[0]; // same-instance set is a no-op
             other.Close();
         }
