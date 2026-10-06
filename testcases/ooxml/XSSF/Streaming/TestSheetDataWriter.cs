@@ -161,8 +161,12 @@ namespace TestCases.XSSF.Streaming
             }
             finally
             {
-                try { writer.Close(); } catch(IOException) { }
-                try { File.Delete(path); } catch(IOException) { }
+                try
+                { writer.Close(); }
+                catch(IOException) { }
+                try
+                { File.Delete(path); }
+                catch(IOException) { }
             }
         }
 
