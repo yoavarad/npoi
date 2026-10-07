@@ -30,6 +30,7 @@ namespace NPOI.OpenXml4Net.Util
             zipEntries = new List<FakeZipEntry>();
 
             bool going = true;
+            long entryCount = 0;
             //if(inp.Position != 0)
             //    inp.Position = 0;
             while(going)
@@ -41,6 +42,7 @@ namespace NPOI.OpenXml4Net.Util
                 }
                 else
                 {
+                    ZipSecureFile.CheckEntryCount(++entryCount);
                     FakeZipEntry entry = new FakeZipEntry(zipEntry, inp);
                     //inp.Close();
 
@@ -124,29 +126,24 @@ namespace NPOI.OpenXml4Net.Util
             public FakeZipEntry(ZipEntry entry, ZipInputStream inp) : base(entry.Name)
             {
 
-                // Grab the de-compressed contents for later
-                MemoryStream baos = new MemoryStream();
-
+                // Grab the de-compressed contents for later.
+                // Header sizes are untrusted: never pre-allocate from them beyond a small cap,
+                // and enforce limits on the bytes actually inflated.
                 long entrySize = entry.Size;
-
-                if(entrySize != -1)
+                if(entrySize >= Int32.MaxValue)
                 {
-                    if(entrySize >= Int32.MaxValue)
-                    {
-                        throw new IOException("ZIP entry size is too large");
-                    }
-
-                    baos = new MemoryStream((int) entrySize);
+                    throw new IOException("ZIP entry size is too large");
                 }
-                else
-                {
-                    baos = new MemoryStream();
-                }
+                MemoryStream baos = new MemoryStream(entrySize > 0 ? (int) Math.Min(entrySize, 1 << 20) : 0);
 
+                Func<long> compressed = ZipSecureFile.CompressedCounter(inp, entry.CompressionMethod == CompressionMethod.Deflated);
                 byte[] buffer = new byte[4096];
-                int read = 0;
+                long total = 0;
+                int read;
                 while((read = inp.Read(buffer, 0, buffer.Length)) > 0)
                 {
+                    total += read;
+                    ZipSecureFile.CheckThreshold(total, compressed);
                     baos.Write(buffer, 0, read);
                 }
 

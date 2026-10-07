@@ -1,4 +1,5 @@
 using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Zip.Compression;
 using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using NPOI.Util;
 using System;
@@ -31,6 +32,10 @@ namespace NPOI.OpenXml4Net.Util
          */
         public static void SetMinInflateRatio(double ratio)
         {
+            if(double.IsNaN(ratio) || ratio < 0 || ratio > 1)
+            {
+                throw new ArgumentException("Min inflate ratio is bounded [0-1], but had " + ratio);
+            }
             MIN_INFLATE_RATIO = ratio;
         }
 
@@ -111,253 +116,207 @@ namespace NPOI.OpenXml4Net.Util
         {
             return MAX_TEXT_SIZE;
         }
+        private static long MAX_ENTRY_COUNT = 10000;
+
+        /// <summary>
+        /// Sets the maximum number of entries a zip may contain. Defaults to 10000.
+        /// </summary>
+        public static void SetMaxEntryCount(long maxEntryCount)
+        {
+            if(maxEntryCount < 0)
+            {
+                throw new ArgumentException("Max entry count must not be negative.");
+            }
+            MAX_ENTRY_COUNT = maxEntryCount;
+        }
+
+        /// <summary>Returns the maximum number of zip entries allowed.</summary>
+        public static long GetMaxEntryCount()
+        {
+            return MAX_ENTRY_COUNT;
+        }
+
         public ZipSecureFile(FileStream file, int mode)
             : base(file)
         {
-
+            CheckEntryCountOrClose();
         }
 
         public ZipSecureFile(FileStream file)
             : base(file)
         {
-
+            CheckEntryCountOrClose();
         }
 
         public ZipSecureFile(String name)
                 : base(name)
         {
-
+            CheckEntryCountOrClose();
         }
 
-        /**
-         * Returns an input stream for reading the contents of the specified
-         * zip file entry.
-         *
-         * <p> Closing this ZIP file will, in turn, close all input
-         * streams that have been returned by invocations of this method.
-         *
-         * @param entry the zip file entry
-         * @return the input stream for reading the contents of the specified
-         * zip file entry.
-         * @throws ZipException if a ZIP format error has occurred
-         * @throws IOException if an I/O error has occurred
-         * @throws IllegalStateException if the zip file has been closed
-         */
+        /// <summary>
+        /// Opens an entry, enforcing the zip-bomb limits on the bytes actually read.
+        /// </summary>
         public new Stream GetInputStream(ZipEntry entry)
         {
-            Stream zipIS = base.GetInputStream(entry);
-            return AddThreshold(zipIS);
+            return AddThreshold(base.GetInputStream(entry), entry);
         }
 
-        public static ThresholdInputStream AddThreshold(Stream zipIS)
+        private void CheckEntryCountOrClose()
         {
-
-            ThresholdInputStream newInner = null;
-            if(zipIS is InflaterInputStream)
+            try
             {
-                //replace inner stream of zipIS by using a ThresholdInputStream instance??
-                try
-                {
-                    FieldInfo f = typeof(FilterInputStream).GetField("in");
-                    //f.SetAccessible(true);
-                    //InputStream oldInner = (InputStream)f.Get(zipIS);
-                    //newInner = new ThresholdInputStream(oldInner, null);
-                    //f.Set(zipIS, newInner);
-                }
-                catch(Exception ex)
-                {
-                    //logger.Log(POILogger.WARN, "SecurityManager doesn't allow manipulation via reflection for zipbomb detection - continue with original input stream", ex);
-                    newInner = null;
-                }
+                CheckEntryCount(Count);
             }
-            else
+            catch
             {
-                // the inner stream is a ZipFileInputStream, i.e. the data wasn't compressed
-                newInner = null;
+                Close();
+                throw;
             }
-
-            return new ThresholdInputStream(zipIS, newInner);
         }
 
-        public class ThresholdInputStream : Stream
+        internal static void CheckEntryCount(long count)
         {
-            long counter = 0;
-            long markPos = 0;
-            ThresholdInputStream cis;
-            Stream input;
-
-            public override bool CanRead => throw new NotImplementedException();
-
-            public override bool CanSeek => throw new NotImplementedException();
-
-            public override bool CanWrite => throw new NotImplementedException();
-
-            public override long Length => throw new NotImplementedException();
-
-            public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-            public ThresholdInputStream(Stream is1, ThresholdInputStream cis)
-
+            if(count > MAX_ENTRY_COUNT)
             {
-                this.input = is1;
-                this.cis = cis;
+                throw new ZipSecurityException("Zip bomb detected! The zip contains more entries than allowed. "
+                    + "You can adjust this limit via ZipSecureFile.SetMaxEntryCount(). "
+                    + "Entries: " + count + ", limit: MAX_ENTRY_COUNT: " + MAX_ENTRY_COUNT);
+            }
+        }
+
+        private static readonly FieldInfo InflaterField =
+            typeof(InflaterInputStream).GetField("inf", BindingFlags.Instance | BindingFlags.NonPublic);
+
+        /// <summary>
+        /// Total compressed bytes the inflater of a deflated entry stream has consumed so far.
+        /// Taken from the decompressor itself, never from zip headers (which an attacker controls).
+        /// Returns null if the stream is not deflated (stored entries cannot expand).
+        /// </summary>
+        internal static Func<long> CompressedCounter(Stream zipStream, bool deflated)
+        {
+            if(!deflated)
+            {
+                // stored entries cannot expand; ZipInputStream is an InflaterInputStream
+                // whose inflater stays unused (TotalIn == 0) for them
+                return null;
+            }
+            if(zipStream is InflaterInputStream)
+            {
+                Inflater inf = InflaterField?.GetValue(zipStream) as Inflater;
+                if(inf != null)
+                {
+                    return () => inf.TotalIn;
+                }
+            }
+            // fail closed: cannot measure the real compressed size
+            throw new ZipSecurityException("Zip bomb detection could not be applied to this entry; refusing to read it.");
+        }
+
+        /// <summary>
+        /// Throws if the counted number of inflated bytes violates a limit.
+        /// </summary>
+        internal static void CheckThreshold(long inflated, Func<long> compressed)
+        {
+            if(inflated > MAX_ENTRY_SIZE)
+            {
+                throw new ZipSecurityException("Zip bomb detected! The file would exceed the max size of the expanded data in the zip-file. "
+                        + "This may indicate that the file is used to inflate memory usage and thus could pose a security risk. "
+                        + "You can adjust this limit via ZipSecureFile.SetMaxEntrySize() if you need to work with files which are very large. "
+                        + "Counter: " + inflated + ", Limits: MAX_ENTRY_SIZE: " + MAX_ENTRY_SIZE);
+            }
+            if(compressed == null || inflated <= GRACE_ENTRY_SIZE)
+            {
+                return;
+            }
+            long comp = compressed();
+            double ratio = (double) comp / (double) inflated;
+            if(ratio >= MIN_INFLATE_RATIO)
+            {
+                return;
+            }
+            throw new ZipSecurityException("Zip bomb detected! The file would exceed the max. ratio of compressed file size to the size of the expanded data. "
+                    + "This may indicate that the file is used to inflate memory usage and thus could pose a security risk. "
+                    + "You can adjust this limit via ZipSecureFile.SetMinInflateRatio() if you need to work with files which exceed this limit. "
+                    + "Counter: " + inflated + ", compressed: " + comp + ", ratio: " + ratio
+                    + ", Limits: MIN_INFLATE_RATIO: " + MIN_INFLATE_RATIO);
+        }
+
+        /// <summary>
+        /// Wraps an entry stream so every read is counted and checked against the limits.
+        /// </summary>
+        public static Stream AddThreshold(Stream zipStream, ZipEntry entry)
+        {
+            bool deflated = entry == null || entry.CompressionMethod == CompressionMethod.Deflated;
+            try
+            {
+                return new ThresholdInputStream(zipStream, CompressedCounter(zipStream, deflated));
+            }
+            catch
+            {
+                zipStream.Dispose();
+                throw;
+            }
+        }
+
+        private sealed class ThresholdInputStream : Stream
+        {
+            private readonly Stream input;
+            private readonly Func<long> compressed;
+            private long counter;
+
+            public ThresholdInputStream(Stream input, Func<long> compressed)
+            {
+                this.input = input;
+                this.compressed = compressed;
             }
 
-            public int Read()
+            public override int Read(byte[] buffer, int offset, int count)
             {
+                int n = input.Read(buffer, offset, count);
+                if(n > 0)
+                {
+                    counter += n;
+                    CheckThreshold(counter, compressed);
+                }
+                return n;
+            }
 
-                int b = this.input.ReadByte();
-                if(b > -1)
-                    Advance(1);
+            public override int ReadByte()
+            {
+                int b = input.ReadByte();
+                if(b >= 0)
+                {
+                    counter++;
+                    CheckThreshold(counter, compressed);
+                }
                 return b;
             }
 
-            public override int Read(byte[] b, int off, int len)
+            public override bool CanRead => input.CanRead;
+            public override bool CanSeek => false;
+            public override bool CanWrite => false;
+            public override long Length => throw new NotSupportedException();
+            public override long Position { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+            public override void Flush() { }
+            public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+            public override void SetLength(long value) => throw new NotSupportedException();
+            public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+
+            protected override void Dispose(bool disposing)
             {
-
-                int cnt = input.Read(b, off, len);
-                if(cnt > -1)
-                    Advance(cnt);
-                return cnt;
-
-            }
-
-            public long Skip(long n)
-            {
-                long s = input.Seek(n, SeekOrigin.Current);
-                counter += s;
-                return s;
-            }
-
-            public void Reset()
-            {
-                counter = markPos;
-                input.Seek(0, SeekOrigin.Begin);
-            }
-
-            public void Advance(int advance)
-            {
-
-                counter += advance;
-                // check the file size first, in case we are working on uncompressed streams
-                if(counter > MAX_ENTRY_SIZE)
+                if(disposing)
                 {
-                    throw new IOException("Zip bomb detected! The file would exceed the max size of the expanded data in the zip-file. "
-                            + "This may indicates that the file is used to inflate memory usage and thus could pose a security risk. "
-                            + "You can adjust this limit via ZipSecureFile.setMaxEntrySize() if you need to work with files which are very large. "
-                            + "Counter: " + counter + ", cis.counter: " + (cis == null ? 0 : cis.counter)
-                            + "Limits: MAX_ENTRY_SIZE: " + MAX_ENTRY_SIZE);
+                    input.Dispose();
                 }
-                // no expanded size?
-                if(cis == null)
-                {
-                    return;
-                }
-
-                // don't alert for small expanded size
-                if(counter <= GRACE_ENTRY_SIZE)
-                {
-                    return;
-                }
-
-                double ratio = (double)cis.counter/(double)counter;
-                if(ratio >= MIN_INFLATE_RATIO)
-                {
-                    return;
-                }
-
-                // one of the limits was reached, report it
-                throw new IOException("Zip bomb detected! The file would exceed the max. ratio of compressed file size to the size of the expanded data.\n"
-                        + "This may indicate that the file is used to inflate memory usage and thus could pose a security risk.\n"
-                        + "You can adjust this limit via ZipSecureFile.setMinInflateRatio() if you need to work with files which exceed this limit.\n"
-                        + "Counter: " + counter + ", cis.counter: " + cis.counter + ", ratio: " + ratio + "\n"
-                        + "Limits: MIN_INFLATE_RATIO: " + MIN_INFLATE_RATIO);
-            }
-
-            public ZipEntry GetNextEntry()
-            {
-
-                if(input is not ZipInputStream stream)
-                {
-                    throw new NotSupportedException("underlying stream is not a ZipInputStream");
-                }
-                counter = 0;
-                return stream.GetNextEntry();
-            }
-
-            public void CloseEntry()
-            {
-
-                if(input is not ZipInputStream stream)
-                {
-                    throw new NotSupportedException("underlying stream is not a ZipInputStream");
-                }
-                counter = 0;
-                stream.CloseEntry();
-            }
-
-            public void Unread(int b)
-            {
-
-                if(input is not PushbackInputStream stream)
-                {
-                    throw new NotSupportedException("underlying stream is not a PushbackInputStream");
-                }
-                if(--counter < 0)
-                    counter = 0;
-                stream.Unread(b);
-            }
-
-            public void Unread(byte[] b, int off, int len)
-            {
-
-                if(input is not PushbackInputStream stream)
-                {
-                    throw new NotSupportedException("underlying stream is not a PushbackInputStream");
-                }
-                counter -= len;
-                if(--counter < 0)
-                    counter = 0;
-                stream.Unread(b, off, len);
-            }
-
-            public int Available()
-            {
-                return (int) (input.Length - input.Position);
-                //return input.Available();
-            }
-
-            public bool MarkSupported()
-            {
-                //return input.MarkSupported();
-                return true;
-            }
-
-            public void Mark(int readlimit)
-            {
-                //input.Mark(readlimit);
-            }
-
-            public override void Flush()
-            {
-                throw new NotImplementedException();
-            }
-
-            public override long Seek(long offset, SeekOrigin origin)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void SetLength(long value)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void Write(byte[] buffer, int offset, int count)
-            {
-                throw new NotImplementedException();
+                base.Dispose(disposing);
             }
         }
+    }
 
+    /// <summary>Thrown when a zip violates a ZipSecureFile limit (zip-bomb protection).</summary>
+    public class ZipSecurityException : IOException
+    {
+        public ZipSecurityException(string message) : base(message) { }
     }
 }
