@@ -232,7 +232,9 @@ namespace NPOI.POIFS.FileSystem
                     }
                     catch(IOException)
                     {
-                        // TODO Work out how to report this, given we can't change the method signature...
+                        // Won't fix: Delete only returns bool, so a failure freeing the
+                        //  entry's blocks can't be reported. The entry is already gone from
+                        //  the directory; at worst its blocks stay allocated until rewrite.
                     }
                 }
             }
@@ -249,7 +251,7 @@ namespace NPOI.POIFS.FileSystem
         }
         /// <summary>
         /// return the filesystem that this belongs to
-        /// TODO: Temporary workaround during #56791
+        /// (Same as <see cref="NFileSystem"/>; kept from the #56791 transition as public API.)
         /// </summary>
         public NPOIFSFileSystem FileSystem
         {

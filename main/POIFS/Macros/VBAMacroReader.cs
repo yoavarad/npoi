@@ -268,7 +268,9 @@ namespace NPOI.POIFS.Macros
         private static void ReadModule(DocumentInputStream dis, String name, ModuleMap modules)
         {
             Module module = modules.Get(name);
-            // TODO Refactor this to fetch dir then do the rest
+            // Modules can be met before the dir stream that holds their offsets, so
+            //  buffer the compressed bytes until then. Won't fix (refactor to read dir
+            //  first): this works and only costs a buffer per early module.
             if(module == null)
             {
                 // no DIR stream with offsets yet, so store the compressed bytes for later

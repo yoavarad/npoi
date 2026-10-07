@@ -45,7 +45,7 @@ namespace NPOI.POIFS.FileSystem
     /// </summary>
     [Serializable]
     public class POIFSFileSystem :
-        NPOIFSFileSystem // TODO Temporary workaround during #56791
+        NPOIFSFileSystem // Kept from the #56791 transition: POIFSFileSystem is NPOIFS-backed (public API, not renamed)
         , POIFSViewable
     {
 
@@ -135,12 +135,11 @@ namespace NPOI.POIFS.FileSystem
          */
         public static POIFSFileSystem Create(FileInfo file)
         {
-            // TODO Make this nicer!
-            // Create a new empty POIFS in the file
+            // Create a new empty POIFS in the file, truncating any existing content
             POIFSFileSystem tmp = new POIFSFileSystem();
             try
             {
-                FileStream fout = file.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                FileStream fout = file.Open(FileMode.Create, FileAccess.ReadWrite);
                 try
                 {
                     tmp.WriteFileSystem(fout);

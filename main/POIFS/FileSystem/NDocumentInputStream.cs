@@ -247,9 +247,15 @@ namespace NPOI.POIFS.FileSystem
 
             long rval = new_offset - _current_offset;
 
-            // TODO Do this better
-            byte[] Skip = IOUtils.SafelyAllocate(rval, int.MaxValue);
-            ReadFully(Skip);
+            // Read through the blocks in bounded chunks rather than
+            //  allocating a buffer the size of the skip
+            byte[] skipBuffer = new byte[(int) Math.Min(rval, 4096)];
+            for(long remaining = rval; remaining > 0;)
+            {
+                int chunk = (int) Math.Min(remaining, skipBuffer.Length);
+                ReadFully(skipBuffer, 0, chunk);
+                remaining -= chunk;
+            }
             return rval;
         }
 

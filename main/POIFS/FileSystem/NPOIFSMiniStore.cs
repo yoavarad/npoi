@@ -144,9 +144,8 @@ namespace NPOI.POIFS.FileSystem
             if(!firstInStore && TryGetBlockAt(offset, out var result))
                 return result;
 
-            // Need to extend the stream
-            // TODO Replace this with proper append support
-            // For now, do the extending by hand...
+            // Need to extend the stream. NPOIFSStream has no append, so
+            //  tack a new big block onto the end of the mini stream chain by hand
 
             _chainCache = null;
 

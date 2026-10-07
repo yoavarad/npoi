@@ -290,11 +290,11 @@ namespace NPOI
         /**
          * Writes out the updated standard Document Information Properties (HPSF)
          *  into the currently open NPOIFSFileSystem
-         * TODO Implement in-place update
+         * TODO Implement in-place update (deferred to #153)
          * 
          * @throws IOException if an error when writing to the open
          *      {@link NPOIFSFileSystem} occurs
-         * TODO throws exception if open from stream not file
+         * TODO throws exception if open from stream not file (deferred to #153)
          */
         protected internal void WriteProperties()
         {
