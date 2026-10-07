@@ -59,8 +59,6 @@ namespace NPOI.OpenXml4Net.OPC
         {
             isStream = true;
             ZipInputStream zis = ZipHelper.OpenZipStream(in1);
-            // TODO: ZipSecureFile
-            //ThresholdInputStream zis = ZipHelper.OpenZipStream(in1);
             this.zipArchive = new ZipInputStreamZipEntrySource(zis);
         }
 
@@ -96,6 +94,11 @@ namespace NPOI.OpenXml4Net.OPC
                 ZipFile zipFile = ZipHelper.OpenZipFile(file);
                 ze = new ZipFileZipEntrySource(zipFile);
             }
+            catch(ZipSecurityException)
+            {
+                // zip bomb: fail closed, never fall back to another reader
+                throw;
+            }
             catch(IOException e)
             {
                 // probably not happening with write access - not sure how to handle the default read-write access ...
@@ -108,15 +111,20 @@ namespace NPOI.OpenXml4Net.OPC
                 // contains either non-latin entries or the compression type can't be handled
                 // the workaround is to iterate over the stream and not the directory
                 FileStream fis = null;
-                //ThresholdInputStream zis = null;
                 ZipInputStream zis = null;
                 try
                 {
-                    fis = file.Create();
-                    // TODO: ZipSecureFile
-                    // zis = ZipHelper.OpenZipStream(fis);
+                    fis = file.OpenRead();
                     zis = ZipHelper.OpenZipStream(fis);
                     ze = new ZipInputStreamZipEntrySource(zis);
+                }
+                catch(ZipSecurityException)
+                {
+                    // zip bomb in the fallback path: release the file and fail closed with the original type
+                    try
+                    { (zis as IDisposable ?? fis)?.Dispose(); }
+                    catch(IOException) { }
+                    throw;
                 }
                 catch(IOException e2)
                 {
@@ -202,6 +210,10 @@ namespace NPOI.OpenXml4Net.OPC
                     {
                         this.contentTypeManager = new ZipContentTypeManager(
                                 ZipArchive.GetInputStream(entry), this);
+                    }
+                    catch(ZipSecurityException)
+                    {
+                        throw;
                     }
                     catch(IOException e)
                     {
@@ -369,10 +381,10 @@ namespace NPOI.OpenXml4Net.OPC
                 return new MemoryPackagePart(this, partName, contentType,
                         loadRelationships);
             }
-            catch(InvalidFormatException)
+            catch(InvalidFormatException e)
             {
-                // TODO - don't use system.err.  Is it valid to return null when this exception occurs?
-                //System.err.println(e);
+                // invalid part name: callers treat null as "part not created"
+                logger.Log(POILogger.WARN, "Could not create part " + partName, e);
                 return null;
             }
         }

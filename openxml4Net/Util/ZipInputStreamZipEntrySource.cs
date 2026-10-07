@@ -30,22 +30,39 @@ namespace NPOI.OpenXml4Net.Util
             zipEntries = new List<FakeZipEntry>();
 
             bool going = true;
+            long entryCount = 0;
+            long totalSize = 0;
             //if(inp.Position != 0)
             //    inp.Position = 0;
-            while(going)
+            try
             {
-                ZipEntry zipEntry = inp.GetNextEntry();
-                if(zipEntry == null)
+                while(going)
                 {
-                    going = false;
-                }
-                else
-                {
-                    FakeZipEntry entry = new FakeZipEntry(zipEntry, inp);
-                    //inp.Close();
+                    ZipEntry zipEntry = inp.GetNextEntry();
+                    if(zipEntry == null)
+                    {
+                        going = false;
+                    }
+                    else
+                    {
+                        ZipSecureFile.CheckEntryCount(++entryCount);
+                        FakeZipEntry entry = new FakeZipEntry(zipEntry, inp, totalSize);
+                        totalSize += entry.DataLength;
+                        ZipSecureFile.CheckTotalSize(totalSize);
+                        //inp.Close();
 
-                    zipEntries.Add(entry);
+                        zipEntries.Add(entry);
+                    }
                 }
+            }
+            catch
+            {
+                // release buffered data and the source stream on any failure (bomb, bad zip)
+                zipEntries = null;
+                try
+                { inp.Close(); }
+                catch(IOException) { }
+                throw;
             }
             inp.Close();
         }
@@ -121,37 +138,35 @@ namespace NPOI.OpenXml4Net.Util
         {
             private byte[] data;
 
-            public FakeZipEntry(ZipEntry entry, ZipInputStream inp) : base(entry.Name)
+            public FakeZipEntry(ZipEntry entry, ZipInputStream inp, long totalBefore) : base(entry.Name)
             {
 
-                // Grab the de-compressed contents for later
-                MemoryStream baos = new MemoryStream();
-
+                // Grab the de-compressed contents for later.
+                // Header sizes are untrusted: never pre-allocate from them beyond a small cap,
+                // and enforce limits on the bytes actually inflated.
                 long entrySize = entry.Size;
-
-                if(entrySize != -1)
+                if(entrySize >= Int32.MaxValue)
                 {
-                    if(entrySize >= Int32.MaxValue)
-                    {
-                        throw new IOException("ZIP entry size is too large");
-                    }
-
-                    baos = new MemoryStream((int) entrySize);
+                    throw new IOException("ZIP entry size is too large");
                 }
-                else
-                {
-                    baos = new MemoryStream();
-                }
+                MemoryStream baos = new MemoryStream(entrySize > 0 ? (int) Math.Min(entrySize, 1 << 20) : 0);
 
+                Func<long> compressed = ZipSecureFile.CompressedCounter(inp, entry.CompressionMethod == CompressionMethod.Deflated);
                 byte[] buffer = new byte[4096];
-                int read = 0;
+                long total = 0;
+                int read;
                 while((read = inp.Read(buffer, 0, buffer.Length)) > 0)
                 {
+                    total += read;
+                    ZipSecureFile.CheckThreshold(total, compressed, ZipSecureFile.StreamEntryLimit);
+                    ZipSecureFile.CheckTotalSize(totalBefore + total);
                     baos.Write(buffer, 0, read);
                 }
 
                 data = baos.ToArray();
             }
+
+            internal long DataLength => data.Length;
 
             public Stream GetInputStream()
             {

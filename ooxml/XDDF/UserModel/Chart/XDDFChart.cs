@@ -1025,6 +1025,10 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 // no usable embedded workbook: callers treat a null sheet as "no data", as Apache POI does
             }
+            catch(NPOI.OpenXml4Net.Util.ZipSecurityException)
+            {
+                throw;
+            }
             catch(IOException)
             {
                 // same as above
