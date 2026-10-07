@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using NPOI.SS.UserModel;
 
 namespace NPOI.XSSF.Binary
 {
@@ -41,7 +42,7 @@ namespace NPOI.XSSF.Binary
         private  XSSFBStylesTable _styles;
         private  XSSFBCommentsTable _comments;
         private  DataFormatter _dataFormatter;
-        private  bool _formulasNotResults;//TODO: implement this
+        private  bool _formulasNotResults;// won't fix: raw-text extraction only; formulas are never emitted
 
         private int _lastEndedRow = -1;
         private int _lastStartedRow = -1;
@@ -113,7 +114,7 @@ namespace NPOI.XSSF.Binary
                 case XSSFBRecordType.BrtFmlaError:
                     HandleFmlaError(data);
                     break;
-                //TODO: All the PCDI and PCDIA
+                // won't fix: pivot cache records (PCDI/PCDIA) are not cell data
                 case XSSFBRecordType.BrtEndSheetData:
                     CheckMissedComments(CHECK_ALL_ROWS);
                     EndRow(_lastStartedRow);
@@ -169,15 +170,26 @@ namespace NPOI.XSSF.Binary
         private void HandleCellError(byte[] data)
         {
             BeforeCellValue(data);
-            //TODO, read byte to figure out the type of error
-            HandleCellValue("ERROR");
+            HandleCellValue(ErrorText(data));
+        }
+
+        private static string ErrorText(byte[] data)
+        {
+            if(data.Length > XSSFBCellHeader.Length)
+            {
+                byte code = data[XSSFBCellHeader.Length];
+                if(code <= 0x2B && FormulaError.IsValidCode(code))
+                {
+                    return FormulaError.ForInt(code).String;
+                }
+            }
+            return "ERROR";
         }
 
         private void HandleFmlaError(byte[] data)
         {
             BeforeCellValue(data);
-            //TODO, read byte to figure out the type of error
-            HandleCellValue("ERROR");
+            HandleCellValue(ErrorText(data));
         }
 
         private void HandleBoolean(byte[] data)

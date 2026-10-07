@@ -123,6 +123,40 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
+        public void GroupRowDoesNotGroupPastToRow()
+        {
+            using var wb = new SXSSFWorkbook(100);
+            var sheet = (SXSSFSheet) wb.CreateSheet();
+            for(int i = 0; i < 6; i++)
+            {
+                sheet.CreateRow(i);
+            }
+
+            sheet.GroupRow(1, 3);
+
+            ClassicAssert.AreEqual(0, sheet.GetRow(0).OutlineLevel);
+            for(int i = 1; i <= 3; i++)
+            {
+                ClassicAssert.AreEqual(1, sheet.GetRow(i).OutlineLevel, "row " + i);
+            }
+            ClassicAssert.AreEqual(0, sheet.GetRow(4).OutlineLevel, "row past toRow must not be grouped");
+            ClassicAssert.AreEqual(0, sheet.GetRow(5).OutlineLevel);
+        }
+
+        [Test]
+        public void AutoSizeColumnTrackingSkipsMergedRegionWithMissingFirstCell()
+        {
+            using var wb = new SXSSFWorkbook(100);
+            var sheet = (SXSSFSheet) wb.CreateSheet();
+            sheet.TrackAllColumnsForAutoSizing();
+            sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 1, 2));
+            IRow row = sheet.CreateRow(0);
+            row.CreateCell(2).SetCellValue("text in second column of merged region");
+
+            Assert.DoesNotThrow(() => sheet.AutoSizeColumn(2, true));
+        }
+
+        [Test]
         public void OverrideFlushedRows()
         {
             IWorkbook wb = new SXSSFWorkbook(3);

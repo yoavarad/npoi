@@ -484,7 +484,6 @@ namespace NPOI.XSSF.Streaming
             RemoveProperty(Property.COMMENT);
         }
 
-        //TODO: implement correctly
         public void RemoveHyperlink()
         {
             RemoveProperty(Property.HYPERLINK);
