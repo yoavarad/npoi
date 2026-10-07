@@ -1,10 +1,10 @@
+using NPOI.HSSF.Record;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System.IO;
 namespace TestCases.HSSF.Record
 {
-    using System.IO;
-    using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using NUnit.Framework;
-    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public class TestRecordGaps108

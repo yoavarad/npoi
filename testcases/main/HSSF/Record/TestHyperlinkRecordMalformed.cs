@@ -1,11 +1,11 @@
+using NPOI.HSSF.Record;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.IO;
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.IO;
-    using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using NUnit.Framework;
-    using NUnit.Framework.Legacy;
 
     /// <summary>
     /// Malformed (untrusted) HLINK records must fail fast with RecordFormatException,
