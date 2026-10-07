@@ -1,9 +1,9 @@
 using ICSharpCode.SharpZipLib.Zip;
 using NPOI.Openxml4Net.Exceptions;
+using NPOI.OpenXml4Net.Util;
 using NPOI.POIFS.Common;
 using NPOI.POIFS.FileSystem;
 using NPOI.POIFS.Storage;
-using NPOI.OpenXml4Net.Util;
 using NPOI.Util;
 using System;
 using System.Collections;
