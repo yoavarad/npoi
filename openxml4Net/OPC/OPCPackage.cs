@@ -241,7 +241,7 @@ namespace NPOI.OpenXml4Net.OPC
                 {
                     if(!success)
                     {
-                        IOUtils.CloseQuietly(pack);
+                        AbortQuietly(pack);
                     }
                 }
             }

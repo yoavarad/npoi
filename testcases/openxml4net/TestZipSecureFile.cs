@@ -300,6 +300,15 @@ namespace TestCases.OpenXml4Net.OPC
         }
 
         [Test]
+        public void BombOpenPathReadWrite_DoesNotLeakFileHandle()
+        {
+            File.WriteAllBytes(tmp, MakeCorePropsBombPackage());
+            AssertBomb(() => OPCPackage.Open(tmp, PackageAccess.READ_WRITE));
+            File.Delete(tmp);
+            Assert.IsFalse(File.Exists(tmp));
+        }
+
+        [Test]
         public void MaxTotalSize_StreamPath()
         {
             byte[] zip = MakeZip(3, 60_000, (int) CompressionMethod.Deflated, zeros: false);
