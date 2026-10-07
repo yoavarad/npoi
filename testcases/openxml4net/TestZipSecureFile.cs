@@ -35,7 +35,8 @@ namespace TestCases.OpenXml4Net.OPC
             ZipSecureFile.SetMinInflateRatio(ratio);
             ZipSecureFile.SetMaxEntrySize(maxSize);
             ZipSecureFile.SetMaxEntryCount(maxCount);
-            foreach(var o in opened) { try { o.Close(); } catch { } }
+            foreach(var o in opened)
+            { try { o.Close(); } catch { } }
             opened.Clear();
             if(File.Exists(tmp))
             {
@@ -60,7 +61,8 @@ namespace TestCases.OpenXml4Net.OPC
                     if(xml && i == 0)
                     {
                         // whitespace-padded but well-formed content types
-                        for(int k = 0; k < data.Length; k++) data[k] = (byte) ' ';
+                        for(int k = 0; k < data.Length; k++)
+                            data[k] = (byte) ' ';
                         byte[] open = System.Text.Encoding.ASCII.GetBytes("<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">");
                         byte[] close = System.Text.Encoding.ASCII.GetBytes("</Types>");
                         Array.Copy(open, 0, data, 0, open.Length);
@@ -92,13 +94,15 @@ namespace TestCases.OpenXml4Net.OPC
             while(en.MoveNext())
             {
                 using Stream s = src.GetInputStream((ZipEntry) en.Current);
-                while(s.Read(buf, 0, buf.Length) > 0) { }
+                while(s.Read(buf, 0, buf.Length) > 0)
+                { }
             }
         }
 
         private ZipEntrySource FileSource(byte[] zip)
         {
-            foreach(var o in opened) { try { o.Close(); } catch { } }
+            foreach(var o in opened)
+            { try { o.Close(); } catch { } }
             opened.Clear();
             File.WriteAllBytes(tmp, zip);
             var src = new ZipFileZipEntrySource(ZipHelper.OpenZipFile(tmp));
