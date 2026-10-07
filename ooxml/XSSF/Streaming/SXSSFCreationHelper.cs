@@ -65,8 +65,6 @@ namespace NPOI.XSSF.Streaming
             return new XSSFRichTextString(text);
         }
 
-        //TODO: missing methods CreateExtendedColor()
-
         /**
          * {@inheritDoc}
          */

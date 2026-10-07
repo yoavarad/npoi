@@ -49,7 +49,15 @@ namespace NPOI.HPSF
         /// <returns></returns>
         public static int WriteToStream(Stream out1, short n)
         {
-            LittleEndian.PutShort(out1, n); // FIXME: unsigned
+            return WriteToStream(out1, unchecked((ushort) n));
+        }
+
+        /// <summary>
+        /// Writes an unsigned two-byte value (ushort) To an output stream.
+        /// </summary>
+        public static int WriteToStream(Stream out1, ushort n)
+        {
+            LittleEndian.PutUShort(n, out1);
             return LittleEndianConsts.SHORT_SIZE;
         }
 

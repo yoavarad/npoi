@@ -302,6 +302,14 @@ namespace NPOI.XWPF.UserModel
             }
         }
 
+        /// <summary>
+        /// Document settings (settings.xml), or null if the document has none.
+        /// </summary>
+        public XWPFSettings GetSettings()
+        {
+            return settings;
+        }
+
         /**
          * Create a new CT_Document with all values Set to default
          */
@@ -610,7 +618,10 @@ namespace NPOI.XWPF.UserModel
             }
             else if(type == HeaderFooterType.EVEN)
             {
-                // TODO Add support for Even/Odd headings and footers
+                if(settings != null)
+                {
+                    settings.IsEvenAndOddHeaders = true;
+                }
             }
             return hfPolicy.CreateHeader(EnumConverter.ValueOf<ST_HdrFtr, HeaderFooterType>(type));
         }
@@ -636,7 +647,10 @@ namespace NPOI.XWPF.UserModel
             }
             else if(type == HeaderFooterType.EVEN)
             {
-                // TODO Add support for Even/Odd headings and footers
+                if(settings != null)
+                {
+                    settings.IsEvenAndOddHeaders = true;
+                }
             }
             return hfPolicy.CreateFooter(EnumConverter.ValueOf<ST_HdrFtr, HeaderFooterType>(type));
         }
@@ -1705,7 +1719,7 @@ namespace NPOI.XWPF.UserModel
                  * relationship to the already existing part and update
                  * POIXMLDocumentPart data.
                  */
-                // TODO add support for TargetMode.EXTERNAL relations.
+                // NOTE: only internal relations are created here; linked (TargetMode.EXTERNAL) pictures are not supported (needs separate design).
                 RelationPart rp = AddRelation(null, XWPFRelation.IMAGES, xwpfPicData);
                 return rp.Relationship.Id;
             }

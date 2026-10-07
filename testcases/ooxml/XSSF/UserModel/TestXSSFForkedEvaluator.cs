@@ -26,7 +26,7 @@ namespace TestCases.XSSF.UserModel
     [TestFixture]
     public class TestXSSFForkedEvaluator : TestForkedEvaluator
     {
-        protected new IWorkbook NewWorkbook()
+        protected override IWorkbook NewWorkbook()
         {
             return new XSSFWorkbook();
         }

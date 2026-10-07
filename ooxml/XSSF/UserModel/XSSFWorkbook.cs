@@ -203,15 +203,35 @@ namespace NPOI.XSSF.UserModel
          * @param pkg the OpenXML4J <code>OPC Package</code> object.
          */
         public XSSFWorkbook(OPCPackage pkg)
+            : this(pkg, false)
+        {
+        }
+
+        // ownsPackage: the package was opened by this workbook's constructor chain, so it must be
+        // released (reverted) if parsing fails; otherwise the file handle stays locked.
+        private XSSFWorkbook(OPCPackage pkg, bool ownsPackage)
             : base(pkg)
         {
-            BeforeDocumentRead();
+            try
+            {
+                BeforeDocumentRead();
 
-            //build a tree of POIXMLDocumentParts, this workbook being the root
-            Load(XSSFFactory.GetInstance());
+                //build a tree of POIXMLDocumentParts, this workbook being the root
+                Load(XSSFFactory.GetInstance());
 
-            // some broken Workbooks miss this...
-            SetBookViewsIfMissing();
+                // some broken Workbooks miss this...
+                SetBookViewsIfMissing();
+            }
+            catch
+            {
+                if(ownsPackage)
+                {
+                    try
+                    { pkg.Revert(); }
+                    catch(Exception) { }
+                }
+                throw;
+            }
         }
         public XSSFWorkbook(PackagePart part) : this(part.GetInputStream(), true)
         {
@@ -232,7 +252,7 @@ namespace NPOI.XSSF.UserModel
          *   </code></pre>     
          */
         public XSSFWorkbook(Stream fileStream, bool readOnly = false)
-            : this(PackageHelper.Open(fileStream, readOnly))
+            : this(PackageHelper.Open(fileStream, readOnly), true)
         {
         }
 
@@ -249,7 +269,7 @@ namespace NPOI.XSSF.UserModel
          * @param file   the file to open
          */
         public XSSFWorkbook(FileInfo file, bool readOnly = false)
-            : this(OPCPackage.Open(file, readOnly ? PackageAccess.READ : PackageAccess.READ_WRITE))
+            : this(OPCPackage.Open(file, readOnly ? PackageAccess.READ : PackageAccess.READ_WRITE), true)
         {
 
         }
@@ -291,7 +311,7 @@ namespace NPOI.XSSF.UserModel
          * @param      path   the file name.
          */
         public XSSFWorkbook(String path, bool readOnly = false)
-            : this(OpenPackage(path, readOnly))
+            : this(OpenPackage(path, readOnly), true)
         {
 
         }

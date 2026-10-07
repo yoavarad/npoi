@@ -46,7 +46,7 @@ Follow-up tasks are grouped by area rather than one task per comment. Kept items
 | `main/POIFS/Crypt/Standard/StandardEncryptor.cs:189` | // TODO: any properties??? |
 | `main/POIFS/Crypt/Standard/StandardEncryptor.cs:232` | // TODO: any properties??? |
 | `main/SS/Formula/Constant/ConstantValueParser.cs:37` | private const int TYPE_ERROR_CODE = 16; // TODO - update OOO document to include this value |
-| `main/SS/Formula/Eval/Forked/ForkedEvaluator.cs:60` | // TODO: check if this is Java 9 compatible ... |
+| `main/SS/Formula/Eval/Forked/ForkedEvaluator.cs:60` | // TODO: check if this is Java 9 compatible ... (FIXED task 110: type-name typo + assembly-qualified lookup) |
 | `main/SS/Formula/FormulaParser.cs:1075` | //TODO Livshen's code |
 | `main/SS/Formula/FormulaParser.cs:1080` | //TODO End of Livshen's code |
 | `main/SS/Formula/Functions/AggregateFunction.cs:305` | else if(n == N) //TODO: Double.compare(n, N) == 0, DOSE THE "==" operator equals Double.compare |
@@ -442,3 +442,10 @@ Follow-up tasks are grouped by area rather than one task per comment. Kept items
 | `ooxml/POIXMLPropertiesTextExtractor.cs:195` | //    // TODO Decode, if possible |
 | `ooxml/XWPF/Usermodel/XWPFDocument.cs:797` | //     * TODO DO not use a coded constant, find the constant in the OOXML |
 | `OpenXmlFormats/Spreadsheet/CustomXmlMappings.cs:20` | //  TODO the initial elements of schemaField and mapField must be ensured somewhere else - or is there a save default!? |
+
+## Task 110 deferred (F5 formula-eval items, documented not fixed)
+
+Need new plumbing (workbook date-windowing / A1-vs-R1C1 flag into the evaluation context) or a Java-DecimalFormat port; out of scope for the ForkedEvaluator bug fix:
+- 1900 vs 1904 windowing: `Functions/CalendarFieldFunction.cs:91`, `Functions/DateFunc.cs:101` (hardcoded 1900; needs `IEvaluationWorkbook` to expose the windowing flag).
+- R1C1: `Functions/Address.cs:85`, `OperationEvaluationContext.cs:227` (only A1 supported).
+- `Atp/DateParser.cs:89` (date format choice), `Eval/NumberEval.cs:67` (15-digit limit), `Functions/Text/Text.cs:64` (DecimalFormat), D-functions (DGet/DMax/DMin/DSum, DStarRunner), `EvaluationConditionalFormatRule.cs` top-10.

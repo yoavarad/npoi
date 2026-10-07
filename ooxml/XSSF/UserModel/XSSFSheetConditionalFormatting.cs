@@ -49,7 +49,7 @@ namespace NPOI.XSSF.UserModel
         /**
          * A factory method allowing to create a conditional formatting rule
          * with a cell comparison operator<p/>
-         * TODO - formulas Containing cell references are currently not Parsed properly
+         * Known limitation (#108 won't-fix): formulas containing cell references are not parsed relative to the rule anchor
          *
          * @param comparisonOperation - a constant value from
          *		 <tt>{@link NPOI.hssf.record.CFRuleRecord.ComparisonOperator}</tt>: <p>

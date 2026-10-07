@@ -36,6 +36,30 @@ Conventions, preferences, and domain knowledge.
 - **`graph.json` (~68MB), `GRAPH_REPORT.md`, `graph.html`, `manifest.json` are committed on purpose** so exploration works on a fresh clone. `graphify-out/cache/`, dated snapshot dirs and `graphify-out/*.graphify_*` are gitignored. Expect large diffs when re-committing the graph; do it only occasionally.
 - `.claude/settings.json` has graphify `PreToolUse` hooks (`hook-guard search` / `read --strict`) that steer searches to the graph.
 
+## Branch Protection (main)
+
+- Applied once via the API (task #97); not stored in the repo. Required status checks (exact check-run names, all run on every PR, no path filters): `ubuntu-latest`, `windows-latest` (CI.yml), `format (windows-latest)` (Format.yml), `branch-name`, `commit-messages` (conventions.yml), `check-body` (pr-body-check.yml).
+- Settings: `strict: true` (branch must be up to date), `enforce_admins: false` (owner can bypass in emergencies), force-push and deletion blocked, no required reviews (solo maintainer). Merge commits stay allowed (needed for `.git-blame-ignore-revs` reformat commits); do not change repo merge-method settings.
+- Command: `gh api -X PUT repos/yoavarad/npoi/branches/main/protection --input protection.json`, body:
+
+```json
+{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": ["ubuntu-latest", "windows-latest", "format (windows-latest)", "branch-name", "commit-messages", "check-body"]
+  },
+  "enforce_admins": false,
+  "required_pull_request_reviews": null,
+  "restrictions": null,
+  "allow_force_pushes": false,
+  "allow_deletions": false
+}
+```
+
+- Verify: `gh api repos/yoavarad/npoi/branches/main/protection`.
+- **Every required check must run on `synchronize`:** with `strict: true`, each "Update branch" creates a new head commit. A required workflow that only triggers on `opened`/`edited` (as `pr-body-check.yml` once did) never reports on that commit and the PR stays BLOCKED.
+- **Renaming a workflow job or matrix leg:** the old name becomes a required check that never reports, blocking every PR. Get the new name from `gh pr checks <n>`, then re-run the PUT above with the updated `contexts` (the PUT replaces the full list) before or right after merging the rename.
+
 ## Benchmarks
 
 - **Run from the csproj, not the folder:** `benchmarks/NPOI.Benchmarks` holds both a `.csproj` and a `.sln`; a bare `dotnet build`/`dotnet run` there picks the `.sln`, which maps the library projects to Debug, and BenchmarkDotNet then aborts on "non-optimized" dependencies. Use `dotnet build benchmarks/NPOI.Benchmarks/NPOI.Benchmarks.csproj -c Release` then `dotnet run --project benchmarks/NPOI.Benchmarks/NPOI.Benchmarks.csproj -c Release --no-build -- --filter '*ReadFromBytesBenchmark*' --job short`. Delete `benchmarks/NPOI.Benchmarks/bin` first if an earlier sln build left Debug DLLs there.

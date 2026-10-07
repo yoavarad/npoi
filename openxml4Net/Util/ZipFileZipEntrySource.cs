@@ -17,6 +17,15 @@ namespace NPOI.OpenXml4Net.Util
         private ZipFile zipArchive;
         public ZipFileZipEntrySource(ZipFile zipFile)
         {
+            try
+            {
+                ZipSecureFile.CheckEntryCount(zipFile.Count);
+            }
+            catch
+            {
+                zipFile.Close();
+                throw;
+            }
             this.zipArchive = zipFile;
         }
 
@@ -49,8 +58,7 @@ namespace NPOI.OpenXml4Net.Util
         {
             if(zipArchive == null)
                 throw new InvalidDataException("Zip File is closed");
-            Stream s = zipArchive.GetInputStream(entry);
-            return s;
+            return ZipSecureFile.AddThreshold(zipArchive.GetInputStream(entry), entry);
         }
     }
 }

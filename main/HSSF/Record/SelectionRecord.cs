@@ -29,7 +29,7 @@ namespace NPOI.HSSF.Record
      * Description:  shows the user's selection on the sheet
      *               for Write Set num refs to 0
      *
-     * TODO :  Fully implement reference subrecords.
+     * Reference subrecords are not decoded (#108 won't-fix): selections are preserved as written.
      * REFERENCE:  PG 291 Microsoft Excel 97 Developer's Kit (ISBN: 1-57231-498-2)
      * @author Andrew C. Oliver (acoliver at apache dot org)
      * @author Jason Height (jheight at chariot dot net dot au)

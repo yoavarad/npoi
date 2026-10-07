@@ -240,7 +240,7 @@ namespace NPOI.HSSF.Extractor
 
                 // To track formats and encodings
                 CodepageRecord codepage = null;
-                // TODO track the XFs and Format Strings
+                // XF / format-string tracking not implemented (#108 won't-fix): numbers are emitted raw
 
                 // Process each record in turn, looking for interesting ones
                 while(ris.HasNextRecord)
@@ -325,7 +325,7 @@ namespace NPOI.HSSF.Extractor
 
         protected void handleNumericCell(StringBuilder text, double value)
         {
-            // TODO Need to fetch / use format strings
+            // Format strings not applied (#108 won't-fix): value emitted raw
             text.Append(value);
             text.Append('\n');
         }

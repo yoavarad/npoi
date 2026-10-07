@@ -427,7 +427,12 @@ namespace NPOI.HPSF
         /// </return>
         public static bool IsPropertySetStream(byte[] src, int offset, int length)
         {
-            /* FIXME (3): Ensure that at most "length" bytes are read. */
+            /* The fixed header must fit into the significant bytes. */
+            if(src == null || offset < 0 || length < OFFSET_HEADER
+                || offset > src.Length - OFFSET_HEADER || length > src.Length - offset)
+            {
+                return false;
+            }
 
             /*
              * Read the header fields of the stream. They must always be
@@ -473,7 +478,19 @@ namespace NPOI.HPSF
         private void Init(byte[] src, int offset, int length)
         {
 
-            /* FIXME (3): Ensure that at most "length" bytes are read. */
+            if(length < OFFSET_HEADER || offset < 0 || length > src.Length - offset)
+            {
+                throw new IllegalPropertySetDataException("Property set stream of length " + length
+                    + " at offset " + offset + " does not fit its " + src.Length + " byte buffer or its header.");
+            }
+            if(offset != 0 || length != src.Length)
+            {
+                // confine all further reads (incl. the section parser) to the significant bytes
+                byte[] copy = new byte[length];
+                System.Array.Copy(src, offset, copy, 0, length);
+                src = copy;
+                offset = 0;
+            }
 
             /*
              * Read the stream's header fields.
@@ -493,6 +510,11 @@ namespace NPOI.HPSF
             {
                 throw new HPSFRuntimeException("Section count " + sectionCount + " is negative.");
             }
+            if((long) sectionCount * (ClassID.LENGTH + LittleEndianConsts.INT_SIZE) > length - OFFSET_HEADER)
+            {
+                throw new IllegalPropertySetDataException("Section count " + sectionCount
+                    + " does not fit into a stream of " + length + " bytes.");
+            }
 
             /*
              * Read the sections, which are following the header. They
@@ -511,8 +533,19 @@ namespace NPOI.HPSF
              * consists of a ClassID and a DWord, and we have to increment
              * "offset" accordingly.
              */
+            var seenOffsets = new System.Collections.Generic.HashSet<long>();
             for(int i = 0; i < sectionCount; i++)
             {
+                long sectionOffset = LittleEndian.GetUInt(src, o + ClassID.LENGTH);
+                if(!seenOffsets.Add(sectionOffset))
+                {
+                    throw new IllegalPropertySetDataException("Section " + i + " shares offset " + sectionOffset + " with an earlier section.");
+                }
+                if(sectionOffset + 2 * LittleEndianConsts.INT_SIZE > length)
+                {
+                    throw new IllegalPropertySetDataException("Section " + i + " offset " + sectionOffset
+                        + " lies outside the stream of " + length + " bytes.");
+                }
                 Section s = new MutableSection(src, o);
                 o += ClassID.LENGTH + LittleEndianConsts.INT_SIZE;
                 sections.Add(s);

@@ -173,6 +173,19 @@ namespace NPOI.OpenXml4Net.OPC
          * @return A Package object
          * @ if a parsing error occur.
          */
+        // Revert (not Close): Close() on a read-write package tries to save and would leak the file handle
+        private static void AbortQuietly(OPCPackage pack)
+        {
+            try
+            {
+                pack.Revert();
+            }
+            catch(Exception)
+            {
+                // best effort; the original exception is rethrown by the caller
+            }
+        }
+
         public static OPCPackage Open(ZipEntrySource zipEntry)
         {
             OPCPackage pack = new ZipPackage(zipEntry, PackageAccess.READ);
@@ -185,14 +198,9 @@ namespace NPOI.OpenXml4Net.OPC
                 // pack.originalPackagePath = file.AbsolutePath;
                 return pack;
             }
-            catch(InvalidFormatException)
+            catch
             {
-                IOUtils.CloseQuietly(pack);
-                throw;
-            }
-            catch(RuntimeException)
-            {
-                IOUtils.CloseQuietly(pack);
+                AbortQuietly(pack);
                 throw;
             }
         }
@@ -233,7 +241,7 @@ namespace NPOI.OpenXml4Net.OPC
                 {
                     if(!success)
                     {
-                        IOUtils.CloseQuietly(pack);
+                        AbortQuietly(pack);
                     }
                 }
             }
@@ -271,14 +279,9 @@ namespace NPOI.OpenXml4Net.OPC
                 pack.originalPackagePath = file.FullName;
                 return pack;
             }
-            catch(InvalidFormatException)
+            catch
             {
-                IOUtils.CloseQuietly(pack);
-                throw;
-            }
-            catch(RuntimeException)
-            {
-                IOUtils.CloseQuietly(pack);
+                AbortQuietly(pack);
                 throw;
             }
         }
@@ -304,14 +307,9 @@ namespace NPOI.OpenXml4Net.OPC
                     pack.GetParts();
                 }
             }
-            catch(InvalidFormatException)
+            catch
             {
-                IOUtils.CloseQuietly(pack);
-                throw;
-            }
-            catch(RuntimeException)
-            {
-                IOUtils.CloseQuietly(pack);
+                AbortQuietly(pack);
                 throw;
             }
             return pack;
@@ -320,9 +318,17 @@ namespace NPOI.OpenXml4Net.OPC
         public static OPCPackage Open(Stream stream, bool readOnly)
         {
             OPCPackage pack = new ZipPackage(stream, readOnly ? PackageAccess.READ : PackageAccess.READ_WRITE);
-            if(pack.partList == null)
+            try
             {
-                pack.GetParts();
+                if(pack.partList == null)
+                {
+                    pack.GetParts();
+                }
+            }
+            catch
+            {
+                AbortQuietly(pack);
+                throw;
             }
             return pack;
         }
@@ -855,6 +861,11 @@ namespace NPOI.OpenXml4Net.OPC
                                 this.packageProperties = propertiesPart;
                                 needCorePropertiesPart = false;
                             }
+                        }
+                        catch(ZipSecurityException)
+                        {
+                            // zip bomb: fail closed
+                            throw;
                         }
                         catch(IOException)
                         {

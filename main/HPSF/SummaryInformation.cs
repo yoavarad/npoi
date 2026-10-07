@@ -435,7 +435,7 @@ namespace NPOI.HPSF
         public byte[] Thumbnail
         {
             get => (byte[]) GetProperty(PropertyIDMap.PID_THUMBNAIL);
-            set => FirstSection.SetProperty(PropertyIDMap.PID_THUMBNAIL, /* FIXME: */ Variant.VT_LPSTR, value);
+            set => FirstSection.SetProperty(PropertyIDMap.PID_THUMBNAIL, Variant.VT_CF, value);
         }
 
         /// <summary>

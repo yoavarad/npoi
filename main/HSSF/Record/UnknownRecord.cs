@@ -304,7 +304,7 @@ namespace NPOI.HSSF.Record
  */
         private static bool IsObservedButUnknown(int sid)
         {
-            // TODO Look up more of these in the latest [MS-XLS] doc and move to getBiffName
+            // Names only affect diagnostics (#108 won't-fix): add more from [MS-XLS] to GetBiffName as needed
             switch(sid)
             {
                 case 0x0033:

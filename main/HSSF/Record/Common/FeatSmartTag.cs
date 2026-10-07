@@ -34,7 +34,7 @@ namespace NPOI.HSSF.Record.Common
      */
     public class FeatSmartTag : SharedFeature
     {
-        // TODO - process
+        // Smart tag payload is kept as raw bytes and round-tripped verbatim (decoding intentionally not implemented).
         private byte[] data;
 
         public FeatSmartTag()

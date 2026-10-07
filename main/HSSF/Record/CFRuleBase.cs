@@ -126,7 +126,7 @@ namespace NPOI.HSSF.Record
         }
 
         protected int formatting_options;
-        protected short formatting_not_used; // TODO Decode this properly
+        protected short formatting_not_used; // reserved/unused per [MS-XLS] (dxfn); preserved verbatim
 
         protected FontFormatting _fontFormatting;
         protected BorderFormatting _borderFormatting;
@@ -541,7 +541,7 @@ namespace NPOI.HSSF.Record
         }
 
         /**
-         * TODO - parse conditional format formulas properly i.e. produce tRefN and tAreaN instead of tRef and tArea
+         * WON'T FIX (#108, needs the rule's anchor cell): parse conditional format formulas properly i.e. produce tRefN and tAreaN instead of tRef and tArea
          * this call will produce the wrong results if the formula Contains any cell references
          * One approach might be to apply the inverse of SharedFormulaRecord.ConvertSharedFormulas(Stack, int, int)
          * Note - two extra parameters (rowIx & colIx) will be required. They probably come from one of the Region objects.

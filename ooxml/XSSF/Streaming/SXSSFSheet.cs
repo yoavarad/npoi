@@ -833,7 +833,7 @@ namespace NPOI.XSSF.Streaming
         //TODO: test
         public void GroupRow(int fromRow, int toRow)
         {
-            var groupRows = _rows.Where(kvp => kvp.Key >= fromRow && kvp.Key <= toRow + 1).Select(r => r.Value);
+            var groupRows = _rows.Where(kvp => kvp.Key >= fromRow && kvp.Key <= toRow).Select(r => r.Value);
             foreach(SXSSFRow row in groupRows)
             {
                 int level = row.OutlineLevel + 1;

@@ -424,7 +424,11 @@ namespace NPOI.HSSF.Record
         }
         public override Object Clone()
         {
-            return this; // TODO proper clone
+            EmbeddedObjectRefSubRecord rec = (EmbeddedObjectRefSubRecord) MemberwiseClone();
+            rec.field_2_refPtg = (Ptg) field_2_refPtg?.Clone();
+            rec.field_2_unknownFormulaData = (byte[]) field_2_unknownFormulaData?.Clone();
+            rec.field_6_unknown = (byte[]) field_6_unknown?.Clone();
+            return rec;
         }
         public void SetUnknownFormulaData(byte[] formularData)
         {

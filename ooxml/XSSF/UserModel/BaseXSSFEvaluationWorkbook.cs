@@ -383,7 +383,7 @@ namespace NPOI.XSSF.UserModel
 
 
         /*
-         * TODO: data tables are stored at the workbook level in XSSF, but are bound to a single sheet.
+         * won't fix (cache staleness, see FIXME below): data tables are stored at the workbook level in XSSF, but are bound to a single sheet.
          *       The current code structure has them hanging off XSSFSheet, but formulas reference them
          *       only by name (names are global, and case insensitive).
          *       This map stores names as lower case for case-insensitive lookups.

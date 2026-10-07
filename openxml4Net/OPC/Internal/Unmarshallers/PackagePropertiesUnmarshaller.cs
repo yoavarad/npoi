@@ -60,8 +60,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Unmarshallers
 
         protected XmlNamespaceManager nsmgr;
 
-        // TODO Load element with XMLBeans or dynamic table
-        // TODO Check every element/namespace for compliance
+        // Elements are loaded via XmlDocument; OPC compliance is checked by CheckElementForOPCCompliance
         public PackagePart Unmarshall(UnmarshallContext context, Stream in1)
         {
             PackagePropertiesPart coreProps = new PackagePropertiesPart(context

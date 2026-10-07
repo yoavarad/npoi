@@ -1032,8 +1032,6 @@ namespace NPOI.XSSF.Streaming
 
 
 
-        //TODO: missing method isDate1904, isHidden, setHidden
-
         private sealed class SheetEnumerator<T> : IEnumerator<T> where T : class, ISheet
         {
             private XSSFWorkbook _wb;

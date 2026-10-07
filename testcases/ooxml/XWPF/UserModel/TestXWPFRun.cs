@@ -237,6 +237,23 @@ namespace TestCases.XWPF.UserModel
 
 
         [Test]
+        public void TestRemoveBreak()
+        {
+            XWPFDocument doc = new XWPFDocument();
+            XWPFRun run = doc.CreateParagraph().CreateRun();
+            run.RemoveBreak();
+            ClassicAssert.AreEqual(0, run.GetCTR().SizeOfBrArray());
+            run.AddBreak();
+            run.AddBreak(BreakType.PAGE);
+            ClassicAssert.AreEqual(2, run.GetCTR().SizeOfBrArray());
+            run.RemoveBreak();
+            ClassicAssert.AreEqual(1, run.GetCTR().SizeOfBrArray());
+            run.RemoveBreak();
+            ClassicAssert.AreEqual(0, run.GetCTR().SizeOfBrArray());
+            doc.Close();
+        }
+
+        [Test]
         public void TestAddPageBreak()
         {
             ctRun.AddNewT().Value = "TEST STRING";

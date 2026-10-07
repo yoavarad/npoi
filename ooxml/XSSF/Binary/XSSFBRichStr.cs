@@ -36,7 +36,7 @@ namespace NPOI.XSSF.Binary
             StringBuilder sb = new StringBuilder();
 
             int read = XSSFBUtils.ReadXLWideString(bytes, offset+1, sb);
-            //TODO: parse phonetic strings.
+            // won't fix: phonetic (furigana) runs are skipped, base text is returned
             return new XSSFBRichStr(sb.ToString(), "");
         }
 

@@ -402,6 +402,30 @@ namespace NPOI.XWPF.UserModel
             }
         }
 
+        /// <summary>
+        /// Whether the document uses different headers/footers for odd and even pages (w:evenAndOddHeaders).
+        /// </summary>
+        public bool IsEvenAndOddHeaders
+        {
+            get
+            {
+                return ctSettings.evenAndOddHeaders != null && ctSettings.evenAndOddHeaders.val;
+            }
+            set
+            {
+                if(value)
+                {
+                    CT_OnOff onOff = new CT_OnOff();
+                    onOff.val = true;
+                    ctSettings.evenAndOddHeaders = onOff;
+                }
+                else
+                {
+                    ctSettings.evenAndOddHeaders = null;
+                }
+            }
+        }
+
         protected internal override void Commit()
         {
             if(ctSettings == null)

@@ -20,3 +20,5 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+.ydk/manifest.yaml merge=ydk-bookkeeping
+.ydk/tasks/*.md merge=ydk-bookkeeping
