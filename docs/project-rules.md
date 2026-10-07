@@ -40,3 +40,19 @@ Conventions, preferences, and domain knowledge.
 
 - **Run from the csproj, not the folder:** `benchmarks/NPOI.Benchmarks` holds both a `.csproj` and a `.sln`; a bare `dotnet build`/`dotnet run` there picks the `.sln`, which maps the library projects to Debug, and BenchmarkDotNet then aborts on "non-optimized" dependencies. Use `dotnet build benchmarks/NPOI.Benchmarks/NPOI.Benchmarks.csproj -c Release` then `dotnet run --project benchmarks/NPOI.Benchmarks/NPOI.Benchmarks.csproj -c Release --no-build -- --filter '*ReadFromBytesBenchmark*' --job short`. Delete `benchmarks/NPOI.Benchmarks/bin` first if an earlier sln build left Debug DLLs there.
 - **Read-path baseline:** `ReadFromBytesBenchmark` (POIFS open/walk, HPSF, HSSF open, cell iteration, pictures, embedded objects; MemoryDiagnoser) has committed results in [docs/benchmarks/read-path-baseline.md](benchmarks/read-path-baseline.md). Re-run and compare allocated bytes and GC counts when changing the read path.
+
+## Branch Protection
+
+`main` is protected. Required status checks (6): `ubuntu-latest`, `windows-latest`, `format (windows-latest)`, `branch-name`, `commit-messages`, `check-body`. `strict` is **false**: avoids forced branch updates and CI reruns after every merge. Admins not enforced; force-push and deletion blocked; no required reviews.
+
+Required status checks body (`strict: false`):
+
+```json
+{"strict": false, "contexts": ["ubuntu-latest", "windows-latest", "format (windows-latest)", "branch-name", "commit-messages", "check-body"]}
+```
+
+Set with:
+
+```console
+gh api -X PATCH repos/yoavarad/npoi/branches/main/protection/required_status_checks -F strict=false
+```
