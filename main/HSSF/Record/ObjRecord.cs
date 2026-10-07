@@ -50,7 +50,7 @@ namespace NPOI.HSSF.Record
         public ObjRecord()
         {
             subrecords = new List<SubRecord>(2);
-            // TODO - ensure 2 sub-records (ftCmo 15h, and ftEnd 00h) are always created
+            // ftCmo/ftEnd are not auto-created here; callers add sub-records (#108 won't-fix)
             _uninterpretedData = null;
         }
 
@@ -62,7 +62,7 @@ namespace NPOI.HSSF.Record
 
         public ObjRecord(RecordInputStream in1)
         {
-            // TODO - problems with OBJ sub-records stream
+            // Known tolerance (#108 won't-fix): malformed OBJ sub-record streams are handled below by stopping at EndSubRecord
             // MS spec says first sub-record is always CommonObjectDataSubRecord,
             // and last is
             // always EndSubRecord. OOO spec does not mention ObjRecord(0x005D).

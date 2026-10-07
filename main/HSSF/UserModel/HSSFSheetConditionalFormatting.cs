@@ -49,7 +49,7 @@ namespace NPOI.HSSF.UserModel
         /// <summary>
         /// A factory method allowing to Create a conditional formatting rule
         /// with a cell comparison operator
-        /// TODO - formulas containing cell references are currently not Parsed properly
+        /// Known limitation (#108 won't-fix): formulas containing cell references are not parsed relative to the rule anchor
         /// </summary>
         /// <param name="comparisonOperation">a constant value from HSSFConditionalFormattingRule.ComparisonOperator</param>
         /// <param name="formula1">formula for the valued, Compared with the cell</param>
@@ -76,7 +76,7 @@ namespace NPOI.HSSF.UserModel
         /// <summary>
         /// A factory method allowing to Create a conditional formatting rule with a formula.
         /// The formatting rules are applied by Excel when the value of the formula not equal to 0.
-        /// TODO - formulas containing cell references are currently not Parsed properly
+        /// Known limitation (#108 won't-fix): formulas containing cell references are not parsed relative to the rule anchor
         /// </summary>
         /// <param name="formula">formula for the valued, Compared with the cell</param>
         /// <returns></returns>

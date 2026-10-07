@@ -260,7 +260,7 @@ namespace NPOI.HSSF.Extractor
                     case NoteRecord.sid:
                         NoteRecord nrec = (NoteRecord)record;
                         thisRow = nrec.Row;
-                        // TODO: Find object to match nrec.GetShapeId()
+                        // Note text is not extracted (#108 won't-fix)
                         break;
                     case NumberRecord.sid:
                         NumberRecord numrec = (NumberRecord)record;

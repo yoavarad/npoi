@@ -90,7 +90,7 @@ namespace NPOI.HSSF.Record.Crypto
         }
 
         /**
-         * TODO: Additionally, the lbPlyPos (position_of_BOF) field of the BoundSheet8 record MUST NOT be encrypted.
+         * Not handled (#108 won't-fix, written files are never RC4-encrypted by NPOI): additionally, the lbPlyPos (position_of_BOF) field of the BoundSheet8 record MUST NOT be encrypted.
          *
          * @return <c>true</c> if record type specified by <c>sid</c> is never encrypted
          */
@@ -100,7 +100,7 @@ namespace NPOI.HSSF.Record.Crypto
             {
                 case BOFRecord.sid:
                 // sheet BOFs for sure
-                // TODO - find out about chart BOFs
+                // chart BOFs share BOFRecord.sid, so they are covered too
 
                 case InterfaceHdrRecord.sid:
                 // don't know why this record doesn't seem to get encrypted
