@@ -49,7 +49,7 @@ namespace NPOI.XSSF.Binary
             int styleIdx = XSSFBUtils.Get24BitInt(data, offset);
             offset += 3;
             //TODO: range checking
-            bool showPhonetic = false;//TODO: fill this out
+            bool showPhonetic = false;// won't fix: flag unused by the handlers
             cell.Reset(currentRow, colNum, styleIdx, showPhonetic);
         }
 

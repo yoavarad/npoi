@@ -61,7 +61,7 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                // TODO How does XSSF encode this?
+                // won't fix: stored only in the x14 dataBar extension, which is not modelled; value is not persisted
             }
         }
 
@@ -74,7 +74,7 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                // TODO How does XSSF encode this?
+                // won't fix: stored only in the x14 dataBar extension, which is not modelled; value is not persisted
             }
         }
 
@@ -86,7 +86,7 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                // TODO How does XSSF encode this?
+                // won't fix: stored only in the x14 dataBar extension, which is not modelled; value is not persisted
             }
         }
 

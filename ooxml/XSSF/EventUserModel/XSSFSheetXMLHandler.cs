@@ -233,14 +233,13 @@ namespace NPOI.XSSF.EventUserModel
                     if(ref1 != null)
                     {
                         // This one defines it
-                        // TODO Save it somewhere
+                        // won't fix: shared formula text is not resolved in the event model
                         fIsOpen = true;
                     }
                     else
                     {
                         // This one uses a shared formula
-                        // TODO Retrieve the shared formula and tweak it to 
-                        //  match the current cell
+                        // won't fix: shared formulas are not expanded per cell in the event model
                         if(formulasNotResults)
                         {
                             //logger.log(POILogger.WARN, "shared formulas not yet supported!");

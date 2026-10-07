@@ -521,6 +521,11 @@ namespace NPOI.SS.Util
                         return -1;
                     }
                     cell = row.GetCell(region.FirstColumn);
+                    if(cell == null)
+                    {
+                        // first cell of the merged region is absent (e.g. outside the SXSSF window)
+                        return -1;
+                    }
                     colspan = 1 + region.LastColumn - region.FirstColumn;
                 }
             }
@@ -821,6 +826,10 @@ namespace NPOI.SS.Util
                     return -1;
                 }
                 cell = row.GetCell(region.FirstColumn);
+                if(cell == null)
+                {
+                    return -1;
+                }
                 colspan = 1 + region.LastColumn - region.FirstColumn;
             }
 

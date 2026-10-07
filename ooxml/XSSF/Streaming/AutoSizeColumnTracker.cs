@@ -323,8 +323,7 @@ namespace NPOI.XSSF.Streaming
                     int column = e.Key;
                     ICell cell = row.GetCell(column); //is MissingCellPolicy=Row.RETURN_NULL_AND_BLANK needed?
 
-                    // FIXME: if cell belongs to a merged region, some of the merged region may have fallen outside of the random access window
-                    // In this case, getting the column width may result in an error. Need to gracefully handle this.
+                    // A merged region whose first cell is outside the random access window is skipped (width -1).
 
                     // FIXME: Most cells are not merged, so calling getCellWidth twice re-computes the same value twice.
                     // Need to rewrite this to avoid unnecessary computation if this proves to be a performance bottleneck.
@@ -343,8 +342,7 @@ namespace NPOI.XSSF.Streaming
                 {
                     int column = cell.ColumnIndex;
 
-                    // FIXME: if cell belongs to a merged region, some of the merged region may have fallen outside of the random access window
-                    // In this case, getting the column width may result in an error. Need to gracefully handle this.
+                    // A merged region whose first cell is outside the random access window is skipped (width -1).
 
                     // FIXME: Most cells are not merged, so calling getCellWidth twice re-computes the same value twice.
                     // Need to rewrite this to avoid unnecessary computation if this proves to be a performance bottleneck.
