@@ -32,7 +32,7 @@ namespace TestCases.SS.Formula.Eval.Forked
     [TestFixture]
     public class TestForkedEvaluator
     {
-        protected IWorkbook NewWorkbook()
+        protected virtual IWorkbook NewWorkbook()
         {
             return new HSSFWorkbook();
         }
