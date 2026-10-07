@@ -57,6 +57,7 @@ Conventions, preferences, and domain knowledge.
 ```
 
 - Verify: `gh api repos/yoavarad/npoi/branches/main/protection`.
+- **Every required check must run on `synchronize`:** with `strict: true`, each "Update branch" creates a new head commit. A required workflow that only triggers on `opened`/`edited` (as `pr-body-check.yml` once did) never reports on that commit and the PR stays BLOCKED.
 - **Renaming a workflow job or matrix leg:** the old name becomes a required check that never reports, blocking every PR. Get the new name from `gh pr checks <n>`, then re-run the PUT above with the updated `contexts` (the PUT replaces the full list) before or right after merging the rename.
 
 ## Benchmarks
