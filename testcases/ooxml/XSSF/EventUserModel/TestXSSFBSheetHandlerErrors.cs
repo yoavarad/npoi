@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using System.IO;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.Binary;
 using NPOI.XSSF.EventUserModel;
 using NPOI.XSSF.UserModel;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System.Collections.Generic;
+using System.IO;
 
 namespace TestCases.XSSF.EventUserModel
 {
