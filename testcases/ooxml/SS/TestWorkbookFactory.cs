@@ -32,7 +32,7 @@ namespace TestCases.SS
     using TestCases;
     using TestCases.HSSF;
 
-    [TestFixture, NonParallelizable] // closing an HSSF workbook rewrites the shared sample file
+    [TestFixture]
     public class TestWorkbookFactory
     {
         private readonly String xls = "SampleSS.xls";
@@ -401,6 +401,100 @@ namespace TestCases.SS
             catch(FileNotFoundException)
             {
                 // expected
+            }
+        }
+
+        private static FileInfo CopySampleToTemp(string sample)
+        {
+            FileInfo copy = TempFile.CreateTempFile("wbfactory", Path.GetExtension(sample));
+            HSSFTestDataSamples.GetSampleFile(sample).CopyTo(copy.FullName, true);
+            copy.Refresh();
+            return copy;
+        }
+
+        private static void DeleteTemp(FileInfo file)
+        {
+            file.Refresh();
+            if(file.Exists)
+            {
+                file.Attributes = FileAttributes.Normal;
+                file.Delete();
+            }
+        }
+
+        [Test]
+        public void TestCreateFromReadOnlyFile()
+        {
+            foreach(string sample in new[] { xls, xlsx })
+            {
+                FileInfo copy = CopySampleToTemp(sample);
+                try
+                {
+                    copy.Attributes |= FileAttributes.ReadOnly;
+
+                    WorkbookFactory.Create(copy.FullName).Close();
+                    WorkbookFactory.Create(copy.FullName, null).Close();
+                    WorkbookFactory.Create(copy.FullName, null, true).Close();
+                    WorkbookFactory.Create(copy.FullName, null, false).Close();
+                    if(sample == xls)
+                    {
+                        new POIFSFileSystem(copy).Close();
+                        new NPOIFSFileSystem(copy).Close();
+                    }
+                }
+                finally
+                {
+                    DeleteTemp(copy);
+                }
+            }
+        }
+
+        [Test]
+        public void TestCreateWhileFileOpenByAnotherReader()
+        {
+            foreach(string sample in new[] { xls, xlsx })
+            {
+                FileInfo copy = CopySampleToTemp(sample);
+                try
+                {
+                    using(new FileStream(copy.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        WorkbookFactory.Create(copy.FullName).Close();
+                        WorkbookFactory.Create(copy.FullName, null).Close();
+                        WorkbookFactory.Create(copy.FullName, null, true).Close();
+                        WorkbookFactory.Create(copy.FullName, null, false).Close();
+                        if(sample == xls)
+                        {
+                            new POIFSFileSystem(copy).Close();
+                            new NPOIFSFileSystem(copy).Close();
+                        }
+                    }
+                }
+                finally
+                {
+                    DeleteTemp(copy);
+                }
+            }
+        }
+
+        [Test]
+        public void TestCloseLeavesFileByteIdentical()
+        {
+            foreach(string sample in new[] { xls, xlsx })
+            {
+                FileInfo copy = CopySampleToTemp(sample);
+                try
+                {
+                    byte[] before = File.ReadAllBytes(copy.FullName);
+                    WorkbookFactory.Create(copy.FullName).Close();
+                    WorkbookFactory.Create(copy.FullName, null).Close();
+                    WorkbookFactory.Create(copy.FullName, null, false).Close();
+                    CollectionAssert.AreEqual(before, File.ReadAllBytes(copy.FullName), sample + " was modified by Close()");
+                }
+                finally
+                {
+                    DeleteTemp(copy);
+                }
             }
         }
 
