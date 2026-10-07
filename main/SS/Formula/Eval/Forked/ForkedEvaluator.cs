@@ -57,9 +57,8 @@ namespace NPOI.SS.Formula.Eval.Forked
             {
                 try
                 {
-                    Type evalWB = Type.GetType("NPOI.XSSF.UserModel.XSSFEvaluationWorkbook");
-                    Type xssfWB = Type.GetType("NPOI.XSSF.UserMode.XSSFWorkbook");
-                    MethodInfo createM = evalWB.GetMethod("create", new Type[] { xssfWB });
+                    Type evalWB = Type.GetType("NPOI.XSSF.UserModel.XSSFEvaluationWorkbook, NPOI.OOXML", true);
+                    MethodInfo createM = evalWB.GetMethod("Create", new Type[] { typeof(IWorkbook) });
                     return (IEvaluationWorkbook) createM.Invoke(null, new object[] { wb });
                 }
                 catch(Exception e)
