@@ -117,6 +117,36 @@ namespace NPOI.OpenXml4Net.Util
             return MAX_TEXT_SIZE;
         }
         private static long MAX_ENTRY_COUNT = 10000;
+        private static long MAX_TOTAL_SIZE = 0xFFFFFFFFL;
+
+        /// <summary>
+        /// Sets the maximum total uncompressed size of all entries buffered in memory when a
+        /// package is read from a stream. Defaults to 4GB.
+        /// </summary>
+        public static void SetMaxTotalSize(long maxTotalSize)
+        {
+            if(maxTotalSize < 0)
+            {
+                throw new ArgumentException("Max total size must not be negative.");
+            }
+            MAX_TOTAL_SIZE = maxTotalSize;
+        }
+
+        /// <summary>Returns the maximum total uncompressed size allowed when buffering a zip stream.</summary>
+        public static long GetMaxTotalSize()
+        {
+            return MAX_TOTAL_SIZE;
+        }
+
+        internal static void CheckTotalSize(long total)
+        {
+            if(total > MAX_TOTAL_SIZE)
+            {
+                throw new ZipSecurityException("Zip bomb detected! The zip would exceed the max total size of expanded data. "
+                    + "You can adjust this limit via ZipSecureFile.SetMaxTotalSize(). "
+                    + "Total: " + total + ", limit: MAX_TOTAL_SIZE: " + MAX_TOTAL_SIZE);
+            }
+        }
 
         /// <summary>
         /// Sets the maximum number of entries a zip may contain. Defaults to 10000.

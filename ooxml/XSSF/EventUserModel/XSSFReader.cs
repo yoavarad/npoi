@@ -366,6 +366,10 @@ namespace NPOI.XSSF.EventUserModel
                     {
                         return null;
                     }
+                    catch(NPOI.OpenXml4Net.Util.ZipSecurityException)
+                    {
+                        throw;
+                    }
                     catch(IOException)
                     {
                         return null;
@@ -410,6 +414,10 @@ namespace NPOI.XSSF.EventUserModel
                     catch(InvalidFormatException)
                     {
                         return null;
+                    }
+                    catch(NPOI.OpenXml4Net.Util.ZipSecurityException)
+                    {
+                        throw;
                     }
                     catch(IOException)
                     {

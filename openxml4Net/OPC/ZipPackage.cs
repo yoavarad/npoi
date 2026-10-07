@@ -118,6 +118,14 @@ namespace NPOI.OpenXml4Net.OPC
                     zis = ZipHelper.OpenZipStream(fis);
                     ze = new ZipInputStreamZipEntrySource(zis);
                 }
+                catch(ZipSecurityException)
+                {
+                    // zip bomb in the fallback path: release the file and fail closed with the original type
+                    try
+                    { (zis as IDisposable ?? fis)?.Dispose(); }
+                    catch(IOException) { }
+                    throw;
+                }
                 catch(IOException e2)
                 {
                     if(zis != null)

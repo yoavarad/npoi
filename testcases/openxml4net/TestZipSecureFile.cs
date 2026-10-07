@@ -17,6 +17,7 @@ namespace TestCases.OpenXml4Net.OPC
         private double ratio;
         private long maxSize;
         private long maxCount;
+        private long maxTotal;
         private string tmp;
         private readonly System.Collections.Generic.List<ZipEntrySource> opened = new System.Collections.Generic.List<ZipEntrySource>();
 
@@ -26,6 +27,7 @@ namespace TestCases.OpenXml4Net.OPC
             ratio = ZipSecureFile.GetMinInflateRatio();
             maxSize = ZipSecureFile.GetMaxEntrySize();
             maxCount = ZipSecureFile.GetMaxEntryCount();
+            maxTotal = ZipSecureFile.GetMaxTotalSize();
             tmp = Path.Combine(Path.GetTempPath(), "zsf-" + Guid.NewGuid().ToString("N") + ".zip");
         }
 
@@ -35,6 +37,7 @@ namespace TestCases.OpenXml4Net.OPC
             ZipSecureFile.SetMinInflateRatio(ratio);
             ZipSecureFile.SetMaxEntrySize(maxSize);
             ZipSecureFile.SetMaxEntryCount(maxCount);
+            ZipSecureFile.SetMaxTotalSize(maxTotal);
             foreach(var o in opened)
             { try { o.Close(); } catch { } }
             opened.Clear();
@@ -232,6 +235,78 @@ namespace TestCases.OpenXml4Net.OPC
             File.WriteAllBytes(tmp, zip);
             AssertBomb(() => OPCPackage.Open(tmp, PackageAccess.READ));
             AssertBomb(() => OPCPackage.Open(new MemoryStream(zip)));
+        }
+
+        private static byte[] PaddedXml(string rootOpen, string rootClose, int size)
+        {
+            byte[] open = System.Text.Encoding.ASCII.GetBytes(rootOpen);
+            byte[] close = System.Text.Encoding.ASCII.GetBytes(rootClose);
+            byte[] data = new byte[size];
+            for(int k = 0; k < size; k++)
+                data[k] = (byte) ' ';
+            Array.Copy(open, 0, data, 0, open.Length);
+            Array.Copy(close, 0, data, size - close.Length, close.Length);
+            return data;
+        }
+
+        private static byte[] MakeCorePropsBombPackage()
+        {
+            using var ms = new MemoryStream();
+            using(var zos = new ZipOutputStream(ms) { IsStreamOwner = false })
+            {
+                zos.SetLevel(9);
+                void Add(string name, byte[] data)
+                {
+                    zos.PutNextEntry(new ZipEntry(name) { CompressionMethod = CompressionMethod.Deflated });
+                    zos.Write(data, 0, data.Length);
+                    zos.CloseEntry();
+                }
+                string ct = "<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
+                    + "<Default Extension=\"xml\" ContentType=\"application/xml\"/>"
+                    + "<Override PartName=\"/docProps/core.xml\" ContentType=\"application/vnd.openxmlformats-package.core-properties+xml\"/></Types>";
+                Add("[Content_Types].xml", System.Text.Encoding.ASCII.GetBytes(ct));
+                Add("docProps/core.xml", PaddedXml("<cp:coreProperties xmlns:cp=\"http://schemas.openxmlformats.org/package/2006/metadata/core-properties\">", "</cp:coreProperties>", 20_000_000));
+            }
+            return ms.ToArray();
+        }
+
+        [Test]
+        public void BombInUnmarshalledPart_FailsClosed()
+        {
+            byte[] zip = MakeCorePropsBombPackage();
+            File.WriteAllBytes(tmp, zip);
+            AssertBomb(() => OPCPackage.Open(tmp, PackageAccess.READ));
+            AssertBomb(() => OPCPackage.Open(new FileInfo(tmp), PackageAccess.READ));
+            AssertBomb(() => OPCPackage.Open(new MemoryStream(zip)));
+            AssertBomb(() => OPCPackage.Open(new MemoryStream(zip), true));
+        }
+
+        [Test]
+        public void BombOpen_DoesNotLeakFileHandle()
+        {
+            File.WriteAllBytes(tmp, MakeCorePropsBombPackage());
+            AssertBomb(() => OPCPackage.Open(new FileInfo(tmp), PackageAccess.READ));
+            File.Delete(tmp); // throws if the handle leaked
+            Assert.IsFalse(File.Exists(tmp));
+        }
+
+        [Test]
+        public void BombOpenReadWrite_DoesNotLeakFileHandle()
+        {
+            File.WriteAllBytes(tmp, MakeCorePropsBombPackage());
+            AssertBomb(() => OPCPackage.Open(new FileInfo(tmp), PackageAccess.READ_WRITE));
+            File.Delete(tmp);
+            Assert.IsFalse(File.Exists(tmp));
+        }
+
+        [Test]
+        public void MaxTotalSize_StreamPath()
+        {
+            byte[] zip = MakeZip(3, 60_000, (int) CompressionMethod.Deflated, zeros: false);
+            ZipSecureFile.SetMaxTotalSize(150_000);
+            AssertBomb(() => StreamSource(zip));
+            ZipSecureFile.SetMaxTotalSize(180_000);
+            DrainAll(StreamSource(zip));
         }
 
         private static void AssertChainHasBomb(Exception e)

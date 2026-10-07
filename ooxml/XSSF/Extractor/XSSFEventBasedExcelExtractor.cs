@@ -295,6 +295,10 @@ namespace NPOI.XSSF.Extractor
 
                     return text.ToString();
                 }
+                catch(NPOI.OpenXml4Net.Util.ZipSecurityException)
+                {
+                    throw;
+                }
                 catch(IOException)
                 {
                     //LOGGER.log(POILogger.WARN, e);

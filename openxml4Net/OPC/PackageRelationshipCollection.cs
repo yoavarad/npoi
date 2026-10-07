@@ -1,4 +1,5 @@
 using NPOI.OpenXml4Net.Exceptions;
+using NPOI.OpenXml4Net.Util;
 using NPOI.Util;
 using System;
 using System.Collections.Generic;
@@ -403,6 +404,10 @@ namespace NPOI.OpenXml4Net.OPC
                     }
                     AddRelationship(target, targetMode, type, id);
                 }
+            }
+            catch(ZipSecurityException)
+            {
+                throw;
             }
             catch(Exception e)
             {
