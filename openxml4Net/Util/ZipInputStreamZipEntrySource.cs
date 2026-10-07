@@ -158,7 +158,7 @@ namespace NPOI.OpenXml4Net.Util
                 while((read = inp.Read(buffer, 0, buffer.Length)) > 0)
                 {
                     total += read;
-                    ZipSecureFile.CheckThreshold(total, compressed);
+                    ZipSecureFile.CheckThreshold(total, compressed, ZipSecureFile.StreamEntryLimit);
                     ZipSecureFile.CheckTotalSize(totalBefore + total);
                     baos.Write(buffer, 0, read);
                 }

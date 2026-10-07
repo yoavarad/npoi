@@ -246,14 +246,18 @@ namespace NPOI.OpenXml4Net.Util
         /// <summary>
         /// Throws if the counted number of inflated bytes violates a limit.
         /// </summary>
-        internal static void CheckThreshold(long inflated, Func<long> compressed)
+        // A single in-memory buffer (MemoryStream/byte[]) tops out just under 2GB, so paths that buffer
+        // whole entries clamp the effective entry limit to this (public defaults unchanged).
+        internal static long StreamEntryLimit = 0x7FFFFFC7L;
+
+        internal static void CheckThreshold(long inflated, Func<long> compressed, long entryLimit = long.MaxValue)
         {
-            if(inflated > MAX_ENTRY_SIZE)
+            if(inflated > MAX_ENTRY_SIZE || inflated > entryLimit)
             {
                 throw new ZipSecurityException("Zip bomb detected! The file would exceed the max size of the expanded data in the zip-file. "
                         + "This may indicate that the file is used to inflate memory usage and thus could pose a security risk. "
                         + "You can adjust this limit via ZipSecureFile.SetMaxEntrySize() if you need to work with files which are very large. "
-                        + "Counter: " + inflated + ", Limits: MAX_ENTRY_SIZE: " + MAX_ENTRY_SIZE);
+                        + "Counter: " + inflated + ", Limits: MAX_ENTRY_SIZE: " + MAX_ENTRY_SIZE + ", buffer limit: " + entryLimit);
             }
             if(compressed == null || inflated <= GRACE_ENTRY_SIZE)
             {

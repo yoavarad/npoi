@@ -308,6 +308,77 @@ namespace TestCases.OpenXml4Net.OPC
             Assert.IsFalse(File.Exists(tmp));
         }
 
+        private static byte[] MakeXlsxWithBombWorkbook()
+        {
+            using var ms = new MemoryStream();
+            using(var zos = new ZipOutputStream(ms) { IsStreamOwner = false })
+            {
+                zos.SetLevel(9);
+                void Add(string name, byte[] data)
+                {
+                    zos.PutNextEntry(new ZipEntry(name) { CompressionMethod = CompressionMethod.Deflated });
+                    zos.Write(data, 0, data.Length);
+                    zos.CloseEntry();
+                }
+                byte[] B(string x) => System.Text.Encoding.UTF8.GetBytes(x);
+                Add("[Content_Types].xml", B("<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
+                    + "<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
+                    + "<Default Extension=\"xml\" ContentType=\"application/xml\"/>"
+                    + "<Override PartName=\"/xl/workbook.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml\"/>"
+                    + "<Override PartName=\"/xl/worksheets/sheet1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml\"/>"
+                    + "<Override PartName=\"/xl/styles.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml\"/></Types>"));
+                Add("_rels/.rels", B("<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
+                    + "<Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"xl/workbook.xml\"/></Relationships>"));
+                // workbook.xml is parsed eagerly when the workbook opens (sheets/styles are lazy)
+                byte[] wbHead = B("<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\">"
+                    + "<sheets><sheet name=\"S1\" sheetId=\"1\" r:id=\"rId1\"/></sheets>");
+                byte[] wbTail = B("</workbook>");
+                byte[] wb = new byte[20_000_000];
+                for(int k = 0; k < wb.Length; k++)
+                    wb[k] = (byte) ' ';
+                Array.Copy(wbHead, 0, wb, 0, wbHead.Length);
+                Array.Copy(wbTail, 0, wb, wb.Length - wbTail.Length, wbTail.Length);
+                Add("xl/workbook.xml", wb);
+                Add("xl/_rels/workbook.xml.rels", B("<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
+                    + "<Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet\" Target=\"worksheets/sheet1.xml\"/>"
+                    + "<Relationship Id=\"rId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles\" Target=\"styles.xml\"/></Relationships>"));
+                Add("xl/worksheets/sheet1.xml", B("<worksheet xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><sheetData/></worksheet>"));
+                Add("xl/styles.xml", B("<styleSheet xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"/>"));
+            }
+            return ms.ToArray();
+        }
+
+        [Test]
+        public void XSSFWorkbook_BombInWorkbookPart_ReleasesFileHandle()
+        {
+            File.WriteAllBytes(tmp, MakeXlsxWithBombWorkbook());
+            AssertChainHasBomb(Assert.Catch(() => new NPOI.XSSF.UserModel.XSSFWorkbook(tmp)));
+            File.Delete(tmp); // throws if the handle leaked
+            File.WriteAllBytes(tmp, MakeXlsxWithBombWorkbook());
+            AssertChainHasBomb(Assert.Catch(() => new NPOI.XSSF.UserModel.XSSFWorkbook(new FileInfo(tmp))));
+            File.Delete(tmp);
+            Assert.IsFalse(File.Exists(tmp));
+        }
+
+        [Test]
+        public void StreamPath_ClampsEntryLimitToBufferSize()
+        {
+            var f = typeof(ZipSecureFile).GetField("StreamEntryLimit",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            long orig = (long) f.GetValue(null);
+            try
+            {
+                f.SetValue(null, 10_000L);
+                byte[] zip = MakeZip(1, 50_000, (int) CompressionMethod.Deflated, zeros: false);
+                AssertBomb(() => StreamSource(zip));
+                DrainAll(FileSource(zip)); // ZipFile path is not buffered and not clamped
+            }
+            finally
+            {
+                f.SetValue(null, orig);
+            }
+        }
+
         [Test]
         public void MaxTotalSize_StreamPath()
         {
