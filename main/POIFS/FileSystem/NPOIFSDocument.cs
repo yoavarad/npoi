@@ -92,27 +92,15 @@ namespace NPOI.POIFS.FileSystem
         private int Store(Stream inStream)
         {
             int bigBlockSize = POIFSConstants.BIG_BLOCK_MINIMUM_DOCUMENT_SIZE;
-            //BufferedStream bis = new BufferedStream(stream, bigBlockSize + 1);
-            //bis.mark(bigBlockSize);
 
-            //// Buffer the contents into memory. This is a bit icky...
-            //// TODO Replace with a buffer up to the mini stream size, then streaming write
-            //byte[] contents;
-            //if (stream is MemoryStream)
-            //{
-            //    MemoryStream bais = (MemoryStream)stream;
-            //    contents = new byte[bais.Length];
-            //    bais.Read(contents, 0, contents.Length);
-            //}
-            //else
-            //{
-            //    MemoryStream baos = new MemoryStream();
-            //    IOUtils.Copy(stream, baos);
-            //    contents = baos.ToArray();
-            //}
+            // Buffer up to the mini stream cut-off to decide where the document
+            //  goes, then stream the rest. This reads from the current position
+            //  and does not need Length, so non-seekable streams work too.
+            byte[] head = new byte[bigBlockSize];
+            int headLength = Math.Max(IOUtils.ReadFully(inStream, head), 0);
 
             // Do we need to store as a mini stream or a full one?
-            if(inStream.Length < bigBlockSize)
+            if(headLength < bigBlockSize)
             {
                 _stream = new NPOIFSStream(_filesystem.GetMiniStore());
                 _block_size = _filesystem.GetMiniStore().GetBlockStoreBlockSize();
@@ -123,19 +111,12 @@ namespace NPOI.POIFS.FileSystem
                 _block_size = _filesystem.GetBlockStoreBlockSize();
             }
 
-            // start from the beginning 
-            //bis.Seek(0, SeekOrigin.Begin);
-
             // Store it
             Stream outStream = _stream.GetOutputStream();
+            outStream.Write(head, 0, headLength);
+            int length = headLength;
+
             byte[] buf = new byte[1024];
-            int length = 0;
-
-            //for (int readBytes; (readBytes = bis.Read(buf, 0, buf.Length)) != 0; length += readBytes)
-            //{
-            //    outStream.Write(buf, 0, readBytes);
-            //}
-
             for(int readBytes = 0; ;)
             {
                 readBytes = inStream.Read(buf, 0, buf.Length);

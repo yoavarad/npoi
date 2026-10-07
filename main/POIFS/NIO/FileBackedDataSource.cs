@@ -28,7 +28,7 @@ namespace NPOI.POIFS.NIO
     /// A POIFS DataSource backed by a File
     /// TODO - Return the ByteBuffers in such a way that in RW mode,
     /// changes to the buffer end up on the disk (will fix the HPSF TestWrite
-    /// currently failing unit test when done)
+    /// currently failing unit test when done). Deferred to #153.
     /// </summary>
     public class FileBackedDataSource : DataSource
     {
@@ -128,26 +128,21 @@ namespace NPOI.POIFS.NIO
             if(position >= Size)
                 throw new IndexOutOfRangeException("Position " + position + " past the end of the file");
 
-            // Do we read or map (for read/write)?
-            ByteBuffer dst;
+            // The data is in memory, so copy it into a heap buffer in both modes.
+            //  (Java maps the file for read/write; here writes are not mapped back,
+            //  see #153, but the buffer must still carry the file's contents.)
+            fileStream.Position = position;
+            ByteBuffer dst = ByteBuffer.CreateBuffer(length);
+
+            // Read the contents and check that we could read some data
+            int worked = IOUtils.ReadFully(fileStream, dst.Buffer);
+            // Check
+            if(worked == -1)
+                throw new IndexOutOfRangeException("Position " + position + " past the end of the file");
             if(writable)
             {
-                //dst = channel.map(FileChannel.MapMode.READ_WRITE, position, length);
-                dst = ByteBuffer.CreateBuffer(length);
                 // remember this buffer for cleanup
                 buffersToClean.Add(dst);
-            }
-            else
-            {
-                // allocate the buffer on the heap if we cannot map the data in directly
-                fileStream.Position = position;
-                dst = ByteBuffer.CreateBuffer(length);
-
-                // Read the contents and check that we could read some data
-                int worked = IOUtils.ReadFully(fileStream, dst.Buffer);
-                // Check
-                if(worked == -1)
-                    throw new IndexOutOfRangeException("Position " + position + " past the end of the file");
             }
             // make it ready for reading
             dst.Position = 0;
@@ -207,12 +202,11 @@ namespace NPOI.POIFS.NIO
 
         }
 
-        // need to use reflection to avoid depending on the sun.nio internal API
-        // unfortunately this might break silently with newer/other Java implementations, 
-        // but we at least have unit-tests which will indicate this when run on Windows
+        // Won't fix: the Java original unmaps memory-mapped buffers here via reflection.
+        //  This port copies the file into memory and hands out heap buffers, so nothing
+        //  is mapped or locked and the GC reclaims them; this is intentionally a no-op.
         private static void unmap(ByteBuffer bb)
         {
-            //TODO: try add clean method for ByteBuffer class.
             //Type fcClass = bb.GetType();
             //try
             //{

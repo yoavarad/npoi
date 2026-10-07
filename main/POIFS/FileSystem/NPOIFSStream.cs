@@ -38,8 +38,10 @@ namespace NPOI.POIFS.FileSystem
  * This only works on big block streams, it doesn't
  *  handle small block ones.
  * This uses the new NIO code
- * 
- * TODO Implement a streaming write method, and append
+ * Writing is streaming: {@link #GetOutputStream()} overwrites the
+ *  existing chain block by block, allocating new blocks as needed and
+ *  freeing any left over on close. Appending to the end of an existing
+ *  stream is not supported; rewrite the whole stream instead.
  */
 
     public class NPOIFSStream : IEnumerable<ByteBuffer>
@@ -137,10 +139,6 @@ namespace NPOI.POIFS.FileSystem
             return outStream;
         }
 
-        // TODO Streaming write support
-        // TODO  then convert fixed sized write to use streaming internally
-        // TODO Append write support (probably streaming)
-
         /**
          * Frees all blocks in the stream
          */
@@ -229,8 +227,13 @@ namespace NPOI.POIFS.FileSystem
 
             public void Write(int b)
             {
-                oneByte[0] = (byte) (b & 0xFF);
-                base.Write(oneByte, 0, oneByte.Length);
+                WriteByte((byte) (b & 0xFF));
+            }
+
+            public override void WriteByte(byte value)
+            {
+                oneByte[0] = value;
+                Write(oneByte, 0, oneByte.Length);
             }
 
             public override void Write(byte[] b, int off, int len)

@@ -237,9 +237,9 @@ namespace NPOI.POIFS.FileSystem
             }
             catch(RuntimeException)
             {
-                // Comes from Iterators etc.
-                // TODO Decide if we can handle these better whilst
-                //  still sticking to the iterator contract
+                // Comes from Iterators etc. Won't fix: the iterator contract
+                //  can't throw IOException, so these are rethrown as-is after
+                //  releasing the channel
                 if(closeChannelOnError && channel != null)
                 {
                     channel.Close();
