@@ -56,6 +56,20 @@ namespace TestCases.XWPF.UserModel
         }
 
         [Test]
+        public void TestCreateEvenHeaderFooterSetsEvenAndOddHeaders()
+        {
+            XWPFDocument doc = new XWPFDocument();
+            ClassicAssert.IsFalse(doc.GetSettings().IsEvenAndOddHeaders);
+            doc.CreateHeader(NPOI.WP.UserModel.HeaderFooterType.EVEN);
+            ClassicAssert.IsTrue(doc.GetSettings().IsEvenAndOddHeaders);
+            XWPFDocument doc2 = new XWPFDocument();
+            doc2.CreateFooter(NPOI.WP.UserModel.HeaderFooterType.EVEN);
+            ClassicAssert.IsTrue(doc2.GetSettings().IsEvenAndOddHeaders);
+            doc.Close();
+            doc2.Close();
+        }
+
+        [Test]
         public void TestSetHeader()
         {
             XWPFDocument sampleDoc = XWPFTestDataSamples.OpenSampleDocument("SampleDoc.docx");

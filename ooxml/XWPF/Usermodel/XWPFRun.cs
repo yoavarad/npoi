@@ -1284,7 +1284,11 @@ namespace NPOI.XWPF.UserModel
          */
         public void RemoveBreak()
         {
-            // TODO
+            int n = run.SizeOfBrArray();
+            if(n > 0)
+            {
+                run.RemoveBr(n - 1);
+            }
         }
 
         /**

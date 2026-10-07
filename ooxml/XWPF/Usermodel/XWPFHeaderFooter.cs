@@ -322,7 +322,7 @@ namespace NPOI.XWPF.UserModel
                  * POIXMLDocumentPart data.
                  */
                 PackagePart picDataPart = xwpfPicData.GetPackagePart();
-                // TODO add support for TargetMode.EXTERNAL relations.
+                // NOTE: only internal relations are created here; linked (TargetMode.EXTERNAL) pictures are not supported (needs separate design).
                 RelationPart rp = AddRelation(null, XWPFRelation.IMAGES, xwpfPicData);
                 pictures.Add(xwpfPicData);
                 return rp.Relationship.Id;
