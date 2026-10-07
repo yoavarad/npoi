@@ -59,7 +59,8 @@ namespace NPOI.HSSF.Record
         private DataBarFormatting data_bar;
         private IconMultiStateFormatting multistate;
         private ColorGradientFormatting color_gradient;
-        // TODO Parse this, see #58150
+        // Auto-filter conditional-format payload (see #58150): kept as raw bytes and round-tripped
+        // verbatim; decoding it is intentionally out of scope.
         private byte[] filter_data;
 
         /** Creates new CFRuleRecord */
@@ -207,6 +208,10 @@ namespace NPOI.HSSF.Record
 
             ext_formatting_length = in1.ReadInt();
             ext_formatting_data = [];
+            if(ext_formatting_length < 0)
+            {
+                throw new RecordFormatException("Invalid CF12 extended formatting length: " + ext_formatting_length);
+            }
             if(ext_formatting_length == 0)
             {
                 // 2 bytes reserved
@@ -217,6 +222,7 @@ namespace NPOI.HSSF.Record
                 int len = ReadFormatOptions(in1);
                 if(len < ext_formatting_length)
                 {
+                    // SafelyAllocate rejects absurd sizes before allocating
                     ext_formatting_data = IOUtils.SafelyAllocate(ext_formatting_length - len, MAX_RECORD_LENGTH);
                     in1.ReadFully(ext_formatting_data);
                 }
@@ -366,7 +372,8 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(formula1Len);
             out1.WriteShort(formula2Len);
 
-            // TODO Update ext_formatting_length
+            // ext_formatting_length is derived from the current formatting block + trailing data,
+            // so edits to the formatting never leave a stale length behind.
             if(ext_formatting_length == 0)
             {
                 out1.WriteInt(0);
@@ -374,6 +381,7 @@ namespace NPOI.HSSF.Record
             }
             else
             {
+                ext_formatting_length = FormattingBlockSize + ext_formatting_data.Length;
                 out1.WriteInt(ext_formatting_length);
                 SerializeFormattingBlock(out1);
                 out1.Write(ext_formatting_data);
@@ -500,11 +508,10 @@ namespace NPOI.HSSF.Record
 
             base.CopyTo(rec);
 
-            // use min() to gracefully handle cases where the length-property and the array-lenght do not match
-            // we saw some such files in circulation
-            rec.ext_formatting_length = Math.Min(ext_formatting_length, ext_formatting_data.Length);
-            rec.ext_formatting_data = IOUtils.SafelyAllocate(ext_formatting_length, MAX_RECORD_LENGTH);
-            Array.Copy(ext_formatting_data, 0, rec.ext_formatting_data, 0, rec.ext_formatting_length);
+            // ext_formatting_length covers the formatting block AND the trailing data,
+            // so it is copied as-is; only the trailing data array is cloned.
+            rec.ext_formatting_length = ext_formatting_length;
+            rec.ext_formatting_data = (byte[]) ext_formatting_data.Clone();
 
             rec.formula_scale = formula_scale.Copy();
 

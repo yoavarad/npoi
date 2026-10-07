@@ -140,17 +140,17 @@ namespace NPOI.HSSF.Record
             if((_linkOpts & HLINK_LABEL) != 0)
             {
                 int label_len = in1.ReadInt();
-                _label = in1.ReadUnicodeLEString(label_len);
+                _label = in1.ReadUnicodeLEString(CheckCharCount(label_len));
             }
             if((_linkOpts & HLINK_TARGET_FRAME) != 0)
             {
                 int len = in1.ReadInt();
-                _targetFrame = in1.ReadUnicodeLEString(len);
+                _targetFrame = in1.ReadUnicodeLEString(CheckCharCount(len));
             }
             if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) != 0)
             {
                 _moniker = null;
-                int nChars = in1.ReadInt();
+                int nChars = CheckCharCount(in1.ReadInt());
                 _address = in1.ReadUnicodeLEString(nChars);
             }
             if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) == 0)
@@ -169,15 +169,15 @@ namespace NPOI.HSSF.Record
                     int remaining = in1.Remaining;
                     if(length == remaining)
                     {
-                        int nChars = length / 2;
+                        int nChars = CheckCharCount(length / 2);
                         _address = in1.ReadUnicodeLEString(nChars);
                     }
                     else
                     {
-                        int nChars = (length - TAIL_SIZE) / 2;
+                        int nChars = CheckCharCount((length - TAIL_SIZE) / 2);
                         _address = in1.ReadUnicodeLEString(nChars);
                         /*
-                         * TODO: make sense of the remaining bytes
+                         * The remaining bytes are kept verbatim in _uninterpretedTail (round-tripped as-is).
                          * According to the spec they consist of:
                          * 1. 16-byte  GUID: This field MUST equal
                          *    {0xF4815879, 0x1D3B, 0x487F, 0xAF, 0x2C, 0x82, 0x5D, 0xC4, 0x85, 0x27, 0x63}
@@ -192,7 +192,7 @@ namespace NPOI.HSSF.Record
                     _fileOpts = in1.ReadShort();
 
                     int len = in1.ReadInt();
-                    _shortFilename = StringUtil.ReadCompressedUnicode(in1, len);
+                    _shortFilename = StringUtil.ReadCompressedUnicode(in1, CheckCharCount(len));
                     _uninterpretedTail = ReadTail(FILE_uninterpretedTail, in1);
                     int size = in1.ReadInt();
                     if(size > 0)
@@ -202,7 +202,7 @@ namespace NPOI.HSSF.Record
                         //From the spec: An optional unsigned integer that MUST be 3 if present
                         // but some files has 4
                         int usKeyValue = in1.ReadUShort();
-                        _address = StringUtil.ReadUnicodeLE(in1, charDataSize / 2);
+                        _address = StringUtil.ReadUnicodeLE(in1, CheckCharCount(charDataSize / 2));
                     }
                     else
                     {
@@ -213,7 +213,7 @@ namespace NPOI.HSSF.Record
                 {
                     _fileOpts = in1.ReadShort();
 
-                    int len = in1.ReadInt();
+                    int len = CheckCharCount(in1.ReadInt());
 
                     byte[] path_bytes = IOUtils.SafelyAllocate(len, MAX_RECORD_LENGTH);
                     in1.ReadFully(path_bytes);
@@ -225,13 +225,25 @@ namespace NPOI.HSSF.Record
             if((_linkOpts & HLINK_PLACE) != 0)
             {
                 int len = in1.ReadInt();
-                _textMark = in1.ReadUnicodeLEString(len);
+                _textMark = in1.ReadUnicodeLEString(CheckCharCount(len));
             }
 
             if(in1.Remaining > 0)
             {
                 Console.WriteLine(HexDump.ToHex(in1.ReadRemainder()));
             }
+        }
+
+        /// <summary>
+        /// Rejects negative or absurd length fields from untrusted data before any allocation.
+        /// </summary>
+        private static int CheckCharCount(int count)
+        {
+            if(count < 0 || count > MAX_RECORD_LENGTH)
+            {
+                throw new RecordFormatException("Invalid hyperlink field length: " + count);
+            }
+            return count;
         }
 
         private static byte[] ReadTail(byte[] expectedTail, RecordInputStream in1)
