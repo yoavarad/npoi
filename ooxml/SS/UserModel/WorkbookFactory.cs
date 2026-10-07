@@ -152,7 +152,9 @@ namespace NPOI.SS.UserModel
             }
 
 
-            Stream inputStream = new FileStream(file, FileMode.Open, readOnly ? FileAccess.Read : FileAccess.ReadWrite);
+            // The contents are copied into memory and the stream is disposed before returning,
+            // so write access is never used: open read-only with shared read.
+            Stream inputStream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
             try
             {
                 return Create(inputStream, password, readOnly);
