@@ -257,6 +257,19 @@ namespace NPOI.SS.Formula
             int sheetIndex = GetSheetIndex(srcCell.Sheet);
             return EvaluateAny(srcCell, sheetIndex, srcCell.RowIndex, srcCell.ColumnIndex, new EvaluationTracker(_cache));
         }
+
+        /// <summary>
+        /// Evaluates the formula in <paramref name="srcCell"/> without reducing an array result to a
+        /// single value, so the caller can see its full size (used to spill dynamic-array formulas).
+        /// The result is not cached.
+        /// </summary>
+        public ValueEval EvaluateArrayResult(IEvaluationCell srcCell)
+        {
+            int sheetIndex = GetSheetIndex(srcCell.Sheet);
+            OperationEvaluationContext ec = new OperationEvaluationContext(this, _workbook, sheetIndex,
+                srcCell.RowIndex, srcCell.ColumnIndex, new EvaluationTracker(_cache), false);
+            return EvaluateFormula(ec, _workbook.GetFormulaTokens(srcCell));
+        }
         /**
   * Evaluate a formula outside a cell value, e.g. conditional format rules or data validation expressions
   * 
@@ -891,6 +904,17 @@ namespace NPOI.SS.Formula
 
             if(evalCell != null && evalCell.IsPartOfArrayFormulaGroup && evaluationResult is AreaEval eval)
             {
+                if(evalCell is IDynamicArrayEvaluationCell { IsDynamicArrayFormula: true })
+                {
+                    // a dynamic array that does not fill its stored range has not spilled (yet), see XSSFFormulaEvaluator
+                    CellRangeAddress range = evalCell.ArrayFormulaRange;
+                    if(eval.Height != range.LastRow - range.FirstRow + 1 || eval.Width != range.LastColumn - range.FirstColumn + 1)
+                    {
+                        return ErrorEval.SPILL;
+                    }
+                    value = OperandResolver.GetElementFromArray(eval, evalCell);
+                    return value == BlankEval.instance ? NumberEval.ZERO : value;
+                }
                 value = OperandResolver.GetElementFromArray(eval, evalCell);
             }
             else

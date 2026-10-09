@@ -3815,6 +3815,24 @@ namespace NPOI.XSSF.UserModel
             SafeGetProtectionField().selectUnlockedCells = enabled;
         }
 
+        /// <summary>
+        /// Sets a dynamic-array (spilling) formula, as Excel 365 stores it: an array formula on the
+        /// anchor cell flagged with dynamic-array cell metadata. It starts as a single cell;
+        /// <see cref="XSSFFormulaEvaluator.EvaluateFormulaCell"/> on the anchor (or EvaluateAll) spills
+        /// the result into the neighbouring cells, or sets <c>#SPILL!</c> when they are not empty.
+        /// For Excel to recognise newer functions, write their stored names, e.g.
+        /// <c>_xlfn._xlws.FILTER</c>, <c>_xlfn._xlws.SORT</c>, <c>_xlfn.UNIQUE</c>, <c>_xlfn.SEQUENCE</c>.
+        /// </summary>
+        /// <returns>the anchor cell</returns>
+        public ICell SetDynamicArrayFormula(string formula, CellReference anchor)
+        {
+            var range = new CellRangeAddress(anchor.Row, anchor.Row, anchor.Col, anchor.Col);
+            XSSFCell cell = (XSSFCell) SetArrayFormula(formula, range).TopLeftCell;
+            cell.GetCTCell().cm = 1;
+            ((XSSFWorkbook) Workbook).EnsureSheetMetadata();
+            return cell;
+        }
+
         public ICellRange<ICell> SetArrayFormula(string formula, CellRangeAddress range)
         {
             EnsureWorksheetLoaded();

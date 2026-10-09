@@ -33,12 +33,12 @@ XMATCH, TEXTJOIN, IFS, SWITCH, XLOOKUP, CONCAT, MAXIFS, MINIFS.
 
 (Some legacy statistical names may be served by newer implementations elsewhere; verify before starting.)
 
-## Not present at all (dynamic-array / modern)
-FILTER SORT SORTBY UNIQUE SEQUENCE RANDARRAY LET LAMBDA TAKE DROP VSTACK HSTACK TOCOL TOROW.
-These need spill/array-result support in the evaluator and are a separate design task (not done in #61: spilling requires the evaluator to write a multi-cell result back to neighbouring cells and track the spill range for `#SPILL!`; HSSF `.xls` has no dynamic-array storage, so this mainly concerns XSSF).
+## Dynamic-array functions
+FILTER SORT UNIQUE SEQUENCE implemented in #152 (`Atp/DynamicArrayFunctions.cs`) with spill support for XSSF; design in [dynamic-arrays.md](dynamic-arrays.md).
+Not present yet: SORTBY RANDARRAY LET LAMBDA TAKE DROP VSTACK HSTACK TOCOL TOROW (they can reuse the same spill support).
 
 ## Priority list
 1. Engineering conversions and complex-number families (small, well-defined).
 2. Statistical legacy functions (CORREL, RSQ, SKEW, KURT, QUARTILE, GEOMEAN, HARMEAN, AVERAGEA/STDEVA/VARA, FISHER).
 3. Financial: done in #61 except the odd-period, AMOR*, ACCRINT, PRICEMAT/YIELDMAT functions.
-4. Dynamic-array functions (blocked on spill support).
+4. Remaining dynamic-array functions (spill support exists since #152).

@@ -2559,6 +2559,21 @@ outerloop:
         }
 
 
+        /// <summary>
+        /// Adds the cell metadata part that marks dynamic-array formulas, unless the workbook already has one.
+        /// </summary>
+        internal void EnsureSheetMetadata()
+        {
+            foreach(POIXMLDocumentPart part in GetRelations())
+            {
+                if(part is XSSFSheetMetadata)
+                {
+                    return;
+                }
+            }
+            CreateRelationship(XSSFRelation.SHEET_METADATA, XSSFFactory.GetInstance());
+        }
+
         /**
          * Adds a vbaProject.bin file to the workbook.  This will change the workbook
          * type if necessary.

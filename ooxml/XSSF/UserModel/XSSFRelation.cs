@@ -297,6 +297,13 @@ namespace NPOI.XSSF.UserModel
                 typeof(CalculationChain)
         );
 
+        public static XSSFRelation SHEET_METADATA = new XSSFRelation(
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml",
+                "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
+                "/xl/metadata.xml",
+                typeof(XSSFSheetMetadata)
+        );
+
         public static XSSFRelation EXTERNAL_LINKS = new XSSFRelation(
         "application/vnd.openxmlformats-officedocument.spreadsheetml.externalLink+xml",
         "http://schemas.openxmlformats.org/officeDocument/2006/relationships/externalLink",
