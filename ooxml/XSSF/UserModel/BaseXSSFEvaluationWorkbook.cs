@@ -507,6 +507,11 @@ namespace NPOI.XSSF.UserModel
             return SpreadsheetVersion.EXCEL2007;
         }
 
+        public bool IsDate1904()
+        {
+            return _uBook.IsDate1904();
+        }
+
         public abstract int GetSheetIndex(IEvaluationSheet sheet);
 
         public abstract IEvaluationSheet GetSheet(int sheetIndex);

@@ -168,6 +168,11 @@ namespace NPOI.SS.Formula.Eval.Forked
         {
             return _masterBook.GetSpreadsheetVersion();
         }
+
+        public bool IsDate1904()
+        {
+            return _masterBook.IsDate1904();
+        }
     }
 
 }
