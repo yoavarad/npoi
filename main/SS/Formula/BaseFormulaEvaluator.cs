@@ -175,7 +175,7 @@ namespace NPOI.SS.Formula
          * @return The type of the formula result (the cell's type remains as CellType.FORMULA however)
          *         If cell is not a formula cell, returns {@link CellType#_NONE} rather than throwing an exception.
          */
-        public CellType EvaluateFormulaCell(ICell cell)
+        public virtual CellType EvaluateFormulaCell(ICell cell)
         {
             if(cell == null || cell.CellType != CellType.Formula)
             {
@@ -287,14 +287,17 @@ namespace NPOI.SS.Formula
             {
                 ISheet sheet = wb.GetSheetAt(i);
 
+                // snapshot first: spilling a dynamic-array formula can add rows and cells
+                List<ICell> cells = new List<ICell>();
                 foreach(IRow r in sheet)
                 {
-                    foreach(ICell c in r)
+                    cells.AddRange(r);
+                }
+                foreach(ICell c in cells)
+                {
+                    if(c.CellType == CellType.Formula)
                     {
-                        if(c.CellType == CellType.Formula)
-                        {
-                            evaluator.EvaluateFormulaCell(c);
-                        }
+                        evaluator.EvaluateFormulaCell(c);
                     }
                 }
             }

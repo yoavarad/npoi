@@ -34,6 +34,8 @@ namespace NPOI.SS.UserModel
         NAME = 0x1D,
         NUM = 0x24,
         NA = 0x2A,
+        SPILL = 0x2D,
+        CALC = 0x32,
         CIRCULAR_REF = 0xFFFFFFC4,
         FUNCTION_NOT_IMPLEMENTED = 0xFFFFFFE2
     }
@@ -49,6 +51,8 @@ namespace NPOI.SS.UserModel
                 FormulaError.NAME,
                 FormulaError.NUM,
                 FormulaError.NA,
+                FormulaError.SPILL,
+                FormulaError.CALC,
                 FormulaError.CIRCULAR_REF,
                 FormulaError.FUNCTION_NOT_IMPLEMENTED
             };
@@ -132,6 +136,18 @@ namespace NPOI.SS.UserModel
          * This error value can be produced by calling the function NA
          */
         public static readonly FormulaError NA = new FormulaError(0x2A, "#N/A", "NA");
+
+        /**
+         * A dynamic-array formula cannot spill because a cell in its spill range is not empty,
+         * or the range runs off the sheet. The code matches Excel's xlErrSpill (2045) - 2000.
+         */
+        public static readonly FormulaError SPILL = new FormulaError(0x2D, "#SPILL!", "SPILL");
+
+        /**
+         * A calculation cannot produce a value, e.g. FILTER with no matching rows and no if_empty
+         * argument. The code matches Excel's xlErrCalc (2050) - 2000.
+         */
+        public static readonly FormulaError CALC = new FormulaError(0x32, "#CALC!", "CALC");
 
         // These are POI-specific error codes
         // It is desirable to make these (arbitrary) strings look clearly different from any other

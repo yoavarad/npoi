@@ -1432,6 +1432,19 @@ namespace NPOI.XSSF.UserModel
             }
         }
 
+        /// <summary>
+        /// True when this cell belongs to a dynamic-array (spilling) formula: an array formula whose
+        /// anchor cell carries cell metadata (the <c>cm</c> attribute Excel writes for dynamic arrays).
+        /// </summary>
+        public bool IsDynamicArrayFormula
+        {
+            get
+            {
+                XSSFCell anchor = ((XSSFSheet) Sheet).GetFirstCellInArrayFormula(this);
+                return anchor != null && anchor._cell.cm != 0;
+            }
+        }
+
         /**
          * The purpose of this method is to validate the cell state prior to modification
          *

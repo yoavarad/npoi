@@ -61,6 +61,10 @@ namespace NPOI.SS.Formula.Atp
             String prefix = "_xlfn.";
             if(name.StartsWith(prefix))
                 name = name.Substring(prefix.Length);
+            // worksheet-only functions (FILTER, SORT) also carry _xlws.
+            String wsPrefix = "_xlws.";
+            if(name.StartsWith(wsPrefix))
+                name = name.Substring(wsPrefix.Length);
 
             string key = name.ToUpper();
             if(_functionsByName.TryGetValue(key, out FreeRefFunction function))
@@ -167,6 +171,7 @@ namespace NPOI.SS.Formula.Atp
             r(m, "OCT2BIN", BaseConvert.OCT2BIN);
             r(m, "OCT2DEC", Oct2Dec.instance);
             r(m, "OCT2HEX", BaseConvert.OCT2HEX);
+            r(m, "FILTER", DynamicArrayFunctions.FILTER);
             r(m, "ODDFPRICE", null);
             r(m, "ODDFYIELD", null);
             r(m, "ODDLPRICE", null);
@@ -178,8 +183,10 @@ namespace NPOI.SS.Formula.Atp
             r(m, "RANDBETWEEN", RandBetween.Instance);
             r(m, "RECEIVED", DiscountSecurity.RECEIVED);
             r(m, "RTD", null);
+            r(m, "SEQUENCE", DynamicArrayFunctions.SEQUENCE);
             r(m, "SERIESSUM", null);
             r(m, "SHEET", Sheet.instance);
+            r(m, "SORT", DynamicArrayFunctions.SORT);
             r(m, "SQRTPI", SqrtPi.instance);
             r(m, "SUMIFS", Sumifs.instance);
             r(m, "SWITCH", Switch.instance);
@@ -188,6 +195,7 @@ namespace NPOI.SS.Formula.Atp
             r(m, "TBILLYIELD", TBill.YIELD);
             r(m, "TEXTJOIN", TextJoinFunction.instance);
             r(m, "T.INV", TInv.instance);
+            r(m, "UNIQUE", DynamicArrayFunctions.UNIQUE);
             r(m, "WEEKNUM", WeekNum.instance);
             r(m, "WORKDAY", WorkdayFunction.instance);
             r(m, "WORKDAY.INTL", WorkdayIntlFunction.instance);

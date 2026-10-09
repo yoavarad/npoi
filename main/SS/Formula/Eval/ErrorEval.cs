@@ -46,6 +46,10 @@ namespace NPOI.SS.Formula.Eval
         public static readonly ErrorEval NUM_ERROR = new ErrorEval(FormulaError.NUM);
         /** <b>#N/A</b> - Argument or function not available */
         public static readonly ErrorEval NA = new ErrorEval(FormulaError.NA);
+        /** <b>#SPILL!</b> - Dynamic-array result cannot spill into its range */
+        public static readonly ErrorEval SPILL = new ErrorEval(FormulaError.SPILL);
+        /** <b>#CALC!</b> - Calculation cannot produce a value (e.g. empty array) */
+        public static readonly ErrorEval CALC = new ErrorEval(FormulaError.CALC);
 
 
         // POI internal error codes

@@ -29,7 +29,7 @@ namespace NPOI.XSSF.UserModel
      * 
      * @author Josh Micich
      */
-    public class XSSFEvaluationCell : IEvaluationCell
+    public class XSSFEvaluationCell : IEvaluationCell, IDynamicArrayEvaluationCell
     {
 
         private readonly IEvaluationSheet _evalSheet;
@@ -134,6 +134,11 @@ namespace NPOI.XSSF.UserModel
         {
 
             get { return _cell.ArrayFormulaRange; }
+        }
+
+        public bool IsDynamicArrayFormula
+        {
+            get { return _cell.IsDynamicArrayFormula; }
         }
 
         public virtual CellType CachedFormulaResultType
