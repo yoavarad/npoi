@@ -69,6 +69,21 @@ namespace TestCases.SS.Formula.Functions
             ConfirmResult(fe, cell, formulaText, "'[Book1]Sheet1'!$C2");
         }
 
+        [Test]
+        public void TestR1C1()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            ICell cell = wb.CreateSheet().CreateRow(0).CreateCell(0);
+            HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(wb);
+
+            ConfirmResult(fe, cell, "ADDRESS(2,3,1,FALSE)", "R2C3");
+            ConfirmResult(fe, cell, "ADDRESS(2,3,2,FALSE)", "R2C[3]");
+            ConfirmResult(fe, cell, "ADDRESS(2,3,3,FALSE)", "R[2]C3");
+            ConfirmResult(fe, cell, "ADDRESS(2,3,4,FALSE)", "R[2]C[3]");
+            ConfirmResult(fe, cell, "ADDRESS(2,3,1,FALSE,\"Sheet 1\")", "'Sheet 1'!R2C3");
+            ConfirmResult(fe, cell, "ADDRESS(2,3,1,TRUE)", "$C$2");
+        }
+
         private static void ConfirmResult(HSSFFormulaEvaluator fe, ICell cell, String formulaText,
                                           String expectedResult)
         {

@@ -155,6 +155,26 @@ namespace TestCases.SS.Formula.Functions
 #endif
             Confirm(feA, c, "INDIRECT(\"Sheet1!A 1\")", ErrorEval.REF_INVALID); // space in cell ref
         }
+
+        [Test]
+        public void TestR1C1()
+        {
+            HSSFWorkbook wbA = CreateWBA();
+            ICell c = wbA.GetSheetAt(0).CreateRow(5).CreateCell(2); // C6
+            HSSFFormulaEvaluator feA = new HSSFFormulaEvaluator(wbA);
+
+            Confirm(feA, c, "INDIRECT(\"R2C3\", FALSE)", 23); // absolute
+            Confirm(feA, c, "INDIRECT(\"r2c3\", FALSE)", 23); // case-insensitive
+            Confirm(feA, c, "INDIRECT(\"R[-4]C[1]\", FALSE)", 24); // relative to C6
+            Confirm(feA, c, "INDIRECT(\"R1C\", FALSE)", 13); // current column
+            Confirm(feA, c, "SUM(INDIRECT(\"R1C1:R2C2\", FALSE))", 66);
+            Confirm(feA, c, "SUM(INDIRECT(\"Sheet2!R1C2:R3C3\", FALSE))", 351);
+            Confirm(feA, c, "SUM(INDIRECT(\"R1:R2\", FALSE))", 140); // whole rows
+            Confirm(feA, c, "SUM(INDIRECT(\"C1:C2\", FALSE))", 129); // whole columns A:B
+            Confirm(feA, c, "SUM(INDIRECT(\"sales1\", FALSE))", 50); // defined name
+            Confirm(feA, c, "INDIRECT(\"R[-10]C\", FALSE)", ErrorEval.REF_INVALID); // above row 1
+            Confirm(feA, c, "INDIRECT(\"R0C1\", FALSE)", ErrorEval.REF_INVALID);
+        }
         [Test]
         public void TestMultipleWorkbooks()
         {

@@ -82,7 +82,6 @@ namespace NPOI.SS.Formula.Functions
                 if(args.Length > 3)
                 {
                     ValueEval ve = OperandResolver.GetSingleValue(args[3], srcRowIndex, srcColumnIndex);
-                    // TODO R1C1 style is not yet supported
                     a1 = ve == MissingArgEval.instance ? true : OperandResolver.CoerceValueToBoolean(ve, false).Value;
                 }
                 else
@@ -101,14 +100,22 @@ namespace NPOI.SS.Formula.Functions
                     sheetName = null;
                 }
 
-                CellReference ref1 = new CellReference(row - 1, col - 1, pAbsRow, pAbsCol);
                 StringBuilder sb = new StringBuilder(32);
                 if(sheetName != null)
                 {
                     SheetNameFormatter.AppendFormat(sb, sheetName);
                     sb.Append('!');
                 }
-                sb.Append(ref1.FormatAsString());
+                if(a1)
+                {
+                    sb.Append(new CellReference(row - 1, col - 1, pAbsRow, pAbsCol).FormatAsString());
+                }
+                else
+                {
+                    // R1C1 style: a relative part is written as an offset, e.g. ADDRESS(2,3,4,FALSE) is R[2]C[3]
+                    sb.Append('R').Append(pAbsRow ? row.ToString() : "[" + row + "]");
+                    sb.Append('C').Append(pAbsCol ? col.ToString() : "[" + col + "]");
+                }
 
                 return new StringEval(sb.ToString());
 
