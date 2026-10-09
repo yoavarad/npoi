@@ -273,18 +273,23 @@ namespace NPOI.SS.Formula
             return hasRow ? (row + 1).ToString(CultureInfo.InvariantCulture) : CellReference.ConvertNumToColString(col);
         }
 
-        /** @return the 0-based index for an R1C1 row/column part: empty (current), "[n]" (offset) or "n" (absolute, 1-based) */
+        /**
+         * @return the 0-based index for an R1C1 row/column part: empty (current), "[n]" (offset) or "n" (absolute, 1-based);
+         * -1 if the number does not fit
+         */
         private static int ResolveR1C1Part(String part, int current)
         {
             if(part.Length == 0)
             {
                 return current;
             }
-            if(part[0] == '[')
+            bool relative = part[0] == '[';
+            if(!long.TryParse(relative ? part.Substring(1, part.Length - 2) : part, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out long n))
             {
-                return current + int.Parse(part.Substring(1, part.Length - 2), CultureInfo.InvariantCulture);
+                return -1;
             }
-            return int.Parse(part, CultureInfo.InvariantCulture) - 1;
+            long index = relative ? current + n : n - 1;
+            return index < 0 || index > int.MaxValue ? -1 : (int) index;
         }
 
         public ValueEval GetDynamicReference(String workbookName, String sheetName, String refStrPart1,

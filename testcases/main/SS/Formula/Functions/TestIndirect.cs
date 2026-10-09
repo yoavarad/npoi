@@ -174,6 +174,7 @@ namespace TestCases.SS.Formula.Functions
             Confirm(feA, c, "SUM(INDIRECT(\"sales1\", FALSE))", 50); // defined name
             Confirm(feA, c, "INDIRECT(\"R[-10]C\", FALSE)", ErrorEval.REF_INVALID); // above row 1
             Confirm(feA, c, "INDIRECT(\"R0C1\", FALSE)", ErrorEval.REF_INVALID);
+            Confirm(feA, c, "INDIRECT(\"R99999999999C1\", FALSE)", ErrorEval.REF_INVALID); // no overflow
         }
         [Test]
         public void TestMultipleWorkbooks()

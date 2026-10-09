@@ -150,6 +150,7 @@ namespace TestCases.SS.Formula.Functions
         [TestCase("<>P*", "DSUM", 19)]
         [TestCase("<C", "DSUM", 10)]
         [TestCase(">=Cherry", "DSUM", 19)]
+        [TestCase("=A+*", "DSUM", 0)] // regex metacharacters are literal
         public void TestTextCriteria(string treeCondition, string function, double expected)
         {
             using(HSSFWorkbook wb = initWorkbook1(false, treeCondition))

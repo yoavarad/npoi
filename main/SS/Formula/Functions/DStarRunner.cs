@@ -447,7 +447,8 @@ namespace NPOI.SS.Formula.Functions
          */
         private static bool testNumericOrStringCondition(ValueEval value, Operator op, String condition)
         {
-            return IsNumber(condition) ? testNumericCondition(value, op, condition) : testStringCondition(value, op, condition);
+            // an empty operand (">" alone) keeps the numeric path
+            return condition.Length == 0 || IsNumber(condition) ? testNumericCondition(value, op, condition) : testStringCondition(value, op, condition);
         }
 
         /**
