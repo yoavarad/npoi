@@ -11,6 +11,7 @@ using System.Collections.Generic;
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = ["main", "master", "release*", "poi/*"],
     InvokedTargets = [nameof(Test), nameof(Pack), nameof(RemoveNpoiPackFromPackage)],
+    AutoGenerate = false,
     TimeoutMinutes = 20,
     CacheKeyFiles = ["**/Directory.Packages.props", "**/*.csproj"],
     PublishCondition = "runner.os == 'Linux'"
@@ -20,6 +21,7 @@ using System.Collections.Generic;
     GitHubActionsImage.UbuntuLatest,
     On = [GitHubActionsTrigger.PullRequest],
     InvokedTargets = [nameof(Test)],
+    AutoGenerate = false,
     TimeoutMinutes = 20,
     CacheKeyFiles = ["**/Directory.Packages.props", "**/*.csproj"],
     ConcurrencyCancelInProgress = true,

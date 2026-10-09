@@ -30,6 +30,7 @@ partial class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
 
     static AbsolutePath ArtifactsDirectory => RootDirectory / "publish";
+    static AbsolutePath TestResultsDirectory => RootDirectory / "TestResults";
 
     string TagVersion => GitRepository.Tags.SingleOrDefault(x => x.StartsWith("v"))?[1..];
 
@@ -131,7 +132,9 @@ partial class Build : NukeBuild
                 .EnableNoRestore()
                 .SetConfiguration(Configuration)
                 .SetProjectFile(Solution)
-                .When(_ => Host is GitHubActions, settings => settings.SetLoggers("GitHubActions"))
+                .When(_ => Host is GitHubActions, settings => settings
+                    .SetLoggers("GitHubActions", "trx")
+                    .SetResultsDirectory(TestResultsDirectory))
                 // net10.0 runs on Linux; net472 can only run on Windows
                 .SetFramework(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "net472" : "net10.0")
             );
