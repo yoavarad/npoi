@@ -369,6 +369,76 @@ namespace TestCases.POIFS.Macros
             r.Close();
         }
 
+        private static string WriteZip(Action<ICSharpCode.SharpZipLib.Zip.ZipOutputStream> fill)
+        {
+            string path = Path.GetTempFileName();
+            using(FileStream fs = File.Create(path))
+            using(ICSharpCode.SharpZipLib.Zip.ZipOutputStream zos = new ICSharpCode.SharpZipLib.Zip.ZipOutputStream(fs))
+            {
+                fill(zos);
+            }
+            return path;
+        }
+
+        private static void AddEntry(ICSharpCode.SharpZipLib.Zip.ZipOutputStream zos, string name, byte[] data)
+        {
+            zos.PutNextEntry(new ICSharpCode.SharpZipLib.Zip.ZipEntry(name));
+            zos.Write(data, 0, data.Length);
+            zos.CloseEntry();
+        }
+
+        [Test]
+        public void TestZipBombTooManyEntries()
+        {
+            string path = WriteZip(zos =>
+            {
+                for(int i = 0; i < 10001; i++)
+                {
+                    AddEntry(zos, "e" + i, new byte[0]);
+                }
+            });
+            try
+            {
+                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+            }
+            finally
+            {
+                File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void TestZipBombEntryTooLarge()
+        {
+            long old = VBAMacroReader.MAX_ENTRY_SIZE;
+            string path = WriteZip(zos => AddEntry(zos, "word/vbaProject.bin", new byte[8192]));
+            try
+            {
+                VBAMacroReader.MAX_ENTRY_SIZE = 4096;
+                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+            }
+            finally
+            {
+                VBAMacroReader.MAX_ENTRY_SIZE = old;
+                File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void TestZipBombHighInflateRatio()
+        {
+            // 20 MB of zeros deflates to ~20 KB, far below the 1% ratio
+            string path = WriteZip(zos => AddEntry(zos, "word/vbaProject.bin", new byte[20 * 1024 * 1024]));
+            try
+            {
+                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+            }
+            finally
+            {
+                File.Delete(path);
+            }
+        }
+
         [Test]
         public void Bug60273()
         {

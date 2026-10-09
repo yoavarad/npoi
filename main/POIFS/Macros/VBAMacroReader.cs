@@ -107,7 +107,7 @@ namespace NPOI.POIFS.Macros
 
         // Mirrors ZipSecureFile defaults (that class lives in a downstream assembly).
         private const long MAX_ENTRY_COUNT = 10000;
-        private const long MAX_ENTRY_SIZE = 0xFFFFFFFFL;
+        internal static long MAX_ENTRY_SIZE = 0xFFFFFFFFL;
         private const long GRACE_SIZE = 100 * 1024L;
         private const double MIN_INFLATE_RATIO = 0.01d;
 
