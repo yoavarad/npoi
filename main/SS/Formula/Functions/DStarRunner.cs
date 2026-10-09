@@ -22,6 +22,7 @@ namespace NPOI.SS.Formula.Functions
     using NPOI.SS.Util;
     using NPOI.Util;
     using System;
+    using System.Globalization;
     using System.Text.RegularExpressions;
 
     /**
@@ -336,7 +337,7 @@ namespace NPOI.SS.Formula.Functions
                     if(number.StartsWith('='))
                     {
                         number = number.Substring(1);
-                        return testNumericCondition(value, Operator.smallerEqualThan, number);
+                        return testNumericOrStringCondition(value, Operator.smallerEqualThan, number);
                     }
                     else if(number.StartsWith('>'))
                     {
@@ -353,7 +354,7 @@ namespace NPOI.SS.Formula.Functions
                     }
                     else
                     {
-                        return testNumericCondition(value, Operator.smallerThan, number);
+                        return testNumericOrStringCondition(value, Operator.smallerThan, number);
                     }
                 }
                 else if(conditionString.StartsWith('>'))
@@ -362,11 +363,11 @@ namespace NPOI.SS.Formula.Functions
                     if(number.StartsWith('='))
                     {
                         number = number.Substring(1);
-                        return testNumericCondition(value, Operator.largerEqualThan, number);
+                        return testNumericOrStringCondition(value, Operator.largerEqualThan, number);
                     }
                     else
                     {
-                        return testNumericCondition(value, Operator.largerThan, number);
+                        return testNumericOrStringCondition(value, Operator.largerThan, number);
                     }
                 }
                 else if(conditionString.StartsWith('='))
@@ -406,7 +407,8 @@ namespace NPOI.SS.Formula.Functions
                         }
                         else
                         {
-                            return pattern.IsMatch(lowerValue);
+                            // a criterion without an operator is a "begins with" match, wildcards included
+                            return Countif.StringMatcher.GetWildCardPattern(lowerCondition + "*").IsMatch(lowerValue);
                         }
                     }
                 }
@@ -438,6 +440,14 @@ namespace NPOI.SS.Formula.Functions
                 return false;
             }
 
+        }
+
+        /**
+         * Test a value against a comparison whose operand is a number or, failing that, text.
+         */
+        private static bool testNumericOrStringCondition(ValueEval value, Operator op, String condition)
+        {
+            return IsNumber(condition) ? testNumericCondition(value, op, condition) : testStringCondition(value, op, condition);
         }
 
         /**
@@ -509,11 +519,37 @@ namespace NPOI.SS.Formula.Functions
             switch(op)
             {
                 case Operator.equal:
-                    return valueString.Equals(condition, StringComparison.OrdinalIgnoreCase);
+                    return MatchesText(valueString, condition);
                 case Operator.notEqual:
-                    return !valueString.Equals(condition, StringComparison.OrdinalIgnoreCase);
+                    return !MatchesText(valueString, condition);
+            }
+            // text ordering criteria (e.g. ">m") only match text values, compared case-insensitively
+            if(valueEval is not StringEval)
+            {
+                return false;
+            }
+            int result = String.Compare(valueString, condition, CultureInfo.CurrentCulture, CompareOptions.IgnoreCase);
+            switch(op)
+            {
+                case Operator.largerThan:
+                    return result > 0;
+                case Operator.largerEqualThan:
+                    return result >= 0;
+                case Operator.smallerThan:
+                    return result < 0;
+                case Operator.smallerEqualThan:
+                    return result <= 0;
             }
             return false; // Can not be reached.
+        }
+
+        /**
+         * Case-insensitive whole-text match, honoring the ? and * wildcards (~ escapes them).
+         */
+        private static bool MatchesText(String value, String condition)
+        {
+            Regex pattern = Countif.StringMatcher.GetWildCardPattern(condition);
+            return pattern == null ? value.Equals(condition, StringComparison.OrdinalIgnoreCase) : pattern.IsMatch(value);
         }
 
         private static Double? GetNumberFromValueEval(ValueEval value)

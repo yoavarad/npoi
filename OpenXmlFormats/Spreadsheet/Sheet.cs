@@ -6255,6 +6255,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.stopIfTrue = src.stopIfTrue;
             this.bottom = src.bottom;
             this.percent = src.percent;
+            this.rank = src.rank;
             this.dxfId = src.dxfId;
             this.priority = src.priority;
             this.@operator = src.@operator;

@@ -36,7 +36,7 @@ namespace NPOI.SS.Formula.Functions
     /// </para>
     /// <para>
     /// TODO:
-    /// - functions as conditions
+    /// - functions as conditions (task #158)
     /// </para>
     /// </summary>
     public sealed class DSum : IDStarAlgorithm

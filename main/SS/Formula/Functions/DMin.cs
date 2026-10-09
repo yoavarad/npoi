@@ -24,8 +24,7 @@ namespace NPOI.SS.Formula.Functions
      * Finds the minimum value of a column in an area with given conditions.
      * 
      * TODO:
-     * - wildcards ? and * in string conditions
-     * - functions as conditions
+     * - functions as conditions (task #158)
      */
     public class DMin : IDStarAlgorithm
     {
