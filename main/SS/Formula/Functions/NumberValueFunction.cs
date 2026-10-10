@@ -91,7 +91,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 return e.GetErrorEval();
             }
-            catch
+            catch(Exception e) when(e is FormatException || e is OverflowException)
             {
                 return ErrorEval.VALUE_INVALID; //If any of the arguments are not valid, NUMBERVALUE returns the #VALUE! error value.
             }

@@ -32,6 +32,7 @@ namespace NPOI.SS.Format
      */
     public class CellNumberFormatter : CellFormatter
     {
+        private static readonly POILogger logger = POILogFactory.GetLogger(typeof(CellNumberFormatter));
         private String desc;
         private String printfFmt;
         private double scale;
@@ -869,10 +870,9 @@ namespace NPOI.SS.Format
                 WriteSingleint(numeratorFmt, n, output, numeratorSpecials, mods);
                 WriteSingleint(denominatorFmt, d, output, denominatorSpecials, mods);
             }
-            catch(Exception ignored)
+            catch(Exception e) when(e is ArgumentException || e is RuntimeException || e is FormatException || e is OverflowException || e is InvalidOperationException || e is IndexOutOfRangeException)
             {
-                //ignored.PrintStackTrace();
-                System.Console.WriteLine(ignored.StackTrace);
+                logger.Log(POILogger.WARN, "Can't format " + value + " as a fraction", e);
             }
         }
         //private static bool HasChar(char ch, List<Special> s1, List<Special> s2, List<Special> s3)

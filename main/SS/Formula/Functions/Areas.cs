@@ -25,7 +25,7 @@ namespace NPOI.SS.Formula.Functions
                 NumberEval numberEval = new NumberEval(new NumberPtg(result));
                 return numberEval;
             }
-            catch
+            catch(Exception e) when(e is InvalidCastException || e is NullReferenceException)
             {
                 return ErrorEval.VALUE_INVALID;
             }

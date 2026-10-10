@@ -312,9 +312,8 @@ namespace NPOI.OpenXml4Net.OPC
                     {
                         targetURI = ParseUri(path.Substring(1), UriKind.RelativeOrAbsolute);
                     }
-                    catch
+                    catch(UriFormatException)
                     {
-                        //_logger.log(POILogger.WARN, e);
                         return null;
                     }
                 }
@@ -359,9 +358,8 @@ namespace NPOI.OpenXml4Net.OPC
                 {
                     return ParseUri(retVal.ToString(), UriKind.RelativeOrAbsolute);
                 }
-                catch
+                catch(UriFormatException)
                 {
-                    //System.err.println(e);
                     return null;
                 }
             }
@@ -418,9 +416,8 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 return ParseUri(retVal.ToString(), UriKind.RelativeOrAbsolute);
             }
-            catch
+            catch(UriFormatException)
             {
-                //System.err.println(e);
                 return null;
             }
         }
@@ -677,7 +674,7 @@ namespace NPOI.OpenXml4Net.OPC
                 CreatePartName(partUri);
                 return true;
             }
-            catch
+            catch(InvalidFormatException)
             {
                 return false;
             }

@@ -403,5 +403,13 @@ namespace TestCases.XSSF.Model
 
             ClassicAssert.IsNotNull(XSSFTestDataSamples.WriteOutAndReadBack(workbook));
         }
+
+        [Test]
+        public void TestGetTableStyleBuiltinName()
+        {
+            using XSSFWorkbook wb = new XSSFWorkbook();
+            StylesTable styles = wb.GetStylesSource();
+            ClassicAssert.IsNotNull(styles.GetTableStyle("TableStyleMedium2"));
+        }
     }
 }

@@ -1183,7 +1183,7 @@ namespace NPOI.SS.UserModel
                         {
                             cellType = cell.CachedFormulaResultType;
                         }
-                        catch(Exception)
+                        catch(InvalidOperationException)
                         {
                             return cell.CellFormula;
                         }

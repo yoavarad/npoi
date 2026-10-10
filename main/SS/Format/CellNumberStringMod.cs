@@ -77,15 +77,7 @@ namespace NPOI.SS.Format
 
         public override bool Equals(Object that)
         {
-            try
-            {
-                return CompareTo((CellNumberStringMod) that) == 0;
-            }
-            catch
-            {
-                // NullPointerException or CastException
-                return false;
-            }
+            return that is CellNumberStringMod mod && CompareTo(mod) == 0;
         }
 
 

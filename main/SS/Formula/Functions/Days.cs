@@ -49,7 +49,7 @@ namespace NPOI.SS.Formula.Functions
                 double d0 = NumericFunction.SingleOperandEvaluate(ve, srcRowIndex, srcColumnIndex);
                 return getDate(d0);
             }
-            catch(Exception e)
+            catch(Exception ex) when(ex is EvaluationException || ex is ArgumentException)
             {
                 String strText1 = OperandResolver.CoerceValueToString(ve);
                 DateTime result = DateTime.MinValue;

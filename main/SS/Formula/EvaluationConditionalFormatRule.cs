@@ -734,7 +734,7 @@ namespace NPOI.SS.Formula
                         // see TextFunction.TRIM for implementation
                         return v == null || v.Trim().Length == 0;
                     }
-                    catch
+                    catch(Exception e) when(e is InvalidOperationException || e is NullReferenceException)
                     {
                         // not a valid string value, and not a blank cell (that's checked earlier)
                         return false;
@@ -746,7 +746,7 @@ namespace NPOI.SS.Formula
                         // see TextFunction.TRIM for implementation
                         return v != null && v.Trim().Length > 0;
                     }
-                    catch
+                    catch(Exception e) when(e is InvalidOperationException || e is NullReferenceException)
                     {
                         // not a valid string value, but not blank
                         return true;

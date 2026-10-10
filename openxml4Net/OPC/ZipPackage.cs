@@ -346,12 +346,11 @@ namespace NPOI.OpenXml4Net.OPC
                 return PackagingUriHelper.CreatePartName(ZipHelper
                         .GetOPCNameFromZipItemName(entry.Name));
             }
-            catch
+            catch(InvalidFormatException e)
             {
                 // We assume we can continue, even in degraded mode ...
-                //logger.log(POILogger.WARN,"Entry "
-                //                + entry.getName()
-                //                + " is not valid, so this part won't be add to the package.");
+                logger.Log(POILogger.WARN, "Entry " + entry.Name
+                                + " is not valid, so this part won't be add to the package.", e);
                 return null;
             }
         }

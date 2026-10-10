@@ -4575,9 +4575,9 @@ namespace NPOI.XSSF.UserModel
                     var elem = XElement.Parse(data);
                     id = elem.Attributes().FirstOrDefault(x => x.Name.LocalName == "id").Value;
                 }
-                catch
+                catch(Exception e) when(e is XmlException || e is NullReferenceException)
                 {
-                    Debug.WriteLine("Warning: Can't get id for chart.");
+                    logger.Log(POILogger.WARN, "Can't get id for chart.", e);
                     continue;
                 }
 
@@ -6465,7 +6465,7 @@ namespace NPOI.XSSF.UserModel
                             newCell.SetCellType(CellType.Numeric);
                             newCell.SetCellValue(oldCell.NumericCellValue);
                         }
-                        catch
+                        catch(InvalidOperationException)
                         {
                             newCell.SetCellType(CellType.String);
                             newCell.SetCellValue(oldCell.ToString());
