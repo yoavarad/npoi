@@ -124,6 +124,10 @@ namespace NPOI.SS.Formula
                         return eval;
                     }
                 }
+                if(result is DStarRunner dStar)
+                {
+                    return dStar.Evaluate(args, ec);
+                }
                 if(result is IDate1904AwareFunction dateFunc)
                 {
                     return dateFunc.Evaluate(args, ec.RowIndex, ec.ColumnIndex, ec.GetWorkbook().IsDate1904());
