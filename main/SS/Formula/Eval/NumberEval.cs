@@ -64,7 +64,8 @@ namespace NPOI.SS.Formula.Eval
         public String StringValue
         {
             get
-            {// TODO: limit to 15 decimal places
+            {
+                // NumberToTextConverter applies Excel's 15-significant-digit rendering
                 if(_stringValue == null)
                     //MakeString();
                     _stringValue = NumberToTextConverter.ToText(_value);

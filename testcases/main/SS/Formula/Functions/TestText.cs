@@ -47,6 +47,33 @@ namespace TestCases.SS.Formula.Functions
         }
 
         [Test]
+        public void TestTextFormatsNumericStringAndDecimalPatterns()
+        {
+            CultureInfo saved = System.Threading.Thread.CurrentThread.CurrentCulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+            try
+            {
+                // Excel: numeric text is formatted like a number
+                ConfirmText(new StringEval("123"), "0.00", "123.00");
+                ConfirmText(new NumberEval(1234.5), "#,##0.00", "1,234.50");
+                ConfirmText(new NumberEval(0.256), "0.0%", "25.6%");
+                ConfirmText(new NumberEval(5), "000", "005");
+                ConfirmText(new NumberEval(-3.14159), "0.000", "-3.142");
+            }
+            finally
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = saved;
+            }
+        }
+
+        private static void ConfirmText(ValueEval value, string format, string expected)
+        {
+            ValueEval result = TextFunction.TEXT.Evaluate(new ValueEval[] { value, new StringEval(format) }, -1, (short) -1);
+            ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), format);
+            ClassicAssert.AreEqual(expected, ((StringEval) result).StringValue, format);
+        }
+
+        [Test]
         public void TestTextWithRefEvalStringFirstArg()
         {
             // Simulate a cell reference (RefEval) that resolves to a string cell value,

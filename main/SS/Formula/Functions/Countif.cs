@@ -512,6 +512,11 @@ namespace NPOI.SS.Formula.Functions
                         case ']':
                         case '(':
                         case ')':
+                        case '+':
+                        case '{':
+                        case '}':
+                        case '|':
+                        case '\\':
                             // escape literal characters that would have special meaning in regex
                             sb.Append("\\").Append(ch);
                             continue;

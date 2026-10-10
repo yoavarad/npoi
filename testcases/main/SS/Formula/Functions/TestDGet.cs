@@ -142,6 +142,25 @@ namespace TestCases.SS.Formula.Functions
             }
         }
 
+        // Excel criteria: "=" and "<>" text criteria honor ? and * wildcards,
+        // operator-less text is "begins with" (wildcards included), and < > compare text.
+        [TestCase("=A*e", "DGET", 10)]
+        [TestCase("=a?ple", "DGET", 10)]
+        [TestCase("C?er", "DGET", 9)]
+        [TestCase("<>P*", "DSUM", 19)]
+        [TestCase("<C", "DSUM", 10)]
+        [TestCase(">=Cherry", "DSUM", 19)]
+        [TestCase("=A+*", "DSUM", 0)] // regex metacharacters are literal
+        public void TestTextCriteria(string treeCondition, string function, double expected)
+        {
+            using(HSSFWorkbook wb = initWorkbook1(false, treeCondition))
+            {
+                HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(wb);
+                HSSFCell cell = wb.GetSheetAt(0).GetRow(0).CreateCell(100) as HSSFCell;
+                Utils.AssertDouble(fe, cell, function + "(A5:E11, \"Yield\", A1:F3)", expected);
+            }
+        }
+
         private HSSFWorkbook initWorkbook1(bool adjustAppleCondition, string appleCondition)
         {
             HSSFWorkbook wb = new HSSFWorkbook();

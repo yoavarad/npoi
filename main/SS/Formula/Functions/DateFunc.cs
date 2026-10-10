@@ -22,7 +22,7 @@ namespace NPOI.SS.Formula.Functions
     /**
      * @author Pavel Krupets (pkrupets at palmtreebusiness dot com)
      */
-    public class DateFunc : Fixed3ArgFunction
+    public class DateFunc : Fixed3ArgFunction, IDate1904AwareFunction
     {
         public static Function instance = new DateFunc();
 
@@ -32,13 +32,27 @@ namespace NPOI.SS.Formula.Functions
         }
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1, ValueEval arg2)
         {
+            return Evaluate(srcRowIndex, srcColumnIndex, arg0, arg1, arg2, false);
+        }
+
+        public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex, bool use1904windowing)
+        {
+            if(args.Length != 3)
+            {
+                return ErrorEval.VALUE_INVALID;
+            }
+            return Evaluate(srcRowIndex, srcColumnIndex, args[0], args[1], args[2], use1904windowing);
+        }
+
+        private ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1, ValueEval arg2, bool use1904windowing)
+        {
             double result;
             try
             {
                 double d0 = NumericFunction.SingleOperandEvaluate(arg0, srcRowIndex, srcColumnIndex);
                 double d1 = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                 double d2 = NumericFunction.SingleOperandEvaluate(arg2, srcRowIndex, srcColumnIndex);
-                result = Evaluate(GetYear(d0), (int) d1, (int) d2);
+                result = Evaluate(GetYear(d0), (int) d1, (int) d2, use1904windowing);
                 NumericFunction.CheckValue(result);
             }
             catch(EvaluationException e)
@@ -54,6 +68,15 @@ namespace NPOI.SS.Formula.Functions
 	     */
         public double Evaluate(int year, int month, int pDay)
         {
+            return Evaluate(year, month, pDay, false);
+        }
+
+        /**
+         * Note - works with Java Calendar months, not Excel months
+         * Java Calendar month = Excel month + 1
+         */
+        public double Evaluate(int year, int month, int pDay, bool use1904windowing)
+        {
             // We don't support negative years yet
             if(year < 0)
             {
@@ -66,6 +89,17 @@ namespace NPOI.SS.Formula.Functions
                 month += 12;
             }
             // Negative days are handled by the Java Calendar
+
+            if(use1904windowing)
+            {
+                // the 1904 date system has no 1900 leap-year bug; dates before its epoch are #NUM!
+                double date1904 = DateUtil.GetExcelDate(year, month, pDay, 0, 0, 0, true);
+                if(date1904 < 0)
+                {
+                    throw new EvaluationException(ErrorEval.NUM_ERROR);
+                }
+                return date1904;
+            }
 
             // Excel has bugs around leap years in 1900, handle them
             // Special case for the non-existant 1900 leap year
@@ -98,11 +132,8 @@ namespace NPOI.SS.Formula.Functions
             //    c.add(Calendar.DATE, 1);
             //}
 
-            // TODO Identify if we're doing 1900 or 1904 date windowing
-            bool use1904windowing = false;
-
             // Have this Java date turned back into an Excel one
-            return DateUtil.GetExcelDate(year, month, day, 0, 0, 0, use1904windowing); // XXX fix 1900/1904 problem
+            return DateUtil.GetExcelDate(year, month, day, 0, 0, 0, false);
         }
 
         private static int GetYear(double d)

@@ -324,6 +324,10 @@ namespace NPOI.HSSF.UserModel
         {
             return SpreadsheetVersion.EXCEL97;
         }
+        public bool IsDate1904()
+        {
+            return _uBook.IsDate1904();
+        }
         public ITable GetTable(String name)
         {
             throw new InvalidOperationException("XSSF-style tables are not supported for HSSF");

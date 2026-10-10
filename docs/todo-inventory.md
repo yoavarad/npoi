@@ -140,20 +140,15 @@ Follow-up tasks are grouped by area rather than one task per comment. Kept items
 
 ## Follow-up #110: Formula eval gaps
 
+Resolved by task 150 except D-function computed (formula) criteria, split to task #158:
+
 | Location | Comment |
 |---|---|
-| `main/SS/Formula/Atp/DateParser.cs:89` | // TODO - find a way to choose the correct date format |
-| `main/SS/Formula/Eval/NumberEval.cs:67` | {// TODO: limit to 15 decimal places |
-| `main/SS/Formula/EvaluationConditionalFormatRule.cs:557` | // TODO: anything else, we don't handle yet, such as top 10 |
-| `main/SS/Formula/Functions/Address.cs:85` | // TODO R1C1 style is not yet supported |
-| `main/SS/Formula/Functions/CalendarFieldFunction.cs:91` | // TODO Figure out if we're in 1900 or 1904 |
-| `main/SS/Formula/Functions/DateFunc.cs:101` | // TODO Identify if we're doing 1900 or 1904 date windowing |
-| `main/SS/Formula/Functions/DGet.cs:26` | * TODO: |
-| `main/SS/Formula/Functions/DMax.cs:38` | /// TODO: |
-| `main/SS/Formula/Functions/DMin.cs:26` | * TODO: |
-| `main/SS/Formula/Functions/DStarRunner.cs:302` | // TODO: Check whether the condition cell contains a formula and return #VALUE! if it doesn't. |
-| `main/SS/Formula/Functions/DSum.cs:38` | /// TODO: |
-| `main/SS/Formula/OperationEvaluationContext.cs:227` | * TODO - currently POI only supports 'A1' reference style |
+| `main/SS/Formula/Functions/DGet.cs:26` | * TODO: - functions as conditions (task #158) |
+| `main/SS/Formula/Functions/DMax.cs:38` | /// TODO: - functions as conditions (task #158) |
+| `main/SS/Formula/Functions/DMin.cs:26` | * TODO: - functions as conditions (task #158) |
+| `main/SS/Formula/Functions/DStarRunner.cs:302` | // TODO: Check whether the condition cell contains a formula and return #VALUE! if it doesn't. (task #158) |
+| `main/SS/Formula/Functions/DSum.cs:38` | /// TODO: - functions as conditions (task #158) |
 
 ## Follow-up #111: XSSF/SXSSF gaps
 
@@ -425,7 +420,6 @@ Follow-up tasks are grouped by area rather than one task per comment. Kept items
 | `main/HSSF/Record/UnknownRecord.cs:94` | //    // TODO - put unknown OBJ sub-records in a different class |
 | `main/SS/Formula/Eval/OperandResolver.cs:307` | //// TODO - support notation like '1E3' (==1000) |
 | `main/SS/Formula/Formula.cs:50` | //        // TODO - this seems to occur when IntersectionPtg is present |
-| `main/SS/Formula/Functions/Text/Text.cs:64` | //    //TODO: simulate DecimalFormat class in java. |
 | `main/SS/Formula/PTG/Ptg.cs:243` | //    // TODO - all base tokens are logically immutable, but AttrPtg needs some clean-up |
 | `main/SS/Util/CellRangeUtil.cs:183` | //// TODO - write junit test for this |
 | `main/SS/Util/SheetUtil.cs:871` | //    TODO-Fonts: not supported: if (font.Underline == (byte)FontUnderlineType.SINGLE) str.AddAttribute(TextAttribute.UNDERLINE, TextAttr... |
@@ -443,9 +437,6 @@ Follow-up tasks are grouped by area rather than one task per comment. Kept items
 | `ooxml/XWPF/Usermodel/XWPFDocument.cs:797` | //     * TODO DO not use a coded constant, find the constant in the OOXML |
 | `OpenXmlFormats/Spreadsheet/CustomXmlMappings.cs:20` | //  TODO the initial elements of schemaField and mapField must be ensured somewhere else - or is there a save default!? |
 
-## Task 110 deferred (F5 formula-eval items, documented not fixed)
+## Task 110 deferred (F5 formula-eval items)
 
-Need new plumbing (workbook date-windowing / A1-vs-R1C1 flag into the evaluation context) or a Java-DecimalFormat port; out of scope for the ForkedEvaluator bug fix:
-- 1900 vs 1904 windowing: `Functions/CalendarFieldFunction.cs:91`, `Functions/DateFunc.cs:101` (hardcoded 1900; needs `IEvaluationWorkbook` to expose the windowing flag).
-- R1C1: `Functions/Address.cs:85`, `OperationEvaluationContext.cs:227` (only A1 supported).
-- `Atp/DateParser.cs:89` (date format choice), `Eval/NumberEval.cs:67` (15-digit limit), `Functions/Text/Text.cs:64` (DecimalFormat), D-functions (DGet/DMax/DMin/DSum, DStarRunner), `EvaluationConditionalFormatRule.cs` top-10.
+Done in task 150: 1900/1904 windowing (`IEvaluationWorkbook.IsDate1904`, `IDate1904AwareFunction` for DATE, YEAR..SECOND, TEXT), R1C1 in ADDRESS and INDIRECT, DateParser culture date order, NumberEval 15-digit text (already via `NumberToTextConverter`; tests added), TEXT numeric-text coercion (dead DecimalFormat port removed; `DataFormatter` does the work), D-function wildcard and text-comparison criteria, CF top-10 ranking only numbers (plus `CT_CfRule.Set` now copies `rank`). Remaining: D-function computed criteria, task #158.

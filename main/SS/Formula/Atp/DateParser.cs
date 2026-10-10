@@ -16,8 +16,8 @@
 ==================================================================== */
 
 using NPOI.SS.Formula.Eval;
-using NPOI.Util;
 using System;
+using System.Globalization;
 
 namespace NPOI.SS.Formula.Atp
 {
@@ -78,16 +78,30 @@ namespace NPOI.SS.Formula.Atp
                 // when 4 digit value appears first, the format is YYYY/MM/DD, regardless of OS settings
                 return MakeDate(f0, f1, f2);
             }
-#if !HIDE_UNREACHABLE_CODE
-            // otherwise the format seems to depend on OS settings (default date format)
-            if(false)
+            // otherwise Excel follows the OS short date order; use the current culture's
+            string pattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.TrimStart();
+            char first = pattern.Length == 0 ? 'm' : char.ToLowerInvariant(pattern[0]);
+            switch(first)
             {
-                // MM/DD/YYYY is probably a good guess, if the in the US
-                return MakeDate(f2, f0, f1);
+                case 'd':
+                    return MakeDate(ExpandYear(f2), f1, f0);
+                case 'y':
+                    return MakeDate(ExpandYear(f0), f1, f2);
+                default:
+                    return MakeDate(ExpandYear(f2), f0, f1);
             }
-#endif
-            // TODO - find a way to choose the correct date format
-            throw new RuntimeException("Unable to determine date format for text '" + strVal + "'");
+        }
+
+        /**
+         * Excel reads two-digit years 00-29 as 2000-2029 and 30-99 as 1930-1999.
+         */
+        private static int ExpandYear(int year)
+        {
+            if(year < 30)
+            {
+                return 2000 + year;
+            }
+            return year < 100 ? 1900 + year : year;
         }
 
         /**
@@ -95,7 +109,7 @@ namespace NPOI.SS.Formula.Atp
          */
         private static DateTime MakeDate(int year, int month, int day)
         {
-            if(month < 1 || month > 12)
+            if(year < 1900 || year > 9999 || month < 1 || month > 12)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }

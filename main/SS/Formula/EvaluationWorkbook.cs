@@ -130,6 +130,11 @@ namespace NPOI.SS.Formula
         void ClearAllCachedResultValues();
 
         SpreadsheetVersion GetSpreadsheetVersion();
+
+        /**
+         * @return <c>true</c> if the workbook uses the 1904 date system, <c>false</c> for the 1900 date system
+         */
+        bool IsDate1904();
     }
 
     public class ExternalName

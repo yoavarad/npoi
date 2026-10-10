@@ -128,7 +128,9 @@ namespace NPOI.SS.Formula.Functions
 
             String refStrPart1;
             String refStrPart2;
-            if(Table.IsStructuredReference.IsMatch(refText))
+            // "R[1]C[2]" looks like a structured reference, but R1C1 text is never a valid table name
+            bool isR1C1Text = !isA1style && OperationEvaluationContext.IsR1C1Reference(refText);
+            if(!isR1C1Text && Table.IsStructuredReference.IsMatch(refText))
             { // The argument is structured reference
                 Area3DPxg areaPtg = null;
                 try

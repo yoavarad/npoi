@@ -224,16 +224,77 @@ namespace NPOI.SS.Formula
          * parameter must be <code>null</code>
          * @param isA1Style specifies the format for <c>refStrPart1</c> and <c>refStrPart2</c>.
          * Pass <c>true</c> for 'A1' style and <c>false</c> for 'R1C1' style.
-         * TODO - currently POI only supports 'A1' reference style
          * @return a {@link RefEval} or {@link AreaEval}
          */
+        private static readonly System.Text.RegularExpressions.Regex R1C1_PATTERN = new System.Text.RegularExpressions.Regex(
+            @"^(?:R(\[-?\d+\]|\d+)?(?:(?<col>C)(\[-?\d+\]|\d+)?)?|(?<col>C)(\[-?\d+\]|\d+)?)$",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+        /**
+         * @return <c>true</c> if every ':'-separated part of <c>refText</c> is an R1C1-style reference
+         */
+        internal static bool IsR1C1Reference(String refText)
+        {
+            foreach(String part in refText.Split(':'))
+            {
+                if(!R1C1_PATTERN.IsMatch(part.Trim()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /**
+         * Converts one part of an R1C1-style reference ("R2C3", "R[-1]C", "R5", "C[2]", "RC") into the
+         * equivalent A1-style text, resolving relative parts against the evaluating cell.
+         * Text that is not R1C1 (for example a defined name) is returned unchanged.
+         * @return <c>null</c> if the reference falls outside the sheet
+         */
+        private String ConvertR1C1ToA1(String refStr, SpreadsheetVersion ssVersion)
+        {
+            System.Text.RegularExpressions.Match m = R1C1_PATTERN.Match(refStr);
+            if(!m.Success)
+            {
+                return refStr;
+            }
+            bool hasRow = refStr[0] == 'R' || refStr[0] == 'r';
+            bool hasCol = m.Groups["col"].Success;
+            int row = hasRow ? ResolveR1C1Part(m.Groups[1].Value, _rowIndex) : 0;
+            int col = hasCol ? ResolveR1C1Part(hasRow ? m.Groups[2].Value : m.Groups[3].Value, _columnIndex) : 0;
+            if(row < 0 || row > ssVersion.LastRowIndex || col < 0 || col > ssVersion.LastColumnIndex)
+            {
+                return null;
+            }
+            if(hasRow && hasCol)
+            {
+                return new CellReference(row, col).FormatAsString();
+            }
+            return hasRow ? (row + 1).ToString(CultureInfo.InvariantCulture) : CellReference.ConvertNumToColString(col);
+        }
+
+        /**
+         * @return the 0-based index for an R1C1 row/column part: empty (current), "[n]" (offset) or "n" (absolute, 1-based);
+         * -1 if the number does not fit
+         */
+        private static int ResolveR1C1Part(String part, int current)
+        {
+            if(part.Length == 0)
+            {
+                return current;
+            }
+            bool relative = part[0] == '[';
+            if(!long.TryParse(relative ? part.Substring(1, part.Length - 2) : part, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out long n))
+            {
+                return -1;
+            }
+            long index = relative ? current + n : n - 1;
+            return index < 0 || index > int.MaxValue ? -1 : (int) index;
+        }
+
         public ValueEval GetDynamicReference(String workbookName, String sheetName, String refStrPart1,
                 String refStrPart2, bool isA1Style)
         {
-            if(!isA1Style)
-            {
-                throw new Exception("R1C1 style not supported yet");
-            }
             SheetRefEvaluator se = CreateExternSheetRefEvaluator(workbookName, sheetName);
             if(se == null)
             {
@@ -243,6 +304,23 @@ namespace NPOI.SS.Formula
 
             // ugly typecast - TODO - make spReadsheet version more easily accessible
             SpreadsheetVersion ssVersion = ((IFormulaParsingWorkbook)_workbook).GetSpreadsheetVersion();
+
+            if(!isA1Style)
+            {
+                refStrPart1 = ConvertR1C1ToA1(refStrPart1, ssVersion);
+                if(refStrPart1 == null)
+                {
+                    return ErrorEval.REF_INVALID;
+                }
+                if(refStrPart2 != null)
+                {
+                    refStrPart2 = ConvertR1C1ToA1(refStrPart2, ssVersion);
+                    if(refStrPart2 == null)
+                    {
+                        return ErrorEval.REF_INVALID;
+                    }
+                }
+            }
 
             NameType part1refType = ClassifyCellReference(refStrPart1, ssVersion);
             switch(part1refType)

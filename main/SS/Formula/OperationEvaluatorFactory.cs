@@ -124,6 +124,10 @@ namespace NPOI.SS.Formula
                         return eval;
                     }
                 }
+                if(result is IDate1904AwareFunction dateFunc)
+                {
+                    return dateFunc.Evaluate(args, ec.RowIndex, ec.ColumnIndex, ec.GetWorkbook().IsDate1904());
+                }
                 return result.Evaluate(args, ec.RowIndex, (short) ec.ColumnIndex);
             }
             else if(udfFunc != null)

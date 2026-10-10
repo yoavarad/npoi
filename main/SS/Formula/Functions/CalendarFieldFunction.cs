@@ -29,7 +29,7 @@ namespace NPOI.SS.Formula.Functions
      * @author Others (not mentioned in code)
      * @author Thies Wellpott
      */
-    public class CalendarFieldFunction : Fixed1ArgFunction
+    public class CalendarFieldFunction : Fixed1ArgFunction, IDate1904AwareFunction
     {
         public const int YEAR_ID = 0x01;
         public const int MONTH_ID = 0x02;
@@ -54,6 +54,20 @@ namespace NPOI.SS.Formula.Functions
 
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0)
         {
+            return Evaluate(srcRowIndex, srcColumnIndex, arg0, false);
+        }
+
+        public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex, bool use1904windowing)
+        {
+            if(args.Length != 1)
+            {
+                return ErrorEval.VALUE_INVALID;
+            }
+            return Evaluate(srcRowIndex, srcColumnIndex, args[0], use1904windowing);
+        }
+
+        private ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, bool use1904windowing)
+        {
             double val;
             try
             {
@@ -68,12 +82,12 @@ namespace NPOI.SS.Formula.Functions
             {
                 return ErrorEval.NUM_ERROR;
             }
-            return new NumberEval(GetCalField(val));
+            return new NumberEval(GetCalField(val, use1904windowing));
         }
 
-        private int GetCalField(double serialDate)
+        private int GetCalField(double serialDate, bool use1904windowing)
         {
-            if((int) serialDate == 0)
+            if(!use1904windowing && (int) serialDate == 0)
             {
                 // Special weird case
                 // day zero should be 31-Dec-1899,  but Excel seems to think it is 0-Jan-1900
@@ -88,11 +102,10 @@ namespace NPOI.SS.Formula.Functions
                 }
                 //throw new InvalidOperationException("bad date field " + _dateFieldId);
             }
-            // TODO Figure out if we're in 1900 or 1904
             // EXCEL functions round up nearly a half second (probably to prevent floating point
             // rounding issues); use UTC here to prevent daylight saving issues for HOUR
             //DateTime d = DateUtil.GetJavaDate(serialDate, false);
-            DateTime d = DateUtil.GetJavaCalendar(serialDate + 0.4995 / DateUtil.SECONDS_PER_DAY, false);
+            DateTime d = DateUtil.GetJavaCalendar(serialDate + 0.4995 / DateUtil.SECONDS_PER_DAY, use1904windowing);
 
             //Calendar c = new GregorianCalendar();
             //c.setTime(d);

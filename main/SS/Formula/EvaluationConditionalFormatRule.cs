@@ -554,7 +554,7 @@ namespace NPOI.SS.Formula
             {
                 return CheckFilter(cell, reference, region);
             }
-            // TODO: anything else, we don't handle yet, such as top 10
+            // no other rule types exist (top 10 and the other filters are handled by CheckFilter)
             return false;
         }
         private bool CheckFilter(ICell cell, CellReference reference, CellRangeAddress region)
@@ -576,7 +576,7 @@ namespace NPOI.SS.Formula
                     {
                         return false;
                     }
-                    return GetMeaningfulValues(region, true, (allValues) =>
+                    return GetMeaningfulValues(region, false, (allValues) =>
                     {
                         IConditionFilterData fc = rule.FilterConfiguration;
 
