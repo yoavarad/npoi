@@ -39,13 +39,13 @@ Conventions, preferences, and domain knowledge.
 ## Branch Protection (main)
 
 - Applied once via the API (task #97); not stored in the repo. Required status checks (exact check-run names, all run on every PR, no path filters): `ubuntu-latest`, `windows-latest` (CI.yml), `format (windows-latest)` (Format.yml), `branch-name`, `commit-messages` (conventions.yml), `check-body` (pr-body-check.yml).
-- Settings: `strict: true` (branch must be up to date), `enforce_admins: false` (owner can bypass in emergencies), force-push and deletion blocked, no required reviews (solo maintainer). Merge commits stay allowed (needed for `.git-blame-ignore-revs` reformat commits); do not change repo merge-method settings.
+- Settings: `strict: false` (branch need not be up to date; avoids forced branch updates + CI reruns after every merge), `enforce_admins: false` (owner can bypass in emergencies), force-push and deletion blocked, no required reviews (solo maintainer). Merge commits stay allowed (needed for `.git-blame-ignore-revs` reformat commits); do not change repo merge-method settings.
 - Command: `gh api -X PUT repos/yoavarad/npoi/branches/main/protection --input protection.json`, body:
 
 ```json
 {
   "required_status_checks": {
-    "strict": true,
+    "strict": false,
     "contexts": ["ubuntu-latest", "windows-latest", "format (windows-latest)", "branch-name", "commit-messages", "check-body"]
   },
   "enforce_admins": false,
@@ -56,6 +56,7 @@ Conventions, preferences, and domain knowledge.
 }
 ```
 
+- Change only this flag: `gh api -X PATCH repos/yoavarad/npoi/branches/main/protection/required_status_checks -F strict=false`.
 - Verify: `gh api repos/yoavarad/npoi/branches/main/protection`.
 - **Every required check must run on `synchronize`:** with `strict: true`, each "Update branch" creates a new head commit. A required workflow that only triggers on `opened`/`edited` (as `pr-body-check.yml` once did) never reports on that commit and the PR stays BLOCKED.
 - **Renaming a workflow job or matrix leg:** the old name becomes a required check that never reports, blocking every PR. Get the new name from `gh pr checks <n>`, then re-run the PUT above with the updated `contexts` (the PUT replaces the full list) before or right after merging the rename.
