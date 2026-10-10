@@ -74,14 +74,21 @@ namespace NPOI.POIFS.Macros
         {
             ZipInputStream zis = new ZipInputStream(zipFile);
             ZipEntry zipEntry;
+            long entryCount = 0;
             while((zipEntry = zis.GetNextEntry()) != null)
             {
+                if(++entryCount > MAX_ENTRY_COUNT)
+                {
+                    zis.Close();
+                    throw new IOException("Zip entry count exceeds limit of " + MAX_ENTRY_COUNT);
+                }
                 if(zipEntry.Name.EndsWith(VBA_PROJECT_OOXML, StringComparison.OrdinalIgnoreCase))
                 {
                     try
                     {
-                        // Make a NPOIFS from the contents, and close the stream
-                        this.fs = new NPOIFSFileSystem(zis);
+                        // Bounded copy (zip-bomb guard; mirrors ZipSecureFile limits), then make a NPOIFS from it
+                        this.fs = new NPOIFSFileSystem(ReadBounded(zis, zipEntry));
+                        zis.Close();
                         return;
                     }
                     catch(IOException)
@@ -96,6 +103,36 @@ namespace NPOI.POIFS.Macros
             }
             zis.Close();
             throw new ArgumentException("No VBA project found");
+        }
+
+        // Mirrors ZipSecureFile defaults (that class lives in a downstream assembly).
+        private const long MAX_ENTRY_COUNT = 10000;
+        internal static long MAX_ENTRY_SIZE = 0xFFFFFFFFL;
+        private const long GRACE_SIZE = 100 * 1024L;
+        private const double MIN_INFLATE_RATIO = 0.01d;
+
+        private static MemoryStream ReadBounded(ZipInputStream zis, ZipEntry entry)
+        {
+            MemoryStream ms = new MemoryStream();
+            byte[] buf = new byte[4096];
+            long total = 0;
+            int n;
+            while((n = zis.Read(buf, 0, buf.Length)) > 0)
+            {
+                total += n;
+                if(total > MAX_ENTRY_SIZE || total > int.MaxValue - 64)
+                {
+                    throw new IOException("Zip entry too large: possible zip bomb");
+                }
+                ms.Write(buf, 0, n);
+            }
+            long compressed = entry.CompressedSize;
+            if(total > GRACE_SIZE && compressed > 0 && (double) compressed / total < MIN_INFLATE_RATIO)
+            {
+                throw new IOException("Zip bomb detected: inflate ratio too low");
+            }
+            ms.Position = 0;
+            return ms;
         }
 
         public void Close()
