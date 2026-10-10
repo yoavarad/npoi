@@ -94,7 +94,7 @@ Resolved in task #106 (per site):
 - **Implemented:** `NPOIFSDocument.Store` buffers up to the 4096-byte mini stream cut-off, then streams the rest (no `Stream.Length`, so non-seekable streams and streams not at position 0 work). `NDocumentInputStream.Skip` reads in 4 KB chunks instead of allocating the whole skip. `POIFSFileSystem.Create` truncates an existing file (`FileMode.Create`). `FileBackedDataSource.Read` returns the file's data in writable mode too (it returned zero-filled buffers, so `Create` and read-write opens failed).
 - **Stale, removed:** `NPOIFSStream` streaming-write TODOs. `GetOutputStream()` already streams; fixed its `WriteByte`, which wrote into the unused `MemoryStream` base instead of the blocks.
 - **Won't fix, TODO turned into a note:** stream append (`NPOIFSStream`, `NPOIFSMiniStore`: no caller needs it, the mini store extends its chain by hand), #56791 workaround (`POIFSFileSystem : NPOIFSFileSystem`, `DirectoryNode.FileSystem`: public API, kept), `DirectoryNode.Delete` IOException (bool signature), `NPOIFSFileSystem` runtime exceptions from iterators, `VBAMacroReader` dir-first refactor, `FileBackedDataSource.unmap` (nothing is memory-mapped in .NET).
-- **Deferred to #153:** read-write write-through to disk (`FileBackedDataSource` class TODO) and `POIDocument` in-place update (two TODOs).
+- **Deferred to #153, resolved there:** read-write write-through to disk (`FileBackedDataSource` keeps the file in memory, hands out views over it, and `NPOIFSFileSystem.WriteFileSystem()` writes it back via a temp file) and `POIDocument` in-place update (two TODOs; works once the data source writes through).
 
 ## Follow-up #107: HPSF bounded reads/types
 

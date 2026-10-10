@@ -550,7 +550,6 @@ namespace TestCases.HPSF.Basic
          *  without needing to stream in + out the whole kitchen sink
          */
         [Test]
-        [Ignore("TODO FIX CI TESTS")]
         public void TestInPlaceNPOIFSWrite()
         {
             NPOIFSFileSystem fs = null;

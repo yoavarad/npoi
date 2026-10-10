@@ -21,6 +21,8 @@ namespace NPOI.POIFS.FileSystem
     using NPOI.POIFS.Properties;
     using System;
     using System.IO;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /**
      * This class provides methods to write a DocumentEntry managed by a
@@ -125,6 +127,35 @@ namespace NPOI.POIFS.FileSystem
                 Write(new byte[] { (byte) b });
             }
         }
+
+        // Route the Stream overrides through our buffering; otherwise the bytes
+        //  land in the base MemoryStream and are lost.
+        public override void WriteByte(byte value)
+        {
+            Write(value);
+        }
+
+        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Write(buffer, offset, count);
+            return Task.CompletedTask;
+        }
+
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public override void Write(ReadOnlySpan<byte> buffer)
+        {
+            byte[] b = buffer.ToArray();
+            Write(b, 0, b.Length);
+        }
+
+        public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Write(buffer.Span);
+            return default;
+        }
+#endif
 
         public void Write(byte[] b)
         {
