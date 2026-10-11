@@ -156,6 +156,126 @@ namespace TestCases.POIFS.FileSystem
             }
         }
 
+        private static FileInfo TempCopyOf(string sample)
+        {
+            FileInfo file = TempFile.CreateTempFile("TestPOIFS-inplace", ".ole2");
+            File.WriteAllBytes(file.FullName, _inst.ReadFile(sample));
+            file.Refresh();
+            return file;
+        }
+
+        [Test]
+        public void TestInPlaceWritePersistsChanges()
+        {
+            foreach(string sample in new[] { "BlockSize512.zvi", "BlockSize4096.zvi" })
+            {
+                FileInfo file = TempCopyOf(sample);
+                byte[] small = new byte[] { 1, 2, 3, 4, 5 };
+                byte[] big = new byte[10000];
+                for(int i = 0; i < big.Length; i++)
+                {
+                    big[i] = (byte) i;
+                }
+                int entryCount;
+                using(NPOIFSFileSystem fs = new NPOIFSFileSystem(file, false))
+                {
+                    ClassicAssert.IsTrue(fs.IsInPlaceWriteable());
+                    entryCount = fs.Root.EntryCount;
+                    fs.CreateDocument(new MemoryStream(small), "InPlaceSmall");
+                    fs.CreateDocument(new MemoryStream(big), "InPlaceBig");
+                    fs.WriteFileSystem();
+                }
+
+                // File is not held open, and the changes reached the disk
+                using(NPOIFSFileSystem fs = new NPOIFSFileSystem(new MemoryStream(File.ReadAllBytes(file.FullName))))
+                {
+                    ClassicAssert.AreEqual(entryCount + 2, fs.Root.EntryCount, sample);
+                    assertContentsMatches(small, (DocumentEntry) fs.Root.GetEntry("InPlaceSmall"));
+                    assertContentsMatches(big, (DocumentEntry) fs.Root.GetEntry("InPlaceBig"));
+                }
+                file.Delete();
+            }
+        }
+
+        [Test]
+        public void TestInPlaceWriteTwiceAndAcrossSessions()
+        {
+            FileInfo file = TempCopyOf("BlockSize512.zvi");
+            byte[] first = new byte[] { 1, 2, 3 };
+            byte[] second = new byte[6000];
+            for(int i = 0; i < second.Length; i++)
+            {
+                second[i] = (byte) (i * 7);
+            }
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(file, false))
+            {
+                fs.CreateDocument(new MemoryStream(first), "First");
+                fs.WriteFileSystem();
+                fs.CreateDocument(new MemoryStream(second), "Second");
+                fs.WriteFileSystem();
+            }
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(file, false))
+            {
+                assertContentsMatches(first, (DocumentEntry) fs.Root.GetEntry("First"));
+                assertContentsMatches(second, (DocumentEntry) fs.Root.GetEntry("Second"));
+                ((DocumentEntry) fs.Root.GetEntry("Second")).Delete();
+                fs.WriteFileSystem();
+            }
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(file, true))
+            {
+                assertContentsMatches(first, (DocumentEntry) fs.Root.GetEntry("First"));
+                ClassicAssert.IsFalse(fs.Root.HasEntry("Second"));
+            }
+            ClassicAssert.AreEqual(0, file.Directory.GetFiles(file.Name + ".*.tmp").Length, "temp file left behind");
+            file.Delete();
+        }
+
+        [Test]
+        public void TestInPlaceWriteFromFileStream()
+        {
+            FileInfo file = TempCopyOf("BlockSize512.zvi");
+            byte[] small = new byte[] { 9, 8, 7 };
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(
+                new FileStream(file.FullName, FileMode.Open, FileAccess.ReadWrite), null, false, true))
+            {
+                fs.CreateDocument(new MemoryStream(small), "InPlaceSmall");
+                fs.WriteFileSystem();
+            }
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(file, true))
+            {
+                assertContentsMatches(small, (DocumentEntry) fs.Root.GetEntry("InPlaceSmall"));
+            }
+            file.Delete();
+        }
+
+        [Test]
+        public void TestNoChangesReachDiskWithoutWriteFileSystem()
+        {
+            FileInfo file = TempCopyOf("BlockSize512.zvi");
+            byte[] before = File.ReadAllBytes(file.FullName);
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(file, false))
+            {
+                fs.CreateDocument(new MemoryStream(new byte[] { 1, 2, 3 }), "NotSaved");
+            }
+            Assert.That(File.ReadAllBytes(file.FullName), new EqualConstraint(before));
+            file.Delete();
+        }
+
+        [Test]
+        public void TestInPlaceWriteRejectedWhenReadOnly()
+        {
+            FileInfo file = TempCopyOf("BlockSize512.zvi");
+            byte[] before = File.ReadAllBytes(file.FullName);
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(file, true))
+            {
+                ClassicAssert.IsFalse(fs.IsInPlaceWriteable());
+                fs.CreateDocument(new MemoryStream(new byte[] { 1, 2, 3 }), "NotSaved");
+                Assert.Throws<InvalidOperationException>(() => fs.WriteFileSystem());
+            }
+            Assert.That(File.ReadAllBytes(file.FullName), new EqualConstraint(before));
+            file.Delete();
+        }
+
         [Test]
         public void TestBasicOpen()
         {
