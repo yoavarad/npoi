@@ -19,6 +19,7 @@ namespace NPOI.SS.Formula.Functions
 {
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
     using System;
@@ -68,8 +69,26 @@ namespace NPOI.SS.Formula.Functions
             }
         }
 
+        /// <summary>
+        /// Context-aware entry point; needed to evaluate computed (formula) criteria.
+        /// </summary>
+        public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
+        {
+            if(args.Length != 3)
+            {
+                return ErrorEval.VALUE_INVALID;
+            }
+            return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], args[2], ec);
+        }
+
         public ValueEval Evaluate(int srcRowIndex, int srcColumnIndex,
                 ValueEval database, ValueEval filterColumn, ValueEval conditionDatabase)
+        {
+            return Evaluate(srcRowIndex, srcColumnIndex, database, filterColumn, conditionDatabase, null);
+        }
+
+        private ValueEval Evaluate(int srcRowIndex, int srcColumnIndex,
+                ValueEval database, ValueEval filterColumn, ValueEval conditionDatabase, OperationEvaluationContext ec)
         {
             // Input Processing and error Checks.
             if(database is not AreaEval db || conditionDatabase is not AreaEval cdb)
@@ -159,7 +178,7 @@ namespace NPOI.SS.Formula.Functions
                 bool matches = true;
                 try
                 {
-                    matches = FullFillsConditions(db, row, cdb);
+                    matches = FullFillsConditions(db, row, cdb, ec);
                 }
                 catch(EvaluationException)
                 {
@@ -253,7 +272,7 @@ namespace NPOI.SS.Formula.Functions
          * @If references could not be Resolved or comparison
          * operators and operands didn't match.
          */
-        private static bool FullFillsConditions(AreaEval db, int row, AreaEval cdb)
+        private static bool FullFillsConditions(AreaEval db, int row, AreaEval cdb, OperationEvaluationContext ec)
         {
             // Only one row must match to accept the input, so rows are ORed.
             // Each row is made up of cells where each cell is a condition,
@@ -279,12 +298,13 @@ namespace NPOI.SS.Formula.Functions
                     // The column in the DB to apply the condition to.
                     ValueEval targetHeader = ResolveReference(cdb, 0, column);
 
-                    if(targetHeader is not StringValueEval)
+                    // A blank header marks a computed criteria column.
+                    if(targetHeader is not StringValueEval && targetHeader is not BlankEval)
                     {
                         throw new EvaluationException(ErrorEval.VALUE_INVALID);
                     }
 
-                    if(GetColumnForName(targetHeader, db) == -1)
+                    if(targetHeader is BlankEval || GetColumnForName(targetHeader, db) == -1)
                         // No column found, it's again a special column that accepts formulas.
                         columnCondition = false;
 
@@ -299,14 +319,12 @@ namespace NPOI.SS.Formula.Functions
                         }
                     }
                     else
-                    { // It's a special formula condition.
-                      // TODO: Check whether the condition cell contains a formula and return #VALUE! if it doesn't.
-                        if(string.IsNullOrEmpty(OperandResolver.CoerceValueToString(condition)))
+                    { // It's a computed (formula) condition, evaluated against this database row.
+                        if(!TestFormulaCondition(cdb, conditionRow, column, row, ec))
                         {
-                            throw new EvaluationException(ErrorEval.VALUE_INVALID);
+                            matches = false;
+                            break;
                         }
-                        throw new NotImplementedException(
-                                "D* function with formula conditions");
                     }
                 }
                 if(matches == true)
@@ -315,6 +333,33 @@ namespace NPOI.SS.Formula.Functions
                 }
             }
             return false;
+        }
+
+        /**
+         * Evaluates a computed criterion: the formula in the criteria cell is written against the
+         * first database row, and its relative row references are shifted to the row being tested.
+         */
+        private static bool TestFormulaCondition(AreaEval cdb, int conditionRow, int column, int dbRow, OperationEvaluationContext ec)
+        {
+            if(ec == null)
+            {
+                throw new EvaluationException(ErrorEval.VALUE_INVALID);
+            }
+            int sheetIndex = cdb.FirstSheetIndex;
+            IEvaluationSheet sheet = ec.GetWorkbook().GetSheet(sheetIndex);
+            IEvaluationCell cell = sheet?.GetCell(cdb.FirstRow + conditionRow, cdb.FirstColumn + column);
+            if(cell == null || cell.CellType != CellType.Formula)
+            {
+                throw new EvaluationException(ErrorEval.VALUE_INVALID);
+            }
+            ValueEval result = ec.EvaluateFormulaShiftedRows(sheetIndex, cell, dbRow - 1);
+            result = OperandResolver.GetSingleValue(result, ec.RowIndex, ec.ColumnIndex);
+            if(result is ErrorEval)
+            {
+                return false;
+            }
+            bool? b = OperandResolver.CoerceValueToBoolean(result, false);
+            return b == true;
         }
 
         /**

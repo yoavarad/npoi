@@ -57,6 +57,14 @@ namespace NPOI.SS.Formula
                 _isInArrayContext = value;
             }
         }
+        /// <summary>
+        /// Evaluates the formula in the given cell with relative row references shifted down by deltaRow.
+        /// </summary>
+        public ValueEval EvaluateFormulaShiftedRows(int sheetIndex, IEvaluationCell cell, int deltaRow)
+        {
+            return _bookEvaluator.EvaluateFormulaShiftedRows(sheetIndex, cell, deltaRow);
+        }
+
         public IEvaluationWorkbook GetWorkbook()
         {
             return _workbook;
