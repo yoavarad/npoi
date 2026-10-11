@@ -21,6 +21,15 @@
         ]
       },
       {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/pr-body-gate.py"
+          }
+        ]
+      },
+      {
         "matcher": "Bash|Grep",
         "hooks": [
           {
