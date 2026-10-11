@@ -1,0 +1,6 @@
+name: conventions
+description: Branch name and commit subjects must pass CI's conventions.yml (branch-name, commit-messages)
+trigger: git:pre-push
+parallel: true
+timeout: 30
+requires: []

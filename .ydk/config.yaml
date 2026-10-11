@@ -32,6 +32,7 @@ verification:
   - dotnet-format
   - dotnet-test
   - dotnet-tdd-guard
+  - conventions
 ai:
   provider: anthropic
   model_tiers:
