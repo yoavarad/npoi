@@ -3,7 +3,9 @@
 # Exit 0 = allow (task was completed or never started)
 # Exit 2 = block (task started but not done — message fed back to agent)
 
-ACTIVE_TASK=".ydk/active-task.json"
+COMMON_DIR=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+if [ -n "$COMMON_DIR" ]; then ROOT=$(dirname "$COMMON_DIR"); else ROOT="."; fi
+ACTIVE_TASK="$ROOT/.ydk/active-task.json"
 
 if [ ! -f "$ACTIVE_TASK" ]; then
     exit 0

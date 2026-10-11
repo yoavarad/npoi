@@ -372,6 +372,31 @@ namespace TestCases.POIFS.FileSystem
         }
 
 
+        [Test]
+        public void TestOpenFileThenHSSFWorkbook([Values("SimpleWithComments.xls", "WithChart.xls", "Employee.xls", "44235.xls", "countblankExamples.xls")] string sample, [Values(true, false)] bool readOnly)
+        {
+            FileInfo src = HSSFTestDataSamples.GetSampleFile(sample);
+            string tmp = Path.GetTempFileName();
+            try
+            {
+                File.Copy(src.FullName, tmp, true);
+                int expected;
+                using(POIFSFileSystem fs = new POIFSFileSystem(new FileInfo(tmp), true))
+                {
+                    expected = new NPOI.HSSF.UserModel.HSSFWorkbook(fs).NumberOfSheets;
+                }
+                using(POIFSFileSystem fs = new POIFSFileSystem(new FileInfo(tmp), readOnly))
+                {
+                    NPOI.HSSF.UserModel.HSSFWorkbook wb = new NPOI.HSSF.UserModel.HSSFWorkbook(fs);
+                    ClassicAssert.AreEqual(expected, wb.NumberOfSheets);
+                }
+            }
+            finally
+            {
+                File.Delete(tmp);
+            }
+        }
+
         private void CheckAllDirectoryContents(DirectoryEntry dir)
         {
             IEnumerator<Entry> it = dir.Entries;

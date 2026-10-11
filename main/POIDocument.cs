@@ -289,12 +289,13 @@ namespace NPOI
         }
         /**
          * Writes out the updated standard Document Information Properties (HPSF)
-         *  into the currently open NPOIFSFileSystem
-         * TODO Implement in-place update (deferred to #153)
-         * 
+         *  into the currently open NPOIFSFileSystem. The changes reach the
+         *  file when the caller then calls NPOIFSFileSystem.WriteFileSystem().
+         *
          * @throws IOException if an error when writing to the open
          *      {@link NPOIFSFileSystem} occurs
-         * TODO throws exception if open from stream not file (deferred to #153)
+         * @throws InvalidOperationException if the document was not opened
+         *      from a writable file (see ValidateInPlaceWritePossible)
          */
         protected internal void WriteProperties()
         {

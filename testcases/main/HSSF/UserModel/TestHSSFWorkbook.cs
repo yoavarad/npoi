@@ -1324,7 +1324,6 @@ namespace TestCases.HSSF.UserModel
         }
 
         [Test]
-        [Ignore("TODO FIX CI TESTS")]
         public void InPlaceWrite()
         {
             // Setup as a copy of a known-good file
@@ -1368,7 +1367,6 @@ namespace TestCases.HSSF.UserModel
         }
 
         [Test]
-        [Ignore("TODO FIX CI TESTS")]
         public void TestWriteToNewFile()
         {
             // Open from a Stream

@@ -343,6 +343,39 @@ namespace NPOI.SS.Formula
             return EvaluateNameFormula(ptgs, ec);
         }
         /// <summary>
+        /// Evaluates the formula of a cell with its relative row references shifted down by
+        /// <paramref name="deltaRow"/> (used for D* function computed criteria).
+        /// </summary>
+        internal ValueEval EvaluateFormulaShiftedRows(int sheetIndex, IEvaluationCell cell, int deltaRow)
+        {
+            Ptg[] ptgs = (Ptg[]) _workbook.GetFormulaTokens(cell).Clone();
+            for(int i = 0; i < ptgs.Length; i++)
+            {
+                if(ptgs[i] is RefPtgBase || ptgs[i] is AreaPtgBase)
+                {
+                    ptgs[i] = (Ptg) ptgs[i].Clone();
+                }
+                if(ptgs[i] is RefPtgBase r && r.IsRowRelative)
+                {
+                    r.Row += deltaRow;
+                }
+                else if(ptgs[i] is AreaPtgBase a)
+                {
+                    if(a.IsFirstRowRelative)
+                    {
+                        a.FirstRow += deltaRow;
+                    }
+                    if(a.IsLastRowRelative)
+                    {
+                        a.LastRow += deltaRow;
+                    }
+                }
+            }
+            OperationEvaluationContext ec = new OperationEvaluationContext(this, Workbook, sheetIndex, cell.RowIndex, cell.ColumnIndex, new EvaluationTracker(_cache));
+            return EvaluateFormula(ec, ptgs);
+        }
+
+        /// <summary>
         /// Adjust formula relative references by the offset between the start of the given region and the given target cell.
         /// </summary>
         /// <param name="ptgs"></param>

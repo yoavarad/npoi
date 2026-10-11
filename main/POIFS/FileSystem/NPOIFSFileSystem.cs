@@ -807,24 +807,31 @@ namespace NPOI.POIFS.FileSystem
         /**
          * Write the filesystem out to the open file. Will thrown an
          *  {@link ArgumentException} if opened from an 
-         *  {@link InputStream}.
+         *  {@link InputStream}, and an {@link InvalidOperationException}
+         *  if the file was opened read-only.
          * 
          * @exception IOException thrown on errors writing to the stream
          */
         public void WriteFileSystem()
         {
-            if(_data is FileBackedDataSource)
-            {
-                // Good, correct type
-            }
-            else
+            if(_data is not FileBackedDataSource source)
             {
                 throw new ArgumentException(
                       "POIFS opened from an inputstream, so WriteFilesystem() may " +
                       "not be called. Use WriteFilesystem(OutputStream) instead"
                 );
             }
+            if(!source.IsWriteable)
+            {
+                throw new InvalidOperationException(
+                      "POIFS opened read-only, so WriteFilesystem() may not be called. " +
+                      "Use WriteFilesystem(OutputStream) instead"
+                );
+            }
             syncWithDataSource();
+
+            // The data source holds the file in memory, so write it back to disk
+            source.Flush();
         }
 
         /**
