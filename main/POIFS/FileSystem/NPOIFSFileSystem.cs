@@ -263,6 +263,28 @@ namespace NPOI.POIFS.FileSystem
             InitFromBuffer(data);
         }
 
+        /// <summary>
+        /// Opens a read-only file system over a seekable stream without buffering it:
+        /// blocks are read from the stream on demand. The caller owns the stream; neither
+        /// this constructor nor <see cref="Close"/> closes it. Keep it open and unchanged
+        /// while the file system is in use. Writing is not supported.
+        /// </summary>
+        /// <param name="source">the data source wrapping the caller's stream</param>
+        public NPOIFSFileSystem(StreamBackedDataSource source)
+            : this(false)
+        {
+            if(source == null)
+                throw new ArgumentNullException(nameof(source));
+            if(source.Size < POIFSConstants.SMALLER_BIG_BLOCK_SIZE)
+                throw new IOException("Unable to read the OLE2 header: only " + source.Size + " bytes available");
+
+            _header = new HeaderBlock(source.Read(POIFSConstants.SMALLER_BIG_BLOCK_SIZE, 0));
+            BlockAllocationTableReader.SanityCheckBlockCount(_header.BATCount);
+            _data = source;
+
+            ReadCoreContents();
+        }
+
         private void InitFromBuffer(byte[] data)
         {
             if(data.Length < POIFSConstants.SMALLER_BIG_BLOCK_SIZE)

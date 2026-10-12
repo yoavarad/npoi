@@ -156,6 +156,65 @@ namespace TestCases.POIFS.FileSystem
             }
         }
 
+        [Test]
+        public void TestOpenFromStreamBackedDataSourceMatchesByteArrayAndLeavesStreamOpen()
+        {
+            foreach(string sample in new[] { "BlockSize512.zvi", "BlockSize4096.zvi" })
+            {
+                byte[] data = _inst.ReadFile(sample);
+                MemoryStream stream = new MemoryStream(data, false);
+                stream.Position = 7;
+                using(NPOIFSFileSystem expected = new NPOIFSFileSystem(data))
+                using(NPOIFSFileSystem fs = new NPOIFSFileSystem(new NPOI.POIFS.NIO.StreamBackedDataSource(stream)))
+                {
+                    ClassicAssert.IsInstanceOf<NPOI.POIFS.NIO.StreamBackedDataSource>(fs.Data, sample);
+                    ClassicAssert.AreEqual(expected.Root.EntryCount, fs.Root.EntryCount, sample);
+                    foreach(Entry entry in expected.Root)
+                    {
+                        if(entry is DocumentEntry doc)
+                        {
+                            byte[] contents = new byte[doc.Size];
+                            using(Stream s = expected.CreateDocumentInputStream(doc.Name))
+                                IOUtils.ReadFully(s, contents);
+                            assertContentsMatches(contents, (DocumentEntry) fs.Root.GetEntry(doc.Name));
+                        }
+                    }
+                    ClassicAssert.AreEqual(7, stream.Position, sample);
+                }
+                // Closing the file system leaves the caller's stream open and where it was
+                ClassicAssert.IsTrue(stream.CanRead, sample);
+                ClassicAssert.AreEqual(7, stream.Position, sample);
+            }
+        }
+
+        [Test]
+        public void TestStreamBackedDataSourceIsReadOnlyAndNonOwning()
+        {
+            FileInfo file = TempCopyOf("BlockSize512.zvi");
+            try
+            {
+                using(FileStream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
+                {
+                    NPOI.POIFS.NIO.StreamBackedDataSource source = new NPOI.POIFS.NIO.StreamBackedDataSource(stream);
+                    NPOIFSFileSystem fs = new NPOIFSFileSystem(source);
+                    ClassicAssert.IsTrue(fs.Root.EntryCount > 0);
+                    Assert.Throws<NotSupportedException>(() => source.Write(ByteBuffer.CreateBuffer(1), 0));
+
+                    MemoryStream copy = new MemoryStream();
+                    source.CopyTo(copy);
+                    ClassicAssert.AreEqual(File.ReadAllBytes(file.FullName), copy.ToArray());
+
+                    fs.Close();
+                    ClassicAssert.IsTrue(stream.CanRead);
+                    Assert.Throws<InvalidOperationException>(() => source.Read(512, 0));
+                }
+            }
+            finally
+            {
+                file.Delete();
+            }
+        }
+
         private static FileInfo TempCopyOf(string sample)
         {
             FileInfo file = TempFile.CreateTempFile("TestPOIFS-inplace", ".ole2");
