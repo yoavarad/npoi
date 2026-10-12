@@ -215,6 +215,18 @@ namespace TestCases.POIFS.FileSystem
             }
         }
 
+        [Test]
+        public void TestStreamBackedFileSystemCannotBeWrittenOut()
+        {
+            byte[] data = _inst.ReadFile("BlockSize512.zvi");
+            using(NPOIFSFileSystem fs = new NPOIFSFileSystem(new NPOI.POIFS.NIO.StreamBackedDataSource(new MemoryStream(data, false))))
+            {
+                // A change that fits in existing blocks must not be silently dropped on write
+                ((Entry) fs.Root.GetEntry(fs.Root.EntryNames[0])).Delete();
+                Assert.Throws<NotSupportedException>(() => fs.WriteFileSystem(new MemoryStream()));
+            }
+        }
+
         private static FileInfo TempCopyOf(string sample)
         {
             FileInfo file = TempFile.CreateTempFile("TestPOIFS-inplace", ".ole2");

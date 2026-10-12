@@ -868,6 +868,10 @@ namespace NPOI.POIFS.FileSystem
 
         public void WriteFileSystem(Stream stream)
         {
+            if(_data is StreamBackedDataSource)
+                throw new NotSupportedException(
+                      "POIFS opened over a StreamBackedDataSource is read-only, so it cannot be written out"
+                );
 
             // Have the datasource updated
             syncWithDataSource();
