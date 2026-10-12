@@ -280,6 +280,7 @@ namespace NPOI.POIFS.FileSystem
 
             _header = new HeaderBlock(source.Read(POIFSConstants.SMALLER_BIG_BLOCK_SIZE, 0));
             BlockAllocationTableReader.SanityCheckBlockCount(_header.BATCount);
+            source.LimitSize(BATBlock.CalculateMaximumSize(_header));
             _data = source;
 
             ReadCoreContents();

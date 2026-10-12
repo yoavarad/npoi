@@ -31,7 +31,7 @@ namespace NPOI.POIFS.NIO
     public class StreamBackedDataSource : DataSource
     {
         private readonly Stream stream;
-        private readonly long size;
+        private long size;
         private bool closed;
 
         public StreamBackedDataSource(Stream stream)
@@ -102,6 +102,15 @@ namespace NPOI.POIFS.NIO
             {
                 stream.Position = saved;
             }
+        }
+
+        /// <summary>
+        /// Caps the visible size, as the byte[] path does with the maximum size the header's FAT can address.
+        /// </summary>
+        internal void LimitSize(long maxSize)
+        {
+            if(maxSize < size)
+                size = maxSize;
         }
 
         public override long Size
