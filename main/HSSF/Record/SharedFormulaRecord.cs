@@ -17,13 +17,13 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
+    using NPOI.SS;
     using NPOI.SS.Formula;
-    using NPOI.Util;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
-    using NPOI.SS;
+    using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Title:        SharedFormulaRecord
@@ -49,7 +49,7 @@ namespace NPOI.HSSF.Record
         {
             //field_7_parsed_expr = NPOI.SS.Formula.Formula.Create(Ptg.EMPTY_PTG_ARRAY);
         }
-        private SharedFormulaRecord(CellRangeAddress8Bit range):
+        private SharedFormulaRecord(CellRangeAddress8Bit range) :
             base(range)
         {
             field_7_parsed_expr = Formula.Create(Ptg.EMPTY_PTG_ARRAY);
@@ -89,7 +89,7 @@ namespace NPOI.HSSF.Record
             buffer.Append("    .reserved    = ").Append(HexDump.ShortToHex(field_5_reserved)).Append("\n");
 
             Ptg[] ptgs = field_7_parsed_expr.Tokens;
-            for (int k = 0; k < ptgs.Length; k++)
+            for(int k = 0; k < ptgs.Length; k++)
             {
                 buffer.Append("Formula[").Append(k).Append("]");
                 Ptg ptg = ptgs[k];
@@ -111,7 +111,7 @@ namespace NPOI.HSSF.Record
             result.field_7_parsed_expr = field_7_parsed_expr.Copy();
             return result;
         }
-        
+
         protected override void SerializeExtraData(ILittleEndianOutput out1)
         {
             out1.WriteShort(field_5_reserved);
@@ -125,7 +125,7 @@ namespace NPOI.HSSF.Record
             int formulaRow = formula.Row;
             int formulaColumn = formula.Column;
             //Sanity checks
-            if (!IsInRange(formulaRow, formulaColumn))
+            if(!IsInRange(formulaRow, formulaColumn))
             {
                 throw new Exception("Shared Formula Conversion: Coding Error");
             }
@@ -134,7 +134,7 @@ namespace NPOI.HSSF.Record
             //return ConvertSharedFormulas(field_7_parsed_expr.Tokens, formulaRow, formulaColumn);
         }
 
-        
+
         public bool IsFormulaSame(SharedFormulaRecord other)
         {
             return field_7_parsed_expr.IsSame(other.field_7_parsed_expr);

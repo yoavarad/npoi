@@ -21,12 +21,13 @@
 namespace TestCases.HSSF.Record
 {
 
-    using System;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the TextObjectBaseRecord
@@ -39,7 +40,7 @@ namespace TestCases.HSSF.Record
     [TestFixture]
     public class TestTextObjectBaseRecord
     {
-	    /** data for one TXO rec and two continue recs */
+        /** data for one TXO rec and two continue recs */
         private static byte[] data = HexRead.ReadFromString(
             "B6 01 " + // TextObjectRecord.sid
             "12 00 " + // size 18
@@ -77,8 +78,8 @@ namespace TestCases.HSSF.Record
         {
             TextObjectRecord record = new TextObjectRecord();
             HSSFRichTextString str = new HSSFRichTextString("AB");
-            str.ApplyFont(0, 2, (short)0x0018);
-            str.ApplyFont(2, 2, (short)0x0320);
+            str.ApplyFont(0, 2, (short) 0x0018);
+            str.ApplyFont(2, 2, (short) 0x0320);
 
             record.HorizontalTextAlignment = HorizontalTextAlignment.Center;
             record.VerticalTextAlignment = VerticalTextAlignment.Justify;
@@ -88,7 +89,7 @@ namespace TestCases.HSSF.Record
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i], "At offset " + i);
         }
     }

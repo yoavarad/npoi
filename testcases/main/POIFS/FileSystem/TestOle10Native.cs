@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,13 +17,14 @@
 
 namespace TestCases.POIFS.FileSystem
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases;
-    using System.IO;
-    using System.Collections.Generic;
-    using NPOI.Util;
     using NPOI.POIFS.FileSystem;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using TestCases;
 
     [TestFixture]
     public class TestOle10Native
@@ -54,13 +55,13 @@ namespace TestCases.POIFS.FileSystem
             POIDataSamples.GetDocumentInstance().GetFile("Bug47731.doc")
         };
 
-            foreach (FileStream f in files)
+            foreach(FileStream f in files)
             {
                 NPOIFSFileSystem fs = new NPOIFSFileSystem(f, null, true, true);
                 List<Entry> entries = new List<Entry>();
                 FindOle10(entries, fs.Root, "/", "");
 
-                foreach (Entry e in entries)
+                foreach(Entry e in entries)
                 {
                     MemoryStream bosExp = new MemoryStream();
                     Stream is1 = ((DirectoryNode)e.Parent).CreateDocumentInputStream(e);
@@ -97,17 +98,18 @@ namespace TestCases.POIFS.FileSystem
         private void FindOle10(List<Entry> entries, DirectoryNode dn, String path, String filename)
         {
             IEnumerator<Entry> iter = dn.Entries;
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 Entry e = iter.Current;
-                if (Ole10Native.OLE10_NATIVE.Equals(e.Name))
+                if(Ole10Native.OLE10_NATIVE.Equals(e.Name))
                 {
-                    if (entries != null) entries.Add(e);
+                    if(entries != null)
+                        entries.Add(e);
                     // System.out.Println(filename+" : "+path);
                 }
-                else if (e.IsDirectoryEntry)
+                else if(e.IsDirectoryEntry)
                 {
-                    FindOle10(entries, (DirectoryNode)e, path + e.Name + "/", filename);
+                    FindOle10(entries, (DirectoryNode) e, path + e.Name + "/", filename);
                 }
             }
         }
@@ -121,7 +123,7 @@ namespace TestCases.POIFS.FileSystem
                 Ole10Native.CreateFromEmbeddedOleObject(fs);
                 Assert.Fail("Should have thrown exception because OLENative lacks a length parameter");
             }
-            catch (Ole10NativeException e)
+            catch(Ole10NativeException e)
             {
                 ClassicAssert.IsTrue(e.Message.IndexOf("declared data length") > -1);
             }

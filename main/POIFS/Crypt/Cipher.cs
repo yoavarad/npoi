@@ -1,4 +1,4 @@
-﻿using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 using System;
@@ -47,11 +47,11 @@ namespace NPOI.POIFS.Crypt
         public void Init(int cipherMode, IKey key, AlgorithmParameterSpec aps)
         {
             ICipherParameters cp;
-            if (aps is RC2ParameterSpec spec)
+            if(aps is RC2ParameterSpec spec)
             {
                 cp = new RC2Parameters(key.GetEncoded(), spec.GetEffectiveKeyBits());
             }
-            else if (aps is IvParameterSpec parameterSpec)
+            else if(aps is IvParameterSpec parameterSpec)
             {
                 cp = new KeyParameter(key.GetEncoded());
                 cp = new ParametersWithIV(cp, parameterSpec.GetIV());
@@ -86,14 +86,20 @@ namespace NPOI.POIFS.Crypt
              * des3_112/DESede/2147483647
              * rsa/RSA/2147483647
              */
-            switch (jceId)
+            switch(jceId)
             {
-                case "RC2": return 128;
-                case "RC4": return 128;
-                case "DES": return 64;
-                case "AES": return 128;
-                case "DESede": return 2147483647;
-                case "RSA": return 2147483647;
+                case "RC2":
+                    return 128;
+                case "RC4":
+                    return 128;
+                case "DES":
+                    return 64;
+                case "AES":
+                    return 128;
+                case "DESede":
+                    return 2147483647;
+                case "RSA":
+                    return 2147483647;
                 default:
                     throw new NotImplementedException();
             }
@@ -101,7 +107,7 @@ namespace NPOI.POIFS.Crypt
 
         public int Update(byte[] input, int inputOffset, int inputLen, byte[] output)
         {
-            if ((input == null) || (inputOffset < 0) || (inputLen > input.Length - inputOffset) || (inputLen < 0))
+            if((input == null) || (inputOffset < 0) || (inputLen > input.Length - inputOffset) || (inputLen < 0))
             {
                 throw new ArgumentException("Bad arguments");
             }
@@ -110,7 +116,7 @@ namespace NPOI.POIFS.Crypt
 
         public int Update(byte[] input, int inputOffset, int inputLen, byte[] output, int outputOffset)
         {
-            if ((input == null) || (inputOffset < 0) || (inputLen > input.Length - inputOffset) || (inputLen < 0) || (outputOffset < 0))
+            if((input == null) || (inputOffset < 0) || (inputLen > input.Length - inputOffset) || (inputLen < 0) || (outputOffset < 0))
             {
                 throw new ArgumentException("Bad arguments");
             }

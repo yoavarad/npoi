@@ -17,13 +17,13 @@
  * ====================================================================
  */
 
-using NPOI.SS.UserModel;
+using Cysharp.Text;
 using NPOI.OpenXmlFormats.Spreadsheet;
-using System.Collections.Generic;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using System;
-using System.Text; 
-using Cysharp.Text;
+using System.Collections.Generic;
+using System.Text;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -65,7 +65,7 @@ namespace NPOI.XSSF.UserModel
         {
             List<CellRangeAddress> lst = new List<CellRangeAddress>();
             String[] regions = _cf.sqref.Split(' ');
-            for (int i = 0; i < regions.Length; i++)
+            for(int i = 0; i < regions.Length; i++)
             {
                 lst.Add(CellRangeAddress.ValueOf(regions[i]));
             }
@@ -74,16 +74,16 @@ namespace NPOI.XSSF.UserModel
 
         public void SetFormattingRanges(CellRangeAddress[] ranges)
         {
-            if (ranges == null)
+            if(ranges == null)
             {
                 throw new ArgumentNullException("cellRanges must not be null");
             }
             using var sb = ZString.CreateStringBuilder();
 
             bool first = true;
-            foreach (CellRangeAddress range in ranges)
+            foreach(CellRangeAddress range in ranges)
             {
-                if (!first)
+                if(!first)
                 {
                     sb.Append(" ");
                 }
@@ -147,4 +147,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-

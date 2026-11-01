@@ -21,9 +21,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -73,7 +73,7 @@ namespace NPOI.HSSF.Record
 
         public CalcModeRecord(RecordInputStream in1)
         {
-            field_1_calcmode = in1.ReadShort();           
+            field_1_calcmode = in1.ReadShort();
         }
 
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 
@@ -12,9 +12,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal
      * @author Julien Chable
      * @version 0.1
      */
-    public interface PartMarshaller {
+    public interface PartMarshaller
+    {
 
-	    /**
+        /**
 	     * Save the content of the package in the stream
 	     *
 	     * @param part

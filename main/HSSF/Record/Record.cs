@@ -70,9 +70,9 @@ namespace NPOI.HSSF.Record
         //public abstract int RecordSize { get; }
         //{
 
-            // this is kind od a stupid way to do it but for now we just Serialize
-            // the record and return the size of the byte array
-            //get { return Serialize().Length; }
+        // this is kind od a stupid way to do it but for now we just Serialize
+        // the record and return the size of the byte array
+        //get { return Serialize().Length; }
         //}
 
         // /**
@@ -98,25 +98,25 @@ namespace NPOI.HSSF.Record
          * return the non static version of the id for this record.
          */
 
-        public abstract short Sid{get;}
+        public abstract short Sid { get; }
 
         public virtual Object Clone()
         {
             throw new NotSupportedException("The class " + this.GetType().Name + " needs to define a Clone method");
         }
 
-        public Record CloneViaReserialise() 
+        public Record CloneViaReserialise()
         {
             // Do it via a re-serialization
             // It's a cheat, but it works...
             byte[] b = Serialize();
-            using (MemoryStream ms = RecyclableMemory.GetStream(b))
+            using(MemoryStream ms = RecyclableMemory.GetStream(b))
             {
                 RecordInputStream rinp = new RecordInputStream(ms);
                 rinp.NextRecord();
 
                 Record[] r = RecordFactory.CreateRecord(rinp);
-                if (r.Length != 1)
+                if(r.Length != 1)
                 {
                     throw new InvalidOperationException("Re-serialised a record to clone it, but got " + r.Length + " records back!");
                 }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -16,15 +16,16 @@
  *    limitations under the License.
  * ====================================================================
  */
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using ExtendedNumerics;
+using MathNet.Numerics;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.SS.UserModel;
-using NUnit.Framework.Constraints;
-using NPOI.SS.Util;
-using ExtendedNumerics;
-using MathNet.Numerics;
 
 namespace TestCases.SS.Util
 {

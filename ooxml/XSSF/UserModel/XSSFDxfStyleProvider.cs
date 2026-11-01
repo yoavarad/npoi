@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -20,7 +20,7 @@ namespace NPOI.OOXML.XSSF.UserModel
         {
             this.stripeSize = stripeSize;
             this.colorMap = colorMap;
-            if (dxf == null)
+            if(dxf == null)
             {
                 border = null;
                 font = null;
@@ -31,10 +31,10 @@ namespace NPOI.OOXML.XSSF.UserModel
             {
                 border = dxf.IsSetBorder() ? new XSSFBorderFormatting(dxf.border, colorMap) : null;
                 font = dxf.IsSetFont() ? new XSSFFontFormatting(dxf.font, colorMap) : null;
-                if (dxf.IsSetNumFmt())
+                if(dxf.IsSetNumFmt())
                 {
                     CT_NumFmt numFmt = dxf.numFmt;
-                    number = new ExcelNumberFormat((int)numFmt.numFmtId, numFmt.formatCode);
+                    number = new ExcelNumberFormat((int) numFmt.numFmtId, numFmt.formatCode);
                 }
                 else
                 {

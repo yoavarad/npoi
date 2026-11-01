@@ -18,10 +18,10 @@
 namespace NPOI.SS.Formula.PTG
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    
+
 
 
     /**
@@ -45,8 +45,8 @@ namespace NPOI.SS.Formula.PTG
 
         public ExpPtg(int firstRow, int firstCol)
         {
-            this.field_1_first_row = (short)firstRow;
-            this.field_2_first_col = (short)firstCol;
+            this.field_1_first_row = (short) firstRow;
+            this.field_2_first_col = (short) firstCol;
         }
 
         public override void Write(ILittleEndianOutput out1)

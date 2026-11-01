@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -100,18 +100,18 @@ namespace NPOI.OpenXml4Net.OPC
         {
             String extension = filename.Substring(filename.LastIndexOf('.') + 1)
                     .ToLower();
-            if (extension.Equals(EXTENSION_JPG_1)
+            if(extension.Equals(EXTENSION_JPG_1)
                     || extension.Equals(EXTENSION_JPG_2))
                 return IMAGE_JPEG;
-            else if (extension.Equals(EXTENSION_GIF))
+            else if(extension.Equals(EXTENSION_GIF))
                 return IMAGE_GIF;
-            else if (extension.Equals(EXTENSION_PICT))
+            else if(extension.Equals(EXTENSION_PICT))
                 return IMAGE_PICT;
-            else if (extension.Equals(EXTENSION_PNG))
+            else if(extension.Equals(EXTENSION_PNG))
                 return IMAGE_PNG;
-            else if (extension.Equals(EXTENSION_TIFF))
+            else if(extension.Equals(EXTENSION_TIFF))
                 return IMAGE_TIFF;
-            else if (extension.Equals(EXTENSION_XML))
+            else if(extension.Equals(EXTENSION_XML))
                 return XML;
             else
                 return null;

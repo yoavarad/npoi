@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,18 +25,16 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Collections;
-
-
-using NPOI.POIFS.Properties;
 using NPOI.POIFS.Dev;
-using NPOI.POIFS.FileSystem;
 using NPOI.POIFS.EventFileSystem;
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
 using NPOI.Util;
 using NPOI.Util.Collections;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -73,7 +71,7 @@ namespace NPOI.POIFS.FileSystem
         internal DirectoryNode(DirectoryProperty property,
                         OPOIFSFileSystem fileSystem,
                         DirectoryNode parent)
-            : this(property, parent, fileSystem, (NPOIFSFileSystem)null)
+            : this(property, parent, fileSystem, (NPOIFSFileSystem) null)
         {
         }
 
@@ -87,7 +85,7 @@ namespace NPOI.POIFS.FileSystem
         internal DirectoryNode(DirectoryProperty property,
                 NPOIFSFileSystem nFileSystem,
                 DirectoryNode parent)
-            : this(property, parent, (OPOIFSFileSystem)null, nFileSystem)
+            : this(property, parent, (OPOIFSFileSystem) null, nFileSystem)
         {
         }
 
@@ -100,7 +98,7 @@ namespace NPOI.POIFS.FileSystem
             this._oFilesSystem = oFileSystem;
             this._nFilesSystem = nFileSystem;
 
-            if (parent == null)
+            if(parent == null)
                 _path = new POIFSDocumentPath();
             else
             {
@@ -112,15 +110,15 @@ namespace NPOI.POIFS.FileSystem
             _entries = new List<Entry>();
             IEnumerator<Property> iter = property.Children;
 
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 Property child = iter.Current;
                 Entry childNode = null;
 
-                if (child.IsDirectory)
+                if(child.IsDirectory)
                 {
                     DirectoryProperty childDir = (DirectoryProperty)child;
-                    if (_oFilesSystem != null)
+                    if(_oFilesSystem != null)
                     {
                         childNode = new DirectoryNode(childDir, _oFilesSystem, this);
                     }
@@ -131,14 +129,14 @@ namespace NPOI.POIFS.FileSystem
                 }
                 else
                 {
-                    childNode = new DocumentNode((DocumentProperty)child, this);
+                    childNode = new DocumentNode((DocumentProperty) child, this);
                 }
                 _entries.Add(childNode);
                 _byname.Add(childNode.Name, childNode);
                 _byUCName.Add(childNode.Name.ToUpperInvariant(), childNode);
             }
         }
-        
+
         /// <summary>
         /// open a document in the directory's entry's list of entries
         /// </summary>
@@ -149,12 +147,12 @@ namespace NPOI.POIFS.FileSystem
         {
             Entry document = GetEntry(documentName);
 
-            if (!document.IsDocumentEntry)
+            if(!document.IsDocumentEntry)
             {
                 throw new IOException("Entry '" + documentName
                                       + "' Is not a DocumentEntry");
             }
-            return new DocumentInputStream((DocumentEntry)document);
+            return new DocumentInputStream((DocumentEntry) document);
         }
 
         /// <summary>
@@ -167,7 +165,7 @@ namespace NPOI.POIFS.FileSystem
             DocumentProperty property = document.DocumentProperty;
             DocumentNode     rval     = new DocumentNode(property, this);
 
-            ((DirectoryProperty)Property).AddChild(property);
+            ((DirectoryProperty) Property).AddChild(property);
             _oFilesSystem.AddDocument(document);
 
             _entries.Add(rval);
@@ -188,11 +186,11 @@ namespace NPOI.POIFS.FileSystem
             bool   rval  = false;
             EntryNode child = (EntryNode)_byname[oldName];
 
-            if (child != null)
+            if(child != null)
             {
-                rval = ((DirectoryProperty)Property)
+                rval = ((DirectoryProperty) Property)
                     .ChangeName(child.Property, newName);
-                if (rval)
+                if(rval)
                 {
                     _byname.Remove(oldName);
                     _byUCName.Remove(oldName.ToUpperInvariant());
@@ -215,13 +213,13 @@ namespace NPOI.POIFS.FileSystem
                 ((DirectoryProperty)Property)
                     .DeleteChild(entry.Property);
 
-            if (rval)
+            if(rval)
             {
                 _entries.Remove(entry);
                 _byname.Remove(entry.Name);
                 _byUCName.Remove(entry.Name.ToUpperInvariant());
 
-                if (_oFilesSystem != null)
+                if(_oFilesSystem != null)
                 {
                     _oFilesSystem.Remove(entry);
                 }
@@ -231,7 +229,7 @@ namespace NPOI.POIFS.FileSystem
                     {
                         _nFilesSystem.Remove(entry);
                     }
-                    catch (IOException)
+                    catch(IOException)
                     {
                         // TODO Work out how to report this, given we can't change the method signature...
                     }
@@ -275,7 +273,7 @@ namespace NPOI.POIFS.FileSystem
             get { return _nFilesSystem; }
         }
 
-       /// <summary>
+        /// <summary>
         /// get an iterator of the Entry instances contained directly in
         /// this instance (in other words, children only; no grandchildren
         /// etc.)
@@ -300,23 +298,23 @@ namespace NPOI.POIFS.FileSystem
         {
             Entry rval = null;
 
-            if (name != null) 
+            if(name != null)
             {
                 rval = _byUCName[name.ToUpperInvariant()];
             }
 
-            if (rval == null) 
+            if(rval == null)
             {
                 // throw more useful exceptions for known wrong file-extensions
-                if (_byname.ContainsKey("Workbook"))
+                if(_byname.ContainsKey("Workbook"))
                 {
                     throw new ArgumentException("The document is really a XLS file");
                 }
-                else if (_byname.ContainsKey("PowerPoint Document"))
+                else if(_byname.ContainsKey("PowerPoint Document"))
                 {
                     throw new ArgumentException("The document is really a PPT file");
                 }
-                else if (_byname.ContainsKey("VisioDocument"))
+                else if(_byname.ContainsKey("VisioDocument"))
                 {
                     throw new ArgumentException("The document is really a VSD file");
                 }
@@ -391,10 +389,10 @@ namespace NPOI.POIFS.FileSystem
         {
             Entry rval = null;
 
-            if (name != null)
+            if(name != null)
                 _byname.TryGetValue(name, out rval);
-                                
-            if (rval == null)
+
+            if(rval == null)
             {
 
                 // either a null name was given, or there Is no such name
@@ -429,7 +427,7 @@ namespace NPOI.POIFS.FileSystem
 
         public DocumentInputStream CreateDocumentInputStream(Entry document)
         {
-            if (!document.IsDocumentEntry)
+            if(!document.IsDocumentEntry)
             {
                 throw new IOException("Entry '" + document.Name
                                     + "' is not a DocumentEntry");
@@ -450,7 +448,7 @@ namespace NPOI.POIFS.FileSystem
             DocumentProperty property = document.DocumentProperty;
             DocumentNode rval = new DocumentNode(property, this);
 
-            ((DirectoryProperty)Property).AddChild(property);
+            ((DirectoryProperty) Property).AddChild(property);
 
             _nFilesSystem.AddDocument(document);
 
@@ -472,7 +470,7 @@ namespace NPOI.POIFS.FileSystem
             DirectoryProperty property = new DirectoryProperty(name);
             DirectoryNode rval;
 
-            if (_oFilesSystem != null)
+            if(_oFilesSystem != null)
             {
                 rval = new DirectoryNode(property, _oFilesSystem, this);
                 _oFilesSystem.AddDirectory(property);
@@ -483,7 +481,7 @@ namespace NPOI.POIFS.FileSystem
                 _nFilesSystem.AddDirectory(property);
             }
 
-            ((DirectoryProperty)Property).AddChild(property);
+            ((DirectoryProperty) Property).AddChild(property);
             _entries.Add(rval);
             _byname[name] = rval;
             _byUCName[name.ToUpperInvariant()] = rval;
@@ -506,14 +504,14 @@ namespace NPOI.POIFS.FileSystem
                                                     Stream stream)
 
         {
-            if (!HasEntry(name))
+            if(!HasEntry(name))
             {
                 return CreateDocument(name, stream);
             }
             else
             {
                 DocumentNode existing = (DocumentNode)GetEntry(name);
-                if (_nFilesSystem != null)
+                if(_nFilesSystem != null)
                 {
                     NPOIFSDocument nDoc = new NPOIFSDocument(existing);
                     nDoc.ReplaceContents(stream);
@@ -534,7 +532,8 @@ namespace NPOI.POIFS.FileSystem
         /// <value>The storage ClassID.</value>
         public HPSF.ClassID StorageClsid
         {
-            set{
+            set
+            {
                 this.Property.StorageClsid=value;
             }
             get
@@ -569,7 +568,7 @@ namespace NPOI.POIFS.FileSystem
 
         public DocumentEntry CreateDocument(string name, Stream stream)
         {
-            if (_nFilesSystem != null)
+            if(_nFilesSystem != null)
             {
                 return CreateDocument(new NPOIFSDocument(name, _nFilesSystem, stream));
             }
@@ -582,7 +581,7 @@ namespace NPOI.POIFS.FileSystem
 
         public DocumentEntry CreateDocument(string name, int size, POIFSWriterListener writer)
         {
-            if (_nFilesSystem != null)
+            if(_nFilesSystem != null)
             {
                 return CreateDocument(new NPOIFSDocument(name, size, _nFilesSystem, writer));
             }
@@ -645,7 +644,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get { return Name; }
         }
-        
+
         #endregion
 
 
@@ -671,54 +670,54 @@ namespace NPOI.POIFS.FileSystem
 
 
 
-        public  bool CanRead
+        public bool CanRead
         {
             get { throw new System.NotImplementedException(); }
         }
 
-        public  bool CanSeek
+        public bool CanSeek
         {
             get { throw new System.NotImplementedException(); }
         }
 
-        public  bool CanWrite
+        public bool CanWrite
         {
             get { throw new System.NotImplementedException(); }
         }
 
-        public  void Flush()
+        public void Flush()
         {
             throw new System.NotImplementedException();
         }
 
-        public  long Length
+        public long Length
         {
             get { throw new System.NotImplementedException(); }
         }
 
-        public  long Position
+        public long Position
         {
             get
             {
                 throw new System.NotImplementedException();
-    }
+            }
             set
             {
                 throw new System.NotImplementedException();
             }
         }
 
-        public  int Read(byte[] buffer, int offset, int count)
+        public int Read(byte[] buffer, int offset, int count)
         {
             throw new System.NotImplementedException();
         }
 
-        public  long Seek(long offset, SeekOrigin origin)
+        public long Seek(long offset, SeekOrigin origin)
         {
             throw new System.NotImplementedException();
         }
 
-        public  void SetLength(long value)
+        public void SetLength(long value)
         {
             throw new System.NotImplementedException();
         }

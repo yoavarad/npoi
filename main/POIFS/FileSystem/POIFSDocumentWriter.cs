@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -35,7 +35,7 @@ namespace NPOI.POIFS.FileSystem
     /// @author Marc Johnson (mjohnson at apache dot org)
     /// </summary>
     [Obsolete]
-    public class POIFSDocumentWriter:Stream
+    public class POIFSDocumentWriter : Stream
     {
         private int limit;
         private Stream stream;
@@ -73,7 +73,7 @@ namespace NPOI.POIFS.FileSystem
 
         private void LimitCheck(int toBeWritten)
         {
-            if ((this.written + toBeWritten) > this.limit)
+            if((this.written + toBeWritten) > this.limit)
             {
                 throw new IOException("tried to write too much data");
             }
@@ -99,7 +99,7 @@ namespace NPOI.POIFS.FileSystem
         public void Write(int b)
         {
             LimitCheck(1);
-            stream.WriteByte((byte)b);
+            stream.WriteByte((byte) b);
         }
 
         /// <summary>
@@ -152,10 +152,10 @@ namespace NPOI.POIFS.FileSystem
         /// <param name="fill">the byte to fill remaining space with</param>
         public virtual void WriteFiller(int totalLimit, byte fill)
         {
-            if (totalLimit > this.written)
+            if(totalLimit > this.written)
             {
                 byte[] buffer = new byte[totalLimit - this.written];
-                for (int i = 0; i < buffer.Length; i++)
+                for(int i = 0; i < buffer.Length; i++)
                 {
                     buffer[i] = fill;
                 }

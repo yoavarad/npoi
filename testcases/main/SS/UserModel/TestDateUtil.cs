@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -25,7 +25,8 @@ namespace TestCases.SS.UserModel
 {
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System.Globalization;
 
     public class TestDateUtil
@@ -49,31 +50,31 @@ namespace TestCases.SS.UserModel
                 DateUtil.GetJavaDate(dateValue);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 DateUtil.GetJavaDate(dateValue, tz);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 DateUtil.GetJavaDate(dateValue, use1904windowing);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 DateUtil.GetJavaDate(dateValue, use1904windowing, tz);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 DateUtil.GetJavaDate(dateValue, use1904windowing, tz, roundSeconds);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             //ClassicAssert.AreEqual(null, DateUtil.GetJavaDate(dateValue));
             //ClassicAssert.AreEqual(null, DateUtil.GetJavaDate(dateValue, tz));
             //ClassicAssert.AreEqual(null, DateUtil.GetJavaDate(dateValue, use1904windowing));
@@ -113,25 +114,25 @@ namespace TestCases.SS.UserModel
                 DateUtil.GetJavaDate(dateValue);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 DateUtil.GetJavaDate(dateValue, use1904windowing);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 DateUtil.GetJavaDate(dateValue, use1904windowing, tz);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 DateUtil.GetJavaDate(dateValue, use1904windowing, tz, roundSeconds);
                 Assert.Fail("invalid datetime double value -1");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             //ClassicAssert.AreEqual(null, DateUtil.GetJavaCalendar(dateValue));
             //ClassicAssert.AreEqual(null, DateUtil.GetJavaCalendar(dateValue, use1904windowing));
             //ClassicAssert.AreEqual(null, DateUtil.GetJavaCalendar(dateValue, use1904windowing, tz));

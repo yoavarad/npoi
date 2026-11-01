@@ -1,6 +1,7 @@
-﻿using NPOI.OpenXmlFormats.Shared;
+using NPOI.OpenXmlFormats.Shared;
 using NPOI.XWPF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace TestCases.XWPF.UserModel
 {

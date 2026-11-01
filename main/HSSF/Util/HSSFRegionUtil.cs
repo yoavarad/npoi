@@ -17,10 +17,9 @@
 
 namespace NPOI.HSSF.Util
 {
-    using System;
-
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Util;
+    using System;
 
     /// <summary>
     /// Various utility functions that make working with a region of cells easier.

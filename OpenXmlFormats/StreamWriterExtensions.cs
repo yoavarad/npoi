@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace NPOI.OpenXmlFormats;
@@ -51,7 +51,7 @@ internal static class StreamWriterExtensions
     public static void WriteCDATA(this StreamWriter sw, string text)
     {
         sw.Write("<![CDATA[");
-        if (text != null)
+        if(text != null)
         {
             // closes the section between "]]" and ">" and opens a new one, so no "]]>" is left inside it
             sw.Write(text.Replace("]]>", "]]]]><![CDATA[>"));

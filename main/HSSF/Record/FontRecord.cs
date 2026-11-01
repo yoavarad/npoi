@@ -19,10 +19,10 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
 
@@ -78,16 +78,16 @@ namespace NPOI.HSSF.Record
             field_3_color_palette_index = in1.ReadShort();
             field_4_bold_weight = in1.ReadShort();
             field_5_base_sub_script = in1.ReadShort();
-            field_6_underline = (byte)in1.ReadByte();
-            field_7_family = (byte)in1.ReadByte();
-            field_8_charset = (byte)in1.ReadByte();
-            field_9_zero = (byte)in1.ReadByte();
+            field_6_underline = (byte) in1.ReadByte();
+            field_7_family = (byte) in1.ReadByte();
+            field_8_charset = (byte) in1.ReadByte();
+            field_9_zero = (byte) in1.ReadByte();
             int field_10_font_name_len = (byte)in1.ReadByte();
             int unicodeFlags = in1.ReadUByte(); // options byte present always (even if no character data)
 
-            if (field_10_font_name_len > 0)
+            if(field_10_font_name_len > 0)
             {
-                if (unicodeFlags == 0)
+                if(unicodeFlags == 0)
                 {   // Is compressed Unicode
                     field_11_font_name = in1.ReadCompressedUnicode(field_10_font_name_len);
                 }
@@ -361,9 +361,9 @@ namespace NPOI.HSSF.Record
             out1.WriteByte(fontNameLen);
             bool hasMultibyte = StringUtil.HasMultibyte(field_11_font_name);
             out1.WriteByte(hasMultibyte ? 0x01 : 0x00);
-            if (fontNameLen > 0)
+            if(fontNameLen > 0)
             {
-                if (hasMultibyte)
+                if(hasMultibyte)
                 {
                     StringUtil.PutUnicodeLE(field_11_font_name, out1);
                 }
@@ -381,7 +381,7 @@ namespace NPOI.HSSF.Record
             {
                 int size = 16; // 5 shorts + 6 bytes
                 int fontNameLen = field_11_font_name.Length;
-                if (fontNameLen < 1)
+                if(fontNameLen < 1)
                 {
                     return size;
                 }
@@ -425,7 +425,7 @@ namespace NPOI.HSSF.Record
          */
         public override bool Equals(Object obj)
         {
-            if (this == obj)
+            if(this == obj)
                 return true;
             return false;
         }

@@ -19,9 +19,9 @@ using System.Text;
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.IO;
-    using NPOI.Util;
 
     /// <summary>
     /// @author Glen Stampoultzis
@@ -52,8 +52,10 @@ namespace NPOI.DDF
             int pos = offset + HEADER_SIZE;
 
             field_1_UID = new byte[16];
-            Array.Copy(data, pos, field_1_UID, 0, 16); pos += 16;
-            field_2_marker = data[pos]; pos++;
+            Array.Copy(data, pos, field_1_UID, 0, 16);
+            pos += 16;
+            field_2_marker = data[pos];
+            pos++;
 
             SetPictureData(data, pos, bytesAfterHeader - 17);
 
@@ -103,7 +105,7 @@ namespace NPOI.DDF
             get { return field_1_UID; }
             set
             {
-                if (value == null || value.Length != 16)
+                if(value == null || value.Length != 16)
                 {
                     throw new ArgumentException("uid must be byte[16]");
                 }
@@ -142,7 +144,7 @@ namespace NPOI.DDF
         public override String ToXml(String tab)
         {
             String extraData = HexDump.ToHex(this.PictureData);
-            
+
             StringBuilder builder = new StringBuilder();
             builder.Append(tab).Append(FormatXmlRecordHeader(GetType().Name, HexDump.ToHex(RecordId), HexDump.ToHex(Version), HexDump.ToHex(Instance)))
                     .Append(tab).Append("\t").Append("<UID>0x").Append(HexDump.ToHex(field_1_UID)).Append("</UID>\n")

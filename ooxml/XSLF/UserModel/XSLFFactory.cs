@@ -1,5 +1,5 @@
-using System;
 using NPOI.OpenXml4Net.OPC;
+using System;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -25,19 +25,19 @@ namespace NPOI.XSLF.UserModel
         /// <inheritdoc/>
         public override POIXMLDocumentPart CreateDocumentPart(POIXMLDocumentPart parent, PackagePart part)
         {
-            if (part.ContentType == XSLFRelation.SLIDE.ContentType)
+            if(part.ContentType == XSLFRelation.SLIDE.ContentType)
             {
                 return new XSLFSlide(parent, part);
             }
-            if (part.ContentType == XSLFRelation.SLIDE_MASTER.ContentType)
+            if(part.ContentType == XSLFRelation.SLIDE_MASTER.ContentType)
             {
                 return new XSLFSlideMaster(parent, part);
             }
-            if (part.ContentType == XSLFRelation.SLIDE_LAYOUT.ContentType)
+            if(part.ContentType == XSLFRelation.SLIDE_LAYOUT.ContentType)
             {
                 return new XSLFSlideLayout(parent, part);
             }
-            if (part.ContentType == XSLFRelation.THEME.ContentType)
+            if(part.ContentType == XSLFRelation.THEME.ContentType)
             {
                 return new XSLFTheme(parent, part);
             }
@@ -54,7 +54,7 @@ namespace NPOI.XSLF.UserModel
 
         protected override POIXMLDocumentPart CreateDocumentPart(Type cls, Type[] classes, object[] values)
         {
-            if (cls == typeof(XSLFSlide) && classes == null)
+            if(cls == typeof(XSLFSlide) && classes == null)
             {
                 return new XSLFSlide();
             }

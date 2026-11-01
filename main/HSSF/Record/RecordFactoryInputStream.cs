@@ -16,16 +16,16 @@
 ==================================================================== */
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI;
-    using System.IO;
-    using NPOI.HSSF.Record.Crypto;
-    using NPOI.Util;
     using NPOI.HSSF.Record.Chart;
+    using NPOI.HSSF.Record.Crypto;
     using NPOI.POIFS.Crypt;
     using NPOI.SS.Formula.Functions;
+    using NPOI.Util;
     using Org.BouncyCastle.Security;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
 
     /**
 * A stream based way to get at complete records, with
@@ -60,20 +60,20 @@ namespace NPOI.HSSF.Record
                 rec = RecordFactory.CreateSingleRecord(rs);
                 outputRecs.Add(rec);
                 FilePassRecord fpr = null;
-                if (rec is BOFRecord)
+                if(rec is BOFRecord)
                 {
                     _hasBOFRecord = true;
                     // Fetch the next record, and see if it indicates whether
                     //  the document is encrypted or not
-                    if (rs.HasNextRecord)
+                    if(rs.HasNextRecord)
                     {
                         rs.NextRecord();
                         rec = RecordFactory.CreateSingleRecord(rs);
                         recSize += rec.RecordSize;
                         outputRecs.Add(rec);
                         // Encrypted is normally BOF then FILEPASS
-					    // May sometimes be BOF, WRITEPROTECT, FILEPASS
-                        if (rec is WriteProtectRecord && rs.HasNextRecord)
+                        // May sometimes be BOF, WRITEPROTECT, FILEPASS
+                        if(rec is WriteProtectRecord && rs.HasNextRecord)
                         {
                             rs.NextRecord();
                             rec = RecordFactory.CreateSingleRecord(rs);
@@ -82,14 +82,14 @@ namespace NPOI.HSSF.Record
                         }
                         // If it's a FILEPASS, track it specifically but
                         //  don't include it in the main stream
-                        if (rec is FilePassRecord record)
+                        if(rec is FilePassRecord record)
                         {
                             fpr = record;
                         }
                         else
                         {
                             // workbook not encrypted (typical case)
-                            if (rec is EOFRecord)
+                            if(rec is EOFRecord)
                             {
                                 // A workbook stream is never empty, so crash instead
                                 // of trying to keep track of nesting level
@@ -113,13 +113,13 @@ namespace NPOI.HSSF.Record
 
             public RecordInputStream CreateDecryptingStream(InputStream original)
             {
-                if (_filePassRec == null)
+                if(_filePassRec == null)
                 {
                     throw new InvalidOperationException("No FilePassRecord found; stream is not encrypted.");
                 }
 
                 String userPassword = Biff8EncryptionKey.CurrentUserPassword;
-                if (userPassword == null)
+                if(userPassword == null)
                 {
                     userPassword = Decryptor.DEFAULT_PASSWORD;
                 }
@@ -127,14 +127,14 @@ namespace NPOI.HSSF.Record
                 EncryptionInfo info = _filePassRec.GetEncryptionInfo();
                 try
                 {
-                    if (!info.Decryptor.VerifyPassword(userPassword))
+                    if(!info.Decryptor.VerifyPassword(userPassword))
                     {
                         throw new EncryptedDocumentException(
                                 (Decryptor.DEFAULT_PASSWORD.Equals(userPassword) ? "Default" : "Supplied")
                                 + " password is invalid for salt/verifier/verifierHash");
                     }
                 }
-                catch (GeneralSecurityException e)
+                catch(GeneralSecurityException e)
                 {
                     throw new EncryptedDocumentException(e);
                 }
@@ -215,7 +215,7 @@ namespace NPOI.HSSF.Record
             RecordInputStream rs = new RecordInputStream(in1);
             List<Record> records = new List<Record>();
             StreamEncryptionInfo sei = new StreamEncryptionInfo(rs, records);
-            if (sei.HasEncryption)
+            if(sei.HasEncryption)
             {
                 rs = sei.CreateDecryptingStream(in1);
             }
@@ -224,7 +224,7 @@ namespace NPOI.HSSF.Record
                 // typical case - non-encrypted stream
             }
 
-            if (records.Count != 0)
+            if(records.Count != 0)
             {
                 _unreadRecordBuffer = new Record[records.Count];
                 _unreadRecordBuffer = records.ToArray();
@@ -263,27 +263,27 @@ namespace NPOI.HSSF.Record
         {
             Record r;
             r = GetNextUnreadRecord();
-            if (r != null)
+            if(r != null)
             {
                 // found an unread record
                 return r;
             }
-            while (true)
+            while(true)
             {
-                if (!_recStream.HasNextRecord)
+                if(!_recStream.HasNextRecord)
                 {
                     // recStream is exhausted;
                     return null;
                 }
 
-                if (_lastRecordWasEOFLevelZero)
+                if(_lastRecordWasEOFLevelZero)
                 {
                     // Potential place for ending the workbook stream
                     // Check that the next record is not BOFRecord(0x0809)
                     // Normally the input stream Contains only zero pAdding after the last EOFRecord,
                     // but bug 46987 and 48068 suggests that the padding may be garbage.
                     // This code relies on the pAdding bytes not starting with BOFRecord.sid
-                    if (_recStream.GetNextSid() != BOFRecord.sid)
+                    if(_recStream.GetNextSid() != BOFRecord.sid)
                     {
                         return null;
                     }
@@ -294,7 +294,7 @@ namespace NPOI.HSSF.Record
                 _recStream.NextRecord();
 
                 r = ReadNextRecord();
-                if (r == null)
+                if(r == null)
                 {
                     // some record types may get skipped (e.g. DBCellRecord and ContinueRecord)
                     continue;
@@ -309,10 +309,10 @@ namespace NPOI.HSSF.Record
          */
         private Record GetNextUnreadRecord()
         {
-            if (_unreadRecordBuffer != null)
+            if(_unreadRecordBuffer != null)
             {
                 int ix = _unreadRecordIndex;
-                if (ix < _unreadRecordBuffer.Length)
+                if(ix < _unreadRecordBuffer.Length)
                 {
                     Record result = _unreadRecordBuffer[ix];
                     _unreadRecordIndex = ix + 1;
@@ -335,16 +335,16 @@ namespace NPOI.HSSF.Record
             Record record = RecordFactory.CreateSingleRecord(_recStream);
             _lastRecordWasEOFLevelZero = false;
 
-            if (record is BOFRecord)
+            if(record is BOFRecord)
             {
                 _bofDepth++;
                 return record;
             }
 
-            if (record is EOFRecord)
+            if(record is EOFRecord)
             {
                 _bofDepth--;
-                if (_bofDepth < 1)
+                if(_bofDepth < 1)
                 {
                     _lastRecordWasEOFLevelZero = true;
                 }
@@ -352,18 +352,18 @@ namespace NPOI.HSSF.Record
                 return record;
             }
 
-            if (record is DBCellRecord)
+            if(record is DBCellRecord)
             {
                 // Not needed by POI.  Regenerated from scratch by POI when spreadsheet is written
                 return null;
             }
 
-            if (record is RKRecord rkRecord)
+            if(record is RKRecord rkRecord)
             {
                 return RecordFactory.ConvertToNumberRecord(rkRecord);
             }
 
-            if (record is MulRKRecord mulRkRecord)
+            if(record is MulRKRecord mulRkRecord)
             {
                 Record[] records = RecordFactory.ConvertRKRecords(mulRkRecord);
 
@@ -372,50 +372,50 @@ namespace NPOI.HSSF.Record
                 return records[0];
             }
 
-            if (record.Sid == DrawingGroupRecord.sid
+            if(record.Sid == DrawingGroupRecord.sid
                     && _lastRecord is DrawingGroupRecord lastDgRecord)
             {
-                lastDgRecord.Join((AbstractEscherHolderRecord)record);
+                lastDgRecord.Join((AbstractEscherHolderRecord) record);
                 return null;
             }
-            if (record.Sid == ContinueRecord.sid)
+            if(record.Sid == ContinueRecord.sid)
             {
                 ContinueRecord contRec = (ContinueRecord)record;
 
-                if (_lastRecord is ObjRecord || _lastRecord is TextObjectRecord)
+                if(_lastRecord is ObjRecord || _lastRecord is TextObjectRecord)
                 {
                     // Drawing records have a very strange continue behaviour.
                     //There can actually be OBJ records mixed between the continues.
                     _lastDrawingRecord.ProcessContinueRecord(contRec.Data);
                     //we must remember the position of the continue record.
                     //in the serialization procedure the original structure of records must be preserved
-                    if (_shouldIncludeContinueRecords)
+                    if(_shouldIncludeContinueRecords)
                     {
                         return record;
                     }
                     return null;
                 }
-                if (_lastRecord is DrawingGroupRecord groupRecord)
+                if(_lastRecord is DrawingGroupRecord groupRecord)
                 {
                     groupRecord.ProcessContinueRecord(contRec.Data);
                     return null;
                 }
-                if (_lastRecord is DrawingRecord)
+                if(_lastRecord is DrawingRecord)
                 {
                     //((DrawingRecord)_lastRecord).ProcessContinueRecord(contRec.Data);
                     return contRec;
                 }
-                if (_lastRecord is CrtMlFrtRecord)
+                if(_lastRecord is CrtMlFrtRecord)
                 {
                     return record;
                 }
-                if (_lastRecord is UnknownRecord)
+                if(_lastRecord is UnknownRecord)
                 {
                     //Gracefully handle records that we don't know about,
                     //that happen to be continued
                     return record;
                 }
-                if (_lastRecord is EOFRecord)
+                if(_lastRecord is EOFRecord)
                 {
                     // This is really odd, but excel still sometimes
                     //  outPuts a file like this all the same
@@ -429,7 +429,7 @@ namespace NPOI.HSSF.Record
                 throw new RecordFormatException("Unhandled Continue Record");
             }
             _lastRecord = record;
-            if (record is DrawingRecord drawingRecord)
+            if(record is DrawingRecord drawingRecord)
             {
                 _lastDrawingRecord = drawingRecord;
             }

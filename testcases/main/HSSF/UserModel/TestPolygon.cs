@@ -1,14 +1,15 @@
-﻿using System;
+using NPOI.DDF;
+using NPOI.HSSF.Model;
+using NPOI.HSSF.Record;
+using NPOI.HSSF.UserModel;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.HSSF.UserModel;
-using NPOI.HSSF.Model;
-using NPOI.DDF;
 using TestCases.HSSF.Model;
-using NPOI.Util;
-using NPOI.HSSF.Record;
 using static TestCases.POIFS.Storage.RawDataUtil;
 
 namespace TestCases.HSSF.UserModel
@@ -127,7 +128,7 @@ namespace TestCases.HSSF.UserModel
             sh = wb2.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
 
-            polygon = (HSSFPolygon)patriarch.Children[0];
+            polygon = (HSSFPolygon) patriarch.Children[0];
             ClassicAssert.IsTrue(Arrays.Equals(polygon.XPoints, new int[] { 1, 2, 3 }));
             ClassicAssert.IsTrue(Arrays.Equals(polygon.YPoints, new int[] { 4, 5, 6 }));
             ClassicAssert.AreEqual(polygon.DrawAreaHeight, 101);
@@ -146,7 +147,7 @@ namespace TestCases.HSSF.UserModel
             sh = wb3.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
 
-            polygon = (HSSFPolygon)patriarch.Children[0];
+            polygon = (HSSFPolygon) patriarch.Children[0];
 
             ClassicAssert.IsTrue(Arrays.Equals(polygon.XPoints, new int[] { 11, 21, 31 }));
             ClassicAssert.IsTrue(Arrays.Equals(polygon.YPoints, new int[] { 41, 51, 61 }));
@@ -188,9 +189,9 @@ namespace TestCases.HSSF.UserModel
 
             ClassicAssert.AreEqual(patriarch.Children.Count, 3);
 
-            polygon = (HSSFPolygon)patriarch.Children[0];
-            polygon1 = (HSSFPolygon)patriarch.Children[1];
-            polygon2 = (HSSFPolygon)patriarch.Children[2];
+            polygon = (HSSFPolygon) patriarch.Children[0];
+            polygon1 = (HSSFPolygon) patriarch.Children[1];
+            polygon2 = (HSSFPolygon) patriarch.Children[2];
 
             ClassicAssert.IsTrue(Arrays.Equals(polygon.XPoints, new int[] { 1, 2, 3 }));
             ClassicAssert.IsTrue(Arrays.Equals(polygon.YPoints, new int[] { 4, 5, 6 }));
@@ -247,7 +248,7 @@ namespace TestCases.HSSF.UserModel
 
             EscherSpRecord spRecord = polygon1.GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID) as EscherSpRecord;
 
-            spRecord.ShapeType = ((short)77/**RANDOM**/);
+            spRecord.ShapeType = ((short) 77/**RANDOM**/);
 
             HSSFWorkbook wb3 = HSSFTestDataSamples.WriteOutAndReadBack(wb2);
             wb2.Close();

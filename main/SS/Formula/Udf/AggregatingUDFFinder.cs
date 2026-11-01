@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.UDF
 {
-    using System;
     using NPOI.SS.Formula.Functions;
+    using System;
     using System.Collections.Generic;
 
     /**
@@ -45,10 +45,10 @@ namespace NPOI.SS.Formula.UDF
         public override FreeRefFunction FindFunction(String name)
         {
             FreeRefFunction evaluatorForFunction;
-            foreach (UDFFinder pack in _usedToolPacks)
+            foreach(UDFFinder pack in _usedToolPacks)
             {
                 evaluatorForFunction = pack.FindFunction(name);
-                if (evaluatorForFunction != null)
+                if(evaluatorForFunction != null)
                 {
                     return evaluatorForFunction;
                 }
@@ -66,4 +66,3 @@ namespace NPOI.SS.Formula.UDF
         }
     }
 }
-

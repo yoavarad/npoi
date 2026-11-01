@@ -71,19 +71,24 @@ namespace NPOI.OpenXmlFormats.Presentation
 
         private static int GetElementGroup(object item)
         {
-            if (item is CT_SlideIdList)
+            if(item is CT_SlideIdList)
             {
                 return 3;
             }
-            if (item is XmlElement element && element.NamespaceURI == Namespace)
+            if(item is XmlElement element && element.NamespaceURI == Namespace)
             {
-                switch (element.LocalName)
+                switch(element.LocalName)
                 {
-                    case "sldMasterIdLst": return 0;
-                    case "notesMasterIdLst": return 1;
-                    case "handoutMasterIdLst": return 2;
-                    case "sldSz": return 4;
-                    case "notesSz": return 5;
+                    case "sldMasterIdLst":
+                        return 0;
+                    case "notesMasterIdLst":
+                        return 1;
+                    case "handoutMasterIdLst":
+                        return 2;
+                    case "sldSz":
+                        return 4;
+                    case "notesSz":
+                        return 5;
                 }
             }
             return 6;

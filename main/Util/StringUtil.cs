@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -26,10 +26,10 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.Text; 
 using Cysharp.Text;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 
 
@@ -47,11 +47,11 @@ namespace NPOI.Util
     {
         static StringUtil()
         {
-        #if NETSTANDARD2_1 || NET6_0_OR_GREATER || NETSTANDARD2_0
+#if NETSTANDARD2_1 || NET6_0_OR_GREATER || NETSTANDARD2_0
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             BIG5 = Encoding.GetEncoding("big5");
             WIN_1252 = Encoding.GetEncoding("windows-1252");
-        #endif 
+#endif
         }
         private static Encoding ISO_8859_1 = Encoding.GetEncoding("ISO-8859-1");
         //arbitrarily selected; may need to increase
@@ -84,11 +84,11 @@ namespace NPOI.Util
             int offset,
             int len)
         {
-            if ((offset < 0) || (offset >= str.Length))
+            if((offset < 0) || (offset >= str.Length))
             {
                 throw new IndexOutOfRangeException("Illegal offset");
             }
-            if ((len < 0) || (((str.Length - offset) / 2) < len))
+            if((len < 0) || (((str.Length - offset) / 2) < len))
             {
                 throw new ArgumentException("Illegal Length");
             }
@@ -106,7 +106,8 @@ namespace NPOI.Util
         /// <returns>the converted string</returns>  
         public static String GetFromUnicodeLE(byte[] str)
         {
-            if (str.Length == 0) { return ""; }
+            if(str.Length == 0)
+            { return ""; }
             return GetFromUnicodeLE(str, 0, str.Length / 2);
         }
 
@@ -137,11 +138,11 @@ namespace NPOI.Util
             int offset,
             int len)
         {
-            if ((offset < 0) || (offset >= str.Length))
+            if((offset < 0) || (offset >= str.Length))
             {
                 throw new IndexOutOfRangeException("Illegal offset");
             }
-            if ((len < 0) || (((str.Length - offset) / 2) < len))
+            if((len < 0) || (((str.Length - offset) / 2) < len))
             {
                 throw new ArgumentException("Illegal Length");
             }
@@ -165,7 +166,8 @@ namespace NPOI.Util
         /// <returns>the converted string</returns>      
         public static String GetFromUnicodeBE(byte[] str)
         {
-            if (str.Length == 0) { return ""; }
+            if(str.Length == 0)
+            { return ""; }
             return GetFromUnicodeBE(str, 0, str.Length / 2);
         }
 
@@ -273,10 +275,12 @@ namespace NPOI.Util
         /// </returns>
         public static bool HasMultibyte(String value)
         {
-            if (value == null) return false;
-            foreach (char c in value)
+            if(value == null)
+                return false;
+            foreach(char c in value)
             {
-                if (c > 0xFF) return true;
+                if(c > 0xFF)
+                    return true;
             }
             return false;
         }
@@ -308,7 +312,7 @@ namespace NPOI.Util
 
             int nChars = in1.ReadUShort();
             byte flag = (byte)in1.ReadByte();
-            if ((flag & 0x01) == 0)
+            if((flag & 0x01) == 0)
             {
                 return ReadCompressedUnicode(in1, nChars);
             }
@@ -329,7 +333,7 @@ namespace NPOI.Util
         public static String ReadUnicodeString(ILittleEndianInput in1, int nChars)
         {
             byte is16Bit = (byte)in1.ReadByte();
-            if ((is16Bit & 0x01) == 0)
+            if((is16Bit & 0x01) == 0)
             {
                 return ReadCompressedUnicode(in1, nChars);
             }
@@ -351,7 +355,7 @@ namespace NPOI.Util
             out1.WriteShort(nChars);
             bool is16Bit = HasMultibyte(value);
             out1.WriteByte(is16Bit ? 0x01 : 0x00);
-            if (is16Bit)
+            if(is16Bit)
             {
                 PutUnicodeLE(value, out1);
             }
@@ -376,7 +380,7 @@ namespace NPOI.Util
         {
             bool is16Bit = HasMultibyte(value);
             out1.WriteByte(is16Bit ? 0x01 : 0x00);
-            if (is16Bit)
+            if(is16Bit)
             {
                 PutUnicodeLE(value, out1);
             }
@@ -419,10 +423,10 @@ namespace NPOI.Util
         {
             char[] chars = s.ToCharArray();
             StringBuilder builder = new StringBuilder();
-            for (int index = 0; index < chars.Length; index++)
+            for(int index = 0; index < chars.Length; index++)
             {
                 bool needToEncode = NeedToEncode(chars[index]);
-                if (needToEncode)
+                if(needToEncode)
                 {
                     string encodedString = ToHexString(chars[index]);
                     builder.Append(encodedString);
@@ -452,7 +456,7 @@ namespace NPOI.Util
 
             //return builder.ToString();
 
-            return Convert.ToString((int)chr, 16);
+            return Convert.ToString((int) chr, 16);
         }
 
         /// <summary> 
@@ -462,7 +466,7 @@ namespace NPOI.Util
         /// <returns></returns> 
         public static string ToHexString(short chr)
         {
-            return ToHexString((char)chr);
+            return ToHexString((char) chr);
         }
 
         /// <summary> 
@@ -472,7 +476,7 @@ namespace NPOI.Util
         /// <returns></returns> 
         public static string ToHexString(int chr)
         {
-            return ToHexString((char)chr);
+            return ToHexString((char) chr);
         }
         /// <summary> 
         /// Encodes a non-US-ASCII character. 
@@ -481,7 +485,7 @@ namespace NPOI.Util
         /// <returns></returns> 
         public static string ToHexString(long chr)
         {
-            return ToHexString((char)chr);
+            return ToHexString((char) chr);
         }
         /// <summary> 
         /// Determines if the character needs to be encoded. 
@@ -493,9 +497,9 @@ namespace NPOI.Util
         {
             string reservedChars = "$-_.+!*'(),@=&";
 
-            if (chr > 127)
+            if(chr > 127)
                 return true;
-            if (char.IsLetterOrDigit(chr) || reservedChars.Contains(chr))
+            if(char.IsLetterOrDigit(chr) || reservedChars.Contains(chr))
                 return false;
 
             return true;
@@ -514,14 +518,15 @@ namespace NPOI.Util
         */
         public static String MapMsCodepointString(String string1)
         {
-            if (string1 == null || "".Equals(string1)) return string1;
+            if(string1 == null || "".Equals(string1))
+                return string1;
             InitMsCodepointMap();
 
             using var sb = ZString.CreateStringBuilder();
 
             int length = string1.Length;
             //char[] stringChars = string1.ToCharArray();
-            for (int offset = 0; offset < length;)
+            for(int offset = 0; offset < length;)
             {
 
                 int msCodepoint = char.ConvertToUtf32(string1, offset);//codePointAt(stringChars, offset, string1.Length);
@@ -600,10 +605,10 @@ namespace NPOI.Util
         static int codePointAt(char[] a, int index, int limit)
         {
             char c1 = a[index];
-            if (char.IsHighSurrogate(c1) && ++index < limit)
+            if(char.IsHighSurrogate(c1) && ++index < limit)
             {
                 char c2 = a[index];
-                if (char.IsLowSurrogate(c2))
+                if(char.IsLowSurrogate(c2))
                 {
                     return toCodePoint(c1, c2);
                 }
@@ -639,15 +644,16 @@ namespace NPOI.Util
 
         private static void InitMsCodepointMap()
         {
-            if (msCodepointToUnicode != null) return;
+            if(msCodepointToUnicode != null)
+                return;
             msCodepointToUnicode = new Dictionary<int, int>();
             int i = 0xF020;
-            foreach (int ch in symbolMap_f020)
+            foreach(int ch in symbolMap_f020)
             {
                 msCodepointToUnicode.Add(i++, ch);
             }
             i = 0xf0a0;
-            foreach (int ch in symbolMap_f0a0)
+            foreach(int ch in symbolMap_f0a0)
             {
                 msCodepointToUnicode.Add(i++, ch);
             }
@@ -855,10 +861,11 @@ namespace NPOI.Util
         // for dotnet, should use string.Join
         public static String Join(Object[] array, String separator)
         {
-            if (array.Length == 0) return "";
+            if(array.Length == 0)
+                return "";
             StringBuilder sb = new StringBuilder();
             sb.Append(array[0]);
-            for (int i = 1; i < array.Length; i++)
+            for(int i = 1; i < array.Length; i++)
             {
                 sb.Append(separator).Append(array[i]);
             }
@@ -880,26 +887,27 @@ namespace NPOI.Util
         */
         public static int CountMatches(string haystack, char needle)
         {
-            if (haystack == null) return 0;
+            if(haystack == null)
+                return 0;
             int count = 0;
             int length = haystack.Length;
-            for (int i = 0; i < length; i++)
+            for(int i = 0; i < length; i++)
             {
-                if (haystack[i] == needle)
+                if(haystack[i] == needle)
                 {
                     count++;
                 }
             }
             return count;
         }
-        
+
         public static int CodePointAt(this string text, int index)
         {
-            if (!char.IsSurrogate(text[index]))
+            if(!char.IsSurrogate(text[index]))
             {
-                return (int)text[index];
+                return (int) text[index];
             }
-            if (index + 1 < text.Length && char.IsSurrogatePair(text[index], text[index + 1]))
+            if(index + 1 < text.Length && char.IsSurrogatePair(text[index], text[index + 1]))
             {
                 return char.ConvertToUtf32(text[index], text[index+1]);
             }

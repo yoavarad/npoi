@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -33,7 +33,7 @@ namespace NPOI.POIFS.Storage
     /// A list of SmallDocumentBlocks instances, and methods to manage the list
     /// @author Marc Johnson (mjohnson at apache dot org)
     /// </summary>
-    public class SmallDocumentBlockList:BlockListImpl
+    public class SmallDocumentBlockList : BlockListImpl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SmallDocumentBlockList"/> class.

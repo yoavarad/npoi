@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for Additional information regarding copyright ownership.
@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-using NPOI.SS.Util;
-using System.Text.RegularExpressions;
-using System;
-using System.Text; 
 using Cysharp.Text;
-using System.Globalization;
 using NPOI.SS.Format;
+using NPOI.SS.Util;
+using System;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 namespace NPOI.SS.UserModel
 {
 
@@ -68,37 +68,37 @@ namespace NPOI.SS.UserModel
             Match m = DENOM_FORMAT_PATTERN.Match(denomFormatString);
             int tmpExact = -1;
             int tmpMax = -1;
-            if (m.Success)
+            if(m.Success)
             {
-                if (m.Groups[2] != null && m.Groups[2].Success)
+                if(m.Groups[2] != null && m.Groups[2].Success)
                 {
                     try
                     {
                         tmpExact = Int32.Parse(m.Groups[2].Value);
                         //if the denom is 0, fall back to the default: tmpExact=100
 
-                        if (tmpExact == 0)
+                        if(tmpExact == 0)
                         {
                             tmpExact = -1;
                         }
                     }
-                    catch (FormatException)
+                    catch(FormatException)
                     {
                         //should never happen
                     }
                 }
-                else if (m.Groups[1] != null && m.Groups[1].Success)
+                else if(m.Groups[1] != null && m.Groups[1].Success)
                 {
                     int len = m.Groups[1].Value.Length;
                     len = Math.Min(len, MAX_DENOM_POW);
-                    tmpMax = (int)Math.Pow(10, len);
+                    tmpMax = (int) Math.Pow(10, len);
                 }
                 else
                 {
                     tmpExact = 100;
                 }
             }
-            if (tmpExact <= 0 && tmpMax <= 0)
+            if(tmpExact <= 0 && tmpMax <= 0)
             {
                 //use 100 as the default denom if something went horribly wrong
                 tmpExact = 100;
@@ -118,7 +118,7 @@ namespace NPOI.SS.UserModel
             long wholePart = (long)Math.Truncate(absValue);
             double decPart = absValue - wholePart;
 
-            if (wholePart == 0 && decPart == 0)
+            if(wholePart == 0 && decPart == 0)
             {
                 return "0";
             }
@@ -126,16 +126,16 @@ namespace NPOI.SS.UserModel
             //if the absolute value is smaller than half the smallest representable fraction
             //round to zero instead of to the nearest fraction
             int effectiveDenom = Math.Max(exactDenom, maxDenom);
-            if (effectiveDenom > 0 && absValue < (0.5 / effectiveDenom))
+            if(effectiveDenom > 0 && absValue < (0.5 / effectiveDenom))
             {
                 return isNeg ? "-0" : "0";
             }
 
             //this is necessary to prevent overflow in the maxDenom calculation
             //stink1
-            if (decPart == 0)
+            if(decPart == 0)
             {
-                if (isNeg)
+                if(isNeg)
                 {
                     return "-" + wholePart;
                 }
@@ -146,7 +146,7 @@ namespace NPOI.SS.UserModel
             try
             {
                 //this should be the case because of the constructor
-                if (exactDenom > 0)
+                if(exactDenom > 0)
                 {
                     fract = SimpleFraction.BuildFractionExactDenominator(decPart, exactDenom);
                 }
@@ -155,13 +155,13 @@ namespace NPOI.SS.UserModel
                     fract = SimpleFraction.BuildFractionMaxDenominator(decPart, maxDenom);
                 }
             }
-            catch (SimpleFractionException)
+            catch(SimpleFractionException)
             {
                 return originalValue.ToString();
             }
 
             //now format the results
-            if (isNeg)
+            if(isNeg)
             {
                 return "-" + FormatInternal(wholePart, fract);
             }
@@ -173,7 +173,7 @@ namespace NPOI.SS.UserModel
             StringBuilder sb = new StringBuilder();
 
             //if whole part has to go into the numerator
-            if (string.IsNullOrEmpty(wholePartFormatString))
+            if(string.IsNullOrEmpty(wholePartFormatString))
             {
                 int fden = fract.Denominator;
                 long fnum = (long)fract.Numerator;
@@ -185,18 +185,18 @@ namespace NPOI.SS.UserModel
             }
 
             //short circuit if fraction is 0 or 1
-            if (fract.Numerator == 0)
+            if(fract.Numerator == 0)
             {
                 sb.Append(wholePart);
                 return sb.ToString();
             }
-            else if (fract.Numerator == fract.Denominator)
+            else if(fract.Numerator == fract.Denominator)
             {
                 sb.Append(wholePart + 1);
                 return sb.ToString();
             }
             //as mentioned above, this ignores the exact space formatting in Excel
-            if (wholePart > 0)
+            if(wholePart > 0)
             {
                 sb.Append(wholePart);
                 sb.Append(" ");
@@ -221,7 +221,7 @@ namespace NPOI.SS.UserModel
         {
             throw new NotImplementedException("Reverse parsing not supported");
         }
-       
+
         private sealed class SimpleFractionException : Exception
         {
             public SimpleFractionException(String message) :

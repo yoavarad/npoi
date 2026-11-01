@@ -43,21 +43,21 @@ namespace NPOI.SS.Formula
         public FormulaCellCacheEntry[] ToArray()
         {
             int nItems = _size;
-            if (nItems < 1)
+            if(nItems < 1)
             {
                 return FormulaCellCacheEntry.EMPTY_ARRAY;
             }
             FormulaCellCacheEntry[] result = new FormulaCellCacheEntry[nItems];
             int j = 0;
-            for (int i = 0; i < _arr.Length; i++)
+            for(int i = 0; i < _arr.Length; i++)
             {
                 FormulaCellCacheEntry cce = _arr[i];
-                if (cce != null)
+                if(cce != null)
                 {
                     result[j++] = cce;
                 }
             }
-            if (j != nItems)
+            if(j != nItems)
             {
                 throw new InvalidOperationException("size mismatch");
             }
@@ -67,22 +67,22 @@ namespace NPOI.SS.Formula
 
         public void Add(CellCacheEntry cce)
         {
-            if (_size * 3 >= _arr.Length * 2)
+            if(_size * 3 >= _arr.Length * 2)
             {
                 // re-Hash
                 FormulaCellCacheEntry[] prevArr = _arr;
                 FormulaCellCacheEntry[] newArr = new FormulaCellCacheEntry[4 + _arr.Length * 3 / 2]; // grow 50%
-                for (int i = 0; i < prevArr.Length; i++)
+                for(int i = 0; i < prevArr.Length; i++)
                 {
                     FormulaCellCacheEntry prevCce = _arr[i];
-                    if (prevCce != null)
+                    if(prevCce != null)
                     {
                         AddInternal(newArr, prevCce);
                     }
                 }
                 _arr = newArr;
             }
-            if (AddInternal(_arr, cce))
+            if(AddInternal(_arr, cce))
             {
                 _size++;
             }
@@ -94,29 +94,29 @@ namespace NPOI.SS.Formula
 
             int startIx = Math.Abs(cce.GetHashCode() % arr.Length);
 
-            for (int i = startIx; i < arr.Length; i++)
+            for(int i = startIx; i < arr.Length; i++)
             {
                 CellCacheEntry item = arr[i];
-                if (item == cce)
+                if(item == cce)
                 {
                     // already present
                     return false;
                 }
-                if (item == null)
+                if(item == null)
                 {
                     arr[i] = cce;
                     return true;
                 }
             }
-            for (int i = 0; i < startIx; i++)
+            for(int i = 0; i < startIx; i++)
             {
                 CellCacheEntry item = arr[i];
-                if (item == cce)
+                if(item == cce)
                 {
                     // already present
                     return false;
                 }
-                if (item == null)
+                if(item == null)
                 {
                     arr[i] = cce;
                     return true;
@@ -129,18 +129,18 @@ namespace NPOI.SS.Formula
         {
             FormulaCellCacheEntry[] arr = _arr;
 
-            if (_size * 3 < _arr.Length && _arr.Length > 8)
+            if(_size * 3 < _arr.Length && _arr.Length > 8)
             {
                 // re-Hash
                 bool found = false;
                 FormulaCellCacheEntry[] prevArr = _arr;
                 FormulaCellCacheEntry[] newArr = new FormulaCellCacheEntry[_arr.Length / 2]; // shrink 50%
-                for (int i = 0; i < prevArr.Length; i++)
+                for(int i = 0; i < prevArr.Length; i++)
                 {
                     FormulaCellCacheEntry prevCce = _arr[i];
-                    if (prevCce != null)
+                    if(prevCce != null)
                     {
-                        if (prevCce == cce)
+                        if(prevCce == cce)
                         {
                             found = true;
                             _size--;
@@ -159,10 +159,10 @@ namespace NPOI.SS.Formula
             int startIx = Math.Abs(cce.GetHashCode() % arr.Length);
 
             // note - can't exit loops upon finding null because of potential previous deletes
-            for (int i = startIx; i < arr.Length; i++)
+            for(int i = startIx; i < arr.Length; i++)
             {
                 FormulaCellCacheEntry item = arr[i];
-                if (item == cce)
+                if(item == cce)
                 {
                     // found it
                     arr[i] = null;
@@ -170,10 +170,10 @@ namespace NPOI.SS.Formula
                     return true;
                 }
             }
-            for (int i = 0; i < startIx; i++)
+            for(int i = 0; i < startIx; i++)
             {
                 FormulaCellCacheEntry item = arr[i];
-                if (item == cce)
+                if(item == cce)
                 {
                     // found it
                     arr[i] = null;

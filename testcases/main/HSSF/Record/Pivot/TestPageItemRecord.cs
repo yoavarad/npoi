@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record.Pivot
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.PivotTable;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF.Record;
 
     /**
@@ -39,7 +40,7 @@ namespace TestCases.HSSF.Record.Pivot
             byte[] data = HexRead.ReadFromString("01 02 03 04 05 06 07 08 09 0A 0B 0C");
             RecordInputStream in1 = TestcaseRecordInputStream.Create(PageItemRecord.sid, data);
             PageItemRecord rec = new PageItemRecord(in1);
-            if (in1.Remaining == 6)
+            if(in1.Remaining == 6)
             {
                 throw new AssertionException("Identified bug 46917");
             }

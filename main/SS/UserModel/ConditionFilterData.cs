@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,31 +9,31 @@ namespace NPOI.SS.UserModel
         /**
     * @return true if the flag is missing or set to true
     */
-        bool AboveAverage{ get; }
+        bool AboveAverage { get; }
 
         /**
          * @return true if the flag is set
          */
-        bool Bottom{ get; }
+        bool Bottom { get; }
 
         /**
          * @return true if the flag is set
          */
-        bool EqualAverage{ get; }
+        bool EqualAverage { get; }
 
         /**
          * @return true if the flag is set
          */
-        bool Percent{ get; }
+        bool Percent { get; }
 
         /**
          * @return value, or 0 if not used/defined
          */
-        long Rank{ get; }
+        long Rank { get; }
 
         /**
          * @return value, or 0 if not used/defined
          */
-        int StdDev{ get; }
+        int StdDev { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
 Licensed to the Apache Software Foundation (ASF) under one or more
 contributor license agreements.  See the NOTICE file distributed with
 this work for additional information regarding copyright ownership.
@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==================================================================== */
 using NPOI.SS.Util;
+using NPOI.Util;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using TestCases.HSSF.Record;
-using NPOI.Util;
-using System.IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using TestCases.HSSF.Record;
 namespace TestCases.SS.Util
 {
     //import java.io.ByteArrayOutputStream;
@@ -35,10 +35,10 @@ namespace TestCases.SS.Util
     public class TestCellRangeAddress
     {
         byte[] data = new byte[] {
-             (byte)0x02,(byte)0x00, 
-             (byte)0x04,(byte)0x00, 
-             (byte)0x00,(byte)0x00, 
-             (byte)0x03,(byte)0x00, 
+             (byte)0x02,(byte)0x00,
+             (byte)0x04,(byte)0x00,
+             (byte)0x00,(byte)0x00,
+             (byte)0x03,(byte)0x00,
         };
         [Test]
         public void TestLoad()
@@ -59,9 +59,9 @@ namespace TestCases.SS.Util
             try
             {
                 ClassicAssert.IsNotNull(new CellRangeAddress(
-                    TestcaseRecordInputStream.Create(0x000, new byte[] { (byte)0x02 })));
+                    TestcaseRecordInputStream.Create(0x000, new byte[] { (byte) 0x02 })));
             }
-            catch (RuntimeException e)
+            catch(RuntimeException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("Ran out of data"), "Had: " + e);
             }
@@ -81,16 +81,16 @@ namespace TestCases.SS.Util
                 cref.Serialize(output);
                 recordBytes = baos.ToArray();
                 ClassicAssert.AreEqual(recordBytes.Length, data.Length);
-                for (int i = 0; i < data.Length; i++)
+                for(int i = 0; i < data.Length; i++)
                 {
                     ClassicAssert.AreEqual(0, recordBytes[i], "At offset " + i);
                 }
 
                 // Now set the flags
-                cref.FirstRow = ((short)2);
-                cref.LastRow = ((short)4);
-                cref.FirstColumn = ((short)0);
-                cref.LastColumn = ((short)3);
+                cref.FirstRow = ((short) 2);
+                cref.LastRow = ((short) 4);
+                cref.FirstColumn = ((short) 0);
+                cref.LastColumn = ((short) 3);
 
                 // Re-test
                 //baos.reset();
@@ -99,7 +99,7 @@ namespace TestCases.SS.Util
                 recordBytes = baos.ToArray();
 
                 ClassicAssert.AreEqual(recordBytes.Length, data.Length);
-                for (int i = 0; i < data.Length; i++)
+                for(int i = 0; i < data.Length; i++)
                 {
                     ClassicAssert.AreEqual(data[i], recordBytes[i], "At offset " + i);
                 }
@@ -120,7 +120,7 @@ namespace TestCases.SS.Util
                 ClassicAssert.IsNotNull(new CellRangeAddress(1, 0, 0, 0));
                 Assert.Fail("Expect to catch an exception");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected here
             }
@@ -129,7 +129,7 @@ namespace TestCases.SS.Util
                 ClassicAssert.IsNotNull(new CellRangeAddress(0, 0, 1, 0));
                 Assert.Fail("Expect to catch an exception");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected here
             }
@@ -312,7 +312,7 @@ namespace TestCases.SS.Util
             ClassicAssert.AreEqual(new CellAddress(1, 0), iter.Current, "A2");
             iter.MoveNext();
             ClassicAssert.AreEqual(new CellAddress(1, 1), iter.Current, "B2");
-            
+
             ClassicAssert.IsFalse(iter.MoveNext());
             //try
             //{
@@ -343,7 +343,7 @@ namespace TestCases.SS.Util
 
         private static void assertIntersects(CellRangeAddress regionA, CellRangeAddress regionB)
         {
-            if (!(regionA.Intersects(regionB) && regionB.Intersects(regionA)))
+            if(!(regionA.Intersects(regionB) && regionB.Intersects(regionA)))
             {
                 String A = regionA.FormatAsString();
                 String B = regionB.FormatAsString();
@@ -352,7 +352,7 @@ namespace TestCases.SS.Util
         }
         private static void assertNotIntersects(CellRangeAddress regionA, CellRangeAddress regionB)
         {
-            if ((regionA.Intersects(regionB) || regionB.Intersects(regionA)))
+            if((regionA.Intersects(regionB) || regionB.Intersects(regionA)))
             {
                 String A = regionA.FormatAsString();
                 String B = regionB.FormatAsString();

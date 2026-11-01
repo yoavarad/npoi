@@ -18,10 +18,10 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.SS.UserModel;
+    using System;
 
     /// <summary>
     /// Class to Read and manipulate the footer.
@@ -33,7 +33,7 @@ namespace NPOI.HSSF.UserModel
     /// fonts by using similar methods.
     /// @author Shawn Laubach (slaubach at apache dot org)
     /// </summary>
-    public class HSSFFooter : HeaderFooter,IFooter
+    public class HSSFFooter : HeaderFooter, IFooter
     {
         private readonly PageSettingsBlock _psb;
 
@@ -56,7 +56,7 @@ namespace NPOI.HSSF.UserModel
             get
             {
                 FooterRecord hf = _psb.Footer;
-                if (hf == null)
+                if(hf == null)
                 {
                     return string.Empty;
                 }
@@ -66,7 +66,7 @@ namespace NPOI.HSSF.UserModel
         protected override void SetHeaderFooterText(string text)
         {
             FooterRecord hfr = _psb.Footer;
-            if (hfr == null)
+            if(hfr == null)
             {
                 hfr = new FooterRecord(text);
                 _psb.Footer=(hfr);

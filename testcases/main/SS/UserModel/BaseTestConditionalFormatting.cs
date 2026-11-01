@@ -19,15 +19,15 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.UserModel;
+    using NPOI.HSSF.Util;
     using NPOI.SS;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.SS;
-    using NPOI.HSSF.Util;
-    using NPOI.HSSF.UserModel;
 
     /**
      * @author Dmitriy Kumshayev
@@ -59,7 +59,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.IsNull(sheetCF.GetConditionalFormattingAt(0));
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("Specified CF index 0 is outside the allowable range"));
             }
@@ -69,7 +69,7 @@ namespace TestCases.SS.UserModel
                 sheetCF.RemoveConditionalFormatting(0);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("Specified CF index 0 is outside the allowable range"));
             }
@@ -83,7 +83,7 @@ namespace TestCases.SS.UserModel
                 sheetCF.AddConditionalFormatting(null, rule1);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("regions must not be null"));
             }
@@ -91,10 +91,10 @@ namespace TestCases.SS.UserModel
             {
                 sheetCF.AddConditionalFormatting(
                         new CellRangeAddress[] { CellRangeAddress.ValueOf("A1:A3") },
-                        (IConditionalFormattingRule)null);
+                        (IConditionalFormattingRule) null);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("cfRules must not be null"));
             }
@@ -106,7 +106,7 @@ namespace TestCases.SS.UserModel
                         new IConditionalFormattingRule[0]);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("cfRules must not be empty"));
             }
@@ -285,7 +285,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.IsNull(sheetCF.GetConditionalFormattingAt(0));
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("Specified CF index 0 is outside the allowable range"));
             }
@@ -303,7 +303,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.IsNull(sheetCF.GetConditionalFormattingAt(0));
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("Specified CF index 0 is outside the allowable range"));
             }
@@ -428,9 +428,9 @@ namespace TestCases.SS.UserModel
                 wb.CloneSheet(0);
                 ClassicAssert.AreEqual(2, wb.NumberOfSheets);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.IndexOf("needs to define a clone method") > 0)
+                if(e.Message.IndexOf("needs to define a clone method") > 0)
                 {
                     Assert.Fail("Identified bug 45682");
                 }
@@ -606,23 +606,23 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(numCF + numCF12 + numCFEX, sheetCF.NumConditionalFormattings);
 
             int fCF = 0, fCF12 = 0, fCFEX = 0;
-            for (int i = 0; i < sheetCF.NumConditionalFormattings; i++)
+            for(int i = 0; i < sheetCF.NumConditionalFormattings; i++)
             {
                 IConditionalFormatting cf0 = sheetCF.GetConditionalFormattingAt(i);
-                if (cf0 is HSSFConditionalFormatting)
+                if(cf0 is HSSFConditionalFormatting)
                 {
                     String str = cf0.ToString();
-                    if (str.Contains("[CF]"))
+                    if(str.Contains("[CF]"))
                         fCF++;
-                    if (str.Contains("[CF12]"))
+                    if(str.Contains("[CF12]"))
                         fCF12++;
-                    if (str.Contains("[CFEX]"))
+                    if(str.Contains("[CFEX]"))
                         fCFEX++;
                 }
                 else
                 {
                     ConditionType type = cf0.GetRule(cf0.NumberOfRules - 1).ConditionType;
-                    if (type == ConditionType.CellValueIs ||
+                    if(type == ConditionType.CellValueIs ||
                         type == ConditionType.Formula)
                     {
                         fCF++;
@@ -656,7 +656,7 @@ namespace TestCases.SS.UserModel
             //   Sets the font colour to dark green
             //   Sets the background colour to lighter green
             // TODO Should the colours be slightly different between formats?
-            if (cr is HSSFConditionalFormattingRule)
+            if(cr is HSSFConditionalFormattingRule)
             {
                 AssertColour("0:8080:0", cr.FontFormatting.FontColor);
                 AssertColour("CCCC:FFFF:CCCC", cr.PatternFormatting.FillBackgroundColorColor);
@@ -682,7 +682,7 @@ namespace TestCases.SS.UserModel
             //   Sets the font colour to dark red
             //   Sets the background colour to lighter red
             // TODO Should the colours be slightly different between formats?
-            if (cr is HSSFConditionalFormattingRule)
+            if(cr is HSSFConditionalFormattingRule)
             {
                 AssertColour("8080:0:8080", cr.FontFormatting.FontColor);
                 AssertColour("FFFF:9999:CCCC", cr.PatternFormatting.FillBackgroundColorColor);
@@ -874,7 +874,7 @@ namespace TestCases.SS.UserModel
 
             ClassicAssert.IsNotNull(icon.Thresholds);
             ClassicAssert.AreEqual(vals.Length, icon.Thresholds.Length);
-            for (int i = 0; i < vals.Length; i++)
+            for(int i = 0; i < vals.Length; i++)
             {
                 Double v = vals[i];
                 IConditionalFormattingThreshold th = icon.Thresholds[i] as IConditionalFormattingThreshold;
@@ -898,7 +898,7 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(null, cr.Formula2);
 
             // TODO Implement
-            if (cr is HSSFConditionalFormattingRule)
+            if(cr is HSSFConditionalFormattingRule)
                 return;
             IColorScaleFormatting color = cr.ColorScaleFormatting;
             ClassicAssert.IsNotNull(color);
@@ -910,27 +910,27 @@ namespace TestCases.SS.UserModel
 
             // Thresholds should be Min / (evenly spaced) / Max
             int steps = 100 / (colors.Length - 1);
-            for (int i = 0; i < colors.Length; i++)
+            for(int i = 0; i < colors.Length; i++)
             {
                 IConditionalFormattingThreshold th = color.Thresholds[i];
-                if (i == 0)
+                if(i == 0)
                 {
                     ClassicAssert.AreEqual(RangeType.MIN, th.RangeType);
                 }
-                else if (i == colors.Length - 1)
+                else if(i == colors.Length - 1)
                 {
                     ClassicAssert.AreEqual(RangeType.MAX, th.RangeType);
                 }
                 else
                 {
                     ClassicAssert.AreEqual(RangeType.PERCENTILE, th.RangeType);
-                    ClassicAssert.AreEqual(steps * i, (int)th.Value.Value);
+                    ClassicAssert.AreEqual(steps * i, (int) th.Value.Value);
                 }
                 ClassicAssert.AreEqual(null, th.Formula);
             }
 
             // Colors should match
-            for (int i = 0; i < colors.Length; i++)
+            for(int i = 0; i < colors.Length; i++)
             {
                 AssertColour(colors[i], color.Colors[i]);
             }
@@ -1029,7 +1029,7 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(FillPattern.SolidForeground, patternFmt.FillPattern);
             patternFmt.FillPattern = FillPattern.NoFill;
             ClassicAssert.AreEqual(FillPattern.NoFill, patternFmt.FillPattern);
-            if (this._testDataProvider.GetSpreadsheetVersion() == SpreadsheetVersion.EXCEL97)
+            if(this._testDataProvider.GetSpreadsheetVersion() == SpreadsheetVersion.EXCEL97)
             {
                 patternFmt.FillPattern = FillPattern.Bricks;
                 ClassicAssert.AreEqual(FillPattern.Bricks, patternFmt.FillPattern);
@@ -1052,7 +1052,7 @@ namespace TestCases.SS.UserModel
 
             ClassicAssert.AreEqual(HSSFColor.Red.Index, r1fp.FillBackgroundColor);
             ClassicAssert.AreEqual(HSSFColor.Blue.Index, r1fp.FillForegroundColor);
-            if (this._testDataProvider.GetSpreadsheetVersion() == SpreadsheetVersion.EXCEL97)
+            if(this._testDataProvider.GetSpreadsheetVersion() == SpreadsheetVersion.EXCEL97)
             {
                 ClassicAssert.AreEqual(FillPattern.Bricks, r1fp.FillPattern);
             }
@@ -1070,7 +1070,7 @@ namespace TestCases.SS.UserModel
             ISheetConditionalFormatting sheetCF = sheet.SheetConditionalFormatting;
             IConditionalFormattingRule rule1 = sheetCF.CreateConditionalFormattingRule(ComparisonOperator.Equal, "7");
             IBorderFormatting borderFmt = rule1.CreateBorderFormatting();
-            foreach (BorderStyle border in BorderStyleEnum.Values())
+            foreach(BorderStyle border in BorderStyleEnum.Values())
             {
                 borderFmt.BorderTop = border;
                 ClassicAssert.AreEqual(border, borderFmt.BorderTop);

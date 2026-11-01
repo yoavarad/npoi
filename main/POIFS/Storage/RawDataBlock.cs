@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,11 +25,10 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.IO;
-
 using NPOI.POIFS.Common;
 using NPOI.Util;
+using System;
+using System.IO;
 
 
 namespace NPOI.POIFS.Storage
@@ -68,11 +67,11 @@ namespace NPOI.POIFS.Storage
             int count = IOUtils.ReadFully(stream, _data);
             _hasData = (count > 0);
 
-            if (count == -1)
+            if(count == -1)
             {
                 _eof = true;
             }
-            else if (count != blockSize)
+            else if(count != blockSize)
             {
                 // IOUtils.readFully will always read the
                 //  requested number of bytes, unless it hits
@@ -123,7 +122,7 @@ namespace NPOI.POIFS.Storage
         {
             get
             {
-                if (!HasData)
+                if(!HasData)
                 {
                     // TODO return null instead of raising an unexpected exception (CA1065)
                     //return null;

@@ -39,18 +39,18 @@ namespace NPOI.SS.Formula.Functions
 
         static LookupUtils()
         {
-            foreach (var value in Enums.GetValues<MatchMode>())
+            foreach(var value in Enums.GetValues<MatchMode>())
             {
-                matchModeMap.Add((int)value, value);
+                matchModeMap.Add((int) value, value);
             }
-            foreach (var value in Enums.GetValues<SearchMode>())
+            foreach(var value in Enums.GetValues<SearchMode>())
             {
-                searchModeMap.Add((int)value, value);
+                searchModeMap.Add((int) value, value);
             }
         }
         public static MatchMode GetMatchMode(int m)
         {
-            if (!matchModeMap.TryGetValue(m, out MatchMode mode))
+            if(!matchModeMap.TryGetValue(m, out MatchMode mode))
             {
                 throw new ArgumentException("unknown match mode " + m);
             }
@@ -58,7 +58,7 @@ namespace NPOI.SS.Formula.Functions
         }
         public static SearchMode GetSearchMode(int s)
         {
-            if (!searchModeMap.TryGetValue(s, out SearchMode mode))
+            if(!searchModeMap.TryGetValue(s, out SearchMode mode))
             {
                 throw new ArgumentException("unknown search mode " + s);
             }
@@ -89,7 +89,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 _rowIndex = rowIndex;
                 int _rowAbsoluteIndex = tableArray.FirstRow + rowIndex;
-                if (!tableArray.ContainsRow(_rowAbsoluteIndex))
+                if(!tableArray.ContainsRow(_rowAbsoluteIndex))
                 {
                     int lastRowIx = tableArray.LastRow - tableArray.FirstRow;
                     throw new ArgumentException("Specified row index (" + rowIndex
@@ -101,7 +101,7 @@ namespace NPOI.SS.Formula.Functions
 
             public override ValueEval GetItem(int index)
             {
-                if (index > _size)
+                if(index > _size)
                 {
                     throw new IndexOutOfRangeException("Specified index (" + index
                             + ") is outside the allowed range (0.." + (_size - 1) + ")");
@@ -127,7 +127,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 _columnIndex = columnIndex;
                 int _columnAbsoluteIndex = tableArray.FirstColumn + columnIndex;
-                if (!tableArray.ContainsColumn((short)_columnAbsoluteIndex))
+                if(!tableArray.ContainsColumn((short) _columnAbsoluteIndex))
                 {
                     int lastColIx = tableArray.LastColumn - tableArray.FirstColumn;
                     throw new ArgumentException("Specified column index (" + columnIndex
@@ -136,7 +136,7 @@ namespace NPOI.SS.Formula.Functions
                 _tableArray = tableArray;
 
                 int height = tableArray.Height;
-                if (tableArray is LazyAreaEval lazyArea)
+                if(tableArray is LazyAreaEval lazyArea)
                 {
                     int lastRowNum = lazyArea.GetSheetLastRowNum(lazyArea.FirstSheetIndex);
                     height = Math.Min(height, Math.Max(0, lastRowNum - tableArray.FirstRow + 1));
@@ -146,7 +146,7 @@ namespace NPOI.SS.Formula.Functions
 
             public override ValueEval GetItem(int index)
             {
-                if (index > _size)
+                if(index > _size)
                 {
                     throw new IndexOutOfRangeException("Specified index (" + index
                             + ") is outside the allowed range (0.." + (_size - 1) + ")");
@@ -175,7 +175,7 @@ namespace NPOI.SS.Formula.Functions
 
             public override ValueEval GetItem(int index)
             {
-                if (index >= _size)
+                if(index >= _size)
                 {
                     throw new IndexOutOfRangeException("Specified index (" + index
                             + ") is outside the allowed range (0.." + (_size - 1) + ")");
@@ -194,12 +194,12 @@ namespace NPOI.SS.Formula.Functions
 
         public static RowVector CreateRowVector(TwoDEval tableArray, int relativeRowIndex)
         {
-            return new RowVector((AreaEval)tableArray, relativeRowIndex);
+            return new RowVector((AreaEval) tableArray, relativeRowIndex);
         }
 
         public static ColumnVector CreateColumnVector(TwoDEval tableArray, int relativeColumnIndex)
         {
-            return new ColumnVector((AreaEval)tableArray, relativeColumnIndex);
+            return new ColumnVector((AreaEval) tableArray, relativeColumnIndex);
         }
 
         /**
@@ -207,11 +207,11 @@ namespace NPOI.SS.Formula.Functions
          */
         public static ValueVector CreateVector(TwoDEval ae)
         {
-            if (ae.IsColumn)
+            if(ae.IsColumn)
             {
                 return CreateColumnVector(ae, 0);
             }
-            if (ae.IsRow)
+            if(ae.IsRow)
             {
                 return CreateRowVector(ae, 0);
             }
@@ -249,7 +249,7 @@ namespace NPOI.SS.Formula.Functions
             protected override CompareResult CompareSameType(ValueEval other)
             {
                 String stringValue = ConvertToString(other);
-                if (_wildCardPattern != null && (_isMatchFunction || !_matchExact))
+                if(_wildCardPattern != null && (_isMatchFunction || !_matchExact))
                 {
                     MatchCollection matcher = _wildCardPattern.Matches(stringValue);
                     bool matches = matcher.Count > 0;
@@ -268,7 +268,7 @@ namespace NPOI.SS.Formula.Functions
         {
             static StringEval ConvertToStringEval(ValueEval eval)
             {
-                if (eval is StringEval stringEval)
+                if(eval is StringEval stringEval)
                 {
                     return stringEval;
                 }
@@ -335,22 +335,28 @@ namespace NPOI.SS.Formula.Functions
          */
         public static int ResolveRowOrColIndexArg(ValueEval rowColIndexArg, int srcCellRow, int srcCellCol)
         {
-            if (rowColIndexArg == null) {
+            if(rowColIndexArg == null)
+            {
                 throw new ArgumentException("argument must not be null");
             }
 
             ValueEval veRowColIndexArg;
-            try {
-                veRowColIndexArg = OperandResolver.GetSingleValue(rowColIndexArg, srcCellRow, (short)srcCellCol);
-            } catch (EvaluationException) {
+            try
+            {
+                veRowColIndexArg = OperandResolver.GetSingleValue(rowColIndexArg, srcCellRow, (short) srcCellCol);
+            }
+            catch(EvaluationException)
+            {
                 // All errors get translated to #REF!
                 throw EvaluationException.InvalidRef();
             }
             int oneBasedIndex;
-            if (veRowColIndexArg is StringEval se) {
+            if(veRowColIndexArg is StringEval se)
+            {
                 String strVal = se.StringValue;
                 Double dVal = OperandResolver.ParseDouble(strVal);
-                if (Double.IsNaN(dVal)) {
+                if(Double.IsNaN(dVal))
+                {
                     // String does not resolve to a number. Raise #REF! error.
                     throw EvaluationException.InvalidRef();
                     // This includes text booleans "TRUE" and "FALSE".  They are not valid.
@@ -359,7 +365,8 @@ namespace NPOI.SS.Formula.Functions
             }
             // actual BoolEval values get interpreted as FALSE->0 and TRUE->1
             oneBasedIndex = OperandResolver.CoerceValueToInt(veRowColIndexArg);
-            if (oneBasedIndex < 1) {
+            if(oneBasedIndex < 1)
+            {
                 // note this is asymmetric with the errors when the index is too large (#REF!)  
                 throw EvaluationException.InvalidValue();
             }
@@ -374,12 +381,13 @@ namespace NPOI.SS.Formula.Functions
          */
         public static AreaEval ResolveTableArrayArg(ValueEval eval)
         {
-            if (eval is AreaEval areaEval)
+            if(eval is AreaEval areaEval)
             {
                 return areaEval;
             }
 
-            if (eval is RefEval refEval) {
+            if(eval is RefEval refEval)
+            {
                 // Make this cell ref look like a 1x1 area ref.
 
                 // It doesn't matter if eval is a 2D or 3D ref, because that detail is never asked of AreaEval.
@@ -400,29 +408,29 @@ namespace NPOI.SS.Formula.Functions
         public static bool ResolveRangeLookupArg(ValueEval rangeLookupArg, int srcCellRow, int srcCellCol)
         {
             ValueEval valEval = OperandResolver.GetSingleValue(rangeLookupArg, srcCellRow, srcCellCol);
-            if (valEval == MissingArgEval.instance)
+            if(valEval == MissingArgEval.instance)
             {
                 // Tricky:
                 // forth arg exists but is not supplied: "=VLOOKUP(A1,A2:A4,2,)"
                 return false;
             }
-            if (valEval is BlankEval)
+            if(valEval is BlankEval)
             {
                 // Tricky:
                 // fourth arg supplied but Evaluates to blank
                 // this does not Get the default value
                 return false;
             }
-            if (valEval is BoolEval boolEval)
+            if(valEval is BoolEval boolEval)
             {
                 // Happy day flow 
                 return boolEval.BooleanValue;
             }
 
-            if (valEval is StringEval eval)
+            if(valEval is StringEval eval)
             {
                 String stringValue = eval.StringValue;
-                if (stringValue.Length < 1)
+                if(stringValue.Length < 1)
                 {
                     // More trickiness:
                     // Empty string Is not the same as BlankEval.  It causes #VALUE! error 
@@ -430,7 +438,7 @@ namespace NPOI.SS.Formula.Functions
                 }
                 // TODO move parseBoolean to OperandResolver
                 bool? b = Countif.ParseBoolean(stringValue);
-                if (b != null)
+                if(b != null)
                 {
                     // string Converted to bool OK
                     return b == true ? true : false;
@@ -442,7 +450,7 @@ namespace NPOI.SS.Formula.Functions
                 //// This Is in contrast to the code below,, where NumberEvals values (for 
                 //// example 0.01) *do* resolve to equivalent bool values.
             }
-            if (valEval is NumericValueEval nve)
+            if(valEval is NumericValueEval nve)
             {
                 // zero Is FALSE, everything else Is TRUE
                 return 0.0 != nve.NumberValue;
@@ -452,7 +460,7 @@ namespace NPOI.SS.Formula.Functions
 
 
         private static int LookupIndexOfValue(LookupValueComparer lookupComparer, ValueVector vector,
-            MatchMode matchMode, bool reverse) 
+            MatchMode matchMode, bool reverse)
         {
             int bestMatchIdx = -1;
             ValueEval bestMatchEval = null;
@@ -461,18 +469,25 @@ namespace NPOI.SS.Formula.Functions
             {
                 ValueEval valueEval = vector.GetItem(i);
                 CompareResult result = lookupComparer.CompareTo(valueEval);
-                if (result.IsEqual) {
+                if(result.IsEqual)
+                {
                     return i;
                 }
-                switch (matchMode) {
+                switch(matchMode)
+                {
                     case MatchMode.ExactMatchFallbackToLargerValue:
-                        if (result.IsLessThan) {
-                            if (bestMatchEval == null) {
+                        if(result.IsLessThan)
+                        {
+                            if(bestMatchEval == null)
+                            {
                                 bestMatchIdx = i;
                                 bestMatchEval = valueEval;
-                            } else {
+                            }
+                            else
+                            {
                                 LookupValueComparer matchComparer = CreateTolerantLookupComparer(valueEval, true, true);
-                                if (matchComparer.CompareTo(bestMatchEval).IsLessThan) {
+                                if(matchComparer.CompareTo(bestMatchEval).IsLessThan)
+                                {
                                     bestMatchIdx = i;
                                     bestMatchEval = valueEval;
                                 }
@@ -480,13 +495,18 @@ namespace NPOI.SS.Formula.Functions
                         }
                         break;
                     case MatchMode.ExactMatchFallbackToSmallerValue:
-                        if (result.IsGreaterThan) {
-                            if (bestMatchEval == null) {
+                        if(result.IsGreaterThan)
+                        {
+                            if(bestMatchEval == null)
+                            {
                                 bestMatchIdx = i;
                                 bestMatchEval = valueEval;
-                            } else {
+                            }
+                            else
+                            {
                                 LookupValueComparer matchComparer = CreateTolerantLookupComparer(valueEval, true, true);
-                                if (matchComparer.CompareTo(bestMatchEval).IsGreaterThan) {
+                                if(matchComparer.CompareTo(bestMatchEval).IsGreaterThan)
+                                {
                                     bestMatchIdx = i;
                                     bestMatchEval = valueEval;
                                 }
@@ -562,7 +582,8 @@ namespace NPOI.SS.Formula.Functions
                 if(result.IsTypeMismatch)
                 {
                     int newIdx = HandleMidValueTypeMismatch(lookupComparer, vector, bsi, i, reverse);
-                    if (newIdx >= 0) {
+                    if(newIdx >= 0)
+                    {
                         return newIdx;
                     }
                 }
@@ -589,9 +610,9 @@ namespace NPOI.SS.Formula.Functions
 
             // find first occurrence of lookup value
             int size = vector.Size;
-            for (int i = 0; i < size; i++)
+            for(int i = 0; i < size; i++)
             {
-                if (lookupComparer.CompareTo(vector.GetItem(i)).IsEqual)
+                if(lookupComparer.CompareTo(vector.GetItem(i)).IsEqual)
                 {
                     return i;
                 }
@@ -603,7 +624,7 @@ namespace NPOI.SS.Formula.Functions
         {
             LookupValueComparer lookupComparer = CreateLookupComparer(lookupValue, isRangeLookup, false);
             int result;
-            if (isRangeLookup)
+            if(isRangeLookup)
             {
                 result = PerformBinarySearch(vector, lookupComparer);
             }
@@ -611,7 +632,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 result = LookupFirstIndexOfValue(lookupComparer, vector, MatchMode.ExactMatch);
             }
-            if (result < 0)
+            if(result < 0)
             {
                 throw new EvaluationException(ErrorEval.NA);
             }
@@ -620,14 +641,16 @@ namespace NPOI.SS.Formula.Functions
         public static int XlookupIndexOfValue(ValueEval lookupValue, ValueVector vector, MatchMode matchMode, SearchMode searchMode)
         {
             ValueEval modifiedLookup = lookupValue;
-            if (lookupValue is StringEval &&
-                (matchMode == MatchMode.ExactMatchFallbackToLargerValue || matchMode == MatchMode.ExactMatchFallbackToSmallerValue)) {
+            if(lookupValue is StringEval &&
+                (matchMode == MatchMode.ExactMatchFallbackToLargerValue || matchMode == MatchMode.ExactMatchFallbackToSmallerValue))
+            {
                 String lookupText = ((StringEval)lookupValue).StringValue;
                 StringBuilder sb = new StringBuilder(lookupText.Length);
                 bool containsWildcard = false;
-                foreach (char c in lookupText.ToCharArray())
+                foreach(char c in lookupText.ToCharArray())
                 {
-                    switch (c) {
+                    switch(c)
+                    {
                         case '~':
                         case '?':
                         case '*':
@@ -637,10 +660,11 @@ namespace NPOI.SS.Formula.Functions
                             sb.Append(c);
                             break;
                     }
-                    if (containsWildcard)
+                    if(containsWildcard)
                         break;
                 }
-                if (containsWildcard) {
+                if(containsWildcard)
+                {
                     modifiedLookup = new StringEval(sb.ToString());
                 }
             }
@@ -662,7 +686,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 result = LookupFirstIndexOfValue(lookupComparer, vector, matchMode);
             }
-            if (result < 0)
+            if(result < 0)
             {
                 throw new EvaluationException(ErrorEval.NA);
             }
@@ -683,20 +707,20 @@ namespace NPOI.SS.Formula.Functions
             int size = vector.Size;
             int bestMatchIdx = -1;
             ValueEval bestMatchEval = null;
-            for (int i = 0; i < size; i++)
+            for(int i = 0; i < size; i++)
             {
                 ValueEval valueEval = vector.GetItem(i);
                 CompareResult result = lookupComparer.CompareTo(valueEval);
-                if (result.IsEqual)
+                if(result.IsEqual)
                 {
                     return i;
                 }
-                switch (matchMode)
+                switch(matchMode)
                 {
                     case MatchMode.ExactMatchFallbackToLargerValue:
-                        if (result.IsLessThan)
+                        if(result.IsLessThan)
                         {
-                            if (bestMatchEval == null)
+                            if(bestMatchEval == null)
                             {
                                 bestMatchIdx = i;
                                 bestMatchEval = valueEval;
@@ -704,7 +728,7 @@ namespace NPOI.SS.Formula.Functions
                             else
                             {
                                 LookupValueComparer matchComparer = CreateTolerantLookupComparer(valueEval, true, true);
-                                if (matchComparer.CompareTo(bestMatchEval).IsLessThan)
+                                if(matchComparer.CompareTo(bestMatchEval).IsLessThan)
                                 {
                                     bestMatchIdx = i;
                                     bestMatchEval = valueEval;
@@ -713,9 +737,9 @@ namespace NPOI.SS.Formula.Functions
                         }
                         break;
                     case MatchMode.ExactMatchFallbackToSmallerValue:
-                        if (result.IsGreaterThan)
+                        if(result.IsGreaterThan)
                         {
-                            if (bestMatchEval == null)
+                            if(bestMatchEval == null)
                             {
                                 bestMatchIdx = i;
                                 bestMatchEval = valueEval;
@@ -723,7 +747,7 @@ namespace NPOI.SS.Formula.Functions
                             else
                             {
                                 LookupValueComparer matchComparer = CreateTolerantLookupComparer(valueEval, true, true);
-                                if (matchComparer.CompareTo(bestMatchEval).IsGreaterThan)
+                                if(matchComparer.CompareTo(bestMatchEval).IsGreaterThan)
                                 {
                                     bestMatchIdx = i;
                                     bestMatchEval = valueEval;
@@ -751,20 +775,20 @@ namespace NPOI.SS.Formula.Functions
             int size = vector.Size;
             int bestMatchIdx = -1;
             ValueEval bestMatchEval = null;
-            for (int i = size - 1; i >= 0; i--)
+            for(int i = size - 1; i >= 0; i--)
             {
                 ValueEval valueEval = vector.GetItem(i);
                 CompareResult result = lookupComparer.CompareTo(valueEval);
-                if (result.IsEqual)
+                if(result.IsEqual)
                 {
                     return i;
                 }
-                switch (matchMode)
+                switch(matchMode)
                 {
                     case MatchMode.ExactMatchFallbackToLargerValue:
-                        if (result.IsLessThan)
+                        if(result.IsLessThan)
                         {
-                            if (bestMatchEval == null)
+                            if(bestMatchEval == null)
                             {
                                 bestMatchIdx = i;
                                 bestMatchEval = valueEval;
@@ -772,7 +796,7 @@ namespace NPOI.SS.Formula.Functions
                             else
                             {
                                 LookupValueComparer matchComparer = CreateTolerantLookupComparer(valueEval, true, true);
-                                if (matchComparer.CompareTo(bestMatchEval).IsLessThan)
+                                if(matchComparer.CompareTo(bestMatchEval).IsLessThan)
                                 {
                                     bestMatchIdx = i;
                                     bestMatchEval = valueEval;
@@ -781,9 +805,9 @@ namespace NPOI.SS.Formula.Functions
                         }
                         break;
                     case MatchMode.ExactMatchFallbackToSmallerValue:
-                        if (result.IsGreaterThan)
+                        if(result.IsGreaterThan)
                         {
-                            if (bestMatchEval == null)
+                            if(bestMatchEval == null)
                             {
                                 bestMatchIdx = i;
                                 bestMatchEval = valueEval;
@@ -791,7 +815,7 @@ namespace NPOI.SS.Formula.Functions
                             else
                             {
                                 LookupValueComparer matchComparer = CreateTolerantLookupComparer(valueEval, true, true);
-                                if (matchComparer.CompareTo(bestMatchEval).IsGreaterThan)
+                                if(matchComparer.CompareTo(bestMatchEval).IsGreaterThan)
                                 {
                                     bestMatchIdx = i;
                                     bestMatchEval = valueEval;
@@ -813,26 +837,26 @@ namespace NPOI.SS.Formula.Functions
             // both low and high indexes point to values assumed too low and too high.
             BinarySearchIndexes bsi = new BinarySearchIndexes(vector.Size);
 
-            while (true)
+            while(true)
             {
                 int midIx = bsi.GetMidIx();
 
-                if (midIx < 0)
+                if(midIx < 0)
                 {
                     return bsi.GetLowIx();
                 }
                 CompareResult cr = lookupComparer.CompareTo(vector.GetItem(midIx));
-                if (cr.IsTypeMismatch)
+                if(cr.IsTypeMismatch)
                 {
                     int newMidIx = HandleMidValueTypeMismatch(lookupComparer, vector, bsi, midIx,false);
-                    if (newMidIx < 0)
+                    if(newMidIx < 0)
                     {
                         continue;
                     }
                     midIx = newMidIx;
                     cr = lookupComparer.CompareTo(vector.GetItem(midIx));
                 }
-                if (cr.IsEqual)
+                if(cr.IsEqual)
                 {
                     return FindLastIndexInRunOfEqualValues(lookupComparer, vector, midIx, bsi.GetHighIx());
                 }
@@ -852,10 +876,10 @@ namespace NPOI.SS.Formula.Functions
             int newMid = midIx;
             int highIx = bsi.GetHighIx();
 
-            while (true)
+            while(true)
             {
                 newMid++;
-                if (newMid == highIx)
+                if(newMid == highIx)
                 {
                     // every element from midIx to highIx was the wrong type
                     // move highIx down to the low end of the mid values
@@ -879,12 +903,12 @@ namespace NPOI.SS.Formula.Functions
                     // but only when "newMid == highIx-1"? slightly weird.
                     // It would seem more efficient to always do this.
                 }
-                if (cr.IsTypeMismatch)
+                if(cr.IsTypeMismatch)
                 {
                     // keep stepping over values Until the right type Is found
                     continue;
                 }
-                if (cr.IsEqual)
+                if(cr.IsEqual)
                 {
                     return newMid;
                 }
@@ -909,9 +933,9 @@ namespace NPOI.SS.Formula.Functions
         private static int FindLastIndexInRunOfEqualValues(LookupValueComparer lookupComparer, ValueVector vector,
                     int firstFoundIndex, int maxIx)
         {
-            for (int i = firstFoundIndex + 1; i < maxIx; i++)
+            for(int i = firstFoundIndex + 1; i < maxIx; i++)
             {
-                if (!lookupComparer.CompareTo(vector.GetItem(i)).IsEqual)
+                if(!lookupComparer.CompareTo(vector.GetItem(i)).IsEqual)
                 {
                     return i - 1;
                 }
@@ -922,22 +946,22 @@ namespace NPOI.SS.Formula.Functions
         public static LookupValueComparer CreateLookupComparer(ValueEval lookupValue, bool matchExact, bool isMatchFunction)
         {
 
-            if (lookupValue == BlankEval.instance)
+            if(lookupValue == BlankEval.instance)
             {
                 // blank eval translates to zero
                 // Note - a blank eval in the lookup column/row never matches anything
                 // empty string in the lookup column/row can only be matched by explicit emtpty string
                 return new NumberLookupComparer(NumberEval.ZERO);
             }
-            if (lookupValue is StringEval eval)
+            if(lookupValue is StringEval eval)
             {
                 return new StringLookupComparer(eval, matchExact, isMatchFunction);
             }
-            if (lookupValue is NumberEval value)
+            if(lookupValue is NumberEval value)
             {
                 return new NumberLookupComparer(value);
             }
-            if (lookupValue is BoolEval boolEval)
+            if(lookupValue is BoolEval boolEval)
             {
                 return new BooleanLookupComparer(boolEval);
             }
@@ -945,14 +969,16 @@ namespace NPOI.SS.Formula.Functions
         }
         private static LookupValueComparer CreateTolerantLookupComparer(ValueEval lookupValue, bool matchExact, bool isMatchFunction)
         {
-            if (lookupValue == BlankEval.instance)
+            if(lookupValue == BlankEval.instance)
             {
                 return new TolerantStringLookupComparer(new StringEval(""), matchExact, isMatchFunction);
             }
-            if (lookupValue is BoolEval eval) {
+            if(lookupValue is BoolEval eval)
+            {
                 return new BooleanLookupComparer(eval);
             }
-            if (matchExact && lookupValue is NumberEval value) {
+            if(matchExact && lookupValue is NumberEval value)
+            {
                 return new NumberLookupComparer(value);
             }
             return new TolerantStringLookupComparer(lookupValue, matchExact, isMatchFunction);
@@ -978,7 +1004,7 @@ namespace NPOI.SS.Formula.Functions
 
         private CompareResult(bool IsTypeMismatch, int simpleCompareResult)
         {
-            if (IsTypeMismatch)
+            if(IsTypeMismatch)
             {
                 _isTypeMismatch = true;
                 _isLessThan = false;
@@ -1001,11 +1027,11 @@ namespace NPOI.SS.Formula.Functions
 
         public static CompareResult ValueOf(int simpleCompareResult)
         {
-            if (simpleCompareResult < 0)
+            if(simpleCompareResult < 0)
             {
                 return LessThan;
             }
-            if (simpleCompareResult > 0)
+            if(simpleCompareResult > 0)
             {
                 return GreaterThan;
             }
@@ -1013,7 +1039,7 @@ namespace NPOI.SS.Formula.Functions
         }
         public static CompareResult ValueOf(bool matches)
         {
-            if (matches)
+            if(matches)
             {
                 return Equal;
             }
@@ -1048,19 +1074,19 @@ namespace NPOI.SS.Formula.Functions
         {
             get
             {
-                if (_isTypeMismatch)
+                if(_isTypeMismatch)
                 {
                     return "TYPE_MISMATCH";
                 }
-                if (_isLessThan)
+                if(_isLessThan)
                 {
                     return "LESS_THAN";
                 }
-                if (_isEqual)
+                if(_isEqual)
                 {
                     return "EQUAL";
                 }
-                if (_isGreaterThan)
+                if(_isGreaterThan)
                 {
                     return "GREATER_THAN";
                 }
@@ -1091,7 +1117,7 @@ namespace NPOI.SS.Formula.Functions
         public int GetMidIx()
         {
             int ixDiff = _highIx - _lowIx;
-            if (ixDiff < 2)
+            if(ixDiff < 2)
             {
                 return -1;
             }
@@ -1108,7 +1134,7 @@ namespace NPOI.SS.Formula.Functions
         }
         public void NarrowSearch(int midIx, bool isLessThan)
         {
-            if (isLessThan)
+            if(isLessThan)
             {
                 _highIx = midIx;
             }
@@ -1132,12 +1158,12 @@ namespace NPOI.SS.Formula.Functions
         {
             BoolEval be = (BoolEval)other;
             bool otherVal = be.BooleanValue;
-            if (_value == otherVal)
+            if(_value == otherVal)
             {
                 return CompareResult.Equal;
             }
             // TRUE > FALSE
-            if (_value)
+            if(_value)
             {
                 return CompareResult.GreaterThan;
             }
@@ -1184,7 +1210,7 @@ namespace NPOI.SS.Formula.Functions
         private readonly Type _targetType;
         protected LookupValueComparerBase(ValueEval targetValue)
         {
-            if (targetValue == null)
+            if(targetValue == null)
             {
                 throw new Exception("targetValue cannot be null");
             }
@@ -1192,11 +1218,11 @@ namespace NPOI.SS.Formula.Functions
         }
         public CompareResult CompareTo(ValueEval other)
         {
-            if (other == null)
+            if(other == null)
             {
                 throw new Exception("Compare to value cannot be null");
             }
-            if (_targetType != other.GetType())
+            if(_targetType != other.GetType())
             {
                 return CompareResult.TypeMismatch;
             }

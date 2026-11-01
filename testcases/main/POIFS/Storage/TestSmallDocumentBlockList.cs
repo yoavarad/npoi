@@ -26,15 +26,15 @@
  * ==============================================================*/
 
 
-using System;
-using System.IO;
-using System.Collections;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NPOI.POIFS.Common;
+using NPOI.POIFS.FileSystem;
 using NPOI.POIFS.Storage;
 using NPOI.Util;
-using NPOI.POIFS.FileSystem;
-using NPOI.POIFS.Common;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
+using System.IO;
 
 namespace TestCases.POIFS.Storage
 {
@@ -56,14 +56,14 @@ namespace TestCases.POIFS.Storage
         {
             byte[] data = new byte[2560];
 
-            for (int j = 0; j < 2560; j++)
+            for(int j = 0; j < 2560; j++)
             {
-                data[j] = (byte)j;
+                data[j] = (byte) j;
             }
             MemoryStream stream = new MemoryStream(data);
             RawDataBlock[] blocks = new RawDataBlock[5];
 
-            for (int j = 0; j < 5; j++)
+            for(int j = 0; j < 5; j++)
             {
                 blocks[j] = new RawDataBlock(stream);
             }
@@ -71,7 +71,7 @@ namespace TestCases.POIFS.Storage
                 new SmallDocumentBlockList(SmallDocumentBlock.Extract(POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS, blocks));
 
             // proof we added the blocks
-            for (int j = 0; j < 40; j++)
+            for(int j = 0; j < 40; j++)
             {
                 sdbl.Remove(j);
             }
@@ -80,7 +80,7 @@ namespace TestCases.POIFS.Storage
                 sdbl.Remove(41);
                 Assert.Fail("there should have been an Earth-shattering ka-boom!");
             }
-            catch (IOException )
+            catch(IOException)
             {
 
                 // it better have thrown one!!

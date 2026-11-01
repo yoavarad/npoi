@@ -1,6 +1,6 @@
-using System.Xml;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Dml;
+using System.Xml;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -25,14 +25,14 @@ namespace NPOI.XSLF.UserModel
             {
                 document.Load(reader);
                 var root = document.DocumentElement;
-                if (root == null || root.LocalName != "theme" ||
+                if(root == null || root.LocalName != "theme" ||
                     root.NamespaceURI != XSLFXmlHelper.DrawingNamespace)
                 {
                     throw new POIXMLException("Invalid DrawingML theme: " + part.PartName.Name);
                 }
                 theme = CT_OfficeStyleSheet.Parse(root, NamespaceManager);
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new POIXMLException("Invalid DrawingML theme: " + part.PartName.Name, e);
             }

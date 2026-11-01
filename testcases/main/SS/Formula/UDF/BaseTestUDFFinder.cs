@@ -16,14 +16,13 @@
 ==================================================================== */
 namespace TestCases.SS.Formula.UDF
 {
-    using System;
-
-
-    using NPOI.SS.Formula.Functions;
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.UDF;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class BaseTestUDFFinder

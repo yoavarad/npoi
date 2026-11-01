@@ -18,11 +18,11 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
-    using NPOI.SS.Formula.Eval;
-    using NPOI.SS.UserModel;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
+    using NPOI.SS.UserModel;
+    using System;
     /**
      * 
      * 
@@ -38,7 +38,7 @@ namespace NPOI.SS.Formula
 
         public SheetRefEvaluator(WorkbookEvaluator bookEvaluator, EvaluationTracker tracker, int sheetIndex)
         {
-            if (sheetIndex < 0)
+            if(sheetIndex < 0)
             {
                 throw new ArgumentException("Invalid sheetIndex: " + sheetIndex + ".");
             }
@@ -72,7 +72,7 @@ namespace NPOI.SS.Formula
         {
             get
             {
-                if (_sheet == null)
+                if(_sheet == null)
                 {
                     _sheet = _bookEvaluator.GetSheet(_sheetIndex);
                 }
@@ -88,14 +88,14 @@ namespace NPOI.SS.Formula
         {
             bool subtotal = false;
             IEvaluationCell cell = Sheet.GetCell(rowIndex, columnIndex);
-            if (cell != null && cell.CellType == CellType.Formula)
+            if(cell != null && cell.CellType == CellType.Formula)
             {
                 IEvaluationWorkbook wb = _bookEvaluator.Workbook;
-                foreach (Ptg ptg in wb.GetFormulaTokens(cell))
+                foreach(Ptg ptg in wb.GetFormulaTokens(cell))
                 {
-                    if (ptg is FuncVarPtg varPtg)
+                    if(ptg is FuncVarPtg varPtg)
                     {
-                        if ("SUBTOTAL".Equals(varPtg.Name))
+                        if("SUBTOTAL".Equals(varPtg.Name))
                         {
                             subtotal = true;
                             break;

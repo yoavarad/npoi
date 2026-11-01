@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System.Text;
-    using System;
     using NPOI.Util;
+    using System;
     using System.Globalization;
+    using System.Text;
 
 
     /**
@@ -83,18 +83,22 @@ namespace NPOI.HSSF.Record
             field_4_shapeid = in1.ReadUShort();
             int length = in1.ReadShort();
             field_5_hasMultibyte = in1.ReadByte() != 0x00;
-            if (field_5_hasMultibyte) {
+            if(field_5_hasMultibyte)
+            {
                 field_6_author = StringUtil.ReadUnicodeLE(in1, length);
-            } else {
+            }
+            else
+            {
                 field_6_author = StringUtil.ReadCompressedUnicode(in1, length);
             }
-            if (in1.Available() == 1) {
-                field_7_padding = (byte)in1.ReadByte();
+            if(in1.Available() == 1)
+            {
+                field_7_padding = (byte) in1.ReadByte();
             }
-            else if (in1.Available() == 2 && length == 0)
+            else if(in1.Available() == 2 && length == 0)
             {
                 // If there's no author, may be double padded
-                field_7_padding = (byte)in1.ReadByte();
+                field_7_padding = (byte) in1.ReadByte();
                 in1.ReadByte();
             }
         }
@@ -123,12 +127,16 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(field_4_shapeid);
             out1.WriteShort(field_6_author.Length);
             out1.WriteByte(field_5_hasMultibyte ? 0x01 : 0x00);
-            if (field_5_hasMultibyte) {
+            if(field_5_hasMultibyte)
+            {
                 StringUtil.PutUnicodeLE(field_6_author, out1);
-            } else {
+            }
+            else
+            {
                 StringUtil.PutCompressedUnicode(field_6_author, out1);
             }
-            if (field_7_padding != null) {
+            if(field_7_padding != null)
+            {
                 out1.WriteByte(Convert.ToInt32(field_7_padding, CultureInfo.InvariantCulture));
             }
 
@@ -173,8 +181,8 @@ namespace NPOI.HSSF.Record
          */
         public int Row
         {
-            get{return field_1_row;}
-            set{ field_1_row = value;}
+            get { return field_1_row; }
+            set { field_1_row = value; }
         }
 
         /**

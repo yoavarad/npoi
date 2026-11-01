@@ -30,7 +30,8 @@ namespace NPOI.HSSF.Record.Common
      *  Formatting, Sheet Extensions), this XSSF-style color record 
      *  can be used.
      */
-    public class ExtendedColor: ICloneable {
+    public class ExtendedColor : ICloneable
+    {
         public static int TYPE_AUTO = 0;
         public static int TYPE_INDEXED = 1;
         public static int TYPE_RGB = 2;
@@ -62,21 +63,30 @@ namespace NPOI.HSSF.Record.Common
 
         private double tint;
 
-        public ExtendedColor() {
+        public ExtendedColor()
+        {
             this.type = TYPE_INDEXED;
             this.colorIndex = 0;
             this.tint = 0d;
         }
-        public ExtendedColor(ILittleEndianInput in1) {
+        public ExtendedColor(ILittleEndianInput in1)
+        {
             type = in1.ReadInt();
-            if (type == TYPE_INDEXED) {
+            if(type == TYPE_INDEXED)
+            {
                 colorIndex = in1.ReadInt();
-            } else if (type == TYPE_RGB) {
+            }
+            else if(type == TYPE_RGB)
+            {
                 rgba = new byte[4];
                 in1.ReadFully(rgba);
-            } else if (type == TYPE_THEMED) {
+            }
+            else if(type == TYPE_THEMED)
+            {
                 themeIndex = in1.ReadInt();
-            } else {
+            }
+            else
+            {
                 // Ignored
                 in1.ReadInt();
             }
@@ -116,7 +126,7 @@ namespace NPOI.HSSF.Record.Common
         public byte[] RGBA
         {
             get { return rgba; }
-            set { this.rgba = (value == null) ? null : (byte[])value.Clone(); }
+            set { this.rgba = (value == null) ? null : (byte[]) value.Clone(); }
         }
 
         /**
@@ -135,7 +145,7 @@ namespace NPOI.HSSF.Record.Common
             get { return tint; }
             set
             {
-                if (tint < -1 || tint > 1)
+                if(tint < -1 || tint > 1)
                 {
                     throw new ArgumentException("Tint/Shade must be between -1 and +1");
                 }
@@ -143,7 +153,8 @@ namespace NPOI.HSSF.Record.Common
             }
         }
 
-        public override String ToString() {
+        public override String ToString()
+        {
             StringBuilder buffer = new StringBuilder();
             buffer.Append("    [Extended Color]\n");
             buffer.Append("          .type  = ").Append(type).Append("\n");
@@ -155,16 +166,22 @@ namespace NPOI.HSSF.Record.Common
             return buffer.ToString();
         }
 
-        public Object Clone() {
+        public Object Clone()
+        {
             ExtendedColor exc = new ExtendedColor();
             exc.type = type;
             exc.tint = tint;
-            if (type == TYPE_INDEXED) {
+            if(type == TYPE_INDEXED)
+            {
                 exc.colorIndex = colorIndex;
-            } else if (type == TYPE_RGB) {
+            }
+            else if(type == TYPE_RGB)
+            {
                 exc.rgba = new byte[4];
                 Array.Copy(rgba, 0, exc.rgba, 0, 4);
-            } else if (type == TYPE_THEMED) {
+            }
+            else if(type == TYPE_THEMED)
+            {
                 exc.themeIndex = themeIndex;
             }
             return exc;
@@ -178,15 +195,23 @@ namespace NPOI.HSSF.Record.Common
             }
         }
 
-        public void Serialize(ILittleEndianOutput out1) {
+        public void Serialize(ILittleEndianOutput out1)
+        {
             out1.WriteInt(type);
-            if (type == TYPE_INDEXED) {
+            if(type == TYPE_INDEXED)
+            {
                 out1.WriteInt(colorIndex);
-            } else if (type == TYPE_RGB) {
+            }
+            else if(type == TYPE_RGB)
+            {
                 out1.Write(rgba);
-            } else if (type == TYPE_THEMED) {
+            }
+            else if(type == TYPE_THEMED)
+            {
                 out1.WriteInt(themeIndex);
-            } else {
+            }
+            else
+            {
                 out1.WriteInt(0);
             }
             out1.WriteDouble(tint);

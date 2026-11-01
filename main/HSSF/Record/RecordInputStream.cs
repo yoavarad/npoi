@@ -20,16 +20,13 @@
 namespace NPOI.HSSF.Record
 {
 
-    using NPOI.Util;
-
-    using System;
-    using System.IO;
-
-
-    using NPOI.HSSF.Record.Crypto;
-    using System.Diagnostics;
-    using NPOI.POIFS.Crypt;
     using NPOI.HPSF;
+    using NPOI.HSSF.Record.Crypto;
+    using NPOI.POIFS.Crypt;
+    using NPOI.Util;
+    using System;
+    using System.Diagnostics;
+    using System.IO;
 
 
     [Serializable]
@@ -44,7 +41,7 @@ namespace NPOI.HSSF.Record
         private static String getRecordName(int sid)
         {
             Type recordClass = RecordFactory.GetRecordClass(sid);
-            if (recordClass == null)
+            if(recordClass == null)
             {
                 return null;
             }
@@ -59,7 +56,7 @@ namespace NPOI.HSSF.Record
 
         internal static ILittleEndianInput GetLEI(Stream in1)
         {
-            if (in1 is ILittleEndianInput input)
+            if(in1 is ILittleEndianInput input)
             {
                 // accessing directly is an optimisation
                 return input;
@@ -136,7 +133,7 @@ namespace NPOI.HSSF.Record
 
         public RecordInputStream(InputStream in1, EncryptionInfo info, int initialOffset)
         {
-            if (info == null)
+            if(info == null)
             {
                 _dataInput = (in1 is ILittleEndianInput)
                     // accessing directly is an optimisation
@@ -174,9 +171,9 @@ namespace NPOI.HSSF.Record
         private int ReadNextSid()
         {
             int nAvailable = _bhi.Available();
-            if (nAvailable < EOFRecord.ENCODED_SIZE)
+            if(nAvailable < EOFRecord.ENCODED_SIZE)
             {
-                if (nAvailable > 0)
+                if(nAvailable > 0)
                 {
                     // some scrap left over?
                     // ex45582-22397.xls has one extra byte after the last record
@@ -185,7 +182,7 @@ namespace NPOI.HSSF.Record
                 return INVALID_SID_VALUE;
             }
             int result = _bhi.ReadRecordSID();
-            if (result == INVALID_SID_VALUE)
+            if(result == INVALID_SID_VALUE)
             {
                 throw new RecordFormatException("Found invalid sid (" + result + ")");
             }
@@ -196,12 +193,12 @@ namespace NPOI.HSSF.Record
 
         public short Sid
         {
-            get { return (short)_currentSid; }
+            get { return (short) _currentSid; }
         }
 
         public void Mark(int readlimit)
         {
-            if (!(_dataInput is InputStream))
+            if(!(_dataInput is InputStream))
             {
                 throw new ApplicationException("Cannot use mark for dataInput of type " + _dataInput.GetType() + ", need an InputStream");
             }
@@ -229,11 +226,11 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (_currentDataLength != -1 && _currentDataLength != _currentDataOffset)
+                if(_currentDataLength != -1 && _currentDataLength != _currentDataOffset)
                 {
                     throw new LeftoverDataException(_currentSid, Remaining);
                 }
-                if (_currentDataLength != DATA_LEN_NEEDS_TO_BE_READ)
+                if(_currentDataLength != DATA_LEN_NEEDS_TO_BE_READ)
                 {
                     _nextSid = ReadNextSid();
                 }
@@ -247,18 +244,18 @@ namespace NPOI.HSSF.Record
          */
         public void NextRecord()
         {
-            if (_nextSid == INVALID_SID_VALUE)
+            if(_nextSid == INVALID_SID_VALUE)
             {
                 throw new InvalidDataException("EOF - next record not available");
             }
-            if (_currentDataLength != DATA_LEN_NEEDS_TO_BE_READ)
+            if(_currentDataLength != DATA_LEN_NEEDS_TO_BE_READ)
             {
                 throw new InvalidDataException("Cannot call nextRecord() without checking hasNextRecord() first");
             }
             _currentSid = _nextSid;
             _currentDataOffset = 0;
             _currentDataLength = _bhi.ReadDataSize();
-            if (_currentDataLength > MAX_RECORD_DATA_SIZE)
+            if(_currentDataLength > MAX_RECORD_DATA_SIZE)
             {
                 throw new RecordFormatException("The content of an excel record cannot exceed "
                         + MAX_RECORD_DATA_SIZE + " bytes");
@@ -268,12 +265,12 @@ namespace NPOI.HSSF.Record
         protected void CheckRecordPosition(int requiredByteCount)
         {
             int nAvailable = Remaining;
-            if (nAvailable >= requiredByteCount)
+            if(nAvailable >= requiredByteCount)
             {
                 // all OK
                 return;
             }
-            if (nAvailable == 0 && IsContinueNext)
+            if(nAvailable == 0 && IsContinueNext)
             {
                 NextRecord();
                 return;
@@ -322,7 +319,7 @@ namespace NPOI.HSSF.Record
         public int ReadUByte()
         {
             int s = ReadByte();
-            if (s < 0)
+            if(s < 0)
             {
                 s += 256;
             }
@@ -374,21 +371,21 @@ namespace NPOI.HSSF.Record
             pos += len;*/
 
             int origLen = len;
-            if (buf == null)
+            if(buf == null)
             {
                 throw new ArgumentNullException();
             }
-            else if (off < 0 || len < 0 || len > buf.Length - off)
+            else if(off < 0 || len < 0 || len > buf.Length - off)
             {
                 throw new IndexOutOfRangeException();
             }
 
-            while (len > 0)
+            while(len > 0)
             {
                 int nextChunk = Math.Min(Available(), len);
-                if (nextChunk == 0)
+                if(nextChunk == 0)
                 {
-                    if (!HasNextRecord)
+                    if(!HasNextRecord)
                     {
                         throw new RecordFormatException("Can't read the remaining " + len + " bytes of the requested " + origLen + " bytes. No further record exists.");
                     }
@@ -400,7 +397,7 @@ namespace NPOI.HSSF.Record
                     }
                 }
                 CheckRecordPosition(nextChunk);
-                if (isPlain)
+                if(isPlain)
                 {
                     _dataInput.ReadPlain(buf, off, nextChunk);
                 }
@@ -437,29 +434,29 @@ namespace NPOI.HSSF.Record
         private String ReadStringCommon(int requestedLength, bool pIsCompressedEncoding)
         {
             // Sanity check to detect garbage string lengths
-            if (requestedLength < 0 || requestedLength > 0x100000)
+            if(requestedLength < 0 || requestedLength > 0x100000)
             { // 16 million chars?
                 throw new ArgumentException("Bad requested string length (" + requestedLength + ")");
             }
             char[] buf = new char[requestedLength];
             bool isCompressedEncoding = pIsCompressedEncoding;
             int curLen = 0;
-            while (true)
+            while(true)
             {
                 int availableChars = isCompressedEncoding ? Remaining : Remaining / LittleEndianConsts.SHORT_SIZE;
-                if (requestedLength - curLen <= availableChars)
+                if(requestedLength - curLen <= availableChars)
                 {
                     // enough space in current record, so just read it out
-                    while (curLen < requestedLength)
+                    while(curLen < requestedLength)
                     {
                         char ch;
-                        if (isCompressedEncoding)
+                        if(isCompressedEncoding)
                         {
-                            ch = (char)ReadUByte();
+                            ch = (char) ReadUByte();
                         }
                         else
                         {
-                            ch = (char)ReadShort();
+                            ch = (char) ReadShort();
                         }
                         buf[curLen] = ch;
                         curLen++;
@@ -468,27 +465,27 @@ namespace NPOI.HSSF.Record
                 }
                 // else string has been spilled into next continue record
                 // so read what's left of the current record
-                while (availableChars > 0)
+                while(availableChars > 0)
                 {
                     char ch;
-                    if (isCompressedEncoding)
+                    if(isCompressedEncoding)
                     {
-                        ch = (char)ReadUByte();
+                        ch = (char) ReadUByte();
                     }
                     else
                     {
-                        ch = (char)ReadShort();
+                        ch = (char) ReadShort();
                     }
                     buf[curLen] = ch;
                     curLen++;
                     availableChars--;
                 }
-                if (!IsContinueNext)
+                if(!IsContinueNext)
                 {
                     throw new RecordFormatException("Expected to find a ContinueRecord in order to read remaining "
                             + (requestedLength - curLen) + " of " + requestedLength + " chars");
                 }
-                if (Remaining != 0)
+                if(Remaining != 0)
                 {
                     throw new RecordFormatException("Odd number of bytes(" + Remaining + ") left behind");
                 }
@@ -513,7 +510,7 @@ namespace NPOI.HSSF.Record
         public byte[] ReadRemainder()
         {
             int size = Remaining;
-            if (size == 0)
+            if(size == 0)
             {
                 return [];
             }
@@ -532,14 +529,14 @@ namespace NPOI.HSSF.Record
         {
             //Using a ByteArrayOutputStream is just an easy way to Get a
             //growable array of the data.
-            using (MemoryStream out1 = RecyclableMemory.GetStream(2 * MAX_RECORD_DATA_SIZE))
+            using(MemoryStream out1 = RecyclableMemory.GetStream(2 * MAX_RECORD_DATA_SIZE))
             {
 
-                while (true)
+                while(true)
                 {
                     byte[] b = ReadRemainder();
                     out1.Write(b, 0, b.Length);
-                    if (!IsContinueNext)
+                    if(!IsContinueNext)
                     {
                         break;
                     }
@@ -558,7 +555,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (_currentDataLength == DATA_LEN_NEEDS_TO_BE_READ)
+                if(_currentDataLength == DATA_LEN_NEEDS_TO_BE_READ)
                 {
                     // already read sid of next record. so current one is finished
                     return 0;
@@ -575,11 +572,11 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (_currentDataLength != DATA_LEN_NEEDS_TO_BE_READ && _currentDataOffset != _currentDataLength)
+                if(_currentDataLength != DATA_LEN_NEEDS_TO_BE_READ && _currentDataOffset != _currentDataLength)
                 {
                     throw new InvalidOperationException("Should never be called before end of current record");
                 }
-                if (!HasNextRecord)
+                if(!HasNextRecord)
                 {
                     return false;
                 }
@@ -598,7 +595,7 @@ namespace NPOI.HSSF.Record
         public int Read(byte[] b, int off, int len)
         {
             int limit = Math.Min(len, Remaining);
-            if (limit == 0)
+            if(limit == 0)
             {
                 return 0;
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using NPOI.SS.UserModel;
 using NPOI.SS;
+using NPOI.SS.UserModel;
+using System;
 using System.Text;
 
 namespace TestCases.SS.Util
@@ -49,23 +49,23 @@ namespace TestCases.SS.Util
             {
                 //double d = Double.longBitsToDouble(rawDoubleBits);
                 double d = BitConverter.Int64BitsToDouble(rawDoubleBits);
-                if ("NaN".Equals(cSharpRendering))
+                if("NaN".Equals(cSharpRendering))
                 {
-                    if (!Double.IsNaN(d))
+                    if(!Double.IsNaN(d))
                     {
                         throw new ArgumentException("value must be NaN");
                     }
                 }
-                else if (double.IsInfinity(d))
+                else if(double.IsInfinity(d))
                 {
-                    if (!Double.IsInfinity(d))
+                    if(!Double.IsInfinity(d))
                     {
                         throw new ArgumentException("value must be Infinity");
                     }
                 }
                 else
                 {
-                    if (Double.IsNaN(d))
+                    if(Double.IsNaN(d))
                     {
                         throw new ArgumentException("value must not be NaN");
                     }
@@ -73,7 +73,7 @@ namespace TestCases.SS.Util
                     // just to be dead sure test conversion in java both ways
                     bool javaToStringOk = cSharpRendering.Equals(d.ToString("R"));
                     bool javaParseOk = double.Parse(cSharpRendering) == d;
-                    if (!javaToStringOk || !javaParseOk)
+                    if(!javaToStringOk || !javaParseOk)
                     {
                         String msgA = "Specified rawDoubleBits " + DoubleToHexString(d) + " encodes to double '" + d.ToString("R") + "'.";
                         String msgB = "Specified cSharpRendering '" + cSharpRendering + "' parses as double with rawDoubleBits "
@@ -164,7 +164,7 @@ namespace TestCases.SS.Util
 #endif
             Ec(0x3F543A272D9E0EA6L, "0.0012345678901234751",  "0.00123456789012348"),
 
-        
+
             Ec(0x544CE6345CF3209CL, "1.2345678901234549E+98",  "1.23456789012345E+98"),
             Ec(0x544CE6345CF3209DL, "1.234567890123455E+98",   "1.23456789012346E+98"),
             Ec(0x544CE6345CF320DEL, "1.2345678901234649E+98",  "1.23456789012346E+98"),
@@ -404,11 +404,11 @@ namespace TestCases.SS.Util
         }
         private static ExampleConversion Ec(ulong rawDoubleBits, String cSharpRendering, String excelRendering)
         {
-            return new ExampleConversion((long)rawDoubleBits, cSharpRendering, excelRendering);
+            return new ExampleConversion((long) rawDoubleBits, cSharpRendering, excelRendering);
         }
         public static ExampleConversion[] GetExampleConversions()
         {
-            return (ExampleConversion[])examples.Clone();
+            return (ExampleConversion[]) examples.Clone();
         }
     }
 

@@ -24,7 +24,7 @@ namespace NPOI.Util
     /// Wraps an <see cref="FilterOutputStream"/> providing <see cref="NPOI.Util.ILittleEndianOutput"/>
     /// </summary>
     /// <remarks>@author Josh Micich</remarks>
-    public class LittleEndianOutputStream : FilterOutputStream,  ILittleEndianOutput, IDisposable
+    public class LittleEndianOutputStream : FilterOutputStream, ILittleEndianOutput, IDisposable
     {
         public void Dispose()
         {
@@ -34,7 +34,7 @@ namespace NPOI.Util
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
                 this.Close();
             }
@@ -43,7 +43,7 @@ namespace NPOI.Util
         public override void Close()
         {
             base.Close();
-            if (null != out1)
+            if(null != out1)
             {
                 out1.Dispose();
                 out1 = null;
@@ -66,9 +66,9 @@ namespace NPOI.Util
         {
             try
             {
-                out1.WriteByte((byte)v);
+                out1.WriteByte((byte) v);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -87,12 +87,12 @@ namespace NPOI.Util
             int b0 = (v >> 0) & 0xFF;
             try
             {
-                out1.WriteByte((byte)b0);
-                out1.WriteByte((byte)b1);
-                out1.WriteByte((byte)b2);
-                out1.WriteByte((byte)b3);
+                out1.WriteByte((byte) b0);
+                out1.WriteByte((byte) b1);
+                out1.WriteByte((byte) b2);
+                out1.WriteByte((byte) b3);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -100,8 +100,8 @@ namespace NPOI.Util
 
         public void WriteLong(long v)
         {
-            WriteInt((int)(v >> 0));
-            WriteInt((int)(v >> 32));
+            WriteInt((int) (v >> 0));
+            WriteInt((int) (v >> 32));
         }
 
         public void WriteShort(int v)
@@ -110,10 +110,10 @@ namespace NPOI.Util
             int b0 = (v >> 0) & 0xFF;
             try
             {
-                out1.WriteByte((byte)b0);
-                out1.WriteByte((byte)b1);
+                out1.WriteByte((byte) b0);
+                out1.WriteByte((byte) b1);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -126,7 +126,7 @@ namespace NPOI.Util
             {
                 out1.Write(b, 0, b.Length);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -138,7 +138,7 @@ namespace NPOI.Util
             {
                 out1.Write(b, off, len);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }

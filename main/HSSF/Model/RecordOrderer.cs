@@ -17,11 +17,11 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
-    using System.Collections.Generic;
     using NPOI.HSSF.Record.PivotTable;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * Finds correct insert positions for records in workbook streams<p/>
@@ -51,27 +51,27 @@ namespace NPOI.HSSF.Model
 
         private static int FindSheetInsertPos(List<RecordBase> records, Type recClass)
         {
-            if (recClass == typeof(DataValidityTable))
+            if(recClass == typeof(DataValidityTable))
             {
                 return FindDataValidationTableInsertPos(records);
             }
-            if (recClass == typeof(MergedCellsTable))
+            if(recClass == typeof(MergedCellsTable))
             {
                 return FindInsertPosForNewMergedRecordTable(records);
             }
-            if (recClass == typeof(ConditionalFormattingTable))
+            if(recClass == typeof(ConditionalFormattingTable))
             {
                 return FindInsertPosForNewCondFormatTable(records);
             }
-            if (recClass == typeof(GutsRecord))
+            if(recClass == typeof(GutsRecord))
             {
                 return GetGutsRecordInsertPos(records);
             }
-            if (recClass == typeof(PageSettingsBlock))
+            if(recClass == typeof(PageSettingsBlock))
             {
                 return GetPageBreakRecordInsertPos(records);
             }
-            if (recClass == typeof(WorksheetProtectionBlock))
+            if(recClass == typeof(WorksheetProtectionBlock))
             {
                 return GetWorksheetProtectionBlockInsertPos(records);
             }
@@ -102,11 +102,11 @@ namespace NPOI.HSSF.Model
         private static int GetWorksheetProtectionBlockInsertPos(List<RecordBase> records)
         {
             int i = GetDimensionsIndex(records);
-            while (i > 0)
+            while(i > 0)
             {
                 i--;
                 Object rb = records[i];
-                if (!IsProtectionSubsequentRecord(rb))
+                if(!IsProtectionSubsequentRecord(rb))
                 {
                     return i + 1;
                 }
@@ -125,13 +125,13 @@ namespace NPOI.HSSF.Model
         /// </remarks>
         private static bool IsProtectionSubsequentRecord(Object rb)
         {
-            if (rb is ColumnInfoRecordsAggregate)
+            if(rb is ColumnInfoRecordsAggregate)
             {
                 return true; // oo COLINFO
             }
-            if (rb is Record record)
+            if(rb is Record record)
             {
-                switch (record.Sid)
+                switch(record.Sid)
                 {
                     case DefaultColWidthRecord.sid:
                     case UnknownRecord.SORT_0090:
@@ -144,11 +144,11 @@ namespace NPOI.HSSF.Model
         {
             int dimensionsIndex = GetDimensionsIndex(records);
             int i = dimensionsIndex - 1;
-            while (i > 0)
+            while(i > 0)
             {
                 i--;
                 RecordBase rb = records[i];
-                if (IsPageBreakPriorRecord(rb))
+                if(IsPageBreakPriorRecord(rb))
                 {
                     return i + 1;
                 }
@@ -157,9 +157,9 @@ namespace NPOI.HSSF.Model
         }
         private static bool IsPageBreakPriorRecord(RecordBase rb)
         {
-            if (rb is Record record)
+            if(rb is Record record)
             {
-                switch (record.Sid)
+                switch(record.Sid)
                 {
                     case BOFRecord.sid:
                     case IndexRecord.sid:
@@ -180,7 +180,7 @@ namespace NPOI.HSSF.Model
                     case DefaultRowHeightRecord.sid:
                     case UnknownRecord.SHEETPR_0081:
                         return true;
-                    // next is the 'Worksheet Protection Block'
+                        // next is the 'Worksheet Protection Block'
                 }
             }
             return false;
@@ -193,19 +193,19 @@ namespace NPOI.HSSF.Model
         private static int FindInsertPosForNewCondFormatTable(List<RecordBase> records)
         {
 
-            for (int i = records.Count - 2; i >= 0; i--)
+            for(int i = records.Count - 2; i >= 0; i--)
             { // -2 to skip EOF record
                 Object rb = records[i];
-                if (rb is MergedCellsTable)
+                if(rb is MergedCellsTable)
                 {
                     return i + 1;
                 }
-                if (rb is DataValidityTable)
+                if(rb is DataValidityTable)
                 {
                     continue;
                 }
                 Record rec = (Record)rb;
-                switch (rec.Sid)
+                switch(rec.Sid)
                 {
                     case WindowTwoRecord.sid:
                     case SCLRecord.sid:
@@ -217,8 +217,8 @@ namespace NPOI.HSSF.Model
                     case UnknownRecord.PHONETICPR_00EF:
                         // ConditionalFormattingTable goes here
                         return i + 1;
-                    // HyperlinkTable (not aggregated by POI yet)
-                    // DataValidityTable
+                        // HyperlinkTable (not aggregated by POI yet)
+                        // DataValidityTable
                 }
             }
             throw new InvalidOperationException("Did not Find Window2 record");
@@ -226,17 +226,17 @@ namespace NPOI.HSSF.Model
 
         private static int FindInsertPosForNewMergedRecordTable(List<RecordBase> records)
         {
-            for (int i = records.Count - 2; i >= 0; i--)
+            for(int i = records.Count - 2; i >= 0; i--)
             { // -2 to skip EOF record
                 Object rb = records[i];
-                if (rb is not Record rec)
+                if(rb is not Record rec)
                 {
                     // DataValidityTable, ConditionalFormattingTable, 
                     // even PageSettingsBlock (which doesn't normally appear after 'View Settings')
                     continue;
                 }
 
-                switch (rec.Sid)
+                switch(rec.Sid)
                 {
                     // 'View Settings' (4 records) 
                     case WindowTwoRecord.sid:
@@ -275,18 +275,18 @@ namespace NPOI.HSSF.Model
         private static int FindDataValidationTableInsertPos(List<RecordBase> records)
         {
             int i = records.Count - 1;
-            if (records[i] is not EOFRecord)
+            if(records[i] is not EOFRecord)
             {
                 throw new InvalidOperationException("Last sheet record should be EOFRecord");
             }
-            while (i > 0)
+            while(i > 0)
             {
                 i--;
                 RecordBase rb = records[i];
-                if (IsDVTPriorRecord(rb))
+                if(IsDVTPriorRecord(rb))
                 {
                     Record nextRec = (Record)records[i + 1];
-                    if (!IsDVTSubsequentRecord(nextRec.Sid))
+                    if(!IsDVTSubsequentRecord(nextRec.Sid))
                     {
                         throw new InvalidOperationException("Unexpected (" + nextRec.GetType().Name
                                 + ") found after (" + rb.GetType().Name + ")");
@@ -294,7 +294,7 @@ namespace NPOI.HSSF.Model
                     return i + 1;
                 }
                 Record rec = (Record)rb;
-                if (!IsDVTSubsequentRecord(rec.Sid))
+                if(!IsDVTSubsequentRecord(rec.Sid))
                 {
                     throw new InvalidOperationException("Unexpected (" + rec.GetType().Name
                             + ") while looking for DV Table insert pos");
@@ -306,12 +306,12 @@ namespace NPOI.HSSF.Model
 
         private static bool IsDVTPriorRecord(RecordBase rb)
         {
-            if (rb is MergedCellsTable || rb is ConditionalFormattingTable)
+            if(rb is MergedCellsTable || rb is ConditionalFormattingTable)
             {
                 return true;
             }
             short sid = ((Record)rb).Sid;
-            switch (sid)
+            switch(sid)
             {
                 case WindowTwoRecord.sid:
                 case SCLRecord.sid:
@@ -331,14 +331,14 @@ namespace NPOI.HSSF.Model
 
         private static bool IsDVTSubsequentRecord(short sid)
         {
-            switch (sid)
+            switch(sid)
             {
                 //case UnknownRecord.SHEETEXT_0862:
                 case SheetExtRecord.sid:
                 case UnknownRecord.SHEETPROTECTION_0867:
                 case UnknownRecord.PLV_MAC:
                 //case UnknownRecord.RANGEPROTECTION_0868:
-                case FeatRecord.sid: 
+                case FeatRecord.sid:
                 case EOFRecord.sid:
                     return true;
             }
@@ -350,9 +350,9 @@ namespace NPOI.HSSF.Model
         private static int GetDimensionsIndex(List<RecordBase> records)
         {
             int nRecs = records.Count;
-            for (int i = 0; i < nRecs; i++)
+            for(int i = 0; i < nRecs; i++)
             {
-                if (records[i] is DimensionsRecord)
+                if(records[i] is DimensionsRecord)
                 {
                     return i;
                 }
@@ -365,11 +365,11 @@ namespace NPOI.HSSF.Model
         {
             int dimensionsIndex = GetDimensionsIndex(records);
             int i = dimensionsIndex - 1;
-            while (i > 0)
+            while(i > 0)
             {
                 i--;
                 RecordBase rb = records[i];
-                if (IsGutsPriorRecord(rb))
+                if(IsGutsPriorRecord(rb))
                 {
                     return i + 1;
                 }
@@ -379,28 +379,28 @@ namespace NPOI.HSSF.Model
 
         private static bool IsGutsPriorRecord(RecordBase rb)
         {
-            if (rb is Record record)
+            if(rb is Record record)
             {
-                switch (record.Sid)
+                switch(record.Sid)
                 {
                     case BOFRecord.sid:
                     case IndexRecord.sid:
                     // calc settings block
-                        case UncalcedRecord.sid:
-                        case CalcCountRecord.sid:
-                        case CalcModeRecord.sid:
-                        case PrecisionRecord.sid:
-                        case RefModeRecord.sid:
-                        case DeltaRecord.sid:
-                        case IterationRecord.sid:
-                        case DateWindow1904Record.sid:
-                        case SaveRecalcRecord.sid:
+                    case UncalcedRecord.sid:
+                    case CalcCountRecord.sid:
+                    case CalcModeRecord.sid:
+                    case PrecisionRecord.sid:
+                    case RefModeRecord.sid:
+                    case DeltaRecord.sid:
+                    case IterationRecord.sid:
+                    case DateWindow1904Record.sid:
+                    case SaveRecalcRecord.sid:
                     // end calc settings
                     case PrintHeadersRecord.sid:
                     case PrintGridlinesRecord.sid:
                     case GridsetRecord.sid:
                         return true;
-                    // DefaultRowHeightRecord.sid is next
+                        // DefaultRowHeightRecord.sid is next
                 }
             }
             return false;
@@ -414,7 +414,7 @@ namespace NPOI.HSSF.Model
         /// <returns></returns>
         public static bool IsEndOfRowBlock(int sid)
         {
-            switch (sid)
+            switch(sid)
             {
                 case ViewDefinitionRecord.sid:                // should have been prefixed with DrawingRecord (0x00EC), but bug 46280 seems to allow this
                 case DrawingRecord.sid:
@@ -444,7 +444,7 @@ namespace NPOI.HSSF.Model
         /// <returns></returns>
         public static bool IsRowBlockRecord(int sid)
         {
-            switch (sid)
+            switch(sid)
             {
                 case RowRecord.sid:
 

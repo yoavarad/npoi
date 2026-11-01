@@ -18,9 +18,9 @@ public class MergedRegionsBenchmark
     public void Setup()
     {
         _workbook = new XSSFWorkbook();
-        _sheet = (XSSFSheet)_workbook.CreateSheet("test");
+        _sheet = (XSSFSheet) _workbook.CreateSheet("test");
         // Add non-overlapping merged regions (each row merges columns 0-1)
-        for (int i = 0; i < RegionCount; i++)
+        for(int i = 0; i < RegionCount; i++)
         {
             _sheet.AddMergedRegionUnsafe(new CellRangeAddress(i, i, 0, 1));
         }
@@ -31,7 +31,7 @@ public class MergedRegionsBenchmark
     {
         // Simulates repeated reads (e.g., during row copy, auto-size, validation)
         int count = 0;
-        for (int i = 0; i < 10; i++)
+        for(int i = 0; i < 10; i++)
         {
             count = _sheet.MergedRegions.Count;
         }
@@ -43,7 +43,7 @@ public class MergedRegionsBenchmark
     {
         // Simulates building a sheet with many merged regions (validated)
         var tempSheet = (XSSFSheet)_workbook.CreateSheet();
-        for (int i = 0; i < RegionCount; i++)
+        for(int i = 0; i < RegionCount; i++)
         {
             tempSheet.AddMergedRegion(new CellRangeAddress(i, i, 0, 1));
         }

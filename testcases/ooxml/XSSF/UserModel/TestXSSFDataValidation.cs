@@ -14,18 +14,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using TestCases.SS.UserModel;
-using NPOI.SS.UserModel;
-using System.Collections.Generic;
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
-using NPOI.SS.Util;
-using System;
-using System.Text;
-using NPOI.XSSF;
-using NPOI.XSSF.UserModel;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.Eval;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -97,9 +97,12 @@ namespace TestCases.XSSF.UserModel
             cellRangeAddressList = new CellRangeAddressList();
             cellRangeAddressList.AddCellRangeAddress(cell.RowIndex, cell.ColumnIndex, cell.RowIndex, cell.ColumnIndex);
 
-            ICell firstCell = row.CreateCell(1); firstCell.SetCellValue("UT");
-            ICell secondCell = row.CreateCell(2); secondCell.SetCellValue("MN");
-            ICell thirdCell = row.CreateCell(3); thirdCell.SetCellValue("IL");
+            ICell firstCell = row.CreateCell(1);
+            firstCell.SetCellValue("UT");
+            ICell secondCell = row.CreateCell(2);
+            secondCell.SetCellValue("MN");
+            ICell thirdCell = row.CreateCell(3);
+            thirdCell.SetCellValue("IL");
 
             int rowNum = row.RowNum + 1;
             String listFormula = new StringBuilder("$B$").Append(rowNum).Append(":").Append("$D$").Append(rowNum).ToString();
@@ -113,7 +116,7 @@ namespace TestCases.XSSF.UserModel
             offset++;
             offset++;
 
-            for (int i = 0; i < validationTypes.Length; i++)
+            for(int i = 0; i < validationTypes.Length; i++)
             {
                 int validationType = validationTypes[i];
                 offset = offset + 2;
@@ -121,7 +124,7 @@ namespace TestCases.XSSF.UserModel
                 ICell cell_10 = row0.CreateCell(0);
                 cell_10.SetCellValue(validationType == ValidationType.DECIMAL ? "Decimal " : validationType == ValidationType.INTEGER ? "int" : "Text Length");
                 offset++;
-                for (int j = 0; j < SingleOperandOperatorTypes.Length; j++)
+                for(int j = 0; j < SingleOperandOperatorTypes.Length; j++)
                 {
                     int operatorType = SingleOperandOperatorTypes[j];
                     IRow row1 = sheet.CreateRow(offset++);
@@ -139,7 +142,7 @@ namespace TestCases.XSSF.UserModel
 
 
                     cell_13.SetCellType(CellType.Numeric);
-                    cell_13.SetCellValue(validationType == ValidationType.DECIMAL ? dvalue : (double)value);
+                    cell_13.SetCellValue(validationType == ValidationType.DECIMAL ? dvalue : (double) value);
 
 
                     //First create value based validation;
@@ -149,28 +152,28 @@ namespace TestCases.XSSF.UserModel
                     IDataValidation validation = dataValidationHelper.CreateValidation(constraint, cellRangeAddressList);
                     SetOtherValidationParameters(validation);
                     sheet.AddValidationData(validation);
-                    ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet)sheet).GetDataValidations().Count);
+                    ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet) sheet).GetDataValidations().Count);
 
                     //Now create real formula based validation.
                     String formula1 = new CellReference(cell_13.RowIndex, cell_13.ColumnIndex).FormatAsString();
                     constraint = dataValidationHelper.CreateNumericConstraint(validationType, operatorType, formula1, null);
-                    if (i == 0 && j == 0)
+                    if(i == 0 && j == 0)
                     {
                         cellRangeAddressList = new CellRangeAddressList();
                         cellRangeAddressList.AddCellRangeAddress(new CellRangeAddress(cell_21.RowIndex, cell_21.RowIndex, cell_21.ColumnIndex, cell_21.ColumnIndex));
                         validation = dataValidationHelper.CreateValidation(constraint, cellRangeAddressList);
                         SetOtherValidationParameters(validation);
                         sheet.AddValidationData(validation);
-                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet)sheet).GetDataValidations().Count);
+                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet) sheet).GetDataValidations().Count);
 
                         cellRangeAddressList = new CellRangeAddressList();
                         cellRangeAddressList.AddCellRangeAddress(new CellRangeAddress(cell_22.RowIndex, cell_22.RowIndex, cell_22.ColumnIndex, cell_22.ColumnIndex));
                         validation = dataValidationHelper.CreateValidation(constraint, cellRangeAddressList);
                         SetOtherValidationParameters(validation);
                         sheet.AddValidationData(validation);
-                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet)sheet).GetDataValidations().Count);
+                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet) sheet).GetDataValidations().Count);
                     }
-                    else if (i == 0 && j == 1)
+                    else if(i == 0 && j == 1)
                     {
                         cellRangeAddressList = new CellRangeAddressList();
                         cellRangeAddressList.AddCellRangeAddress(new CellRangeAddress(cell_21.RowIndex, cell_21.RowIndex, cell_21.ColumnIndex, cell_21.ColumnIndex));
@@ -178,7 +181,7 @@ namespace TestCases.XSSF.UserModel
                         validation = dataValidationHelper.CreateValidation(constraint, cellRangeAddressList);
                         SetOtherValidationParameters(validation);
                         sheet.AddValidationData(validation);
-                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet)sheet).GetDataValidations().Count);
+                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet) sheet).GetDataValidations().Count);
                     }
                     else
                     {
@@ -187,11 +190,11 @@ namespace TestCases.XSSF.UserModel
                         validation = dataValidationHelper.CreateValidation(constraint, cellRangeAddressList);
                         SetOtherValidationParameters(validation);
                         sheet.AddValidationData(validation);
-                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet)sheet).GetDataValidations().Count);
+                        ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet) sheet).GetDataValidations().Count);
                     }
                 }
 
-                for (int j = 0; j < doubleOperandOperatorTypes.Length; j++)
+                for(int j = 0; j < doubleOperandOperatorTypes.Length; j++)
                 {
                     int operatorType = doubleOperandOperatorTypes[j];
                     IRow row1 = sheet.CreateRow(offset++);
@@ -208,11 +211,11 @@ namespace TestCases.XSSF.UserModel
 
                     String value1String = validationType == ValidationType.DECIMAL ? dvalue.ToString() : value.ToString();
                     cell_13.SetCellType(CellType.Numeric);
-                    cell_13.SetCellValue(validationType == ValidationType.DECIMAL ? dvalue : (int)value);
+                    cell_13.SetCellValue(validationType == ValidationType.DECIMAL ? dvalue : (int) value);
 
                     String value2String = validationType == ValidationType.DECIMAL ? dvalue2.ToString() : value2.ToString();
                     cell_14.SetCellType(CellType.Numeric);
-                    cell_14.SetCellValue(validationType == ValidationType.DECIMAL ? dvalue2 : (int)value2);
+                    cell_14.SetCellValue(validationType == ValidationType.DECIMAL ? dvalue2 : (int) value2);
 
 
                     //First create value based validation;
@@ -222,7 +225,7 @@ namespace TestCases.XSSF.UserModel
                     IDataValidation validation = dataValidationHelper.CreateValidation(constraint, cellRangeAddressList);
                     SetOtherValidationParameters(validation);
                     sheet.AddValidationData(validation);
-                    ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet)sheet).GetDataValidations().Count);
+                    ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet) sheet).GetDataValidations().Count);
 
 
                     //Now create real formula based validation.
@@ -235,13 +238,13 @@ namespace TestCases.XSSF.UserModel
 
                     SetOtherValidationParameters(validation);
                     sheet.AddValidationData(validation);
-                    ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet)sheet).GetDataValidations().Count);
+                    ClassicAssert.AreEqual(++lastKnownNumValidations, ((XSSFSheet) sheet).GetDataValidations().Count);
                 }
             }
 
-            workbook = (XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(workbook);
+            workbook = (XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(workbook);
             ISheet sheetAt = workbook.GetSheetAt(0);
-            ClassicAssert.AreEqual(lastKnownNumValidations, ((XSSFSheet)sheetAt).GetDataValidations().Count);
+            ClassicAssert.AreEqual(lastKnownNumValidations, ((XSSFSheet) sheetAt).GetDataValidations().Count);
         }
 
         protected void SetOtherValidationParameters(IDataValidation validation)
@@ -379,7 +382,8 @@ namespace TestCases.XSSF.UserModel
         public void TestRemoveDataValidation()
         {
             XSSFWorkbook wb = new XSSFWorkbook();
-            try {
+            try
+            {
                 XSSFSheet sheet = wb.CreateSheet() as XSSFSheet;
                 IDataValidationHelper dataValidationHelper = sheet.GetDataValidationHelper();
                 IDataValidationConstraint constraint = dataValidationHelper.CreateExplicitListConstraint(new string[] { "A" });
@@ -396,7 +400,8 @@ namespace TestCases.XSSF.UserModel
 
                 ClassicAssert.AreEqual(0, sheet.GetDataValidations().Count);
             }
-            finally {
+            finally
+            {
                 wb.Close();
             }
         }

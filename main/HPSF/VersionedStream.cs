@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -23,9 +23,9 @@ namespace NPOI.HPSF
         private readonly GUID _versionGuid = new GUID();
         private readonly IndirectPropertyName _streamName;
 
-        internal VersionedStream() {}
+        internal VersionedStream() { }
 
-        internal void Read( LittleEndianByteArrayInputStream lei )
+        internal void Read(LittleEndianByteArrayInputStream lei)
         {
             _versionGuid.Read(lei);
             _streamName.Read(lei);

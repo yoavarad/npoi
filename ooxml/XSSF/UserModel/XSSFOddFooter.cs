@@ -15,10 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel.Extensions;
 using System;
-using NPOI.SS.UserModel;
-using NPOI.OpenXmlFormats.Spreadsheet;
 namespace NPOI.XSSF.UserModel
 {
 
@@ -52,7 +52,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return GetHeaderFooter().oddFooter;
             }
-            set 
+            set
             {
                 if(value == null)
                 {

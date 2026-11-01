@@ -1,10 +1,10 @@
-﻿using System;
-using System.Text;
 using NPOI.OpenXml4Net.Exceptions;
+using System;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.OPC
 {
-     interface RelationshipSource
+    interface RelationshipSource
     {
         /**
  * Add a relationship to a part (except relationships part).
@@ -109,7 +109,7 @@ namespace NPOI.OpenXml4Net.OPC
          *            ID of the package relationship to retrieve.
          * @return The package relationship
          */
-         PackageRelationship GetRelationship(String id);
+        PackageRelationship GetRelationship(String id);
 
         /**
          * Retrieve all relationships attached to this part which have the specified
@@ -123,8 +123,8 @@ namespace NPOI.OpenXml4Net.OPC
          * @throws InvalidOperationException
          *             If the package is open in write only mode.
          */
-         PackageRelationshipCollection GetRelationshipsByType(
-                String relationshipType);
+        PackageRelationshipCollection GetRelationshipsByType(
+               String relationshipType);
 
         /**
          * Knows if the part have any relationships.
@@ -132,7 +132,7 @@ namespace NPOI.OpenXml4Net.OPC
          * @return <b>true</b> if the part have at least one relationship else
          *         <b>false</b>.
          */
-         bool HasRelationships { get; }
+        bool HasRelationships { get; }
 
         /**
          * Checks if the specified relationship is part of this package part.
@@ -142,7 +142,7 @@ namespace NPOI.OpenXml4Net.OPC
          * @return <b>true</b> if the specified relationship exists in this part,
          *         else returns <b>false</b>
          */
-         bool IsRelationshipExists(PackageRelationship rel);
+        bool IsRelationshipExists(PackageRelationship rel);
 
     }
 }

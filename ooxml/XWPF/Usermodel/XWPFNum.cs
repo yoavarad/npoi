@@ -16,8 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * TODO Bring more of the logic over from XWPFParagraph

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Xml;
-using System.IO;
 
 namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
 {
@@ -65,7 +65,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         public virtual bool Marshall(PackagePart part, Stream out1)
         {
-            if (part is not PackagePropertiesPart propertiesPart)
+            if(part is not PackagePropertiesPart propertiesPart)
                 throw new ArgumentException(
                         "'part' must be a PackagePropertiesPart instance.");
             propsPart = propertiesPart;
@@ -75,9 +75,9 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             XmlElement rootElem = xmlDoc.CreateElement("coreProperties",namespaceCoreProperties);
 
             nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
-            nsmgr.AddNamespace("cp",PackagePropertiesPart.NAMESPACE_CP_URI);
-            nsmgr.AddNamespace("dc",PackagePropertiesPart.NAMESPACE_DC_URI);
-            nsmgr.AddNamespace("dcterms",PackagePropertiesPart.NAMESPACE_DCTERMS_URI);
+            nsmgr.AddNamespace("cp", PackagePropertiesPart.NAMESPACE_CP_URI);
+            nsmgr.AddNamespace("dc", PackagePropertiesPart.NAMESPACE_DC_URI);
+            nsmgr.AddNamespace("dcterms", PackagePropertiesPart.NAMESPACE_DCTERMS_URI);
             nsmgr.AddNamespace("xsi", PackagePropertiesPart.NAMESPACE_XSI_URI);
 
             rootElem.SetAttribute("xmlns:cp", PackagePropertiesPart.NAMESPACE_CP_URI);
@@ -111,15 +111,15 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddCategory()
         {
-            if (propsPart.GetCategoryProperty() == null)
+            if(propsPart.GetCategoryProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_CATEGORY, namespaceCoreProperties);
             XmlNode elem = null;
-            if (elems.Count==0)
+            if(elems.Count==0)
             {
                 // Missing, we Add it
-                elem =xmlDoc.CreateElement("cp", KEYWORD_CATEGORY, namespaceCoreProperties); 
+                elem =xmlDoc.CreateElement("cp", KEYWORD_CATEGORY, namespaceCoreProperties);
                 xmlDoc.DocumentElement.AppendChild(elem);
             }
             else
@@ -135,11 +135,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddContentStatus()
         {
-            if (propsPart.GetContentStatusProperty()==null)
+            if(propsPart.GetContentStatusProperty()==null)
                 return;
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_CONTENT_STATUS, namespaceCoreProperties);
             XmlNode elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("cp", KEYWORD_CONTENT_STATUS, namespaceCoreProperties);
@@ -158,11 +158,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddContentType()
         {
-            if (propsPart.GetContentTypeProperty()==null)
+            if(propsPart.GetContentTypeProperty()==null)
                 return;
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_CONTENT_TYPE,namespaceCoreProperties);
             XmlNode elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("cp", KEYWORD_CONTENT_TYPE, namespaceCoreProperties);
@@ -181,11 +181,11 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddCreated()
         {
-            if (propsPart.GetCreatedProperty() == null)
+            if(propsPart.GetCreatedProperty() == null)
                 return;
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_CREATED,namespaceDcTerms);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dcterms", KEYWORD_CREATED, namespaceDcTerms);
@@ -193,7 +193,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.SetAttribute("type", namespaceXSI, "dcterms:W3CDTF");
@@ -205,12 +205,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddCreator()
         {
-            if (propsPart.GetCreatorProperty() == null)
+            if(propsPart.GetCreatorProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_CREATOR, namespaceDC);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dc", KEYWORD_CREATOR, namespaceDC);
@@ -218,7 +218,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
 
@@ -230,12 +230,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddDescription()
         {
-            if (propsPart.GetDescriptionProperty() == null)
+            if(propsPart.GetDescriptionProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_DESCRIPTION, namespaceDC);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dc", KEYWORD_DESCRIPTION, namespaceDC);
@@ -243,7 +243,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
 
@@ -255,12 +255,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddIdentifier()
         {
-            if (propsPart.GetIdentifierProperty() == null)
+            if(propsPart.GetIdentifierProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_IDENTIFIER, namespaceDC);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dc", KEYWORD_IDENTIFIER, namespaceDC);
@@ -268,7 +268,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
 
@@ -280,12 +280,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddKeywords()
         {
-            if (propsPart.GetKeywordsProperty() == null)
+            if(propsPart.GetKeywordsProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_KEYWORDS, namespaceCoreProperties);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("cp", KEYWORD_KEYWORDS, namespaceCoreProperties);
@@ -293,7 +293,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetKeywordsProperty();
@@ -304,12 +304,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddLanguage()
         {
-            if (propsPart.GetLanguageProperty() == null)
+            if(propsPart.GetLanguageProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_LANGUAGE, namespaceDC);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dc", KEYWORD_LANGUAGE, namespaceDC);
@@ -317,7 +317,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetLanguageProperty();
@@ -328,12 +328,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddLastModifiedBy()
         {
-            if (propsPart.GetLastModifiedByProperty() == null)
+            if(propsPart.GetLastModifiedByProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_LAST_MODIFIED_BY, namespaceCoreProperties);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("cp", KEYWORD_LAST_MODIFIED_BY, namespaceCoreProperties);
@@ -341,7 +341,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetLastModifiedByProperty();
@@ -353,12 +353,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddLastPrinted()
         {
-            if (propsPart.GetLastPrintedProperty() == null)
+            if(propsPart.GetLastPrintedProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_LAST_PRINTED, namespaceCoreProperties);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("cp", KEYWORD_LAST_PRINTED, namespaceCoreProperties);
@@ -366,7 +366,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetLastPrintedPropertyString();
@@ -377,12 +377,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddModified()
         {
-            if (propsPart.GetModifiedProperty() == null)
+            if(propsPart.GetModifiedProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_MODIFIED, namespaceDcTerms);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dcterms", KEYWORD_MODIFIED, namespaceDcTerms);
@@ -390,7 +390,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetModifiedPropertyString();
@@ -402,12 +402,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddRevision()
         {
-            if (propsPart.GetRevisionProperty() == null)
+            if(propsPart.GetRevisionProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_REVISION, namespaceCoreProperties);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("cp", KEYWORD_REVISION, namespaceCoreProperties);
@@ -415,7 +415,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetRevisionProperty();
@@ -426,12 +426,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddSubject()
         {
-            if (propsPart.GetSubjectProperty() == null)
+            if(propsPart.GetSubjectProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_SUBJECT, namespaceDC);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dc", KEYWORD_SUBJECT, namespaceDC);
@@ -439,7 +439,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetSubjectProperty();
@@ -450,12 +450,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
          */
         private void AddTitle()
         {
-            if (propsPart.GetTitleProperty() == null)
+            if(propsPart.GetTitleProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_TITLE, namespaceDC);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("dc", KEYWORD_TITLE, namespaceDC);
@@ -463,7 +463,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetTitleProperty();
@@ -471,12 +471,12 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
 
         private void AddVersion()
         {
-            if (propsPart.GetVersionProperty() == null)
+            if(propsPart.GetVersionProperty() == null)
                 return;
 
             XmlNodeList elems = xmlDoc.DocumentElement.GetElementsByTagName(KEYWORD_VERSION, namespaceCoreProperties);
             XmlElement elem = null;
-            if (elems.Count == 0)
+            if(elems.Count == 0)
             {
                 // Missing, we Add it
                 elem = xmlDoc.CreateElement("cp", KEYWORD_VERSION, namespaceCoreProperties);
@@ -484,7 +484,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Marshallers
             }
             else
             {
-                elem = (XmlElement)elems[0];
+                elem = (XmlElement) elems[0];
                 elem.InnerXml = "";// clear the old value
             }
             elem.InnerText = propsPart.GetVersionProperty();

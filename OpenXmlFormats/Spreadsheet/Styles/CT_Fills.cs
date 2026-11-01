@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,14 +22,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Fills Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Fills ctObj = new CT_Fills();
             ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.fill = new List<CT_Fill>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "fill")
+                if(childNode.LocalName == "fill")
                     ctObj.fill.Add(CT_Fill.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -42,9 +42,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
             sw.Write('>');
-            if (this.fill != null)
+            if(this.fill != null)
             {
-                foreach (CT_Fill x in this.fill)
+                foreach(CT_Fill x in this.fill)
                 {
                     x.Write(sw, "fill");
                 }

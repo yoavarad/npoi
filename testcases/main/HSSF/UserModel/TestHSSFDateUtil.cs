@@ -18,14 +18,14 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-
-    using TestCases.HSSF;
     using NPOI.HSSF.Model;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF;
 
     /**
      * Class TestHSSFDateUtil
@@ -56,49 +56,49 @@ namespace TestCases.HSSF.UserModel
         {
 
             // Iteratating over the hours exposes any rounding issues.
-            for (int hour = 1; hour < 24; hour++)
+            for(int hour = 1; hour < 24; hour++)
             {
                 DateTime date = new DateTime(2002, 1, 1,
                         hour, 1, 1);
                 double excelDate =
                         DateUtil.GetExcelDate(date, false);
 
-                ClassicAssert.AreEqual(date,DateUtil.GetJavaDate(excelDate, false), "Checking hour = " + hour);
+                ClassicAssert.AreEqual(date, DateUtil.GetJavaDate(excelDate, false), "Checking hour = " + hour);
             }
 
             // Check 1900 and 1904 date windowing conversions
             double excelDate2 = 36526.0;
             // with 1900 windowing, excelDate is Jan. 1, 2000
             // with 1904 windowing, excelDate is Jan. 2, 2004
-            
+
             DateTime dateIf1900 = new DateTime(2000, 1, 1); // Jan. 1, 2000
 
             DateTime dateIf1904 = dateIf1900.AddYears(4); // now Jan. 1, 2004
             dateIf1904 = dateIf1904.AddDays(1); // now Jan. 2, 2004
-            
+
             // 1900 windowing
             ClassicAssert.AreEqual(dateIf1900,
                     DateUtil.GetJavaDate(excelDate2, false), "Checking 1900 Date Windowing");
             // 1904 windowing
             ClassicAssert.AreEqual(
-                    dateIf1904,DateUtil.GetJavaDate(excelDate2, true),"Checking 1904 Date Windowing");
+                    dateIf1904, DateUtil.GetJavaDate(excelDate2, true), "Checking 1904 Date Windowing");
         }
 
         /**
          * Checks the conversion of a java.util.date to Excel on a day when
          * Daylight Saving Time starts.
          */
-        
+
         public void TestExcelConversionOnDSTStart()
         {
             //TODO:: change time zone
             DateTime cal = new DateTime(2004, CALENDAR_MARCH, 28);
-            for (int hour = 0; hour < 24; hour++)
+            for(int hour = 0; hour < 24; hour++)
             {
 
                 // Skip 02:00 CET as that is the Daylight change time
                 // and Java converts it automatically to 03:00 CEST
-                if (hour == 2)
+                if(hour == 2)
                 {
                     continue;
                 }
@@ -122,7 +122,7 @@ namespace TestCases.HSSF.UserModel
          * Checks the conversion of an Excel date to a java.util.date on a day when
          * Daylight Saving Time starts.
          */
-        
+
         public void TestJavaConversionOnDSTStart()
         {
             //TODO:: change time zone
@@ -130,12 +130,12 @@ namespace TestCases.HSSF.UserModel
             double excelDate = DateUtil.GetExcelDate(cal, false);
             double oneHour = 1.0 / 24;
             double oneMinute = oneHour / 60;
-            for (int hour = 0; hour < 24; hour++, excelDate += oneHour)
+            for(int hour = 0; hour < 24; hour++, excelDate += oneHour)
             {
 
                 // Skip 02:00 CET as that is the Daylight change time
                 // and Java converts it automatically to 03:00 CEST
-                if (hour == 2)
+                if(hour == 2)
                 {
                     continue;
                 }
@@ -144,7 +144,7 @@ namespace TestCases.HSSF.UserModel
                 DateTime javaDate = DateUtil.GetJavaDate(excelDate, false);
                 ClassicAssert.AreEqual(
                         excelDate,
-                        DateUtil.GetExcelDate(javaDate, false),0.001);
+                        DateUtil.GetExcelDate(javaDate, false), 0.001);
             }
         }
 
@@ -152,12 +152,12 @@ namespace TestCases.HSSF.UserModel
          * Checks the conversion of a java.util.Date to Excel on a day when
          * Daylight Saving Time ends.
          */
-        
+
         public void TestExcelConversionOnDSTEnd()
         {
             //TODO:: change time zone
             DateTime cal = new DateTime(2004, CALENDAR_OCTOBER, 31);
-            for (int hour = 0; hour < 24; hour++)
+            for(int hour = 0; hour < 24; hour++)
             {
                 cal.AddDays(hour);
                 DateTime javaDate = cal;
@@ -186,13 +186,13 @@ namespace TestCases.HSSF.UserModel
             double excelDate = DateUtil.GetExcelDate(cal, false);
             double oneHour = 1.0 / 24;
             double oneMinute = oneHour / 60;
-            for (int hour = 0; hour < 24; hour++, excelDate += oneHour)
+            for(int hour = 0; hour < 24; hour++, excelDate += oneHour)
             {
-                cal.AddHours( hour);
+                cal.AddHours(hour);
                 DateTime javaDate = DateUtil.GetJavaDate(excelDate, false);
                 ClassicAssert.AreEqual(
                         excelDate,
-                        DateUtil.GetExcelDate(javaDate, false),0.1);
+                        DateUtil.GetExcelDate(javaDate, false), 0.1);
             }
         }
 
@@ -206,14 +206,14 @@ namespace TestCases.HSSF.UserModel
             DateTime expected = date;
 
             // Iterating over the hours exposes any rounding issues.
-            for (int hour = -12; hour <= 12; hour++)
+            for(int hour = -12; hour <= 12; hour++)
             {
                 String id = "GMT" + (hour < 0 ? "" : "+") + hour + ":00";
 
                 //TODO:: change time zone
                 //date.SetTimeZone(TimeZone.GetTimeZone(id));
                 //date.AddDays(12);
-                
+
                 double excelDate = DateUtil.GetExcelDate(date, false);
                 DateTime javaDate = DateUtil.GetJavaDate(excelDate);
 
@@ -250,7 +250,7 @@ namespace TestCases.HSSF.UserModel
         {
             // First up, try with a few built in date formats
             short[] builtins = new short[] { 0x0e, 0x0f, 0x10, 0x16, 0x2d, 0x2e };
-            for (int i = 0; i < builtins.Length; i++)
+            for(int i = 0; i < builtins.Length; i++)
             {
                 String formatStr = HSSFDataFormat.GetBuiltinFormat(builtins[i]);
                 ClassicAssert.IsTrue(DateUtil.IsInternalDateFormat(builtins[i]));
@@ -259,7 +259,7 @@ namespace TestCases.HSSF.UserModel
 
             // Now try a few built-in non date formats
             builtins = new short[] { 0x01, 0x02, 0x17, 0x1f, 0x30 };
-            for (int i = 0; i < builtins.Length; i++)
+            for(int i = 0; i < builtins.Length; i++)
             {
                 String formatStr = HSSFDataFormat.GetBuiltinFormat(builtins[i]);
                 ClassicAssert.IsFalse(DateUtil.IsInternalDateFormat(builtins[i]));
@@ -284,7 +284,7 @@ namespace TestCases.HSSF.UserModel
                 "dd\\ mm\\.yyyy AM", "dd\\ mm\\.yyyy pm",
                  "dd\\ mm\\.yyyy\\-dd", "[h]:mm:ss",
                  //"mm/dd/yy", "\"mm\"/\"dd\"/\"yy\"",
-                 "mm/dd/yy", 
+                 "mm/dd/yy",
                  "\\\"mm\\\"/\\\"dd\\\"/\\\"yy\\\"",
                  "mm/dd/yy \"\\\"some\\\" string\"",
                  "m\\/d\\/yyyy", 
@@ -300,11 +300,11 @@ namespace TestCases.HSSF.UserModel
                 "[BLACK]dddd/mm/yy",
                 "[yeLLow]yyyy-mm-dd"
         };
-            for (int i = 0; i < formats.Length; i++)
+            for(int i = 0; i < formats.Length; i++)
             {
                 ClassicAssert.IsTrue(
                         DateUtil.IsADateFormat(formatId, formats[i])
-                        ,formats[i] + " is a date format"
+                        , formats[i] + " is a date format"
                 );
             }
 
@@ -316,7 +316,7 @@ namespace TestCases.HSSF.UserModel
                 "mm/dd HH:MM PM", "mm/dd HH:MM pm"
                 //"m/d/yy h:mm AM/PM"
         };
-            for (int i = 0; i < formats.Length; i++)
+            for(int i = 0; i < formats.Length; i++)
             {
                 ClassicAssert.IsTrue(
                         DateUtil.IsADateFormat(formatId, formats[i]),
@@ -332,11 +332,11 @@ namespace TestCases.HSSF.UserModel
                 "[]Foo", "[BLACK]0.00%",
                 "", null
         };
-            for (int i = 0; i < formats.Length; i++)
+            for(int i = 0; i < formats.Length; i++)
             {
                 ClassicAssert.IsFalse(
 
-                        DateUtil.IsADateFormat(formatId, formats[i]), 
+                        DateUtil.IsADateFormat(formatId, formats[i]),
                         formats[i] + " is not a date or datetime format"
                 );
             }
@@ -347,7 +347,7 @@ namespace TestCases.HSSF.UserModel
                 //"yyyy:mm:dd",
                 "yyyy:mm:dd", "\"mm\"/\"dd\"/\"yy\"",
         };
-            for (int i = 0; i < formats.Length; i++)
+            for(int i = 0; i < formats.Length; i++)
             {
                 //    ClassicAssert.IsFalse( DateUtil.IsADateFormat(formatId, formats[i]) );
             }
@@ -489,7 +489,7 @@ namespace TestCases.HSSF.UserModel
                 HSSFDateUtil.AbsoluteDay(calendar, false);
                 Assert.Fail("Should fail here");
             }
-            catch (ArgumentException )
+            catch(ArgumentException)
             {
                 // expected here
             }
@@ -500,7 +500,7 @@ namespace TestCases.HSSF.UserModel
                 HSSFDateUtil.AbsoluteDay(calendar, true);
                 Assert.Fail("Should fail here");
             }
-            catch (ArgumentException )
+            catch(ArgumentException)
             {
                 // expected here
             }

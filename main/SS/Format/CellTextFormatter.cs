@@ -17,8 +17,8 @@
 namespace NPOI.SS.Format
 {
     using System;
-    using System.Text.RegularExpressions;
     using System.Text;
+    using System.Text.RegularExpressions;
 
 
     /**
@@ -38,7 +38,7 @@ namespace NPOI.SS.Format
             private int numplace;
             public int NumPlace
             {
-                get{return numplace;}
+                get { return numplace; }
             }
             public PartHandler(int numPlace)
             {
@@ -47,7 +47,7 @@ namespace NPOI.SS.Format
             public String HandlePart(Match m, String part,
                                 CellFormatType type, StringBuilder desc)
             {
-                if (part.Equals("@"))
+                if(part.Equals("@"))
                 {
                     numplace++;
                     return "\u0000";
@@ -67,7 +67,7 @@ namespace NPOI.SS.Format
             // Remember the "@" positions in last-to-first order (to make insertion easier)
             textPos = new int[handler.NumPlace];
             int pos = desc.Length - 1;
-            for (int i = 0; i < textPos.Length; i++)
+            for(int i = 0; i < textPos.Length; i++)
             {
                 textPos[i] = desc.LastIndexOf('\u0000', pos);
                 pos = textPos[i] - 1;
@@ -79,7 +79,7 @@ namespace NPOI.SS.Format
         {
             int start = toAppendTo.Length;
             String text = obj.ToString();
-            if (obj is Boolean)
+            if(obj is Boolean)
             {
                 text = text.ToUpper();
             }

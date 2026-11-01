@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System;
-    using System.Collections;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
+    using System;
+    using System.Collections;
 
     /// <summary>
     /// Simplifies iteration over a sequence of Record objects.
@@ -43,9 +43,9 @@ namespace NPOI.HSSF.Model
 
         }
 
-        public RecordStream(IList records, int startIx):this(records, startIx, records.Count)
+        public RecordStream(IList records, int startIx) : this(records, startIx, records.Count)
         {
-            
+
         }
 
         /// <summary>
@@ -65,12 +65,12 @@ namespace NPOI.HSSF.Model
         /// <returns></returns>
         public Record GetNext()
         {
-            if (_nextIndex >= _list.Count)
+            if(_nextIndex >= _list.Count)
             {
                 throw new Exception("Attempt to Read past end of record stream");
             }
             _countRead++;
-            return (Record)_list[_nextIndex++];
+            return (Record) _list[_nextIndex++];
         }
         /// <summary>
         /// Peeks the next sid.
@@ -78,11 +78,11 @@ namespace NPOI.HSSF.Model
         /// <returns>-1 if at end of records</returns>
         public int PeekNextSid()
         {
-            if (!HasNext())
+            if(!HasNext())
             {
                 return -1;
             }
-            return ((Record)_list[_nextIndex]).Sid;
+            return ((Record) _list[_nextIndex]).Sid;
         }
         /// <summary>
         /// Peeks the next class.
@@ -90,7 +90,7 @@ namespace NPOI.HSSF.Model
         /// <returns>the class of the next Record.return null if this stream Is exhausted.</returns>
         public Type PeekNextClass()
         {
-            if (_nextIndex >= _list.Count)
+            if(_nextIndex >= _list.Count)
             {
                 return null;
             }
@@ -104,12 +104,12 @@ namespace NPOI.HSSF.Model
 
         public int PeekNextChartSid()
         {
-            if (!HasNext())
+            if(!HasNext())
             {
                 return -1;
             }
 
-            while (PeekNextSid() == StartBlockRecord.sid || PeekNextSid() == EndBlockRecord.sid)
+            while(PeekNextSid() == StartBlockRecord.sid || PeekNextSid() == EndBlockRecord.sid)
             {
                 GetNext();
             }
@@ -117,10 +117,10 @@ namespace NPOI.HSSF.Model
         }
         public void FindChartSubStream()
         {
-            while (PeekNextSid() > -1)
+            while(PeekNextSid() > -1)
             {
                 Record r = GetNext();
-                if (r.Sid == BOFRecord.sid && (r as BOFRecord).Type == BOFRecordType.Chart)
+                if(r.Sid == BOFRecord.sid && (r as BOFRecord).Type == BOFRecordType.Chart)
                 {
                     _nextIndex--;
                     _countRead--;

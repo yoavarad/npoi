@@ -1,12 +1,12 @@
-﻿namespace TestCases.XSSF.UserModel.Charts
+namespace TestCases.XSSF.UserModel.Charts
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NPOI.XSSF.UserModel;
     using NPOI.XDDF.UserModel.Chart;
+    using NPOI.XSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for XSSF Line Charts

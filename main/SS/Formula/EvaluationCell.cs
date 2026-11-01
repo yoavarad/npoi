@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula
 {
-    using System;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
 
     /**
 * Abstracts a cell for the purpose of formula evaluation.  This interface represents both formula

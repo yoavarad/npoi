@@ -19,7 +19,8 @@ namespace TestCases.SS.UserModel
 {
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.SS;
 
@@ -60,11 +61,11 @@ namespace TestCases.SS.UserModel
             IWorkbook b = _testDataProvider.CreateWorkbook();
             ISheet s = b.CreateSheet("Test");
             s.SetRowBreak(3);
-            s.SetColumnBreak((short)6);
+            s.SetColumnBreak((short) 6);
 
             ISheet clone = b.CloneSheet(0);
             ClassicAssert.IsTrue(clone.IsRowBroken(3), "Row 3 not broken");
-            ClassicAssert.IsTrue(clone.IsColumnBroken((short)6), "Column 6 not broken");
+            ClassicAssert.IsTrue(clone.IsColumnBroken((short) 6), "Column 6 not broken");
 
             s.RemoveRowBreak(3);
 
@@ -85,7 +86,7 @@ namespace TestCases.SS.UserModel
                 wb.CloneSheet(2);
                 Assert.Fail("ShouldFail");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected here
             }
@@ -101,7 +102,7 @@ namespace TestCases.SS.UserModel
                 wb.CloneSheet(1);
                 Assert.Fail("Should Fail");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected here
             }

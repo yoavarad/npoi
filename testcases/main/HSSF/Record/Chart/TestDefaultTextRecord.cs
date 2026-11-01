@@ -20,10 +20,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the DefaultDataLabelTextPropertiesRecord
@@ -49,19 +50,19 @@ namespace TestCases.HSSF.Record.Chart
         {
 
             DefaultTextRecord record = new DefaultTextRecord(TestcaseRecordInputStream.Create((short)0x1024, data));
-            ClassicAssert.AreEqual(2, (int)record.FormatType);
+            ClassicAssert.AreEqual(2, (int) record.FormatType);
             ClassicAssert.AreEqual(6, record.RecordSize);
         }
         [Test]
         public void TestStore()
         {
             DefaultTextRecord record = new DefaultTextRecord();
-            record.FormatType = (TextFormatInfo)2;
+            record.FormatType = (TextFormatInfo) 2;
 
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

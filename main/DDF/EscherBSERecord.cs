@@ -18,10 +18,10 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.IO;
     using System.Text;
-    using NPOI.Util;
 
 
     /// <summary>
@@ -90,9 +90,9 @@ namespace NPOI.DDF
             field_11_unused3 = data[pos + 35];
             bytesRemaining -= 36;
             int bytesRead = 0;
-            if (bytesRemaining > 0)
+            if(bytesRemaining > 0)
             {
-                field_12_blipRecord = (EscherBlipRecord)recordFactory.CreateRecord(data, pos + 36);
+                field_12_blipRecord = (EscherBlipRecord) recordFactory.CreateRecord(data, pos + 36);
                 bytesRead = field_12_blipRecord.FillFields(data, pos + 36, recordFactory);
             }
             pos += 36 + bytesRead;
@@ -116,19 +116,19 @@ namespace NPOI.DDF
         {
             listener.BeforeRecordSerialize(offset, RecordId, this);
 
-            if (_remainingData == null)
+            if(_remainingData == null)
                 _remainingData = [];
 
             LittleEndian.PutShort(data, offset, Options);
             LittleEndian.PutShort(data, offset + 2, RecordId);
-            
+
             int blipSize = field_12_blipRecord == null ? 0 : field_12_blipRecord.RecordSize;
             int remainingBytes = _remainingData.Length + 36 + blipSize;
             LittleEndian.PutInt(data, offset + 4, remainingBytes);
 
             data[offset + 8] = field_1_blipTypeWin32;
             data[offset + 9] = field_2_blipTypeMacOS;
-            for (int i = 0; i < 16; i++)
+            for(int i = 0; i < 16; i++)
                 data[offset + 10 + i] = field_3_uid[i];
             LittleEndian.PutShort(data, offset + 26, field_4_tag);
             LittleEndian.PutInt(data, offset + 28, field_5_size);
@@ -139,7 +139,7 @@ namespace NPOI.DDF
             data[offset + 42] = field_10_unused2;
             data[offset + 43] = field_11_unused3;
             int bytesWritten = 0;
-            if (field_12_blipRecord != null)
+            if(field_12_blipRecord != null)
             {
                 bytesWritten = field_12_blipRecord.Serialize(offset + 44, data);
             }
@@ -157,20 +157,20 @@ namespace NPOI.DDF
         /// <value>Number of bytes</value>
         public override int RecordSize
         {
-            get 
+            get
             {
                 int field_12_size = 0;
-                if (field_12_blipRecord != null)
+                if(field_12_blipRecord != null)
                 {
                     field_12_size = field_12_blipRecord.RecordSize;
                 }
                 int remaining_size = 0;
-                if (_remainingData != null)
+                if(_remainingData != null)
                 {
                     remaining_size = _remainingData.Length;
                 }
                 return 8 + 1 + 1 + 16 + 2 + 4 + 4 + 4 + 1 + 1 +
-                    1 + 1 + field_12_size + remaining_size;            
+                    1 + 1 + field_12_size + remaining_size;
             }
         }
 
@@ -215,7 +215,7 @@ namespace NPOI.DDF
             get { return field_3_uid; }
             set
             {
-                if (value == null || value.Length != 16)
+                if(value == null || value.Length != 16)
                 {
                     throw new ArgumentException("uid must be byte[16]");
                 }
@@ -323,14 +323,14 @@ namespace NPOI.DDF
             get { return _remainingData; }
             set
             {
-                if (value == null)
+                if(value == null)
                 {
                     _remainingData = [];
                 }
                 else
                 {
                     _remainingData = new byte[value.Length];
-                    if (value.Length > 0)
+                    if(value.Length > 0)
                         Array.Copy(value, _remainingData, value.Length);
                 }
             }
@@ -346,15 +346,15 @@ namespace NPOI.DDF
             String nl = Environment.NewLine;
 
             String extraData;
-            using (MemoryStream b = new MemoryStream())
+            using(MemoryStream b = new MemoryStream())
             {
                 try
                 {
                     HexDump.Dump(this._remainingData, 0, b, 0);
                     //extraData = b.ToString();
-                    extraData = Encoding.UTF8.GetString(b.GetBuffer(), 0, (int)b.Length);
+                    extraData = Encoding.UTF8.GetString(b.GetBuffer(), 0, (int) b.Length);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     extraData = e.ToString();
                 }
@@ -402,7 +402,7 @@ namespace NPOI.DDF
         /// <returns></returns>
         public String GetBlipType(byte b)
         {
-            switch (b)
+            switch(b)
             {
                 case BT_ERROR:
                     return " ERROR";
@@ -421,7 +421,7 @@ namespace NPOI.DDF
                 case BT_DIB:
                     return " DIB";
                 default:
-                    if (b < 32)
+                    if(b < 32)
                         return " NotKnown";
                     else
                         return " Client";

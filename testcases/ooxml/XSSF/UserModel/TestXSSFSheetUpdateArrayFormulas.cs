@@ -15,14 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using TestCases.SS.UserModel;
 using NPOI.XSSF;
 using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -36,9 +37,9 @@ namespace TestCases.XSSF.UserModel
     public class TestXSSFSheetUpdateArrayFormulas : BaseTestSheetUpdateArrayFormulas
     {
 
-        public TestXSSFSheetUpdateArrayFormulas():base(XSSFITestDataProvider.instance)
+        public TestXSSFSheetUpdateArrayFormulas() : base(XSSFITestDataProvider.instance)
         {
-            
+
         }
 
         // Test methods common with HSSF are in superclass
@@ -101,13 +102,13 @@ namespace TestCases.XSSF.UserModel
         }
         private static void ConfirmArrayFormulaCell(ICell c, String cellRef, String formulaText, String arrayRangeRef)
         {
-            if (c == null)
+            if(c == null)
             {
                 throw new AssertionException("Cell should not be null.");
             }
             CT_Cell ctCell = ((XSSFCell)c).GetCTCell();
             ClassicAssert.AreEqual(cellRef, ctCell.r);
-            if (formulaText == null)
+            if(formulaText == null)
             {
                 ClassicAssert.IsFalse(ctCell.IsSetF());
                 ClassicAssert.IsNull(ctCell.f);

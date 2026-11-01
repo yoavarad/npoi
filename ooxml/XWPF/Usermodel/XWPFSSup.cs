@@ -1,8 +1,8 @@
-﻿using System;
+using NPOI.OpenXmlFormats.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NPOI.OpenXmlFormats.Shared;
 
 namespace NPOI.XWPF.UserModel
 {
@@ -23,13 +23,13 @@ namespace NPOI.XWPF.UserModel
             this.ssup = ssup;
             this.parent = p;
 
-            if (ssup.e == null)
+            if(ssup.e == null)
             {
                 ssup.e = new CT_OMathArg();
             }
             this.e = new XWPFOMathArg(ssup.e, this);
 
-            if (ssup.sup == null)
+            if(ssup.sup == null)
             {
                 ssup.sup = new CT_OMathArg();
             }

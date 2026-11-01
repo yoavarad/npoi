@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -56,9 +56,9 @@ namespace NPOI.Util
             this._mask = mask;
             int num = 0;
             int num2 = mask;
-            if (num2 != 0)
+            if(num2 != 0)
             {
-                while ((num2 & 1) == 0)
+                while((num2 & 1) == 0)
                 {
                     num++;
                     num2 = num2 >> 1;
@@ -74,7 +74,7 @@ namespace NPOI.Util
         /// BitField. Bits that are set in this mask are the
         /// bits that this BitField operates on
         /// </param>
-        public BitField(uint mask):this((int)mask)
+        public BitField(uint mask) : this((int) mask)
         {
 
         }
@@ -95,7 +95,7 @@ namespace NPOI.Util
         /// <returns>the value of holder with the specified bits cleared (set to 0)</returns>
         public short ClearShort(short holder)
         {
-            return (short)this.Clear(holder);
+            return (short) this.Clear(holder);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace NPOI.Util
         /// <returns>the selected bits</returns>
         public short GetShortRawValue(short holder)
         {
-            return (short)this.GetRawValue(holder);
+            return (short) this.GetRawValue(holder);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace NPOI.Util
         /// <returns>the selected bits, shifted right appropriately</returns>
         public short GetShortValue(short holder)
         {
-            return (short)this.GetValue(holder);
+            return (short) this.GetValue(holder);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace NPOI.Util
         /// <returns>the selected bits, shifted right appropriately</returns>
         public int GetValue(int holder)
         {
-            return Operator.UnsignedRightShift(this.GetRawValue(holder) , this._shift_count);
+            return Operator.UnsignedRightShift(this.GetRawValue(holder), this._shift_count);
         }
 
         /// <summary>
@@ -207,8 +207,8 @@ namespace NPOI.Util
         /// <returns>the value of holder with the specified bits set to 1</returns>
         public short SetShort(short holder)
         {
-            return (short)this.Set(holder);
-        }   
+            return (short) this.Set(holder);
+        }
 
         /// <summary>
         /// Set a boolean BitField
@@ -233,7 +233,7 @@ namespace NPOI.Util
         /// <returns>the selected bits, shifted right appropriately</returns>
         public short SetShortValue(short holder, short value)
         {
-            return (short)this.SetValue(holder, value);
+            return (short) this.SetValue(holder, value);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace NPOI.Util
         /// <returns>the value of holder with the specified bits cleared</returns>
         public byte ClearByte(byte holder)
         {
-            return (byte)this.Clear(holder);
+            return (byte) this.Clear(holder);
         }
         /// <summary>
         /// Set the bits.
@@ -273,7 +273,7 @@ namespace NPOI.Util
         /// <returns>the value of holder with the specified bits set to 1</returns>
         public byte SetByte(byte holder)
         {
-            return (byte)this.Set(holder);
+            return (byte) this.Set(holder);
         }
     }
 }

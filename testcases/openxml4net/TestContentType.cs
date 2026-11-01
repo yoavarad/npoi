@@ -15,14 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.OpenXml4Net.OPC.Internal;
 using NPOI.OpenXml4Net.Exceptions;
-using System.IO;
 using NPOI.OpenXml4Net.OPC;
-using TestCases.OpenXml4Net;
+using NPOI.OpenXml4Net.OPC.Internal;
 using NPOI.XWPF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.IO;
+using TestCases.OpenXml4Net;
 namespace TestCases.OpenXml4Net.OPC
 {
 
@@ -48,7 +49,7 @@ namespace TestCases.OpenXml4Net.OPC
             String[] contentTypesToTest = new String[] { "text/xml",
                 "application/pgp-key", "application/vnd.hp-PCLXL",
                 "application/vnd.lotus-1-2-3" };
-            for (int i = 0; i < contentTypesToTest.Length; ++i)
+            for(int i = 0; i < contentTypesToTest.Length; ++i)
             {
                 new ContentType(contentTypesToTest[i]);
             }
@@ -79,13 +80,13 @@ namespace TestCases.OpenXml4Net.OPC
                 "text[/xml", "text]/xml", "text?/xml", "tex=t/xml",
                 "te{xt/xml", "tex}t/xml", "te xt/xml",
                 "text" + (char) 9 + "/xml", "text xml", " text/xml " };
-            for (int i = 0; i < contentTypesToTest.Length; ++i)
+            for(int i = 0; i < contentTypesToTest.Length; ++i)
             {
                 try
                 {
                     new ContentType(contentTypesToTest[i]);
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     continue;
                 }
@@ -104,10 +105,10 @@ namespace TestCases.OpenXml4Net.OPC
         {
             String[] contentTypesToTest = new String[] { "mail/toto;titi=tata",
                "text/xml;a=b;c=d", "text/xml;key1=param1;key2=param2",
-               "application/pgp-key;version=\"2\"", 
+               "application/pgp-key;version=\"2\"",
                "application/x-resqml+xml;version=2.0;type=obj_global2dCrs"
       };
-            foreach (String contentType in contentTypesToTest)
+            foreach(String contentType in contentTypesToTest)
             {
                 new ContentType(contentType);
             }
@@ -119,18 +120,18 @@ namespace TestCases.OpenXml4Net.OPC
         [Test]
         public void TestContentTypeParameterFailure()
         {
-            String[] contentTypesToTest = new String[] { 
+            String[] contentTypesToTest = new String[] {
                 "mail/toto;\"titi=tata\"", // quotes not allowed like that
                 "mail/toto;titi = tata", // spaces not allowed
                 "text/\u0080" // characters above ASCII are not allowed
         };
-            for (int i = 0; i < contentTypesToTest.Length; ++i)
+            for(int i = 0; i < contentTypesToTest.Length; ++i)
             {
                 try
                 {
                     new ContentType(contentTypesToTest[i]);
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     continue;
                 }
@@ -148,13 +149,13 @@ namespace TestCases.OpenXml4Net.OPC
         public void TestContentTypeCommentFailure()
         {
             String[] contentTypesToTest = new String[] { "text/xml(comment)" };
-            for (int i = 0; i < contentTypesToTest.Length; ++i)
+            for(int i = 0; i < contentTypesToTest.Length; ++i)
             {
                 try
                 {
                     new ContentType(contentTypesToTest[i]);
                 }
-                catch (InvalidFormatException)
+                catch(InvalidFormatException)
                 {
                     continue;
                 }
@@ -175,19 +176,19 @@ namespace TestCases.OpenXml4Net.OPC
 
             // Check we found the contents of it
             bool foundCoreProps = false, foundDocument = false, foundTheme1 = false;
-            foreach (PackagePart part in p.GetParts())
+            foreach(PackagePart part in p.GetParts())
             {
-                if (part.PartName.ToString().Equals("/docProps/core.xml"))
+                if(part.PartName.ToString().Equals("/docProps/core.xml"))
                 {
                     ClassicAssert.AreEqual(ContentTypes.CORE_PROPERTIES_PART, part.ContentType);
                     foundCoreProps = true;
                 }
-                if (part.PartName.ToString().Equals("/word/document.xml"))
+                if(part.PartName.ToString().Equals("/word/document.xml"))
                 {
                     ClassicAssert.AreEqual(XWPFRelation.DOCUMENT.ContentType, part.ContentType);
                     foundDocument = true;
                 }
-                if (part.PartName.ToString().Equals("/word/theme/theme1.xml"))
+                if(part.PartName.ToString().Equals("/word/theme/theme1.xml"))
                 {
                     ClassicAssert.AreEqual(XWPFRelation.THEME.ContentType, part.ContentType);
                     foundTheme1 = true;
@@ -213,14 +214,14 @@ namespace TestCases.OpenXml4Net.OPC
             String typeResqml = "application/x-resqml+xml";
 
             // Check the types on everything
-            foreach (PackagePart part in p.GetParts())
+            foreach(PackagePart part in p.GetParts())
             {
                 String contentType = part.ContentType;
                 ContentType details = part.ContentTypeDetails;
                 int length = details.GetParameterKeys().Length;
                 bool hasParameters = details.HasParameters();
                 // _rels type doesn't have any params
-                if (part.IsRelationshipPart)
+                if(part.IsRelationshipPart)
                 {
                     ClassicAssert.AreEqual(ContentTypes.RELATIONSHIPS_PART, contentType);
                     ClassicAssert.AreEqual(ContentTypes.RELATIONSHIPS_PART, details.ToString());
@@ -228,7 +229,7 @@ namespace TestCases.OpenXml4Net.OPC
                     ClassicAssert.AreEqual(0, length);
                 }
                 // Core type doesn't have any params
-                else if (part.PartName.ToString().Equals("/docProps/core.xml"))
+                else if(part.PartName.ToString().Equals("/docProps/core.xml"))
                 {
                     ClassicAssert.AreEqual(ContentTypes.CORE_PROPERTIES_PART, contentType);
                     ClassicAssert.AreEqual(ContentTypes.CORE_PROPERTIES_PART, details.ToString());
@@ -236,7 +237,7 @@ namespace TestCases.OpenXml4Net.OPC
                     ClassicAssert.AreEqual(0, length);
                 }
                 // Global Crs types do have params
-                else if (part.PartName.ToString().Equals("/global1dCrs.xml"))
+                else if(part.PartName.ToString().Equals("/global1dCrs.xml"))
                 {
                     ClassicAssert.IsTrue(part.ContentType.StartsWith(typeResqml));
                     ClassicAssert.AreEqual(typeResqml, details.ToString(false));
@@ -248,7 +249,7 @@ namespace TestCases.OpenXml4Net.OPC
                     ClassicAssert.AreEqual("obj_global1dCrs", details.GetParameter("type"));
 
                 }
-                else if (part.PartName.ToString().Equals("/global2dCrs.xml"))
+                else if(part.PartName.ToString().Equals("/global2dCrs.xml"))
                 {
                     ClassicAssert.IsTrue(part.ContentType.StartsWith(typeResqml));
                     ClassicAssert.AreEqual(typeResqml, details.ToString(false));
@@ -261,7 +262,7 @@ namespace TestCases.OpenXml4Net.OPC
 
                 }
                 // Other thingy
-                else if (part.PartName.ToString().Equals("/myTestingGuid.xml"))
+                else if(part.PartName.ToString().Equals("/myTestingGuid.xml"))
                 {
                     ClassicAssert.IsTrue(part.ContentType.StartsWith(typeResqml));
                     ClassicAssert.AreEqual(typeResqml, details.ToString(false));
@@ -286,6 +287,3 @@ namespace TestCases.OpenXml4Net.OPC
         }
     }
 }
-
-
-

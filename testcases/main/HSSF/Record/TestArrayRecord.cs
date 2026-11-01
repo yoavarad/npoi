@@ -17,15 +17,16 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF.Record;
-    using NPOI.HSSF.Record;
-    using NPOI.HSSF.UserModel;
 
     [TestFixture]
     public class TestArrayRecord

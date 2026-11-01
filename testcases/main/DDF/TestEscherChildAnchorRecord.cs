@@ -19,14 +19,14 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     [TestFixture]
     public class TestEscherChildAnchorRecord
     {
@@ -66,7 +66,7 @@ namespace TestCases.DDF
             ClassicAssert.AreEqual(2, r.Dy1);
             ClassicAssert.AreEqual(3, r.Dx2);
             ClassicAssert.AreEqual(4, r.Dy2);
-            ClassicAssert.AreEqual((short)0x0001, r.Options);
+            ClassicAssert.AreEqual((short) 0x0001, r.Options);
         }
         [Test]
         public void TestToString()
@@ -88,7 +88,7 @@ namespace TestCases.DDF
         {
             EscherChildAnchorRecord r = new EscherChildAnchorRecord();
             r.RecordId=EscherChildAnchorRecord.RECORD_ID;
-            r.Options=(short)0x0001;
+            r.Options=(short) 0x0001;
             r.Dx1=1;
             r.Dy1=2;
             r.Dx2=3;

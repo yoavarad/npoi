@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,11 +15,12 @@
    limitations Under the License.
 ==================================================================== */
 
-using System;
-using System.IO;
 using NPOI.HSSF.Record;
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.IO;
 
 namespace TestCases.HSSF.Record
 {

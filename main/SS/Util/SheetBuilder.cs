@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
    ==================================================================== */
-using System;
 using NPOI.SS.UserModel;
 using NPOI.Util;
+using System;
 
 namespace NPOI.SS.Util
 {
@@ -38,7 +38,7 @@ namespace NPOI.SS.Util
         public SheetBuilder(IWorkbook workbook, Object[][] cells)
         {
             this.workbook = workbook;
-            this.cells = (Object[][])cells.Clone();
+            this.cells = (Object[][]) cells.Clone();
         }
 
         /**
@@ -101,15 +101,15 @@ namespace NPOI.SS.Util
             IRow currentRow = null;
             ICell currentCell = null;
 
-            for (int rowIndex = 0; rowIndex < cells.Length; ++rowIndex)
+            for(int rowIndex = 0; rowIndex < cells.Length; ++rowIndex)
             {
                 Object[] rowArray = cells[rowIndex];
                 currentRow = sheet.CreateRow(rowIndex);
 
-                for (int cellIndex = 0; cellIndex < rowArray.Length; ++cellIndex)
+                for(int cellIndex = 0; cellIndex < rowArray.Length; ++cellIndex)
                 {
                     Object cellValue = rowArray[cellIndex];
-                    if (cellValue != null || shouldCreateEmptyCells)
+                    if(cellValue != null || shouldCreateEmptyCells)
                     {
                         currentCell = currentRow.CreateCell(cellIndex);
                         SheetBuilder.SetCellValue(currentCell, cellValue);
@@ -126,24 +126,24 @@ namespace NPOI.SS.Util
          */
         private static void SetCellValue(ICell cell, Object value)
         {
-            if (value == null || cell == null)
+            if(value == null || cell == null)
             {
                 return;
             }
             //else if (value is Number)
-            else if (Number.IsNumber(value))
+            else if(Number.IsNumber(value))
             {
                 double val;
                 double.TryParse(value.ToString(), out val);
                 cell.SetCellValue(val);
             }
-            else if (value is DateTime time)
+            else if(value is DateTime time)
             {
                 cell.SetCellValue(time);
                 //} else if (value is Calendar) {
                 //    cell.SetCellValue((Calendar) value);
             }
-            else if (SheetBuilder.IsFormulaDefinition(value))
+            else if(SheetBuilder.IsFormulaDefinition(value))
             {
                 cell.CellFormula = (GetFormula(value));
             }
@@ -155,9 +155,9 @@ namespace NPOI.SS.Util
 
         private static bool IsFormulaDefinition(Object obj)
         {
-            if (obj is String str)
+            if(obj is String str)
             {
-                if (str.Length < 2)
+                if(str.Length < 2)
                 {
                     return false;
                 }
@@ -174,7 +174,7 @@ namespace NPOI.SS.Util
 
         private static String GetFormula(Object obj)
         {
-            return ((String)obj).Substring(1);
+            return ((String) obj).Substring(1);
         }
     }
 }

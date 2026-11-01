@@ -17,13 +17,13 @@
 
 namespace NPOI.HSSF.EventUserModel
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
-    using System.Collections.Generic;
     using NPOI.SS.UserModel;
-    using System.Globalization;
     using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
 
     /**
      * A proxy HSSFListener that keeps track of the document
@@ -77,11 +77,11 @@ namespace NPOI.HSSF.EventUserModel
          */
         public void ProcessRecordInternally(Record record)
         {
-            if (record is FormatRecord fr)
+            if(record is FormatRecord fr)
             {
                 customFormatRecords[fr.IndexCode] = fr;
             }
-            else if (record is ExtendedFormatRecord xr)
+            else if(record is ExtendedFormatRecord xr)
             {
                 xfRecords.Add(xr);
             }
@@ -98,11 +98,11 @@ namespace NPOI.HSSF.EventUserModel
         public String FormatNumberDateCell(CellValueRecordInterface cell)
         {
             double value;
-            if (cell is NumberRecord record)
+            if(cell is NumberRecord record)
             {
                 value = record.Value;
             }
-            else if (cell is FormulaRecord formulaRecord)
+            else if(cell is FormulaRecord formulaRecord)
             {
                 value = formulaRecord.Value;
             }
@@ -115,7 +115,7 @@ namespace NPOI.HSSF.EventUserModel
             int formatIndex = GetFormatIndex(cell);
             String formatString = GetFormatString(cell);
 
-            if (formatString == null)
+            if(formatString == null)
             {
                 return value.ToString(CultureInfo.InvariantCulture);
             }
@@ -133,10 +133,10 @@ namespace NPOI.HSSF.EventUserModel
         public String GetFormatString(int formatIndex)
         {
             String format = null;
-            if (formatIndex >= HSSFDataFormat.NumberOfBuiltinBuiltinFormats)
+            if(formatIndex >= HSSFDataFormat.NumberOfBuiltinBuiltinFormats)
             {
                 FormatRecord tfr = (FormatRecord)customFormatRecords[formatIndex];
-                if (tfr == null)
+                if(tfr == null)
                 {
                     logger.Log(POILogger.ERROR, "Requested format at index " + formatIndex + ", but it wasn't found");
                 }
@@ -147,7 +147,7 @@ namespace NPOI.HSSF.EventUserModel
             }
             else
             {
-                format = HSSFDataFormat.GetBuiltinFormat((short)formatIndex);
+                format = HSSFDataFormat.GetBuiltinFormat((short) formatIndex);
             }
             return format;
         }
@@ -159,7 +159,7 @@ namespace NPOI.HSSF.EventUserModel
         public String GetFormatString(CellValueRecordInterface cell)
         {
             int formatIndex = GetFormatIndex(cell);
-            if (formatIndex == -1)
+            if(formatIndex == -1)
             {
                 // Not found
                 return null;
@@ -175,7 +175,7 @@ namespace NPOI.HSSF.EventUserModel
         {
             ExtendedFormatRecord xfr = (ExtendedFormatRecord)
                 xfRecords[cell.XFIndex];
-            if (xfr == null)
+            if(xfr == null)
             {
                 logger.Log(POILogger.ERROR, "Cell " + cell.Row + "," + cell.Column + " uses XF with index " + cell.XFIndex + ", but we don't have that");
                 return -1;

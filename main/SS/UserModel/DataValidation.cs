@@ -16,9 +16,8 @@
 ==================================================================== */
 namespace NPOI.SS.UserModel
 {
-    using System;
-
     using NPOI.SS.Util;
+    using System;
     /**
          * Error style constants for error box
          */
@@ -110,7 +109,7 @@ namespace NPOI.SS.UserModel
          * @return Prompt box's title or <code>null</code>
          */
         String PromptBoxTitle { get; }
-        
+
         /**
          * @return Prompt box's text or <code>null</code>
          */

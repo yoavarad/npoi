@@ -1,4 +1,4 @@
-﻿namespace NPOI.HPSF
+namespace NPOI.HPSF
 {
     public class IndirectPropertyName : CodePageString
     {

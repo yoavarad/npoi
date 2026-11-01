@@ -17,9 +17,9 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
+    using System;
 
     /**
      * Raises visibility of some internal functionality for Test purposes 

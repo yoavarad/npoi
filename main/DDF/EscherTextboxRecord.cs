@@ -88,7 +88,7 @@ namespace NPOI.DDF
 
             listener.AfterRecordSerialize(pos, RecordId, pos - offset, this);
             int size = pos - offset;
-            if (size != RecordSize)
+            if(size != RecordSize)
                 throw new RecordFormatException(size + " bytes written but RecordSize reports " + RecordSize);
             return size;
         }
@@ -152,7 +152,7 @@ namespace NPOI.DDF
             EscherTextboxRecord etr = new EscherTextboxRecord();
             etr.Options = (this.Options);
             etr.RecordId = (this.RecordId);
-            etr._thedata = (byte[])this._thedata.Clone();
+            etr._thedata = (byte[]) this._thedata.Clone();
             return etr;
         }
 
@@ -169,7 +169,7 @@ namespace NPOI.DDF
             String theDumpHex = "";
             try
             {
-                if (_thedata.Length != 0)
+                if(_thedata.Length != 0)
                 {
                     theDumpHex = "  Extra Data:" + nl;
                     theDumpHex += HexDump.Dump(_thedata, 0, 0);
@@ -192,7 +192,7 @@ namespace NPOI.DDF
             String theDumpHex = "";
             try
             {
-                if (_thedata.Length != 0)
+                if(_thedata.Length != 0)
                 {
                     theDumpHex += HexDump.Dump(_thedata, 0, 0);
                 }
@@ -210,4 +210,3 @@ namespace NPOI.DDF
     }
 
 }
-

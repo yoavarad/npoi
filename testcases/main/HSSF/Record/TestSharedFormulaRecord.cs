@@ -17,8 +17,6 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS;
@@ -26,6 +24,9 @@ namespace TestCases.HSSF.Record
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.Exceptions;
     using TestCases.HSSF;
     using TestCases.HSSF.UserModel;
@@ -49,19 +50,19 @@ namespace TestCases.HSSF.Record
          * tAreaN*) with operand class 'array'.
          */
         private static byte[] SHARED_FORMULA_WITH_REF_ARRAYS_DATA = {
-		0x1A, 0x00,
-		0x63, 0x02, 0x00, 0x00, 0x00,
-		0x6C, 0x00, 0x00, 0x02, (byte)0x80,  // tRefNA
+        0x1A, 0x00,
+        0x63, 0x02, 0x00, 0x00, 0x00,
+        0x6C, 0x00, 0x00, 0x02, (byte)0x80,  // tRefNA
 		0x0B,
-		0x15,
-		0x13,
-		0x13,
-		0x63, 0x03, 0x00, 0x00, 0x00,
-		0x15,
-		0x13,
-		0x13,
-		0x42, 0x02, (byte)0xE4, 0x00,
-	};
+        0x15,
+        0x13,
+        0x13,
+        0x63, 0x03, 0x00, 0x00, 0x00,
+        0x15,
+        0x13,
+        0x13,
+        0x42, 0x02, (byte)0xE4, 0x00,
+    };
 
         /**
          * The method <tt>SharedFormulaRecord.ConvertSharedFormulas()</tt> Converts formulas from
@@ -82,7 +83,7 @@ namespace TestCases.HSSF.Record
 
             RefPtg refPtg = (RefPtg)ConvertedFormula[1];
             ClassicAssert.AreEqual("$C101", refPtg.ToFormulaString());
-            if (refPtg.PtgClass == Ptg.CLASS_REF)
+            if(refPtg.PtgClass == Ptg.CLASS_REF)
             {
                 throw new AssertionException("Identified bug 45123");
             }
@@ -93,11 +94,11 @@ namespace TestCases.HSSF.Record
         private static void ConfirmOperandClasses(Ptg[] originalPtgs, Ptg[] convertedPtg)
         {
             ClassicAssert.AreEqual(originalPtgs.Length, convertedPtg.Length);
-            for (int i = 0; i < convertedPtg.Length; i++)
+            for(int i = 0; i < convertedPtg.Length; i++)
             {
                 Ptg originalPtg = originalPtgs[i];
                 Ptg ConvertedPtg = convertedPtg[i];
-                if (originalPtg.PtgClass != ConvertedPtg.PtgClass)
+                if(originalPtg.PtgClass != ConvertedPtg.PtgClass)
                 {
                     throw new ComparisonFailure("Different operand class for token[" + i + "]",
                             originalPtg.PtgClass.ToString(), ConvertedPtg.PtgClass.ToString());
@@ -250,10 +251,10 @@ namespace TestCases.HSSF.Record
         {
             NPOI.HSSF.Record.Record[] records = RecordInspector.GetRecords(sheet, 0);
             int count = 0;
-            for (int i = 0; i < records.Length; i++)
+            for(int i = 0; i < records.Length; i++)
             {
                 NPOI.HSSF.Record.Record rec = records[i];
-                if (rec is SharedFormulaRecord)
+                if(rec is SharedFormulaRecord)
                 {
                     count++;
                 }

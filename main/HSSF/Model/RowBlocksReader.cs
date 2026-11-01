@@ -17,13 +17,13 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System;
-    //using System.Collections;
-    using System.Collections.Generic;
-    using NPOI.SS.Util;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
+    using NPOI.SS.Util;
+    using System;
     using System.Collections;
+    //using System.Collections;
+    using System.Collections.Generic;
 
     /**
      * Segregates the 'Row Blocks' section of a single sheet into plain row/cell records and 
@@ -52,27 +52,27 @@ namespace NPOI.HSSF.Model
             List<CellReference> firstCellRefs = new List<CellReference>();
             Record prevRec = null;
 
-            while (!RecordOrderer.IsEndOfRowBlock(rs.PeekNextSid()))
+            while(!RecordOrderer.IsEndOfRowBlock(rs.PeekNextSid()))
             {
                 // End of row/cell records for the current sheet
                 // Note - It is important that this code does not inadvertently add any sheet 
                 // records from a subsequent sheet.  For example, if SharedFormulaRecords 
                 // are taken from the wrong sheet, this could cause bug 44449.
-                if (!rs.HasNext())
+                if(!rs.HasNext())
                 {
                     throw new InvalidOperationException("Failed to find end of row/cell records");
 
                 }
                 Record rec = rs.GetNext();
                 ArrayList dest;
-                switch (rec.Sid)
+                switch(rec.Sid)
                 {
                     case MergeCellsRecord.sid:
                         dest = mergeCellRecords;
                         break;
                     case SharedFormulaRecord.sid:
                         dest = shFrmRecords;
-                        if (prevRec is not FormulaRecord fr)
+                        if(prevRec is not FormulaRecord fr)
                         {
                             throw new Exception("Shared formula record should follow a FormulaRecord");
                         }
@@ -86,7 +86,8 @@ namespace NPOI.HSSF.Model
                     case TableRecord.sid:
                         dest = tableRecords;
                         break;
-                    default: dest = plainRecords;
+                    default:
+                        dest = plainRecords;
                         break;
                 }
                 dest.Add(rec);
@@ -95,17 +96,17 @@ namespace NPOI.HSSF.Model
             SharedFormulaRecord[] sharedFormulaRecs = new SharedFormulaRecord[shFrmRecords.Count];
             List<ArrayRecord> arrayRecs = new List<ArrayRecord>(arrayRecords.Count);
             List<TableRecord> tableRecs = new List<TableRecord>(tableRecords.Count);
-            sharedFormulaRecs = (SharedFormulaRecord[])shFrmRecords.ToArray(typeof(SharedFormulaRecord));
+            sharedFormulaRecs = (SharedFormulaRecord[]) shFrmRecords.ToArray(typeof(SharedFormulaRecord));
 
             CellReference[] firstCells = new CellReference[firstCellRefs.Count];
             firstCells=firstCellRefs.ToArray();
-            arrayRecs = new List<ArrayRecord>((ArrayRecord[])arrayRecords.ToArray(typeof(ArrayRecord)));
-            tableRecs = new List<TableRecord>((TableRecord[])tableRecords.ToArray(typeof(TableRecord)));
+            arrayRecs = new List<ArrayRecord>((ArrayRecord[]) arrayRecords.ToArray(typeof(ArrayRecord)));
+            tableRecs = new List<TableRecord>((TableRecord[]) tableRecords.ToArray(typeof(TableRecord)));
 
             _plainRecords = plainRecords;
-            _sfm = SharedValueManager.Create(sharedFormulaRecs,firstCells, arrayRecs, tableRecs);
+            _sfm = SharedValueManager.Create(sharedFormulaRecs, firstCells, arrayRecs, tableRecs);
             _mergedCellsRecords = new MergeCellsRecord[mergeCellRecords.Count];
-            _mergedCellsRecords = (MergeCellsRecord[])mergeCellRecords.ToArray(typeof(MergeCellsRecord));
+            _mergedCellsRecords = (MergeCellsRecord[]) mergeCellRecords.ToArray(typeof(MergeCellsRecord));
         }
 
         /**

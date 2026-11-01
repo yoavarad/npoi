@@ -16,18 +16,18 @@
 ==================================================================== */
 namespace TestCases.SS.Format
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Format;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using TestCases.SS;
-    using System.Diagnostics;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Text.RegularExpressions;
+    using TestCases.SS;
 
     /**
      * This class is a base class for spreadsheet-based tests, such as are used for
@@ -92,10 +92,10 @@ namespace TestCases.SS.Format
             SortedList<string, object> runCategories = new SortedList<string, object>(StringComparer.InvariantCultureIgnoreCase);
             String RunCategoryList = flagString("Categories", "");
             Regex regex = new Regex("\\s*,\\s*");
-            if (RunCategoryList != null)
+            if(RunCategoryList != null)
             {
-                foreach (string s in regex.Split(RunCategoryList))
-                    if (!runCategories.ContainsKey(s))
+                foreach(string s in regex.Split(RunCategoryList))
+                    if(!runCategories.ContainsKey(s))
                         runCategories.Add(s, null);
                 runCategories.Remove(""); // this can be found and means nothing
             }
@@ -103,23 +103,23 @@ namespace TestCases.SS.Format
             ISheet sheet = workbook.GetSheet("Tests");
             int end = sheet.LastRowNum;
             // Skip the header row, therefore "+ 1"
-            for (int r = sheet.FirstRowNum + 1; r <= end; r++)
+            for(int r = sheet.FirstRowNum + 1; r <= end; r++)
             {
                 IRow row = sheet.GetRow(r);
-                if (row == null)
+                if(row == null)
                     continue;
                 int cellnum = 0;
                 String expectedText = row.GetCell(cellnum).StringCellValue;
                 String format = row.GetCell(1).StringCellValue;
                 String testCategoryList = row.GetCell(3).StringCellValue;
                 bool byCategory = RunByCategory(runCategories, testCategoryList);
-                if ((expectedText.Length > 0 || format.Length > 0) && byCategory)
+                if((expectedText.Length > 0 || format.Length > 0) && byCategory)
                 {
                     ICell cell = row.GetCell(2);
                     Debug.WriteLine(string.Format("expectedText: {0}, format:{1}", expectedText, format));
-                    if (format == "hh:mm:ss a/p")
+                    if(format == "hh:mm:ss a/p")
                         expectedText = expectedText.ToUpper();
-                    else if (format == "H:M:S.00 a/p")
+                    else if(format == "H:M:S.00 a/p")
                         expectedText = expectedText.ToUpper();
                     tryFormat(r, expectedText, format, valueGetter, cell);
                 }
@@ -153,18 +153,18 @@ namespace TestCases.SS.Format
         {
             ISheet flagSheet = wb.GetSheet("Flags");
             testFlags = new Dictionary<String, String>();
-            if (flagSheet != null)
+            if(flagSheet != null)
             {
                 int end = flagSheet.LastRowNum;
                 // Skip the header row, therefore "+ 1"
-                for (int r = flagSheet.FirstRowNum + 1; r <= end; r++)
+                for(int r = flagSheet.FirstRowNum + 1; r <= end; r++)
                 {
                     IRow row = flagSheet.GetRow(r);
-                    if (row == null)
+                    if(row == null)
                         continue;
                     String flagName = row.GetCell(0).StringCellValue;
                     String flagValue = row.GetCell(1).StringCellValue;
-                    if (flagName.Length > 0)
+                    if(flagName.Length > 0)
                     {
                         testFlags.Add(flagName, flagValue);
                     }
@@ -191,14 +191,14 @@ namespace TestCases.SS.Format
                 String testCategories)
         {
 
-            if (categories.Count == 0)
+            if(categories.Count == 0)
                 return true;
             // If there are specified categories, find out if this has one of them
             Regex regex = new Regex("\\s*,\\s*");
 
-            foreach (String category in regex.Split(testCategories))//.Split("\\s*,\\s*"))
+            foreach(String category in regex.Split(testCategories))//.Split("\\s*,\\s*"))
             {
-                if (categories.ContainsKey(category))
+                if(categories.ContainsKey(category))
                 {
                     return true;
                 }
@@ -223,9 +223,9 @@ namespace TestCases.SS.Format
                     testColor);
             logger.Log(POILogger.INFO, String.Format(", actual \"%s\")%n", actualText));
 
-            if (tryAllColors && testColor != TEST_COLOR)
+            if(tryAllColors && testColor != TEST_COLOR)
             {
-                for (int i = 0; i < COLOR_NAMES.Length; i++)
+                for(int i = 0; i < COLOR_NAMES.Length; i++)
                 {
                     String cname = COLOR_NAMES[i];
                     tryColor(desc, cname, getter, value, expectedText, COLORS[i]);
@@ -237,12 +237,12 @@ namespace TestCases.SS.Format
                 Object value, String expectedText, SKColor expectedColor)
         {
 
-            if (cname != null)
+            if(cname != null)
                 desc = "[" + cname + "]" + desc;
             SKColor origColor = labelForeColor;
             CellFormatPart format = new CellFormatPart(desc);
             CellFormatResult result = format.Apply(value);
-            if (!result.Applies)
+            if(!result.Applies)
             {
                 // If this doesn't Apply, no color change is expected
                 expectedColor = origColor;
@@ -269,7 +269,7 @@ namespace TestCases.SS.Format
         {
             String value = testFlags[(flagName)];
             bool isSet;
-            if (value == null)
+            if(value == null)
                 isSet = false;
             else
             {
@@ -297,7 +297,7 @@ namespace TestCases.SS.Format
         protected String flagString(String flagName, String expected)
         {
             String value = testFlags[(flagName)];
-            if (value == null)
+            if(value == null)
                 value = "";
             warnIfUnexpected(flagName, expected, value);
             return value;
@@ -306,7 +306,7 @@ namespace TestCases.SS.Format
         private void warnIfUnexpected(String flagName, Object expected,
                 Object actual)
         {
-            if (!actual.Equals(expected))
+            if(!actual.Equals(expected))
             {
                 System.Console.WriteLine(
                         "WARNING: " + testFile + ": " + "Flag " + flagName +

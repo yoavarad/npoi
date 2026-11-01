@@ -35,7 +35,7 @@ namespace NPOI.SS.Formula
     /// <summary>
     /// Enumeration of various formula types. For internal use only
     /// </summary>
-    public enum FormulaType:int
+    public enum FormulaType : int
     {
         [SingleValue(true)]
         Cell = 0,

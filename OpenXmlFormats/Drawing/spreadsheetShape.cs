@@ -1,10 +1,10 @@
-﻿using Cysharp.Text;
+using Cysharp.Text;
 using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text; 
+using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -45,22 +45,22 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
         public static CT_Shape Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Shape ctObj = new CT_Shape();
             ctObj.macro = XmlHelper.ReadString(node.Attributes["macro"]);
             ctObj.textlink = XmlHelper.ReadString(node.Attributes["textlink"]);
             ctObj.fLocksText = XmlHelper.ReadBool(node.Attributes["fLocksText"]);
             ctObj.fPublished = XmlHelper.ReadBool(node.Attributes["fPublished"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "nvSpPr")
+                if(childNode.LocalName == "nvSpPr")
                     ctObj.nvSpPr = CT_ShapeNonVisual.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "txBody")
+                else if(childNode.LocalName == "txBody")
                     ctObj.txBody = CT_TextBody.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "style")
+                else if(childNode.LocalName == "style")
                     ctObj.style = CT_ShapeStyle.Parse(childNode, namespaceManager);
             }
             ctObj.Node = node;
@@ -73,17 +73,17 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             XmlHelper.WriteAttribute(sw, "macro", this.macro, true);
-            XmlHelper.WriteAttribute(sw, "textlink", this.textlink,true);
+            XmlHelper.WriteAttribute(sw, "textlink", this.textlink, true);
             XmlHelper.WriteAttribute(sw, "fLocksText", this.fLocksText, false);
             XmlHelper.WriteAttribute(sw, "fPublished", this.fPublished, false);
             sw.Write('>');
-            if (this.nvSpPr != null)
+            if(this.nvSpPr != null)
                 this.nvSpPr.Write(sw, "nvSpPr");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.style != null)
+            if(this.style != null)
                 this.style.Write(sw, "style");
-            if (this.txBody != null)
+            if(this.txBody != null)
                 this.txBody.Write(sw, "xdr", "txBody");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -199,18 +199,18 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         private CT_FontReference fontRefField;
         public static CT_ShapeStyle Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ShapeStyle ctObj = new CT_ShapeStyle();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "lnRef")
+                if(childNode.LocalName == "lnRef")
                     ctObj.lnRef = CT_StyleMatrixReference.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fillRef")
+                else if(childNode.LocalName == "fillRef")
                     ctObj.fillRef = CT_StyleMatrixReference.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "effectRef")
+                else if(childNode.LocalName == "effectRef")
                     ctObj.effectRef = CT_StyleMatrixReference.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fontRef")
+                else if(childNode.LocalName == "fontRef")
                     ctObj.fontRef = CT_FontReference.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -222,13 +222,13 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.lnRef != null)
+            if(this.lnRef != null)
                 this.lnRef.Write(sw, "lnRef");
-            if (this.fillRef != null)
+            if(this.fillRef != null)
                 this.fillRef.Write(sw, "fillRef");
-            if (this.effectRef != null)
+            if(this.effectRef != null)
                 this.effectRef.Write(sw, "effectRef");
-            if (this.fontRef != null)
+            if(this.fontRef != null)
                 this.fontRef.Write(sw, "fontRef");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -348,14 +348,14 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         }
         public static CT_ShapeNonVisual Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ShapeNonVisual ctObj = new CT_ShapeNonVisual();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cNvPr")
+                if(childNode.LocalName == "cNvPr")
                     ctObj.cNvPr = CT_NonVisualDrawingProps.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cNvSpPr")
+                else if(childNode.LocalName == "cNvSpPr")
                     ctObj.cNvSpPr = CT_NonVisualDrawingShapeProps.Parse(childNode, namespaceManager);
             }
             ctObj.Node = node;
@@ -368,9 +368,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.cNvPr != null)
+            if(this.cNvPr != null)
                 this.cNvPr.Write(sw, "cNvPr");
-            if (this.cNvSpPr != null)
+            if(this.cNvSpPr != null)
                 this.cNvSpPr.Write(sw, "cNvSpPr");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -391,15 +391,15 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         private bool txBoxField;
         public static CT_NonVisualDrawingShapeProps Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualDrawingShapeProps ctObj = new CT_NonVisualDrawingShapeProps();
             ctObj.txBox = XmlHelper.ReadBool(node.Attributes["txBox"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "spLocks")
+                if(childNode.LocalName == "spLocks")
                     ctObj.spLocks = CT_ShapeLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -412,9 +412,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
             sw.WriteStart("xdr", nodeName);
             XmlHelper.WriteAttribute(sw, "txBox", this.txBox, false);
             sw.Write('>');
-            if (this.spLocks != null)
+            if(this.spLocks != null)
                 this.spLocks.Write(sw, "spLocks");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -572,31 +572,31 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
 
         public static CT_GroupShape Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupShape ctObj = new CT_GroupShape();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "nvGrpSpPr")
+                if(childNode.LocalName == "nvGrpSpPr")
                     ctObj.nvGrpSpPr = CT_GroupShapeNonVisual.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "grpSpPr")
+                else if(childNode.LocalName == "grpSpPr")
                     ctObj.grpSpPr = CT_GroupShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pic")
+                else if(childNode.LocalName == "pic")
                 {
                     var pic = CT_Picture.Parse(childNode, namespaceManager);
                     ctObj.pictures.Add(pic);
                 }
-                else if (childNode.LocalName == "sp")
+                else if(childNode.LocalName == "sp")
                 {
                     var shape = CT_Shape.Parse(childNode, namespaceManager);
                     ctObj.shapes.Add(shape);
                 }
-                else if (childNode.LocalName == "cxnSp")
+                else if(childNode.LocalName == "cxnSp")
                 {
                     var connector = CT_Connector.Parse(childNode, namespaceManager);
                     ctObj.connectors.Add(connector);
                 }
-                else if (childNode.LocalName == "grpSp")
+                else if(childNode.LocalName == "grpSp")
                 {
                     var group = CT_GroupShape.Parse(childNode, namespaceManager);
                     ctObj.groups.Add(group);
@@ -612,32 +612,32 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.nvGrpSpPr != null)
+            if(this.nvGrpSpPr != null)
                 this.nvGrpSpPr.Write(sw, "xdr:nvGrpSpPr");
-            if (this.grpSpPr != null)
+            if(this.grpSpPr != null)
                 this.grpSpPr.Write(sw, "xdr:grpSpPr");
-            if (this.shapes.Count > 0)
+            if(this.shapes.Count > 0)
             {
-                foreach (var shape in this.shapes)
+                foreach(var shape in this.shapes)
                 {
                     shape.Write(sw, "sp");
                 }
             }
-            if (this.pictures.Count > 0)
+            if(this.pictures.Count > 0)
             {
-                foreach (var pic in this.pictures)
+                foreach(var pic in this.pictures)
                 {
                     pic.Write(sw, "pic");
                 }
             }
-            if (this.connectors.Count > 0)
+            if(this.connectors.Count > 0)
             {
                 foreach(var con in this.connectors)
                 {
                     con.Write(sw, "cxnSp");
                 }
             }
-            if (this.groups.Count > 0)
+            if(this.groups.Count > 0)
             {
                 foreach(var group in this.groups)
                 {
@@ -657,14 +657,14 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         CT_NonVisualGroupDrawingShapeProps cNvGrpSpPrField;
         public static CT_GroupShapeNonVisual Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupShapeNonVisual ctObj = new CT_GroupShapeNonVisual();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cNvPr")
+                if(childNode.LocalName == "cNvPr")
                     ctObj.cNvPr = CT_NonVisualDrawingProps.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cNvGrpSpPr")
+                else if(childNode.LocalName == "cNvGrpSpPr")
                     ctObj.cNvGrpSpPr = CT_NonVisualGroupDrawingShapeProps.Parse(childNode, namespaceManager);
             }
             ctObj.Node = node;
@@ -677,9 +677,9 @@ namespace NPOI.OpenXmlFormats.Dml.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.cNvPr != null)
+            if(this.cNvPr != null)
                 this.cNvPr.Write(sw, "cNvPr");
-            if (this.cNvGrpSpPr != null)
+            if(this.cNvGrpSpPr != null)
                 this.cNvGrpSpPr.Write(sw, "xdr:cNvGrpSpPr");
             sw.WriteEndElement(nodeName);
         }

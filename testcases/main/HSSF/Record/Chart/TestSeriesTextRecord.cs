@@ -20,11 +20,12 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the SeriesTextRecord
@@ -49,8 +50,8 @@ namespace TestCases.HSSF.Record.Chart
         {
             SeriesTextRecord record = new SeriesTextRecord(TestcaseRecordInputStream.Create(0x100d, SIMPLE_DATA));
 
-            ClassicAssert.AreEqual((short)0, record.Id);
-            ClassicAssert.AreEqual((byte)0x0C, record.Text.Length);
+            ClassicAssert.AreEqual((short) 0, record.Id);
+            ClassicAssert.AreEqual((byte) 0x0C, record.Text.Length);
 
             ClassicAssert.AreEqual("Value Number", record.Text);
 
@@ -69,7 +70,7 @@ namespace TestCases.HSSF.Record.Chart
 
 
             byte[] recordBytes = record.Serialize();
-            TestcaseRecordInputStream.ConfirmRecordEncoding(SeriesTextRecord.sid, SIMPLE_DATA,recordBytes);
+            TestcaseRecordInputStream.ConfirmRecordEncoding(SeriesTextRecord.sid, SIMPLE_DATA, recordBytes);
         }
     }
 }

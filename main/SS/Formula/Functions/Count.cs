@@ -50,13 +50,13 @@ namespace NPOI.SS.Formula.Functions
         public ValueEval Evaluate(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
             int nArgs = args.Length;
-            if (nArgs < 1)
+            if(nArgs < 1)
             {
                 // too few arguments
                 return ErrorEval.VALUE_INVALID;
             }
 
-            if (nArgs > 30)
+            if(nArgs > 30)
             {
                 // too many arguments
                 return ErrorEval.VALUE_INVALID;
@@ -64,7 +64,7 @@ namespace NPOI.SS.Formula.Functions
 
             int temp = 0;
 
-            for (int i = 0; i < nArgs; i++)
+            for(int i = 0; i < nArgs; i++)
             {
                 temp += CountUtils.CountArg(args[i], _predicate);
 
@@ -77,12 +77,12 @@ namespace NPOI.SS.Formula.Functions
             public bool Matches(ValueEval valueEval)
             {
 
-                if (valueEval is NumberEval)
+                if(valueEval is NumberEval)
                 {
                     // only numbers are counted
                     return true;
                 }
-                if (valueEval == MissingArgEval.instance)
+                if(valueEval == MissingArgEval.instance)
                 {
                     // oh yeah, and missing arguments
                     return true;
@@ -115,7 +115,7 @@ namespace NPOI.SS.Formula.Functions
         /// <summary>
         /// matches nither hidden rows or subtotals
         /// </summary>
-        private sealed class SubtotalVisibleOnlyPredicate: I_MatchAreaPredicate
+        private sealed class SubtotalVisibleOnlyPredicate : I_MatchAreaPredicate
         {
             public bool Matches(ValueEval valueEval)
             {

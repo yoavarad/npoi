@@ -19,7 +19,8 @@ namespace TestCases.SS.Format
     using NPOI.SS.Format;
     using NPOI.SS.UserModel;
     using NPOI.XSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Globalization;
     using System.Text;
@@ -45,9 +46,9 @@ namespace TestCases.SS.Format
             public override object GetValue(ICell cell)
             {
                 CellType type = CellFormat.UltimateType(cell);
-                if (type == CellType.Boolean)
+                if(type == CellType.Boolean)
                     return cell.BooleanCellValue ? "TRUE" : "FALSE";
-                else if (type == CellType.Numeric)
+                else if(type == CellType.Numeric)
                     return cell.NumericCellValue;
                 else
                     return cell.StringCellValue;
@@ -115,7 +116,7 @@ namespace TestCases.SS.Format
         {
             public override object GetValue(ICell cell)
             {
-                if (CellFormat.UltimateType(cell) == CellType.Boolean)
+                if(CellFormat.UltimateType(cell) == CellType.Boolean)
                     return cell.BooleanCellValue ? "TRUE" : "FALSE";
                 else
                     return cell.StringCellValue;
@@ -136,16 +137,16 @@ namespace TestCases.SS.Format
         private static double ExtractNumber(String str)
         {
             Match m = NUMBER_EXTRACT_FMT.Match(str);
-            if (!m.Success)
+            if(!m.Success)
                 throw new ArgumentException(
                         "Cannot find numer in \"" + str + "\"");
 
             StringBuilder sb = new StringBuilder();
             // The groups in the pattern are the parts of the number
-            for (int i = 1; i <= m.Groups.Count; i++)
+            for(int i = 1; i <= m.Groups.Count; i++)
             {
                 String part = m.Groups[i].Value;
-                if (part != null)
+                if(part != null)
                     sb.Append(part);
             }
             return double.Parse(sb.ToString(), CultureInfo.InvariantCulture);

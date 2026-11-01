@@ -20,9 +20,9 @@
  */
 namespace NPOI.SS.Formula.Eval
 {
+    using NPOI.SS.Formula.PTG;
     using System;
     using System.Text;
-    using NPOI.SS.Formula.PTG;
 
 
     /**
@@ -50,7 +50,7 @@ namespace NPOI.SS.Formula.Eval
 
         public BoolEval(Ptg ptg)
         {
-            this.value = ((BoolPtg)ptg).Value;
+            this.value = ((BoolPtg) ptg).Value;
         }
 
         private BoolEval(bool value)
@@ -65,7 +65,7 @@ namespace NPOI.SS.Formula.Eval
 
         public double NumberValue
         {
-            get{return value ? 1 : 0;}
+            get { return value ? 1 : 0; }
         }
 
         public String StringValue

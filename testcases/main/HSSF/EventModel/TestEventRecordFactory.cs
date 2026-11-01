@@ -17,17 +17,16 @@
 
 namespace TestCases.HSSF.EventModel
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
     using NPOI.HSSF;
     using NPOI.HSSF.EventModel;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record;
     using NPOI.POIFS.FileSystem;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
+    using TestCases.HSSF.Record;
 
 
     /**
@@ -74,11 +73,11 @@ namespace TestCases.HSSF.EventModel
             EventRecordFactory factory = new EventRecordFactory(listener, param);
 
             BOFRecord bof = new BOFRecord();
-            bof.Build = ((short)0);
-            bof.BuildYear = ((short)1999);
+            bof.Build = ((short) 0);
+            bof.BuildYear = ((short) 1999);
             bof.RequiredVersion = (123);
             bof.Type = (BOFRecordType.Workbook);
-            bof.Version = ((short)0x06);
+            bof.Version = ((short) 0x06);
             bof.HistoryBitMask = (BOFRecord.HISTORY_MASK);
 
             EOFRecord eof = EOFRecord.instance;
@@ -99,11 +98,11 @@ namespace TestCases.HSSF.EventModel
         public void TestCreateRecord()
         {
             BOFRecord bof = new BOFRecord();
-            bof.Build = ((short)0);
-            bof.BuildYear = ((short)1999);
+            bof.Build = ((short) 0);
+            bof.BuildYear = ((short) 1999);
             bof.RequiredVersion = (123);
             bof.Type = (BOFRecordType.Workbook);
-            bof.Version = ((short)0x06);
+            bof.Version = ((short) 0x06);
             bof.HistoryBitMask = (BOFRecord.HISTORY_MASK);
 
             byte[] bytes = bof.Serialize();
@@ -126,13 +125,13 @@ namespace TestCases.HSSF.EventModel
             byte[] rec1 = first.Serialize();
             byte[] rec2 = second.Serialize();
 
-            if (rec1.Length != rec2.Length)
+            if(rec1.Length != rec2.Length)
             {
                 return false;
             }
-            for (int k = 0; k < rec1.Length; k++)
+            for(int k = 0; k < rec1.Length; k++)
             {
-                if (rec1[k] != rec2[k])
+                if(rec1[k] != rec2[k])
                 {
                     return false;
                 }
@@ -184,7 +183,7 @@ namespace TestCases.HSSF.EventModel
             private void CompareData(Record record, String message)
             {
                 byte[] recData = record.Serialize();
-                for (int i = 0; i < recData.Length; i++)
+                for(int i = 0; i < recData.Length; i++)
                 {
                     ClassicAssert.AreEqual(recData[i], data[offset[0]++], message + " data byte " + i);
                 }
@@ -211,8 +210,8 @@ namespace TestCases.HSSF.EventModel
             int[] offset =  {0} ;
             IERFListener listener = new ERFListener2(ref data, ref recCnt,ref offset);
             ArrayList sids = new ArrayList(2);
-            sids.Add((short)-256);
-            sids.Add((short)0x3C);
+            sids.Add((short) -256);
+            sids.Add((short) 0x3C);
 
             EventRecordFactory factory = new EventRecordFactory(listener, sids);
 

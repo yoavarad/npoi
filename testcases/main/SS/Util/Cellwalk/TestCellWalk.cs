@@ -17,20 +17,21 @@
 namespace TestCases.SS.Util.CellWalk
 {
 
-    using NPOI.SS.UserModel;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Util.CellWalk;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     [TestFixture]
     public class TestCellWalk
     {
 
         private static Object[][] TestData = new Object[][] {
-	new object[] {   1,          2,  null},
-	new object[] {null, new DateTime(),  null},
-	new object[] {null,       null, "str"}
+    new object[] {   1,          2,  null},
+    new object[] {null, new DateTime(),  null},
+    new object[] {null,       null, "str"}
     };
 
         private CountCellHandler countCellHandler = new CountCellHandler();

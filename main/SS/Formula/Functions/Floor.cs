@@ -26,19 +26,21 @@ namespace NPOI.SS.Formula.Functions
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
      *
      */
-    public class Floor :TwoArg
+    public class Floor : TwoArg
     {
-        	static double ZERO = 0.0;
-		public override double Evaluate(double d0, double d1)
+        static double ZERO = 0.0;
+        public override double Evaluate(double d0, double d1)
         {
-			if (d1 == ZERO) {
-				if (d0 == ZERO) {
-					return ZERO;
-				}
-				throw new EvaluationException(ErrorEval.DIV_ZERO);
-			}
-			return MathX.Floor(d0, d1);
-		}
+            if(d1 == ZERO)
+            {
+                if(d0 == ZERO)
+                {
+                    return ZERO;
+                }
+                throw new EvaluationException(ErrorEval.DIV_ZERO);
+            }
+            return MathX.Floor(d0, d1);
+        }
 
     }
 }

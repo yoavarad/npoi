@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * BlankRecord.java
@@ -24,9 +24,9 @@
  */
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -147,24 +147,24 @@ namespace NPOI.HSSF.Record
         {
             CellValueRecordInterface loc = (CellValueRecordInterface)obj;
 
-            if ((this.Row == loc.Row)
+            if((this.Row == loc.Row)
                     && (this.Column == loc.Column))
             {
                 return 0;
             }
-            if (this.Row < loc.Row)
+            if(this.Row < loc.Row)
             {
                 return -1;
             }
-            if (this.Row > loc.Row)
+            if(this.Row > loc.Row)
             {
                 return 1;
             }
-            if (this.Column < loc.Column)
+            if(this.Column < loc.Column)
             {
                 return -1;
             }
-            if (this.Column > loc.Column)
+            if(this.Column > loc.Column)
             {
                 return 1;
             }

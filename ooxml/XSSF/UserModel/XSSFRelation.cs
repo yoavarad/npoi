@@ -14,11 +14,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using NPOI.Util;
-using System.Collections.Generic;
-using System;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.Util;
 using NPOI.XSSF.Model;
+using System;
+using System.Collections.Generic;
 using System.IO;
 namespace NPOI.XSSF.UserModel
 {
@@ -351,7 +351,7 @@ namespace NPOI.XSSF.UserModel
         private XSSFRelation(String type, String rel, String defaultName, Type cls) :
             base(type, rel, defaultName, cls)
         {
-            _table[rel] = this; 
+            _table[rel] = this;
         }
 
         /**
@@ -364,7 +364,7 @@ namespace NPOI.XSSF.UserModel
             PackageRelationshipCollection prc =
                 corePart.GetRelationshipsByType(Relation);
             IEnumerator<PackageRelationship> it = prc.GetEnumerator();
-            if (it.MoveNext())
+            if(it.MoveNext())
             {
                 PackageRelationship rel = it.Current;
                 PackagePartName relName = PackagingUriHelper.CreatePartName(rel.TargetUri);
@@ -385,7 +385,7 @@ namespace NPOI.XSSF.UserModel
          */
         public static XSSFRelation GetInstance(String rel)
         {
-            if (_table.TryGetValue(rel, out XSSFRelation instance))
+            if(_table.TryGetValue(rel, out XSSFRelation instance))
                 return instance;
             else
                 return null;
@@ -408,12 +408,10 @@ namespace NPOI.XSSF.UserModel
         /// <param name="relation">Relation to add</param>
         internal static void AddRelation(XSSFRelation relation)
         {
-            if ((null != relation.ContentType) && !_table.ContainsKey(relation.Relation))
+            if((null != relation.ContentType) && !_table.ContainsKey(relation.Relation))
             {
                 _table.Add(relation.Relation, relation);
             }
         }
     }
 }
-
-

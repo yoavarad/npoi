@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,7 +17,8 @@
 using NPOI.SS.UserModel;
 using NPOI.XSSF.Streaming;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.IO;
 
@@ -31,7 +32,7 @@ namespace TestCases.XSSF.Streaming
         [TearDown]
         public void CleanUp()
         {
-            if (_objectToTest != null)
+            if(_objectToTest != null)
                 _objectToTest.Dispose();
         }
 
@@ -80,7 +81,7 @@ namespace TestCases.XSSF.Streaming
 
             ClassicAssert.IsTrue(result is GZIPSheetDataWriter);
 
-            if (result != null)
+            if(result != null)
                 result.Close();
         }
 
@@ -92,7 +93,7 @@ namespace TestCases.XSSF.Streaming
 
             ClassicAssert.IsTrue(result is SheetDataWriter);
 
-            if (result != null)
+            if(result != null)
                 result.Close();
         }
 
@@ -455,13 +456,13 @@ namespace TestCases.XSSF.Streaming
 
         private void AddCells(IWorkbook wb, int sheets, int rows, int columns, CellType type)
         {
-            for (int j = 0; j < sheets; j++)
+            for(int j = 0; j < sheets; j++)
             {
                 var sheet = wb.CreateSheet(j.ToString());
-                for (int k = 0; k < rows; k++)
+                for(int k = 0; k < rows; k++)
                 {
                     var row = sheet.CreateRow(k);
-                    for (int i = 0; i < columns; i++)
+                    for(int i = 0; i < columns; i++)
                     {
                         WriteCellValue(row, type, i, i);
                     }
@@ -472,7 +473,7 @@ namespace TestCases.XSSF.Streaming
         private void WriteFile(string saveAsPath, SXSSFWorkbook wb)
         {
             //Passing SXSSFWorkbook because IWorkbook does not implement .Dispose which cleans ups temporary files.
-            using (FileStream fs = new FileStream(saveAsPath, FileMode.Create, FileAccess.ReadWrite))
+            using(FileStream fs = new FileStream(saveAsPath, FileMode.Create, FileAccess.ReadWrite))
             {
                 wb.Write(fs);
             }
@@ -482,27 +483,27 @@ namespace TestCases.XSSF.Streaming
 
         private void WriteCellValue(IRow row, CellType type, int col, object val)
         {
-            if (type == CellType.Numeric)
+            if(type == CellType.Numeric)
             {
                 row.CreateCell(col).SetCellValue(Convert.ToInt32(val));
             }
-            else if (type == CellType.String)
+            else if(type == CellType.String)
             {
                 row.CreateCell(col).SetCellValue("\"\'\'<>\\t\\n\\r&\\\"?         test:SLDFKj    \"");
             }
-            else if (type == CellType.Boolean)
+            else if(type == CellType.Boolean)
             {
                 row.CreateCell(col).SetCellValue(true);
             }
-            else if (type == CellType.Blank)
+            else if(type == CellType.Blank)
             {
                 row.CreateCell(col);
             }
-            else if (type == CellType.Error)
+            else if(type == CellType.Error)
             {
                 row.CreateCell(col).SetCellErrorValue(0);
             }
-            else if (type == CellType.Formula)
+            else if(type == CellType.Formula)
             {
                 row.CreateCell(col).SetCellFormula("SUM(A1:A2)");
             }
@@ -511,15 +512,15 @@ namespace TestCases.XSSF.Streaming
         [Test]
         public void StreamShouldBeLeavedOpen()
         {
-            using (SXSSFWorkbook workbook = new SXSSFWorkbook())
+            using(SXSSFWorkbook workbook = new SXSSFWorkbook())
             {
                 ISheet sheet = workbook.CreateSheet("Sheet1");
 
                 // Write a large number of rows and columns to cause OutOfMemoryException
-                for (int rowNumber = 0; rowNumber < 10; rowNumber++) // Increase this number for more rows
+                for(int rowNumber = 0; rowNumber < 10; rowNumber++) // Increase this number for more rows
                 {
                     IRow row = sheet.CreateRow(rowNumber);
-                    for (int colNumber = 0; colNumber < 100; colNumber++) // Increase this number for more columns
+                    for(int colNumber = 0; colNumber < 100; colNumber++) // Increase this number for more columns
                     {
                         ICell cell = row.CreateCell(colNumber);
                         cell.SetCellValue($"Row {rowNumber + 1}, Column {colNumber + 1}");
@@ -527,7 +528,7 @@ namespace TestCases.XSSF.Streaming
                 }
 
                 // Write the workbook data to a MemoryStream
-                using (var stream = new MemoryStream())
+                using(var stream = new MemoryStream())
                 {
                     workbook.Write(stream, true);
                     ClassicAssert.IsTrue(stream.CanRead);

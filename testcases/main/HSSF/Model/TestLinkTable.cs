@@ -17,17 +17,18 @@
 
 namespace TestCases.HSSF.Model
 {
-    using System;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
+    using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using System.Collections.Generic;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.Collections;
-    using NPOI.HSSF.Model;
-    using NPOI.SS.Formula.PTG;
+    using System.Collections.Generic;
+    using TestCases.HSSF;
 
     /**
      * Tests for {@link LinkTable}
@@ -54,9 +55,9 @@ namespace TestCases.HSSF.Model
             {
                 wb = HSSFTestDataSamples.OpenSampleWorkbook("ex45046-21984.xls");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if ("DEFINEDNAME is part of LinkTable".Equals(e.Message))
+                if("DEFINEDNAME is part of LinkTable".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 45046 b");
                 }
@@ -66,7 +67,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(3, wb.NumberOfSheets);
             String formula = wb.GetSheetAt(0).GetRow(4).GetCell(13).CellFormula;
 
-            if ("ipcSummenproduktIntern($P5,N$6,$A$9,N$5)".Equals(formula))
+            if("ipcSummenproduktIntern($P5,N$6,$A$9,N$5)".Equals(formula))
             {
                 // The reported symptom of this bugzilla is an earlier bug (already fixed)
                 throw new AssertionException("Identified bug 41726");
@@ -84,9 +85,9 @@ namespace TestCases.HSSF.Model
             {
                 wb = HSSFTestDataSamples.OpenSampleWorkbook("ex45698-22488.xls");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if ("Extern sheet is part of LinkTable".Equals(e.Message))
+                if("Extern sheet is part of LinkTable".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 45698");
                 }
@@ -131,9 +132,9 @@ namespace TestCases.HSSF.Model
             {
                 cellFormula = cell.CellFormula;
             }
-            catch (IndexOutOfRangeException e)
+            catch(IndexOutOfRangeException e)
             {
-                if (e.Message.Equals("Index: 2, Size: 2"))
+                if(e.Message.Equals("Index: 2, Size: 2"))
                 {
                     throw new AssertionException("Identified bug 45798");
                 }
@@ -162,9 +163,9 @@ namespace TestCases.HSSF.Model
             {
                 lt = new LinkTable(recList, 0, wrl, new Dictionary<String, NameCommentRecord>());
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("Expected an EXTERNSHEET record but got (NPOI.HSSF.record.SSTRecord)"))
+                if(e.Message.Equals("Expected an EXTERNSHEET record but got (NPOI.HSSF.record.SSTRecord)"))
                 {
                     throw new AssertionException("Identified bug 47001b");
                 }
@@ -276,8 +277,8 @@ namespace TestCases.HSSF.Model
             ClassicAssert.IsTrue(wrl[(3)] is SupBookRecord);
             ClassicAssert.IsTrue(wrl[(4)] is ExternalNameRecord);
             ClassicAssert.IsTrue(wrl[(5)] is ExternalNameRecord);
-            ClassicAssert.AreEqual("ISODD", ((ExternalNameRecord)wrl[(4)]).Text);
-            ClassicAssert.AreEqual("ISEVEN", ((ExternalNameRecord)wrl[(5)]).Text);
+            ClassicAssert.AreEqual("ISODD", ((ExternalNameRecord) wrl[(4)]).Text);
+            ClassicAssert.AreEqual("ISEVEN", ((ExternalNameRecord) wrl[(5)]).Text);
             ClassicAssert.IsTrue(wrl[(6)] is ExternSheetRecord);
             ClassicAssert.IsTrue(wrl[(7)] is EOFRecord);
 

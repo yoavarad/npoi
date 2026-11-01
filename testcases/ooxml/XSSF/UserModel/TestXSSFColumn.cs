@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -70,12 +70,12 @@ namespace TestCases.XSSF.UserModel
             int firstRowNum = 5;
             int numOfCells = 10;
 
-            for (int i = 0; i < numOfCells; i++)
+            for(int i = 0; i < numOfCells; i++)
             {
                 _ = column2.CreateCell(firstRowNum + i);
             }
 
-            for (int i = 0; i < numOfCells; i++)
+            for(int i = 0; i < numOfCells; i++)
             {
                 _ = column2.CreateCell(firstRowNum + 20 + i);
             }
@@ -108,12 +108,12 @@ namespace TestCases.XSSF.UserModel
             int firstRowNum = 5;
             int numOfCells = 10;
 
-            for (int i = 0; i < numOfCells; i++)
+            for(int i = 0; i < numOfCells; i++)
             {
                 _ = column2.CreateCell(firstRowNum + i);
             }
 
-            for (int i = 0; i < numOfCells; i++)
+            for(int i = 0; i < numOfCells; i++)
             {
                 _ = column2.CreateCell(firstRowNum + 20 + i);
             }
@@ -175,12 +175,12 @@ namespace TestCases.XSSF.UserModel
             int firstRowNum = 5;
             int numOfCells = 10;
 
-            for (int i = 0; i < numOfCells; i++)
+            for(int i = 0; i < numOfCells; i++)
             {
                 _ = column2.CreateCell(firstRowNum + i);
             }
 
-            for (int i = 0; i < numOfCells; i++)
+            for(int i = 0; i < numOfCells; i++)
             {
                 _ = column2.CreateCell(firstRowNum + 20 + i);
             }
@@ -233,7 +233,7 @@ namespace TestCases.XSSF.UserModel
             }
 
             using(XSSFWorkbook wbLoaded = new XSSFWorkbook(file.ToString()))
-            { 
+            {
                 XSSFSheet sheetLoaded = (XSSFSheet)wbLoaded.GetSheet("sheet1");
                 IColumn column1Loaded = sheetLoaded.GetColumn(columnIndex);
                 IColumn column2Loaded = sheetLoaded.GetColumn(columnIndex + 1);
@@ -382,7 +382,7 @@ namespace TestCases.XSSF.UserModel
             _ = column.CreateCell(4, CellType.Numeric);
             _ = column.CreateCell(5, CellType.String);
 
-            for (int i = 0; i <= 5; i++)
+            for(int i = 0; i <= 5; i++)
             {
                 ClassicAssert.NotNull(sheet.GetRow(i));
                 ClassicAssert.NotNull(sheet.GetRow(i).GetCell(columnIndex));
@@ -407,7 +407,7 @@ namespace TestCases.XSSF.UserModel
             XSSFWorkbook wbLoaded = new XSSFWorkbook(file.ToString());
             XSSFSheet sheetLoaded = (XSSFSheet)wbLoaded.GetSheet("sheet1");
 
-            for (int i = 0; i <= 5; i++)
+            for(int i = 0; i <= 5; i++)
             {
                 ClassicAssert.NotNull(sheetLoaded.GetRow(i));
                 ClassicAssert.NotNull(sheetLoaded.GetRow(i).GetCell(columnIndex));
@@ -508,7 +508,7 @@ namespace TestCases.XSSF.UserModel
             int initialNumberOfCells = 10;
             IColumn column = sheet.CreateColumn(columnIndex);
 
-            for (int i = 0; i < initialNumberOfCells; i++)
+            for(int i = 0; i < initialNumberOfCells; i++)
             {
                 _ = column.CreateCell(rowIndex + i);
             }
@@ -570,7 +570,7 @@ namespace TestCases.XSSF.UserModel
 
             XSSFColumn anotherColumn = (XSSFColumn)sheet.CreateColumn(copyColIndex);
             anotherColumn.CreateCell(0).SetCellValue("POI");
-            anotherColumn.Width = (short)(width * 2);
+            anotherColumn.Width = (short) (width * 2);
             anotherColumn.CreateCell(0).SetCellValue("POI");
             anotherColumn.CreateCell(cellToBeErasedRowIndex).SetCellValue("POI");
             XSSFColumn originalColumn = (XSSFColumn)sheet.CreateColumn(originalColIndex);

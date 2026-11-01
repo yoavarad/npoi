@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -62,7 +62,7 @@ namespace NPOI.Util
         {
             int b0 = data[offset] & 0xFF;
             int b1 = data[offset + 1] & 0xFF;
-            return (short)((b1 << 8) + (b0 << 0));
+            return (short) ((b1 << 8) + (b0 << 0));
             //return (short)GetNumber(data, offset, LittleEndianConsts.SHORT_SIZE);
         }
 
@@ -171,7 +171,7 @@ namespace NPOI.Util
             //return GetNumber(data, offset, LittleEndianConsts.LONG_SIZE);
             long result = 0;
 
-            for (int j = offset + LONG_SIZE - 1; j >= offset; j--)
+            for(int j = offset + LONG_SIZE - 1; j >= offset; j--)
             {
                 result <<= 8;
                 result |= 0xffL & data[j];
@@ -201,8 +201,8 @@ namespace NPOI.Util
         public static void PutShort(byte[] data, int offset, short value)
         {
             int i = offset;
-            data[i++] = (byte)((value >> 0) & 0xFF);
-            data[i++] = (byte)((value >> 8) & 0xFF);
+            data[i++] = (byte) ((value >> 0) & 0xFF);
+            data[i++] = (byte) ((value >> 8) & 0xFF);
             //PutNumber(data, offset, Convert.ToInt64(value), LittleEndianConsts.SHORT_SIZE);
         }
 
@@ -214,13 +214,13 @@ namespace NPOI.Util
         /// <param name="value">The value.</param>
         public static void PutByte(byte[] data, int offset, int value)
         {
-            data[offset] = (byte)value;
+            data[offset] = (byte) value;
             //PutNumber(data, offset, value, LittleEndianConsts.BYTE_SIZE);
         }
 
         public static void PutUByte(byte[] data, int offset, short value)
         {
-            data[offset] = (byte)(value & 0xFF);
+            data[offset] = (byte) (value & 0xFF);
         }
         /// <summary>
         /// Puts the U short.
@@ -232,8 +232,8 @@ namespace NPOI.Util
         {
             //PutNumber(data, offset, Convert.ToInt64(value), LittleEndianConsts.SHORT_SIZE);
             int i = offset;
-            data[i++] = (byte)((value >> 0) & 0xFF);
-            data[i++] = (byte)((value >> 8) & 0xFF);
+            data[i++] = (byte) ((value >> 0) & 0xFF);
+            data[i++] = (byte) ((value >> 8) & 0xFF);
         }
 
         /**
@@ -246,10 +246,10 @@ namespace NPOI.Util
          * @throws IOException
          *             if an I/O error occurs
          */
-        public static void PutShort( Stream outputStream, short value )
+        public static void PutShort(Stream outputStream, short value)
         {
-            outputStream.WriteByte((byte)((value >> 0) & 0xFF));
-            outputStream.WriteByte((byte)((value >> 8) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 0) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 8) & 0xFF));
         }
 
         /// <summary>
@@ -261,10 +261,10 @@ namespace NPOI.Util
         public static void PutInt(byte[] data, int offset, int value)
         {
             int i = offset;
-            data[i++] = (byte)((value >> 0) & 0xFF);
-            data[i++] = (byte)((value >> 8) & 0xFF);
-            data[i++] = (byte)((value >> 16) & 0xFF);
-            data[i++] = (byte)((value >> 24) & 0xFF);
+            data[i++] = (byte) ((value >> 0) & 0xFF);
+            data[i++] = (byte) ((value >> 8) & 0xFF);
+            data[i++] = (byte) ((value >> 16) & 0xFF);
+            data[i++] = (byte) ((value >> 24) & 0xFF);
         }
 
         /// <summary>
@@ -292,9 +292,9 @@ namespace NPOI.Util
             int limit = LONG_SIZE + offset;
             long v = value;
 
-            for (int j = offset; j < limit; j++)
+            for(int j = offset; j < limit; j++)
             {
-                data[j] = (byte)(v & 0xFF);
+                data[j] = (byte) (v & 0xFF);
                 v >>= 8;
             }
         }
@@ -309,7 +309,7 @@ namespace NPOI.Util
         public static void PutDouble(byte[] data, int offset, double value)
         {
             long lvalue = 0L;
-            if (double.IsNaN(value))
+            if(double.IsNaN(value))
             {
                 lvalue = -276939487313920L;
                 //PutNumber(data, offset, -276939487313920L, LittleEndianConsts.DOUBLE_SIZE);
@@ -330,14 +330,14 @@ namespace NPOI.Util
         public static short ReadShort(Stream stream)
         {
             //return GetShort(ReadFromStream(stream, LittleEndianConsts.SHORT_SIZE));
-            return (short)ReadUShort(stream);
+            return (short) ReadUShort(stream);
         }
 
         public static int ReadUShort(Stream stream)
         {
             int ch1 = stream.ReadByte();
             int ch2 = stream.ReadByte();
-            if ((ch1 | ch2) < 0)
+            if((ch1 | ch2) < 0)
             {
                 throw new BufferUnderrunException();
             }
@@ -357,7 +357,7 @@ namespace NPOI.Util
             int ch2 = stream.ReadByte();
             int ch3 = stream.ReadByte();
             int ch4 = stream.ReadByte();
-            if ((ch1 | ch2 | ch3 | ch4) < 0)
+            if((ch1 | ch2 | ch3 | ch4) < 0)
             {
                 throw new BufferUnderrunException();
             }
@@ -382,17 +382,17 @@ namespace NPOI.Util
             int ch6 = stream.ReadByte();
             int ch7 = stream.ReadByte();
             int ch8 = stream.ReadByte();
-            if ((ch1 | ch2 | ch3 | ch4 | ch5 | ch6 | ch7 | ch8) < 0)
+            if((ch1 | ch2 | ch3 | ch4 | ch5 | ch6 | ch7 | ch8) < 0)
             {
                 throw new BufferUnderrunException();
             }
 
             return
-                ((long)ch8 << 56) +
-                ((long)ch7 << 48) +
-                ((long)ch6 << 40) +
-                ((long)ch5 << 32) +
-                ((long)ch4 << 24) + // cast to long to preserve bit 31 (sign bit for ints)
+                ((long) ch8 << 56) +
+                ((long) ch7 << 48) +
+                ((long) ch6 << 40) +
+                ((long) ch5 << 32) +
+                ((long) ch4 << 24) + // cast to long to preserve bit 31 (sign bit for ints)
                       (ch3 << 16) +
                       (ch2 << 8) +
                       (ch1 << 0);
@@ -460,7 +460,7 @@ namespace NPOI.Util
         private static long GetNumber(byte[] data, int offset, int size)
         {
             long num = 0L;
-            for (int i = (offset + size) - 1; i >= offset; i--)
+            for(int i = (offset + size) - 1; i >= offset; i--)
             {
                 num = num << 8;
                 num |= 0xffL & data[i];
@@ -468,13 +468,13 @@ namespace NPOI.Util
             return num;
         }
 
-        
 
-        
 
-        
 
-        
+
+
+
+
 
         /// <summary>
         /// Gets the unsigned byte.
@@ -483,7 +483,7 @@ namespace NPOI.Util
         /// <returns></returns>
         public static short GetUByte(byte[] data)
         {
-            return (short)(data[0] & 0xFF);
+            return (short) (data[0] & 0xFF);
         }
 
         /// <summary>
@@ -494,11 +494,11 @@ namespace NPOI.Util
         /// <returns></returns>
         public static short GetUByte(byte[] data, int offset)
         {
-            return (short)(data[offset] & 0xFF);
+            return (short) (data[offset] & 0xFF);
         }
-        
 
-        
+
+
 
         /// <summary>
         /// Puts the double.
@@ -537,12 +537,12 @@ namespace NPOI.Util
          * @throws IOException
          *             if an I/O error occurs
          */
-        public static void PutUInt( long value, Stream outputStream )
+        public static void PutUInt(long value, Stream outputStream)
         {
-            outputStream.WriteByte((byte)((value >> 0) & 0xFF));
-            outputStream.WriteByte((byte)((value >> 8) & 0xFF));
-            outputStream.WriteByte((byte)((value >> 16) & 0xFF));
-            outputStream.WriteByte((byte)((value >> 24) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 0) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 8) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 16) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 24) & 0xFF));
         }
 
         /// <summary>
@@ -559,10 +559,10 @@ namespace NPOI.Util
         public static void PutUInt(byte[] data, int offset, long value)
         {
             int i = offset;
-            data[i++] = (byte)((value >> 0) & 0xFF);
-            data[i++] = (byte)((value >> 8) & 0xFF);
-            data[i++] = (byte)((value >> 16) & 0xFF);
-            data[i++] = (byte)((value >> 24) & 0xFF);
+            data[i++] = (byte) ((value >> 0) & 0xFF);
+            data[i++] = (byte) ((value >> 8) & 0xFF);
+            data[i++] = (byte) ((value >> 16) & 0xFF);
+            data[i++] = (byte) ((value >> 24) & 0xFF);
         }
         /// <summary>
         /// Puts the long.
@@ -585,7 +585,7 @@ namespace NPOI.Util
          * @throws IOException
          *             if an I/O error occurs
          */
-        public static void PutLong( long value, Stream outputStream )
+        public static void PutLong(long value, Stream outputStream)
         {
             outputStream.WriteByte((byte) ((value >> 0) & 0xFF));
             outputStream.WriteByte((byte) ((value >> 8) & 0xFF));
@@ -594,7 +594,7 @@ namespace NPOI.Util
             outputStream.WriteByte((byte) ((value >> 32) & 0xFF));
             outputStream.WriteByte((byte) ((value >> 40) & 0xFF));
             outputStream.WriteByte((byte) ((value >> 48) & 0xFF));
-            outputStream.WriteByte((byte)((value >> 56) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 56) & 0xFF));
         }
 
         /// <summary>
@@ -632,9 +632,9 @@ namespace NPOI.Util
         {
             int limit = size + offset;
             long v = value;
-            for (int i = offset; i < limit; i++)
+            for(int i = offset; i < limit; i++)
             {
-                data[i] = (byte)(v & 0xffL);
+                data[i] = (byte) (v & 0xffL);
                 v >>= 8;
             }
         }
@@ -651,9 +651,9 @@ namespace NPOI.Util
         {
             int limit = size + offset;
             ulong v = value;
-            for (int i = offset; i < limit; i++)
+            for(int i = offset; i < limit; i++)
             {
-                data[i] = (byte)(v & 0xffL);
+                data[i] = (byte) (v & 0xffL);
                 v >>= 8;
             }
         }
@@ -667,14 +667,14 @@ namespace NPOI.Util
         [Obsolete]
         public static void PutShortArray(byte[] data, int offset, short[] value)
         {
-            PutNumber( data, offset, Convert.ToInt64(value.Length), LittleEndianConsts.SHORT_SIZE);
-            for (int i = 0; i < value.Length; i++)
+            PutNumber(data, offset, Convert.ToInt64(value.Length), LittleEndianConsts.SHORT_SIZE);
+            for(int i = 0; i < value.Length; i++)
             {
-                PutNumber( data, (offset + 2) + (i * 2), Convert.ToInt64(value[i]), LittleEndianConsts.SHORT_SIZE);
+                PutNumber(data, (offset + 2) + (i * 2), Convert.ToInt64(value[i]), LittleEndianConsts.SHORT_SIZE);
             }
         }
 
-        
+
 
         /// <summary>
         /// Puts the U short.
@@ -696,10 +696,10 @@ namespace NPOI.Util
          * @throws IOException
          *             if an I/O error occurs
          */
-        public static void PutUShort( int value, Stream outputStream )
+        public static void PutUShort(int value, Stream outputStream)
         {
-            outputStream.WriteByte((byte)((value >> 0) & 0xFF));
-            outputStream.WriteByte((byte)((value >> 8) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 0) & 0xFF));
+            outputStream.WriteByte((byte) ((value >> 8) & 0xFF));
         }
 
         /// <summary>
@@ -713,22 +713,22 @@ namespace NPOI.Util
         {
             byte[] buffer = new byte[size];
             int num = stream.Read(buffer, 0, buffer.Length);
-            if (num == 0)
+            if(num == 0)
             {
-                for (int i = 0; i < buffer.Length; i++)
+                for(int i = 0; i < buffer.Length; i++)
                 {
                     buffer[i] = 0;
                 }
                 return buffer;
             }
-            if (num != size)
+            if(num != size)
             {
                 throw new BufferUnderrunException();
             }
             return buffer;
         }
 
-        
+
 
         /// <summary>
         /// Reads the long.
@@ -742,9 +742,9 @@ namespace NPOI.Util
             return BitConverter.ToUInt64(ReadFromStream(stream, LittleEndianConsts.LONG_SIZE), 0);
         }
 
-        
 
-        
+
+
     }
     // Nested Types
     [Serializable]

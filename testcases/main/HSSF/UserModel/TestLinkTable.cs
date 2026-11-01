@@ -1,9 +1,9 @@
 namespace TestCases.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
     /**
      * Tests for LinkTable
@@ -30,9 +30,9 @@ namespace TestCases.HSSF.UserModel
             {
                 wb = HSSFTestDataSamples.OpenSampleWorkbook("ex45046-21984.xls");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if ("DEFINEDNAME is part of LinkTable".Equals(e.Message))
+                if("DEFINEDNAME is part of LinkTable".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 45046 b");
                 }
@@ -42,7 +42,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(3, wb.NumberOfSheets);
             String formula = wb.GetSheetAt(0).GetRow(4).GetCell(13).CellFormula;
 
-            if ("ipcSummenproduktIntern($P5,N$6,$A$9,N$5)".Equals(formula))
+            if("ipcSummenproduktIntern($P5,N$6,$A$9,N$5)".Equals(formula))
             {
                 // The reported symptom of this bugzilla is an earlier bug (already fixed)
                 throw new AssertionException("Identified bug 41726");
@@ -60,9 +60,9 @@ namespace TestCases.HSSF.UserModel
             {
                 wb = HSSFTestDataSamples.OpenSampleWorkbook("ex45698-22488.xls");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if ("Extern sheet is part of LinkTable".Equals(e.Message))
+                if("Extern sheet is part of LinkTable".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 45698");
                 }
@@ -107,9 +107,9 @@ namespace TestCases.HSSF.UserModel
             {
                 cellFormula = cell.CellFormula;
             }
-            catch (IndexOutOfRangeException e)
+            catch(IndexOutOfRangeException e)
             {
-                if (e.Message.Equals("Index: 2, Size: 2"))
+                if(e.Message.Equals("Index: 2, Size: 2"))
                 {
                     throw new AssertionException("Identified bug 45798");
                 }

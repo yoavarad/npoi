@@ -17,17 +17,18 @@
 
 namespace TestCases.HPSF.Basic
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Collections;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HPSF;
-    using NPOI.Util;
-    using System.Collections.Generic;
     using NPOI.POIFS.FileSystem;
-    using System.Text.RegularExpressions;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
 
     /**
@@ -61,7 +62,7 @@ namespace TestCases.HPSF.Basic
         [Test]
         public void TestReadAllFiles1()
         {
-            foreach (POIFile pf in Util.ReadPropertySets(file))
+            foreach(POIFile pf in Util.ReadPropertySets(file))
             {
                 InputStream in1 =
                     new ByteArrayInputStream(pf.GetBytes());
@@ -84,9 +85,9 @@ namespace TestCases.HPSF.Basic
          */
         public static bool checkExclude(string f)
         {
-            foreach (String exclude in excludes)
+            foreach(String exclude in excludes)
             {
-                if (f.EndsWith(exclude))
+                if(f.EndsWith(exclude))
                 {
                     return false;
                 }
@@ -112,15 +113,16 @@ namespace TestCases.HPSF.Basic
         /// </para>
         /// </summary>
         [Test]
-        public void Recreate() {
+        public void Recreate()
+        {
             /* Read the POI filesystem's property Set streams: */
             Dictionary<String,PropertySet> psMap = new Dictionary<String,PropertySet>();
-        
+
             /* Create a new POI filesystem containing the origin file's
              * property Set streams: */
-            
+
             POIFSFileSystem poiFs = new POIFSFileSystem();
-            foreach (POIFile poifile in Util.ReadPropertySets(file))
+            foreach(POIFile poifile in Util.ReadPropertySets(file))
             {
                 InputStream in1 = new ByteArrayInputStream(poifile.GetBytes());
                 PropertySet psIn = PropertySetFactory.Create(in1);
@@ -133,28 +135,28 @@ namespace TestCases.HPSF.Basic
 
             /* Read the property Set streams from the POI filesystem just
              * created. */
-            foreach (KeyValuePair<String,PropertySet> me in psMap)
+            foreach(KeyValuePair<String, PropertySet> me in psMap)
             {
                 PropertySet ps1 = me.Value;
                 PropertySet ps2 = PropertySetFactory.Create(poiFs.Root, me.Key);
                 ClassicAssert.IsNotNull(ps2);
-            
+
                 /* Compare the property Set stream with the corresponding one
                  * from the origin file and check whether they are equal. */
-            
+
                 // Because of missing 0-paddings in the original input files, the bytes might differ.
                 // This fixes the comparison
-                
+
                 string pattern = "(?m)(\\s+$|(size|offset): [0-9]+)";
 
                 string ps1str = Regex.Replace(ps1.ToString().Replace(" 00", "   ").Replace(".", " "), pattern, "");
                 string ps2str = Regex.Replace(ps2.ToString().Replace(" 00", "   ").Replace(".", " "), pattern, "");
-            
+
                 ClassicAssert.AreEqual(ps1str, ps2str, "Equality for file " + file.Name);
             }
             poiFs.Close();
         }
-    
+
         /// <summary>
         /// This test method checks whether DocumentSummary information streams
         /// can be read. This is done by opening all "Test*" files in the 'poifs' directrory
@@ -175,10 +177,10 @@ namespace TestCases.HPSF.Basic
                  * If there is a document summry information stream, read it from
                  * the POI filesystem.
                  */
-                if (dir.HasEntry(DocumentSummaryInformation.DEFAULT_STREAM_NAME))
+                if(dir.HasEntry(DocumentSummaryInformation.DEFAULT_STREAM_NAME))
                 {
                     DocumentSummaryInformation dsi = TestWriteWellKnown.GetDocumentSummaryInformation(poifs);
-    
+
                     /* Execute the Get... methods. */
                     var _ = dsi.ByteCount;
                     _ = dsi.ByteOrder;
@@ -204,7 +206,7 @@ namespace TestCases.HPSF.Basic
                 poifs.Close();
             }
         }
-    
+
         /// <summary>
         /// Tests the simplified custom properties by reading them from the
         /// available test files.
@@ -222,19 +224,19 @@ namespace TestCases.HPSF.Basic
                  * the POI filesystem, else create a new one.
                  */
                 DocumentSummaryInformation dsi = TestWriteWellKnown.GetDocumentSummaryInformation(poifs);
-                if (dsi == null) 
+                if(dsi == null)
                 {
                     dsi = PropertySetFactory.NewDocumentSummaryInformation();
                 }
                 CustomProperties cps = dsi.CustomProperties;
 
-                if (cps == null)
+                if(cps == null)
                 {
                     /* The document does not have custom properties. */
                     return;
                 }
 
-                foreach (CustomProperty cp in cps.Properties())
+                foreach(CustomProperty cp in cps.Properties())
                 {
                     ClassicAssert.IsNotNull(cp.Name);
                     ClassicAssert.IsNotNull(cp.Value);
@@ -255,7 +257,7 @@ namespace TestCases.HPSF.Basic
             {
                 POIDataSamples _samples = POIDataSamples.GetHPSFInstance();
                 string[] files = _samples.GetFiles();
-                return files.Where(x=>TestReadAllFiles.checkExclude(x)).Select(f=>new FileInfo(f));
+                return files.Where(x => TestReadAllFiles.checkExclude(x)).Select(f => new FileInfo(f));
             }
         }
     }

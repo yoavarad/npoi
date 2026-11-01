@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
     using NPOI.Util;
+    using System;
 
 
     /**
@@ -30,7 +30,7 @@ namespace NPOI.HSSF.Record
     public abstract class StandardRecord : Record
     {
 
-        protected abstract int DataSize{get;}
+        protected abstract int DataSize { get; }
         public override int RecordSize
         {
             get
@@ -54,7 +54,7 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(this.Sid);
             out1.WriteShort(dataSize);
             Serialize(out1);
-            if (out1.WriteIndex - offset != recSize)
+            if(out1.WriteIndex - offset != recSize)
             {
                 throw new InvalidOperationException("Error in serialization of (" + this.GetType().Name + "): "
                         + "Incorrect number of bytes written - expected "

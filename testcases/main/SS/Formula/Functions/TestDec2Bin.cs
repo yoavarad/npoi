@@ -17,13 +17,14 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
-    using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link Dec2Bin}
@@ -54,7 +55,7 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval result = invokeValue(number1);
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
-            ClassicAssert.AreEqual(expected, ((StringEval)result).StringValue, msg);
+            ClassicAssert.AreEqual(expected, ((StringEval) result).StringValue, msg);
         }
 
         private static void ConfirmValueError(String msg, String number1, ErrorEval numError)
@@ -92,7 +93,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = new Dec2Bin().Evaluate(args, ctx);
 
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType());
-            ClassicAssert.AreEqual("1101", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("1101", ((StringEval) result).StringValue);
         }
 
         [Test]
@@ -144,7 +145,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = new Dec2Bin().Evaluate(args, -1, -1);
 
             ClassicAssert.AreEqual(result.GetType(), typeof(StringEval), "Had: " + result.ToString());
-            ClassicAssert.AreEqual("1101", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("1101", ((StringEval) result).StringValue);
         }
 
         [Test]
@@ -157,7 +158,7 @@ namespace TestCases.SS.Formula.Functions
 
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
             // TODO: documentation and behavior do not match here!
-            ClassicAssert.AreEqual("1101", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("1101", ((StringEval) result).StringValue);
         }
 
         [Test]
@@ -170,7 +171,7 @@ namespace TestCases.SS.Formula.Functions
 
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
             // TODO: documentation and behavior do not match here!
-            ClassicAssert.AreEqual("1101", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("1101", ((StringEval) result).StringValue);
         }
 
         [Test]
@@ -260,7 +261,7 @@ namespace TestCases.SS.Formula.Functions
         [Test]
         public void TestBackAndForth()
         {
-            for (int i = -512; i < 512; i++)
+            for(int i = -512; i < 512; i++)
             {
                 ValueEval result = invokeValue(i.ToString());
                 ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
@@ -268,7 +269,7 @@ namespace TestCases.SS.Formula.Functions
                 ValueEval back = invokeBack(((StringEval)result).StringValue);
                 ClassicAssert.AreEqual(typeof(NumberEval), back.GetType(), "Had: " + back.ToString());
 
-                ClassicAssert.AreEqual(i.ToString(), ((NumberEval)back).StringValue);
+                ClassicAssert.AreEqual(i.ToString(), ((NumberEval) back).StringValue);
             }
         }
     }

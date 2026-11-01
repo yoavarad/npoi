@@ -17,15 +17,15 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using TestCases.HSSF;
-    using NPOI.SS.UserModel;
-    using TestCases.SS.UserModel;
-    using NPOI.SS;
     using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF;
+    using TestCases.SS.UserModel;
 
     /**
      * Test Row is okay.
@@ -35,12 +35,12 @@ namespace TestCases.HSSF.UserModel
     [TestFixture]
     public class TestHSSFRow : BaseTestRow
     {
-        public TestHSSFRow(): base(HSSFITestDataProvider.Instance)
+        public TestHSSFRow() : base(HSSFITestDataProvider.Instance)
         {
-          
+
         }
 
-        
+
         [Test]
         public void TestRowBounds()
         {
@@ -60,18 +60,18 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = (HSSFSheet)workbook.CreateSheet("Sheet1");
             RowRecord rowRec = new RowRecord(ROW_IX);
-            rowRec.FirstCol=((short)2);
-            rowRec.LastCol=((short)5);
+            rowRec.FirstCol=((short) 2);
+            rowRec.LastCol=((short) 5);
 
             BlankRecord br = new BlankRecord();
             br.Row=(ROW_IX);
-            br.Column=((short)COL_IX);
+            br.Column=((short) COL_IX);
 
             sheet.Sheet.AddValueRecord(ROW_IX, br);
             HSSFRow row = new HSSFRow(workbook,sheet, rowRec);
             ICell cell = row.CreateCellFromRecord(br);
 
-            if (row.FirstCellNum == 2 && row.LastCellNum == 5)
+            if(row.FirstCellNum == 2 && row.LastCellNum == 5)
             {
                 Assert.Fail("Identified bug 46654a");
             }
@@ -107,10 +107,10 @@ namespace TestCases.HSSF.UserModel
             // Try to move to somewhere else that's used
             try
             {
-                row.MoveCell(cellB2, (short)3);
+                row.MoveCell(cellB2, (short) 3);
                 Assert.Fail("ArgumentException should have been thrown");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected during successful Test
             }
@@ -118,17 +118,17 @@ namespace TestCases.HSSF.UserModel
             // Try to move one off a different row
             try
             {
-                row.MoveCell(cellA2, (short)3);
+                row.MoveCell(cellA2, (short) 3);
                 Assert.Fail("ArgumentException should have been thrown");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected during successful Test
             }
 
             // Move somewhere spare
             ClassicAssert.IsNotNull(row.GetCell(1));
-            row.MoveCell(cellB2, (short)5);
+            row.MoveCell(cellB2, (short) 5);
             ClassicAssert.IsNull(row.GetCell(1));
             ClassicAssert.IsNotNull(row.GetCell(5));
 
@@ -149,11 +149,11 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(row.Height, sheet.DefaultRowHeight);
             ClassicAssert.IsFalse(row.RowRecord.BadFontHeight);
 
-            row.Height=((short)123);
+            row.Height=((short) 123);
             ClassicAssert.AreEqual(123, row.Height);
             ClassicAssert.IsTrue(row.RowRecord.BadFontHeight);
 
-            row.Height = ((short)-1);
+            row.Height = ((short) -1);
             ClassicAssert.AreEqual(row.Height, sheet.DefaultRowHeight);
             ClassicAssert.IsFalse(row.RowRecord.BadFontHeight);
 

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -45,7 +45,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsTrue(font.IsBold, "header row not bold");
             IPatternFormatting fill = headerRow.PatternFormatting;
             ClassicAssert.IsNotNull(fill, "No header fill");
-            ClassicAssert.AreEqual(4, ((XSSFColor)fill.FillBackgroundColorColor).Theme, "wrong header fill");
+            ClassicAssert.AreEqual(4, ((XSSFColor) fill.FillBackgroundColorColor).Theme, "wrong header fill");
         }
 
         [Test]

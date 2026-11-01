@@ -15,13 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Wordprocessing;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-
-using NPOI.OpenXmlFormats.Wordprocessing;
-using NPOI.OpenXml4Net.OPC;
 
 namespace NPOI.XWPF.UserModel
 {
@@ -77,21 +76,21 @@ namespace NPOI.XWPF.UserModel
                 notesDoc = FootnotesDocument.Parse(xmldoc, NamespaceManager);
                 ctFootnotes = notesDoc.Footnotes;
             }
-            catch (XmlException)
+            catch(XmlException)
             {
                 throw new POIXMLException();
             }
             finally
             {
-                if (is1 != null)
+                if(is1 != null)
                 {
                     is1.Close();
                 }
             }
             //get any Footnote
-            if (ctFootnotes.footnote != null)
+            if(ctFootnotes.footnote != null)
             {
-                foreach (CT_FtnEdn note in ctFootnotes.footnote)
+                foreach(CT_FtnEdn note in ctFootnotes.footnote)
                 {
                     listFootnote.Add(new XWPFFootnote(note, this));
                 }
@@ -105,13 +104,13 @@ namespace NPOI.XWPF.UserModel
             {
                 IEnumerator<PackageRelationship> relIter =
                     GetPackagePart().GetRelationshipsByType(XWPFRelation.HYPERLINK.Relation).GetEnumerator();
-                while (relIter.MoveNext())
+                while(relIter.MoveNext())
                 {
                     PackageRelationship rel = relIter.Current;
                     hyperlinks.Add(new XWPFHyperlink(rel.Id, rel.TargetUri.OriginalString));
                 }
             }
-            catch (InvalidDataException e)
+            catch(InvalidDataException e)
             {
                 throw new POIXMLException(e);
             }
@@ -126,7 +125,7 @@ namespace NPOI.XWPF.UserModel
             map.Put("http://schemas.Openxmlformats.org/wordProcessingml/2006/main", "w");
             xmlOptions.SaveSuggestedPrefixes=(map);*/
             PackagePart part = GetPackagePart();
-            using (Stream out1 = part.GetOutputStream())
+            using(Stream out1 = part.GetOutputStream())
             {
                 FootnotesDocument notesDoc = new FootnotesDocument(ctFootnotes);
                 notesDoc.Save(out1);
@@ -140,7 +139,8 @@ namespace NPOI.XWPF.UserModel
 
         public XWPFFootnote GetFootnoteById(int id)
         {
-            foreach(XWPFFootnote note in listFootnote) {
+            foreach(XWPFFootnote note in listFootnote)
+            {
                 if(note.GetCTFtnEdn().id == id)
                     return note;
             }
@@ -212,7 +212,7 @@ namespace NPOI.XWPF.UserModel
         /// <returns></returns>
         public bool RemoveFootnote(int pos)
         {
-            if (ctFootnotes.SizeOfFootnoteArray >= pos - 1)
+            if(ctFootnotes.SizeOfFootnoteArray >= pos - 1)
             {
                 ctFootnotes.RemoveFootnote(pos);
                 listFootnote.RemoveAt(pos);
@@ -228,7 +228,7 @@ namespace NPOI.XWPF.UserModel
          */
         public XWPFDocument GetXWPFDocument()
         {
-            if (document != null)
+            if(document != null)
             {
                 return document;
             }
@@ -245,7 +245,7 @@ namespace NPOI.XWPF.UserModel
 
         public XWPFHyperlink GetHyperlinkByID(string id)
         {
-            foreach (XWPFHyperlink link in hyperlinks)
+            foreach(XWPFHyperlink link in hyperlinks)
             {
                 if(link.Id.Equals(id))
                 {

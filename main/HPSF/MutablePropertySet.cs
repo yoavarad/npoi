@@ -29,11 +29,11 @@ using System.Collections.Generic;
 
 namespace NPOI.HPSF
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-    using NPOI.Util;
     using NPOI.POIFS.FileSystem;
+    using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.IO;
 
 
     /// <summary>

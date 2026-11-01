@@ -21,11 +21,12 @@ namespace TestCases.SS.Formula.Functions
 {
 
     using NPOI.HSSF;
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.HSSF;
 
@@ -57,24 +58,24 @@ namespace TestCases.SS.Formula.Functions
             ValueEval[] values;
 
             values = new ValueEval[] {
-				new NumberEval(0),
-				new StringEval(""),	// note - does match blank
+                new NumberEval(0),
+                new StringEval(""),	// note - does match blank
 				BoolEval.TRUE,
-				BoolEval.FALSE,
-				ErrorEval.DIV_ZERO,
-				BlankEval.instance,
-		};
+                BoolEval.FALSE,
+                ErrorEval.DIV_ZERO,
+                BlankEval.instance,
+        };
             range = EvalFactory.CreateAreaEval("A1:B3", values);
             ConfirmCountBlank(2, range);
 
             values = new ValueEval[] {
-				new NumberEval(0),
-				new StringEval(""),	// note - does match blank
+                new NumberEval(0),
+                new StringEval(""),	// note - does match blank
 				BlankEval.instance,
-				BoolEval.FALSE,
-				BoolEval.TRUE,
-				BlankEval.instance,
-		};
+                BoolEval.FALSE,
+                BoolEval.TRUE,
+                BlankEval.instance,
+        };
             range = EvalFactory.CreateAreaEval("A1:B3", values);
             ConfirmCountBlank(3, range);
         }
@@ -85,28 +86,28 @@ namespace TestCases.SS.Formula.Functions
             ValueEval[] args;
 
             args = new ValueEval[] {
-			new NumberEval(0),
-		};
+            new NumberEval(0),
+        };
             ConfirmCountA(1, args);
 
             args = new ValueEval[] {
-			new NumberEval(0),
-			new NumberEval(0),
-			new StringEval(""),
-		};
+            new NumberEval(0),
+            new NumberEval(0),
+            new StringEval(""),
+        };
             ConfirmCountA(3, args);
 
             args = new ValueEval[] {
-			EvalFactory.CreateAreaEval("D2:F5", new ValueEval[12]),
-		};
+            EvalFactory.CreateAreaEval("D2:F5", new ValueEval[12]),
+        };
             ConfirmCountA(12, args);
 
             args = new ValueEval[] {
-			EvalFactory.CreateAreaEval("D1:F5", new ValueEval[15]),
-			EvalFactory.CreateRefEval("A1"),
-			EvalFactory.CreateAreaEval("A1:G6", new ValueEval[42]),
-			new NumberEval(0),
-		};
+            EvalFactory.CreateAreaEval("D1:F5", new ValueEval[15]),
+            EvalFactory.CreateRefEval("A1"),
+            EvalFactory.CreateAreaEval("A1:G6", new ValueEval[42]),
+            new NumberEval(0),
+        };
             ConfirmCountA(59, args);
         }
         [Test]
@@ -118,25 +119,25 @@ namespace TestCases.SS.Formula.Functions
 
             // when criteria is a bool value
             values = new ValueEval[] {
-				new NumberEval(0),
-				new StringEval("TRUE"),	// note - does not match bool TRUE
+                new NumberEval(0),
+                new StringEval("TRUE"),	// note - does not match bool TRUE
 				BoolEval.TRUE,
-				BoolEval.FALSE,
-				BoolEval.TRUE,
-				BlankEval.instance,
-		};
+                BoolEval.FALSE,
+                BoolEval.TRUE,
+                BlankEval.instance,
+        };
             range = EvalFactory.CreateAreaEval("A1:B3", values);
             ConfirmCountIf(2, range, BoolEval.TRUE);
 
             // when criteria is numeric
             values = new ValueEval[] {
-				new NumberEval(0),
-				new StringEval("2"),
-				new StringEval("2.001"),
-				new NumberEval(2),
-				new NumberEval(2),
-				BoolEval.TRUE,
-		};
+                new NumberEval(0),
+                new StringEval("2"),
+                new StringEval("2.001"),
+                new NumberEval(2),
+                new NumberEval(2),
+                BoolEval.TRUE,
+        };
             range = EvalFactory.CreateAreaEval("A1:B3", values);
             ConfirmCountIf(3, range, new NumberEval(2));
             // note - same results when criteria is a string that Parses as the number with the same value
@@ -154,7 +155,7 @@ namespace TestCases.SS.Formula.Functions
             ClassicAssert.IsNotNull(mp);
             StringEval seA = new StringEval("aa"); // this should not match the criteria '<>aa'
             StringEval seB = new StringEval("bb"); // this should match
-            if (mp.Matches(seA) && !mp.Matches(seB))
+            if(mp.Matches(seA) && !mp.Matches(seB))
             {
                 throw new AssertionException("Identified bug 46647");
             }
@@ -166,24 +167,24 @@ namespace TestCases.SS.Formula.Functions
             ValueEval[] values;
 
             values = new ValueEval[] {
-				new StringEval("aa"),
-				new StringEval("def"),
-				new StringEval("aa"),
-				new StringEval("ghi"),
-				new StringEval("aa"),
-				new StringEval("aa"),
-		};
+                new StringEval("aa"),
+                new StringEval("def"),
+                new StringEval("aa"),
+                new StringEval("ghi"),
+                new StringEval("aa"),
+                new StringEval("aa"),
+        };
 
             range = EvalFactory.CreateAreaEval("A1:A6", values);
             ConfirmCountIf(2, range, new StringEval("<>aa"));
 
             values = new ValueEval[] {
-				new StringEval("ab"),
-				new StringEval("aabb"),
-				new StringEval("aa"), // match
+                new StringEval("ab"),
+                new StringEval("aabb"),
+                new StringEval("aa"), // match
 				new StringEval("abb"),
-				new StringEval("aab"),
-				new StringEval("ba"), // match
+                new StringEval("aab"),
+                new StringEval("ba"), // match
 		};
 
             range = EvalFactory.CreateAreaEval("A1:A6", values);
@@ -191,12 +192,12 @@ namespace TestCases.SS.Formula.Functions
 
 
             values = new ValueEval[] {
-				new NumberEval(222),
-				new NumberEval(222),
-				new NumberEval(111),
-				new StringEval("aa"),
-				new StringEval("111"),
-		};
+                new NumberEval(222),
+                new NumberEval(222),
+                new NumberEval(111),
+                new StringEval("aa"),
+                new StringEval("111"),
+        };
 
             range = EvalFactory.CreateAreaEval("A1:A5", values);
             ConfirmCountIf(4, range, new StringEval("<>111"));
@@ -233,13 +234,13 @@ namespace TestCases.SS.Formula.Functions
         {
 
             ValueEval[] values = {
-				new NumberEval(22),
-				new NumberEval(25),
-				new NumberEval(21),
-				new NumberEval(25),
-				new NumberEval(25),
-				new NumberEval(25),
-		};
+                new NumberEval(22),
+                new NumberEval(25),
+                new NumberEval(21),
+                new NumberEval(25),
+                new NumberEval(25),
+                new NumberEval(25),
+        };
             AreaEval arg0 = EvalFactory.CreateAreaEval("C1:C6", values);
 
             ValueEval criteriaArg = EvalFactory.CreateRefEval("A1", new NumberEval(25));
@@ -417,7 +418,7 @@ namespace TestCases.SS.Formula.Functions
             ISheet sheet = workbook.GetSheetAt(0);
 
             // numeric criteria
-            for (int i = 0; i < 8; i++)
+            for(int i = 0; i < 8; i++)
             {
                 CellValue expected = evaluator.Evaluate(sheet.GetRow(i).GetCell(REF_COL));
                 CellValue actual = evaluator.Evaluate(sheet.GetRow(i).GetCell(EVAL_COL));
@@ -425,7 +426,7 @@ namespace TestCases.SS.Formula.Functions
             }
 
             // boolean criteria
-            for (int i = 0; i < 8; i++)
+            for(int i = 0; i < 8; i++)
             {
                 HSSFCell cellFmla = (HSSFCell)sheet.GetRow(i).GetCell(8);
                 HSSFCell cellRef = (HSSFCell)sheet.GetRow(i).GetCell(9);
@@ -439,7 +440,7 @@ namespace TestCases.SS.Formula.Functions
             }
 
             // string criteria
-            for (int i = 1; i < 9; i++)
+            for(int i = 1; i < 9; i++)
             {
                 ICell cellFmla = sheet.GetRow(i).GetCell(13);
                 ICell cellRef = sheet.GetRow(i).GetCell(14);
@@ -540,7 +541,7 @@ namespace TestCases.SS.Formula.Functions
             HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(wb);
 
             HSSFSheet sheet1 = (HSSFSheet)wb.GetSheet("MSDN Example 1");
-            for (int rowIx = 7; rowIx <= 12; rowIx++)
+            for(int rowIx = 7; rowIx <= 12; rowIx++)
             {
                 HSSFRow row = (HSSFRow)sheet1.GetRow(rowIx - 1);
                 HSSFCell cellA = (HSSFCell)row.GetCell(0);  // cell containing a formula with COUNTIF
@@ -558,7 +559,7 @@ namespace TestCases.SS.Formula.Functions
             }
 
             HSSFSheet sheet2 = (HSSFSheet)wb.GetSheet("MSDN Example 2");
-            for (int rowIx = 9; rowIx <= 14; rowIx++)
+            for(int rowIx = 9; rowIx <= 14; rowIx++)
             {
                 HSSFRow row = (HSSFRow)sheet2.GetRow(rowIx - 1);
                 HSSFCell cellA = (HSSFCell)row.GetCell(0);  // cell containing a formula with COUNTIF
@@ -592,10 +593,10 @@ namespace TestCases.SS.Formula.Functions
             ISheet sheet = wb.GetSheetAt(0);
             HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(wb);
             int maxRow = sheet.LastRowNum;
-            for (int rowIx = START_ROW_IX; rowIx < maxRow; rowIx++)
+            for(int rowIx = START_ROW_IX; rowIx < maxRow; rowIx++)
             {
                 IRow row = sheet.GetRow(rowIx);
-                if (row == null)
+                if(row == null)
                 {
                     continue;
                 }
@@ -603,7 +604,7 @@ namespace TestCases.SS.Formula.Functions
                 CellValue cv = fe.Evaluate(cell);
                 double actualValue = cv.NumberValue;
                 double expectedValue = row.GetCell(COL_IX_EXPECTED).NumericCellValue;
-                if (actualValue != expectedValue)
+                if(actualValue != expectedValue)
                 {
                     System.Console.Error.WriteLine("Problem with Test case on row " + (rowIx + 1) + " "
                             + "Expected = (" + expectedValue + ") Actual=(" + actualValue + ") ");
@@ -611,7 +612,7 @@ namespace TestCases.SS.Formula.Functions
                 }
             }
 
-            if (failureCount > 0)
+            if(failureCount > 0)
             {
                 throw new AssertionException(failureCount + " " + functionName
                         + " Evaluations failed. See stderr for more details");

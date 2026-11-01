@@ -18,10 +18,10 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -48,7 +48,7 @@ namespace NPOI.HSSF.Record.Chart
             //  end, which must be there and must be zero
             // However, sometimes Excel forgets them...
             reserved = new byte[6];
-            if (in1.Available() == 0)
+            if(in1.Available() == 0)
             {
                 // They've gone missing...
             }

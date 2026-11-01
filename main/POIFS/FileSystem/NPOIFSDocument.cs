@@ -18,14 +18,14 @@
 
 using NPOI.POIFS.Common;
 using NPOI.POIFS.Dev;
+using NPOI.POIFS.EventFileSystem;
 using NPOI.POIFS.Properties;
 using NPOI.Util;
-using System.IO;
-using System.Collections.Generic;
 using System;
-using System.Text;
 using System.Collections;
-using NPOI.POIFS.EventFileSystem;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -48,8 +48,8 @@ namespace NPOI.POIFS.FileSystem
     * Constructor for an existing Document 
     */
         public NPOIFSDocument(DocumentNode document)
-            : this((DocumentProperty)document.Property,
-                 ((DirectoryNode)document.Parent).NFileSystem)
+            : this((DocumentProperty) document.Property,
+                 ((DirectoryNode) document.Parent).NFileSystem)
         {
         }
         /**
@@ -60,7 +60,7 @@ namespace NPOI.POIFS.FileSystem
             this._property = property;
             this._filesystem = filesystem;
 
-            if (property.Size < POIFSConstants.BIG_BLOCK_MINIMUM_DOCUMENT_SIZE)
+            if(property.Size < POIFSConstants.BIG_BLOCK_MINIMUM_DOCUMENT_SIZE)
             {
                 _stream = new NPOIFSStream(_filesystem.GetMiniStore(), property.StartBlock);
                 _block_size = _filesystem.GetMiniStore().GetBlockStoreBlockSize();
@@ -112,7 +112,7 @@ namespace NPOI.POIFS.FileSystem
             //}
 
             // Do we need to store as a mini stream or a full one?
-            if (inStream.Length < bigBlockSize)
+            if(inStream.Length < bigBlockSize)
             {
                 _stream = new NPOIFSStream(_filesystem.GetMiniStore());
                 _block_size = _filesystem.GetMiniStore().GetBlockStoreBlockSize();
@@ -136,21 +136,21 @@ namespace NPOI.POIFS.FileSystem
             //    outStream.Write(buf, 0, readBytes);
             //}
 
-            for (int readBytes = 0; ; )
+            for(int readBytes = 0; ;)
             {
                 readBytes = inStream.Read(buf, 0, buf.Length);
-                if (readBytes <= 0)
+                if(readBytes <= 0)
                     break;
                 length += readBytes;
                 outStream.Write(buf, 0, readBytes);
             }
             // Pad to the end of the block with -1s
             int usedInBlock = length % _block_size;
-            if (usedInBlock != 0 && usedInBlock != _block_size)
+            if(usedInBlock != 0 && usedInBlock != _block_size)
             {
                 int toBlockEnd = _block_size - usedInBlock;
                 byte[] padding = IOUtils.SafelyAllocate(toBlockEnd, MAX_RECORD_LENGTH);
-                Arrays.Fill(padding, (byte)0xFF);
+                Arrays.Fill(padding, (byte) 0xFF);
                 outStream.Write(padding, 0, padding.Length);
             }
 
@@ -163,7 +163,7 @@ namespace NPOI.POIFS.FileSystem
         {
             this._filesystem = filesystem;
 
-            if (size < POIFSConstants.BIG_BLOCK_MINIMUM_DOCUMENT_SIZE)
+            if(size < POIFSConstants.BIG_BLOCK_MINIMUM_DOCUMENT_SIZE)
             {
                 _stream = new NPOIFSStream(filesystem.GetMiniStore());
                 _block_size = _filesystem.GetMiniStore().GetBlockStoreBlockSize();
@@ -189,7 +189,8 @@ namespace NPOI.POIFS.FileSystem
         /**
         * Frees the underlying stream and property
         */
-        internal void Free() {
+        internal void Free()
+        {
             _stream.Free();
             _property.StartBlock = (POIFSConstants.END_OF_CHAIN);
         }
@@ -209,7 +210,7 @@ namespace NPOI.POIFS.FileSystem
 
         public IEnumerator<ByteBuffer> GetBlockIterator()
         {
-            if (Size > 0)
+            if(Size > 0)
             {
                 return _stream.GetBlockIterator();
             }
@@ -257,12 +258,12 @@ namespace NPOI.POIFS.FileSystem
         protected Object[] GetViewableArray()
         {
             String result = "<NO DATA>";
-            if (Size > 0)
+            if(Size > 0)
             {
                 // Get all the data into a single array
                 byte[] data = IOUtils.SafelyAllocate(Size, MAX_RECORD_LENGTH);
                 int offset = 0;
-                foreach (ByteBuffer buffer in _stream)
+                foreach(ByteBuffer buffer in _stream)
                 {
                     int length = Math.Min(_block_size, data.Length - offset);
                     buffer.Read(data, offset, length);

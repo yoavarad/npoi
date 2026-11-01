@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -18,7 +18,8 @@
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.XSSF;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 namespace TestCases.XSSF.UserModel
 {
 
@@ -50,15 +51,15 @@ namespace TestCases.XSSF.UserModel
             sheet.SetColumnWidth(4, 5000);
             sheet.SetColumnWidth(5, 5000);
 
-            sheet.GroupColumn((short)4, (short)7);
-            sheet.GroupColumn((short)9, (short)12);
+            sheet.GroupColumn((short) 4, (short) 7);
+            sheet.GroupColumn((short) 9, (short) 12);
 
             wb = XSSFTestDataSamples.WriteOutAndReadBack(wb, "testNoColsWithoutWidthWhenGrouping");
-            sheet = (XSSFSheet)wb.GetSheet("test");
+            sheet = (XSSFSheet) wb.GetSheet("test");
 
             CT_Cols cols = sheet.GetCTWorksheet().GetColsArray(0);
             //logger.log(POILogger.DEBUG, "test52186/cols:" + cols);
-            foreach (CT_Col col in cols.GetColList())
+            foreach(CT_Col col in cols.GetColList())
             {
                 ClassicAssert.IsTrue(col.IsSetWidth(), "Col width attribute is unset: " + col.ToString());
             }
@@ -77,7 +78,7 @@ namespace TestCases.XSSF.UserModel
             sheet.SetColumnWidth(4, 5000);
             sheet.SetColumnWidth(5, 5000);
 
-            sheet.GroupColumn((short)4, (short)5);
+            sheet.GroupColumn((short) 4, (short) 5);
 
             sheet.SetColumnGroupCollapsed(4, true);
 
@@ -85,14 +86,14 @@ namespace TestCases.XSSF.UserModel
             //logger.log(POILogger.DEBUG, "test52186_2/cols:" + cols);
 
             wb = XSSFTestDataSamples.WriteOutAndReadBack(wb, "testNoColsWithoutWidthWhenGroupingAndCollapsing");
-            sheet = (XSSFSheet)wb.GetSheet("test");
+            sheet = (XSSFSheet) wb.GetSheet("test");
 
-            for (int i = 4; i <= 5; i++)
+            for(int i = 4; i <= 5; i++)
             {
                 ClassicAssert.AreEqual(5000, sheet.GetColumnWidth(i), "Unexpected width of column " + i);
             }
             cols = sheet.GetCTWorksheet().GetColsArray(0);
-            foreach (CT_Col col in cols.GetColList())
+            foreach(CT_Col col in cols.GetColList())
             {
                 ClassicAssert.IsTrue(col.IsSetWidth(), "Col width attribute is unset: " + col.ToString());
             }
@@ -112,7 +113,7 @@ namespace TestCases.XSSF.UserModel
             sheet.CreateColumn(3).Width = 20;
             sheet.CreateColumn(4).Width = 20;
 
-            sheet.GroupColumn((short)2, (short)3);
+            sheet.GroupColumn((short) 2, (short) 3);
 
             CT_Cols cols = sheet.GetCTWorksheet().GetColsArray(0);
 
@@ -139,11 +140,11 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(4, cols.sizeOfColArray());
 
             wb = XSSFTestDataSamples.WriteOutAndReadBack(wb, "testMergingOverlappingCols_OVERLAPS_2_WRAPS");
-            sheet = (XSSFSheet)wb.GetSheet("test");
+            sheet = (XSSFSheet) wb.GetSheet("test");
 
-            for (int i = 1; i <= 4; i++)
+            for(int i = 1; i <= 4; i++)
             {
-                ClassicAssert.AreEqual( 20 * 256, sheet.GetColumnWidth(i), "Unexpected width of column " + i);
+                ClassicAssert.AreEqual(20 * 256, sheet.GetColumnWidth(i), "Unexpected width of column " + i);
             }
         }
 
@@ -160,7 +161,7 @@ namespace TestCases.XSSF.UserModel
             sheet.CreateColumn(3).Width = 20;
             sheet.CreateColumn(4).Width = 20;
 
-            sheet.GroupColumn((short)1, (short)5);
+            sheet.GroupColumn((short) 1, (short) 5);
 
             CT_Cols cols = sheet.GetCTWorksheet().GetColsArray(0);
 
@@ -192,9 +193,9 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(5, cols.sizeOfColArray());
 
             wb = XSSFTestDataSamples.WriteOutAndReadBack(wb, "testMergingOverlappingCols_OVERLAPS_1_WRAPS");
-            sheet = (XSSFSheet)wb.GetSheet("test");
+            sheet = (XSSFSheet) wb.GetSheet("test");
 
-            for (int i = 2; i <= 4; i++)
+            for(int i = 2; i <= 4; i++)
             {
                 ClassicAssert.AreEqual(20 * 256, sheet.GetColumnWidth(i), "Unexpected width of column " + i);
             }
@@ -240,13 +241,13 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(4, cols.sizeOfColArray());
 
             wb = XSSFTestDataSamples.WriteOutAndReadBack(wb, "testMergingOverlappingCols_OVERLAPS_1_MINOR");
-            sheet = (XSSFSheet)wb.GetSheet("test");
+            sheet = (XSSFSheet) wb.GetSheet("test");
 
-            for (int i = 2; i <= 4; i++)
+            for(int i = 2; i <= 4; i++)
             {
-                ClassicAssert.AreEqual( 20 * 256, sheet.GetColumnWidth(i), "Unexpected width of column " + i);
+                ClassicAssert.AreEqual(20 * 256, sheet.GetColumnWidth(i), "Unexpected width of column " + i);
             }
-            ClassicAssert.AreEqual( sheet.DefaultColumnWidth * 256, sheet.GetColumnWidth(5), "Unexpected width of column " + 5);
+            ClassicAssert.AreEqual(sheet.DefaultColumnWidth * 256, sheet.GetColumnWidth(5), "Unexpected width of column " + 5);
         }
 
         /**
@@ -292,13 +293,13 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(4, cols.sizeOfColArray());
 
             wb = XSSFTestDataSamples.WriteOutAndReadBack(wb, "testMergingOverlappingCols_OVERLAPS_2_MINOR");
-            sheet = (XSSFSheet)wb.GetSheet("test");
+            sheet = (XSSFSheet) wb.GetSheet("test");
 
-            for (int i = 2; i <= 4; i++)
+            for(int i = 2; i <= 4; i++)
             {
                 ClassicAssert.AreEqual(20 * 256, sheet.GetColumnWidth(i), "Unexpected width of column " + i);
             }
-            ClassicAssert.AreEqual(sheet.DefaultColumnWidth * 256, sheet.GetColumnWidth(1),"Unexpected width of column " + 1 );
+            ClassicAssert.AreEqual(sheet.DefaultColumnWidth * 256, sheet.GetColumnWidth(1), "Unexpected width of column " + 1);
         }
 
     }

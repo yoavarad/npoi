@@ -18,11 +18,12 @@
 
 namespace TestCases.HPSF.Basic
 {
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HPSF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
 
 
 
@@ -43,7 +44,7 @@ namespace TestCases.HPSF.Basic
         {
             "\x0005DocumentSummaryInformation",
         };
-//        FileStream data;
+        //        FileStream data;
         //POIFile[] poiFiles;
 
 
@@ -68,7 +69,7 @@ namespace TestCases.HPSF.Basic
         public void TestPropertySetMethods()
         {
             POIDataSamples samples = POIDataSamples.GetHPSFInstance();
-            using (FileStream data = samples.GetFile(POI_FS))
+            using(FileStream data = samples.GetFile(POI_FS))
             {
                 POIFile poiFile = Util.ReadPOIFiles(data, POI_FILES)[0];
                 byte[] b = poiFile.GetBytes();

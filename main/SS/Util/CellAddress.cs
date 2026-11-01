@@ -17,11 +17,8 @@
 
 namespace NPOI.SS.Util
 {
-    using System;
-
-
-
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * <p>This class is a Container for POI usermodel row=0 column=0 cell references.
@@ -69,10 +66,10 @@ namespace NPOI.SS.Util
 
             int loc = 0;
             // step over column name chars until first digit for row number.
-            for (; loc < length; loc++)
+            for(; loc < length; loc++)
             {
                 char ch = address[loc];
-                if (Char.IsDigit(ch))
+                if(Char.IsDigit(ch))
                 {
                     break;
                 }
@@ -160,10 +157,12 @@ namespace NPOI.SS.Util
         public int CompareTo(CellAddress other)
         {
             int r = this._row - other._row;
-            if (r != 0) return r;
+            if(r != 0)
+                return r;
 
             r = this._col - other._col;
-            if (r != 0) return r;
+            if(r != 0)
+                return r;
 
             return 0;
         }
@@ -171,11 +170,11 @@ namespace NPOI.SS.Util
 
         public override bool Equals(Object o)
         {
-            if (this == o)
+            if(this == o)
             {
                 return true;
             }
-            if (o is not CellAddress other)
+            if(o is not CellAddress other)
             {
                 return false;
             }

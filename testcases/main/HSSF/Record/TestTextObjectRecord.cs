@@ -17,16 +17,17 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Text;
     using TestCases.HSSF.Record;
-    using NPOI.HSSF.Record;
 
     /**
      * Tests that serialization and deserialization of the TextObjectRecord .
@@ -116,10 +117,10 @@ namespace TestCases.HSSF.Record
         public void TestLongRecords()
         {
             int[] length = { 1024, 2048, 4096, 8192, 16384 }; //test against strings of different length
-            for (int i = 0; i < length.Length; i++)
+            for(int i = 0; i < length.Length; i++)
             {
                 StringBuilder buff = new StringBuilder(length[i]);
-                for (int j = 0; j < length[i]; j++)
+                for(int j = 0; j < length[i]; j++)
                 {
                     buff.Append("x");
                 }

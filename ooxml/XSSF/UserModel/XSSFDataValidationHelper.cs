@@ -17,11 +17,11 @@
 namespace NPOI.XSSF.UserModel
 {
 
-    using NPOI.SS.UserModel;
-    using System;
     using NPOI.OpenXmlFormats.Spreadsheet;
-    using System.Collections.Generic;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * @author <a href="rjankiraman@emptoris.com">Radhakrishnan J</a>
@@ -74,15 +74,15 @@ namespace NPOI.XSSF.UserModel
 
         public IDataValidationConstraint CreateNumericConstraint(int validationType, int operatorType, String formula1, String formula2)
         {
-            if (validationType == ValidationType.INTEGER)
+            if(validationType == ValidationType.INTEGER)
             {
                 return CreateintConstraint(operatorType, formula1, formula2);
             }
-            else if (validationType == ValidationType.DECIMAL)
+            else if(validationType == ValidationType.DECIMAL)
             {
                 return CreateDecimalConstraint(operatorType, formula1, formula2);
             }
-            else if (validationType == ValidationType.TEXT_LENGTH)
+            else if(validationType == ValidationType.TEXT_LENGTH)
             {
                 return CreateTextLengthConstraint(operatorType, formula1, formula2);
             }
@@ -127,7 +127,7 @@ namespace NPOI.XSSF.UserModel
             CT_DataValidation newDataValidation = new CT_DataValidation();
 
             int validationType = constraint.GetValidationType();
-            switch (validationType)
+            switch(validationType)
             {
                 case ValidationType.LIST:
                     newDataValidation.type = (ST_DataValidationType.list);
@@ -159,17 +159,17 @@ namespace NPOI.XSSF.UserModel
                     break;
             }
 
-            if (validationType != ValidationType.ANY && validationType != ValidationType.LIST)
+            if(validationType != ValidationType.ANY && validationType != ValidationType.LIST)
             {
                 newDataValidation.@operator = ST_DataValidationOperator.between;
-                if (XSSFDataValidation.operatorTypeMappings.TryGetValue(constraint.Operator, out ST_DataValidationOperator mapping))
+                if(XSSFDataValidation.operatorTypeMappings.TryGetValue(constraint.Operator, out ST_DataValidationOperator mapping))
                     newDataValidation.@operator = mapping;
 
-                if (constraint.Formula1 != null)
+                if(constraint.Formula1 != null)
                 {
                     newDataValidation.formula1 = (constraint.Formula1);
                 }
-                if (constraint.Formula2 != null)
+                if(constraint.Formula2 != null)
                 {
                     newDataValidation.formula2 = (constraint.Formula2);
                 }
@@ -177,7 +177,7 @@ namespace NPOI.XSSF.UserModel
 
             CellRangeAddress[] cellRangeAddresses = cellRangeAddressList.CellRangeAddresses;
             string sqref = string.Empty;
-            for (int i = 0; i < cellRangeAddresses.Length; i++)
+            for(int i = 0; i < cellRangeAddresses.Length; i++)
             {
                 CellRangeAddress cellRangeAddress = cellRangeAddresses[i];
                 if(sqref.Length==0)
@@ -192,5 +192,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-
-

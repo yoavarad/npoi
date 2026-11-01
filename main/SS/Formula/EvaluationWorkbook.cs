@@ -18,10 +18,10 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
     using NPOI.SS.Formula;
-    using NPOI.SS.Formula.UDF;
     using NPOI.SS.Formula.PTG;
+    using NPOI.SS.Formula.UDF;
+    using System;
 
     public class ExternalSheet
     {
@@ -115,7 +115,7 @@ namespace NPOI.SS.Formula
          * XSSF Only - fetch the external-style name details
          */
         ExternalName GetExternalName(String nameName, String sheetName, int externalWorkbookNumber);
-    
+
         IEvaluationName GetName(NamePtg namePtg);
         IEvaluationName GetName(String name, int sheetIndex);
         String ResolveNameXText(NameXPtg ptg);

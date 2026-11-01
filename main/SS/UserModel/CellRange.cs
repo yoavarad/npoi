@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace NPOI.SS.UserModel
 {
@@ -29,7 +29,7 @@ namespace NPOI.SS.UserModel
         /**
          * @return a flattened array of all the cells in this {@link CellRange}
          */
-        T[] FlattenedCells{get;}
+        T[] FlattenedCells { get; }
         /**
          * @return a 2-D array of all the cells in this {@link CellRange}.  The first
          * array dimension is the row index (values <tt>0...height-1</tt>)

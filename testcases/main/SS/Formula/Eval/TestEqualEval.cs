@@ -18,10 +18,11 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.SS.Formula.Functions;
 
     /**
@@ -45,19 +46,19 @@ namespace TestCases.SS.Formula.Eval
 
             ValueEval[] values = { BoolEval.FALSE, };
             ValueEval[] args = {
-			EvalFactory.CreateAreaEval("B1:B1", values),
-			BoolEval.FALSE,
-		};
+            EvalFactory.CreateAreaEval("B1:B1", values),
+            BoolEval.FALSE,
+        };
             ValueEval result = Evaluate(EvalInstances.Equal, args, 10, 10);
-            if (result is ErrorEval)
+            if(result is ErrorEval)
             {
-                if (result == ErrorEval.VALUE_INVALID)
+                if(result == ErrorEval.VALUE_INVALID)
                 {
                     throw new AssertionException("Identified bug in Evaluation of 1x1 area");
                 }
             }
             ClassicAssert.AreEqual(typeof(BoolEval), result.GetType());
-            ClassicAssert.IsTrue(((BoolEval)result).BooleanValue);
+            ClassicAssert.IsTrue(((BoolEval) result).BooleanValue);
         }
         /**
          * Empty string is equal to blank
@@ -67,13 +68,13 @@ namespace TestCases.SS.Formula.Eval
         {
 
             ValueEval[] args = {
-			new StringEval(""),
-			BlankEval.instance,
-		};
+            new StringEval(""),
+            BlankEval.instance,
+        };
             ValueEval result = Evaluate(EvalInstances.Equal, args, 10, 10);
             ClassicAssert.AreEqual(typeof(BoolEval), result.GetType());
             BoolEval be = (BoolEval)result;
-            if (!be.BooleanValue)
+            if(!be.BooleanValue)
             {
                 throw new AssertionException("Identified bug blank/empty string Equality");
             }
@@ -86,7 +87,7 @@ namespace TestCases.SS.Formula.Eval
         [Test]
         public void TestStringInsensitive_bug46613()
         {
-            if (!EvalStringCmp("abc", "aBc", EvalInstances.Equal))
+            if(!EvalStringCmp("abc", "aBc", EvalInstances.Equal))
             {
                 throw new AssertionException("Identified bug 46613");
             }
@@ -101,9 +102,9 @@ namespace TestCases.SS.Formula.Eval
         private bool EvalStringCmp(String a, String b, Function cmpOp)
         {
             ValueEval[] args = {
-			new StringEval(a),
-			new StringEval(b),
-		};
+            new StringEval(a),
+            new StringEval(b),
+        };
             ValueEval result = Evaluate(cmpOp, args, 10, 20);
             ClassicAssert.AreEqual(typeof(BoolEval), result.GetType());
             BoolEval be = (BoolEval)result;
@@ -141,7 +142,7 @@ namespace TestCases.SS.Formula.Eval
             ValueEval[] args = { a, b, };
             ValueEval result = Evaluate(cmpOp, args, 10, 20);
             ClassicAssert.AreEqual(typeof(BoolEval), result.GetType());
-            ClassicAssert.AreEqual(expectedResult, ((BoolEval)result).BooleanValue);
+            ClassicAssert.AreEqual(expectedResult, ((BoolEval) result).BooleanValue);
         }
 
         /**
@@ -158,13 +159,13 @@ namespace TestCases.SS.Formula.Eval
         {
             NumberEval zero = new NumberEval(0.0);
             NumberEval mZero = (NumberEval)Evaluate(UnaryMinusEval.instance, new ValueEval[] { zero, }, 0, 0);
-            if ((ulong)BitConverter.DoubleToInt64Bits(mZero.NumberValue) == 0x8000000000000000L)
+            if((ulong) BitConverter.DoubleToInt64Bits(mZero.NumberValue) == 0x8000000000000000L)
             {
                 throw new AssertionException("Identified bug 47198: unary minus should convert -0.0 to 0.0");
             }
             ValueEval[] args = { zero, mZero, };
             BoolEval result = (BoolEval)Evaluate(EvalInstances.Equal, args, 0, 0);
-            if (!result.BooleanValue)
+            if(!result.BooleanValue)
             {
                 throw new AssertionException("Identified bug 47198: -0.0 != 0.0");
             }
@@ -181,7 +182,7 @@ namespace TestCases.SS.Formula.Eval
 
             ValueEval[] args = { a, b, };
             BoolEval result = (BoolEval)Evaluate(EvalInstances.Equal, args, 0, 0);
-            if (!result.BooleanValue)
+            if(!result.BooleanValue)
             {
                 throw new AssertionException("Identified bug 47598: 1+1.0028-0.9973 != 1.0055");
             }
@@ -189,7 +190,7 @@ namespace TestCases.SS.Formula.Eval
 
         private static ValueEval Evaluate(Function oper, ValueEval[] args, int srcRowIx, int srcColIx)
         {
-            return oper.Evaluate(args, srcRowIx, (short)srcColIx);
+            return oper.Evaluate(args, srcRowIx, (short) srcColIx);
         }
     }
 

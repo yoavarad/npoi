@@ -18,9 +18,9 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
+    using System;
 
     /**
      * Abstracts a workbook for the purpose of converting formula To text.<br/>

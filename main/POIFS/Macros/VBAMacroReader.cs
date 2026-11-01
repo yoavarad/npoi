@@ -17,13 +17,13 @@
 
 namespace NPOI.POIFS.Macros
 {
+    using ICSharpCode.SharpZipLib.Zip;
+    using NPOI.POIFS.FileSystem;
+    using NPOI.Util;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
-    using ICSharpCode.SharpZipLib.Zip;
-    using NPOI.POIFS.FileSystem;
-    using NPOI.Util;
 
     /**
      * Finds all VBA Macros in an office file (OLE2/POIFS and OOXML/OPC),
@@ -43,7 +43,7 @@ namespace NPOI.POIFS.Macros
         {
             InputStream is1 = FileMagicContainer.PrepareToCheckMagic(rstream);
             FileMagic fm = FileMagicContainer.ValueOf(is1);
-            if (fm == FileMagic.OLE2)
+            if(fm == FileMagic.OLE2)
             {
                 fs = new NPOIFSFileSystem(is1);
             }
@@ -59,7 +59,7 @@ namespace NPOI.POIFS.Macros
             {
                 this.fs = new NPOIFSFileSystem(file);
             }
-            catch (OfficeXmlFileException)
+            catch(OfficeXmlFileException)
             {
                 OpenOOXML(file.OpenRead());
             }
@@ -74,9 +74,9 @@ namespace NPOI.POIFS.Macros
         {
             ZipInputStream zis = new ZipInputStream(zipFile);
             ZipEntry zipEntry;
-            while ((zipEntry = zis.GetNextEntry()) != null)
+            while((zipEntry = zis.GetNextEntry()) != null)
             {
-                if (zipEntry.Name.EndsWith(VBA_PROJECT_OOXML, StringComparison.OrdinalIgnoreCase))
+                if(zipEntry.Name.EndsWith(VBA_PROJECT_OOXML, StringComparison.OrdinalIgnoreCase))
                 {
                     try
                     {
@@ -84,7 +84,7 @@ namespace NPOI.POIFS.Macros
                         this.fs = new NPOIFSFileSystem(zis);
                         return;
                     }
-                    catch (IOException)
+                    catch(IOException)
                     {
                         // Tidy up
                         zis.Close();
@@ -117,10 +117,10 @@ namespace NPOI.POIFS.Macros
             FindMacros(fs.Root, modules);
 
             Dictionary<String, String> moduleSources = new Dictionary<String, String>();
-            foreach (KeyValuePair<String, Module> entry in modules)
+            foreach(KeyValuePair<String, Module> entry in modules)
             {
                 Module module = entry.Value;
-                if (module.buf != null && module.buf.Length > 0)
+                if(module.buf != null && module.buf.Length > 0)
                 { // Skip empty modules
                     moduleSources.Add(entry.Key, ModuleMap.charset.GetString(module.buf));
                 }
@@ -163,7 +163,7 @@ namespace NPOI.POIFS.Macros
             public Module Put(string key, Module value)
             {
                 Module oldValue = null;
-                if (ContainsKey(key))
+                if(ContainsKey(key))
                 {
                     oldValue = this[key];
                     this[key] = value;
@@ -189,7 +189,7 @@ namespace NPOI.POIFS.Macros
 
         protected void FindMacros(DirectoryNode dir, ModuleMap modules)
         {
-            if (VBA_PROJECT_POIFS.Equals(dir.Name, StringComparison.OrdinalIgnoreCase))
+            if(VBA_PROJECT_POIFS.Equals(dir.Name, StringComparison.OrdinalIgnoreCase))
             {
                 // VBA project directory, process
                 ReadMacros(dir, modules);
@@ -197,9 +197,9 @@ namespace NPOI.POIFS.Macros
             else
             {
                 // Check children
-                foreach (Entry child in dir)
+                foreach(Entry child in dir)
                 {
-                    if (child is DirectoryNode node)
+                    if(child is DirectoryNode node)
                     {
                         FindMacros(node, modules);
                     }
@@ -242,7 +242,7 @@ namespace NPOI.POIFS.Macros
         {
             int moduleOffset = in1.ReadInt();
             Module module = modules.Get(streamName);
-            if (module == null)
+            if(module == null)
             {
                 // First time we've seen the module. Add it to the ModuleMap and decompress it later
                 module = new Module();
@@ -264,7 +264,7 @@ namespace NPOI.POIFS.Macros
         {
             Module module = modules.Get(name);
             // TODO Refactor this to fetch dir then do the rest
-            if (module == null)
+            if(module == null)
             {
                 // no DIR stream with offsets yet, so store the compressed bytes for later
                 module = new Module();
@@ -272,16 +272,16 @@ namespace NPOI.POIFS.Macros
                 module.Read(dis);
             }
             else if(module.buf == null)
-            {   
+            {
                 //if we haven't already read the bytes for the module keyed off this name...
-                if (module.offset == null)
+                if(module.offset == null)
                 {
                     //This should not happen. bug 59858
                     throw new IOException("Module offset for '" + name + "' was never Read.");
                 }
                 // we know the offset already, so decompress immediately on-the-fly
                 long skippedBytes = dis.Skip(module.offset.Value);
-                if (skippedBytes != module.offset)
+                if(skippedBytes != module.offset)
                 {
                     throw new IOException("tried to skip " + module.offset + " bytes, but actually skipped " + skippedBytes + " bytes");
                 }
@@ -300,9 +300,9 @@ namespace NPOI.POIFS.Macros
         private static void TrySkip(RLEDecompressingInputStream in1, long n)
         {
             long skippedBytes = in1.Skip(n);
-            if (skippedBytes != n)
+            if(skippedBytes != n)
             {
-                if (skippedBytes < 0)
+                if(skippedBytes < 0)
                 {
                     throw new IOException(
                         "Tried skipping " + n + " bytes, but no bytes were skipped. "
@@ -343,15 +343,16 @@ namespace NPOI.POIFS.Macros
 
         protected void ReadMacros(DirectoryNode macroDir, ModuleMap modules)
         {
-            foreach (Entry entry in macroDir)
+            foreach(Entry entry in macroDir)
             {
-                if (entry is not DocumentNode document) { continue; }
+                if(entry is not DocumentNode document)
+                { continue; }
 
                 String name = entry.Name;
                 DocumentInputStream dis = new DocumentInputStream(document);
                 try
                 {
-                    if ("dir".Equals(name, StringComparison.OrdinalIgnoreCase))
+                    if("dir".Equals(name, StringComparison.OrdinalIgnoreCase))
                     {
                         // process DIR
                         RLEDecompressingInputStream in1 = new RLEDecompressingInputStream(dis);
@@ -360,16 +361,16 @@ namespace NPOI.POIFS.Macros
                         int recordId = 0;
                         try
                         {
-                            while (true)
+                            while(true)
                             {
                                 recordId = in1.ReadShort();
-                                if (EOF == recordId
+                                if(EOF == recordId
                                         || VERSION_INDEPENDENT_TERMINATOR == recordId)
                                 {
                                     break;
                                 }
                                 int recordLength = in1.ReadInt();
-                                switch (recordId)
+                                switch(recordId)
                                 {
                                     case PROJECTVERSION:
                                         TrySkip(in1, 6);
@@ -383,7 +384,7 @@ namespace NPOI.POIFS.Macros
                                     case STREAMNAME:
                                         streamName = ReadString(in1, recordLength, ModuleMap.charset);
                                         int reserved = in1.ReadShort();
-                                        if (reserved != STREAMNAME_RESERVED)
+                                        if(reserved != STREAMNAME_RESERVED)
                                         {
                                             throw new IOException("Expected x0032 after stream name before Unicode stream name, but found: " +
                                                     HexDump.ToHex(reserved));
@@ -403,7 +404,7 @@ namespace NPOI.POIFS.Macros
                                 }
                             }
                         }
-                        catch (IOException e)
+                        catch(IOException e)
                         {
                             throw new IOException(
                                     "Error occurred while Reading macros at section id "
@@ -414,7 +415,7 @@ namespace NPOI.POIFS.Macros
                             in1.Close();
                         }
                     }
-                    else if (!name.StartsWith("__SRP", StringComparison.OrdinalIgnoreCase)
+                    else if(!name.StartsWith("__SRP", StringComparison.OrdinalIgnoreCase)
                           && !name.StartsWith("_VBA_PROJECT", StringComparison.OrdinalIgnoreCase))
                     {
                         // process module, skip __SRP and _VBA_PROJECT since these do not contain macros

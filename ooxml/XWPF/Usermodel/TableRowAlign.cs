@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -35,7 +35,7 @@ namespace NPOI.XWPF.UserModel
     }
     public static class TableRowAlignExtension
     {
-        private static readonly Dictionary<int, TableRowAlign> imap = 
+        private static readonly Dictionary<int, TableRowAlign> imap =
             new(){
                 { 0, TableRowAlign.LEFT },
                 { 1, TableRowAlign.CENTER },
@@ -55,5 +55,3 @@ namespace NPOI.XWPF.UserModel
         }
     }
 }
-
-

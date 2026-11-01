@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -17,11 +17,10 @@
 
 namespace TestCases.SS.Util
 {
-    using System;
-
     using NPOI.SS.Util;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link NumberToTextConverter}
@@ -52,12 +51,12 @@ namespace TestCases.SS.Util
 
             NumberToTextConversionExamples.ExampleConversion[] examples = NumberToTextConversionExamples.GetExampleConversions();
 
-            for (int i = 0; i < examples.Length; i++)
+            for(int i = 0; i < examples.Length; i++)
             {
                 NumberToTextConversionExamples.ExampleConversion example = examples[i];
                 try
                 {
-                    if (example.IsNaN)
+                    if(example.IsNaN)
                     {
                         ConfirmNaN(example.RawDoubleBits, example.ExcelRendering);
                         continue;
@@ -65,7 +64,7 @@ namespace TestCases.SS.Util
 
                     String actual = NumberToTextConverter.ToText(example.DoubleValue);
 
-                    if (!example.ExcelRendering.Equals(actual))
+                    if(!example.ExcelRendering.Equals(actual))
                     {
                         failureCount++;
                         String msg = "Error rendering for examples[" + i + "] "
@@ -75,7 +74,7 @@ namespace TestCases.SS.Util
                         Console.WriteLine(msg);
                     }
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     failureCount++;
                     Console.WriteLine("Error in excel rendering for examples[" + i + "] "
@@ -84,7 +83,7 @@ namespace TestCases.SS.Util
                 }
             }
 
-            if (failureCount > 0)
+            if(failureCount > 0)
             {
                 throw new Exception(failureCount
                         + " error(s) in excel number to text conversion (see std-err)");
@@ -142,7 +141,7 @@ namespace TestCases.SS.Util
             String jdkText = dResult.ToString("R");
             //in c#, the value of dResult.ToString() is 0.06 and equals to actualText;
             //so we use dResult.ToString("R"), thus the test passes.
-            if (jdkText.Equals(actualText))
+            if(jdkText.Equals(actualText))
             {
                 // "0.060000000000000005"
                 throw new Exception("Should not use default JDK IEEE double rendering");

@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,25 +13,25 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 Double xval = evaluateValue(arg1, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(xval))
+                if(double.IsNaN(xval))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
-                else if (xval < 0)
+                else if(xval < 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
 
                 return new NumberEval(NormDist.probability(xval, 0, 1, true));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 1)
+            if(args.Length == 1)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0]);
             }

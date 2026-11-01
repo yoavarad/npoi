@@ -17,10 +17,9 @@
 
 namespace NPOI.HSSF.Record.Cont
 {
-    using System;
-
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
 
     /**
      * An augmented {@link LittleEndianOutput} used for serialization of {@link ContinuableRecord}s.
@@ -88,7 +87,7 @@ namespace NPOI.HSSF.Record.Cont
         }
         public void WriteContinueIfRequired(int requiredContinuousSize)
         {
-            if (_ulrOutput.AvailableSpace < requiredContinuousSize)
+            if(_ulrOutput.AvailableSpace < requiredContinuousSize)
             {
                 WriteContinue();
             }
@@ -117,7 +116,7 @@ namespace NPOI.HSSF.Record.Cont
             // calculate total size of the header and first encoded char
             int keepTogetherSize = 1 + 1; // ushort len, at least one character byte
             int optionFlags = 0x00;
-            if (is16bitEncoded)
+            if(is16bitEncoded)
             {
                 optionFlags |= 0x01;
                 keepTogetherSize += 1; // one extra byte for first char
@@ -158,17 +157,17 @@ namespace NPOI.HSSF.Record.Cont
             // calculate total size of the header and first encoded char
             int keepTogetherSize = 2 + 1 + 1; // ushort len, byte optionFlags, at least one character byte
             int optionFlags = 0x00;
-            if (is16bitEncoded)
+            if(is16bitEncoded)
             {
                 optionFlags |= 0x01;
                 keepTogetherSize += 1; // one extra byte for first char
             }
-            if (numberOfRichTextRuns > 0)
+            if(numberOfRichTextRuns > 0)
             {
                 optionFlags |= 0x08;
                 keepTogetherSize += 2;
             }
-            if (extendedDataSize > 0)
+            if(extendedDataSize > 0)
             {
                 optionFlags |= 0x04;
                 keepTogetherSize += 4;
@@ -176,11 +175,11 @@ namespace NPOI.HSSF.Record.Cont
             WriteContinueIfRequired(keepTogetherSize);
             WriteShort(text.Length);
             WriteByte(optionFlags);
-            if (numberOfRichTextRuns > 0)
+            if(numberOfRichTextRuns > 0)
             {
                 WriteShort(numberOfRichTextRuns);
             }
-            if (extendedDataSize > 0)
+            if(extendedDataSize > 0)
             {
                 WriteInt(extendedDataSize);
             }
@@ -192,16 +191,16 @@ namespace NPOI.HSSF.Record.Cont
         {
             int nChars = text.Length;
             int i = 0;
-            if (is16bitEncoded)
+            if(is16bitEncoded)
             {
-                while (true)
+                while(true)
                 {
                     int nWritableChars = Math.Min(nChars - i, _ulrOutput.AvailableSpace / 2);
-                    for (; nWritableChars > 0; nWritableChars--)
+                    for(; nWritableChars > 0; nWritableChars--)
                     {
                         _ulrOutput.WriteShort(text[i++]);
                     }
-                    if (i >= nChars)
+                    if(i >= nChars)
                     {
                         break;
                     }
@@ -211,14 +210,14 @@ namespace NPOI.HSSF.Record.Cont
             }
             else
             {
-                while (true)
+                while(true)
                 {
                     int nWritableChars = Math.Min(nChars - i, _ulrOutput.AvailableSpace / 1);
-                    for (; nWritableChars > 0; nWritableChars--)
+                    for(; nWritableChars > 0; nWritableChars--)
                     {
                         _ulrOutput.WriteByte(text[i++]);
                     }
-                    if (i >= nChars)
+                    if(i >= nChars)
                     {
                         break;
                     }
@@ -238,14 +237,14 @@ namespace NPOI.HSSF.Record.Cont
             //WriteContinueIfRequired(len);
             //_ulrOutput.Write(b, offset, len);
             int i = 0;
-            while (true)
+            while(true)
             {
                 int nWritableChars = Math.Min(len - i, _ulrOutput.AvailableSpace / 1);
-                for (; nWritableChars > 0; nWritableChars--)
+                for(; nWritableChars > 0; nWritableChars--)
                 {
                     _ulrOutput.WriteByte(b[offset + i++]);
                 }
-                if (i >= len)
+                if(i >= len)
                 {
                     break;
                 }

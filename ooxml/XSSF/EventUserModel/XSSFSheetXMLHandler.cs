@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -244,7 +244,7 @@ namespace NPOI.XSSF.EventUserModel
                         if(formulasNotResults)
                         {
                             //logger.log(POILogger.WARN, "shared formulas not yet supported!");
-                        } 
+                        }
                         /*else {
                            // It's a shared formula, so we can't Get at the formula string yet
                            // However, they don't care about the formula string, so that's ok!
@@ -599,4 +599,3 @@ namespace NPOI.XSSF.EventUserModel
         }
     }
 }
-

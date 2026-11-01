@@ -17,9 +17,10 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.HSSF.Record;
 
     /**
@@ -49,7 +50,7 @@ namespace TestCases.HSSF.Record.Chart
         {
             RecordInputStream in1 = TestcaseRecordInputStream.Create(data);
             ChartFormatRecord record = new ChartFormatRecord(in1);
-            if (in1.Remaining == 2)
+            if(in1.Remaining == 2)
             {
                 throw new AssertionException("Identified bug 44693d");
             }

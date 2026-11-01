@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,13 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.SS.Formula;
-using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 namespace TestCases.SS.Formula.Functions
 {
 
@@ -58,14 +59,14 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval result = invokeValue(number1, number2);
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((StringEval)result).StringValue, msg);
+            ClassicAssert.AreEqual(expected, ((StringEval) result).StringValue, msg);
         }
 
         private static void ConfirmValue(String msg, String number1, String expected)
         {
             ValueEval result = invokeValue(number1);
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((StringEval)result).StringValue, msg);
+            ClassicAssert.AreEqual(expected, ((StringEval) result).StringValue, msg);
         }
 
         private static void ConfirmValueError(String msg, String number1, String number2, ErrorEval numError)
@@ -167,7 +168,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = new Dec2Hex().Evaluate(args, -1, -1);
 
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
-            ClassicAssert.AreEqual("7B", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("7B", ((StringEval) result).StringValue);
         }
 
         [Test]
@@ -179,7 +180,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = new Dec2Hex().Evaluate(args, -1, -1);
 
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
-            ClassicAssert.AreEqual("0000007B", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("0000007B", ((StringEval) result).StringValue);
         }
 
         [Test]
@@ -191,7 +192,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = new Dec2Hex().Evaluate(args, ctx);
 
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
-            ClassicAssert.AreEqual("0000007B", ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual("0000007B", ((StringEval) result).StringValue);
         }
 
         [Test]
@@ -257,7 +258,7 @@ namespace TestCases.SS.Formula.Functions
         [Test]
         public void TestBackAndForth()
         {
-            for (int i = -512; i < 512; i++)
+            for(int i = -512; i < 512; i++)
             {
                 ValueEval result = invokeValue(i.ToString());
                 ClassicAssert.AreEqual(typeof(StringEval), result.GetType(), "Had: " + result.ToString());
@@ -266,7 +267,7 @@ namespace TestCases.SS.Formula.Functions
                 ClassicAssert.AreEqual(typeof(NumberEval), back.GetType(), "Had: " + back.ToString());
 
                 ClassicAssert.AreEqual(i.ToString(),
-                        ((NumberEval)back).StringValue);
+                        ((NumberEval) back).StringValue);
             }
         }
 

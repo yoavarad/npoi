@@ -28,14 +28,14 @@
 
 namespace TestCases.POIFS.Storage
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.POIFS.FileSystem;
     using NPOI.POIFS.Storage;
     using NPOI.Util;
-    using NPOI.POIFS.FileSystem;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
     /**
      * Class to Test HeaderBlockReader functionality
      *
@@ -63,7 +63,7 @@ namespace TestCases.POIFS.Storage
         [Test]
         public void TestConstructors()
         {
-            string[] hexData = 
+            string[] hexData =
         {
                 "D0 CF 11 E0 A1 B1 1A E1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3B 00 03 00 FE FF 09 00",
                 "06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FE FF FF FF 00 00 00 00 00 10 00 00 FE FF FF FF",
@@ -97,29 +97,29 @@ namespace TestCases.POIFS.Storage
                 block = new HeaderBlockReader(new MemoryStream(shortblock));
                 Assert.Fail("Should have caught IOException Reading a short block");
             }
-            catch (IOException)
+            catch(IOException)
             {
 
                 // as expected
             }
 
             // try various forms of corruption
-            for (int index = 0; index < 8; index++)
+            for(int index = 0; index < 8; index++)
             {
-                content[index] = (byte)(content[index] - 1);
+                content[index] = (byte) (content[index] - 1);
                 try
                 {
                     block = new HeaderBlockReader(new MemoryStream(content));
                     Assert.Fail("Should have caught IOException corrupting byte " + index);
                 }
-                catch (IOException)
+                catch(IOException)
                 {
 
                     // as expected
                 }
 
                 // restore byte value
-                content[index] = (byte)(content[index] + 1);
+                content[index] = (byte) (content[index] + 1);
             }
         }
     }

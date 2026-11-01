@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.Common
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * FeatFormulaErr2 (Formula Evaluation Shared Feature) common record part

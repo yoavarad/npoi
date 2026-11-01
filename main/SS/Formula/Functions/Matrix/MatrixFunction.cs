@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -34,27 +34,27 @@ namespace NPOI.SS.Formula.Functions
         {
             int idx = 0;
 
-            if (matrix == null || matrix.GetLength(0) < 1 || matrix.GetLength(1) < 1)
+            if(matrix == null || matrix.GetLength(0) < 1 || matrix.GetLength(1) < 1)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
 
             double[] vector = new double[matrix.GetLength(0) * matrix.GetLength(1)];
 
-            for (int j = 0; j < matrix.GetLength(0); j++)
+            for(int j = 0; j < matrix.GetLength(0); j++)
             {
-                for (int i = 0; i < matrix.GetLength(1); i++)
+                for(int i = 0; i < matrix.GetLength(1); i++)
                 {
-                    vector[idx++] = matrix[j,i];
+                    vector[idx++] = matrix[j, i];
                 }
             }
             return vector;
         }
         public static void CheckValues(double[] results)
         {
-            for (int idx = 0; idx < results.Length; idx++)
+            for(int idx = 0; idx < results.Length; idx++)
             {
-                if (Double.IsNaN(results[idx]) || Double.IsInfinity(results[idx]))
+                if(Double.IsNaN(results[idx]) || Double.IsInfinity(results[idx]))
                 {
                     throw new EvaluationException(ErrorEval.NUM_ERROR);
                 }
@@ -65,18 +65,18 @@ namespace NPOI.SS.Formula.Functions
         {
             int i = 0, j = 0;
 
-            if (rows < 1 || cols < 1 || vector.Length < 1)
+            if(rows < 1 || cols < 1 || vector.Length < 1)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
 
             double[,] matrix = new double[rows, cols];
 
-            for (int idx = 0; idx < vector.Length; idx++)
+            for(int idx = 0; idx < vector.Length; idx++)
             {
-                if (j < matrix.GetLength(0))
+                if(j < matrix.GetLength(0))
                 {
-                    if (i == matrix.GetLength(1))
+                    if(i == matrix.GetLength(1))
                     {
                         i = 0;
                         j++;
@@ -96,7 +96,7 @@ namespace NPOI.SS.Formula.Functions
 
             public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0)
             {
-                if (arg0 is AreaEval eval)
+                if(arg0 is AreaEval eval)
                 {
                     double[] result = null;
                     double[,] resultArray;
@@ -113,19 +113,19 @@ namespace NPOI.SS.Formula.Functions
 
                         CheckValues(result);
                     }
-                    catch (EvaluationException e)
+                    catch(EvaluationException e)
                     {
                         return e.GetErrorEval();
                     }
 
                     ValueEval[] vals = new ValueEval[result.Length];
 
-                    for (int idx = 0; idx < result.Length; idx++)
+                    for(int idx = 0; idx < result.Length; idx++)
                     {
                         vals[idx] = new NumberEval(result[idx]);
                     }
 
-                    if (result.Length == 1)
+                    if(result.Length == 1)
                     {
                         return vals[0];
                     }
@@ -147,7 +147,7 @@ namespace NPOI.SS.Formula.Functions
                         result = Evaluate(temp);
                         NumericFunction.CheckValue(result[0, 0]);
                     }
-                    catch (EvaluationException e)
+                    catch(EvaluationException e)
                     {
                         return e.GetErrorEval();
                     }
@@ -159,7 +159,7 @@ namespace NPOI.SS.Formula.Functions
             protected abstract double[,] Evaluate(double[,] d1);
             protected abstract double[] CollectValues(ValueEval arg);
         }
-    public abstract class TwoArrayArg : Fixed2ArgFunction
+        public abstract class TwoArrayArg : Fixed2ArgFunction
         {
             protected TwoArrayArg()
             {
@@ -176,14 +176,14 @@ namespace NPOI.SS.Formula.Functions
                 {
                     double[,] array0, array1, resultArray;
 
-                    if (arg0 is AreaEval eval)
+                    if(arg0 is AreaEval eval)
                     {
                         try
                         {
                             double[] values = CollectValues(eval);
                             array0 = fillDoubleArray(values, eval.Height, eval.Width);
                         }
-                        catch (EvaluationException e)
+                        catch(EvaluationException e)
                         {
                             return e.GetErrorEval();
                         }
@@ -195,20 +195,20 @@ namespace NPOI.SS.Formula.Functions
                             double value = NumericFunction.SingleOperandEvaluate(arg0, srcRowIndex, srcColumnIndex);
                             array0 = new double[,] { { value } };
                         }
-                        catch (EvaluationException e)
+                        catch(EvaluationException e)
                         {
                             return e.GetErrorEval();
                         }
                     }
 
-                    if (arg1 is AreaEval areaEval)
+                    if(arg1 is AreaEval areaEval)
                     {
                         try
                         {
                             double[] values = CollectValues(areaEval);
                             array1 = fillDoubleArray(values, areaEval.Height, areaEval.Width);
                         }
-                        catch (EvaluationException e)
+                        catch(EvaluationException e)
                         {
                             return e.GetErrorEval();
                         }
@@ -220,7 +220,7 @@ namespace NPOI.SS.Formula.Functions
                             double value = NumericFunction.SingleOperandEvaluate(arg1, srcRowIndex, srcColumnIndex);
                             array1 = new double[,] { { value } };
                         }
-                        catch (EvaluationException e)
+                        catch(EvaluationException e)
                         {
                             return e.GetErrorEval();
                         }
@@ -232,11 +232,11 @@ namespace NPOI.SS.Formula.Functions
                     result = extractDoubleArray(resultArray);
                     CheckValues(result);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
-                catch (ArgumentException )
+                catch(ArgumentException)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
@@ -244,18 +244,18 @@ namespace NPOI.SS.Formula.Functions
 
                 ValueEval[] vals = new ValueEval[result.Length];
 
-                for (int idx = 0; idx < result.Length; idx++)
+                for(int idx = 0; idx < result.Length; idx++)
                 {
                     vals[idx] = new NumberEval(result[idx]);
                 }
 
-                if (result.Length == 1)
+                if(result.Length == 1)
                     return vals[0];
                 else
                 {
-                    return new CacheAreaEval(((AreaEval)arg0).FirstRow, ((AreaEval)arg0).FirstColumn,
-                            ((AreaEval)arg0).FirstRow + height - 1,
-                            ((AreaEval)arg0).FirstColumn + width - 1, vals);
+                    return new CacheAreaEval(((AreaEval) arg0).FirstRow, ((AreaEval) arg0).FirstColumn,
+                            ((AreaEval) arg0).FirstRow + height - 1,
+                            ((AreaEval) arg0).FirstColumn + width - 1, vals);
                 }
 
             }
@@ -266,7 +266,7 @@ namespace NPOI.SS.Formula.Functions
         }
 
 
-    public class MutableValueCollector : MultiOperandNumericFunction
+        public class MutableValueCollector : MultiOperandNumericFunction
         {
             public MutableValueCollector(bool isReferenceBoolCounted, bool isBlankCounted) :
                 base(isReferenceBoolCounted, isBlankCounted)

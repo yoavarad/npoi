@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -37,11 +37,11 @@ namespace NPOI.SS.Formula.Functions
         {
 
             double result;
-            if (arg0 is RefEval eval)
+            if(arg0 is RefEval eval)
             {
                 result = CountUtils.CountMatchingCellsInRef(eval, predicate);
             }
-            else if (arg0 is ThreeDEval dEval)
+            else if(arg0 is ThreeDEval dEval)
             {
                 result = CountUtils.CountMatchingCellsInArea(dEval, predicate);
             }

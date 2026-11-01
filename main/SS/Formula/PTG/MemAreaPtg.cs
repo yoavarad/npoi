@@ -17,10 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-
-    using NPOI.Util;
 
 
     /**
@@ -61,9 +60,9 @@ namespace NPOI.SS.Formula.PTG
 
         public override void Write(ILittleEndianOutput out1)
         {
-		    out1.WriteByte(sid + PtgClass);
-		    out1.WriteInt(field_1_reserved);
-		    out1.WriteShort(field_2_subex_len);
+            out1.WriteByte(sid + PtgClass);
+            out1.WriteInt(field_1_reserved);
+            out1.WriteShort(field_2_subex_len);
         }
 
 

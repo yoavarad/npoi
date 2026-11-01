@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -49,8 +49,8 @@ namespace NPOI.HSSF.Record
         public const int BITMAP_00E9 = 0x00E9;
         public const int PHONETICPR_00EF = 0x00EF;
         public const int LABELRANGES_015F = 0x015F;
-      	//public const int USERSVIEWBEGIN_01AA  = 0x01AA;
-    	//public const int USERSVIEWEND_01AB    = 0x01AB;
+        //public const int USERSVIEWBEGIN_01AA  = 0x01AA;
+        //public const int USERSVIEWEND_01AB    = 0x01AB;
         public const int QUICKTIP_0800 = 0x0800;
         //public const int SHEETEXT_0862 = 0x0862; // OOO calls this SHEETLAYOUT
         public const int SHEETPROTECTION_0867 = 0x0867;
@@ -96,9 +96,9 @@ namespace NPOI.HSSF.Record
             //}
         }
 
-	/**
-	 * spit the record out AS IS. no interpretation or identification
-	 */
+        /**
+         * spit the record out AS IS. no interpretation or identification
+         */
         public override void Serialize(ILittleEndianOutput out1)
         {
             out1.Write(_rawData);
@@ -118,7 +118,7 @@ namespace NPOI.HSSF.Record
         public override String ToString()
         {
             String biffName = GetBiffName(_sid);
-            if (biffName == null)
+            if(biffName == null)
             {
                 biffName = "UNKNOWNRECORD";
             }
@@ -126,7 +126,7 @@ namespace NPOI.HSSF.Record
 
             sb.Append("[").Append(biffName).Append("] (0x");
             sb.Append(StringUtil.ToHexString(_sid).ToUpper() + ")\n");
-            if (_rawData.Length > 0)
+            if(_rawData.Length > 0)
             {
                 sb.Append("  rawData=").Append(HexDump.ToHex(_rawData)).Append("\n");
             }
@@ -145,86 +145,150 @@ namespace NPOI.HSSF.Record
             // Note to POI developers:
             // Make sure you delete the corresponding entry from
             // this method any time a new Record subclass is created.
-            switch (sid)
+            switch(sid)
             {
                 //case PRINTSIZE_0033: return "PRINTSIZE";
-                case PLS_004D: return "PLS";
-                case 0x0050: return "DCON"; // Data Consolidation Information
-                case 0x007F: return "IMDATA";
-                case SHEETPR_0081: return "SHEETPR";
-                case SORT_0090: return "SORT"; // Sorting Options
-                case 0x0094: return "LHRECORD"; // .WK? File Conversion Information
-                case STANDARDWIDTH_0099: return "STANDARDWIDTH"; //Standard Column Width
-                case 0x009D: return "AUTOFILTERINFO"; // Drop-Down Arrow Count
+                case PLS_004D:
+                    return "PLS";
+                case 0x0050:
+                    return "DCON"; // Data Consolidation Information
+                case 0x007F:
+                    return "IMDATA";
+                case SHEETPR_0081:
+                    return "SHEETPR";
+                case SORT_0090:
+                    return "SORT"; // Sorting Options
+                case 0x0094:
+                    return "LHRECORD"; // .WK? File Conversion Information
+                case STANDARDWIDTH_0099:
+                    return "STANDARDWIDTH"; //Standard Column Width
+                case 0x009D:
+                    return "AUTOFILTERINFO"; // Drop-Down Arrow Count
                 //case SCL_00A0: return "SCL"; // Window Zoom Magnification
-                case 0x00AE: return "SCENMAN"; // Scenario Output Data
+                case 0x00AE:
+                    return "SCENMAN"; // Scenario Output Data
 
-                case 0x00B2: return "SXVI";        // (pivot table) View Item
-                case 0x00B4: return "SXIVD";       // (pivot table) Row/Column Field IDs
-                case 0x00B5: return "SXLI";        // (pivot table) Line Item Array
+                case 0x00B2:
+                    return "SXVI";        // (pivot table) View Item
+                case 0x00B4:
+                    return "SXIVD";       // (pivot table) Row/Column Field IDs
+                case 0x00B5:
+                    return "SXLI";        // (pivot table) Line Item Array
 
-                case 0x00D3: return "OBPROJ";
-                case 0x00DC: return "PARAMQRY";
-                case 0x00DE: return "OLESIZE";
-                case BITMAP_00E9: return "BITMAP";
-                case PHONETICPR_00EF: return "PHONETICPR";
-                case 0x00F1: return "SXEX";        // PivotTable View Extended Information
+                case 0x00D3:
+                    return "OBPROJ";
+                case 0x00DC:
+                    return "PARAMQRY";
+                case 0x00DE:
+                    return "OLESIZE";
+                case BITMAP_00E9:
+                    return "BITMAP";
+                case PHONETICPR_00EF:
+                    return "PHONETICPR";
+                case 0x00F1:
+                    return "SXEX";        // PivotTable View Extended Information
 
-                case LABELRANGES_015F: return "LABELRANGES";
-                case 0x01BA: return "CODENAME";
-                case 0x01A9: return "USERBVIEW";
-                case 0x01AD: return "QSI";
+                case LABELRANGES_015F:
+                    return "LABELRANGES";
+                case 0x01BA:
+                    return "CODENAME";
+                case 0x01A9:
+                    return "USERBVIEW";
+                case 0x01AD:
+                    return "QSI";
 
-                case 0x01C0: return "EXCEL9FILE";
+                case 0x01C0:
+                    return "EXCEL9FILE";
 
-                case 0x0802: return "QSISXTAG";   // Pivot Table and Query Table Extensions
-                case 0x0803: return "DBQUERYEXT";
-                case 0x0805: return "TXTQUERY";
-                case 0x0810: return "SXVIEWEX9";  // Pivot Table Extensions
+                case 0x0802:
+                    return "QSISXTAG";   // Pivot Table and Query Table Extensions
+                case 0x0803:
+                    return "DBQUERYEXT";
+                case 0x0805:
+                    return "TXTQUERY";
+                case 0x0810:
+                    return "SXVIEWEX9";  // Pivot Table Extensions
 
-                case 0x0812: return "CONTINUEFRT";
-                case QUICKTIP_0800: return "QUICKTIP";
+                case 0x0812:
+                    return "CONTINUEFRT";
+                case QUICKTIP_0800:
+                    return "QUICKTIP";
                 //case SHEETEXT_0862: return "SHEETEXT";
-                case 0x0863: return "BOOKEXT";
-                case 0x0864: return "SXADDL";    // Pivot Table Additional Info
-                case SHEETPROTECTION_0867: return "SHEETPROTECTION";
+                case 0x0863:
+                    return "BOOKEXT";
+                case 0x0864:
+                    return "SXADDL";    // Pivot Table Additional Info
+                case SHEETPROTECTION_0867:
+                    return "SHEETPROTECTION";
                 //case RANGEPROTECTION_0868: return "RANGEPROTECTION";
-                case 0x086B: return "DATALABEXTCONTENTS";
-                case 0x086C: return "CELLWATCH";
-                case FeatRecord.v11_sid: return "SHARED FEATURE v11";
-                case 0x0874: return "DROPDOWNOBJIDS";
-                case 0x0876: return "DCONN";
-                case FeatRecord.v12_sid: return "SHARED FEATURE v12";
-                case 0x087B: return "CFEX";
-                case 0x087C: return "XFCRC";
-                case 0x087D: return "XFEXT";
-                case 0x087F: return "CONTINUEFRT12";
-                case 0x088B: return "PLV";
-                case 0x088C: return "COMPAT12";
-                case 0x088D: return "DXF";
-                case 0x0892: return "STYLEEXT";
-                case 0x0896: return "THEME";
-                case 0x0897: return "GUIDTYPELIB";
-                case 0x089A: return "MTRSETTINGS";
-                case 0x089B: return "COMPRESSPICTURES";
-                case HEADER_FOOTER_089C: return "HEADERFOOTER";
-                case 0x089D: return "CRTLAYOUT12";
-                case 0x089E: return "CRTMLFRT";
-                case 0x089F: return "CRTMLFRTCONTINUE";
-                case 0x08A1: return "SHAPEPROPSSTREAM";
-                case 0x08A3: return "FORCEFULLCALCULATION";
-                case 0x08A4: return "SHAPEPROPSSTREAM";
-                case 0x08A5: return "TEXTPROPSSTREAM";
-                case 0x08A6: return "RICHTEXTSTREAM";
-                case 0x08A7: return "CRTLAYOUT12A";
+                case 0x086B:
+                    return "DATALABEXTCONTENTS";
+                case 0x086C:
+                    return "CELLWATCH";
+                case FeatRecord.v11_sid:
+                    return "SHARED FEATURE v11";
+                case 0x0874:
+                    return "DROPDOWNOBJIDS";
+                case 0x0876:
+                    return "DCONN";
+                case FeatRecord.v12_sid:
+                    return "SHARED FEATURE v12";
+                case 0x087B:
+                    return "CFEX";
+                case 0x087C:
+                    return "XFCRC";
+                case 0x087D:
+                    return "XFEXT";
+                case 0x087F:
+                    return "CONTINUEFRT12";
+                case 0x088B:
+                    return "PLV";
+                case 0x088C:
+                    return "COMPAT12";
+                case 0x088D:
+                    return "DXF";
+                case 0x0892:
+                    return "STYLEEXT";
+                case 0x0896:
+                    return "THEME";
+                case 0x0897:
+                    return "GUIDTYPELIB";
+                case 0x089A:
+                    return "MTRSETTINGS";
+                case 0x089B:
+                    return "COMPRESSPICTURES";
+                case HEADER_FOOTER_089C:
+                    return "HEADERFOOTER";
+                case 0x089D:
+                    return "CRTLAYOUT12";
+                case 0x089E:
+                    return "CRTMLFRT";
+                case 0x089F:
+                    return "CRTMLFRTCONTINUE";
+                case 0x08A1:
+                    return "SHAPEPROPSSTREAM";
+                case 0x08A3:
+                    return "FORCEFULLCALCULATION";
+                case 0x08A4:
+                    return "SHAPEPROPSSTREAM";
+                case 0x08A5:
+                    return "TEXTPROPSSTREAM";
+                case 0x08A6:
+                    return "RICHTEXTSTREAM";
+                case 0x08A7:
+                    return "CRTLAYOUT12A";
 
-                case 0x08C8: return "PLV{Mac Excel}";
+                case 0x08C8:
+                    return "PLV{Mac Excel}";
 
-                case 0x1001: return "UNITS";
-                case 0x1006: return "CHARTDATAFORMAT";
-                case 0x1007: return "CHARTLINEFORMAT";
+                case 0x1001:
+                    return "UNITS";
+                case 0x1006:
+                    return "CHARTDATAFORMAT";
+                case 0x1007:
+                    return "CHARTLINEFORMAT";
             }
-            if (IsObservedButUnknown(sid))
+            if(IsObservedButUnknown(sid))
             {
                 return "UNKNOWN-" + StringUtil.ToHexString(sid).ToUpper();
             }
@@ -241,7 +305,7 @@ namespace NPOI.HSSF.Record
         private static bool IsObservedButUnknown(int sid)
         {
             // TODO Look up more of these in the latest [MS-XLS] doc and move to getBiffName
-            switch (sid)
+            switch(sid)
             {
                 case 0x0033:
                 // contains 2 bytes of data: 0x0001 or 0x0003
@@ -309,7 +373,7 @@ namespace NPOI.HSSF.Record
 
         public override short Sid
         {
-            get { return (short)_sid; }
+            get { return (short) _sid; }
         }
 
 

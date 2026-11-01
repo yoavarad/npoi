@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title: Uncalced Record
@@ -47,7 +47,7 @@ namespace NPOI.HSSF.Record
         public UncalcedRecord(RecordInputStream in1)
         {
             _reserved = in1.ReadShort();
-	    }
+        }
 
         public override short Sid
         {
@@ -64,7 +64,7 @@ namespace NPOI.HSSF.Record
 
         public override void Serialize(ILittleEndianOutput out1)
         {
-           out1.WriteShort(_reserved);
+            out1.WriteShort(_reserved);
         }
 
         protected override int DataSize

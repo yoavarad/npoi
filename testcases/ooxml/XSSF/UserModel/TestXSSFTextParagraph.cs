@@ -18,7 +18,8 @@ namespace TestCases.XSSF.UserModel
 {
     using NPOI.Util;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
     using System.Collections.Generic;
 
@@ -179,7 +180,7 @@ namespace TestCases.XSSF.UserModel
                 text.SetBullet(ListAutoNumber.CIRCLE_NUM_DB_PLAIN);
                 ClassicAssert.IsTrue(text.IsBullet);
                 ClassicAssert.IsTrue(text.IsBulletAutoNumber);
-                
+
                 //ClassicAssert.AreEqual(0, text.BulletAutoNumberStart);
                 //This value should be 1, see CT_TextAutonumberBullet.startAt, default value is 1;
                 ClassicAssert.AreEqual(1, text.BulletAutoNumberStart);

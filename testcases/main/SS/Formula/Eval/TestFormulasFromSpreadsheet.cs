@@ -20,15 +20,16 @@ using System.Collections.ObjectModel;
 namespace TestCases.SS.Formula.Eval
 {
 
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Diagnostics;
+    using System.IO;
     using TestCases.HSSF;
     using TestCases.SS.Formula.Functions;
-    using System.Diagnostics;
 
     /**
      * Tests formulas and operators as loaded from a Test data spreadsheet.<p/>
@@ -101,7 +102,7 @@ namespace TestCases.SS.Formula.Eval
 
         private static ICell GetExpectedValueCell(IRow row, int columnIndex)
         {
-            if (row == null)
+            if(row == null)
             {
                 return null;
             }
@@ -113,8 +114,8 @@ namespace TestCases.SS.Formula.Eval
         {
             ClassicAssert.IsNotNull(expected, msg + " - Bad setup data expected value is null");
             ClassicAssert.IsNotNull(actual, msg + " - actual value was null");
-            
-            switch (expected.CellType)
+
+            switch(expected.CellType)
             {
                 case CellType.Blank:
                     ClassicAssert.AreEqual(CellType.Blank, actual.CellType, msg);
@@ -145,7 +146,7 @@ namespace TestCases.SS.Formula.Eval
         [SetUp]
         protected void SetUp()
         {
-            if (workbook == null)
+            if(workbook == null)
             {
                 workbook = HSSFTestDataSamples.OpenSampleWorkbook(SS.FILENAME);
                 sheet = workbook.GetSheetAt(0);
@@ -170,7 +171,7 @@ namespace TestCases.SS.Formula.Eval
             String successMsg = "There were "
                     + _EvaluationSuccessCount + " successful Evaluation(s) and "
                     + _functionSuccessCount + " function(s) without error";
-            
+
             String msg = _functionFailureCount + " function(s) failed in "
             + _EvaluationFailureCount + " Evaluation(s).  " + successMsg;
             ClassicAssert.AreEqual(_functionFailureCount, 0, msg);
@@ -191,37 +192,41 @@ namespace TestCases.SS.Formula.Eval
             HSSFFormulaEvaluator evaluator = new HSSFFormulaEvaluator(workbook);
             ReadOnlyCollection<String> funcs = FunctionEval.GetSupportedFunctionNames();
             int rowIndex = startRowIndex;
-            while (true)
+            while(true)
             {
                 IRow r = sheet.GetRow(rowIndex);
                 String targetFunctionName = GetTargetFunctionName(r);
                 ClassicAssert.IsNotNull(targetFunctionName, "Test spreadsheet cell empty on row ("
                             + (rowIndex + 1) + "). Expected function name or '"
                             + SS.FUNCTION_NAMES_END_SENTINEL + "'");
-                
-                if (targetFunctionName.Equals(SS.FUNCTION_NAMES_END_SENTINEL))
+
+                if(targetFunctionName.Equals(SS.FUNCTION_NAMES_END_SENTINEL))
                 {
                     // found end of functions list
                     break;
                 }
-                if (testFocusFunctionName == null || targetFunctionName.Equals(testFocusFunctionName, StringComparison.CurrentCultureIgnoreCase))
+                if(testFocusFunctionName == null || targetFunctionName.Equals(testFocusFunctionName, StringComparison.CurrentCultureIgnoreCase))
                 {
                     // expected results are on the row below
                     IRow expectedValuesRow = sheet.GetRow(rowIndex + 1);
-                    
+
                     int missingRowNum = rowIndex + 2; //+1 for 1-based, +1 for next row
                     ClassicAssert.IsNotNull(expectedValuesRow, "Missing expected values row for function '"
                             + targetFunctionName + " (row " + missingRowNum + ")");
-                    
-                    switch (ProcessFunctionRow(evaluator, targetFunctionName, r, expectedValuesRow))
+
+                    switch(ProcessFunctionRow(evaluator, targetFunctionName, r, expectedValuesRow))
                     {
-                        case Result.ALL_EVALUATIONS_SUCCEEDED: _functionSuccessCount++; break;
-                        case Result.SOME_EVALUATIONS_FAILED: _functionFailureCount++; break;
+                        case Result.ALL_EVALUATIONS_SUCCEEDED:
+                            _functionSuccessCount++;
+                            break;
+                        case Result.SOME_EVALUATIONS_FAILED:
+                            _functionFailureCount++;
+                            break;
                         default:
                             throw new SystemException("unexpected result");
                         case Result.NO_EVALUATIONS_FOUND: // do nothing
                             String uname = targetFunctionName.ToUpper();
-                            if (startRowIndex >= SS.START_FUNCTIONS_ROW_INDEX &&
+                            if(startRowIndex >= SS.START_FUNCTIONS_ROW_INDEX &&
                                     funcs.Contains(uname))
                             {
                                 Debug.WriteLine(uname + ": function is supported but missing test data", "");
@@ -246,10 +251,10 @@ namespace TestCases.SS.Formula.Eval
             short endcolnum = (short)formulasRow.LastCellNum;
 
             // iterate across the row for all the Evaluation cases
-            for (int colnum = SS.COLUMN_INDEX_FIRST_TEST_VALUE; colnum < endcolnum; colnum++)
+            for(int colnum = SS.COLUMN_INDEX_FIRST_TEST_VALUE; colnum < endcolnum; colnum++)
             {
                 ICell c = formulasRow.GetCell(colnum);
-                if (c == null || c.CellType != CellType.Formula)
+                if(c == null || c.CellType != CellType.Formula)
                 {
                     continue;
                 }
@@ -262,12 +267,12 @@ namespace TestCases.SS.Formula.Eval
                     ConfirmExpectedResult("Function '" + targetFunctionName + "': Formula: " + c.CellFormula + " @ " + formulasRow.RowNum + ":" + colnum,
                             expectedValueCell, actualValue);
                     _EvaluationSuccessCount++;
-                    if (result != Result.SOME_EVALUATIONS_FAILED)
+                    if(result != Result.SOME_EVALUATIONS_FAILED)
                     {
                         result = Result.ALL_EVALUATIONS_SUCCEEDED;
                     }
                 }
-                catch (AssertionException e)
+                catch(AssertionException e)
                 {
                     _EvaluationFailureCount++;
                     printshortStackTrace(System.Console.Error, e);
@@ -319,22 +324,22 @@ namespace TestCases.SS.Formula.Eval
          */
         private static String GetTargetFunctionName(IRow r)
         {
-            if (r == null)
+            if(r == null)
             {
                 System.Console.Error.WriteLine("Warning - given null row, can't figure out function name");
                 return null;
             }
             ICell cell = r.GetCell(SS.COLUMN_INDEX_FUNCTION_NAME);
-            if (cell == null)
+            if(cell == null)
             {
                 System.Console.Error.WriteLine("Warning - Row " + r.RowNum + " has no cell " + SS.COLUMN_INDEX_FUNCTION_NAME + ", can't figure out function name");
                 return null;
             }
-            if (cell.CellType == CellType.Blank)
+            if(cell.CellType == CellType.Blank)
             {
                 return null;
             }
-            if (cell.CellType == CellType.String)
+            if(cell.CellType == CellType.String)
             {
                 return cell.RichStringCellValue.String;
             }

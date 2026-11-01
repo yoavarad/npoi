@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -27,7 +27,8 @@ namespace TestCases.SS.Formula.Functions
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using static NPOI.SS.Formula.Functions.Frequency;
 
     /// <summary>
@@ -81,7 +82,7 @@ namespace TestCases.SS.Formula.Functions
             }
             IRow binsRow = sheet.CreateRow(1);
             for(int i = 0; i < bins.Length; i++)
-            { 
+            {
                 // A2:C2
                 binsRow.CreateCell(i).SetCellValue(bins[i]);
             }
@@ -104,4 +105,3 @@ namespace TestCases.SS.Formula.Functions
         }
     }
 }
-

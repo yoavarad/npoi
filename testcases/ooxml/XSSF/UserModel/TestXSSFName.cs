@@ -15,15 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using TestCases.SS.UserModel;
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using NPOI.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using NPOI.Util;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -55,7 +55,7 @@ namespace TestCases.XSSF.UserModel
 
 
             // Set repeating rows and columns twice for the first sheet
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 2; i++)
             {
                 sheet1.RepeatingRows = (CellRangeAddress.ValueOf("1:4"));
                 sheet1.RepeatingColumns = (CellRangeAddress.ValueOf("A:A"));
@@ -143,14 +143,14 @@ namespace TestCases.XSSF.UserModel
             XSSFName name = wb.CreateName() as XSSFName;
 
             // Cell addresses/references are not allowed
-            foreach (string ref1 in Arrays.AsList("A1", "$A$1", "A1:B2"))
+            foreach(string ref1 in Arrays.AsList("A1", "$A$1", "A1:B2"))
             {
                 try
                 {
                     name.NameName = ref1;
                     Assert.Fail("cell addresses are not allowed: " + ref1);
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                     // expected
                 }
@@ -163,4 +163,3 @@ namespace TestCases.XSSF.UserModel
         }
     }
 }
-

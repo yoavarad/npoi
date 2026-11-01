@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -24,9 +24,10 @@ namespace NPOI.HPSF
         private short _data2;
         private short _data3;
         private long _data4;
-        internal GUID() {}
-    
-        internal void Read( LittleEndianByteArrayInputStream lei ) {
+        internal GUID() { }
+
+        internal void Read(LittleEndianByteArrayInputStream lei)
+        {
             _data1 = lei.ReadInt();
             _data2 = lei.ReadShort();
             _data3 = lei.ReadShort();

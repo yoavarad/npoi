@@ -17,10 +17,11 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     /**
      * 
      * @author Josh Micich
@@ -61,9 +62,9 @@ namespace TestCases.HSSF.Record
             {
                 TestcaseRecordInputStream.ConfirmRecordEncoding(0x0023, dataFDS, enr.Serialize());
             }
-            catch (IndexOutOfRangeException e)
+            catch(IndexOutOfRangeException e)
             {
-                if (e.Message.Equals("15"))
+                if(e.Message.Equals("15"))
                 {
                     throw new AssertionException("Identified bug 44695");
                 }
@@ -73,7 +74,7 @@ namespace TestCases.HSSF.Record
         public void TestBasicSize()
         {
             ExternalNameRecord enr = CreateSimpleENR(dataFDS);
-            if (enr.RecordSize == 13)
+            if(enr.RecordSize == 13)
             {
                 throw new AssertionException("Identified bug 44695");
             }
@@ -90,9 +91,9 @@ namespace TestCases.HSSF.Record
             {
                 enr = CreateSimpleENR(dataAutoDocName);
             }
-            catch (IndexOutOfRangeException e)
+            catch(IndexOutOfRangeException e)
             {
-                if (e.Message == null)
+                if(e.Message == null)
                 {
                     throw new AssertionException("Identified bug XXXX");
                 }
@@ -147,11 +148,11 @@ namespace TestCases.HSSF.Record
             {
                 enr = CreateSimpleENR(dataDDE);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
                 // actual msg reported in bugzilla 47229 is different
                 // because that seems to be using a version from before svn r646666
-                if (e.Message.StartsWith("Some unread data (is formula present?)"))
+                if(e.Message.StartsWith("Some unread data (is formula present?)"))
                 {
                     throw new AssertionException("Identified bug 47229 - failed to read ENR with OLE/DDE result data");
                 }
@@ -178,9 +179,9 @@ namespace TestCases.HSSF.Record
             {
                 enr = new ExternalNameRecord(in1);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.StartsWith("Expected to find a ContinueRecord in order to read remaining 242 of 268 chars"))
+                if(e.Message.StartsWith("Expected to find a ContinueRecord in order to read remaining 242 of 268 chars"))
                 {
                     throw new AssertionException("Identified bug 47384 - failed to read ENR with unicode name");
                 }
@@ -195,8 +196,8 @@ namespace TestCases.HSSF.Record
             // the file at test-data/spreadsheet/49219.xls has ExternalNameRecords without actual data, 
             // we did handle this during Reading, but failed during serializing this out1, ensure it works now
             byte[] data = new byte[] {
-        		2, 127, 0, 0, 0, 0, 
-        		9, 0, 82, 97, 116, 101, 95, 68, 97, 116, 101};
+                2, 127, 0, 0, 0, 0,
+                9, 0, 82, 97, 116, 101, 95, 68, 97, 116, 101};
 
             ExternalNameRecord enr = CreateSimpleENR(data);
 

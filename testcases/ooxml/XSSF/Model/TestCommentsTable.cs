@@ -15,14 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.Model;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 namespace TestCases.XSSF.Model
 {
 
@@ -81,8 +82,8 @@ namespace TestCases.XSSF.Model
             ISheet sheet1 = workbook.GetSheetAt(0);
             ISheet sheet2 = workbook.GetSheetAt(1);
 
-            ClassicAssert.IsTrue(((XSSFSheet)sheet1).HasComments);
-            ClassicAssert.IsFalse(((XSSFSheet)sheet2).HasComments);
+            ClassicAssert.IsTrue(((XSSFSheet) sheet1).HasComments);
+            ClassicAssert.IsFalse(((XSSFSheet) sheet2).HasComments);
 
             // Comments should be in C5 and C7
             IRow r5 = sheet1.GetRow(4);
@@ -134,11 +135,11 @@ namespace TestCases.XSSF.Model
 
 
             // Save, and re-load the file
-            workbook = (XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(workbook);
+            workbook = (XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(workbook);
 
             // Check we still have comments where we should do
-            sheet1 = (XSSFSheet)workbook.GetSheetAt(0);
-            sheet2 = (XSSFSheet)workbook.GetSheetAt(1);
+            sheet1 = (XSSFSheet) workbook.GetSheetAt(0);
+            sheet2 = (XSSFSheet) workbook.GetSheetAt(1);
             ClassicAssert.IsNotNull(sheet1.GetRow(4).GetCell(2).CellComment);
             ClassicAssert.IsNotNull(sheet1.GetRow(6).GetCell(2).CellComment);
             ClassicAssert.IsNotNull(sheet2.GetRow(2).GetCell(1).CellComment);
@@ -172,10 +173,10 @@ namespace TestCases.XSSF.Model
                     sheet1.GetRow(12).GetCell(2).CellComment.Author);
 
             // Save, and re-load the file
-            workbook = (XSSFWorkbook)XSSFTestDataSamples.WriteOutAndReadBack(workbook);
+            workbook = (XSSFWorkbook) XSSFTestDataSamples.WriteOutAndReadBack(workbook);
 
             // Check we still have comments where we should do
-            sheet1 = (XSSFSheet)workbook.GetSheetAt(0);
+            sheet1 = (XSSFSheet) workbook.GetSheetAt(0);
             ClassicAssert.IsNotNull(sheet1.GetRow(4).GetCell(2).CellComment);
             ClassicAssert.IsNotNull(sheet1.GetRow(6).GetCell(2).CellComment);
             ClassicAssert.IsNotNull(sheet1.GetRow(12).GetCell(2).CellComment);
@@ -273,7 +274,7 @@ namespace TestCases.XSSF.Model
             // NOTE - only occurs if getCellComment is called first
             IComment comment = cell.CellComment;
             //Comment comment = null;
-            if (comment == null)
+            if(comment == null)
             {
                 comment = drawing.CreateCellComment(anchor);
             }
@@ -289,13 +290,13 @@ namespace TestCases.XSSF.Model
         private static ICell GetCell(ISheet sheet, int rowIndex, int colIndex)
         {
             IRow row = sheet.GetRow(rowIndex);
-            if (row == null)
+            if(row == null)
             {
                 row = sheet.CreateRow(rowIndex);
             }
 
             ICell cell = row.GetCell(colIndex);
-            if (cell == null)
+            if(cell == null)
             {
                 cell = row.CreateCell(colIndex);
             }

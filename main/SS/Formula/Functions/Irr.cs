@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /// <summary>
     /// Calculates the internal rate of return.
@@ -33,7 +33,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length == 0 || args.Length > 2)
+            if(args.Length == 0 || args.Length > 2)
             {
                 // Wrong number of arguments
                 return ErrorEval.VALUE_INVALID;
@@ -43,7 +43,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 double[] values = AggregateFunction.ValueCollector.CollectValues(args[0]);
                 double guess;
-                if (args.Length == 2)
+                if(args.Length == 2)
                 {
                     guess = NumericFunction.SingleOperandEvaluate(args[1], srcRowIndex, srcColumnIndex);
                 }
@@ -55,7 +55,7 @@ namespace NPOI.SS.Formula.Functions
                 NumericFunction.CheckValue(result);
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -104,7 +104,7 @@ namespace NPOI.SS.Formula.Functions
             double x1;
 
             int i = 0;
-            while (i < maxIterationCount)
+            while(i < maxIterationCount)
             {
 
                 // the value of the function (NPV) and its derivate can be calculated in the same loop
@@ -113,7 +113,7 @@ namespace NPOI.SS.Formula.Functions
                 double fValue = values[k];
 
                 double fDerivative = 0;
-                for (double denominator = factor; ++k < values.Length;)
+                for(double denominator = factor; ++k < values.Length;)
                 {
                     double value = values[k];
                     fValue += value / denominator;
@@ -124,7 +124,7 @@ namespace NPOI.SS.Formula.Functions
                 // the essense of the Newton-Raphson Method
                 x1 = x0 - fValue / fDerivative;
 
-                if (Math.Abs(x1 - x0) <= absoluteAccuracy)
+                if(Math.Abs(x1 - x0) <= absoluteAccuracy)
                 {
                     return x1;
                 }

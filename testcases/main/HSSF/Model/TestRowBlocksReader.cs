@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.Model
 {
-    using System;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.PivotTable;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.Model;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link RowBlocksReader}
@@ -37,15 +38,15 @@ namespace TestCases.HSSF.Model
         {
             int SXVIEW_SID = ViewDefinitionRecord.sid;
             Record[] inRecs = {
-			new RowRecord(0),
-			new NumberRecord(),
+            new RowRecord(0),
+            new NumberRecord(),
 			// normally MSODRAWING(0x00EC) would come here before SXVIEW
 			new UnknownRecord(SXVIEW_SID, System.Text.Encoding.UTF8.GetBytes("dummydata (SXVIEW: View DefInition)")),
-			new WindowTwoRecord(),
-		};
+            new WindowTwoRecord(),
+        };
             RecordStream rs = new RecordStream(Arrays.AsList(inRecs), 0);
             RowBlocksReader rbr = new RowBlocksReader(rs);
-            if (rs.PeekNextClass() == typeof(WindowTwoRecord))
+            if(rs.PeekNextClass() == typeof(WindowTwoRecord))
             {
                 // Should have stopped at the SXVIEW record
                 Assert.Fail("Identified bug 46280b");
@@ -60,5 +61,3 @@ namespace TestCases.HSSF.Model
         }
     }
 }
-
-

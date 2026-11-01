@@ -18,9 +18,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Window1 Record
@@ -164,7 +164,7 @@ namespace NPOI.HSSF.Record
 
         public bool DisplayHorizontalScrollbar
         {
-            get{return hscroll.IsSet(field_5_options);}
+            get { return hscroll.IsSet(field_5_options); }
             set { field_5_options = hscroll.SetShortBoolean(field_5_options, value); }
         }
 
@@ -230,7 +230,7 @@ namespace NPOI.HSSF.Record
 
         public short TabWidthRatio
         {
-            get{return field_9_tab_width_ratio;}
+            get { return field_9_tab_width_ratio; }
             set { field_9_tab_width_ratio = value; }
         }
 
@@ -271,7 +271,7 @@ namespace NPOI.HSSF.Record
             return buffer.ToString();
         }
 
-        
+
         public override void Serialize(ILittleEndianOutput out1)
         {
             out1.WriteShort(HorizontalHold);

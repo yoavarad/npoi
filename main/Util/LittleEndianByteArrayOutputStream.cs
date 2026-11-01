@@ -32,7 +32,7 @@ namespace NPOI.Util
 
         public LittleEndianByteArrayOutputStream(byte[] buf, int startOffset, int maxWriteLen)
         {
-            if (startOffset < 0 || startOffset > buf.Length)
+            if(startOffset < 0 || startOffset > buf.Length)
             {
                 throw new ArgumentException("Specified startOffset (" + startOffset
                         + ") is out of allowable range (0.." + buf.Length + ")");
@@ -40,7 +40,7 @@ namespace NPOI.Util
             _buf = buf;
             _writeIndex = startOffset;
             _endIndex = startOffset + maxWriteLen;
-            if (_endIndex < startOffset || _endIndex > buf.Length)
+            if(_endIndex < startOffset || _endIndex > buf.Length)
             {
                 throw new ArgumentException("calculated end index (" + _endIndex
                         + ") is out of allowable range (" + _writeIndex + ".." + buf.Length + ")");
@@ -54,7 +54,7 @@ namespace NPOI.Util
 
         private void CheckPosition(int i)
         {
-            if (i > _endIndex - _writeIndex)
+            if(i > _endIndex - _writeIndex)
             {
                 throw new RuntimeException(string.Format(CultureInfo.InvariantCulture, "Buffer overrun i={0};endIndex={1};writeIndex={2}", i, _endIndex, _writeIndex));
             }
@@ -68,7 +68,7 @@ namespace NPOI.Util
         public void WriteByte(int v)
         {
             CheckPosition(1);
-            _buf[_writeIndex++] = (byte)v;
+            _buf[_writeIndex++] = (byte) v;
         }
 
         public void WriteDouble(double v)
@@ -80,25 +80,25 @@ namespace NPOI.Util
         {
             CheckPosition(4);
             int i = _writeIndex;
-            _buf[i++] = (byte)((v >> 0) & 0xFF);
-            _buf[i++] = (byte)((v >> 8) & 0xFF);
-            _buf[i++] = (byte)((v >> 16) & 0xFF);
-            _buf[i++] = (byte)((v >> 24) & 0xFF);
+            _buf[i++] = (byte) ((v >> 0) & 0xFF);
+            _buf[i++] = (byte) ((v >> 8) & 0xFF);
+            _buf[i++] = (byte) ((v >> 16) & 0xFF);
+            _buf[i++] = (byte) ((v >> 24) & 0xFF);
             _writeIndex = i;
         }
 
         public void WriteLong(long v)
         {
-            WriteInt((int)(v >> 0));
-            WriteInt((int)(v >> 32));
+            WriteInt((int) (v >> 0));
+            WriteInt((int) (v >> 32));
         }
 
         public void WriteShort(int v)
         {
             CheckPosition(2);
             int i = _writeIndex;
-            _buf[i++] = (byte)((v >> 0) & 0xFF);
-            _buf[i++] = (byte)((v >> 8) & 0xFF);
+            _buf[i++] = (byte) ((v >> 0) & 0xFF);
+            _buf[i++] = (byte) ((v >> 8) & 0xFF);
             _writeIndex = i;
         }
         public void Write(byte[] b)

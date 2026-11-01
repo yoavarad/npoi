@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,8 +16,8 @@
 ==================================================================== */
 
 using NPOI.SS.Formula.Eval;
-using System;
 using NPOI.SS.Util;
+using System;
 namespace NPOI.SS.Formula.Functions
 {
 
@@ -53,13 +53,13 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(arg1, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
             String strText1 = OperandResolver.CoerceValueToString(veText1);
             Double number1 = OperandResolver.ParseDouble(strText1);
-            if (double.IsNaN(number1))
+            if(double.IsNaN(number1))
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -69,14 +69,14 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText2 = OperandResolver.GetSingleValue(arg2, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
 
             String strText2 = OperandResolver.CoerceValueToString(veText2);
             Double number2 = OperandResolver.ParseDouble(strText2);
-            if (double.IsNaN(number2))
+            if(double.IsNaN(number2))
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -87,7 +87,7 @@ namespace NPOI.SS.Formula.Functions
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 2)
+            if(args.Length == 2)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1]);
             }

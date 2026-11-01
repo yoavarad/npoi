@@ -32,7 +32,7 @@ namespace NPOI.SS.Formula.Eval
 
                 return decimal.ToDouble(dec0 * dec1);
             }
-            catch (System.OverflowException)
+            catch(System.OverflowException)
             {
                 // Values too large for decimal — fall back to double arithmetic (matches Excel behavior)
                 return d0 * d1;

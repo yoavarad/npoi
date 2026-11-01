@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -61,7 +61,7 @@ namespace TestCases.POIFS.FileSystem
         private bool ClaimNoData()
         {
             double tmp = r.NextDouble();
-            if (tmp < 0.75f)   //change 0.25f to 0.40f
+            if(tmp < 0.75f)   //change 0.25f to 0.40f
             {
                 return false;
             }
@@ -70,14 +70,14 @@ namespace TestCases.POIFS.FileSystem
 
         public int Read()
         {
-            if (pos >= data.Length)
+            if(pos >= data.Length)
             {
                 return -1;
             }
             int ret = data[pos];
             pos++;
 
-            if (ret < 0)
+            if(ret < 0)
                 ret += 256;
 
             return ret;
@@ -91,17 +91,17 @@ namespace TestCases.POIFS.FileSystem
         public override int Read(byte[] b, int off, int len)
         {
             // Keep the Length within the chunk size
-            if (len > chunkSize)
+            if(len > chunkSize)
             {
                 len = chunkSize;
             }
             // Don't Read off the end of the data
-            if (pos + len > data.Length)
+            if(pos + len > data.Length)
             {
-                len = data.Length - (int)pos;
+                len = data.Length - (int) pos;
 
                 // Spot when we're out of data
-                if (len == 0)
+                if(len == 0)
                 {
                     return -1;
                 }

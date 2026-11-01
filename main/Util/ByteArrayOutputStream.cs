@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,7 +33,7 @@ namespace NPOI.Util
             get => _position;
             set
             {
-                if (value < 0 || value > _buffer.Count)
+                if(value < 0 || value > _buffer.Count)
                     throw new ArgumentOutOfRangeException(nameof(value));
                 _position = value;
             }
@@ -52,7 +52,7 @@ namespace NPOI.Util
         public override long Seek(long offset, SeekOrigin origin)
         {
             long newPos;
-            switch (origin)
+            switch(origin)
             {
                 case SeekOrigin.Begin:
                     newPos = offset;
@@ -66,7 +66,7 @@ namespace NPOI.Util
                 default:
                     throw new ArgumentException("Invalid SeekOrigin", nameof(origin));
             }
-            if (newPos < 0 || newPos > _buffer.Count)
+            if(newPos < 0 || newPos > _buffer.Count)
                 throw new IOException("Attempted to seek outside the buffer.");
             _position = newPos;
             return _position;
@@ -74,27 +74,27 @@ namespace NPOI.Util
 
         public override void SetLength(long value)
         {
-            if (value < 0)
+            if(value < 0)
                 throw new ArgumentOutOfRangeException(nameof(value));
-            if (value < _buffer.Count)
+            if(value < _buffer.Count)
             {
-                _buffer.RemoveRange((int)value, _buffer.Count - (int)value);
+                _buffer.RemoveRange((int) value, _buffer.Count - (int) value);
             }
-            else if (value > _buffer.Count)
+            else if(value > _buffer.Count)
             {
                 _buffer.AddRange(new byte[value - _buffer.Count]);
             }
-            if (_position > value)
+            if(_position > value)
                 _position = value;
         }
 
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (buffer == null)
+            if(buffer == null)
                 throw new ArgumentNullException(nameof(buffer));
-            if (offset < 0 || count < 0 || offset + count > buffer.Length)
+            if(offset < 0 || count < 0 || offset + count > buffer.Length)
                 throw new ArgumentOutOfRangeException();
-            for (int i = 0; i < count; i++)
+            for(int i = 0; i < count; i++)
             {
                 WriteByte(buffer[offset + i]);
             }
@@ -102,14 +102,14 @@ namespace NPOI.Util
 
         public override void Write(int b)
         {
-            WriteByte((byte)b);
+            WriteByte((byte) b);
         }
 
         public override void WriteByte(byte value)
         {
-            if (_position < _buffer.Count)
+            if(_position < _buffer.Count)
             {
-                _buffer[(int)_position] = value;
+                _buffer[(int) _position] = value;
             }
             else
             {

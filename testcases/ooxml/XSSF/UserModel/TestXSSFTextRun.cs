@@ -16,11 +16,12 @@
 ==================================================================== */
 namespace TestCases.XSSF.UserModel
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.Collections.Generic;
     using NPOI.XSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
+    using System;
+    using System.Collections.Generic;
     using System.Threading;
 
     [TestFixture]
@@ -68,7 +69,7 @@ namespace TestCases.XSSF.UserModel
                     run.FontSize = (/*setter*/0.9);
                     Assert.Fail("Should fail");
                 }
-                catch (ArgumentException e)
+                catch(ArgumentException e)
                 {
                     ClassicAssert.IsTrue(e.Message.Contains("0.9"));
                 }
@@ -83,25 +84,25 @@ namespace TestCases.XSSF.UserModel
                 ClassicAssert.AreEqual(0.0, run.CharacterSpacing, 0.01);
 
                 ClassicAssert.AreEqual("Calibri", run.FontFamily);
-                run.SetFontFamily("Arial", (byte)1, (byte)1, false);
+                run.SetFontFamily("Arial", (byte) 1, (byte) 1, false);
                 ClassicAssert.AreEqual("Arial", run.FontFamily);
-                run.SetFontFamily("Arial", unchecked((byte)-1), (byte)1, false);
+                run.SetFontFamily("Arial", unchecked((byte) -1), (byte) 1, false);
                 ClassicAssert.AreEqual("Arial", run.FontFamily);
-                run.SetFontFamily("Arial", (byte)1, unchecked((byte)-1), false);
+                run.SetFontFamily("Arial", (byte) 1, unchecked((byte) -1), false);
                 ClassicAssert.AreEqual("Arial", run.FontFamily);
-                run.SetFontFamily("Arial", (byte)1, (byte)1, true);
+                run.SetFontFamily("Arial", (byte) 1, (byte) 1, true);
                 ClassicAssert.AreEqual("Arial", run.FontFamily);
-                run.SetFontFamily(null, (byte)1, (byte)1, false);
+                run.SetFontFamily(null, (byte) 1, (byte) 1, false);
                 ClassicAssert.AreEqual("Calibri", run.FontFamily);
-                run.SetFontFamily(null, (byte)1, (byte)1, false);
+                run.SetFontFamily(null, (byte) 1, (byte) 1, false);
                 ClassicAssert.AreEqual("Calibri", run.FontFamily);
 
                 run.SetFont("Arial");
                 ClassicAssert.AreEqual("Arial", run.FontFamily);
 
-                ClassicAssert.AreEqual((byte)0, run.PitchAndFamily);
+                ClassicAssert.AreEqual((byte) 0, run.PitchAndFamily);
                 run.SetFont(null);
-                ClassicAssert.AreEqual((byte)0, run.PitchAndFamily);
+                ClassicAssert.AreEqual((byte) 0, run.PitchAndFamily);
 
                 ClassicAssert.IsFalse(run.IsStrikethrough);
                 run.IsStrikethrough = (/*setter*/true);

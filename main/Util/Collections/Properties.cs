@@ -24,11 +24,11 @@
  * Contributors:
  * 
  * ==============================================================*/
-using System;
-using System.Text; 
 using Cysharp.Text;
-using System.IO;
+using System;
 using System.Collections;
+using System.IO;
+using System.Text;
 
 namespace NPOI.Util.Collections
 {
@@ -55,7 +55,8 @@ namespace NPOI.Util.Collections
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        public string Remove(string key) {
+        public string Remove(string key)
+        {
             string retval = (string)_col[key];
             _col.Remove(key);
             return retval;
@@ -65,7 +66,8 @@ namespace NPOI.Util.Collections
         /// Gets the enumerator.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator GetEnumerator() {
+        public IEnumerator GetEnumerator()
+        {
             return _col.GetEnumerator();
         }
 
@@ -76,8 +78,9 @@ namespace NPOI.Util.Collections
         /// <returns>
         /// 	<c>true</c> if the specified key contains key; otherwise, <c>false</c>.
         /// </returns>
-        public bool ContainsKey(string key) {
-            return _col.ContainsKey(key);            
+        public bool ContainsKey(string key)
+        {
+            return _col.ContainsKey(key);
         }
 
         /// <summary>
@@ -85,12 +88,15 @@ namespace NPOI.Util.Collections
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        public virtual void Add(string key, string value) {
-            _col[key] = value;        
+        public virtual void Add(string key, string value)
+        {
+            _col[key] = value;
         }
 
-        public void AddAll(Properties col) {
-            foreach (string itm in col.Keys) {
+        public void AddAll(Properties col)
+        {
+            foreach(string itm in col.Keys)
+            {
                 _col[itm] = col[itm];
             }
         }
@@ -99,8 +105,10 @@ namespace NPOI.Util.Collections
         /// Gets the count.
         /// </summary>
         /// <value>The count.</value>
-        public int Count {
-            get {
+        public int Count
+        {
+            get
+            {
                 return _col.Count;
             }
         }
@@ -109,12 +117,15 @@ namespace NPOI.Util.Collections
         /// Gets or sets the <see cref="System.String"/> with the specified key.
         /// </summary>
         /// <value></value>
-        public virtual string this[string key] {
-            get {
-                return (string)_col[key];
+        public virtual string this[string key]
+        {
+            get
+            {
+                return (string) _col[key];
             }
 
-            set {
+            set
+            {
                 _col[key] = value;
             }
         }
@@ -123,8 +134,10 @@ namespace NPOI.Util.Collections
         /// Gets the keys.
         /// </summary>
         /// <value>The keys.</value>
-        public ICollection Keys {
-            get {
+        public ICollection Keys
+        {
+            get
+            {
                 return _col.Keys;
             }
         }
@@ -132,7 +145,8 @@ namespace NPOI.Util.Collections
         /// <summary>
         /// Clears this instance.
         /// </summary>
-        public void Clear() {
+        public void Clear()
+        {
             _col.Clear();
         }
 
@@ -140,69 +154,76 @@ namespace NPOI.Util.Collections
         /// Loads the specified in stream.
         /// </summary>
         /// <param name="inStream">The in stream.</param>
-        public void Load(Stream inStream) {
+        public void Load(Stream inStream)
+        {
             StreamReader inp = new StreamReader(inStream, Encoding.GetEncoding(1252));
-            while (true) {
+            while(true)
+            {
                 // Get next line
                 String line = inp.ReadLine();
-                if (line == null)
+                if(line == null)
                     return;
 
-                if (line.Length > 0) {
-                
+                if(line.Length > 0)
+                {
+
                     // Find start of key
                     int len = line.Length;
                     int keyStart;
-                    for (keyStart=0; keyStart<len; keyStart++)
-                        if (!whiteSpaceChars.Contains(line[keyStart]))
+                    for(keyStart=0; keyStart<len; keyStart++)
+                        if(!whiteSpaceChars.Contains(line[keyStart]))
                             break;
 
                     // Blank lines are ignored
-                    if (keyStart == len)
+                    if(keyStart == len)
                         continue;
 
                     // Continue lines that end in slashes if they are not comments
                     char firstChar = line[keyStart];
-                    if ((firstChar != '#') && (firstChar != '!')) {
-                        while (ContinueLine(line)) {
+                    if((firstChar != '#') && (firstChar != '!'))
+                    {
+                        while(ContinueLine(line))
+                        {
                             String nextLine = inp.ReadLine();
-                            if (nextLine == null)
+                            if(nextLine == null)
                                 nextLine = "";
                             String loppedLine = line.Substring(0, len-1);
                             // Advance beyond whitespace on new line
                             int startIndex;
-                            for (startIndex=0; startIndex<nextLine.Length; startIndex++)
-                                if (!whiteSpaceChars.Contains(nextLine[startIndex]))
+                            for(startIndex=0; startIndex<nextLine.Length; startIndex++)
+                                if(!whiteSpaceChars.Contains(nextLine[startIndex]))
                                     break;
-                            nextLine = nextLine.Substring(startIndex,nextLine.Length - startIndex);
+                            nextLine = nextLine.Substring(startIndex, nextLine.Length - startIndex);
                             line = loppedLine+nextLine;
                             len = line.Length;
                         }
 
                         // Find separation between key and value
                         int separatorIndex;
-                        for (separatorIndex=keyStart; separatorIndex<len; separatorIndex++) {
+                        for(separatorIndex=keyStart; separatorIndex<len; separatorIndex++)
+                        {
                             char currentChar = line[separatorIndex];
-                            if (currentChar == '\\')
+                            if(currentChar == '\\')
                                 separatorIndex++;
-                            else if (keyValueSeparators.Contains(currentChar))
+                            else if(keyValueSeparators.Contains(currentChar))
                                 break;
                         }
 
                         // Skip over whitespace after key if any
                         int valueIndex;
-                        for (valueIndex=separatorIndex; valueIndex<len; valueIndex++)
-                            if (!whiteSpaceChars.Contains(line[valueIndex]))
+                        for(valueIndex=separatorIndex; valueIndex<len; valueIndex++)
+                            if(!whiteSpaceChars.Contains(line[valueIndex]))
                                 break;
 
                         // Skip over one non whitespace key value separators if any
-                        if (valueIndex < len)
-                            if (strictKeyValueSeparators.Contains(line[valueIndex]))
+                        if(valueIndex < len)
+                            if(strictKeyValueSeparators.Contains(line[valueIndex]))
                                 valueIndex++;
 
                         // Skip over white space after other separators if any
-                        while (valueIndex < len) {
-                            if (!whiteSpaceChars.Contains(line[valueIndex]))
+                        while(valueIndex < len)
+                        {
+                            if(!whiteSpaceChars.Contains(line[valueIndex]))
                                 break;
                             valueIndex++;
                         }
@@ -233,26 +254,47 @@ namespace NPOI.Util.Collections
             int len = theString.Length;
             using var outBuffer = ZString.CreateStringBuilder();
 
-            for (int x=0; x<len; ) {
+            for(int x = 0; x<len;)
+            {
                 aChar = theString[x++];
-                if (aChar == '\\') {
+                if(aChar == '\\')
+                {
                     aChar = theString[x++];
-                    if (aChar == 'u') {
+                    if(aChar == 'u')
+                    {
                         // Read the xxxx
                         int value=0;
-                        for (int i=0; i<4; i++) {
+                        for(int i = 0; i<4; i++)
+                        {
                             aChar = theString[x++];
-                            switch (aChar) {
-                                case '0': case '1': case '2': case '3': case '4':
-                                case '5': case '6': case '7': case '8': case '9':
+                            switch(aChar)
+                            {
+                                case '0':
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
                                     value = (value << 4) + aChar - '0';
                                     break;
-                                case 'a': case 'b': case 'c':
-                                case 'd': case 'e': case 'f':
+                                case 'a':
+                                case 'b':
+                                case 'c':
+                                case 'd':
+                                case 'e':
+                                case 'f':
                                     value = (value << 4) + 10 + aChar - 'a';
                                     break;
-                                case 'A': case 'B': case 'C':
-                                case 'D': case 'E': case 'F':
+                                case 'A':
+                                case 'B':
+                                case 'C':
+                                case 'D':
+                                case 'E':
+                                case 'F':
                                     value = (value << 4) + 10 + aChar - 'A';
                                     break;
                                 default:
@@ -260,15 +302,22 @@ namespace NPOI.Util.Collections
                                         "Malformed \\uxxxx encoding.");
                             }
                         }
-                        outBuffer.Append((char)value);
-                    } else {
-                        if (aChar == 't') aChar = '\t';
-                        else if (aChar == 'r') aChar = '\r';
-                        else if (aChar == 'n') aChar = '\n';
-                        else if (aChar == 'f') aChar = '\f';
+                        outBuffer.Append((char) value);
+                    }
+                    else
+                    {
+                        if(aChar == 't')
+                            aChar = '\t';
+                        else if(aChar == 'r')
+                            aChar = '\r';
+                        else if(aChar == 'n')
+                            aChar = '\n';
+                        else if(aChar == 'f')
+                            aChar = '\f';
                         outBuffer.Append(aChar);
                     }
-                } else
+                }
+                else
                     outBuffer.Append(aChar);
             }
             return outBuffer.ToString();
@@ -279,10 +328,11 @@ namespace NPOI.Util.Collections
         /// </summary>
         /// <param name="line">The line.</param>
         /// <returns></returns>
-        private static bool ContinueLine(String line) {
+        private static bool ContinueLine(String line)
+        {
             int slashCount = 0;
             int index = line.Length - 1;
-            while ((index >= 0) && (line[index--] == '\\'))
+            while((index >= 0) && (line[index--] == '\\'))
                 slashCount++;
             return (slashCount % 2 == 1);
         }

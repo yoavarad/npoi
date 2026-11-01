@@ -17,12 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
+    using NPOI.SS.Formula;
+    using NPOI.SS.Util;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    
-    using NPOI.SS.Util;
-    using NPOI.SS.Formula;
 
 
 
@@ -66,7 +65,7 @@ namespace NPOI.SS.Formula.PTG
             ExternSheetIndex=externIdx;
         }
 
-        public Ref3DPtg(CellReference cr, int externIdx):base(cr)
+        public Ref3DPtg(CellReference cr, int externIdx) : base(cr)
         {
             ExternSheetIndex = externIdx;
         }

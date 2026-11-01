@@ -1,6 +1,6 @@
-using System.IO;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Presentation;
+using System.IO;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -13,8 +13,7 @@ namespace NPOI.XSLF.UserModel
 
         internal XSLFSlide()
         {
-            slide = new CT_Slide
-            {
+            slide = new CT_Slide {
                 Namespaces = XSLFXmlHelper.CreateNamespaces(),
                 cSld = XSLFXmlHelper.CreateCommonSlideData(),
                 AnyElements = new[]
@@ -30,7 +29,7 @@ namespace NPOI.XSLF.UserModel
             : base(parent, part)
         {
             slide = XSLFXmlHelper.Read<CT_Slide>(part);
-            if (slide.cSld == null)
+            if(slide.cSld == null)
             {
                 throw new POIXMLException("Slide has no common slide data: " + part.PartName.Name);
             }

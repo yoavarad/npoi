@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,9 +16,9 @@
 ==================================================================== */
 
 
-using System;
-using NPOI.OpenXmlFormats.Dml.Chart;
 using NPOI.OpenXmlFormats.Dml;
+using NPOI.OpenXmlFormats.Dml.Chart;
+using System;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
@@ -149,7 +149,7 @@ namespace NPOI.XDDF.UserModel.Chart
         }
         public override void CrossAxis(XDDFChartAxis axis)
         {
-            ctValAx.crossAx.val = (uint)axis.Id;
+            ctValAx.crossAx.val = (uint) axis.Id;
         }
         protected override CT_UnsignedInt GetCTAxId()
         {
@@ -206,7 +206,7 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return AxisCrossBetweenExtensions.ValueOf(ctValAx.crossBetween.val);
             }
-            set 
+            set
             {
                 ctValAx.crossBetween.val = value.ToST_CrossBetween();
             }
@@ -216,7 +216,7 @@ namespace NPOI.XDDF.UserModel.Chart
         {
             long id = GetNextAxId(plotArea);
             ctValAx = plotArea.AddNewValAx();
-            ctValAx.AddNewAxId().val = (uint)id;
+            ctValAx.AddNewAxId().val = (uint) id;
             ctValAx.AddNewAxPos();
             ctValAx.AddNewScaling();
             ctValAx.AddNewCrossBetween();
@@ -248,5 +248,3 @@ namespace NPOI.XDDF.UserModel.Chart
         }
     }
 }
-
-

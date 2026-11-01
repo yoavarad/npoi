@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -30,7 +30,7 @@ namespace NPOI.SS.Formula.Functions
         private StdevP()
         {
         }
-        public override double CalculateFromNumberList(List<double> list) 
+        public override double CalculateFromNumberList(List<double> list)
             => Math.Sqrt(VarP.Instance.CalculateFromNumberList(list));
     }
 }

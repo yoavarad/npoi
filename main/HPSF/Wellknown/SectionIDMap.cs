@@ -28,10 +28,10 @@
 namespace NPOI.HPSF.Wellknown
 {
     using System;
-    using System.Text;
     using System.Collections;
-    using System.Threading;
     using System.Collections.Generic;
+    using System.Text;
+    using System.Threading;
 
     /// <summary>
     /// Maps section format IDs To {@link PropertyIDMap}s. It Is
@@ -63,10 +63,10 @@ namespace NPOI.HPSF.Wellknown
          * ID.
          */
         private static readonly ClassID DOC_SUMMARY_INFORMATION =
-            new ClassID("{D5CDD502-2E9C-101B-9397-08002B2CF9AE}");    
+            new ClassID("{D5CDD502-2E9C-101B-9397-08002B2CF9AE}");
         private static ClassID USER_DEFINED_PROPERTIES =
             new ClassID("{D5CDD505-2E9C-101B-9397-08002B2CF9AE}");
-    
+
         public static ClassID[] DOCUMENT_SUMMARY_INFORMATION_ID = {
             DOC_SUMMARY_INFORMATION, USER_DEFINED_PROPERTIES
         };
@@ -163,8 +163,9 @@ namespace NPOI.HPSF.Wellknown
          * 
          * @return the previous PropertyIDMap stored under this key, or {@code null} if there wasn't one
          */
-        protected PropertyIDMap Put(String key, PropertyIDMap value) {
-            return (PropertyIDMap)Put(new ClassID(key), value);
+        protected PropertyIDMap Put(String key, PropertyIDMap value)
+        {
+            return (PropertyIDMap) Put(new ClassID(key), value);
         }
     }
 }

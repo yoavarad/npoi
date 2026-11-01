@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
 
     /**
     * Common functionality across file formats for Evaluating formula cells.<p/>
@@ -44,7 +44,7 @@ namespace NPOI.SS.Formula
         public static void SetupEnvironment(String[] workbookNames, BaseFormulaEvaluator[] Evaluators)
         {
             WorkbookEvaluator[] wbEvals = new WorkbookEvaluator[Evaluators.Length];
-            for (int i = 0; i < wbEvals.Length; i++)
+            for(int i = 0; i < wbEvals.Length; i++)
             {
                 wbEvals[i] = Evaluators[i]._bookEvaluator;
             }
@@ -90,12 +90,12 @@ namespace NPOI.SS.Formula
 
         public CellValue Evaluate(ICell cell)
         {
-            if (cell == null)
+            if(cell == null)
             {
                 return null;
             }
 
-            switch (cell.CellType)
+            switch(cell.CellType)
             {
                 case CellType.Boolean:
                     return CellValue.ValueOf(cell.BooleanCellValue);
@@ -134,12 +134,12 @@ namespace NPOI.SS.Formula
 
         public virtual ICell EvaluateInCell(ICell cell)
         {
-            if (cell == null)
+            if(cell == null)
             {
                 return null;
             }
             ICell result = cell;
-            if (cell.CellType == CellType.Formula)
+            if(cell.CellType == CellType.Formula)
             {
                 CellValue cv = EvaluateFormulaCellValue(cell);
                 SetCellValue(cell, cv);
@@ -177,7 +177,7 @@ namespace NPOI.SS.Formula
          */
         public CellType EvaluateFormulaCell(ICell cell)
         {
-            if (cell == null || cell.CellType != CellType.Formula)
+            if(cell == null || cell.CellType != CellType.Formula)
             {
                 return CellType._None;
             }
@@ -217,7 +217,7 @@ namespace NPOI.SS.Formula
         protected static void SetCellType(ICell cell, CellValue cv)
         {
             CellType cellType = cv.CellType;
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Boolean:
                 case CellType.Error:
@@ -241,13 +241,13 @@ namespace NPOI.SS.Formula
         protected void SetCellValue(ICell cell, CellValue cv)
         {
             CellType cellType = cv.CellType;
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Boolean:
                     cell.SetCellValue(cv.BooleanValue);
                     break;
                 case CellType.Error:
-                    cell.SetCellErrorValue((byte)cv.ErrorValue);
+                    cell.SetCellErrorValue((byte) cv.ErrorValue);
                     break;
                 case CellType.Numeric:
                     cell.SetCellValue(cv.NumberValue);
@@ -283,15 +283,15 @@ namespace NPOI.SS.Formula
         }
         protected static void EvaluateAllFormulaCells(IWorkbook wb, IFormulaEvaluator evaluator)
         {
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 ISheet sheet = wb.GetSheetAt(i);
 
-                foreach (IRow r in sheet)
+                foreach(IRow r in sheet)
                 {
-                    foreach (ICell c in r)
+                    foreach(ICell c in r)
                     {
-                        if (c.CellType == CellType.Formula)
+                        if(c.CellType == CellType.Formula)
                         {
                             evaluator.EvaluateFormulaCell(c);
                         }

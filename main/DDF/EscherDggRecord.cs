@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -155,7 +155,7 @@ namespace NPOI.DDF
             }
             set
             {
-                
+
             }
         }
         public override string RecordName
@@ -336,7 +336,7 @@ namespace NPOI.DDF
             for(var i = 0; i<field_5_fileIdClusters.Count + 32; i++)
             {
                 if(!bs.Get(i))
-                    return (short)i;
+                    return (short) i;
             }
             //return (short) bs.nextClearBit(0);
             throw new InvalidOperationException();
@@ -429,7 +429,7 @@ namespace NPOI.DDF
             //            extraData = "error";
             //        }
             StringBuilder field_5_string = new StringBuilder();
-            for (int i = 0; i < field_5_fileIdClusters.Count; i++)
+            for(int i = 0; i < field_5_fileIdClusters.Count; i++)
             {
                 field_5_string.Append("  DrawingGroupId").Append(i + 1).Append(": ");
                 field_5_string.Append(field_5_fileIdClusters[i].DrawingGroupId);

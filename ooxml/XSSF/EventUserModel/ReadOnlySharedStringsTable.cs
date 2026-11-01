@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -122,7 +122,7 @@ namespace NPOI.XSSF.EventUserModel
                     pkg.GetPartsByContentType(XSSFRelation.SHARED_STRINGS.ContentType);
 
             // Some workbooks have no shared strings table.
-            if (parts.Count > 0)
+            if(parts.Count > 0)
             {
                 PackagePart sstPart = parts[0];
                 ReadFrom(sstPart.GetInputStream());
@@ -304,4 +304,3 @@ namespace NPOI.XSSF.EventUserModel
         }
     }
 }
-

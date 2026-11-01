@@ -18,12 +18,13 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using NPOI.SS.Formula.Eval;
     using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for the INDIRECT() function.</p>
@@ -39,7 +40,7 @@ namespace TestCases.SS.Formula.Functions
         private static void CreateDataRow(ISheet sheet, int rowIndex, params double[] vals)
         {
             IRow row = sheet.CreateRow(rowIndex);
-            for (int i = 0; i < vals.Length; i++)
+            for(int i = 0; i < vals.Length; i++)
             {
                 row.CreateCell(i).SetCellValue(vals[i]);
             }
@@ -146,7 +147,7 @@ namespace TestCases.SS.Formula.Functions
             Confirm(feA, c, "INDIRECT(\"[Book1]Sheet1!A1\")", ErrorEval.REF_INVALID); // unknown external workbook
             Confirm(feA, c, "INDIRECT(\"Sheet3!A1\")", ErrorEval.REF_INVALID); // unknown sheet
 #if !HIDE_UNREACHABLE_CODE
-            if (false)
+            if(false)
             { // TODO - support Evaluation of defined names
                 Confirm(feA, c, "INDIRECT(\"Sheet1!IW1\")", ErrorEval.REF_INVALID); // bad column
                 Confirm(feA, c, "INDIRECT(\"Sheet1!A65537\")", ErrorEval.REF_INVALID); // bad row
@@ -183,7 +184,7 @@ namespace TestCases.SS.Formula.Functions
             fe.ClearAllCachedResultValues();
             cell.CellFormula = (formula);
             CellValue cv = fe.Evaluate(cell);
-            if (cv.CellType != CellType.Numeric)
+            if(cv.CellType != CellType.Numeric)
             {
                 throw new AssertionException("expected numeric cell type but got " + cv.FormatAsString());
             }
@@ -195,12 +196,12 @@ namespace TestCases.SS.Formula.Functions
             fe.ClearAllCachedResultValues();
             cell.CellFormula=(formula);
             CellValue cv = fe.Evaluate(cell);
-            if (cv.CellType != CellType.Error)
+            if(cv.CellType != CellType.Error)
             {
                 throw new AssertionException("expected error cell type but got " + cv.FormatAsString());
             }
             int expCode = expectedResult.ErrorCode;
-            if (cv.ErrorValue != expCode)
+            if(cv.ErrorValue != expCode)
             {
                 throw new AssertionException("Expected error '" + ErrorEval.GetText(expCode)
                         + "' but got '" + cv.FormatAsString() + "'.");

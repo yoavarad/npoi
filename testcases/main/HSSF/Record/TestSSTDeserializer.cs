@@ -17,13 +17,14 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
-    using TestCases.HSSF;
     using NPOI.Util;
     using NPOI.Util.Collections;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
 
     /**
      * Exercise the SSTDeserializer class.
@@ -43,14 +44,15 @@ namespace TestCases.HSSF.Record
             return result;
         }
 
-        private static byte[] ReadSampleHexData(String sampleFileName, String sectionName,int recSid)
+        private static byte[] ReadSampleHexData(String sampleFileName, String sectionName, int recSid)
         {
             Stream is1 = HSSFTestDataSamples.OpenSampleFileStream(sampleFileName);
             byte[] data;
-            try {
-			    data = HexRead.ReadData(is1, sectionName);
+            try
+            {
+                data = HexRead.ReadData(is1, sectionName);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }

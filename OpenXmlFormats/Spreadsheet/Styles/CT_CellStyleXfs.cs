@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,14 +20,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private bool countFieldSpecified;
         public static CT_CellStyleXfs Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CellStyleXfs ctObj = new CT_CellStyleXfs();
             ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.xf = new List<CT_Xf>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "xf")
+                if(childNode.LocalName == "xf")
                     ctObj.xf.Add(CT_Xf.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -40,9 +40,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
             sw.Write('>');
-            if (this.xf != null)
+            if(this.xf != null)
             {
-                foreach (CT_Xf x in this.xf)
+                foreach(CT_Xf x in this.xf)
                 {
                     x.Write(sw, "xf", true);
                 }
@@ -56,7 +56,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_Xf AddNewXf()
         {
-            if (this.xfField == null)
+            if(this.xfField == null)
                 this.xfField = new List<CT_Xf>();
             CT_Xf xf = new CT_Xf();
             this.xfField.Add(xf);

@@ -26,16 +26,15 @@
  * ==============================================================*/
 
 
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.FileSystem;
-using NPOI.Util;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
 
 namespace TestCases.POIFS.FileSystem
 {
@@ -72,7 +71,7 @@ namespace TestCases.POIFS.FileSystem
             MemoryStream stream =
                 new MemoryStream(new byte[2048]);
 
-            for (int j = 0; j < 4; j++)
+            for(int j = 0; j < 4; j++)
             {
                 rawBlocks[j] = new RawDataBlock(stream);
             }

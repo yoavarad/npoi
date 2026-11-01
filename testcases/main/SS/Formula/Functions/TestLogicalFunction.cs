@@ -20,7 +20,8 @@ namespace TestCases.SS.Formula.Functions
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * LogicalFunction unit tests.

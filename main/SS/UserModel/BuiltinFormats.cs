@@ -139,7 +139,7 @@ namespace NPOI.SS.UserModel
 
         public static String[] GetAll()
         {
-            return (String[])_formats.Clone();
+            return (String[]) _formats.Clone();
         }
 
         /**
@@ -150,7 +150,7 @@ namespace NPOI.SS.UserModel
          */
         public static String GetBuiltinFormat(int index)
         {
-            if (index < 0 || index >= _formats.Length)
+            if(index < 0 || index >= _formats.Length)
             {
                 return null;
             }
@@ -171,10 +171,10 @@ namespace NPOI.SS.UserModel
             String fmt = "TEXT".Equals(pFmt, StringComparison.OrdinalIgnoreCase) ? "@" : pFmt;
 
             int i = -1;
-            foreach (String f in _formats)
+            foreach(String f in _formats)
             {
                 i++;
-                if (f.Equals(fmt))
+                if(f.Equals(fmt))
                 {
                     return i;
                 }

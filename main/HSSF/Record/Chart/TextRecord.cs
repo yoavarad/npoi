@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /*
@@ -140,8 +140,8 @@ namespace NPOI.HSSF.Record
 
         public TextRecord(RecordInputStream in1)
         {
-            field_1_horizontalAlignment = (byte)in1.ReadByte();
-            field_2_verticalAlignment = (byte)in1.ReadByte();
+            field_1_horizontalAlignment = (byte) in1.ReadByte();
+            field_2_verticalAlignment = (byte) in1.ReadByte();
             field_3_DisplayMode = in1.ReadShort();
             field_4_rgbColor = in1.ReadInt();
             field_5_x = in1.ReadInt();
@@ -248,7 +248,7 @@ namespace NPOI.HSSF.Record
          */
         protected override int DataSize
         {
-            get { return  1 + 1 + 2 + 4 + 4 + 4 + 4 + 4 + 2 + 2 + 2 + 2; }
+            get { return 1 + 1 + 2 + 4 + 4 + 4 + 4 + 4 + 2 + 2 + 2 + 2; }
         }
 
         public override short Sid
@@ -509,7 +509,7 @@ namespace NPOI.HSSF.Record
          */
         public bool ShowValueAsPercentage
         {
-            get{return showValueAsPercentage.IsSet(field_9_options1);}
+            get { return showValueAsPercentage.IsSet(field_9_options1); }
             set { field_9_options1 = showValueAsPercentage.SetShortBoolean(field_9_options1, value); }
         }
 
@@ -538,7 +538,7 @@ namespace NPOI.HSSF.Record
          */
         public short DataLabelPlacement
         {
-            get{return dataLabelPlacement.GetShortValue(field_11_options2);}
+            get { return dataLabelPlacement.GetShortValue(field_11_options2); }
             set { field_11_options2 = dataLabelPlacement.SetShortValue(field_11_options2, value); }
         }
 
@@ -549,6 +549,3 @@ namespace NPOI.HSSF.Record
         }
     }
 }
-
-
-

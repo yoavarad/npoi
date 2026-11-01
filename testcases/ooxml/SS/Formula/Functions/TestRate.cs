@@ -1,6 +1,7 @@
-﻿using NPOI.HSSF.UserModel;
+using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.Globalization;
 using TestCases.SS.Util;
 
@@ -40,7 +41,7 @@ namespace TestCases.SS.Formula.Functions
             Utils.AddRow(_sheet, 2, -200, "Monthly payment");
             Utils.AddRow(_sheet, 3, 8000, "Amount of the loan");
             ICell cell = _sheet.GetRow(0).CreateCell(100);
-            
+
             Utils.AssertDouble(_formulaEvaluator, cell, "RATE(A2*12, A3, A4)", 0.007701472, 0.000001);
             Utils.AssertDouble(_formulaEvaluator, cell, "RATE(A2*12, A3, A4)*12", 0.09241767, 0.000001);
         }
@@ -90,10 +91,10 @@ namespace TestCases.SS.Formula.Functions
             for(int i = 0; i < pv.Length; i++)
             {
                 string fmla = string.Format(
-                    "RATE({0}, {1}, {2}, {3}, 0, 0.1)", 
-                    nper.ToString("0.00", culture), 
-                    pmt.ToString("0.00", culture), 
-                    pv[i].ToString("0.00", culture), 
+                    "RATE({0}, {1}, {2}, {3}, 0, 0.1)",
+                    nper.ToString("0.00", culture),
+                    pmt.ToString("0.00", culture),
+                    pv[i].ToString("0.00", culture),
                     fv[i].ToString("0.00", culture));
 
                 ICell cell = row.CreateCell(i);
@@ -102,7 +103,7 @@ namespace TestCases.SS.Formula.Functions
         }
 
         [Test]
-        public void TestNumPyExample2() 
+        public void TestNumPyExample2()
         {
             IRow row = _sheet.CreateRow(8);
             ICell cell = row.CreateCell(0);

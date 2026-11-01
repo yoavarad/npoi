@@ -19,14 +19,14 @@ namespace NPOI.HSSF.UserModel
 {
     using NPOI.DDF;
     using NPOI.HSSF.Record;
-    using System;
     using NPOI.SS.UserModel;
+    using System;
     /// <summary>
     /// Represents a simple shape such as a line, rectangle or oval.
     /// @author Glen Stampoultzis (glens at apache.org)
     /// </summary>
     [Serializable]
-    public class HSSFSimpleShape: HSSFShape, ISimpleShape
+    public class HSSFSimpleShape : HSSFShape, ISimpleShape
     {
         // The commented out ones haven't been tested yet or aren't supported
         // by HSSFSimpleShape.
@@ -67,7 +67,7 @@ namespace NPOI.HSSF.UserModel
         public HSSFSimpleShape(EscherContainerRecord spContainer, ObjRecord objRecord)
             : base(spContainer, objRecord)
         {
-            
+
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="HSSFSimpleShape"/> class.
@@ -75,7 +75,7 @@ namespace NPOI.HSSF.UserModel
         /// <param name="parent">The parent.</param>
         /// <param name="anchor">The anchor.</param>
         public HSSFSimpleShape(HSSFShape parent, HSSFAnchor anchor)
-            :base(parent, anchor)
+            : base(parent, anchor)
         {
             _textObjectRecord = CreateTextObjRecord();
         }
@@ -89,19 +89,19 @@ namespace NPOI.HSSF.UserModel
         /// @see #OBJECT_TYPE_RECTANGLE
         /// @see #OBJECT_TYPE_PICTURE
         /// @see #OBJECT_TYPE_COMMENT
-        public virtual int ShapeType 
+        public virtual int ShapeType
         {
             get
             {
                 EscherSpRecord spRecord = (EscherSpRecord)GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID);
                 return spRecord.ShapeType;
             }
-            set 
+            set
             {
                 CommonObjectDataSubRecord cod = (CommonObjectDataSubRecord)GetObjRecord().SubRecords[0];
                 cod.ObjectType = CommonObjectType.MicrosoftOfficeDrawing;
                 EscherSpRecord spRecord = (EscherSpRecord)GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID);
-                spRecord.ShapeType = ((short)value);
+                spRecord.ShapeType = ((short) value);
             }
         }
         public int WrapText
@@ -111,7 +111,7 @@ namespace NPOI.HSSF.UserModel
                 EscherSimpleProperty property = (EscherSimpleProperty)GetOptRecord().Lookup(EscherProperties.TEXT__WRAPTEXT);
                 return null == property ? WRAP_SQUARE : property.PropertyValue;
             }
-            set 
+            set
             {
                 SetPropertyValue(new EscherSimpleProperty(EscherProperties.TEXT__WRAPTEXT, false, false, value));
             }
@@ -142,16 +142,17 @@ namespace NPOI.HSSF.UserModel
             set
             {
                 //TODO add other shape types which can not contain text
-                if (ShapeType == 0 || ShapeType == OBJECT_TYPE_LINE)
+                if(ShapeType == 0 || ShapeType == OBJECT_TYPE_LINE)
                 {
                     throw new InvalidOperationException("Cannot set text for shape type: " + ShapeType);
                 }
                 HSSFRichTextString rtr = (HSSFRichTextString)value;
                 // If font is not set we must set the default one
-                if (rtr.NumFormattingRuns == 0) rtr.ApplyFont((short)0);
+                if(rtr.NumFormattingRuns == 0)
+                    rtr.ApplyFont((short) 0);
                 TextObjectRecord txo = GetOrCreateTextObjRecord();
                 txo.Str = (rtr);
-                if (value.String != null)
+                if(value.String != null)
                 {
                     SetPropertyValue(new EscherSimpleProperty(EscherProperties.TEXT__TEXTID, value.String.GetHashCode()));
                 }
@@ -165,9 +166,9 @@ namespace NPOI.HSSF.UserModel
             byte[] inSp = GetEscherContainer().Serialize();
             spContainer.FillFields(inSp, 0, new DefaultEscherRecordFactory());
             ObjRecord obj = (ObjRecord)GetObjRecord().CloneViaReserialise();
-            if (GetTextObjectRecord() != null && this.String != null && null != this.String.String)
+            if(GetTextObjectRecord() != null && this.String != null && null != this.String.String)
             {
-                txo = (TextObjectRecord)GetTextObjectRecord().CloneViaReserialise();
+                txo = (TextObjectRecord) GetTextObjectRecord().CloneViaReserialise();
             }
             return new HSSFSimpleShape(spContainer, obj, txo);
         }
@@ -176,7 +177,7 @@ namespace NPOI.HSSF.UserModel
             EscherAggregate agg = patriarch.GetBoundAggregate();
             agg.AssociateShapeToObjRecord(GetEscherContainer().GetChildById(EscherClientDataRecord.RECORD_ID), GetObjRecord());
 
-            if (null != GetTextObjectRecord())
+            if(null != GetTextObjectRecord())
             {
                 agg.AssociateShapeToObjRecord(GetEscherContainer().GetChildById(EscherTextboxRecord.RECORD_ID), GetTextObjectRecord());
             }
@@ -184,7 +185,7 @@ namespace NPOI.HSSF.UserModel
         internal override void AfterRemove(HSSFPatriarch patriarch)
         {
             patriarch.GetBoundAggregate().RemoveShapeToObjRecord(GetEscherContainer().GetChildById(EscherClientDataRecord.RECORD_ID));
-            if (null != GetEscherContainer().GetChildById(EscherTextboxRecord.RECORD_ID))
+            if(null != GetEscherContainer().GetChildById(EscherTextboxRecord.RECORD_ID))
             {
                 patriarch.GetBoundAggregate().RemoveShapeToObjRecord(GetEscherContainer().GetChildById(EscherTextboxRecord.RECORD_ID));
             }
@@ -193,16 +194,16 @@ namespace NPOI.HSSF.UserModel
         {
             EscherContainerRecord spContainer = new EscherContainerRecord();
             spContainer.RecordId=EscherContainerRecord.SP_CONTAINER;
-            spContainer.Options = ((short)0x000F);
+            spContainer.Options = ((short) 0x000F);
 
             EscherSpRecord sp = new EscherSpRecord();
             sp.RecordId = (EscherSpRecord.RECORD_ID);
             sp.Flags = (EscherSpRecord.FLAG_HAVEANCHOR | EscherSpRecord.FLAG_HASSHAPETYPE);
-            sp.Version = ((short)0x2);
+            sp.Version = ((short) 0x2);
 
             EscherClientDataRecord clientData = new EscherClientDataRecord();
             clientData.RecordId = (EscherClientDataRecord.RECORD_ID);
-            clientData.Options = ((short)(0x0000));
+            clientData.Options = ((short) (0x0000));
 
             EscherOptRecord optRecord = new EscherOptRecord();
             optRecord.SetEscherProperty(new EscherSimpleProperty(EscherProperties.LINESTYLE__LINEDASHING, LINESTYLE_SOLID));
@@ -219,7 +220,7 @@ namespace NPOI.HSSF.UserModel
 
             EscherTextboxRecord escherTextbox = new EscherTextboxRecord();
             escherTextbox.RecordId = (EscherTextboxRecord.RECORD_ID);
-            escherTextbox.Options = (short)0x0000;
+            escherTextbox.Options = (short) 0x0000;
 
             spContainer.AddChildRecord(sp);
             spContainer.AddChildRecord(optRecord);
@@ -246,16 +247,16 @@ namespace NPOI.HSSF.UserModel
 
         private TextObjectRecord GetOrCreateTextObjRecord()
         {
-            if (GetTextObjectRecord() == null)
+            if(GetTextObjectRecord() == null)
             {
                 _textObjectRecord = CreateTextObjRecord();
             }
             EscherTextboxRecord escherTextbox = (EscherTextboxRecord)GetEscherContainer().GetChildById(EscherTextboxRecord.RECORD_ID);
-            if (null == escherTextbox)
+            if(null == escherTextbox)
             {
                 escherTextbox = new EscherTextboxRecord();
                 escherTextbox.RecordId = (EscherTextboxRecord.RECORD_ID);
-                escherTextbox.Options = ((short)0x0000);
+                escherTextbox.Options = ((short) 0x0000);
                 GetEscherContainer().AddChildRecord(escherTextbox);
                 Patriarch.GetBoundAggregate().AssociateShapeToObjRecord(escherTextbox, _textObjectRecord);
             }

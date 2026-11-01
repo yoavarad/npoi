@@ -17,11 +17,12 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
-    using NPOI.SS.UserModel;
     using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * @author Josh Micich
@@ -154,7 +155,7 @@ namespace TestCases.SS.Formula.Functions
             DateTime secondArg = decrementDay(firstDayOfNextMonth);
             DateTime firstArg = secondArg;
 
-            foreach (int expResult in diffs)
+            foreach(int expResult in diffs)
             {
                 Confirm(expResult, firstArg, secondArg, method);
                 firstArg = decrementDay(firstArg);
@@ -165,7 +166,7 @@ namespace TestCases.SS.Formula.Functions
         {
 
             ValueEval ve;
-            if (method)
+            if(method)
             {
                 // TODO enable 3rd arg -
                 ve = invokeDays360(Convert(firstArg), Convert(secondArg), BoolEval.ValueOf(method));

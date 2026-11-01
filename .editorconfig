@@ -14,7 +14,6 @@ indent_style = space
 tab_width = 4
 
 # 改行設定
-end_of_line = crlf
 insert_final_newline = false
 
 #### .NET コーディング規則 ####
@@ -199,3 +198,8 @@ csharp_preserve_single_line_statements = false
 
 # Analysis rules
 dotnet_code_quality.api_surface = private, internal
+
+# Top-level-statement file: the whitespace formatter insists on a trailing newline, which fights
+# insert_final_newline = false and makes dotnet format --verify-no-changes fail either way.
+[benchmarks/NPOI.Benchmarks/Program.cs]
+insert_final_newline = true

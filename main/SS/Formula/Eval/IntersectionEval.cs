@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System;
-using NPOI.SS.Formula.Functions;
 using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Functions;
+using System;
 
 namespace NPOI.SS.Formula.Eval
 {
@@ -42,13 +42,13 @@ namespace NPOI.SS.Formula.Eval
                 AreaEval reA = EvaluateRef(arg0);
                 AreaEval reB = EvaluateRef(arg1);
                 AreaEval result = ResolveRange(reA, reB);
-                if (result == null)
+                if(result == null)
                 {
                     return ErrorEval.NULL_INTERSECTION;
                 }
                 return result;
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -64,23 +64,23 @@ namespace NPOI.SS.Formula.Eval
             int aeAfr = aeA.FirstRow;
             int aeAfc = aeA.FirstColumn;
             int aeBlc = aeB.LastColumn;
-            if (aeAfc > aeBlc)
+            if(aeAfc > aeBlc)
             {
                 return null;
             }
             int aeBfc = aeB.FirstColumn;
-            if (aeBfc > aeA.LastColumn)
+            if(aeBfc > aeA.LastColumn)
             {
                 return null;
             }
             int aeBlr = aeB.LastRow;
-            if (aeAfr > aeBlr)
+            if(aeAfr > aeBlr)
             {
                 return null;
             }
             int aeBfr = aeB.FirstRow;
             int aeAlr = aeA.LastRow;
-            if (aeBfr > aeAlr)
+            if(aeBfr > aeAlr)
             {
                 return null;
             }
@@ -96,15 +96,15 @@ namespace NPOI.SS.Formula.Eval
 
         private static AreaEval EvaluateRef(ValueEval arg)
         {
-            if (arg is AreaEval eval)
+            if(arg is AreaEval eval)
             {
                 return eval;
             }
-            if (arg is RefEval refEval)
+            if(arg is RefEval refEval)
             {
                 return refEval.Offset(0, 0, 0, 0);
             }
-            if (arg is ErrorEval errorEval)
+            if(arg is ErrorEval errorEval)
             {
                 throw new EvaluationException(errorEval);
             }
@@ -112,4 +112,3 @@ namespace NPOI.SS.Formula.Eval
         }
     }
 }
-

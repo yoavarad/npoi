@@ -19,12 +19,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF.Record;
 
     /**
      * @author Yegor Kozlov
@@ -828,7 +828,7 @@ namespace TestCases.HSSF.Record
             ClassicAssert.AreEqual(expected.NumStrings, actual.NumStrings, "number of strings");
             ClassicAssert.AreEqual(expected.NumUniqueStrings, actual.NumUniqueStrings, "number of unique strings");
             ClassicAssert.AreEqual(expected.CountStrings, actual.CountStrings, "count of strings");
-            for (int k = 0; k < expected.CountStrings; k++)
+            for(int k = 0; k < expected.CountStrings; k++)
             {
                 UnicodeString us1 = expected.GetString(k);
                 UnicodeString us2 = actual.GetString(k);
@@ -860,7 +860,7 @@ namespace TestCases.HSSF.Record
             InfoSubRecord[] sub2 = src.InfoSubRecords;
             ClassicAssert.AreEqual(sub1.Length, sub2.Length);
 
-            for (int i = 0; i < sub1.Length; i++)
+            for(int i = 0; i < sub1.Length; i++)
             {
                 InfoSubRecord s1 = sub1[i];
                 InfoSubRecord s2 = sub2[i];

@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Util
 {
+    using NPOI.SS.UserModel;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
-    using NPOI.SS.UserModel;
 
     /// <summary>
     /// Per-workbook O(1) style lookup table backed by a
@@ -68,11 +68,11 @@ namespace NPOI.SS.Util
         public void Warm(IWorkbook wb)
         {
             int count = wb.NumCellStyles;
-            for (int i = 0; i < count; i++)
+            for(int i = 0; i < count; i++)
             {
                 ICellStyle style = wb.GetCellStyleAt(i);
                 StyleKey key = StyleKey.From(style);
-                if (!_map.ContainsKey(key))
+                if(!_map.ContainsKey(key))
                     _map[key] = style;
             }
         }

@@ -46,7 +46,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 1:
                     return doFixed(args[0], new NumberEval(2), BoolEval.FALSE,
@@ -84,11 +84,11 @@ namespace NPOI.SS.Formula.Functions
 
                 // Round number to respective places.
                 //number = number.SetScale(places, RoundingMode.HALF_UP);
-                if (places < 0)
+                if(places < 0)
                 {
-                    number = number / (decimal)Math.Pow(10, -places);
+                    number = number / (decimal) Math.Pow(10, -places);
                     number = Math.Round(number, 0);
-                    number = number * (decimal)Math.Pow(10, -places);
+                    number = number * (decimal) Math.Pow(10, -places);
                 }
                 else
                     number = Math.Round(number, places);
@@ -105,10 +105,10 @@ namespace NPOI.SS.Formula.Functions
                     number.ToString(places > 0 ? "F" + places : "F0")
                     : number.ToString(places > 0 ? "N" + places : "N0", System.Globalization.CultureInfo.InvariantCulture);
                 // Return the result as a StringEval.
-                
+
                 return new StringEval(numberString);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

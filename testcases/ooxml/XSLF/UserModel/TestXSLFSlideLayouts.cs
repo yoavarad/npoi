@@ -1,3 +1,8 @@
+using NPOI;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Presentation;
+using NPOI.XSLF.UserModel;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,11 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using NPOI;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXmlFormats.Presentation;
-using NPOI.XSLF.UserModel;
-using NUnit.Framework;
 
 namespace TestCases.XSLF.UserModel
 {
@@ -37,7 +37,7 @@ namespace TestCases.XSLF.UserModel
                 Is.EqualTo(5));
             Assert.That(layout.GetXmlObject().AnyElements.Count(element => element.NamespaceURI == "urn:npoi:test"),
                 Is.EqualTo(3));
-            using (var unchanged = Open(Save(presentation)))
+            using(var unchanged = Open(Save(presentation)))
             {
                 Assert.That(ReadBytes(unchanged.Package.GetPart(masterName)), Is.EqualTo(masterXml));
                 Assert.That(ReadBytes(unchanged.Package.GetPart(layoutName)), Is.EqualTo(layoutXml));
@@ -90,7 +90,7 @@ namespace TestCases.XSLF.UserModel
             presentation.GetCTPresentation().AnyElements = new[] { extension.DocumentElement };
             AssertNoMutation<NotSupportedException>(presentation, () =>
             {
-                if (selectedLayout)
+                if(selectedLayout)
                 {
                     presentation.CreateSlide(presentation.GetSlideMasters()[0].GetSlideLayouts()[0]);
                 }
@@ -107,7 +107,7 @@ namespace TestCases.XSLF.UserModel
             using var presentation = new XMLSlideShow();
             var masters = presentation.GetSlideMasters();
             Assert.That(masters.Count, Is.EqualTo(1));
-            Assert.That(((ICollection<XSLFSlideMaster>)masters).IsReadOnly, Is.True);
+            Assert.That(((ICollection<XSLFSlideMaster>) masters).IsReadOnly, Is.True);
             var master = masters[0];
             var layout = master.GetSlideLayouts()[0];
             Assert.That(master.Name, Is.EqualTo("Blank Master"));
@@ -229,10 +229,10 @@ namespace TestCases.XSLF.UserModel
                 part.ContentType == XSLFRelation.SLIDE_LAYOUT.ContentType ||
                 part.ContentType == XSLFRelation.THEME.ContentType)
                 .ToDictionary(part => part.PartName.Name, ReadBytes);
-            foreach (var master in presentation.GetSlideMasters())
+            foreach(var master in presentation.GetSlideMasters())
             {
                 Assert.That(master.GetTheme().MajorFont, Is.Not.Empty);
-                foreach (var layout in master.GetSlideLayouts())
+                foreach(var layout in master.GetSlideLayouts())
                 {
                     Assert.That(layout.GetTheme(), Is.SameAs(master.GetTheme()));
                     Assert.That(layout.GetSlideMaster(), Is.SameAs(master));
@@ -242,7 +242,7 @@ namespace TestCases.XSLF.UserModel
             Save(presentation);
             using var reopened = Open(Save(presentation));
             using var again = Open(Save(reopened));
-            foreach (var original in originals)
+            foreach(var original in originals)
             {
                 Assert.That(ReadBytes(again.Package.GetPart(PackagingUriHelper.CreatePartName(original.Key))),
                     Is.EqualTo(original.Value), original.Key);
@@ -319,7 +319,7 @@ namespace TestCases.XSLF.UserModel
             var list = masterReference ? presentation.GetCTPresentation().sldMasterIdLst :
                 master.GetXmlObject().sldLayoutIdLst;
             var entry = (XmlElement)list.FirstChild;
-            if (value == "missing")
+            if(value == "missing")
             {
                 entry.SetAttribute("id", CT_Presentation.RelationshipsNamespace, value);
             }
@@ -340,7 +340,7 @@ namespace TestCases.XSLF.UserModel
             var list = masterReference ? presentation.GetCTPresentation().sldMasterIdLst :
                 presentation.GetSlideMasters()[0].GetXmlObject().sldLayoutIdLst;
             var duplicate = (XmlElement)list.FirstChild.CloneNode(true);
-            if (uniqueId)
+            if(uniqueId)
             {
                 duplicate.SetAttribute("id", "2147483650");
             }
@@ -419,7 +419,7 @@ namespace TestCases.XSLF.UserModel
         {
             using var presentation = new XMLSlideShow();
             var master = presentation.GetSlideMasters()[0];
-            if (masterPart)
+            if(masterPart)
             {
                 master.GetXmlObject().cSld = null;
             }
@@ -439,7 +439,7 @@ namespace TestCases.XSLF.UserModel
             using var package = OPCPackage.Open(new MemoryStream(Save(presentation)));
             var theme = package.GetPart(themeName);
             theme.Clear();
-            using (var output = theme.GetOutputStream())
+            using(var output = theme.GetOutputStream())
             {
                 var xml = Encoding.UTF8.GetBytes(dtd
                     ? "<!DOCTYPE theme [<!ENTITY text 'test'>]><a:theme xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\"/>"
@@ -463,7 +463,7 @@ namespace TestCases.XSLF.UserModel
         private static byte[] AddInterleavedExtensions(PackagePart part)
         {
             var document = new XmlDocument { XmlResolver = null };
-            using (var stream = part.GetInputStream())
+            using(var stream = part.GetInputStream())
             {
                 document.Load(stream);
             }
@@ -471,7 +471,7 @@ namespace TestCases.XSLF.UserModel
             var children = root.ChildNodes.OfType<XmlElement>().ToArray();
             root.SetAttribute("xmlns:future", "urn:npoi:test");
             root.SetAttribute("Ignorable", "http://schemas.openxmlformats.org/markup-compatibility/2006", "future");
-            for (var i = 0; i < children.Length; i++)
+            for(var i = 0; i < children.Length; i++)
             {
                 var extension = document.CreateElement("future", "extension", "urn:npoi:test");
                 extension.SetAttribute("position", i.ToString(System.Globalization.CultureInfo.InvariantCulture));
@@ -480,8 +480,7 @@ namespace TestCases.XSLF.UserModel
             }
             root.AppendChild(document.CreateElement("future", "trailing", "urn:npoi:test"));
             using var output = new MemoryStream();
-            using (var writer = XmlWriter.Create(output, new XmlWriterSettings
-            {
+            using(var writer = XmlWriter.Create(output, new XmlWriterSettings {
                 Encoding = new UTF8Encoding(false),
                 NewLineHandling = NewLineHandling.Entitize
             }))
@@ -490,7 +489,7 @@ namespace TestCases.XSLF.UserModel
             }
             var xml = output.ToArray();
             part.Clear();
-            using (var stream = part.GetOutputStream())
+            using(var stream = part.GetOutputStream())
             {
                 stream.Write(xml, 0, xml.Length);
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -70,7 +70,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)(Cells.Count == 0 ? -1 : GetFirstKey());
+                return (short) (Cells.Count == 0 ? -1 : GetFirstKey());
             }
         }
 
@@ -86,7 +86,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (short)(Cells.Count == 0 ? -1 : GetLastKey() + 1);
+                return (short) (Cells.Count == 0 ? -1 : GetLastKey() + 1);
             }
         }
 
@@ -107,14 +107,14 @@ namespace NPOI.XSSF.UserModel
 
             set
             {
-                if (value < 0)
+                if(value < 0)
                 {
-                    if (_column.IsSetWidth())
+                    if(_column.IsSetWidth())
                     {
                         _column.UnsetWidth();
                     }
 
-                    if (_column.IsSetCustomWidth())
+                    if(_column.IsSetCustomWidth())
                     {
                         _column.UnsetCustomWidth();
                     }
@@ -150,13 +150,13 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (int)_column.min - 1;
+                return (int) _column.min - 1;
             }
 
             set
             {
                 int maxColumn = SpreadsheetVersion.EXCEL2007.LastColumnIndex;
-                if (value < 0 || value > maxColumn)
+                if(value < 0 || value > maxColumn)
                 {
                     throw new ArgumentException("Invalid column number (" + value
                             + ") outside allowable range (0.." + maxColumn + ")");
@@ -165,8 +165,8 @@ namespace NPOI.XSSF.UserModel
                 // As current implementation of XSSFColumn is breaking CT_Col 
                 // objects that span over multiple columns into individual
                 // columns we need to set min and max values to the same value.
-                _column.min = (uint)(value + 1);
-                _column.max = (uint)(value + 1);
+                _column.min = (uint) (value + 1);
+                _column.max = (uint) (value + 1);
             }
         }
 
@@ -224,20 +224,20 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (!IsFormatted || _stylesSource == null)
+                if(!IsFormatted || _stylesSource == null)
                 {
                     return null;
                 }
                 return _stylesSource.NumCellStyles > 0
-                    ? _stylesSource.GetStyleAt((int)_column.style)
-                    : (ICellStyle)null;
+                    ? _stylesSource.GetStyleAt((int) _column.style)
+                    : (ICellStyle) null;
             }
 
             set
             {
-                if (value == null)
+                if(value == null)
                 {
-                    if (_column.IsSetStyle())
+                    if(_column.IsSetStyle())
                     {
                         _column.UnsetStyle();
                     }
@@ -248,10 +248,10 @@ namespace NPOI.XSSF.UserModel
                     xStyle.VerifyBelongsToStylesSource(_stylesSource);
 
                     long idx = _stylesSource.PutStyle(xStyle);
-                    _column.style = (uint)idx;
+                    _column.style = (uint) idx;
                 }
 
-                foreach (ICell cell in Cells)
+                foreach(ICell cell in Cells)
                 {
                     cell.CellStyle = value;
                 }
@@ -264,12 +264,12 @@ namespace NPOI.XSSF.UserModel
             {
                 List<ICell> cells = new List<ICell>();
 
-                foreach (IRow row in _sheet.Cast<IRow>())
+                foreach(IRow row in _sheet.Cast<IRow>())
                 {
-                    foreach (ICell cell in row.Where(c => c.ColumnIndex == ColumnNum))
+                    foreach(ICell cell in row.Where(c => c.ColumnIndex == ColumnNum))
                     {
                         cells.Add(cell);
-                        _sheet.OnReadCell((XSSFCell)cell);
+                        _sheet.OnReadCell((XSSFCell) cell);
                     }
                 }
 
@@ -286,7 +286,7 @@ namespace NPOI.XSSF.UserModel
 
             set
             {
-                _column.outlineLevel = (byte)value;
+                _column.outlineLevel = (byte) value;
             }
         }
 
@@ -328,12 +328,12 @@ namespace NPOI.XSSF.UserModel
             _column = column;
             _sheet = sheet;
 
-            if (!column.IsSetNumber())
+            if(!column.IsSetNumber())
             {
                 // Certain file format writers skip the column number
                 // Assume no gaps, and give this the next column number
                 int nextColumnNum = sheet.LastColumnNum + 2;
-                if (nextColumnNum == 2 && sheet.PhysicalNumberOfColumns == 0)
+                if(nextColumnNum == 2 && sheet.PhysicalNumberOfColumns == 0)
                 {
                     nextColumnNum = 1;
                 }
@@ -341,11 +341,11 @@ namespace NPOI.XSSF.UserModel
                 // As current implementation of XSSFColumn is breaking CT_Col 
                 // objects that span over multiple columns into individual
                 // columns we need to set min and max values to the same value.
-                _column.min = (uint)nextColumnNum + 1;
-                _column.max = (uint)nextColumnNum + 1;
+                _column.min = (uint) nextColumnNum + 1;
+                _column.max = (uint) nextColumnNum + 1;
             }
 
-            _stylesSource = ((XSSFWorkbook)sheet.Workbook).GetStylesSource();
+            _stylesSource = ((XSSFWorkbook) sheet.Workbook).GetStylesSource();
         }
         #endregion
 
@@ -377,7 +377,7 @@ namespace NPOI.XSSF.UserModel
         /// supported by the SpreadsheetML format(.xlsx)</exception>
         public ICell CreateCell(int rowIndex, CellType type)
         {
-            if (rowIndex > SpreadsheetVersion.EXCEL2007.LastRowIndex ||
+            if(rowIndex > SpreadsheetVersion.EXCEL2007.LastRowIndex ||
                 rowIndex < 0)
             {
                 throw new ArgumentOutOfRangeException(
@@ -391,7 +391,7 @@ namespace NPOI.XSSF.UserModel
             IRow row = Sheet.GetRow(rowIndex) ?? Sheet.CreateRow(rowIndex);
             ICell newCell = row.CreateCell(ColumnNum, type);
 
-            if (IsFormatted)
+            if(IsFormatted)
             {
                 newCell.CellStyle = ColumnStyle;
             }
@@ -421,7 +421,7 @@ namespace NPOI.XSSF.UserModel
         /// the specified MissingCellPolicy is invalid</exception>
         public ICell GetCell(int cellNum, MissingCellPolicy policy)
         {
-            if (cellNum < 0 || cellNum > SpreadsheetVersion.EXCEL2007.LastRowIndex)
+            if(cellNum < 0 || cellNum > SpreadsheetVersion.EXCEL2007.LastRowIndex)
             {
                 throw new ArgumentOutOfRangeException(
                     "Cell number should be between 0 and " +
@@ -431,7 +431,7 @@ namespace NPOI.XSSF.UserModel
 
             XSSFCell cell = (XSSFCell)RetrieveCell(cellNum);
 
-            switch (policy)
+            switch(policy)
             {
                 case MissingCellPolicy.RETURN_NULL_AND_BLANK:
                     return cell;
@@ -452,12 +452,12 @@ namespace NPOI.XSSF.UserModel
         /// <exception cref="ArgumentException"></exception>
         public void RemoveCell(ICell cell)
         {
-            if (cell == null)
+            if(cell == null)
             {
                 throw new ArgumentException("Cell can not be null");
             }
 
-            if (cell.ColumnIndex != ColumnNum)
+            if(cell.ColumnIndex != ColumnNum)
             {
                 throw new ArgumentException("Specified cell does not belong " +
                     "to this column");
@@ -480,26 +480,26 @@ namespace NPOI.XSSF.UserModel
         /// <param name="policy">the policy to determine what gets copied</param>
         public void CopyColumnFrom(IColumn srcColumn, CellCopyPolicy policy)
         {
-            if (srcColumn == null)
+            if(srcColumn == null)
             {
                 // srcColumn is blank. Overwrite cells with blank values,
                 // blank styles, etc per cell copy policy
-                foreach (ICell destCell in this)
+                foreach(ICell destCell in this)
                 {
                     XSSFCell srcCell = null;
 
-                    ((XSSFCell)destCell).CopyCellFrom(srcCell, policy);
+                    ((XSSFCell) destCell).CopyCellFrom(srcCell, policy);
                 }
 
-                if (policy.IsCopyMergedRegions)
+                if(policy.IsCopyMergedRegions)
                 {
                     // Remove MergedRegions in dest column
                     int destColumnNum = ColumnNum;
                     int index = 0;
                     HashSet<int> indices = new HashSet<int>();
-                    foreach (CellRangeAddress destRegion in Sheet.MergedRegions)
+                    foreach(CellRangeAddress destRegion in Sheet.MergedRegions)
                     {
-                        if (destColumnNum == destRegion.FirstColumn
+                        if(destColumnNum == destRegion.FirstColumn
                             && destColumnNum == destRegion.LastColumn)
                         {
                             _ = indices.Add(index);
@@ -511,7 +511,7 @@ namespace NPOI.XSSF.UserModel
                     (Sheet as XSSFSheet).RemoveMergedRegions(indices.ToList());
                 }
 
-                if (policy.IsCopyColumnWidth)
+                if(policy.IsCopyColumnWidth)
                 {
                     // clear row height
                     Width = -1;
@@ -519,7 +519,7 @@ namespace NPOI.XSSF.UserModel
             }
             else
             {
-                foreach (ICell c in srcColumn)
+                foreach(ICell c in srcColumn)
                 {
                     XSSFCell srcCell = (XSSFCell)c;
                     XSSFCell destCell =
@@ -542,11 +542,11 @@ namespace NPOI.XSSF.UserModel
                     SpreadsheetVersion.EXCEL2007);
                 columnShifter.UpdateColumnFormulas(this, shifter);
 
-                if (policy.IsCopyMergedRegions)
+                if(policy.IsCopyMergedRegions)
                 {
-                    foreach (CellRangeAddress srcRegion in srcColumn.Sheet.MergedRegions)
+                    foreach(CellRangeAddress srcRegion in srcColumn.Sheet.MergedRegions)
                     {
-                        if (srcColumnNum == srcRegion.FirstColumn
+                        if(srcColumnNum == srcRegion.FirstColumn
                             && srcColumnNum == srcRegion.LastColumn)
                         {
                             CellRangeAddress destRegion = srcRegion.Copy();
@@ -557,7 +557,7 @@ namespace NPOI.XSSF.UserModel
                     }
                 }
 
-                if (policy.IsCopyColumnWidth)
+                if(policy.IsCopyColumnWidth)
                 {
                     Width = srcColumn.Width;
                 }
@@ -571,7 +571,7 @@ namespace NPOI.XSSF.UserModel
 
         public IColumn CopyColumnTo(int targetIndex)
         {
-            return ((XSSFSheet)Sheet).CopyColumn(ColumnNum, targetIndex);
+            return ((XSSFSheet) Sheet).CopyColumn(ColumnNum, targetIndex);
         }
 
         public ICell CopyCell(int sourceIndex, int targetIndex)
@@ -610,11 +610,11 @@ namespace NPOI.XSSF.UserModel
                 "included in a multi-cell array formula. You cannot change " +
                 "part of an array.";
 
-            foreach (ICell c in this)
+            foreach(ICell c in this)
             {
                 XSSFCell cell = (XSSFCell)c;
 
-                if (cell.IsPartOfArrayFormulaGroup)
+                if(cell.IsPartOfArrayFormulaGroup)
                 {
                     cell.NotifyArrayFormulaChanging(msg);
                 }
@@ -712,7 +712,7 @@ namespace NPOI.XSSF.UserModel
 
         private static void ValidateCellType(CellType cellType)
         {
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Blank:
                 case CellType.Numeric:

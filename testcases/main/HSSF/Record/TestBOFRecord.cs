@@ -17,13 +17,13 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using TestCases.HSSF;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
     /**
      * 
      */

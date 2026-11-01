@@ -15,12 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
-using TestCases.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System;
 using NPOI.SS.Util;
-using System.Text;
 using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Text;
+using TestCases.SS.Util;
 namespace TestCases.SS.Util
 {
     /**
@@ -38,7 +39,7 @@ namespace TestCases.SS.Util
             ComparisonExample[] examples = NumberComparisonExamples.GetComparisonExamples();
             bool success = true;
 
-            for (int i = 0; i < examples.Length; i++)
+            for(int i = 0; i < examples.Length; i++)
             {
                 ComparisonExample ce = examples[i];
                 success &= Confirm(i, ce.GetA(), ce.GetB(), +ce.GetExpectedResult());
@@ -46,7 +47,7 @@ namespace TestCases.SS.Util
                 success &= Confirm(i, ce.GetNegA(), ce.GetNegB(), -ce.GetExpectedResult());
                 success &= Confirm(i, ce.GetNegB(), ce.GetNegA(), +ce.GetExpectedResult());
             }
-            if (!success)
+            if(!success)
             {
                 throw new AssertionException("One or more cases failed.  See stderr");
             }
@@ -56,7 +57,7 @@ namespace TestCases.SS.Util
         {
             ComparisonExample[] examples = NumberComparisonExamples.GetComparisonExamples();
             bool success = true;
-            for (int i = 0; i < examples.Length; i++)
+            for(int i = 0; i < examples.Length; i++)
             {
                 ComparisonExample ce = examples[i];
                 success &= ConfirmRoundTrip(i, ce.GetA());
@@ -64,7 +65,7 @@ namespace TestCases.SS.Util
                 success &= ConfirmRoundTrip(i, ce.GetB());
                 success &= ConfirmRoundTrip(i, ce.GetNegB());
             }
-            if (!success)
+            if(!success)
             {
                 throw new AssertionException("One or more cases failed.  See stderr");
             }
@@ -105,7 +106,7 @@ namespace TestCases.SS.Util
             int actRes = NumberComparer.Compare(a, b);
 
             int sgnActRes = actRes < 0 ? -1 : actRes > 0 ? +1 : 0;
-            if (sgnActRes != expRes)
+            if(sgnActRes != expRes)
             {
                 Console.WriteLine("Mismatch example[" + i + "] ("
                         + FormatDoubleAsHex(a) + ", " + FormatDoubleAsHex(b) + ") expected "
@@ -123,4 +124,3 @@ namespace TestCases.SS.Util
         }
     }
 }
-

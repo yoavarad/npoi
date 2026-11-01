@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.UserModel
 {
-    using System.Collections.Generic;
     using System.Collections;
+    using System.Collections.Generic;
 
     /**
      * Used to specify the different possible policies
@@ -215,4 +215,3 @@ namespace NPOI.SS.UserModel
         bool? Collapsed { get; set; }
     }
 }
-

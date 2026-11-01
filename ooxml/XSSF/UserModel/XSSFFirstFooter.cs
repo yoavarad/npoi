@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel.Extensions;
-using NPOI.OpenXmlFormats.Spreadsheet;
 using System;
 namespace NPOI.XSSF.UserModel
 {
@@ -54,9 +54,9 @@ namespace NPOI.XSSF.UserModel
             {
                 return GetHeaderFooter().firstFooter;
             }
-            set 
+            set
             {
-                if (value == null)
+                if(value == null)
                 {
                     GetHeaderFooter().UnsetFirstFooter();
                     if(!GetHeaderFooter().IsSetFirstHeader())
@@ -72,5 +72,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-
-

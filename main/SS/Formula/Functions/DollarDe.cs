@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,21 +19,21 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 Double number1 = evaluateValue(arg1, srcRowIndex, srcColumnIndex);
-                if (Double.IsNaN(number1))
+                if(Double.IsNaN(number1))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 Double number2 = evaluateValue(arg2, srcRowIndex, srcColumnIndex);
-                if (Double.IsNaN(number2))
+                if(Double.IsNaN(number2))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 int fraction = (int)number2;
-                if (fraction < 0)
+                if(fraction < 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
-                else if (fraction == 0)
+                else if(fraction == 0)
                 {
                     return ErrorEval.DIV_ZERO;
                 }
@@ -41,33 +41,33 @@ namespace NPOI.SS.Formula.Functions
 
                 bool negative = false;
                 long valueLong = (long)number1;
-                if (valueLong < 0)
+                if(valueLong < 0)
                 {
                     negative = true;
                     valueLong = -valueLong;
                     number1 = -number1;
                 }
                 double valueFractional = number1 - valueLong;
-                if (valueFractional == 0.0)
+                if(valueFractional == 0.0)
                 {
                     return new NumberEval(valueLong);
                 }
                 double inflated = valueFractional * Math.Pow(10, fractionLength);
                 double result = inflated / fraction + valueLong;
-                if (negative)
+                if(negative)
                 {
                     result = result*-1;
                 }
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 2)
+            if(args.Length == 2)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1]);
             }

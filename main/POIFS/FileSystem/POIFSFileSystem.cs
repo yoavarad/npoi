@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,16 +25,15 @@
  * 
  * ==============================================================*/
 
+using NPOI.POIFS.Common;
+using NPOI.POIFS.Dev;
+using NPOI.POIFS.EventFileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
 using System;
 using System.Collections;
 using System.IO;
-
-using NPOI.POIFS.Properties;
-using NPOI.POIFS.Dev;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.EventFileSystem;
-using NPOI.POIFS.Common;
-using NPOI.Util;
 
 
 namespace NPOI.POIFS.FileSystem
@@ -106,7 +105,7 @@ namespace NPOI.POIFS.FileSystem
         public POIFSFileSystem(FileInfo file, bool readOnly)
             : base(file, readOnly)
         {
-            
+
         }
 
         /**
@@ -153,7 +152,7 @@ namespace NPOI.POIFS.FileSystem
             }
             finally
             {
-                tmp.Close(); 
+                tmp.Close();
             }
             // Open it up again backed by the file
             return new POIFSFileSystem(file, false);

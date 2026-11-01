@@ -17,8 +17,6 @@
 
 namespace NPOI.HSSF.UserModel.helpers
 {
-    using System;
-
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.UserModel.Helpers;
     using NPOI.SS.Formula;
@@ -26,6 +24,7 @@ namespace NPOI.HSSF.UserModel.helpers
     using NPOI.SS.UserModel;
     using NPOI.SS.UserModel.Helpers;
     using NPOI.Util;
+    using System;
 
     /**
      * Helper for Shifting rows up or down

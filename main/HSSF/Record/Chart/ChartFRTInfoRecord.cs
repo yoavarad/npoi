@@ -18,10 +18,10 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /*
@@ -81,9 +81,9 @@ namespace NPOI.HSSF.Record.Chart
             rt = 0x850;
             grbitFrt = 0;
             //created by excel 2003
-            verOriginator = (byte)0xA;
+            verOriginator = (byte) 0xA;
             //writen by excel 2003
-            verWriter = (byte)0xA;
+            verWriter = (byte) 0xA;
             rgCFRTID = new CFRTID[3];
             rgCFRTID[0] = new CFRTID(0x0850, 0x085A);
             rgCFRTID[1] = new CFRTID(0x0861, 0x0861);
@@ -94,12 +94,12 @@ namespace NPOI.HSSF.Record.Chart
         {
             rt = in1.ReadShort();
             grbitFrt = in1.ReadShort();
-            verOriginator = (byte)in1.ReadByte();
-            verWriter = (byte)in1.ReadByte();
+            verOriginator = (byte) in1.ReadByte();
+            verWriter = (byte) in1.ReadByte();
             int cCFRTID = in1.ReadShort();
 
             rgCFRTID = new CFRTID[cCFRTID];
-            for (int i = 0; i < cCFRTID; i++)
+            for(int i = 0; i < cCFRTID; i++)
             {
                 rgCFRTID[i] = new CFRTID(in1);
             }
@@ -134,7 +134,7 @@ namespace NPOI.HSSF.Record.Chart
             int nCFRTIDs = rgCFRTID.Length;
             out1.WriteShort(nCFRTIDs);
 
-            for (int i = 0; i < nCFRTIDs; i++)
+            for(int i = 0; i < nCFRTIDs; i++)
             {
                 rgCFRTID[i].Serialize(out1);
             }
@@ -150,8 +150,8 @@ namespace NPOI.HSSF.Record.Chart
             record.verOriginator = this.verOriginator;
             record.verWriter = verWriter;
 
-            for (int i = 0; i < this.rgCFRTID.Length; i++)
-                record.rgCFRTID[i] = (CFRTID)this.rgCFRTID[i].Clone();
+            for(int i = 0; i < this.rgCFRTID.Length; i++)
+                record.rgCFRTID[i] = (CFRTID) this.rgCFRTID[i].Clone();
 
             return record;
         }

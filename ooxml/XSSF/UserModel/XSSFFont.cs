@@ -15,15 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
-using System;
-using Spreadsheet=NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.OpenXmlFormats.Dml;
-using Dml = NPOI.OpenXmlFormats.Dml;
-using NPOI.XSSF.Model;
-using NPOI.Util;
 using NPOI.OOXML.XSSF.UserModel;
+using NPOI.OpenXmlFormats.Dml;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
+using NPOI.Util;
+using NPOI.XSSF.Model;
+using System;
+using Dml = NPOI.OpenXmlFormats.Dml;
+using Spreadsheet = NPOI.OpenXmlFormats.Spreadsheet;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -75,7 +75,7 @@ namespace NPOI.XSSF.UserModel
         public XSSFFont(CT_Font font, int index, IIndexedColorMap colorMap)
         {
             _ctFont = font;
-            _index = (short)index;
+            _index = (short) index;
             _indexedColorMap = colorMap;
         }
 
@@ -110,9 +110,9 @@ namespace NPOI.XSSF.UserModel
                 CT_BooleanProperty bold = _ctFont.SizeOfBArray() == 0 ? null : _ctFont.GetBArray(0);
                 return (bold != null && bold.val);
             }
-            set 
+            set
             {
-                if (value)
+                if(value)
                 {
                     CT_BooleanProperty ctBold = _ctFont.SizeOfBArray() == 0 ? _ctFont.AddNewB() : _ctFont.GetBArray(0);
                     ctBold.val = value;
@@ -136,7 +136,7 @@ namespace NPOI.XSSF.UserModel
             {
                 CT_IntProperty charset = _ctFont.sizeOfCharsetArray() == 0 ? null : _ctFont.GetCharsetArray(0);
                 int val = charset == null ? FontCharset.ANSI.Value : FontCharset.ValueOf(charset.val).Value;
-                return (short)val;
+                return (short) val;
             }
             set
             {
@@ -157,43 +157,44 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 Spreadsheet.CT_Color color = _ctFont.sizeOfColorArray() == 0 ? null : _ctFont.GetColorArray(0);
-                if (color == null) return IndexedColors.Black.Index;
+                if(color == null)
+                    return IndexedColors.Black.Index;
 
                 //if (!color.indexedSpecified) return IndexedColors.Black.Index;
                 long index = color.indexed;
-                if (index == XSSFFont.DEFAULT_FONT_COLOR)
+                if(index == XSSFFont.DEFAULT_FONT_COLOR)
                 {
                     return IndexedColors.Black.Index;
                 }
-                else if (index == IndexedColors.Red.Index)
+                else if(index == IndexedColors.Red.Index)
                 {
                     return IndexedColors.Red.Index;
                 }
                 else
                 {
-                    return (short)index;
+                    return (short) index;
                 }
             }
-            set 
+            set
             {
                 Spreadsheet.CT_Color ctColor = _ctFont.sizeOfColorArray() == 0 ? _ctFont.AddNewColor() : _ctFont.GetColorArray(0);
-                switch (value)
+                switch(value)
                 {
-                    case (short)FontColor.Normal:
-                        
-                            ctColor.indexed = (uint)(XSSFFont.DEFAULT_FONT_COLOR);
-                            ctColor.indexedSpecified = true;
-                            break;
-                        
-                    case (short)FontColor.Red:
+                    case (short) FontColor.Normal:
 
-                            ctColor.indexed = (uint)(IndexedColors.Red.Index);
-                            ctColor.indexedSpecified = true;
-                            break;
-                        
+                        ctColor.indexed = (uint) (XSSFFont.DEFAULT_FONT_COLOR);
+                        ctColor.indexedSpecified = true;
+                        break;
+
+                    case (short) FontColor.Red:
+
+                        ctColor.indexed = (uint) (IndexedColors.Red.Index);
+                        ctColor.indexedSpecified = true;
+                        break;
+
                     default:
-                            ctColor.indexed = (uint)(value);
-                            ctColor.indexedSpecified = true;
+                        ctColor.indexed = (uint) (value);
+                        ctColor.indexedSpecified = true;
                         break;
                 }
             }
@@ -209,10 +210,10 @@ namespace NPOI.XSSF.UserModel
         public XSSFColor GetXSSFColor()
         {
             Spreadsheet.CT_Color ctColor = _ctFont.sizeOfColorArray() == 0 ? null : _ctFont.GetColorArray(0);
-            if (ctColor != null)
+            if(ctColor != null)
             {
                 XSSFColor color = XSSFColor.From(ctColor, _indexedColorMap);
-                if (_themes != null)
+                if(_themes != null)
                 {
                     _themes.InheritFromThemeAsRequired(color);
                 }
@@ -235,7 +236,7 @@ namespace NPOI.XSSF.UserModel
         {
             Spreadsheet.CT_Color color = _ctFont.sizeOfColorArray() == 0 ? null : _ctFont.GetColorArray(0);
             long index = ((color == null) || !color.themeSpecified) ? 0 : color.theme;
-            return (short)index;
+            return (short) index;
         }
         /// <summary>
         ///  Get the font height in unit's of 1/20th of a point.
@@ -246,7 +247,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return FontHeightRaw * 20.0;
             }
-            set 
+            set
             {
                 FontHeightRaw = value / 20.0;
             }
@@ -260,7 +261,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return FontHeightRaw;
             }
-            set 
+            set
             {
                 FontHeightRaw = value;
             }
@@ -270,14 +271,15 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_FontSize size = _ctFont.sizeOfSzArray() == 0 ? null : _ctFont.GetSzArray(0);
-                if (size != null)
+                if(size != null)
                 {
                     double fontHeight = size.val;
                     return fontHeight;
                 }
                 return DEFAULT_FONT_SIZE;
             }
-            set {
+            set
+            {
                 CT_FontSize fontSize = _ctFont.sizeOfSzArray() == 0 ? _ctFont.AddNewSz() : _ctFont.GetSzArray(0);
                 fontSize.val = value;
             }
@@ -294,7 +296,7 @@ namespace NPOI.XSSF.UserModel
                 CT_FontName name = _ctFont.name;
                 return name == null ? DEFAULT_FONT_NAME : name.val;
             }
-            set 
+            set
             {
                 CT_FontName fontName = _ctFont.name==null?_ctFont.AddNewName():_ctFont.name;
                 fontName.val = value == null ? DEFAULT_FONT_NAME : value;
@@ -313,9 +315,9 @@ namespace NPOI.XSSF.UserModel
                 CT_BooleanProperty italic = _ctFont.sizeOfIArray() == 0 ? null : _ctFont.GetIArray(0);
                 return italic != null && italic.val;
             }
-            set 
+            set
             {
-                if (value)
+                if(value)
                 {
                     CT_BooleanProperty bool1 = _ctFont.sizeOfIArray() == 0 ? _ctFont.AddNewI() : _ctFont.GetIArray(0);
                     bool1.val = value;
@@ -339,9 +341,10 @@ namespace NPOI.XSSF.UserModel
                 CT_BooleanProperty strike = _ctFont.sizeOfStrikeArray() == 0 ? null : _ctFont.GetStrikeArray(0);
                 return strike != null && strike.val;
             }
-            set 
+            set
             {
-                if (!value) _ctFont.SetStrikeArray(null);
+                if(!value)
+                    _ctFont.SetStrikeArray(null);
                 else
                 {
                     CT_BooleanProperty strike = _ctFont.sizeOfStrikeArray() == 0 ? _ctFont.AddNewStrike() : _ctFont.GetStrikeArray(0);
@@ -363,12 +366,12 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_VerticalAlignFontProperty vAlign = _ctFont.sizeOfVertAlignArray() == 0 ? null : _ctFont.GetVertAlignArray(0);
-                if (vAlign == null)
+                if(vAlign == null)
                 {
                     return FontSuperScript.None;
                 }
                 ST_VerticalAlignRun val = vAlign.val;
-                switch (val)
+                switch(val)
                 {
                     case ST_VerticalAlignRun.baseline:
                         return FontSuperScript.None;
@@ -380,16 +383,16 @@ namespace NPOI.XSSF.UserModel
                         throw new POIXMLException("Wrong offset value " + val);
                 }
             }
-            set 
+            set
             {
-                if (value == (short)FontSuperScript.None)
+                if(value == (short) FontSuperScript.None)
                 {
                     _ctFont.SetVertAlignArray(null);
                 }
                 else
                 {
                     CT_VerticalAlignFontProperty offSetProperty = _ctFont.sizeOfVertAlignArray() == 0 ? _ctFont.AddNewVertAlign() : _ctFont.GetVertAlignArray(0);
-                    switch (value)
+                    switch(value)
                     {
                         case FontSuperScript.None:
                             offSetProperty.val = ST_VerticalAlignRun.baseline;
@@ -418,14 +421,14 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 CT_UnderlineProperty underline = _ctFont.sizeOfUArray() == 0 ? null : _ctFont.GetUArray(0);
-                if (underline != null)
+                if(underline != null)
                 {
                     FontUnderline val = FontUnderline.ValueOf((int)underline.val);
-                    return (FontUnderlineType)val.ByteValue;
+                    return (FontUnderlineType) val.ByteValue;
                 }
-                return (FontUnderlineType)FontUnderline.NONE.ByteValue;
+                return (FontUnderlineType) FontUnderline.NONE.ByteValue;
             }
-            set 
+            set
             {
                 SetUnderline(value);
             }
@@ -451,7 +454,7 @@ namespace NPOI.XSSF.UserModel
         public void SetCharSet(int charset)
         {
             FontCharset FontCharset = FontCharset.ValueOf(charset);
-            if (FontCharset != null)
+            if(FontCharset != null)
             {
                 SetCharSet(FontCharset);
             }
@@ -469,7 +472,7 @@ namespace NPOI.XSSF.UserModel
         public void SetCharSet(FontCharset charset)
         {
             CT_IntProperty charSetProperty;
-            if (_ctFont.sizeOfCharsetArray() == 0)
+            if(_ctFont.sizeOfCharsetArray() == 0)
             {
                 charSetProperty = _ctFont.AddNewCharset();
             }
@@ -489,11 +492,12 @@ namespace NPOI.XSSF.UserModel
          */
         public void SetColor(XSSFColor color)
         {
-            if (color == null) _ctFont.SetColorArray(null);
+            if(color == null)
+                _ctFont.SetColorArray(null);
             else
             {
                 Spreadsheet.CT_Color ctColor = _ctFont.sizeOfColorArray() == 0 ? _ctFont.AddNewColor() : _ctFont.GetColorArray(0);
-                if (ctColor.IsSetIndexed())
+                if(ctColor.IsSetIndexed())
                 {
                     ctColor.UnsetIndexed();
                 }
@@ -510,7 +514,7 @@ namespace NPOI.XSSF.UserModel
         public void SetThemeColor(short theme)
         {
             Spreadsheet.CT_Color ctColor = _ctFont.sizeOfColorArray() == 0 ? _ctFont.AddNewColor() : _ctFont.GetColorArray(0);
-            ctColor.theme = (uint)theme;
+            ctColor.theme = (uint) theme;
         }
 
 
@@ -525,7 +529,7 @@ namespace NPOI.XSSF.UserModel
          */
         internal void SetUnderline(FontUnderlineType underline)
         {
-            if (underline == FontUnderlineType.None)
+            if(underline == FontUnderlineType.None)
             {
                 _ctFont.SetUArray(null);
             }
@@ -575,7 +579,7 @@ namespace NPOI.XSSF.UserModel
         public FontScheme GetScheme()
         {
             NPOI.OpenXmlFormats.Spreadsheet.CT_FontScheme scheme = _ctFont.sizeOfSchemeArray() == 0 ? null : _ctFont.GetSchemeArray(0);
-            return scheme == null ? FontScheme.NONE : FontScheme.ValueOf((int)scheme.val);
+            return scheme == null ? FontScheme.NONE : FontScheme.ValueOf((int) scheme.val);
         }
 
         /**
@@ -604,7 +608,7 @@ namespace NPOI.XSSF.UserModel
                 CT_IntProperty family = _ctFont.sizeOfFamilyArray() == 0 ? null : _ctFont.GetFamilyArray(0);
                 return family == null ? FontFamily.NOT_APPLICABLE.Value : FontFamily.ValueOf(family.val).Value;
             }
-            set 
+            set
             {
                 CT_IntProperty family = _ctFont.sizeOfFamilyArray() == 0 ? _ctFont.AddNewFamily() : _ctFont.GetFamilyArray(0);
                 family.val = value;
@@ -652,14 +656,15 @@ namespace NPOI.XSSF.UserModel
 
         public override bool Equals(Object o)
         {
-            if (o is not XSSFFont cf) return false;
+            if(o is not XSSFFont cf)
+                return false;
 
             return _ctFont.ToString().Equals(cf.GetCTFont().ToString());
         }
 
         public void CloneStyleFrom(IFont src)
         {
-            if (src == null)
+            if(src == null)
                 return;
 
             FontName = src.FontName;

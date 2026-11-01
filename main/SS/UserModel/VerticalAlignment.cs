@@ -22,7 +22,7 @@ namespace NPOI.SS.UserModel
      * This enumeration value indicates the type of vertical alignment for a cell, i.e.,
      * whether it is aligned top, bottom, vertically centered, justified or distributed.
      */
-    public enum VerticalAlignment:int
+    public enum VerticalAlignment : int
     {
         None = -1,
         /**

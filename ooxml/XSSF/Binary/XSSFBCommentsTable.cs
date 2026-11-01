@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -50,11 +50,11 @@ namespace NPOI.XSSF.Binary
         : base(is1)
         {
             Parse();
-            foreach (var key in comments.Keys)
+            foreach(var key in comments.Keys)
             {
                 commentAddresses.Enqueue(key);
             }
-            
+
         }
         public override void HandleRecord(int id, byte[] data)
         {
@@ -101,4 +101,3 @@ namespace NPOI.XSSF.Binary
         }
     }
 }
-

@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.Util;
+using System;
 
 namespace NPOI.SS.Util
 {
@@ -41,11 +41,11 @@ namespace NPOI.SS.Util
             int biasedExponentA = IEEEDouble.GetBiasedExponent(rawBitsA);
             int biasedExponentB = IEEEDouble.GetBiasedExponent(rawBitsB);
 
-            if (biasedExponentA == IEEEDouble.BIASED_EXPONENT_SPECIAL_VALUE)
+            if(biasedExponentA == IEEEDouble.BIASED_EXPONENT_SPECIAL_VALUE)
             {
                 throw new ArgumentException("Special double values are not allowed: " + ToHex(a));
             }
-            if (biasedExponentB == IEEEDouble.BIASED_EXPONENT_SPECIAL_VALUE)
+            if(biasedExponentB == IEEEDouble.BIASED_EXPONENT_SPECIAL_VALUE)
             {
                 throw new ArgumentException("Special double values are not allowed: " + ToHex(a));
             }
@@ -57,7 +57,7 @@ namespace NPOI.SS.Util
             bool bIsNegative = rawBitsB < 0;
 
             // compare signs
-            if (aIsNegative != bIsNegative)
+            if(aIsNegative != bIsNegative)
             {
                 // Excel seems to have 'normal' comparison behaviour around zero (no rounding)
                 // even -0.0 < +0.0 (which is not quite the initial conclusion of bug 47198)
@@ -67,12 +67,12 @@ namespace NPOI.SS.Util
             // then compare magnitudes (IEEE 754 has exponent bias specifically to allow this)
             cmp = biasedExponentA - biasedExponentB;
             int absExpDiff = Math.Abs(cmp);
-            if (absExpDiff > 1)
+            if(absExpDiff > 1)
             {
                 return aIsNegative ? -cmp : cmp;
             }
 
-            if (absExpDiff == 1)
+            if(absExpDiff == 1)
             {
                 // special case exponent differs by 1.  There is still a chance that with rounding the two quantities could end up the same
 
@@ -80,22 +80,22 @@ namespace NPOI.SS.Util
             else
             {
                 // else - sign and exponents equal
-                if (rawBitsA == rawBitsB)
+                if(rawBitsA == rawBitsB)
                 {
                     // fully equal - exit here
                     return 0;
                 }
             }
-            if (biasedExponentA == 0)
+            if(biasedExponentA == 0)
             {
-                if (biasedExponentB == 0)
+                if(biasedExponentB == 0)
                 {
                     return CompareSubnormalNumbers(rawBitsA & IEEEDouble.FRAC_MASK, rawBitsB & IEEEDouble.FRAC_MASK, aIsNegative);
                 }
                 // else biasedExponentB is 1
                 return -CompareAcrossSubnormalThreshold(rawBitsB, rawBitsA, aIsNegative);
             }
-            if (biasedExponentB == 0)
+            if(biasedExponentB == 0)
             {
                 // else biasedExponentA is 1
                 return +CompareAcrossSubnormalThreshold(rawBitsA, rawBitsB, aIsNegative);
@@ -108,7 +108,7 @@ namespace NPOI.SS.Util
             NormalisedDecimal ndA = edA.NormaliseBaseTen().RoundUnits();
             NormalisedDecimal ndB = edB.NormaliseBaseTen().RoundUnits();
             cmp = ndA.CompareNormalised(ndB);
-            if (aIsNegative)
+            if(aIsNegative)
             {
                 return -cmp;
             }
@@ -136,16 +136,16 @@ namespace NPOI.SS.Util
         private static int CompareAcrossSubnormalThreshold(long normalRawBitsA, long subnormalRawBitsB, bool isNegative)
         {
             long fracB = subnormalRawBitsB & IEEEDouble.FRAC_MASK;
-            if (fracB == 0)
+            if(fracB == 0)
             {
                 // B is zero, so A is definitely greater than B
                 return isNegative ? -1 : +1;
             }
             long fracA = normalRawBitsA & IEEEDouble.FRAC_MASK;
-            if (fracA <= 0x0000000000000007L && fracB >= 0x000FFFFFFFFFFFFAL)
+            if(fracA <= 0x0000000000000007L && fracB >= 0x000FFFFFFFFFFFFAL)
             {
                 // Both A and B close to threshold - weird results
-                if (fracA == 0x0000000000000007L && fracB == 0x000FFFFFFFFFFFFAL)
+                if(fracA == 0x0000000000000007L && fracB == 0x000FFFFFFFFFFFFAL)
                 {
                     // special case
                     return 0;

@@ -17,21 +17,21 @@
 
 namespace NPOI.SS.Converter
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text; 
-using Cysharp.Text;
-    using System.Xml;
-    using NPOI.SS.Util;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Formula.Eval;
-    using NPOI.Util;
+    using Cysharp.Text;
+    using NPOI.HPSF;
+    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
     using NPOI.SS;
-    using NPOI.HSSF.UserModel;
-    using NPOI.HPSF;
-    using NPOI.XSSF.UserModel;
+    using NPOI.SS.Formula.Eval;
+    using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NPOI.Util;
     using NPOI.XSSF.Model;
+    using NPOI.XSSF.UserModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Xml;
 
     public class ExcelToHtmlConverter
     {
@@ -179,7 +179,7 @@ using Cysharp.Text;
             ProcessDocumentInformation(workbook);
 
 
-            if (UseDivsToSpan)
+            if(UseDivsToSpan)
             {
                 // prepare CSS classes for later usage
                 this.cssClassContainerCell = htmlDocumentFacade
@@ -188,7 +188,7 @@ using Cysharp.Text;
                 this.cssClassContainerDiv = htmlDocumentFacade.GetOrCreateCssClass(
                         "div", "d", "position:relative;");
             }
-            for (int s = 0; s < workbook.NumberOfSheets; s++)
+            for(int s = 0; s < workbook.NumberOfSheets; s++)
             {
                 ISheet sheet = (ISheet)workbook.GetSheetAt(s);
                 ProcessSheet(sheet);
@@ -202,7 +202,7 @@ using Cysharp.Text;
             ProcessSheetHeader(htmlDocumentFacade.Body, sheet);
 
             int physicalNumberOfRows = sheet.PhysicalNumberOfRows;
-            if (physicalNumberOfRows <= 0)
+            if(physicalNumberOfRows <= 0)
                 return;
 
             XmlElement table = htmlDocumentFacade.CreateTable();
@@ -214,14 +214,14 @@ using Cysharp.Text;
 
             List<XmlElement> emptyRowElements = new List<XmlElement>(physicalNumberOfRows);
             int maxSheetColumns = 1;
-            for (int r = 0; r < physicalNumberOfRows; r++)
+            for(int r = 0; r < physicalNumberOfRows; r++)
             {
                 IRow row = sheet.GetRow(r);
 
-                if (row == null)
+                if(row == null)
                     continue;
 
-                if (!OutputHiddenRows && row.ZeroHeight)
+                if(!OutputHiddenRows && row.ZeroHeight)
                     continue;
 
                 XmlElement tableRowElement = htmlDocumentFacade.CreateTableRow();
@@ -231,15 +231,15 @@ using Cysharp.Text;
                 int maxRowColumnNumber = ProcessRow(mergedRanges, row,
                         tableRowElement);
 
-                if (maxRowColumnNumber == 0)
+                if(maxRowColumnNumber == 0)
                 {
                     emptyRowElements.Add(tableRowElement);
                 }
                 else
                 {
-                    if (emptyRowElements.Count > 0)
+                    if(emptyRowElements.Count > 0)
                     {
-                        foreach (XmlElement emptyRowElement in emptyRowElements)
+                        foreach(XmlElement emptyRowElement in emptyRowElements)
                         {
                             tableBody.AppendChild(emptyRowElement);
                         }
@@ -253,7 +253,7 @@ using Cysharp.Text;
 
             ProcessColumnWidths(sheet, maxSheetColumns, table);
 
-            if (OutputColumnHeaders)
+            if(OutputColumnHeaders)
             {
                 ProcessColumnHeaders(sheet, maxSheetColumns, table);
             }
@@ -272,38 +272,38 @@ using Cysharp.Text;
 
         protected void ProcessDocumentInformation(IWorkbook workbook)
         {
-            if (workbook is NPOI.HSSF.UserModel.HSSFWorkbook hssfWorkbook)
+            if(workbook is NPOI.HSSF.UserModel.HSSFWorkbook hssfWorkbook)
             {
                 SummaryInformation summaryInformation = hssfWorkbook.SummaryInformation;
-                if (summaryInformation != null)
+                if(summaryInformation != null)
                 {
-                    if (!string.IsNullOrEmpty(summaryInformation.Title))
+                    if(!string.IsNullOrEmpty(summaryInformation.Title))
                         htmlDocumentFacade.Title = summaryInformation.Title;
 
-                    if (!string.IsNullOrEmpty(summaryInformation.Author))
+                    if(!string.IsNullOrEmpty(summaryInformation.Author))
                         htmlDocumentFacade.AddAuthor(summaryInformation.Author);
 
-                    if (!string.IsNullOrEmpty(summaryInformation.Keywords))
+                    if(!string.IsNullOrEmpty(summaryInformation.Keywords))
                         htmlDocumentFacade.AddKeywords(summaryInformation.Keywords);
 
-                    if (!string.IsNullOrEmpty(summaryInformation.Comments))
+                    if(!string.IsNullOrEmpty(summaryInformation.Comments))
                         htmlDocumentFacade.AddDescription(summaryInformation.Comments);
                 }
             }
             else if(workbook is NPOI.XSSF.UserModel.XSSFWorkbook xssfWorkbook)
             {
                 POIXMLProperties props=xssfWorkbook.GetProperties();
-                if (!string.IsNullOrEmpty(props.CoreProperties.Title))
+                if(!string.IsNullOrEmpty(props.CoreProperties.Title))
                 {
                     htmlDocumentFacade.Title = props.CoreProperties.Title;
                 }
-                if (!string.IsNullOrEmpty(props.CoreProperties.Creator))
+                if(!string.IsNullOrEmpty(props.CoreProperties.Creator))
                     htmlDocumentFacade.AddAuthor(props.CoreProperties.Creator);
 
-                if (!string.IsNullOrEmpty(props.CoreProperties.Keywords))
+                if(!string.IsNullOrEmpty(props.CoreProperties.Keywords))
                     htmlDocumentFacade.AddKeywords(props.CoreProperties.Keywords);
 
-                if (!string.IsNullOrEmpty(props.CoreProperties.Description))
+                if(!string.IsNullOrEmpty(props.CoreProperties.Description))
                     htmlDocumentFacade.AddDescription(props.CoreProperties.Description);
             }
         }
@@ -315,12 +315,12 @@ using Cysharp.Text;
         {
             ISheet sheet = (ISheet)row.Sheet;
             int maxColIx = row.LastCellNum;
-            if (maxColIx <= 0)
+            if(maxColIx <= 0)
                 return 0;
 
             List<XmlElement> emptyCells = new List<XmlElement>(maxColIx);
 
-            if (OutputRowNumbers)
+            if(OutputRowNumbers)
             {
                 XmlElement tableRowNumberCellElement = htmlDocumentFacade.CreateTableHeaderCell();
                 ProcessRowNumber(row, tableRowNumberCellElement);
@@ -328,31 +328,31 @@ using Cysharp.Text;
             }
 
             int maxRenderedColumn = 0;
-            for (int colIx = 0; colIx < maxColIx; colIx++)
+            for(int colIx = 0; colIx < maxColIx; colIx++)
             {
-                if (!OutputHiddenColumns && sheet.IsColumnHidden(colIx))
+                if(!OutputHiddenColumns && sheet.IsColumnHidden(colIx))
                     continue;
 
                 CellRangeAddress range = ExcelToHtmlUtils.GetMergedRange(
                         mergedRanges, row.RowNum, colIx);
 
-                if (range != null && (range.FirstColumn != colIx || range.FirstRow != row.RowNum))
+                if(range != null && (range.FirstColumn != colIx || range.FirstRow != row.RowNum))
                     continue;
 
                 ICell cell = (ICell)row.GetCell(colIx);
 
                 double divWidthPx = 0;
-                if (UseDivsToSpan)
+                if(UseDivsToSpan)
                 {
                     divWidthPx = GetColumnWidth(sheet, colIx);
 
                     bool hasBreaks = false;
-                    for (int nextColumnIndex = colIx + 1; nextColumnIndex < maxColIx; nextColumnIndex++)
+                    for(int nextColumnIndex = colIx + 1; nextColumnIndex < maxColIx; nextColumnIndex++)
                     {
-                        if (!OutputHiddenColumns && sheet.IsColumnHidden(nextColumnIndex))
+                        if(!OutputHiddenColumns && sheet.IsColumnHidden(nextColumnIndex))
                             continue;
 
-                        if (row.GetCell(nextColumnIndex) != null && !IsTextEmpty((ICell)row.GetCell(nextColumnIndex)))
+                        if(row.GetCell(nextColumnIndex) != null && !IsTextEmpty((ICell) row.GetCell(nextColumnIndex)))
                         {
                             hasBreaks = true;
                             break;
@@ -361,22 +361,22 @@ using Cysharp.Text;
                         divWidthPx += GetColumnWidth(sheet, nextColumnIndex);
                     }
 
-                    if (!hasBreaks)
+                    if(!hasBreaks)
                         divWidthPx = int.MaxValue;
                 }
 
                 XmlElement tableCellElement = htmlDocumentFacade.CreateTableCell();
 
-                if (range != null)
+                if(range != null)
                 {
-                    if (range.FirstColumn != range.LastColumn)
+                    if(range.FirstColumn != range.LastColumn)
                         tableCellElement.SetAttribute("colspan", (range.LastColumn - range.FirstColumn + 1).ToString());
-                    if (range.FirstRow != range.LastRow)
+                    if(range.FirstRow != range.LastRow)
                         tableCellElement.SetAttribute("rowspan", (range.LastRow - range.FirstRow + 1).ToString());
                 }
 
                 bool emptyCell;
-                if (cell != null)
+                if(cell != null)
                 {
                     emptyCell = ProcessCell(cell, tableCellElement, GetColumnWidth(sheet, colIx), divWidthPx, row.Height / 20f);
                 }
@@ -385,13 +385,13 @@ using Cysharp.Text;
                     emptyCell = true;
                 }
 
-                if (emptyCell)
+                if(emptyCell)
                 {
                     emptyCells.Add(tableCellElement);
                 }
                 else
                 {
-                    foreach (XmlElement emptyCellElement in emptyCells)
+                    foreach(XmlElement emptyCellElement in emptyCells)
                     {
                         tableRowElement.AppendChild(emptyCellElement);
                     }
@@ -425,13 +425,13 @@ using Cysharp.Text;
         {
             // draw COLS after we know max column number
             XmlElement columnGroup = htmlDocumentFacade.CreateTableColumnGroup();
-            if (OutputRowNumbers)
+            if(OutputRowNumbers)
             {
                 columnGroup.AppendChild(htmlDocumentFacade.CreateTableColumn());
             }
-            for (int c = 0; c < maxSheetColumns; c++)
+            for(int c = 0; c < maxSheetColumns; c++)
             {
-                if (!OutputHiddenColumns && sheet.IsColumnHidden(c))
+                if(!OutputHiddenColumns && sheet.IsColumnHidden(c))
                     continue;
 
                 XmlElement col = htmlDocumentFacade.CreateTableColumn();
@@ -448,15 +448,15 @@ using Cysharp.Text;
 
             XmlElement tr = htmlDocumentFacade.CreateTableRow();
 
-            if (OutputRowNumbers)
+            if(OutputRowNumbers)
             {
                 // empty row at left-top corner
                 tr.AppendChild(htmlDocumentFacade.CreateTableHeaderCell());
             }
 
-            for (int c = 0; c < maxSheetColumns; c++)
+            for(int c = 0; c < maxSheetColumns; c++)
             {
-                if (!OutputHiddenColumns && sheet.IsColumnHidden(c))
+                if(!OutputHiddenColumns && sheet.IsColumnHidden(c))
                     continue;
 
                 XmlElement th = htmlDocumentFacade.CreateTableHeaderCell();
@@ -473,25 +473,25 @@ using Cysharp.Text;
         protected bool IsTextEmpty(ICell cell)
         {
             string value;
-            switch (cell.CellType)
+            switch(cell.CellType)
             {
                 case CellType.String:
                     // XXX: enrich
                     value = cell.RichStringCellValue.String;
                     break;
                 case CellType.Formula:
-                    switch (cell.CachedFormulaResultType)
+                    switch(cell.CachedFormulaResultType)
                     {
                         case CellType.String:
                             IRichTextString str = cell.RichStringCellValue as IRichTextString;
-                            if (str == null || str.Length <= 0)
+                            if(str == null || str.Length <= 0)
                                 return false;
 
                             value = str.ToString();
                             break;
                         case CellType.Numeric:
                             ICellStyle style = cell.CellStyle as ICellStyle;
-                            if (style == null)
+                            if(style == null)
                             {
                                 return false;
                             }
@@ -534,18 +534,18 @@ using Cysharp.Text;
             ICellStyle cellStyle = cell.CellStyle as ICellStyle;
 
             string value;
-            switch (cell.CellType)
+            switch(cell.CellType)
             {
                 case CellType.String:
                     // XXX: enrich
                     value = cell.RichStringCellValue.String;
                     break;
                 case CellType.Formula:
-                    switch (cell.CachedFormulaResultType)
+                    switch(cell.CachedFormulaResultType)
                     {
                         case CellType.String:
                             IRichTextString str = cell.RichStringCellValue;
-                            if (str != null && str.Length > 0)
+                            if(str != null && str.Length > 0)
                             {
                                 value = (str.String);
                             }
@@ -556,7 +556,7 @@ using Cysharp.Text;
                             break;
                         case CellType.Numeric:
                             ICellStyle style = cellStyle;
-                            if (style == null)
+                            if(style == null)
                             {
                                 value = cell.NumericCellValue.ToString();
                             }
@@ -598,11 +598,11 @@ using Cysharp.Text;
             bool wrapInDivs = !noText && UseDivsToSpan && !cellStyle.WrapText;
 
             short cellStyleIndex = cellStyle.Index;
-            if (cellStyleIndex != 0)
+            if(cellStyleIndex != 0)
             {
                 IWorkbook workbook = cell.Row.Sheet.Workbook as IWorkbook;
                 string mainCssClass = GetStyleClassName(workbook, cellStyle);
-                if (wrapInDivs)
+                if(wrapInDivs)
                 {
                     tableCellElement.SetAttribute("class", mainCssClass + " "
                             + cssClassContainerCell);
@@ -612,7 +612,7 @@ using Cysharp.Text;
                     tableCellElement.SetAttribute("class", mainCssClass);
                 }
 
-                if (noText)
+                if(noText)
                 {
                     /*
                      * if cell style is defined (like borders, etc.) but cell text
@@ -623,17 +623,17 @@ using Cysharp.Text;
                 }
             }
 
-            if (OutputLeadingSpacesAsNonBreaking && value.StartsWith(' '))
+            if(OutputLeadingSpacesAsNonBreaking && value.StartsWith(' '))
             {
                 using var builder = ZString.CreateStringBuilder();
-                for (int c = 0; c < value.Length; c++)
+                for(int c = 0; c < value.Length; c++)
                 {
-                    if (value[c] != ' ')
+                    if(value[c] != ' ')
                         break;
                     builder.Append('\u00a0');
                 }
 
-                if (value.Length != builder.Length)
+                if(value.Length != builder.Length)
                     builder.Append(value.Substring(builder.Length));
 
                 value = builder.ToString();
@@ -641,7 +641,7 @@ using Cysharp.Text;
 
             XmlText text = htmlDocumentFacade.CreateText(value);
 
-            if (wrapInDivs)
+            if(wrapInDivs)
             {
                 XmlElement outerDiv = htmlDocumentFacade.CreateBlock();
                 outerDiv.SetAttribute("class", this.cssClassContainerDiv);
@@ -651,7 +651,7 @@ using Cysharp.Text;
                 innerDivStyle.Append("position:absolute;min-width:");
                 innerDivStyle.Append(normalWidthPx);
                 innerDivStyle.Append("px;");
-                if (maxSpannedWidthPx != int.MaxValue)
+                if(maxSpannedWidthPx != int.MaxValue)
                 {
                     innerDivStyle.Append("max-width:");
                     innerDivStyle.Append(maxSpannedWidthPx);
@@ -693,28 +693,28 @@ using Cysharp.Text;
         {
             StringBuilder style = new StringBuilder();
 
-            if (workbook is HSSFWorkbook hssfWorkbook)
+            if(workbook is HSSFWorkbook hssfWorkbook)
             {
                 HSSFPalette palette = hssfWorkbook.GetCustomPalette();
                 style.Append("white-space: pre-wrap; ");
                 ExcelToHtmlUtils.AppendAlign(style, cellStyle.Alignment);
 
-                if (cellStyle.FillPattern == FillPattern.NoFill)
+                if(cellStyle.FillPattern == FillPattern.NoFill)
                 {
                     // no fill
                 }
-                else if (cellStyle.FillPattern == FillPattern.SolidForeground)
+                else if(cellStyle.FillPattern == FillPattern.SolidForeground)
                 {
                     //cellStyle.
                     //HSSFColor.
                     HSSFColor foregroundColor = palette.GetColor(cellStyle.FillForegroundColor);
-                    if (foregroundColor != null)
+                    if(foregroundColor != null)
                         style.AppendFormat("background-color:{0}; ", ExcelToHtmlUtils.GetColor(foregroundColor));
                 }
                 else
                 {
                     HSSFColor backgroundColor = palette.GetColor(cellStyle.FillBackgroundColor);
-                    if (backgroundColor != null)
+                    if(backgroundColor != null)
                         style.AppendFormat("background-color:{0}; ", ExcelToHtmlUtils.GetColor(backgroundColor));
                 }
             }
@@ -723,11 +723,11 @@ using Cysharp.Text;
                 style.Append("white-space: pre-wrap; ");
                 ExcelToHtmlUtils.AppendAlign(style, cellStyle.Alignment);
 
-                if (cellStyle.FillPattern == FillPattern.NoFill)
+                if(cellStyle.FillPattern == FillPattern.NoFill)
                 {
                     // no fill
                 }
-                else if (cellStyle.FillPattern == FillPattern.SolidForeground)
+                else if(cellStyle.FillPattern == FillPattern.SolidForeground)
                 {
                     //cellStyle
                     IndexedColors clr=IndexedColors.TryValueOf(cellStyle.FillForegroundColor);
@@ -735,20 +735,21 @@ using Cysharp.Text;
                     if(clr!=null)
                     {
                         hexstring=clr.HexString;
-                    }else
+                    }
+                    else
                     {
                         XSSFColor foregroundColor = (XSSFColor)cellStyle.FillForegroundColorColor;
-                        if (foregroundColor != null)
-                        hexstring = ExcelToHtmlUtils.GetColor(foregroundColor);
+                        if(foregroundColor != null)
+                            hexstring = ExcelToHtmlUtils.GetColor(foregroundColor);
                     }
-                    if (hexstring != null)
-                        style.AppendFormat("background-color:{0}; ",hexstring);
+                    if(hexstring != null)
+                        style.AppendFormat("background-color:{0}; ", hexstring);
                 }
                 else
                 {
                     IndexedColors clr = IndexedColors.TryValueOf(cellStyle.FillBackgroundColor);
                     string hexstring = null;
-                    if (clr != null)
+                    if(clr != null)
                     {
                         hexstring = clr.HexString;
                     }
@@ -758,7 +759,7 @@ using Cysharp.Text;
                         if(backgroundColor!=null)
                             hexstring = ExcelToHtmlUtils.GetColor(backgroundColor);
                     }
-                    if (hexstring != null)
+                    if(hexstring != null)
                         style.AppendFormat("background-color:{0}; ", hexstring);
                 }
 
@@ -777,7 +778,7 @@ using Cysharp.Text;
 
         private static void BuildStyle_Border(IWorkbook workbook, StringBuilder style, String type, BorderStyle xlsBorder, short borderColor)
         {
-            if (xlsBorder == BorderStyle.None)
+            if(xlsBorder == BorderStyle.None)
                 return;
 
             using var borderStyle = ZString.CreateStringBuilder();
@@ -785,13 +786,13 @@ using Cysharp.Text;
             borderStyle.Append(' ');
             borderStyle.Append(ExcelToHtmlUtils.GetBorderStyle(xlsBorder));
 
-            if (workbook is HSSFWorkbook hssfWorkbook)
+            if(workbook is HSSFWorkbook hssfWorkbook)
             {
                 var customPalette = hssfWorkbook.GetCustomPalette();
                 HSSFColor color = null;
-                if (customPalette != null)
+                if(customPalette != null)
                     color = customPalette.GetColor(borderColor);
-                if (color != null)
+                if(color != null)
                 {
                     borderStyle.Append(' ');
                     borderStyle.Append(ExcelToHtmlUtils.GetColor(color));
@@ -800,52 +801,52 @@ using Cysharp.Text;
             else
             {
                 IndexedColors clr = IndexedColors.TryValueOf(borderColor);
-                if (clr != null)
+                if(clr != null)
                 {
-                   borderStyle.Append(' ');
-                   borderStyle.Append(clr.HexString);
+                    borderStyle.Append(' ');
+                    borderStyle.Append(clr.HexString);
                 }
                 else
                 {
                     XSSFColor color = null;
                     var stylesSource = ((XSSFWorkbook) workbook).GetStylesSource();
-                    if (stylesSource != null)
+                    if(stylesSource != null)
                     {
                         var theme = stylesSource.Theme;
-                        if (theme != null)
+                        if(theme != null)
                             color = theme.GetThemeColor(borderColor);
                     }
-                    if (color != null)
+                    if(color != null)
                     {
                         borderStyle.Append(' ');
                         borderStyle.Append(ExcelToHtmlUtils.GetColor(color));
                     }
                 }
             }
-            style.AppendFormat("border-{0}: {1}; ",type, borderStyle);
+            style.AppendFormat("border-{0}: {1}; ", type, borderStyle);
         }
 
         private static void BuildStyle_Font(IWorkbook workbook, StringBuilder style, IFont font)
         {
-            if (font.IsBold)
+            if(font.IsBold)
             {
                 style.Append("font-weight: bold; ");
             }
 
-            if (workbook is HSSFWorkbook hssfWorkbook)
+            if(workbook is HSSFWorkbook hssfWorkbook)
             {
                 var customPalette = hssfWorkbook.GetCustomPalette();
                 HSSFColor fontColor=null;
                 if(customPalette!=null)
                     fontColor = customPalette.GetColor(font.Color);
-                if (fontColor != null)
-                    style.AppendFormat("color:{0}; " ,ExcelToHtmlUtils.GetColor(fontColor) );
+                if(fontColor != null)
+                    style.AppendFormat("color:{0}; ", ExcelToHtmlUtils.GetColor(fontColor));
             }
             else
             {
                 IndexedColors clr = IndexedColors.TryValueOf(font.Color);
                 string hexstring = null;
-                if (clr != null)
+                if(clr != null)
                 {
                     hexstring = clr.HexString;
                 }
@@ -853,24 +854,24 @@ using Cysharp.Text;
                 {
                     StylesTable st = ((XSSFWorkbook)workbook).GetStylesSource();
                     XSSFColor fontColor = null;
-                    if (st != null && st.Theme != null)
+                    if(st != null && st.Theme != null)
                     {
                         fontColor = st.Theme.GetThemeColor(font.Color);
                     }
                     else
                     {
-                        fontColor = ((XSSFFont)font).GetXSSFColor();
+                        fontColor = ((XSSFFont) font).GetXSSFColor();
                     }
-                    if (fontColor != null)
+                    if(fontColor != null)
                         hexstring = ExcelToHtmlUtils.GetColor(fontColor);
                 }
-                if (hexstring != null)
+                if(hexstring != null)
                     style.AppendFormat("color:{0}; ", hexstring);
             }
-            if (font.FontHeightInPoints != 0)
+            if(font.FontHeightInPoints != 0)
                 style.Append("font-size: " + font.FontHeightInPoints + "pt; ");
 
-            if (font.IsItalic)
+            if(font.IsItalic)
             {
                 style.Append("font-style: italic; ");
             }

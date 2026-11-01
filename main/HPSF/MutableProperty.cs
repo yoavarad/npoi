@@ -27,9 +27,9 @@
 
 namespace NPOI.HPSF
 {
+    using NPOI.Util;
     using System;
     using System.IO;
-    using NPOI.Util;
 
 
     [Obsolete("deprecated POI 3.16 - use Property as base class instead")]
@@ -57,19 +57,19 @@ namespace NPOI.HPSF
         public MutableProperty(long id, long type, Object value)
             : base(id, type, value)
         {
-            
+
         }
-    
+
         public MutableProperty(long id, byte[] src, long offset, int length, int codepage)
             : base(id, src, offset, length, codepage)
         {
-            
+
         }
-    
+
         public MutableProperty(long id, LittleEndianByteArrayInputStream leis, int length, int codepage)
             : base(id, leis, length, codepage)
         {
-            
+
         }
     }
 }

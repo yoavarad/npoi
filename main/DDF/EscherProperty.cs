@@ -49,16 +49,16 @@ namespace NPOI.DDF
         /// <param name="isBlipId">if set to <c>true</c> [is blip id].</param> 
         public EscherProperty(short propertyNumber, bool isComplex, bool isBlipId)
         {
-            this.id = (short)(propertyNumber +
-                    (isComplex ? unchecked((short)0x8000) : (short)0x0) +
-                    (isBlipId ? (short)0x4000 : (short)0x0));
+            this.id = (short) (propertyNumber +
+                    (isComplex ? unchecked((short) 0x8000) : (short) 0x0) +
+                    (isBlipId ? (short) 0x4000 : (short) 0x0));
         }
 
         /// <summary>
         /// Gets the id.
         /// </summary>
         /// <value>The id.</value>
-        public virtual  short Id
+        public virtual short Id
         {
             get { return id; }
         }
@@ -67,9 +67,9 @@ namespace NPOI.DDF
         /// Gets the property number.
         /// </summary>
         /// <value>The property number.</value>
-        public virtual  short PropertyNumber
+        public virtual short PropertyNumber
         {
-            get { return (short)(id & (short)0x3FFF); }
+            get { return (short) (id & (short) 0x3FFF); }
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace NPOI.DDF
         /// <value>
         /// 	<c>true</c> if this instance is complex; otherwise, <c>false</c>.
         /// </value>
-        public virtual  bool IsComplex
+        public virtual bool IsComplex
         {
-            get { return (id & unchecked((short)0x8000)) != 0; }
+            get { return (id & unchecked((short) 0x8000)) != 0; }
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace NPOI.DDF
         /// <value>
         /// 	<c>true</c> if this instance is blip id; otherwise, <c>false</c>.
         /// </value>
-        public virtual  bool IsBlipId
+        public virtual bool IsBlipId
         {
-            get { return (id & (short)0x4000) != 0; }
+            get { return (id & (short) 0x4000) != 0; }
         }
 
         /// <summary>

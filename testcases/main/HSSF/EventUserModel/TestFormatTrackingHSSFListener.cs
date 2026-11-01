@@ -17,18 +17,17 @@
 
 namespace TestCases.HSSF.EventUserModel
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
     using NPOI.HSSF;
     using NPOI.HSSF.EventUserModel;
     using NPOI.HSSF.Model;
-    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
 
     [TestFixture]
     public class TestFormatTrackingHSSFListener
@@ -50,7 +49,7 @@ namespace TestCases.HSSF.EventUserModel
                 POIFSFileSystem fs = new POIFSFileSystem(is1);
                 factory.ProcessWorkbookEvents(req, fs);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
@@ -76,10 +75,10 @@ namespace TestCases.HSSF.EventUserModel
         [Test]
         public void TestTurnToString()
         {
-            String[] files = new String[] { 
-				"45365.xls", "45365-2.xls", "MissingBits.xls" 
-		};
-            for (int k = 0; k < files.Length; k++)
+            String[] files = new String[] {
+                "45365.xls", "45365-2.xls", "MissingBits.xls"
+        };
+            for(int k = 0; k < files.Length; k++)
             {
                 ProcessFile(files[k]);
 
@@ -89,21 +88,21 @@ namespace TestCases.HSSF.EventUserModel
 
                 // Now check we can turn all the numeric
                 //  cells into strings without error
-                for (int i = 0; i < mockListen._records.Count; i++)
+                for(int i = 0; i < mockListen._records.Count; i++)
                 {
                     Record r = (Record)mockListen._records[i];
                     CellValueRecordInterface cvr = null;
 
-                    if (r is NumberRecord)
+                    if(r is NumberRecord)
                     {
-                        cvr = (CellValueRecordInterface)r;
+                        cvr = (CellValueRecordInterface) r;
                     }
-                    if (r is FormulaRecord)
+                    if(r is FormulaRecord)
                     {
-                        cvr = (CellValueRecordInterface)r;
+                        cvr = (CellValueRecordInterface) r;
                     }
 
-                    if (cvr != null)
+                    if(cvr != null)
                     {
                         // Should always give us a string 
                         String s = listener.FormatNumberDateCell(cvr);

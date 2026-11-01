@@ -1,4 +1,4 @@
-﻿using NPOI.SS;
+using NPOI.SS;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +25,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_Col AddNewCol()
         {
-            if (null == colField)
+            if(null == colField)
             {
                 colField = new List<CT_Col>();
             }
@@ -37,7 +37,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_Col InsertNewCol(int index)
         {
-            if (null == colField)
+            if(null == colField)
             {
                 colField = new List<CT_Col>();
             }
@@ -52,12 +52,12 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public void RemoveCols(IList<CT_Col> toRemove)
         {
-            if (colField == null)
+            if(colField == null)
             {
                 return;
             }
 
-            foreach (CT_Col c in toRemove)
+            foreach(CT_Col c in toRemove)
             {
                 _ = colField.Remove(c);
             }
@@ -90,7 +90,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Cols Parse(XmlNode node, XmlNamespaceManager namespaceManager, int lastColumn)
         {
-            if (node == null)
+            if(node == null)
             {
                 return null;
             }
@@ -99,13 +99,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             {
                 col = new List<CT_Col>()
             };
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "col")
+                if(childNode.LocalName == "col")
                 {
                     CT_Col ctCol = CT_Col.Parse(childNode, namespaceManager);
 
-                    if (ctCol.min != ctCol.max)
+                    if(ctCol.min != ctCol.max)
                     {
                         BreakUpCtCol(ctObj, ctCol, lastColumn);
                     }
@@ -133,11 +133,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                 ? lastColumn + 1
                 : (int)ctCol.max;
 
-            for (int i = (int)ctCol.min; i <= max; i++)
+            for(int i = (int) ctCol.min; i <= max; i++)
             {
                 CT_Col breakOffCtCol = ctCol.Copy();
-                breakOffCtCol.min = (uint)i;
-                breakOffCtCol.max = (uint)i;
+                breakOffCtCol.min = (uint) i;
+                breakOffCtCol.max = (uint) i;
 
                 ctObj.col.Add(breakOffCtCol);
             }
@@ -150,9 +150,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             sw.Write('>');
 
-            if (combinedCols != null)
+            if(combinedCols != null)
             {
-                foreach (CT_Col x in combinedCols)
+                foreach(CT_Col x in combinedCols)
                 {
                     x.Write(sw, "col");
                 }
@@ -173,15 +173,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
             CT_Col lastCol = null;
 
-            foreach (CT_Col col in cols)
+            foreach(CT_Col col in cols)
             {
-                if (lastCol == null)
+                if(lastCol == null)
                 {
                     lastCol = col;
                     continue;
                 }
 
-                if (col.IsAdjacentAndCanBeCombined(lastCol))
+                if(col.IsAdjacentAndCanBeCombined(lastCol))
                 {
                     lastCol.CombineWith(col);
                     continue;
@@ -191,7 +191,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                 lastCol = col;
             }
 
-            if (lastCol != null)
+            if(lastCol != null)
             {
                 combinedCols.Add(lastCol);
             }

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -72,27 +72,27 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Border Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Border ctObj = new CT_Border();
             ctObj.diagonalUp = XmlHelper.ReadBool(node.Attributes["diagonalUp"]);
             ctObj.diagonalDown = XmlHelper.ReadBool(node.Attributes["diagonalDown"]);
             ctObj.outline = XmlHelper.ReadBool(node.Attributes["outline"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "left")
+                if(childNode.LocalName == "left")
                     ctObj.left = CT_BorderPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "right")
+                else if(childNode.LocalName == "right")
                     ctObj.right = CT_BorderPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "top")
+                else if(childNode.LocalName == "top")
                     ctObj.top = CT_BorderPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bottom")
+                else if(childNode.LocalName == "bottom")
                     ctObj.bottom = CT_BorderPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "diagonal")
+                else if(childNode.LocalName == "diagonal")
                     ctObj.diagonal = CT_BorderPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "vertical")
+                else if(childNode.LocalName == "vertical")
                     ctObj.vertical = CT_BorderPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "horizontal")
+                else if(childNode.LocalName == "horizontal")
                     ctObj.horizontal = CT_BorderPr.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -107,19 +107,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "diagonalDown", this.diagonalDown, false);
             XmlHelper.WriteAttribute(sw, "outline", this.outline, false);
             sw.Write('>');
-            if (this.left != null)
+            if(this.left != null)
                 this.left.Write(sw, "left");
-            if (this.right != null)
+            if(this.right != null)
                 this.right.Write(sw, "right");
-            if (this.top != null)
+            if(this.top != null)
                 this.top.Write(sw, "top");
-            if (this.bottom != null)
+            if(this.bottom != null)
                 this.bottom.Write(sw, "bottom");
-            if (this.diagonal != null)
+            if(this.diagonal != null)
                 this.diagonal.Write(sw, "diagonal");
-            if (this.vertical != null)
+            if(this.vertical != null)
                 this.vertical.Write(sw, "vertical");
-            if (this.horizontal != null)
+            if(this.horizontal != null)
                 this.horizontal.Write(sw, "horizontal");
             sw.WriteEndElement(nodeName);
         }
@@ -145,7 +145,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BorderPr AddNewDiagonal()
         {
-            if (this.diagonalField == null)
+            if(this.diagonalField == null)
                 this.diagonalField = new CT_BorderPr();
             return this.diagonalField;
         }
@@ -206,25 +206,25 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_BorderPr AddNewTop()
         {
-            if (this.topField == null)
+            if(this.topField == null)
                 this.topField = new CT_BorderPr();
             return this.topField;
         }
         public CT_BorderPr AddNewRight()
         {
-            if (this.rightField == null)
+            if(this.rightField == null)
                 this.rightField = new CT_BorderPr();
             return this.rightField;
         }
         public CT_BorderPr AddNewLeft()
         {
-            if (this.leftField == null)
+            if(this.leftField == null)
                 this.leftField = new CT_BorderPr();
             return this.leftField;
         }
         public CT_BorderPr AddNewBottom()
         {
-            if (this.bottomField == null)
+            if(this.bottomField == null)
                 this.bottomField = new CT_BorderPr();
             return this.bottomField;
         }

@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -99,7 +99,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         protected override int DataSize
         {
-            get { return  4 + 4 + 4 + 4; }
+            get { return 4 + 4 + 4 + 4; }
         }
 
         public override short Sid
@@ -130,7 +130,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_x;
             }
-            set 
+            set
             {
                 this.field_1_x = value;
             }
@@ -145,7 +145,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_y;
             }
-            set 
+            set
             {
                 this.field_2_y = value;
             }
@@ -166,11 +166,9 @@ namespace NPOI.HSSF.Record.Chart
          */
         public int Height
         {
-            get{return field_4_height;}
-            set{this.field_4_height = value;}
+            get { return field_4_height; }
+            set { this.field_4_height = value; }
         }
 
     }
 }
-
-

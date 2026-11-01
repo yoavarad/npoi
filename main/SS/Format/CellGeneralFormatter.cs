@@ -16,11 +16,11 @@
 ==================================================================== */
 namespace NPOI.SS.Format
 {
+    using NPOI.Util;
     using System;
     using System.Globalization;
     using System.Runtime.Serialization;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -52,11 +52,11 @@ namespace NPOI.SS.Format
         public override void FormatValue(StringBuilder toAppendTo, Object value)
         {
             //if (value is Number) {
-            if (NPOI.Util.Number.IsNumber(value))
+            if(NPOI.Util.Number.IsNumber(value))
             {
                 double val ;
                 double.TryParse(value.ToString(), out val);
-                if (val == 0)
+                if(val == 0)
                 {
                     toAppendTo.Append('0');
                     return;
@@ -65,9 +65,9 @@ namespace NPOI.SS.Format
                 String fmt;
                 double exp = Math.Log10(Math.Abs(val));
                 bool stripZeros = true;
-                if (exp > 10 || exp < -9)
+                if(exp > 10 || exp < -9)
                     fmt = "E5";
-                else if ((long)val != val)
+                else if((long) val != val)
                     fmt = "F9";
                 else
                 {
@@ -76,34 +76,34 @@ namespace NPOI.SS.Format
                 }
                 toAppendTo.Append(val.ToString(fmt, locale));
 
-                if (stripZeros)
+                if(stripZeros)
                 {
                     // strip off trailing zeros
                     int RemoveFrom;
-                    if (fmt.StartsWith('E'))
+                    if(fmt.StartsWith('E'))
                         RemoveFrom = toAppendTo.ToString().LastIndexOf('E') - 1;
                     else
                         RemoveFrom = toAppendTo.Length - 1;
-                    while (toAppendTo[RemoveFrom] == '0')
+                    while(toAppendTo[RemoveFrom] == '0')
                     {
                         toAppendTo.Remove(RemoveFrom--, 1);
                     }
-                    if (toAppendTo[RemoveFrom] == '.')
+                    if(toAppendTo[RemoveFrom] == '.')
                     {
                         toAppendTo.Remove(RemoveFrom--, 1);
                     }
                     // remove zeros after E   by antony.liu
                     string text = toAppendTo.ToString();
                     RemoveFrom = toAppendTo.ToString().LastIndexOf('E');
-                    if (RemoveFrom > 0)
+                    if(RemoveFrom > 0)
                     {
                         RemoveFrom++;
-                        if (text[RemoveFrom] == '+' || text[RemoveFrom] == '-')
+                        if(text[RemoveFrom] == '+' || text[RemoveFrom] == '-')
                             RemoveFrom++;
                         int count = 0;
-                        while (RemoveFrom + count< text.Length)
+                        while(RemoveFrom + count< text.Length)
                         {
-                            if (text[RemoveFrom + count] == '0')
+                            if(text[RemoveFrom + count] == '0')
                                 count++;
                             else
                                 break;
@@ -111,8 +111,9 @@ namespace NPOI.SS.Format
                         toAppendTo.Remove(RemoveFrom, count);
                     }
                 }
-            } 
-            else if (value is Boolean) {
+            }
+            else if(value is Boolean)
+            {
                 toAppendTo.Append(value.ToString().ToUpper());
             }
             else

@@ -16,11 +16,11 @@
 ==================================================================== */
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.DDF;
     using NPOI.HSSF.Record;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
 
 
     /// <summary>
@@ -50,7 +50,7 @@ namespace NPOI.HSSF.UserModel
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="anchor">defines position of this anchor in the sheet</param>
-        public HSSFComment(HSSFShape parent, HSSFAnchor anchor):
+        public HSSFComment(HSSFShape parent, HSSFAnchor anchor) :
             this(parent, anchor, CreateNoteRecord())
         {
 
@@ -68,7 +68,7 @@ namespace NPOI.HSSF.UserModel
 
             Author = "";
             CommonObjectDataSubRecord cod = (CommonObjectDataSubRecord)GetObjRecord().SubRecords[0];
-            cod.ObjectType = CommonObjectType.Comment; 
+            cod.ObjectType = CommonObjectType.Comment;
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="HSSFComment"/> class.
@@ -76,7 +76,7 @@ namespace NPOI.HSSF.UserModel
         /// <param name="note">The note.</param>
         /// <param name="txo">The txo.</param>
         public HSSFComment(NoteRecord note, TextObjectRecord txo)
-            : this((HSSFShape)null, new HSSFClientAnchor(), note)
+            : this((HSSFShape) null, new HSSFClientAnchor(), note)
         {
         }
 
@@ -104,7 +104,7 @@ namespace NPOI.HSSF.UserModel
         {
             ObjRecord obj = new ObjRecord();
             CommonObjectDataSubRecord c = new CommonObjectDataSubRecord();
-            c.ObjectType = (CommonObjectType)OBJECT_TYPE_COMMENT;
+            c.ObjectType = (CommonObjectType) OBJECT_TYPE_COMMENT;
             c.IsLocked = (true);
             c.IsPrintable = (true);
             c.IsAutoFill = (false);
@@ -131,7 +131,7 @@ namespace NPOI.HSSF.UserModel
             get { return base.ShapeId; }
             set
             {
-                if (value > 65535)
+                if(value > 65535)
                     throw new ArgumentException("Cannot add more than 65535 shapes");
                 base.ShapeId = (value);
                 CommonObjectDataSubRecord cod = (CommonObjectDataSubRecord)GetObjRecord().SubRecords[0];
@@ -158,7 +158,8 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                if (_note != null) _note.Flags = value ? NoteRecord.NOTE_VISIBLE : NoteRecord.NOTE_HIDDEN;
+                if(_note != null)
+                    _note.Flags = value ? NoteRecord.NOTE_VISIBLE : NoteRecord.NOTE_HIDDEN;
                 SetHidden(!value);
             }
         }
@@ -189,7 +190,8 @@ namespace NPOI.HSSF.UserModel
             get { return _note.Row; }
             set
             {
-                if (_note != null) _note.Row = value;
+                if(_note != null)
+                    _note.Row = value;
             }
         }
 
@@ -203,7 +205,8 @@ namespace NPOI.HSSF.UserModel
             get { return _note.Column; }
             set
             {
-                if (_note != null) _note.Column = value;
+                if(_note != null)
+                    _note.Column = value;
             }
         }
 
@@ -219,11 +222,12 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                if (_note != null) _note.Author = value;
+                if(_note != null)
+                    _note.Author = value;
             }
         }
 
-        
+
 
         /// <summary>
         /// Gets the note record.
@@ -241,8 +245,10 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                if (_note == null) return false;
-                if (this.Column < 0 || this.Row < 0) return false;
+                if(_note == null)
+                    return false;
+                if(this.Column < 0 || this.Row < 0)
+                    return false;
                 return true;
             }
         }
@@ -252,7 +258,7 @@ namespace NPOI.HSSF.UserModel
             get
             {
                 HSSFAnchor ha = base.Anchor as HSSFAnchor;
-                if (ha is IClientAnchor clientAnchor)
+                if(ha is IClientAnchor clientAnchor)
                 {
                     return clientAnchor;
                 }
@@ -273,7 +279,7 @@ namespace NPOI.HSSF.UserModel
                 throw new InvalidOperationException("Shape type can not be changed in " + this.GetType().Name);
             }
         }
-        
+
 
         internal override void AfterRemove(HSSFPatriarch patriarch)
         {
@@ -301,7 +307,7 @@ namespace NPOI.HSSF.UserModel
         public void ResetBackgroundImage()
         {
             EscherSimpleProperty property = (EscherSimpleProperty)GetOptRecord().Lookup(EscherProperties.FILL__PATTERNTEXTURE);
-            if (null != property)
+            if(null != property)
             {
                 EscherBSERecord bse = ((HSSFWorkbook)((HSSFPatriarch)Patriarch).Sheet.Workbook).Workbook.GetBSERecord(property.PropertyValue);
                 bse.Ref = (bse.Ref - 1);
@@ -319,7 +325,7 @@ namespace NPOI.HSSF.UserModel
         {
             EscherSimpleProperty property = (EscherSimpleProperty)GetOptRecord().Lookup(EscherProperties.GROUPSHAPE__PRINT);
             // see http://msdn.microsoft.com/en-us/library/dd949807(v=office.12).aspx
-            if (value)
+            if(value)
             {
                 SetPropertyValue(new EscherSimpleProperty(EscherProperties.GROUPSHAPE__PRINT, false, false, property.PropertyValue | GROUP_SHAPE_HIDDEN_MASK));
             }
@@ -330,7 +336,7 @@ namespace NPOI.HSSF.UserModel
         }
         public override bool Equals(Object obj)
         {
-            if (obj is not HSSFComment other)
+            if(obj is not HSSFComment other)
             {
                 return false;
             }

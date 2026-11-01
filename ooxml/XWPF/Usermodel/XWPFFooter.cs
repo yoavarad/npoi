@@ -16,13 +16,13 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
-    using NPOI.OpenXmlFormats.Wordprocessing;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Xml;
     using System.Xml.Serialization;
-    using System.Collections.Generic;
 
     /**
      * Sketch of XWPF footer class
@@ -31,7 +31,7 @@ namespace NPOI.XWPF.UserModel
     {
         protected List<XWPFHyperlink> hyperlinks = new List<XWPFHyperlink>();
         public XWPFFooter()
-            //: base()
+        //: base()
         {
             headerFooter = new CT_Ftr();
             ReadHdrFtr();
@@ -57,14 +57,14 @@ namespace NPOI.XWPF.UserModel
                 }
             }
             cursor.Dispose();*/
-            foreach (object o in hdrFtr.Items)
+            foreach(object o in hdrFtr.Items)
             {
-                if (o is CT_P ctP)
+                if(o is CT_P ctP)
                 {
                     XWPFParagraph p = new XWPFParagraph(ctP, this);
                     paragraphs.Add(p);
                 }
-                if (o is CT_Tbl tbl)
+                if(o is CT_Tbl tbl)
                 {
                     XWPFTable t = new XWPFTable(tbl, this);
                     tables.Add(t);
@@ -81,7 +81,7 @@ namespace NPOI.XWPF.UserModel
         public XWPFFooter(POIXMLDocumentPart parent, PackagePart part, PackageRelationship rel)
             : this(parent, part)
         {
-            
+
         }
         /**
          * save and Commit footer
@@ -103,7 +103,7 @@ namespace NPOI.XWPF.UserModel
             map.Put("http://schemas.microsoft.com/office/word/2006/wordml", "wne");
             xmlOptions.SaveSuggestedPrefixes=(map);*/
             PackagePart part = GetPackagePart();
-            using (Stream out1 = part.GetOutputStream())
+            using(Stream out1 = part.GetOutputStream())
             {
                 FtrDocument doc = new FtrDocument((CT_Ftr)headerFooter);
                 doc.Save(out1);
@@ -122,28 +122,28 @@ namespace NPOI.XWPF.UserModel
                 headerFooter = ftrDocument.Ftr;
                 // parse the document with cursor and add
                 // the XmlObject to its lists
-                foreach (object o in headerFooter.Items)
+                foreach(object o in headerFooter.Items)
                 {
-                    if (o is CT_P ctP)
+                    if(o is CT_P ctP)
                     {
                         XWPFParagraph p = new XWPFParagraph(ctP, this);
                         paragraphs.Add(p);
                         bodyElements.Add(p);
                     }
-                    if (o is CT_Tbl tbl)
+                    if(o is CT_Tbl tbl)
                     {
                         XWPFTable t = new XWPFTable(tbl, this);
                         tables.Add(t);
                         bodyElements.Add(t);
                     }
-                    if (o is CT_SdtBlock block)
+                    if(o is CT_SdtBlock block)
                     {
                         XWPFSDT c = new XWPFSDT(block, this);
                         bodyElements.Add(c);
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new POIXMLException(e);
             }
@@ -156,13 +156,13 @@ namespace NPOI.XWPF.UserModel
             {
                 IEnumerator<PackageRelationship> relIter =
                     GetPackagePart().GetRelationshipsByType(XWPFRelation.HYPERLINK.Relation).GetEnumerator();
-                while (relIter.MoveNext())
+                while(relIter.MoveNext())
                 {
                     PackageRelationship rel = relIter.Current;
                     hyperlinks.Add(new XWPFHyperlink(rel.Id, rel.TargetUri.OriginalString));
                 }
             }
-            catch (InvalidDataException e)
+            catch(InvalidDataException e)
             {
                 throw new POIXMLException(e);
             }
@@ -175,9 +175,9 @@ namespace NPOI.XWPF.UserModel
 
         public XWPFHyperlink GetHyperlinkByID(string id)
         {
-            foreach (XWPFHyperlink link in hyperlinks)
+            foreach(XWPFHyperlink link in hyperlinks)
             {
-                if (link.Id.Equals(id))
+                if(link.Id.Equals(id))
                     return link;
             }
 

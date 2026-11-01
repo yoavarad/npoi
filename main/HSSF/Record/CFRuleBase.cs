@@ -17,14 +17,13 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record.CF;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.Util;
+    using System;
 
 
     /**
@@ -37,7 +36,8 @@ namespace NPOI.HSSF.Record
      */
     public abstract class CFRuleBase : StandardRecord, ICloneable
     {
-        public static class ComparisonOperator {
+        public static class ComparisonOperator
+        {
             public static byte NO_COMPARISON = 0;
             public static byte BETWEEN = 1;
             public static byte NOT_BETWEEN = 2;
@@ -120,8 +120,9 @@ namespace NPOI.HSSF.Record
         internal static BitField prot = bf(0x40000000); // 1 = Record Contains protection formatting block
         internal static BitField alignTextDir = bf(0x80000000); // 0 = Text direction modified
 
-        private static BitField bf(long i) {
-            return BitFieldFactory.GetInstance((int)i);
+        private static BitField bf(long i)
+        {
+            return BitFieldFactory.GetInstance((int) i);
         }
 
         protected int formatting_options;
@@ -135,7 +136,8 @@ namespace NPOI.HSSF.Record
         private Formula formula2;
 
         /** Creates new CFRuleRecord */
-        protected CFRuleBase(byte conditionType, byte comparisonOperation) {
+        protected CFRuleBase(byte conditionType, byte comparisonOperation)
+        {
             ConditionType = (conditionType);
             ComparisonOperation = (comparisonOperation);
             formula1 = Formula.Create(Ptg.EMPTY_PTG_ARRAY);
@@ -150,23 +152,27 @@ namespace NPOI.HSSF.Record
         }
         protected CFRuleBase() { }
 
-        protected int ReadFormatOptions(RecordInputStream in1) {
+        protected int ReadFormatOptions(RecordInputStream in1)
+        {
             formatting_options = in1.ReadInt();
             formatting_not_used = in1.ReadShort();
 
             int len = 6;
 
-            if (ContainsFontFormattingBlock) {
+            if(ContainsFontFormattingBlock)
+            {
                 _fontFormatting = new FontFormatting(in1);
                 len += _fontFormatting.DataLength;
             }
 
-            if (ContainsBorderFormattingBlock) {
+            if(ContainsBorderFormattingBlock)
+            {
                 _borderFormatting = new BorderFormatting(in1);
                 len += _borderFormatting.DataLength;
             }
 
-            if (ContainsPatternFormattingBlock) {
+            if(ContainsPatternFormattingBlock)
+            {
                 _patternFormatting = new PatternFormatting(in1);
                 len += _patternFormatting.DataLength;
             }
@@ -179,9 +185,9 @@ namespace NPOI.HSSF.Record
             get { return condition_type; }
             set
             {
-                if ((this is CFRuleRecord))
+                if((this is CFRuleRecord))
                 {
-                    if (value == CONDITION_TYPE_CELL_VALUE_IS ||
+                    if(value == CONDITION_TYPE_CELL_VALUE_IS ||
                         value == CONDITION_TYPE_FORMULA)
                     {
                         // Good, valid combination
@@ -200,7 +206,7 @@ namespace NPOI.HSSF.Record
             get { return comparison_operator; }
             set
             {
-                if (value < 0 || value > ComparisonOperator.max_operator)
+                if(value < 0 || value > ComparisonOperator.max_operator)
                     throw new ArgumentException(
                             "Valid operators are only in the range 0 to " + ComparisonOperator.max_operator);
 
@@ -217,7 +223,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (ContainsFontFormattingBlock)
+                if(ContainsFontFormattingBlock)
                 {
                     return _fontFormatting;
                 }
@@ -230,23 +236,26 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        public bool ContainsAlignFormattingBlock() {
+        public bool ContainsAlignFormattingBlock()
+        {
             return GetOptionFlag(align);
         }
-        public void SetAlignFormattingUnChanged() {
+        public void SetAlignFormattingUnChanged()
+        {
             SetOptionFlag(false, align);
         }
 
         public bool ContainsBorderFormattingBlock
         {
             get { return GetOptionFlag(bord); }
-            
+
         }
 
-        public BorderFormatting BorderFormatting {
+        public BorderFormatting BorderFormatting
+        {
             get
             {
-                if (ContainsBorderFormattingBlock)
+                if(ContainsBorderFormattingBlock)
                 {
                     return _borderFormatting;
                 }
@@ -268,7 +277,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (ContainsPatternFormattingBlock)
+                if(ContainsPatternFormattingBlock)
                 {
                     return _patternFormatting;
                 }
@@ -281,10 +290,12 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        public bool ContainsProtectionFormattingBlock() {
+        public bool ContainsProtectionFormattingBlock()
+        {
             return GetOptionFlag(prot);
         }
-        public void SetProtectionFormattingUnChanged() {
+        public void SetProtectionFormattingUnChanged()
+        {
             SetOptionFlag(false, prot);
         }
 
@@ -301,10 +312,12 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        private bool IsModified(BitField field) {
+        private bool IsModified(BitField field)
+        {
             return !field.IsSet(formatting_options);
         }
-        private void SetModified(bool modified, BitField field) {
+        private void SetModified(bool modified, BitField field)
+        {
             formatting_options = field.SetBoolean(formatting_options, !modified);
         }
 
@@ -320,7 +333,8 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        public bool IsRightBorderModified {
+        public bool IsRightBorderModified
+        {
             get
             {
                 return IsModified(bordRight);
@@ -415,10 +429,12 @@ namespace NPOI.HSSF.Record
             }
         }
 
-        private bool GetOptionFlag(BitField field) {
+        private bool GetOptionFlag(BitField field)
+        {
             return field.IsSet(formatting_options);
         }
-        private void SetOptionFlag(bool flag, BitField field) {
+        private void SetOptionFlag(bool flag, BitField field)
+        {
             formatting_options = field.SetBoolean(formatting_options, flag);
         }
 
@@ -432,20 +448,24 @@ namespace NPOI.HSSF.Record
               (ContainsPatternFormattingBlock ? 4 : 0);
             }
         }
-        protected void SerializeFormattingBlock(ILittleEndianOutput out1) {
+        protected void SerializeFormattingBlock(ILittleEndianOutput out1)
+        {
             out1.WriteInt(formatting_options);
             out1.WriteShort(formatting_not_used);
 
-            if (ContainsFontFormattingBlock) {
+            if(ContainsFontFormattingBlock)
+            {
                 byte[] fontFormattingRawRecord = _fontFormatting.RawRecord;
                 out1.Write(fontFormattingRawRecord);
             }
 
-            if (ContainsBorderFormattingBlock) {
+            if(ContainsBorderFormattingBlock)
+            {
                 _borderFormatting.Serialize(out1);
             }
 
-            if (ContainsPatternFormattingBlock) {
+            if(ContainsPatternFormattingBlock)
+            {
                 _patternFormatting.Serialize(out1);
             }
         }
@@ -515,7 +535,8 @@ namespace NPOI.HSSF.Record
          * @param formula must not be <code>null</code>
          * @return encoded size of the formula tokens (does not include 2 bytes for ushort length)
          */
-        protected static int GetFormulaSize(Formula formula) {
+        protected static int GetFormulaSize(Formula formula)
+        {
             return formula.EncodedTokenSize;
         }
 
@@ -527,28 +548,34 @@ namespace NPOI.HSSF.Record
          *
          * @return <code>null</code> if <tt>formula</tt> was null.
          */
-        public static Ptg[] ParseFormula(String formula, HSSFSheet sheet) {
-            if (formula == null) {
+        public static Ptg[] ParseFormula(String formula, HSSFSheet sheet)
+        {
+            if(formula == null)
+            {
                 return null;
             }
             int sheetIndex = sheet.Workbook.GetSheetIndex(sheet);
             return HSSFFormulaParser.Parse(formula, sheet.Workbook as HSSFWorkbook, FormulaType.Cell, sheetIndex);
         }
 
-        protected void CopyTo(CFRuleBase rec) {
+        protected void CopyTo(CFRuleBase rec)
+        {
             rec.condition_type = condition_type;
             rec.comparison_operator = comparison_operator;
 
             rec.formatting_options = formatting_options;
             rec.formatting_not_used = formatting_not_used;
-            if (ContainsFontFormattingBlock) {
-                rec._fontFormatting = (FontFormatting)_fontFormatting.Clone();
+            if(ContainsFontFormattingBlock)
+            {
+                rec._fontFormatting = (FontFormatting) _fontFormatting.Clone();
             }
-            if (ContainsBorderFormattingBlock) {
-                rec._borderFormatting = (BorderFormatting)_borderFormatting.Clone();
+            if(ContainsBorderFormattingBlock)
+            {
+                rec._borderFormatting = (BorderFormatting) _borderFormatting.Clone();
             }
-            if (ContainsPatternFormattingBlock) {
-                rec._patternFormatting = (PatternFormatting)_patternFormatting.Clone();
+            if(ContainsPatternFormattingBlock)
+            {
+                rec._patternFormatting = (PatternFormatting) _patternFormatting.Clone();
             }
 
             rec.formula1 = (formula1.Copy());

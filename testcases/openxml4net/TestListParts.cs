@@ -15,13 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.Util;
 using NPOI.OpenXml4Net.OPC;
-using TestCases.OpenXml4Net;
-using System.IO;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using TestCases.OpenXml4Net;
 namespace TestCases.OpenXml4Net.OPC
 {
     [TestFixture]
@@ -88,14 +89,14 @@ namespace TestCases.OpenXml4Net.OPC
             OPCPackage p;
             p = OPCPackage.Open(is1);
 
-            foreach (PackagePart part in p.GetParts())
+            foreach(PackagePart part in p.GetParts())
             {
                 values.Add(part.PartName, part.ContentType);
                 logger.Log(POILogger.DEBUG, part.PartName);
             }
 
             // Compare expected values with values return by the namespace
-            foreach (PackagePartName partName in expectedValues.Keys)
+            foreach(PackagePartName partName in expectedValues.Keys)
             {
                 ClassicAssert.IsNotNull(values[partName]);
                 ClassicAssert.AreEqual(expectedValues[partName], values[partName]);
@@ -103,6 +104,3 @@ namespace TestCases.OpenXml4Net.OPC
         }
     }
 }
-
-
-

@@ -1,4 +1,4 @@
-﻿
+
 namespace NPOI.Util
 {
     public static class XMLConstants

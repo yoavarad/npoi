@@ -1,10 +1,10 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using System;
 
 namespace NPOI.OOXML.XSSF.UserModel
 {
-    public class XSSFConditionFilterData:IConditionFilterData
+    public class XSSFConditionFilterData : IConditionFilterData
     {
         private readonly CT_CfRule _cfRule;
         public XSSFConditionFilterData(CT_CfRule cfRule)

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -40,7 +40,7 @@ namespace NPOI.Util
         }
         public int Read()
         {
-            return (int)_is.ReadByte();
+            return (int) _is.ReadByte();
         }
         public override int Read(byte[] b, int off, int len)
         {

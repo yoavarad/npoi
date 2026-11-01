@@ -1,10 +1,9 @@
-﻿using System;
+using NPOI.OpenXml4Net.Exceptions;
+using NPOI.Util;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-
-using NPOI.OpenXml4Net.Exceptions;
-using NPOI.Util;
 
 namespace NPOI.OpenXml4Net.OPC
 {
@@ -65,13 +64,13 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public PackagePartName(Uri uri, bool checkConformance)
         {
-            if (checkConformance)
+            if(checkConformance)
             {
                 ThrowExceptionIfInvalidPartUri(uri);
             }
             else
             {
-                if (!PackagingUriHelper.PACKAGE_ROOT_URI.Equals(uri))
+                if(!PackagingUriHelper.PACKAGE_ROOT_URI.Equals(uri))
                 {
                     throw new OpenXml4NetException(
                             "OCP conformance must be check for ALL part name except special cases : ['/']");
@@ -102,19 +101,19 @@ namespace NPOI.OpenXml4Net.OPC
             {
                 partURI = PackagingUriHelper.ParseUri(partName, UriKind.RelativeOrAbsolute);
             }
-            catch (UriFormatException)
+            catch(UriFormatException)
             {
                 throw new ArgumentException(
                         "partName argmument is not a valid OPC part name !");
             }
 
-            if (checkConformance)
+            if(checkConformance)
             {
                 ThrowExceptionIfInvalidPartUri(partURI);
             }
             else
             {
-                if (!PackagingUriHelper.PACKAGE_ROOT_URI.Equals(partURI))
+                if(!PackagingUriHelper.PACKAGE_ROOT_URI.Equals(partURI))
                 {
                     throw new OpenXml4NetException(
                             "OCP conformance must be check for ALL part name except special cases : ['/']");
@@ -134,7 +133,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         private static bool IsRelationshipPartURI(Uri partUri)
         {
-            if (partUri == null)
+            if(partUri == null)
                 throw new ArgumentException("partUri");
 
             return Regex.IsMatch(partUri.OriginalString,
@@ -165,7 +164,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         private static void ThrowExceptionIfInvalidPartUri(Uri partUri)
         {
-            if (partUri == null)
+            if(partUri == null)
                 throw new ArgumentException("partUri");
             // Check if the part name URI is empty [M1.1]
             ThrowExceptionIfEmptyURI(partUri);
@@ -194,11 +193,11 @@ namespace NPOI.OpenXml4Net.OPC
          */
         private static void ThrowExceptionIfEmptyURI(Uri partURI)
         {
-            if (partURI == null)
+            if(partURI == null)
                 throw new ArgumentException("partURI");
 
             String uriPath = partURI.OriginalString;
-            if (uriPath.Length == 0
+            if(uriPath.Length == 0
                     || ((uriPath.Length == 1) && (uriPath[0] == PackagingUriHelper.FORWARD_SLASH_CHAR)))
                 throw new InvalidFormatException(
                         "A part name shall not be empty [M1.1]: "
@@ -232,36 +231,36 @@ namespace NPOI.OpenXml4Net.OPC
          */
         private static void ThrowExceptionIfPartNameHaveInvalidSegments(Uri partUri)
         {
-            if (partUri == null || "".Equals(partUri))
+            if(partUri == null || "".Equals(partUri))
             {
                 throw new ArgumentException("partUri");
             }
 
             // Split the URI into several part and analyze each
             String[] segments = partUri.OriginalString.Split('/');
-            if (segments.Length <= 1 || !segments[0].Equals(""))
+            if(segments.Length <= 1 || !segments[0].Equals(""))
                 throw new InvalidFormatException(
                         "A part name shall not have empty segments [M1.3]: "
                                 + partUri.OriginalString);
 
-            for (int i = 1; i < segments.Length; ++i)
+            for(int i = 1; i < segments.Length; ++i)
             {
                 String seg = segments[i];
-                if (seg == null || "".Equals(seg))
+                if(seg == null || "".Equals(seg))
                 {
                     throw new InvalidFormatException(
                             "A part name shall not have empty segments [M1.3]: "
                                     + partUri.OriginalString);
                 }
 
-                if (seg.EndsWith('.'))
+                if(seg.EndsWith('.'))
                 {
                     throw new InvalidFormatException(
                             "A segment shall not end with a dot ('.') character [M1.9]: "
                                     + partUri.OriginalString);
                 }
 
-                if ("".Equals(seg.Replace("\\\\.", "")))
+                if("".Equals(seg.Replace("\\\\.", "")))
                 {
                     // Normally will never been invoked with the previous
                     // implementation rule [M1.9]
@@ -292,7 +291,7 @@ namespace NPOI.OpenXml4Net.OPC
         {
             bool errorFlag;
             int length = segment.Length;
-            for (int i = 0; i < length; ++i)
+            for(int i = 0; i < length; ++i)
             {
                 char c = segment[i];
                 errorFlag = true;
@@ -300,7 +299,7 @@ namespace NPOI.OpenXml4Net.OPC
                 /* Check rule M1.6 */
 
                 // Check for digit or letter
-                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+                if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
                         || (c >= '0' && c <= '9'))
                 {
                     errorFlag = false;
@@ -308,9 +307,9 @@ namespace NPOI.OpenXml4Net.OPC
                 else
                 {
                     // Check "-", ".", "_", "~"
-                    for (int j = 0; j < RFC3986_PCHAR_UNRESERVED_SUP.Length; ++j)
+                    for(int j = 0; j < RFC3986_PCHAR_UNRESERVED_SUP.Length; ++j)
                     {
-                        if (c == RFC3986_PCHAR_UNRESERVED_SUP[j][0])
+                        if(c == RFC3986_PCHAR_UNRESERVED_SUP[j][0])
                         {
                             errorFlag = false;
                             break;
@@ -318,31 +317,31 @@ namespace NPOI.OpenXml4Net.OPC
                     }
 
                     // Check ":", "@"
-                    for (int j = 0; errorFlag
+                    for(int j = 0; errorFlag
                             && j < RFC3986_PCHAR_AUTHORIZED_SUP.Length; ++j)
                     {
-                        if (c == RFC3986_PCHAR_AUTHORIZED_SUP[j][0])
+                        if(c == RFC3986_PCHAR_AUTHORIZED_SUP[j][0])
                         {
                             errorFlag = false;
                         }
                     }
 
                     // Check "!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "="
-                    for (int j = 0; errorFlag
+                    for(int j = 0; errorFlag
                             && j < RFC3986_PCHAR_SUB_DELIMS.Length; ++j)
                     {
-                        if (c == RFC3986_PCHAR_SUB_DELIMS[j][0])
+                        if(c == RFC3986_PCHAR_SUB_DELIMS[j][0])
                         {
                             errorFlag = false;
                         }
                     }
                 }
 
-                if (errorFlag && c == '%')
+                if(errorFlag && c == '%')
                 {
                     // We certainly found an encoded character, check for length
                     // now ( '%' HEXDIGIT HEXDIGIT)
-                    if ((length - i) < 2)
+                    if((length - i) < 2)
                     {
                         throw new InvalidFormatException("The segment " + segment
                                 + " contain invalid encoded character !");
@@ -358,34 +357,34 @@ namespace NPOI.OpenXml4Net.OPC
                     i += 2;
 
                     /* Check rule M1.7 */
-                    if (decodedChar == '/' || decodedChar == '\\')
+                    if(decodedChar == '/' || decodedChar == '\\')
                         throw new InvalidFormatException(
                                 "A segment shall not contain percent-encoded forward slash ('/'), or backward slash ('\') characters. [M1.7]");
 
                     /* Check rule M1.8 */
 
                     // Check for unreserved character like define in RFC3986
-                    if ((decodedChar >= 'A' && decodedChar <= 'Z')
+                    if((decodedChar >= 'A' && decodedChar <= 'Z')
                             || (decodedChar >= 'a' && decodedChar <= 'z')
                             || (decodedChar >= '0' && decodedChar <= '9'))
                         errorFlag = true;
 
                     // Check for unreserved character "-", ".", "_", "~"
-                    for (int j = 0; !errorFlag
+                    for(int j = 0; !errorFlag
                             && j < RFC3986_PCHAR_UNRESERVED_SUP.Length; ++j)
                     {
-                        if (c == RFC3986_PCHAR_UNRESERVED_SUP[j][0])
+                        if(c == RFC3986_PCHAR_UNRESERVED_SUP[j][0])
                         {
                             errorFlag = true;
                             break;
                         }
                     }
-                    if (errorFlag)
+                    if(errorFlag)
                         throw new InvalidFormatException(
                                 "A segment shall not contain percent-encoded unreserved characters. [M1.8]");
                 }
 
-                if (errorFlag)
+                if(errorFlag)
                     throw new InvalidFormatException(
                             "A segment shall not hold any characters other than pchar characters. [M1.6]");
             }
@@ -405,7 +404,7 @@ namespace NPOI.OpenXml4Net.OPC
                 Uri partUri)
         {
             String uriPath = partUri.OriginalString;
-            if (uriPath.Length > 0
+            if(uriPath.Length > 0
                     && uriPath[0] != PackagingUriHelper.FORWARD_SLASH_CHAR)
                 throw new InvalidFormatException(
                         "A part name shall start with a forward slash ('/') character [M1.4]: "
@@ -426,7 +425,7 @@ namespace NPOI.OpenXml4Net.OPC
                 Uri partUri)
         {
             String uriPath = partUri.OriginalString;
-            if (uriPath.Length > 0
+            if(uriPath.Length > 0
                     && uriPath[uriPath.Length - 1] == PackagingUriHelper.FORWARD_SLASH_CHAR)
                 throw new InvalidFormatException(
                         "A part name shall not have a forward slash as the last character [M1.5]: "
@@ -443,7 +442,7 @@ namespace NPOI.OpenXml4Net.OPC
          */
         private static void ThrowExceptionIfAbsoluteUri(Uri partUri)
         {
-            if (partUri.IsAbsoluteUri)
+            if(partUri.IsAbsoluteUri)
                 throw new InvalidFormatException("Absolute URI forbidden: "
                         + partUri);
         }
@@ -473,10 +472,10 @@ namespace NPOI.OpenXml4Net.OPC
             get
             {
                 String fragment = this.partNameURI.OriginalString;
-                if (fragment.Length > 0)
+                if(fragment.Length > 0)
                 {
                     int i = fragment.LastIndexOf('.');
-                    if (i > -1)
+                    if(i > -1)
                         return fragment.Substring(i + 1);
                 }
                 return "";
@@ -505,7 +504,7 @@ namespace NPOI.OpenXml4Net.OPC
 
         public override bool Equals(Object other)
         {
-            if (other is PackagePartName name)
+            if(other is PackagePartName name)
             {
                 // String.equals() is compatible with our compareTo(), but cheaper
                 return this.partNameURI.OriginalString.ToLower().Equals
@@ -566,12 +565,12 @@ namespace NPOI.OpenXml4Net.OPC
         public static int Compare(PackagePartName obj1, PackagePartName obj2)
         {
             // NOTE could also throw a NullPointerException() if desired
-            if (obj1 == null)
+            if(obj1 == null)
             {
                 // (null) == (null), (null) < (non-null)
                 return (obj2 == null ? 0 : -1);
             }
-            else if (obj2 == null)
+            else if(obj2 == null)
             {
                 // (non-null) > (null)
                 return 1;
@@ -596,12 +595,12 @@ namespace NPOI.OpenXml4Net.OPC
          */
         public static int Compare(String str1, String str2)
         {
-            if (str1 == null)
+            if(str1 == null)
             {
                 // (null) == (null), (null) < (non-null)
                 return (str2 == null ? 0 : -1);
             }
-            else if (str2 == null)
+            else if(str2 == null)
             {
                 // (non-null) > (null)
                 return 1;
@@ -609,21 +608,21 @@ namespace NPOI.OpenXml4Net.OPC
 
             int len1 = str1.Length;
             int len2 = str2.Length;
-            for (int idx1 = 0, idx2 = 0; idx1 < len1 && idx2 < len2; /*nil*/)
+            for(int idx1 = 0, idx2 = 0; idx1 < len1 && idx2 < len2; /*nil*/)
             {
                 char c1 = str1[(idx1++)];
                 char c2 = str2[(idx2++)];
 
-                if (char.IsDigit(c1) && char.IsDigit(c2))
+                if(char.IsDigit(c1) && char.IsDigit(c2))
                 {
                     int beg1 = idx1 - 1;  // undo previous increment
-                    while (idx1 < len1 && char.IsDigit(str1[(idx1)]))
+                    while(idx1 < len1 && char.IsDigit(str1[(idx1)]))
                     {
                         ++idx1;
                     }
 
                     int beg2 = idx2 - 1;  // undo previous increment
-                    while (idx2 < len2 && char.IsDigit(str2[(idx2)]))
+                    while(idx2 < len2 && char.IsDigit(str2[(idx2)]))
                     {
                         ++idx2;
                     }
@@ -636,9 +635,10 @@ namespace NPOI.OpenXml4Net.OPC
                     int cmp = decimal.Parse(str1.Substring(beg1, idx1 - beg1)).CompareTo(
                         decimal.Parse(str2.Substring(beg2, idx2 - beg2))
                         );
-                    if (cmp != 0) return cmp;
+                    if(cmp != 0)
+                        return cmp;
                 }
-                else if (c1 != c2)
+                else if(c1 != c2)
                 {
                     return (c1 - c2);
                 }

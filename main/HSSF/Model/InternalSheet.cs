@@ -17,15 +17,14 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.SS.Formula;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Low level model implementation of a Sheet (one workbook Contains many sheets)
@@ -133,16 +132,16 @@ namespace NPOI.HSSF.Model
         public InternalSheet CloneSheet()
         {
             List<Record> clonedRecords = new List<Record>(this.records.Count);
-            for (int i = 0; i < this.records.Count; i++)
+            for(int i = 0; i < this.records.Count; i++)
             {
                 RecordBase rb = (RecordBase)this.records[i];
-                if (rb is RecordAggregate aggregate)
+                if(rb is RecordAggregate aggregate)
                 {
                     aggregate.VisitContainedRecords(new RecordCloner(clonedRecords));
                     continue;
                 }
 
-                if (rb is EscherAggregate)
+                if(rb is EscherAggregate)
                 {
                     /*
                      * this record will be removed after reading actual data from EscherAggregate
@@ -154,7 +153,7 @@ namespace NPOI.HSSF.Model
                     Record rec = (Record)((Record)rb).Clone();
                     clonedRecords.Add(rec);
                 }
-                catch (NotSupportedException e)
+                catch(NotSupportedException e)
                 {
                     throw new RecordFormatException(e);
                 }
@@ -189,13 +188,13 @@ namespace NPOI.HSSF.Model
             {
                 try
                 {
-                    _destList.Add((Record)r.Clone());
+                    _destList.Add((Record) r.Clone());
                 }
-                catch (NotSupportedException e)
+                catch(NotSupportedException e)
                 {
                     throw new RecordFormatException(e);
                 }
-                
+
             }
         }
 
@@ -213,16 +212,16 @@ namespace NPOI.HSSF.Model
             //int bofEofNestingLevel = 0;  // nesting level can only get to 2 (when charts are present)
             int dimsloc = -1;
 
-            if (rs.PeekNextSid() != BOFRecord.sid)
+            if(rs.PeekNextSid() != BOFRecord.sid)
             {
                 throw new RecordFormatException("BOF record expected");
             }
             BOFRecord bof = (BOFRecord)rs.GetNext();
-            if (bof.Type == BOFRecordType.Worksheet)
+            if(bof.Type == BOFRecordType.Worksheet)
             {
                 // Good, well supported
             }
-            else if (bof.Type == BOFRecordType.Chart ||
+            else if(bof.Type == BOFRecordType.Chart ||
                      bof.Type == BOFRecordType.Excel4Macro)
             {
                 // These aren't really typical sheets... Let it go though,
@@ -232,46 +231,46 @@ namespace NPOI.HSSF.Model
             {
                 // Not a supported type
                 // Skip onto the EOF, then complain
-                while (rs.HasNext())
+                while(rs.HasNext())
                 {
                     Record rec = rs.GetNext();
-                    if (rec is EOFRecord)
+                    if(rec is EOFRecord)
                     {
                         break;
                     }
                 }
                 throw new UnsupportedBOFType(bof.Type);
             }
-        
+
             records.Add(bof);
-            while (rs.HasNext())
+            while(rs.HasNext())
             {
                 int recSid = rs.PeekNextSid();
 
-                if (recSid == CFHeaderRecord.sid || recSid == CFHeader12Record.sid)
+                if(recSid == CFHeaderRecord.sid || recSid == CFHeader12Record.sid)
                 {
                     condFormatting = new ConditionalFormattingTable(rs);
                     records.Add(condFormatting);
                     continue;
                 }
 
-                if (recSid == ColumnInfoRecord.sid)
+                if(recSid == ColumnInfoRecord.sid)
                 {
                     _columnInfos = new ColumnInfoRecordsAggregate(rs);
                     records.Add(_columnInfos);
                     continue;
                 }
-                if (recSid == DVALRecord.sid)
+                if(recSid == DVALRecord.sid)
                 {
                     _dataValidityTable = new DataValidityTable(rs);
                     records.Add(_dataValidityTable);
                     continue;
                 }
 
-                if (RecordOrderer.IsRowBlockRecord(recSid))
+                if(RecordOrderer.IsRowBlockRecord(recSid))
                 {
                     //only Add the aggregate once
-                    if (rra != null)
+                    if(rra != null)
                     {
                         throw new InvalidOperationException("row/cell records found in the wrong place");
                     }
@@ -282,17 +281,17 @@ namespace NPOI.HSSF.Model
                     continue;
                 }
 
-                if (CustomViewSettingsRecordAggregate.IsBeginRecord(recSid))
+                if(CustomViewSettingsRecordAggregate.IsBeginRecord(recSid))
                 {
                     // This happens three times in test sample file "29982.xls"
                     // Also several times in bugzilla samples 46840-23373 and 46840-23374
                     records.Add(new CustomViewSettingsRecordAggregate(rs));
-                    continue;                    
+                    continue;
                 }
 
-                if (PageSettingsBlock.IsComponentRecord(recSid))
+                if(PageSettingsBlock.IsComponentRecord(recSid))
                 {
-                    if (_psBlock == null)
+                    if(_psBlock == null)
                     {
                         // first PSB record encountered - read all of them:
                         _psBlock = new PageSettingsBlock(rs);
@@ -308,19 +307,19 @@ namespace NPOI.HSSF.Model
                     _psBlock.PositionRecords(records);
                     continue;
                 }
-                if (WorksheetProtectionBlock.IsComponentRecord(recSid))
+                if(WorksheetProtectionBlock.IsComponentRecord(recSid))
                 {
                     _protectionBlock.AddRecords(rs);
                     continue;
                 }
-                if (recSid == MergeCellsRecord.sid)
+                if(recSid == MergeCellsRecord.sid)
                 {
                     // when the MergedCellsTable is found in the right place, we expect those records to be contiguous
                     _mergedCellsTable.Read(rs);
                     continue;
                 }
-                
-                if (recSid == BOFRecord.sid)
+
+                if(recSid == BOFRecord.sid)
                 {
                     ChartSubstreamRecordAggregate chartAgg = new ChartSubstreamRecordAggregate(rs);
                     //ChartSheetAggregate chartAgg = new ChartSheetAggregate(rs, null);
@@ -336,92 +335,92 @@ namespace NPOI.HSSF.Model
                     continue;
                 }
                 Record rec = rs.GetNext();
-                if (recSid == IndexRecord.sid)
+                if(recSid == IndexRecord.sid)
                 {
                     // ignore INDEX record because it is only needed by Excel,
                     // and POI always re-calculates its contents
                     continue;
                 }
 
-                
-                if (recSid == UncalcedRecord.sid)
+
+                if(recSid == UncalcedRecord.sid)
                 {
                     // don't Add UncalcedRecord to the list
                     _isUncalced = true; // this flag is enough
                     continue;
                 }
 
-                if (recSid == FeatRecord.sid ||
+                if(recSid == FeatRecord.sid ||
                     recSid == FeatHdrRecord.sid)
                 {
                     records.Add(rec);
                     continue;
                 }
-                if (recSid == EOFRecord.sid)
+                if(recSid == EOFRecord.sid)
                 {
                     records.Add(rec);
                     break;
                 }
-                if (recSid == DimensionsRecord.sid)
+                if(recSid == DimensionsRecord.sid)
                 {
                     // Make a columns aggregate if one hasn't Ready been created.
-                    if (_columnInfos == null)
+                    if(_columnInfos == null)
                     {
                         _columnInfos = new ColumnInfoRecordsAggregate();
                         records.Add(_columnInfos);
                     }
 
-                    _dimensions = (DimensionsRecord)rec;
+                    _dimensions = (DimensionsRecord) rec;
                     dimsloc = records.Count;
                 }
-                else if (recSid == DefaultColWidthRecord.sid)
+                else if(recSid == DefaultColWidthRecord.sid)
                 {
-                    defaultcolwidth = (DefaultColWidthRecord)rec;
+                    defaultcolwidth = (DefaultColWidthRecord) rec;
                 }
-                else if (recSid == DefaultRowHeightRecord.sid)
+                else if(recSid == DefaultRowHeightRecord.sid)
                 {
-                    defaultrowheight = (DefaultRowHeightRecord)rec;
+                    defaultrowheight = (DefaultRowHeightRecord) rec;
                 }
-                else if (recSid == PrintGridlinesRecord.sid)
+                else if(recSid == PrintGridlinesRecord.sid)
                 {
-                    printGridlines = (PrintGridlinesRecord)rec;
+                    printGridlines = (PrintGridlinesRecord) rec;
                 }
-                else if (recSid == PrintHeadersRecord.sid)
+                else if(recSid == PrintHeadersRecord.sid)
                 {
-                    printHeaders = (PrintHeadersRecord)rec;
+                    printHeaders = (PrintHeadersRecord) rec;
                 }
-                else if (recSid == GridsetRecord.sid)
+                else if(recSid == GridsetRecord.sid)
                 {
-                    gridset = (GridsetRecord)rec;
+                    gridset = (GridsetRecord) rec;
                 }
-                else if (recSid == SelectionRecord.sid)
+                else if(recSid == SelectionRecord.sid)
                 {
-                    _selection = (SelectionRecord)rec;
+                    _selection = (SelectionRecord) rec;
                 }
-                else if (recSid == WindowTwoRecord.sid)
+                else if(recSid == WindowTwoRecord.sid)
                 {
-                    windowTwo = (WindowTwoRecord)rec;
+                    windowTwo = (WindowTwoRecord) rec;
                 }
-                else if (recSid == SheetExtRecord.sid)
+                else if(recSid == SheetExtRecord.sid)
                 {
-                    sheetext = (SheetExtRecord)rec;
+                    sheetext = (SheetExtRecord) rec;
                 }
-                else if (recSid == GutsRecord.sid)
+                else if(recSid == GutsRecord.sid)
                 {
-                    _gutsRecord = (GutsRecord)rec;
+                    _gutsRecord = (GutsRecord) rec;
                 }
 
                 records.Add(rec);
             }
-            if (windowTwo == null)
+            if(windowTwo == null)
             {
                 throw new RecordFormatException("WINDOW2 was not found");
             }
-            if (_dimensions == null)
+            if(_dimensions == null)
             {
                 // Excel seems to always write the DIMENSION record, but tolerates when it is not present
                 // in all cases Excel (2007) adds the missing DIMENSION record
-                if (rra == null)
+                if(rra == null)
                 {
                     // bug 46206 alludes to files which skip the DIMENSION record
                     // when there are no row/cell records.
@@ -435,9 +434,9 @@ namespace NPOI.HSSF.Model
                 }
                 dimsloc = FindFirstRecordLocBySid(WindowTwoRecord.sid);
                 _dimensions = rra.CreateDimensions();
-                records.Insert(dimsloc, _dimensions);                
+                records.Insert(dimsloc, _dimensions);
             }
-            if (rra == null)
+            if(rra == null)
             {
                 rra = new RowRecordsAggregate();
                 records.Insert(dimsloc + 1, rra);
@@ -450,14 +449,15 @@ namespace NPOI.HSSF.Model
             //    log.Log(POILogger.DEBUG, "sheet createSheet (existing file) exited");
 
         }
-        private sealed class RecordVisitor1:RecordVisitor
+        private sealed class RecordVisitor1 : RecordVisitor
         {
             readonly List<RecordBase> _records;
             public RecordVisitor1(List<RecordBase> recs)
             {
                 _records=recs;
             }
-            public void VisitRecord(Record r) {
+            public void VisitRecord(Record r)
+            {
                 _records.Add(r);
             }
         }
@@ -547,12 +547,12 @@ namespace NPOI.HSSF.Model
         public int AddMergedRegion(int rowFrom, int colFrom, int rowTo, int colTo)
         {
             // Validate input
-            if (rowTo < rowFrom)
+            if(rowTo < rowFrom)
             {
                 throw new ArgumentException("The 'to' row (" + rowTo
                         + ") must not be less than the 'from' row (" + rowFrom + ")");
             }
-            if (colTo < colFrom)
+            if(colTo < colFrom)
             {
                 throw new ArgumentException("The 'to' col (" + colTo
                         + ") must not be less than the 'from' col (" + colFrom + ")");
@@ -571,7 +571,7 @@ namespace NPOI.HSSF.Model
         {
             //safety checks
             MergedCellsTable mrt = MergedRecords;
-            if (index >= mrt.NumberOfMergedRegions)
+            if(index >= mrt.NumberOfMergedRegions)
             {
                 return;
             }
@@ -604,7 +604,7 @@ namespace NPOI.HSSF.Model
         {
             //safety checks
             MergedCellsTable mrt = MergedRecords;
-            if (index >= mrt.NumberOfMergedRegions)
+            if(index >= mrt.NumberOfMergedRegions)
             {
                 return null;
             }
@@ -741,7 +741,7 @@ namespace NPOI.HSSF.Model
             rec.Row = (row);
             rec.Column = (col);
             rec.SSTIndex = (index);
-            rec.XFIndex = ((short)0x0f);
+            rec.XFIndex = ((short) 0x0f);
             return rec;
         }
 
@@ -764,7 +764,7 @@ namespace NPOI.HSSF.Model
             rec.Row = row;
             rec.Column = col;
             rec.Value = value;
-            rec.XFIndex = (short)0x0f;
+            rec.XFIndex = (short) 0x0f;
             return rec;
         }
 
@@ -784,7 +784,7 @@ namespace NPOI.HSSF.Model
 
             rec.Row = row;
             rec.Column = col;
-            rec.XFIndex = (short)0x0f;
+            rec.XFIndex = (short) 0x0f;
             return rec;
         }
 
@@ -806,11 +806,11 @@ namespace NPOI.HSSF.Model
             //}
             DimensionsRecord d = _dimensions;
 
-            if (col.Column >= d.LastCol)
+            if(col.Column >= d.LastCol)
             {
-                d.LastCol = ((short)(col.Column + 1));
+                d.LastCol = ((short) (col.Column + 1));
             }
-            if (col.Column < d.FirstCol)
+            if(col.Column < d.FirstCol)
             {
                 d.FirstCol = (col.Column);
             }
@@ -863,18 +863,18 @@ namespace NPOI.HSSF.Model
             //    log.Log(POILogger.DEBUG, "AddRow ");
             DimensionsRecord d = _dimensions;
 
-            if (row.RowNumber >= d.LastRow)
+            if(row.RowNumber >= d.LastRow)
             {
                 d.LastRow = (row.RowNumber + 1);
             }
-            if (row.RowNumber < d.FirstRow)
+            if(row.RowNumber < d.FirstRow)
             {
                 d.FirstRow = (row.RowNumber);
             }
             //IndexRecord index = null;
             //If the row exists Remove it, so that any cells attached to the row are Removed
             RowRecord existingRow = _rowsAggregate.GetRow(row.RowNumber);
-            if (existingRow != null)
+            if(existingRow != null)
             {
                 _rowsAggregate.RemoveRow(existingRow);
             }
@@ -925,15 +925,15 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (rowRecEnumerator == null)
+                if(rowRecEnumerator == null)
                 {
                     rowRecEnumerator = _rowsAggregate.GetEnumerator();
                 }
-                if (!rowRecEnumerator.MoveNext())
+                if(!rowRecEnumerator.MoveNext())
                 {
                     return null;
                 }
-                return (RowRecord)rowRecEnumerator.Current;
+                return (RowRecord) rowRecEnumerator.Current;
             }
         }
 
@@ -961,7 +961,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (_psBlock == null)
+                if(_psBlock == null)
                 {
                     _psBlock = new PageSettingsBlock();
                     RecordOrderer.AddNewSheetRecord(records, _psBlock);
@@ -977,11 +977,11 @@ namespace NPOI.HSSF.Model
         {
             BOFRecord retval = new BOFRecord();
 
-            retval.Version = ((short)0x600);
+            retval.Version = ((short) 0x600);
             retval.Type = BOFRecordType.Worksheet;
 
-            retval.Build = ((short)0x0dbb);
-            retval.BuildYear = ((short)1996);
+            retval.Build = ((short) 0x0dbb);
+            retval.BuildYear = ((short) 1996);
             retval.HistoryBitMask = (0xc1);
             retval.RequiredVersion = (0x6);
             return retval;
@@ -1008,7 +1008,7 @@ namespace NPOI.HSSF.Model
         {
             CalcModeRecord retval = new CalcModeRecord();
 
-            retval.SetCalcMode((short)1);
+            retval.SetCalcMode((short) 1);
             return retval;
         }
 
@@ -1020,7 +1020,7 @@ namespace NPOI.HSSF.Model
         {
             CalcCountRecord retval = new CalcCountRecord();
 
-            retval.Iterations = ((short)0x64);   // default 64 iterations
+            retval.Iterations = ((short) 0x64);   // default 64 iterations
             return retval;
         }
 
@@ -1051,7 +1051,7 @@ namespace NPOI.HSSF.Model
         /// <returns>record containing a DeltaRecord</returns>
         private static DeltaRecord CreateDelta()
         {
-            return new DeltaRecord(DeltaRecord.DEFAULT_VALUE);            
+            return new DeltaRecord(DeltaRecord.DEFAULT_VALUE);
         }
 
         /// <summary>
@@ -1111,10 +1111,10 @@ namespace NPOI.HSSF.Model
         {
             GutsRecord retval = new GutsRecord();
 
-            retval.LeftRowGutter = ((short)0);
-            retval.TopColGutter = ((short)0);
-            retval.RowLevelMax = ((short)0);
-            retval.ColLevelMax = ((short)0);
+            retval.LeftRowGutter = ((short) 0);
+            retval.TopColGutter = ((short) 0);
+            retval.RowLevelMax = ((short) 0);
+            retval.ColLevelMax = ((short) 0);
             return retval;
         }
         /// <summary>
@@ -1127,8 +1127,8 @@ namespace NPOI.HSSF.Model
         {
             DefaultRowHeightRecord retval = new DefaultRowHeightRecord();
 
-            retval.OptionFlags = ((short)0);
-            retval.RowHeight = ((short)0xff);
+            retval.OptionFlags = ((short) 0);
+            retval.RowHeight = ((short) 0xff);
             return retval;
         }
 
@@ -1143,8 +1143,8 @@ namespace NPOI.HSSF.Model
         {
             WSBoolRecord retval = new WSBoolRecord();
 
-            retval.WSBool1 = ((byte)0x4);
-            retval.WSBool2 = ((byte)0x1);
+            retval.WSBool1 = ((byte) 0x4);
+            retval.WSBool2 = ((byte) 0x1);
             return retval;
         }
 
@@ -1189,17 +1189,17 @@ namespace NPOI.HSSF.Model
         {
             PrintSetupRecord retval = new PrintSetupRecord();
 
-            retval.PaperSize = ((short)1);
-            retval.Scale = ((short)100);
-            retval.PageStart = ((short)1);
-            retval.FitWidth = ((short)1);
-            retval.FitHeight = ((short)1);
-            retval.Options = ((short)2);
-            retval.HResolution = ((short)300);
-            retval.VResolution = ((short)300);
+            retval.PaperSize = ((short) 1);
+            retval.Scale = ((short) 100);
+            retval.PageStart = ((short) 1);
+            retval.FitWidth = ((short) 1);
+            retval.FitHeight = ((short) 1);
+            retval.Options = ((short) 2);
+            retval.HResolution = ((short) 300);
+            retval.VResolution = ((short) 300);
             retval.HeaderMargin = (0.5);
             retval.FooterMargin = (0.5);
-            retval.Copies = ((short)0);
+            retval.Copies = ((short) 0);
             return retval;
         }
 
@@ -1214,7 +1214,7 @@ namespace NPOI.HSSF.Model
         {
             DefaultColWidthRecord retval = new DefaultColWidthRecord();
 
-            retval.ColWidth = (short)DefaultColWidthRecord.DEFAULT_COLUMN_WIDTH;
+            retval.ColWidth = (short) DefaultColWidthRecord.DEFAULT_COLUMN_WIDTH;
             return retval;
         }
 
@@ -1226,7 +1226,7 @@ namespace NPOI.HSSF.Model
         public double DefaultColumnWidth
         {
             get { return defaultcolwidth.ColWidth; }
-            set { defaultcolwidth.ColWidth = (short)value; }
+            set { defaultcolwidth.ColWidth = (short) value; }
         }
 
         /**
@@ -1237,11 +1237,11 @@ namespace NPOI.HSSF.Model
         public short DefaultRowHeight
         {
             get { return defaultrowheight.RowHeight; }
-            set 
-            { 
+            set
+            {
                 defaultrowheight.RowHeight = (value);
                 // set the bit that specifies that the default settings for the row height have been changed.
-                defaultrowheight.OptionFlags = (short)1;
+                defaultrowheight.OptionFlags = (short) 1;
             }
         }
 
@@ -1257,7 +1257,7 @@ namespace NPOI.HSSF.Model
         public int GetColumnWidth(int columnIndex)
         {
             ColumnInfoRecord ci = _columnInfos.FindColumnInfo(columnIndex);
-            if (ci != null)
+            if(ci != null)
             {
                 return ci.ColumnWidth;
             }
@@ -1283,9 +1283,9 @@ namespace NPOI.HSSF.Model
         public short GetXFIndexForColAt(short columnIndex)
         {
             ColumnInfoRecord ci = _columnInfos.FindColumnInfo(columnIndex);
-            if (ci != null)
+            if(ci != null)
             {
-                return (short)ci.XFIndex;
+                return (short) ci.XFIndex;
             }
             return 0xF;
         }
@@ -1297,8 +1297,8 @@ namespace NPOI.HSSF.Model
          */
         public void SetColumnWidth(int column, double width)
         {
-            if (width > 255 * 256) 
-                   throw new ArgumentException("The maximum column width for an individual cell is 255 characters.");
+            if(width > 255 * 256)
+                throw new ArgumentException("The maximum column width for an individual cell is 255 characters.");
             SetColumn(column, null, width, null, null, null);
         }
 
@@ -1314,7 +1314,7 @@ namespace NPOI.HSSF.Model
         public bool IsColumnHidden(int columnIndex)
         {
             ColumnInfoRecord cir = _columnInfos.FindColumnInfo(columnIndex);
-            if (cir == null)
+            if(cir == null)
             {
                 return false;
             }
@@ -1332,7 +1332,7 @@ namespace NPOI.HSSF.Model
         }
         public void SetDefaultColumnStyle(int column, int styleIndex)
         {
-            SetColumn(column, (short)styleIndex, null, null, null, null);
+            SetColumn(column, (short) styleIndex, null, null, null, null);
         }
 
         public void SetColumn(int column, double width, int level, bool hidden, bool collapsed)
@@ -1347,7 +1347,7 @@ namespace NPOI.HSSF.Model
 
         private GutsRecord GetGutsRecord()
         {
-            if (_gutsRecord == null)
+            if(_gutsRecord == null)
             {
                 GutsRecord result = CreateGuts();
                 RecordOrderer.AddNewSheetRecord(records, result);
@@ -1374,11 +1374,11 @@ namespace NPOI.HSSF.Model
             int maxLevel = _columnInfos.MaxOutlineLevel;
 
             GutsRecord guts = GetGutsRecord();
-            guts.ColLevelMax = (short)(maxLevel + 1);
-            if (maxLevel == 0)
-                guts.TopColGutter = ((short)0);
+            guts.ColLevelMax = (short) (maxLevel + 1);
+            if(maxLevel == 0)
+                guts.TopColGutter = ((short) 0);
             else
-                guts.TopColGutter = ((short)(29 + (12 * (maxLevel - 1))));
+                guts.TopColGutter = ((short) (29 + (12 * (maxLevel - 1))));
         }
 
         /**
@@ -1393,10 +1393,10 @@ namespace NPOI.HSSF.Model
         {
             DimensionsRecord retval = new DimensionsRecord();
 
-            retval.FirstCol = (short)0;
+            retval.FirstCol = (short) 0;
             retval.LastRow = 1;             // one more than it Is
             retval.FirstRow = 0;
-            retval.LastCol = (short)1;   // one more than it Is
+            retval.LastCol = (short) 1;   // one more than it Is
             return retval;
         }
 
@@ -1417,12 +1417,12 @@ namespace NPOI.HSSF.Model
         {
             WindowTwoRecord retval = new WindowTwoRecord();
 
-            retval.Options = ((short)0x6b6);
-            retval.TopRow = ((short)0);
-            retval.LeftCol = ((short)0);
+            retval.Options = ((short) 0x6b6);
+            retval.TopRow = ((short) 0);
+            retval.LeftCol = ((short) 0);
             retval.HeaderColor = (0x40);
-            retval.PageBreakZoom = ((short)0);
-            retval.NormalZoom = ((short)0);
+            retval.PageBreakZoom = ((short) 0);
+            retval.NormalZoom = ((short) 0);
             return retval;
         }
 
@@ -1443,11 +1443,11 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                return (windowTwo == null) ? (short)0 : windowTwo.TopRow;
+                return (windowTwo == null) ? (short) 0 : windowTwo.TopRow;
             }
             set
             {
-                if (windowTwo != null)
+                if(windowTwo != null)
                 {
                     windowTwo.TopRow = (value);
                 }
@@ -1462,11 +1462,11 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                return (windowTwo == null) ? (short)0 : windowTwo.LeftCol;
+                return (windowTwo == null) ? (short) 0 : windowTwo.LeftCol;
             }
             set
             {
-                if (windowTwo != null)
+                if(windowTwo != null)
                 {
                     windowTwo.LeftCol = (value);
                 }
@@ -1520,7 +1520,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (_selection == null)
+                if(_selection == null)
                 {
                     return 0;
                 }
@@ -1529,7 +1529,7 @@ namespace NPOI.HSSF.Model
             set
             {
                 //shouldn't have a sheet w/o a SelectionRecord, but best to guard anyway
-                if (_selection != null)
+                if(_selection != null)
                 {
                     _selection.ActiveCellRow = value;
                 }
@@ -1546,7 +1546,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (_selection == null)
+                if(_selection == null)
                 {
                     return 0;
                 }
@@ -1555,7 +1555,7 @@ namespace NPOI.HSSF.Model
             set
             {
                 //shouldn't have a sheet w/o a SelectionRecord, but best to guard anyway
-                if (_selection != null)
+                if(_selection != null)
                 {
                     _selection.ActiveCellCol = value;
                 }
@@ -1591,7 +1591,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (_gutsRecord == null)
+                if(_gutsRecord == null)
                 {
                     GutsRecord result = CreateGuts();
                     RecordOrderer.AddNewSheetRecord(records, result);
@@ -1611,11 +1611,11 @@ namespace NPOI.HSSF.Model
         public Record FindFirstRecordBySid(short sid)
         {
             int ix = FindFirstRecordLocBySid(sid);
-            if (ix < 0)
+            if(ix < 0)
             {
                 return null;
             }
-            return (Record)records[ix];
+            return (Record) records[ix];
         }
 
         /// <summary>
@@ -1626,7 +1626,7 @@ namespace NPOI.HSSF.Model
         public void SetSCLRecord(SCLRecord sclRecord)
         {
             int oldRecordLoc = FindFirstRecordLocBySid(SCLRecord.sid);
-            if (oldRecordLoc == -1)
+            if(oldRecordLoc == -1)
             {
                 // Insert it after the window record
                 int windowRecordLoc = FindFirstRecordLocBySid(WindowTwoRecord.sid);
@@ -1648,15 +1648,15 @@ namespace NPOI.HSSF.Model
         public int FindFirstRecordLocBySid(short sid)
         {
             int max = records.Count;
-            for (int i = 0; i < max; i++)
+            for(int i = 0; i < max; i++)
             {
                 Object rb = records[i];
-                if (rb is not Record record)
+                if(rb is not Record record)
                 {
                     continue;
                 }
 
-                if (record.Sid == sid)
+                if(record.Sid == sid)
                 {
                     return i;
                 }
@@ -1694,7 +1694,7 @@ namespace NPOI.HSSF.Model
             get { return sheetext.TabColorIndex; }
             set
             {
-                if ((value <= 0x08 || value >= 0x3F) && value != 0x7F)
+                if((value <= 0x08 || value >= 0x3F) && value != 0x7F)
                 {
                     throw new ArgumentException("invalid color index");
                 }
@@ -1734,7 +1734,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (gridset == null)
+                if(gridset == null)
                 {
                     gridset = CreateGridset();
                     //Insert the newlycreated Gridset record at the end of the record (just before the EOF)
@@ -1743,7 +1743,7 @@ namespace NPOI.HSSF.Model
                 }
                 return !gridset.Gridset;
             }
-            set 
+            set
             {
                 gridset.Gridset = !value;
             }
@@ -1789,11 +1789,11 @@ namespace NPOI.HSSF.Model
         public void CreateFreezePane(int colSplit, int rowSplit, int topRow, int leftmostColumn)
         {
             int paneLoc = FindFirstRecordLocBySid(PaneRecord.sid);
-            if (paneLoc != -1)
+            if(paneLoc != -1)
                 records.RemoveAt(paneLoc);
 
             // If both colSplit and rowSplit are zero then the existing freeze pane is removed
-            if (colSplit == 0 && rowSplit == 0)
+            if(colSplit == 0 && rowSplit == 0)
             {
                 windowTwo.FreezePanes = (false);
                 windowTwo.FreezePanesNoSplit = (false);
@@ -1804,23 +1804,23 @@ namespace NPOI.HSSF.Model
 
             int loc = FindFirstRecordLocBySid(WindowTwoRecord.sid);
             PaneRecord pane = new PaneRecord();
-            pane.X = ((short)colSplit);
-            pane.Y = ((short)rowSplit);
-            pane.TopRow = ((short)topRow);
-            pane.LeftColumn = ((short)leftmostColumn);
-            if (rowSplit == 0)
+            pane.X = ((short) colSplit);
+            pane.Y = ((short) rowSplit);
+            pane.TopRow = ((short) topRow);
+            pane.LeftColumn = ((short) leftmostColumn);
+            if(rowSplit == 0)
             {
-                pane.TopRow = ((short)0);
-                pane.ActivePane = ((short)1);
+                pane.TopRow = ((short) 0);
+                pane.ActivePane = ((short) 1);
             }
-            else if (colSplit == 0)
+            else if(colSplit == 0)
             {
-                pane.LeftColumn = ((short)0);
-                pane.ActivePane = ((short)2);
+                pane.LeftColumn = ((short) 0);
+                pane.ActivePane = ((short) 2);
             }
             else
             {
-                pane.ActivePane = ((short)0);
+                pane.ActivePane = ((short) 0);
             }
             records.Insert(loc + 1, pane);
 
@@ -1828,7 +1828,7 @@ namespace NPOI.HSSF.Model
             windowTwo.FreezePanesNoSplit = (true);
 
             SelectionRecord sel1 = (SelectionRecord)FindFirstRecordBySid(SelectionRecord.sid);
-            sel1.Pane = ((byte)pane.ActivePane);
+            sel1.Pane = ((byte) pane.ActivePane);
 
         }
 
@@ -1848,23 +1848,23 @@ namespace NPOI.HSSF.Model
         public void CreateSplitPane(int xSplitPos, int ySplitPos, int topRow, int leftmostColumn, NPOI.SS.UserModel.PanePosition activePane)
         {
             int paneLoc = FindFirstRecordLocBySid(PaneRecord.sid);
-            if (paneLoc != -1)
+            if(paneLoc != -1)
                 records.RemoveAt(paneLoc);
 
             int loc = FindFirstRecordLocBySid(WindowTwoRecord.sid);
             PaneRecord r = new PaneRecord();
-            r.X = ((short)xSplitPos);
-            r.Y = ((short)ySplitPos);
-            r.TopRow = ((short)topRow);
-            r.LeftColumn = ((short)leftmostColumn);
-            r.ActivePane = ((short)activePane);
+            r.X = ((short) xSplitPos);
+            r.Y = ((short) ySplitPos);
+            r.TopRow = ((short) topRow);
+            r.LeftColumn = ((short) leftmostColumn);
+            r.ActivePane = ((short) activePane);
             records.Insert(loc + 1, r);
 
             windowTwo.FreezePanes = (false);
             windowTwo.FreezePanesNoSplit = (false);
 
             SelectionRecord sel = (SelectionRecord)FindFirstRecordBySid(SelectionRecord.sid);
-            sel.Pane = (byte)NPOI.SS.UserModel.PanePosition.LowerRight;
+            sel.Pane = (byte) NPOI.SS.UserModel.PanePosition.LowerRight;
 
         }
 
@@ -1877,11 +1877,11 @@ namespace NPOI.HSSF.Model
             get
             {
                 PaneRecord rec = (PaneRecord)FindFirstRecordBySid(PaneRecord.sid);
-                if (rec == null)
+                if(rec == null)
                     return null;
 
                 return new NPOI.SS.Util.PaneInformation(rec.X, rec.Y, rec.TopRow,
-                                           rec.LeftColumn, (byte)rec.ActivePane, windowTwo.FreezePanes);
+                                           rec.LeftColumn, (byte) rec.ActivePane, windowTwo.FreezePanes);
             }
         }
 
@@ -1937,7 +1937,7 @@ namespace NPOI.HSSF.Model
          * @see org.apache.poi.hssf.record.Record
          * @return a ScenarioProtectRecord
          */
-        
+
         protected ScenarioProtectRecord CreateScenarioProtect()
         {
             //if (log.Check(POILogger.DEBUG))
@@ -1947,12 +1947,12 @@ namespace NPOI.HSSF.Model
             retval.Protect = (false);
             return retval;
         }
-        
+
         //'Worksheet Protection Block'<br/>
         //Aggregate object is always present, but possibly empty.
         [NonSerialized]
         private WorksheetProtectionBlock _protectionBlock = new WorksheetProtectionBlock();
-        
+
         public WorksheetProtectionBlock ProtectionBlock
         {
             get
@@ -2031,9 +2031,9 @@ namespace NPOI.HSSF.Model
         {
             int loc = FindFirstRecordLocBySid(DrawingRecord.sid);
             bool noDrawingRecordsFound = (loc == -1);
-            if (noDrawingRecordsFound)
+            if(noDrawingRecordsFound)
             {
-                if (!CreateIfMissing)
+                if(!CreateIfMissing)
                 {
                     // None found, and not allowed to Add in
                     return -1;
@@ -2041,7 +2041,7 @@ namespace NPOI.HSSF.Model
 
                 EscherAggregate aggregate = new EscherAggregate(true);
                 loc = FindFirstRecordLocBySid(EscherAggregate.sid);
-                if (loc == -1)
+                if(loc == -1)
                 {
                     loc = FindFirstRecordLocBySid(WindowTwoRecord.sid);
                 }
@@ -2063,10 +2063,10 @@ namespace NPOI.HSSF.Model
          */
         public void Preserialize()
         {
-            for (IEnumerator iterator = Records.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = Records.GetEnumerator(); iterator.MoveNext();)
             {
                 RecordBase r = (RecordBase)iterator.Current;
-                if (r is EscherAggregate)
+                if(r is EscherAggregate)
                 {
                     int size = r.RecordSize;   // Trigger flatterning of user model and corresponding update of dgg record.
                 }
@@ -2082,25 +2082,25 @@ namespace NPOI.HSSF.Model
          */
         public void ShiftBreaks(PageBreakRecord breaks, short start, short stop, int count)
         {
-            if (rowBreaks == null)
+            if(rowBreaks == null)
             {
                 return;
             }
 
             IEnumerator<PageBreakRecord.Break> iterator = breaks.GetBreaksEnumerator();
             List<PageBreakRecord.Break> ShiftedBreak = [];
-            while (iterator.MoveNext())
+            while(iterator.MoveNext())
             {
                 PageBreakRecord.Break breakItem = iterator.Current;
                 int breakLocation = breakItem.main;
                 bool inStart = (breakLocation >= start);
                 bool inEnd = (breakLocation <= stop);
-                if (inStart && inEnd)
+                if(inStart && inEnd)
                     ShiftedBreak.Add(breakItem);
             }
 
             iterator = ShiftedBreak.GetEnumerator();
-            while (iterator.MoveNext())
+            while(iterator.MoveNext())
             {
                 PageBreakRecord.Break breakItem = iterator.Current;
                 breaks.RemoveBreak(breakItem.main);
@@ -2117,7 +2117,7 @@ namespace NPOI.HSSF.Model
          */
         public void ShiftRowBreaks(int startingRow, int endingRow, int count)
         {
-            ShiftBreaks(rowBreaks, (short)startingRow, (short)endingRow, (short)count);
+            ShiftBreaks(rowBreaks, (short) startingRow, (short) endingRow, (short) count);
         }
 
         /**
@@ -2134,7 +2134,7 @@ namespace NPOI.HSSF.Model
 
         public void SetColumnGroupCollapsed(int columnNumber, bool collapsed)
         {
-            if (collapsed)
+            if(collapsed)
             {
                 _columnInfos.CollapseColumn(columnNumber);
             }
@@ -2157,7 +2157,7 @@ namespace NPOI.HSSF.Model
         public void UpdateFormulasAfterCellShift(FormulaShifter shifter, int externSheetIndex)
         {
             RowsAggregate.UpdateFormulasAfterRowShift(shifter, externSheetIndex);
-            if (condFormatting != null)
+            if(condFormatting != null)
             {
                 ConditionalFormattingTable.UpdateFormulasAfterCellShift(shifter, externSheetIndex);
             }
@@ -2168,7 +2168,7 @@ namespace NPOI.HSSF.Model
         {
             get
             {
-                if (condFormatting == null)
+                if(condFormatting == null)
                 {
                     condFormatting = new ConditionalFormattingTable();
                     RecordOrderer.AddNewSheetRecord(records, condFormatting);
@@ -2184,35 +2184,35 @@ namespace NPOI.HSSF.Model
             bool haveSerializedIndex = false;
 
             int sheetOffset = offset;
-            for (int k = 0; k < records.Count; k++)
+            for(int k = 0; k < records.Count; k++)
             {
                 RecordBase record = records[k];
-                if (record is RecordAggregate agg)
+                if(record is RecordAggregate agg)
                 {
                     agg.VisitContainedRecords(ptv);
                     sheetOffset += agg.RecordSize;
                 }
                 else
                 {
-                    if (record is DefaultColWidthRecord widthRecord)
+                    if(record is DefaultColWidthRecord widthRecord)
                     {
                         widthRecord.offsetForFilePointer = sheetOffset;
                     }
-                    ptv.VisitRecord((Record)record);
+                    ptv.VisitRecord((Record) record);
                     sheetOffset += record.RecordSize;
                 }
 
                 // If the BOF record was just serialized then add the IndexRecord
-                if (record is BOFRecord)
+                if(record is BOFRecord)
                 {
-                    if (!haveSerializedIndex)
+                    if(!haveSerializedIndex)
                     {
                         haveSerializedIndex = true;
                         // Add an optional UncalcedRecord. However, we should add
                         //  it in only the once, after the sheet's own BOFRecord.
                         // If there are diagrams, they have their own BOFRecords,
                         //  and one shouldn't go in after that!
-                        if (_isUncalced)
+                        if(_isUncalced)
                         {
                             UncalcedRecord rec = new UncalcedRecord();
                             ptv.VisitRecord(rec);
@@ -2220,7 +2220,7 @@ namespace NPOI.HSSF.Model
                         }
                         //Can there be more than one BOF for a sheet? If not then we can
                         //remove this guard. So be safe it is left here.
-                        if (_rowsAggregate != null)
+                        if(_rowsAggregate != null)
                         {
                             // find forward distance to first RowRecord
                             int initRecsSize = GetSizeOfInitialSheetRecords(k);
@@ -2244,16 +2244,16 @@ namespace NPOI.HSSF.Model
 
             int result = 0;
             // start just after BOF record (INDEX is not present in this list)
-            for (int j = bofRecordIndex + 1; j < records.Count; j++)
+            for(int j = bofRecordIndex + 1; j < records.Count; j++)
             {
                 RecordBase tmpRec = records[j];
-                if (tmpRec is RowRecordsAggregate)
+                if(tmpRec is RowRecordsAggregate)
                 {
                     break;
                 }
                 result += tmpRec.RecordSize;
             }
-            if (_isUncalced)
+            if(_isUncalced)
             {
                 result += UncalcedRecord.StaticRecordSize;
             }
@@ -2262,19 +2262,22 @@ namespace NPOI.HSSF.Model
 
         public void GroupRowRange(int fromRow, int toRow, bool indent)
         {
-            for (int rowNum = fromRow; rowNum <= toRow; rowNum++)
+            for(int rowNum = fromRow; rowNum <= toRow; rowNum++)
             {
                 RowRecord row = GetRow(rowNum);
-                if (row == null)
+                if(row == null)
                 {
                     row = CreateRow(rowNum);
                     AddRow(row);
                 }
                 int level = row.OutlineLevel;
-                if (indent) level++; else level--;
+                if(indent)
+                    level++;
+                else
+                    level--;
                 level = Math.Max(0, level);
                 level = Math.Min(7, level);
-                row.OutlineLevel = ((short)(level));
+                row.OutlineLevel = ((short) (level));
             }
 
             RecalcRowGutter();
@@ -2284,7 +2287,7 @@ namespace NPOI.HSSF.Model
         {
             int maxLevel = 0;
             IEnumerator iterator = _rowsAggregate.GetEnumerator();
-            while (iterator.MoveNext())
+            while(iterator.MoveNext())
             {
                 RowRecord rowRecord = (RowRecord)iterator.Current;
                 maxLevel = Math.Max(rowRecord.OutlineLevel, maxLevel);
@@ -2292,18 +2295,18 @@ namespace NPOI.HSSF.Model
 
             // Grab the guts record, Adding if needed
             GutsRecord guts = GetGutsRecord();
-            if (guts == null)
+            if(guts == null)
             {
                 guts = new GutsRecord();
                 records.Add(guts);
             }
             // Set the levels onto it
-            guts.RowLevelMax = ((short)(maxLevel + 1));
-            guts.LeftRowGutter = (short)(29 + 12 * maxLevel);
+            guts.RowLevelMax = ((short) (maxLevel + 1));
+            guts.LeftRowGutter = (short) (29 + 12 * maxLevel);
         }
         public DataValidityTable GetOrCreateDataValidityTable()
         {
-            if (_dataValidityTable == null)
+            if(_dataValidityTable == null)
             {
                 _dataValidityTable = new DataValidityTable();
                 RecordOrderer.AddNewSheetRecord(records, _dataValidityTable);
@@ -2317,15 +2320,15 @@ namespace NPOI.HSSF.Model
         public NoteRecord[] GetNoteRecords()
         {
             List<NoteRecord> temp = new List<NoteRecord>();
-            for (int i = records.Count - 1; i >= 0; i--)
+            for(int i = records.Count - 1; i >= 0; i--)
             {
                 RecordBase rec = records[i];
-                if (rec is NoteRecord record)
+                if(rec is NoteRecord record)
                 {
                     temp.Add(record);
                 }
             }
-            if (temp.Count < 1)
+            if(temp.Count < 1)
             {
                 return NoteRecord.EMPTY_ARRAY;
             }

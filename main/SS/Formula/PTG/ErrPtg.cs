@@ -17,11 +17,10 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    
-    using NPOI.Util;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using System;
 
     /**
      * @author Daniel Noll (daniel at nuix dot com dot au)
@@ -49,15 +48,22 @@ namespace NPOI.SS.Formula.PTG
 
         public static ErrPtg ValueOf(int code)
         {
-            switch ((FormulaErrorEnum)code)
+            switch((FormulaErrorEnum) code)
             {
-                case FormulaErrorEnum.DIV_0: return DIV_ZERO;
-                case FormulaErrorEnum.NA: return N_A;
-                case FormulaErrorEnum.NAME: return NAME_INVALID;
-                case FormulaErrorEnum.NULL: return NULL_INTERSECTION;
-                case FormulaErrorEnum.NUM: return NUM_ERROR;
-                case FormulaErrorEnum.REF: return REF_INVALID;
-                case FormulaErrorEnum.VALUE: return VALUE_INVALID;
+                case FormulaErrorEnum.DIV_0:
+                    return DIV_ZERO;
+                case FormulaErrorEnum.NA:
+                    return N_A;
+                case FormulaErrorEnum.NAME:
+                    return NAME_INVALID;
+                case FormulaErrorEnum.NULL:
+                    return NULL_INTERSECTION;
+                case FormulaErrorEnum.NUM:
+                    return NUM_ERROR;
+                case FormulaErrorEnum.REF:
+                    return REF_INVALID;
+                case FormulaErrorEnum.VALUE:
+                    return VALUE_INVALID;
                 default:
                     throw new InvalidOperationException("Unexpected error code (" + code + ")");
             }
@@ -71,7 +77,7 @@ namespace NPOI.SS.Formula.PTG
 
         public ErrPtg(int errorCode)
         {
-            if (!FormulaError.IsValidCode(errorCode))
+            if(!FormulaError.IsValidCode(errorCode))
             {
                 throw new ArgumentException("Invalid error code (" + errorCode + ")");
             }
@@ -81,13 +87,13 @@ namespace NPOI.SS.Formula.PTG
         public ErrPtg(ILittleEndianInput in1)
             : this(in1.ReadByte())
         {
-            
+
         }
 
         public override void Write(ILittleEndianOutput out1)
         {
             out1.WriteByte(sid + PtgClass);
-            out1.WriteByte((byte)field_1_error_code);
+            out1.WriteByte((byte) field_1_error_code);
         }
 
         public override String ToFormulaString()

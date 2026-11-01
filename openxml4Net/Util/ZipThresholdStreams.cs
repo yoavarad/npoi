@@ -34,7 +34,7 @@ namespace NPOI.OpenXml4Net.Util
         public override int Read(byte[] buffer, int offset, int count)
         {
             int n = _inner.Read(buffer, offset, count);
-            if (n > 0)
+            if(n > 0)
             {
                 _bytesRead += n;
             }
@@ -44,7 +44,7 @@ namespace NPOI.OpenXml4Net.Util
         public override int ReadByte()
         {
             int b = _inner.ReadByte();
-            if (b >= 0)
+            if(b >= 0)
             {
                 _bytesRead++;
             }
@@ -69,7 +69,7 @@ namespace NPOI.OpenXml4Net.Util
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
                 _inner.Dispose();
             }
@@ -103,7 +103,7 @@ namespace NPOI.OpenXml4Net.Util
         public override int Read(byte[] buffer, int offset, int count)
         {
             int n = _inner.Read(buffer, offset, count);
-            if (n > 0)
+            if(n > 0)
             {
                 _decompressed += n;
                 ZipSecureFile.CheckThreshold(_decompressed, _compressedSize);
@@ -114,7 +114,7 @@ namespace NPOI.OpenXml4Net.Util
         public override int ReadByte()
         {
             int b = _inner.ReadByte();
-            if (b >= 0)
+            if(b >= 0)
             {
                 _decompressed++;
                 ZipSecureFile.CheckThreshold(_decompressed, _compressedSize);
@@ -143,7 +143,7 @@ namespace NPOI.OpenXml4Net.Util
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
                 _inner.Dispose();
             }

@@ -53,13 +53,16 @@ namespace NPOI.OpenXmlFormats.Presentation
 
         private static int GetElementGroup(XmlElement element)
         {
-            if (element.NamespaceURI == CT_Presentation.Namespace)
+            if(element.NamespaceURI == CT_Presentation.Namespace)
             {
-                switch (element.LocalName)
+                switch(element.LocalName)
                 {
-                    case "cSld": return 0;
-                    case "clrMap": return 1;
-                    case "sldLayoutIdLst": return 2;
+                    case "cSld":
+                        return 0;
+                    case "clrMap":
+                        return 1;
+                    case "sldLayoutIdLst":
+                        return 2;
                 }
             }
             return 3;

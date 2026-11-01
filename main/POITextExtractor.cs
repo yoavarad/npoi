@@ -60,7 +60,7 @@ namespace NPOI
         }
         public virtual void Close()
         {
-            if (fsToClose != null)
+            if(fsToClose != null)
             {
                 fsToClose.Close();
             }

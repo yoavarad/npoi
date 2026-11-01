@@ -10,7 +10,7 @@ namespace NPOI.OpenXmlFormats.Presentation
             var result = new List<object>();
             var positions = new int[groups.Length];
             var lastPositions = new int[groups.Length];
-            for (var group = 0; group < groups.Length; group++)
+            for(var group = 0; group < groups.Length; group++)
             {
                 lastPositions[group] = Array.LastIndexOf(order, group);
             }
@@ -18,45 +18,45 @@ namespace NPOI.OpenXmlFormats.Presentation
             void AppendRemaining(int group)
             {
                 var values = groups[group] ?? Array.Empty<object>();
-                while (positions[group] < values.Length)
+                while(positions[group] < values.Length)
                 {
                     var value = values[positions[group]++];
-                    if (value != null)
+                    if(value != null)
                     {
                         result.Add(value);
                     }
                 }
             }
 
-            for (var index = 0; index < order.Length; index++)
+            for(var index = 0; index < order.Length; index++)
             {
                 var group = order[index];
                 // Insert newly modeled children in schema order without moving opaque XML.
-                if (group < groups.Length - 1)
+                if(group < groups.Length - 1)
                 {
-                    for (var preceding = 0; preceding < group; preceding++)
+                    for(var preceding = 0; preceding < group; preceding++)
                     {
-                        if (lastPositions[preceding] < 0)
+                        if(lastPositions[preceding] < 0)
                         {
                             AppendRemaining(preceding);
                         }
                     }
                 }
                 var values = groups[group] ?? Array.Empty<object>();
-                if (positions[group] < values.Length)
+                if(positions[group] < values.Length)
                 {
                     var value = values[positions[group]++];
-                    if (value != null)
+                    if(value != null)
                     {
                         result.Add(value);
                     }
                 }
-                if (lastPositions[group] == index)
+                if(lastPositions[group] == index)
                 {
                     AppendRemaining(group);
                 }
             }
-            for (var group = 0; group < groups.Length; group++)
+            for(var group = 0; group < groups.Length; group++)
             {
                 AppendRemaining(group);
             }

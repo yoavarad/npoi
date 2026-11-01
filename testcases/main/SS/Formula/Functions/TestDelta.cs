@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,8 +17,9 @@
 
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 namespace TestCases.SS.Formula.Functions
 {
     /**
@@ -40,7 +41,7 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval result = invokeValue(number1, number2);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, 0.0);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, 0.0);
         }
 
         private static void ConfirmValueError(String number1, String number2)

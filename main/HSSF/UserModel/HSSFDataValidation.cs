@@ -17,12 +17,11 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
 
     /**
      *Utility class for creating data validation cells
@@ -56,7 +55,7 @@ namespace NPOI.HSSF.UserModel
             _regions = regions;
 
             //FIXME: This cast can be avoided.
-            _constraint = (DVConstraint)constraint;
+            _constraint = (DVConstraint) constraint;
         }
 
 
@@ -92,9 +91,9 @@ namespace NPOI.HSSF.UserModel
             {
                 return _errorStyle;
             }
-            set 
-            { 
-                _errorStyle = value; 
+            set
+            {
+                _errorStyle = value;
             }
         }
 
@@ -114,7 +113,7 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                if (_constraint.GetValidationType() == ValidationType.LIST)
+                if(_constraint.GetValidationType() == ValidationType.LIST)
                 {
                     return _suppress_dropdown_arrow;
                 }
@@ -155,11 +154,11 @@ namespace NPOI.HSSF.UserModel
          */
         public void CreatePromptBox(String title, String text)
         {
-            if (title != null && title.Length > 32)
+            if(title != null && title.Length > 32)
             {
                 throw new ArgumentOutOfRangeException("Prompt-title cannot be longer than 32 characters, but had: " + title);
             }
-            if (text != null && text.Length > 255)
+            if(text != null && text.Length > 255)
             {
                 throw new ArgumentOutOfRangeException("Prompt-text cannot be longer than 255 characters, but had: " + text);
             }
@@ -195,11 +194,11 @@ namespace NPOI.HSSF.UserModel
          */
         public void CreateErrorBox(String title, String text)
         {
-            if (title != null && title.Length > 32)
+            if(title != null && title.Length > 32)
             {
                 throw new ArgumentOutOfRangeException("Error-title cannot be longer than 32 characters, but had: " + title);
             }
-            if (text != null && text.Length > 255)
+            if(text != null && text.Length > 255)
             {
                 throw new ArgumentOutOfRangeException("Error-text cannot be longer than 255 characters, but had: " + text);
             }

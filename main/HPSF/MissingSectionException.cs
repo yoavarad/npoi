@@ -45,9 +45,9 @@ namespace NPOI.HPSF
         /// <summary>
         /// Initializes a new instance of the <see cref="MissingSectionException"/> class.
         /// </summary>
-        public MissingSectionException():base()
+        public MissingSectionException() : base()
         {
-            
+
         }
 
 
@@ -55,9 +55,9 @@ namespace NPOI.HPSF
         /// Initializes a new instance of the <see cref="MissingSectionException"/> class.
         /// </summary>
         /// <param name="msg">The exception's message string</param>
-        public MissingSectionException(String msg): base(msg)
+        public MissingSectionException(String msg) : base(msg)
         {
-           
+
         }
 
 
@@ -65,9 +65,9 @@ namespace NPOI.HPSF
         /// Initializes a new instance of the <see cref="MissingSectionException"/> class.
         /// </summary>
         /// <param name="reason">This exception's underlying reason.</param>
-        public MissingSectionException(Exception reason): base(reason)
+        public MissingSectionException(Exception reason) : base(reason)
         {
-           
+
         }
 
 
@@ -76,9 +76,9 @@ namespace NPOI.HPSF
         /// </summary>
         /// <param name="msg">The exception's message string</param>
         /// <param name="reason">This exception's underlying reason</param>
-        public MissingSectionException(String msg, Exception reason):base(msg, reason)
+        public MissingSectionException(String msg, Exception reason) : base(msg, reason)
         {
-            
+
         }
 
     }

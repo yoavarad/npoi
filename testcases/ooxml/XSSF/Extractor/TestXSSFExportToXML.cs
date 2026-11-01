@@ -22,7 +22,8 @@ using NPOI.XSSF;
 using NPOI.XSSF.Extractor;
 using NPOI.XSSF.Model;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -280,7 +281,7 @@ namespace TestCases.XSSF.Extractor
                 ClassicAssert.AreEqual("2012-01-13", xmlData.Split(new string[] { "<DATE>" }, StringSplitOptions.None)[1]
                     .Split(new string[] { "</DATE>" }, StringSplitOptions.None)[0].Trim());
                 ClassicAssert.AreEqual("2012-02-16", xmlData.Split(new string[] { "<FORMULA_DATE>" }, StringSplitOptions.None)[1]
-                    .Split(new string[]{"</FORMULA_DATE>"}, StringSplitOptions.None)[0].Trim());
+                    .Split(new string[] { "</FORMULA_DATE>" }, StringSplitOptions.None)[0].Trim());
 
                 ParseXML(xmlData);
 
@@ -506,7 +507,7 @@ namespace TestCases.XSSF.Extractor
             }
             ClassicAssert.IsTrue(found);
         }
-        private void ParseXML(String xmlData) 
+        private void ParseXML(String xmlData)
         {
             string _byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
             xmlData = xmlData.TrimStart(_byteOrderMarkUtf8.ToCharArray());
@@ -671,9 +672,10 @@ namespace TestCases.XSSF.Extractor
         }
 
         [Test]
-        public void TestExportTableWithNonMappedColumn_Bugzilla_61281() {
+        public void TestExportTableWithNonMappedColumn_Bugzilla_61281()
+        {
             XSSFWorkbook wb = XSSFTestDataSamples.OpenSampleWorkbook("61281.xlsx");
-            foreach (XSSFMap map in wb.GetCustomXMLMappings())
+            foreach(XSSFMap map in wb.GetCustomXMLMappings())
             {
                 XSSFExportToXml exporter = new XSSFExportToXml(map);
                 MemoryStream bos = new MemoryStream();
@@ -715,5 +717,3 @@ namespace TestCases.XSSF.Extractor
         }
     }
 }
-
-

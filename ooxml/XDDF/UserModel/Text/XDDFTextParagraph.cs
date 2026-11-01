@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -22,10 +22,10 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Text
 {
-    using NPOI.Util;
-    using NPOI.XDDF.UserModel;
     using NPOI.OpenXmlFormats.Dml;
+    using NPOI.Util;
     using NPOI.Util.Optional;
+    using NPOI.XDDF.UserModel;
 
     /// <summary>
     /// Represents a paragraph of text within the containing text body. The paragraph

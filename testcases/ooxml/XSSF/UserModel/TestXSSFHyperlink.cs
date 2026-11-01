@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,15 +15,16 @@
    limitations under the License.
 ==================================================================== */
 
-using TestCases.SS.UserModel;
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.SS.UserModel;
-using NPOI.OpenXml4Net.OPC;
 using NPOI.HSSF.UserModel;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using NPOI.XSSF.UserModel;
 using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -73,7 +74,7 @@ namespace TestCases.XSSF.UserModel
                 "http://apache.org/default.php?s=isTramsformed&submit=Search&la=*&li=*",
                 "Test/測試.pdf",
                 "https://somedomain.com/Тест А.pdf"};
-            for (int i = 0; i < urls.Length; i++)
+            for(int i = 0; i < urls.Length; i++)
             {
                 String s = urls[i];
                 XSSFHyperlink link = CreateHelper.CreateHyperlink(HyperlinkType.Url) as XSSFHyperlink;
@@ -86,11 +87,11 @@ namespace TestCases.XSSF.UserModel
             sheet = workbook.GetSheetAt(0) as XSSFSheet;
             PackageRelationshipCollection rels = sheet.GetPackagePart().Relationships;
             ClassicAssert.AreEqual(urls.Length, rels.Size);
-            for (int i = 0; i < rels.Size; i++)
+            for(int i = 0; i < rels.Size; i++)
             {
                 PackageRelationship rel = rels.GetRelationship(i);
-                if (rel.TargetUri.IsAbsoluteUri&&rel.TargetUri.IsFile)
-                    ClassicAssert.AreEqual(urls[i].Replace("file:///","").Replace("/","\\"),rel.TargetUri.LocalPath);
+                if(rel.TargetUri.IsAbsoluteUri&&rel.TargetUri.IsFile)
+                    ClassicAssert.AreEqual(urls[i].Replace("file:///", "").Replace("/", "\\"), rel.TargetUri.LocalPath);
                 else
                     // there should be a relationship for each URL
                     ClassicAssert.AreEqual(urls[i], rel.TargetUri.ToString());
@@ -101,10 +102,10 @@ namespace TestCases.XSSF.UserModel
             sheet = workbook.GetSheetAt(0) as XSSFSheet;
             rels = sheet.GetPackagePart().Relationships;
             ClassicAssert.AreEqual(urls.Length, rels.Size);
-            for (int i = 0; i < rels.Size; i++)
+            for(int i = 0; i < rels.Size; i++)
             {
                 PackageRelationship rel = rels.GetRelationship(i);
-                if (rel.TargetUri.IsAbsoluteUri && rel.TargetUri.IsFile)
+                if(rel.TargetUri.IsAbsoluteUri && rel.TargetUri.IsFile)
                     ClassicAssert.AreEqual(urls[i].Replace("file:///", "").Replace("/", "\\"), rel.TargetUri.LocalPath);
                 else
                     // there should be a relationship for each URL
@@ -122,14 +123,14 @@ namespace TestCases.XSSF.UserModel
                 //"www.apache .org",
                 "c:\\temp",
                 "\\poi"};
-            foreach (String s in invalidURLs)
+            foreach(String s in invalidURLs)
             {
                 try
                 {
                     CreateHelper.CreateHyperlink(HyperlinkType.Url).Address = (s);
                     Assert.Fail("expected ArgumentException: " + s);
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                 }
             }
@@ -157,7 +158,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsNotNull(wb2.GetSheetAt(1));
             ClassicAssert.IsNotNull(wb2.GetSheetAt(2));
 
-            sheet = (XSSFSheet)wb2.GetSheetAt(0);
+            sheet = (XSSFSheet) wb2.GetSheetAt(0);
 
 
             // Check hyperlinks again
@@ -193,7 +194,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsNotNull(wb3.GetSheetAt(1));
             ClassicAssert.IsNotNull(wb3.GetSheetAt(2));
 
-            sheet = (XSSFSheet)wb3.GetSheetAt(0);
+            sheet = (XSSFSheet) wb3.GetSheetAt(0);
 
             ClassicAssert.AreEqual(5, sheet.NumHyperlinks);
             doTestHyperlinkContents(sheet);
@@ -355,7 +356,8 @@ namespace TestCases.XSSF.UserModel
         }
 
         [Test]
-        public void Test() {
+        public void Test()
+        {
             XSSFWorkbook wb = new XSSFWorkbook();
 
             ICreationHelper createHelper = wb.GetCreationHelper();
@@ -369,12 +371,12 @@ namespace TestCases.XSSF.UserModel
             ICell cellDet = rowDet.CreateCell(7);
             cellDet.SetCellValue("http://www.google.at");
             //set up style to be able to create hyperlinks
-                hlinkFont.Color = IndexedColors.Blue.Index;
-                hlinkStyle.SetFont(hlinkFont);
+            hlinkFont.Color = IndexedColors.Blue.Index;
+            hlinkStyle.SetFont(hlinkFont);
             IHyperlink link = createHelper.CreateHyperlink(HyperlinkType.Url);
-                link.Address = "http://www.example.com";
-                cellDet.Hyperlink = link;
-                cellDet.CellStyle = hlinkStyle;
+            link.Address = "http://www.example.com";
+            cellDet.Hyperlink = link;
+            cellDet.CellStyle = hlinkStyle;
 
             //set up style to be able to create hyperlinks
             hlinkFont.Color = IndexedColors.Blue.Index;
@@ -398,4 +400,3 @@ namespace TestCases.XSSF.UserModel
         }
     }
 }
-

@@ -16,12 +16,12 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
+    using Cysharp.Text;
+    using NPOI.OpenXmlFormats.Wordprocessing;
     using System;
     using System.Collections;
-    using NPOI.OpenXmlFormats.Wordprocessing;
-    using System.Text; 
-using Cysharp.Text;
     using System.IO;
+    using System.Text;
     using System.Xml;
 
     /**
@@ -47,7 +47,7 @@ using Cysharp.Text;
                                   XWPFTableRow xwpfTableRow, IBody part)
         {
             //sdtContentCell is allowed to be null:  minOccurs="0" maxOccurs="1"
-            if (sdtContentCell == null)
+            if(sdtContentCell == null)
             {
                 return;
             }
@@ -66,36 +66,36 @@ using Cysharp.Text;
             int iBodyCnt = 0;
             int depth = 1;
             string sdtXml = sdtContentCell.ToString();
-            using (StringReader sr = new StringReader(sdtXml))
+            using(StringReader sr = new StringReader(sdtXml))
             {
                 XmlParserContext context = new XmlParserContext(null, POIXMLDocumentPart.NamespaceManager,
                     null, XmlSpace.Preserve);
-                using (XmlReader cursor = XmlReader.Create(sr, null, context))
+                using(XmlReader cursor = XmlReader.Create(sr, null, context))
                 {
-                    while (cursor.Read() && depth > 0)
+                    while(cursor.Read() && depth > 0)
                     {
-                        if (cursor.NodeType == XmlNodeType.Text)
+                        if(cursor.NodeType == XmlNodeType.Text)
                         {
                             sb.Append(cursor.ReadContentAsString());
                         }
-                        else if (IsStartToken(cursor, "tr"))
+                        else if(IsStartToken(cursor, "tr"))
                         {
                             tcCnt = 0;
                             iBodyCnt = 0;
                         }
-                        else if (IsStartToken(cursor, "tc"))
+                        else if(IsStartToken(cursor, "tc"))
                         {
-                            if (tcCnt++ > 0)
+                            if(tcCnt++ > 0)
                             {
                                 sb.Append("\t");
                             }
                             iBodyCnt = 0;
                         }
-                        else if (IsStartToken(cursor, "p") ||
+                        else if(IsStartToken(cursor, "p") ||
                               IsStartToken(cursor, "tbl") ||
                               IsStartToken(cursor, "sdt"))
                         {
-                            if (iBodyCnt > 0)
+                            if(iBodyCnt > 0)
                             {
                                 sb.Append("\n");
                             }
@@ -151,12 +151,12 @@ using Cysharp.Text;
 
         private static bool IsStartToken(XmlReader cursor, String string1)
         {
-            if (!cursor.IsStartElement())
+            if(!cursor.IsStartElement())
             {
                 return false;
             }
 
-            if (cursor.LocalName == string1)
+            if(cursor.LocalName == string1)
             {
                 return true;
             }
@@ -193,4 +193,3 @@ using Cysharp.Text;
         }
     }
 }
-

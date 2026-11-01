@@ -86,11 +86,11 @@ namespace NPOI.Util
         /// <param name="value">the new value</param>
         public void Add(int index, short value)
         {
-            if (index > _limit)
+            if(index > _limit)
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (index == _limit)
+            else if(index == _limit)
             {
                 Add(value);
             }
@@ -98,7 +98,7 @@ namespace NPOI.Util
             {
 
                 // index < limit -- insert into the middle
-                if (_limit == _array.Length)
+                if(_limit == _array.Length)
                 {
                     GrowArray(_limit * 2);
                 }
@@ -116,7 +116,7 @@ namespace NPOI.Util
         /// <returns>return true (as per the general contract of the Collection.add method).</returns>
         public bool Add(short value)
         {
-            if (_limit == _array.Length)
+            if(_limit == _array.Length)
             {
                 GrowArray(_limit * 2);
             }
@@ -137,9 +137,9 @@ namespace NPOI.Util
         /// <returns>return true if this list Changed as a result of the call.</returns>
         public bool AddAll(ShortList c)
         {
-            if (c._limit != 0)
+            if(c._limit != 0)
             {
-                if ((_limit + c._limit) > _array.Length)
+                if((_limit + c._limit) > _array.Length)
                 {
                     GrowArray(_limit + c._limit);
                 }
@@ -167,13 +167,13 @@ namespace NPOI.Util
         /// <exception cref="IndexOutOfRangeException"> if the index is out of range (index &lt; 0 || index &gt; size())</exception>
         public bool AddAll(int index, ShortList c)
         {
-            if (index > _limit)
+            if(index > _limit)
             {
                 throw new IndexOutOfRangeException();
             }
-            if (c._limit != 0)
+            if(c._limit != 0)
             {
-                if ((_limit + c._limit) > _array.Length)
+                if((_limit + c._limit) > _array.Length)
                 {
                     GrowArray(_limit + c._limit);
                 }
@@ -209,9 +209,9 @@ namespace NPOI.Util
         {
             bool rval = false;
 
-            for (int j = 0; !rval && (j < _limit); j++)
+            for(int j = 0; !rval && (j < _limit); j++)
             {
-                if (_array[j] == o)
+                if(_array[j] == o)
                 {
                     rval = true;
                 }
@@ -228,11 +228,11 @@ namespace NPOI.Util
         {
             bool rval = true;
 
-            if (this != c)
+            if(this != c)
             {
-                for (int j = 0; rval && (j < c._limit); j++)
+                for(int j = 0; rval && (j < c._limit); j++)
                 {
-                    if (!Contains(c._array[j]))
+                    if(!Contains(c._array[j]))
                     {
                         rval = false;
                     }
@@ -258,16 +258,16 @@ namespace NPOI.Util
         {
             bool rval = this == o;
 
-            if (!rval && (o != null) && (o.GetType() == this.GetType()))
+            if(!rval && (o != null) && (o.GetType() == this.GetType()))
             {
                 ShortList other = (ShortList)o;
 
-                if (other._limit == _limit)
+                if(other._limit == _limit)
                 {
 
                     // assume match
                     rval = true;
-                    for (int j = 0; rval && (j < _limit); j++)
+                    for(int j = 0; rval && (j < _limit); j++)
                     {
                         rval = _array[j] == other._array[j];
                     }
@@ -283,7 +283,7 @@ namespace NPOI.Util
         /// <returns>return the element at the specified position in this list.</returns>
         public short Get(int index)
         {
-            if (index >= _limit)
+            if(index >= _limit)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -312,7 +312,7 @@ namespace NPOI.Util
         {
             int hash = 0;
 
-            for (int j = 0; j < _limit; j++)
+            for(int j = 0; j < _limit; j++)
             {
                 hash = (31 * hash) + _array[j];
             }
@@ -334,14 +334,14 @@ namespace NPOI.Util
         {
             int rval = 0;
 
-            for (; rval < _limit; rval++)
+            for(; rval < _limit; rval++)
             {
-                if (o == _array[rval])
+                if(o == _array[rval])
                 {
                     break;
                 }
             }
-            if (rval == _limit)
+            if(rval == _limit)
             {
                 rval = -1;   // didn't find it
             }
@@ -370,9 +370,9 @@ namespace NPOI.Util
         {
             int rval = _limit - 1;
 
-            for (; rval >= 0; rval--)
+            for(; rval >= 0; rval--)
             {
-                if (o == _array[rval])
+                if(o == _array[rval])
                 {
                     break;
                 }
@@ -390,7 +390,7 @@ namespace NPOI.Util
         /// <returns>return the element previously at the specified position.</returns>
         public short Remove(int index)
         {
-            if (index >= _limit)
+            if(index >= _limit)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -414,9 +414,9 @@ namespace NPOI.Util
         {
             bool rval = false;
 
-            for (int j = 0; !rval && (j < _limit); j++)
+            for(int j = 0; !rval && (j < _limit); j++)
             {
-                if (o == _array[j])
+                if(o == _array[j])
                 {
                     Array.Copy(_array, j + 1, _array, j, _limit - j);
                     _limit--;
@@ -435,9 +435,9 @@ namespace NPOI.Util
         {
             bool rval = false;
 
-            for (int j = 0; j < c._limit; j++)
+            for(int j = 0; j < c._limit; j++)
             {
-                if (RemoveValue(c._array[j]))
+                if(RemoveValue(c._array[j]))
                 {
                     rval = true;
                 }
@@ -457,9 +457,9 @@ namespace NPOI.Util
         {
             bool rval = false;
 
-            for (int j = 0; j < _limit; )
+            for(int j = 0; j < _limit;)
             {
-                if (!c.Contains(_array[j]))
+                if(!c.Contains(_array[j]))
                 {
                     Remove(j);
                     rval = true;
@@ -480,7 +480,7 @@ namespace NPOI.Util
         /// <returns>return the element previously at the specified position.</returns>
         public short Set(int index, short element)
         {
-            if (index >= _limit)
+            if(index >= _limit)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -507,7 +507,7 @@ namespace NPOI.Util
         {
             get { return _limit; }
         }
-        
+
         /// <summary>
         /// Returns an array Containing all of the elements in this list in
         /// proper sequence.  Obeys the general contract of the
@@ -536,7 +536,7 @@ namespace NPOI.Util
         {
             short[] rval;
 
-            if (a.Length == _limit)
+            if(a.Length == _limit)
             {
                 Array.Copy(_array, 0, a, 0, _limit);
                 rval = a;

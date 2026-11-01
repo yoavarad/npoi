@@ -15,16 +15,16 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
-using NPOI.SS.Util;
-using NPOI.SS.Formula.PTG;
-using NPOI.SS.Formula;
-using System;
-using NPOI.SS.UserModel;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using System.Linq;
-using NPOI.SS.UserModel.Helpers;
 using NPOI.OOXML.XSSF.UserModel.Helpers;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.Formula;
+using NPOI.SS.Formula.PTG;
+using NPOI.SS.UserModel;
+using NPOI.SS.UserModel.Helpers;
+using NPOI.SS.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NPOI.XSSF.UserModel.Helpers
 {
@@ -66,5 +66,3 @@ namespace NPOI.XSSF.UserModel.Helpers
         }
     }
 }
-
-

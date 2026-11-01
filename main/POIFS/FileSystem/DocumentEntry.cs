@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -32,13 +32,13 @@ namespace NPOI.POIFS.FileSystem
     /// managed by a Filesystem instance.
     /// @author Marc Johnson (mjohnson at apache dot org)
     /// </summary>
-    public interface DocumentEntry:Entry
+    public interface DocumentEntry : Entry
     {
         /// <summary>
         /// get the size of the document, in bytes
         /// </summary>
         /// <value>size in bytes</value>
-        int Size{get;}
+        int Size { get; }
     }
 
 }

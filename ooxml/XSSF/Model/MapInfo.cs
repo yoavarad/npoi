@@ -15,15 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Xml;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.Util;
+using NPOI.XSSF.UserModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.OpenXmlFormats;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using System;
-using NPOI.XSSF.UserModel;
-using NPOI.Util;
+using System.Xml;
 namespace NPOI.XSSF.Model
 {
 
@@ -73,13 +73,13 @@ namespace NPOI.XSSF.Model
                 mapInfo = doc.GetMapInfo();
 
                 maps = new Dictionary<int, XSSFMap>();
-                foreach (CT_Map map in mapInfo.Map)
+                foreach(CT_Map map in mapInfo.Map)
                 {
-                    maps[(int)map.ID] = new XSSFMap(map, this);
+                    maps[(int) map.ID] = new XSSFMap(map, this);
                 }
 
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -94,7 +94,7 @@ namespace NPOI.XSSF.Model
         {
             get
             {
-                return (XSSFWorkbook)GetParent();
+                return (XSSFWorkbook) GetParent();
             }
         }
 
@@ -117,9 +117,9 @@ namespace NPOI.XSSF.Model
         {
             NPOI.OpenXmlFormats.Spreadsheet.CT_Schema xmlSchema = null;
 
-            foreach (NPOI.OpenXmlFormats.Spreadsheet.CT_Schema schema in mapInfo.Schema)
+            foreach(NPOI.OpenXmlFormats.Spreadsheet.CT_Schema schema in mapInfo.Schema)
             {
-                if (schema.ID.Equals(schemaId))
+                if(schema.ID.Equals(schemaId))
                 {
                     xmlSchema = schema;
                     break;
@@ -134,19 +134,21 @@ namespace NPOI.XSSF.Model
             return maps[id];
         }
 
-        public XSSFMap GetXSSFMapByName(String name){
-		
-		XSSFMap matchedMap = null;
-		
-		foreach(XSSFMap map in maps.Values){
-            if (map.GetCTMap().Name != null && map.GetCTMap().Name.Equals(name))
+        public XSSFMap GetXSSFMapByName(String name)
+        {
+
+            XSSFMap matchedMap = null;
+
+            foreach(XSSFMap map in maps.Values)
             {
-				matchedMap = map;
-			}
-		}		
-		
-		return matchedMap;
-	}
+                if(map.GetCTMap().Name != null && map.GetCTMap().Name.Equals(name))
+                {
+                    matchedMap = map;
+                }
+            }
+
+            return matchedMap;
+        }
 
         /**
          * 
@@ -180,6 +182,3 @@ namespace NPOI.XSSF.Model
 
     }
 }
-
-
-

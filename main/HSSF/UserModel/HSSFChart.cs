@@ -17,13 +17,13 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
 
     public enum HSSFChartType : int
@@ -86,7 +86,7 @@ namespace NPOI.HSSF.UserModel
             records.Add(CreateUnitsRecord());
             records.Add(CreateChartRecord(0, 0, 30434904, 19031616));
             records.Add(HSSFChart.CreateBeginRecord());
-            records.Add(CreateSCLRecord((short)1, (short)1));
+            records.Add(CreateSCLRecord((short) 1, (short) 1));
             records.Add(CreatePlotGrowthRecord(65536, 65536));
             records.Add(CreateFrameRecord1());
             records.Add(HSSFChart.CreateBeginRecord());
@@ -105,21 +105,21 @@ namespace NPOI.HSSF.UserModel
             records.Add(new SerToCrtRecord());
             records.Add(CreateEndRecord());
             records.Add(CreateSheetPropsRecord());
-            records.Add(CreateDefaultTextRecord((short)TextFormatInfo.FontScaleNotSet));
+            records.Add(CreateDefaultTextRecord((short) TextFormatInfo.FontScaleNotSet));
             records.Add(CreateAllTextRecord());
             records.Add(HSSFChart.CreateBeginRecord());
             // unknown
             records.Add(CreateFontIndexRecord(5));
             records.Add(HSSFChart.CreateDirectLinkRecord());
             records.Add(CreateEndRecord());
-            records.Add(CreateDefaultTextRecord((short)3)); // eek, undocumented text type
+            records.Add(CreateDefaultTextRecord((short) 3)); // eek, undocumented text type
             records.Add(CreateUnknownTextRecord());
             records.Add(HSSFChart.CreateBeginRecord());
-            records.Add(CreateFontIndexRecord((short)6));
+            records.Add(CreateFontIndexRecord((short) 6));
             records.Add(HSSFChart.CreateDirectLinkRecord());
             records.Add(CreateEndRecord());
 
-            records.Add(HSSFChart.CreateAxisUsedRecord((short)1));
+            records.Add(HSSFChart.CreateAxisUsedRecord((short) 1));
             CreateAxisRecords(records);
 
             records.Add(CreateEndRecord());
@@ -148,36 +148,36 @@ namespace NPOI.HSSF.UserModel
             HSSFSeries lastSeries = null;
             // Find records of interest
             IList records = sheet.Sheet.Records;
-            foreach (RecordBase r in records)
+            foreach(RecordBase r in records)
             {
 
-                if (r is ChartRecord record1)
+                if(r is ChartRecord record1)
                 {
                     lastSeries = null;
 
                     lastChart = new HSSFChart(sheet, record1);
                     charts.Add(lastChart);
                 }
-                else if (r is LegendRecord legendRecord1)
+                else if(r is LegendRecord legendRecord1)
                 {
                     lastChart.legendRecord = legendRecord1;
                 }
-                else if (r is SeriesRecord seriesRecord)
+                else if(r is SeriesRecord seriesRecord)
                 {
                     HSSFSeries series = new HSSFSeries(seriesRecord);
                     lastChart.series.Add(series);
                     lastSeries = series;
                 }
-                else if (r is AlRunsRecord runsRecord)
+                else if(r is AlRunsRecord runsRecord)
                 {
                     lastChart.chartTitleFormat =
                         runsRecord;
                 }
-                else if (r is SeriesTextRecord str)
+                else if(r is SeriesTextRecord str)
                 {
                     // Applies to a series, unless we've seen
                     //  a legend already
-                    if (lastChart.legendRecord == null &&
+                    if(lastChart.legendRecord == null &&
                         lastChart.series.Count > 0)
                     {
                         HSSFSeries series = (HSSFSeries)
@@ -189,30 +189,30 @@ namespace NPOI.HSSF.UserModel
                         lastChart.chartTitleText = str;
                     }
                 }
-                else if (r is LinkedDataRecord linkedDataRecord)
+                else if(r is LinkedDataRecord linkedDataRecord)
                 {
-                    if (lastSeries != null)
+                    if(lastSeries != null)
                     {
                         lastSeries.InsertData(linkedDataRecord);
                     }
                 }
-                else if (r is ValueRangeRecord rangeRecord)
+                else if(r is ValueRangeRecord rangeRecord)
                 {
                     lastChart.valueRanges.Add(rangeRecord);
                 }
-                else if (r is Record record)
+                else if(r is Record record)
                 {
-                    if (lastChart != null)
+                    if(lastChart != null)
                     {
-                        foreach (int type in Enum.GetValues(typeof(HSSFChartType)))
+                        foreach(int type in Enum.GetValues(typeof(HSSFChartType)))
                         {
-                            if (type == 0)
+                            if(type == 0)
                             {
                                 continue;
                             }
-                            if (record.Sid == type)
+                            if(record.Sid == type)
                             {
-                                lastChart.type = (HSSFChartType)type;
+                                lastChart.type = (HSSFChartType) type;
                                 break;
                             }
                         }
@@ -287,7 +287,7 @@ namespace NPOI.HSSF.UserModel
         {
             get
             {
-                if (chartTitleText != null)
+                if(chartTitleText != null)
                 {
                     return chartTitleText.Text;
                 }
@@ -295,7 +295,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                if (chartTitleText != null)
+                if(chartTitleText != null)
                 {
                     chartTitleText.Text = value;
                 }
@@ -317,33 +317,34 @@ namespace NPOI.HSSF.UserModel
         public void SetValueRange(int axisIndex, Double? minimum, Double? maximum, Double? majorUnit, Double? minorUnit)
         {
             ValueRangeRecord valueRange = (ValueRangeRecord)valueRanges[axisIndex];
-            if (valueRange == null) return;
-            if (minimum != null)
+            if(valueRange == null)
+                return;
+            if(minimum != null)
             {
-                valueRange.IsAutomaticMinimum = Double.IsNaN((double)minimum);
-                valueRange.MinimumAxisValue = (double)minimum;
+                valueRange.IsAutomaticMinimum = Double.IsNaN((double) minimum);
+                valueRange.MinimumAxisValue = (double) minimum;
             }
-            if (maximum != null)
+            if(maximum != null)
             {
-                valueRange.IsAutomaticMaximum = Double.IsNaN((double)maximum);
-                valueRange.MaximumAxisValue = (double)maximum;
+                valueRange.IsAutomaticMaximum = Double.IsNaN((double) maximum);
+                valueRange.MaximumAxisValue = (double) maximum;
             }
-            if (majorUnit != null)
+            if(majorUnit != null)
             {
-                valueRange.IsAutomaticMajor = Double.IsNaN((double)majorUnit);
-                valueRange.MajorIncrement = (double)majorUnit;
+                valueRange.IsAutomaticMajor = Double.IsNaN((double) majorUnit);
+                valueRange.MajorIncrement = (double) majorUnit;
             }
-            if (minorUnit != null)
+            if(minorUnit != null)
             {
-                valueRange.IsAutomaticMinor = Double.IsNaN((double)minorUnit);
-                valueRange.MinorIncrement = (double)minorUnit;
+                valueRange.IsAutomaticMinor = Double.IsNaN((double) minorUnit);
+                valueRange.MinorIncrement = (double) minorUnit;
             }
         }
 
         private static SeriesIndexRecord CreateSeriesIndexRecord(int index)
         {
             SeriesIndexRecord r = new SeriesIndexRecord();
-            r.Index = ((short)index);
+            r.Index = ((short) index);
             return r;
         }
 
@@ -352,8 +353,8 @@ namespace NPOI.HSSF.UserModel
             DimensionsRecord r = new DimensionsRecord();
             r.FirstRow = (0);
             r.LastRow = (31);
-            r.FirstCol = ((short)0);
-            r.LastCol = ((short)1);
+            r.FirstCol = ((short) 0);
+            r.LastCol = ((short) 1);
             return r;
         }
 
@@ -374,11 +375,11 @@ namespace NPOI.HSSF.UserModel
         private static PrintSetupRecord CreatePrintSetupRecord()
         {
             PrintSetupRecord r = new PrintSetupRecord();
-            r.PaperSize = ((short)0);
-            r.Scale = ((short)18);
-            r.PageStart = ((short)1);
-            r.FitWidth = ((short)1);
-            r.FitHeight = ((short)1);
+            r.PaperSize = ((short) 0);
+            r.Scale = ((short) 18);
+            r.PageStart = ((short) 1);
+            r.FitWidth = ((short) 1);
+            r.FitHeight = ((short) 1);
             r.LeftToRight = (false);
             r.Landscape = (false);
             r.ValidSettings = (true);
@@ -387,39 +388,39 @@ namespace NPOI.HSSF.UserModel
             r.Notes = (false);
             r.NoOrientation = (false);
             r.UsePage = (false);
-            r.HResolution = ((short)0);
-            r.VResolution = ((short)0);
+            r.HResolution = ((short) 0);
+            r.VResolution = ((short) 0);
             r.HeaderMargin = (0.5);
             r.FooterMargin = (0.5);
-            r.Copies = ((short)15); // what the ??
+            r.Copies = ((short) 15); // what the ??
             return r;
         }
 
         private static FbiRecord CreateFontBasisRecord1()
         {
             FbiRecord r = new FbiRecord();
-            r.XBasis = ((short)9120);
-            r.YBasis = ((short)5640);
-            r.HeightBasis = ((short)200);
-            r.Scale = ((short)0);
-            r.IndexToFontTable = ((short)5);
+            r.XBasis = ((short) 9120);
+            r.YBasis = ((short) 5640);
+            r.HeightBasis = ((short) 200);
+            r.Scale = ((short) 0);
+            r.IndexToFontTable = ((short) 5);
             return r;
         }
 
         private static FbiRecord CreateFontBasisRecord2()
         {
             FbiRecord r = CreateFontBasisRecord1();
-            r.IndexToFontTable = ((short)6);
+            r.IndexToFontTable = ((short) 6);
             return r;
         }
 
         private static BOFRecord CreateBOFRecord()
         {
             BOFRecord r = new BOFRecord();
-            r.Version = ((short)600);
+            r.Version = ((short) 600);
             r.Type = BOFRecordType.Chart;
-            r.Build = ((short)0x1CFE);
-            r.BuildYear = ((short)1997);
+            r.Build = ((short) 0x1CFE);
+            r.BuildYear = ((short) 1997);
             r.HistoryBitMask = (0x40C9);
             r.RequiredVersion = (106);
             return r;
@@ -428,13 +429,13 @@ namespace NPOI.HSSF.UserModel
         private static UnknownRecord CreateOBJRecord()
         {
             byte[] data = {
-			(byte)0x15, (byte)0x00, (byte)0x12, (byte)0x00, (byte)0x05, (byte)0x00, (byte)0x02, (byte)0x00,
+            (byte)0x15, (byte)0x00, (byte)0x12, (byte)0x00, (byte)0x05, (byte)0x00, (byte)0x02, (byte)0x00,
             (byte)0x11, (byte)0x60, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0xB8, (byte)0x03,
-			(byte)0x87, (byte)0x03, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+            (byte)0x87, (byte)0x03, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
             (byte)0x00, (byte)0x00,
-		};
+        };
 
-            return new UnknownRecord((short)0x005D, data);
+            return new UnknownRecord((short) 0x005D, data);
         }
 
         private static UnknownRecord CreateMSDrawingObjectRecord()
@@ -443,34 +444,34 @@ namespace NPOI.HSSF.UserModel
             // form for the moment.
 
             byte[] data = {
-			    (byte)0x0F, (byte)0x00, (byte)0x02, (byte)0xF0, (byte)0xC0, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x0F, (byte)0x00, (byte)0x02, (byte)0xF0, (byte)0xC0, (byte)0x00, (byte)0x00, (byte)0x00,
                 (byte)0x10, (byte)0x00, (byte)0x08, (byte)0xF0, (byte)0x08, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x02, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x02, (byte)0x04, (byte)0x00, (byte)0x00,
+                (byte)0x02, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x02, (byte)0x04, (byte)0x00, (byte)0x00,
                 (byte)0x0F, (byte)0x00, (byte)0x03, (byte)0xF0, (byte)0xA8, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x0F, (byte)0x00, (byte)0x04, (byte)0xF0, (byte)0x28, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x0F, (byte)0x00, (byte)0x04, (byte)0xF0, (byte)0x28, (byte)0x00, (byte)0x00, (byte)0x00,
                 (byte)0x01, (byte)0x00, (byte)0x09, (byte)0xF0, (byte)0x10, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
                 (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x02, (byte)0x00, (byte)0x0A, (byte)0xF0, (byte)0x08, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x02, (byte)0x00, (byte)0x0A, (byte)0xF0, (byte)0x08, (byte)0x00, (byte)0x00, (byte)0x00,
                 (byte)0x00, (byte)0x04, (byte)0x00, (byte)0x00, (byte)0x05, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x0F, (byte)0x00, (byte)0x04, (byte)0xF0, (byte)0x70, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0x0F, (byte)0x00, (byte)0x04, (byte)0xF0, (byte)0x70, (byte)0x00, (byte)0x00, (byte)0x00,
                 (byte)0x92, (byte)0x0C, (byte)0x0A, (byte)0xF0, (byte)0x08, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x02, (byte)0x04, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x0A, (byte)0x00, (byte)0x00,
+                (byte)0x02, (byte)0x04, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x0A, (byte)0x00, (byte)0x00,
                 (byte)0x93, (byte)0x00, (byte)0x0B, (byte)0xF0, (byte)0x36, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x7F, (byte)0x00, (byte)0x04, (byte)0x01, (byte)0x04, (byte)0x01, (byte)0xBF, (byte)0x00,
+                (byte)0x7F, (byte)0x00, (byte)0x04, (byte)0x01, (byte)0x04, (byte)0x01, (byte)0xBF, (byte)0x00,
                 (byte)0x08, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0x81, (byte)0x01, (byte)0x4E, (byte)0x00,
-			    (byte)0x00, (byte)0x08, (byte)0x83, (byte)0x01, (byte)0x4D, (byte)0x00, (byte)0x00, (byte)0x08,
+                (byte)0x00, (byte)0x08, (byte)0x83, (byte)0x01, (byte)0x4D, (byte)0x00, (byte)0x00, (byte)0x08,
                 (byte)0xBF, (byte)0x01, (byte)0x10, (byte)0x00, (byte)0x11, (byte)0x00, (byte)0xC0, (byte)0x01,
-			    (byte)0x4D, (byte)0x00, (byte)0x00, (byte)0x08, (byte)0xFF, (byte)0x01, (byte)0x08, (byte)0x00,
+                (byte)0x4D, (byte)0x00, (byte)0x00, (byte)0x08, (byte)0xFF, (byte)0x01, (byte)0x08, (byte)0x00,
                 (byte)0x08, (byte)0x00, (byte)0x3F, (byte)0x02, (byte)0x00, (byte)0x00, (byte)0x02, (byte)0x00,
-			    (byte)0xBF, (byte)0x03, (byte)0x00, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0x00, (byte)0x00,
+                (byte)0xBF, (byte)0x03, (byte)0x00, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0x00, (byte)0x00,
                 (byte)0x10, (byte)0xF0, (byte)0x12, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00,
-			    (byte)0x04, (byte)0x00, (byte)0xC0, (byte)0x02, (byte)0x0A, (byte)0x00, (byte)0xF4, (byte)0x00,
+                (byte)0x04, (byte)0x00, (byte)0xC0, (byte)0x02, (byte)0x0A, (byte)0x00, (byte)0xF4, (byte)0x00,
                 (byte)0x0E, (byte)0x00, (byte)0x66, (byte)0x01, (byte)0x20, (byte)0x00, (byte)0xE9, (byte)0x00,
-			    (byte)0x00, (byte)0x00, (byte)0x11, (byte)0xF0, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00
-		    };
+                (byte)0x00, (byte)0x00, (byte)0x11, (byte)0xF0, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00
+            };
 
-            return new UnknownRecord((short)0x00EC, data);
+            return new UnknownRecord((short) 0x00EC, data);
         }
 
         private static void CreateAxisRecords(IList records)
@@ -519,7 +520,7 @@ namespace NPOI.HSSF.UserModel
             r.LinkType = (LinkedDataRecord.LINK_TYPE_TITLE_OR_TEXT);
             r.ReferenceType = (LinkedDataRecord.REFERENCE_TYPE_DIRECT);
             r.IsCustomNumberFormat = (false);
-            r.IndexNumberFmtRecord = ((short)0);
+            r.IndexNumberFmtRecord = ((short) 0);
             r.FormulaOfLink = (null);
             return r;
         }
@@ -529,7 +530,7 @@ namespace NPOI.HSSF.UserModel
             TextRecord r = new TextRecord();
             r.HorizontalAlignment = (TextRecord.HORIZONTAL_ALIGNMENT_CENTER);
             r.VerticalAlignment = (TextRecord.VERTICAL_ALIGNMENT_CENTER);
-            r.DisplayMode = ((short)1);
+            r.DisplayMode = ((short) 1);
             r.RgbColor = (0x00000000);
             r.X = (-37);
             r.Y = (-60);
@@ -548,9 +549,9 @@ namespace NPOI.HSSF.UserModel
             r.ShowValueAsPercentage = (false);
             r.ShowBubbleSizes = (false);
             r.ShowLabel = (false);
-            r.IndexOfColorValue = ((short)77);
-            r.DataLabelPlacement = ((short)0);
-            r.TextRotation = ((short)0);
+            r.IndexOfColorValue = ((short) 77);
+            r.DataLabelPlacement = ((short) 0);
+            r.TextRotation = ((short) 0);
             return r;
         }
 
@@ -575,8 +576,8 @@ namespace NPOI.HSSF.UserModel
         private static BarRecord CreateBarRecord()
         {
             BarRecord r = new BarRecord();
-            r.BarSpace = ((short)0);
-            r.CategorySpace = ((short)150);
+            r.BarSpace = ((short) 0);
+            r.CategorySpace = ((short) 150);
             r.IsHorizontal = (false);
             r.IsStacked = (false);
             r.IsDisplayAsPercentage = (false);
@@ -631,40 +632,40 @@ namespace NPOI.HSSF.UserModel
         private static TickRecord CreateTickRecord1()
         {
             TickRecord r = new TickRecord();
-            r.MajorTickType = ((byte)2);
-            r.MinorTickType = ((byte)0);
-            r.LabelPosition = ((byte)3);
-            r.Background = ((byte)1);
+            r.MajorTickType = ((byte) 2);
+            r.MinorTickType = ((byte) 0);
+            r.LabelPosition = ((byte) 3);
+            r.Background = ((byte) 1);
             r.LabelColorRgb = (0);
-            r.Zero1 = ((short)0);
-            r.Zero2 = ((short)0);
-            r.Zero3 = ((short)45);
+            r.Zero1 = ((short) 0);
+            r.Zero2 = ((short) 0);
+            r.Zero3 = ((short) 45);
             r.IsAutorotate = (true);
             r.IsAutoTextBackground = (true);
-            r.Rotation = ((short)0);
+            r.Rotation = ((short) 0);
             r.IsAutorotate = (true);
-            r.TickColor = ((short)77);
+            r.TickColor = ((short) 77);
             return r;
         }
 
         private static TickRecord CreateTickRecord2()
         {
             TickRecord r = CreateTickRecord1();
-            r.Zero3 = ((short)0);
+            r.Zero3 = ((short) 0);
             return r;
         }
 
         private static AxcExtRecord CreateAxisOptionsRecord()
         {
             AxcExtRecord r = new AxcExtRecord();
-            r.MinimumDate = ((short)-28644);
-            r.MaximumDate = ((short)-28715);
-            r.MajorInterval = ((short)2);
-            r.MajorUnit = (DateUnit)0;
-            r.MinorInterval = ((short)1);
-            r.MinorUnit = (DateUnit)0;
-            r.BaseUnit = (DateUnit)0;
-            r.CrossDate = ((short)-28644);
+            r.MinimumDate = ((short) -28644);
+            r.MaximumDate = ((short) -28715);
+            r.MajorInterval = ((short) 2);
+            r.MajorUnit = (DateUnit) 0;
+            r.MinorInterval = ((short) 1);
+            r.MinorUnit = (DateUnit) 0;
+            r.BaseUnit = (DateUnit) 0;
+            r.CrossDate = ((short) -28644);
             r.IsAutoMin = (true);
             r.IsAutoMax = (true);
             r.IsAutoMajor = (true);
@@ -679,9 +680,9 @@ namespace NPOI.HSSF.UserModel
         private static CatSerRangeRecord CreateCategorySeriesAxisRecord()
         {
             CatSerRangeRecord r = new CatSerRangeRecord();
-            r.CrossPoint = ((short)1);
-            r.LabelInterval = ((short)1);
-            r.MarkInterval = ((short)1);
+            r.CrossPoint = ((short) 1);
+            r.LabelInterval = ((short) 1);
+            r.MarkInterval = ((short) 1);
             r.IsBetween = (true);
             r.IsMaxCross = (false);
             r.IsReverse = (false);
@@ -719,7 +720,7 @@ namespace NPOI.HSSF.UserModel
             r.LinkType = (LinkedDataRecord.LINK_TYPE_TITLE_OR_TEXT);
             r.ReferenceType = (LinkedDataRecord.REFERENCE_TYPE_DIRECT);
             r.IsCustomNumberFormat = (false);
-            r.IndexNumberFmtRecord = ((short)0);
+            r.IndexNumberFmtRecord = ((short) 0);
             r.FormulaOfLink = (null);
             return r;
         }
@@ -727,7 +728,7 @@ namespace NPOI.HSSF.UserModel
         private static FontIndexRecord CreateFontIndexRecord(int index)
         {
             FontIndexRecord r = new FontIndexRecord();
-            r.FontIndex = ((short)index);
+            r.FontIndex = ((short) index);
             return r;
         }
 
@@ -755,9 +756,9 @@ namespace NPOI.HSSF.UserModel
             r.ShowValueAsPercentage = (false);
             r.ShowBubbleSizes = (false);
             r.ShowLabel = (false);
-            r.IndexOfColorValue = ((short)77);
-            r.DataLabelPlacement = ((short)0);
-            r.TextRotation = ((short)0);
+            r.IndexOfColorValue = ((short) 77);
+            r.DataLabelPlacement = ((short) 0);
+            r.TextRotation = ((short) 0);
             return r;
         }
 
@@ -785,16 +786,16 @@ namespace NPOI.HSSF.UserModel
             r.ShowValueAsPercentage = (false);
             r.ShowBubbleSizes = (false);
             r.ShowLabel = (false);
-            r.IndexOfColorValue = ((short)77);
-            r.DataLabelPlacement = ((short)11088);
-            r.TextRotation = ((short)0);
+            r.IndexOfColorValue = ((short) 77);
+            r.DataLabelPlacement = ((short) 11088);
+            r.TextRotation = ((short) 0);
             return r;
         }
 
         private static DefaultTextRecord CreateDefaultTextRecord(short categoryDataType)
         {
             DefaultTextRecord r = new DefaultTextRecord();
-            r.FormatType = (TextFormatInfo)(categoryDataType);
+            r.FormatType = (TextFormatInfo) (categoryDataType);
             return r;
         }
 
@@ -817,9 +818,9 @@ namespace NPOI.HSSF.UserModel
         private static DataFormatRecord CreateDataFormatRecord()
         {
             DataFormatRecord r = new DataFormatRecord();
-            r.PointNumber = ((short)-1);
-            r.SeriesIndex = ((short)0);
-            r.SeriesNumber = ((short)0);
+            r.PointNumber = ((short) -1);
+            r.SeriesIndex = ((short) 0);
+            r.SeriesNumber = ((short) 0);
             r.UseExcel4Colors = (false);
             return r;
         }
@@ -830,7 +831,7 @@ namespace NPOI.HSSF.UserModel
             r.LinkType = (LinkedDataRecord.LINK_TYPE_CATEGORIES);
             r.ReferenceType = (LinkedDataRecord.REFERENCE_TYPE_WORKSHEET);
             r.IsCustomNumberFormat = (false);
-            r.IndexNumberFmtRecord = ((short)0);
+            r.IndexNumberFmtRecord = ((short) 0);
             Area3DPtg p = new Area3DPtg(0, 31, 1, 1,
                     false, false, false, false, 0);
             r.FormulaOfLink = (new Ptg[] { p, });
@@ -843,7 +844,7 @@ namespace NPOI.HSSF.UserModel
             r.LinkType = (LinkedDataRecord.LINK_TYPE_VALUES);
             r.ReferenceType = (LinkedDataRecord.REFERENCE_TYPE_WORKSHEET);
             r.IsCustomNumberFormat = (false);
-            r.IndexNumberFmtRecord = ((short)0);
+            r.IndexNumberFmtRecord = ((short) 0);
             Area3DPtg p = new Area3DPtg(0, 31, 0, 0,
                     false, false, false, false, 0);
             r.FormulaOfLink = (new Ptg[] { p, });
@@ -856,7 +857,7 @@ namespace NPOI.HSSF.UserModel
             r.LinkType = (LinkedDataRecord.LINK_TYPE_TITLE_OR_TEXT);
             r.ReferenceType = (LinkedDataRecord.REFERENCE_TYPE_DIRECT);
             r.IsCustomNumberFormat = (false);
-            r.IndexNumberFmtRecord = ((short)0);
+            r.IndexNumberFmtRecord = ((short) 0);
             r.FormulaOfLink = (null);
             return r;
         }
@@ -866,10 +867,10 @@ namespace NPOI.HSSF.UserModel
             SeriesRecord r = new SeriesRecord();
             r.CategoryDataType = (SeriesRecord.CATEGORY_DATA_TYPE_NUMERIC);
             r.ValuesDataType = (SeriesRecord.VALUES_DATA_TYPE_NUMERIC);
-            r.NumCategories = ((short)32);
-            r.NumValues = ((short)31);
+            r.NumCategories = ((short) 32);
+            r.NumValues = ((short) 31);
             r.BubbleSeriesType = (SeriesRecord.BUBBLE_SERIES_TYPE_NUMERIC);
-            r.NumBubbleValues = ((short)0);
+            r.NumBubbleValues = ((short) 0);
             return r;
         }
 
@@ -883,11 +884,11 @@ namespace NPOI.HSSF.UserModel
             AreaFormatRecord r = new AreaFormatRecord();
             r.ForegroundColor = (16777215);	 // RGB Color
             r.BackgroundColor = (0);			// RGB Color
-            r.Pattern = ((short)1);			 // TODO: Add Pattern constants to record
+            r.Pattern = ((short) 1);			 // TODO: Add Pattern constants to record
             r.IsAutomatic = (true);
             r.IsInvert = (false);
-            r.ForecolorIndex = ((short)78);
-            r.BackcolorIndex = ((short)77);
+            r.ForecolorIndex = ((short) 78);
+            r.BackcolorIndex = ((short) 77);
             return r;
         }
 
@@ -896,11 +897,11 @@ namespace NPOI.HSSF.UserModel
             AreaFormatRecord r = new AreaFormatRecord();
             r.ForegroundColor = (0x00c0c0c0);
             r.BackgroundColor = (0x00000000);
-            r.Pattern = ((short)1);
+            r.Pattern = ((short) 1);
             r.IsAutomatic = (false);
             r.IsInvert = (false);
-            r.ForecolorIndex = ((short)22);
-            r.BackcolorIndex = ((short)79);
+            r.ForecolorIndex = ((short) 22);
+            r.BackcolorIndex = ((short) 79);
             return r;
         }
 
@@ -909,10 +910,10 @@ namespace NPOI.HSSF.UserModel
             LineFormatRecord r = new LineFormatRecord();
             r.LineColor = (0);
             r.LinePattern = (LineFormatRecord.LINE_PATTERN_SOLID);
-            r.Weight = ((short)-1);
+            r.Weight = ((short) -1);
             r.IsAuto = (true);
             r.IsDrawTicks = (drawTicks);
-            r.ColourPaletteIndex = ((short)77);  // what colour is this?
+            r.ColourPaletteIndex = ((short) 77);  // what colour is this?
             return r;
         }
 
@@ -920,12 +921,12 @@ namespace NPOI.HSSF.UserModel
         {
             LineFormatRecord r = new LineFormatRecord();
             r.LineColor = (0x00808080);
-            r.LinePattern = ((short)0);
-            r.Weight = ((short)0);
+            r.LinePattern = ((short) 0);
+            r.Weight = ((short) 0);
             r.IsAuto = (false);
             r.IsDrawTicks = (false);
             r.IsUnknown = (false);
-            r.ColourPaletteIndex = ((short)23);
+            r.ColourPaletteIndex = ((short) 23);
             return r;
         }
 
@@ -981,7 +982,7 @@ namespace NPOI.HSSF.UserModel
         private static UnitsRecord CreateUnitsRecord()
         {
             UnitsRecord r = new UnitsRecord();
-            r.Units = ((short)0);
+            r.Units = ((short) 0);
             return r;
         }
 
@@ -1005,15 +1006,19 @@ namespace NPOI.HSSF.UserModel
 
             internal void InsertData(LinkedDataRecord data)
             {
-                switch (data.LinkType)
+                switch(data.LinkType)
                 {
-                    case 0: dataName = data;
+                    case 0:
+                        dataName = data;
                         break;
-                    case 1: dataValues = data;
+                    case 1:
+                        dataValues = data;
                         break;
-                    case 2: dataCategoryLabels = data;
+                    case 2:
+                        dataCategoryLabels = data;
                         break;
-                    case 3: dataSecondaryCategoryLabels = data;
+                    case 3:
+                        dataSecondaryCategoryLabels = data;
                         break;
                 }
             }
@@ -1049,7 +1054,7 @@ namespace NPOI.HSSF.UserModel
             {
                 get
                 {
-                    if (seriesTitleText != null)
+                    if(seriesTitleText != null)
                     {
                         return seriesTitleText.Text;
                     }
@@ -1057,7 +1062,7 @@ namespace NPOI.HSSF.UserModel
                 }
                 set
                 {
-                    if (seriesTitleText != null)
+                    if(seriesTitleText != null)
                     {
                         seriesTitleText.Text = value;
                     }
@@ -1110,7 +1115,7 @@ namespace NPOI.HSSF.UserModel
 
             private static CellRangeAddress GetCellRange(LinkedDataRecord linkedDataRecord)
             {
-                if (linkedDataRecord == null)
+                if(linkedDataRecord == null)
                 {
                     return null;
                 }
@@ -1120,9 +1125,9 @@ namespace NPOI.HSSF.UserModel
                 int firstCol = 0;
                 int lastCol = 0;
 
-                foreach (Ptg ptg in linkedDataRecord.FormulaOfLink)
+                foreach(Ptg ptg in linkedDataRecord.FormulaOfLink)
                 {
-                    if (ptg is AreaPtgBase areaPtg)
+                    if(ptg is AreaPtgBase areaPtg)
                     {
                         firstRow = areaPtg.FirstRow;
                         lastRow = areaPtg.LastRow;
@@ -1147,9 +1152,10 @@ namespace NPOI.HSSF.UserModel
 
             private static int SetVerticalCellRange(LinkedDataRecord linkedDataRecord, CellRangeAddressBase range)
             {
-                if (linkedDataRecord == null)
+                if(linkedDataRecord == null)
                 {
-                    throw new ArgumentNullException("linkedDataRecord should not be null"); ;
+                    throw new ArgumentNullException("linkedDataRecord should not be null");
+                    ;
                 }
 
                 List<Ptg> ptgList = new List<Ptg>();
@@ -1157,9 +1163,9 @@ namespace NPOI.HSSF.UserModel
                 int rowCount = (range.LastRow - range.FirstRow) + 1;
                 int colCount = (range.LastColumn - range.FirstColumn) + 1;
 
-                foreach (Ptg ptg in linkedDataRecord.FormulaOfLink)
+                foreach(Ptg ptg in linkedDataRecord.FormulaOfLink)
                 {
-                    if (ptg is AreaPtgBase areaPtg)
+                    if(ptg is AreaPtgBase areaPtg)
                     {
                         areaPtg.FirstRow = range.FirstRow;
                         areaPtg.LastRow = range.LastRow;
@@ -1179,14 +1185,14 @@ namespace NPOI.HSSF.UserModel
             {
                 int count = SetVerticalCellRange(dataValues, range);
 
-                series.NumValues = (short)count;
+                series.NumValues = (short) count;
             }
 
             public void SetCategoryLabelsCellRange(CellRangeAddressBase range)
             {
                 int count = SetVerticalCellRange(dataCategoryLabels, range);
 
-                series.NumCategories = (short)count;
+                series.NumCategories = (short) count;
             }
         }
 
@@ -1205,61 +1211,61 @@ namespace NPOI.HSSF.UserModel
             IList records = sheet.Sheet.Records;
 
             /* store first series as template and find last series index */
-            foreach (RecordBase record in records)
+            foreach(RecordBase record in records)
             {
 
                 idx++;
 
-                if (record is BeginRecord)
+                if(record is BeginRecord)
                 {
                     deep++;
                 }
-                else if (record is EndRecord)
+                else if(record is EndRecord)
                 {
                     deep--;
 
-                    if (lastSeriesDeep == deep)
+                    if(lastSeriesDeep == deep)
                     {
                         lastSeriesDeep = -1;
                         endSeriesRecordIdx = idx;
-                        if (!seriesTemplateFilled)
+                        if(!seriesTemplateFilled)
                         {
                             seriesTemplate.Add(record);
                             seriesTemplateFilled = true;
                         }
                     }
 
-                    if (chartDeep == deep)
+                    if(chartDeep == deep)
                     {
                         break;
                     }
                 }
 
-                if (record is ChartRecord)
+                if(record is ChartRecord)
                 {
-                    if (record == chartRecord)
+                    if(record == chartRecord)
                     {
                         chartRecordIdx = idx;
                         chartDeep = deep;
                     }
                 }
-                else if (record is SeriesRecord)
+                else if(record is SeriesRecord)
                 {
-                    if (chartRecordIdx != -1)
+                    if(chartRecordIdx != -1)
                     {
                         seriesIdx++;
                         lastSeriesDeep = deep;
                     }
                 }
 
-                if (lastSeriesDeep != -1 && !seriesTemplateFilled)
+                if(lastSeriesDeep != -1 && !seriesTemplateFilled)
                 {
                     seriesTemplate.Add(record);
                 }
             }
 
             /* check if a series was found */
-            if (endSeriesRecordIdx == -1)
+            if(endSeriesRecordIdx == -1)
             {
                 return null;
             }
@@ -1271,71 +1277,71 @@ namespace NPOI.HSSF.UserModel
 
             /* duplicate record of the template series */
             List<RecordBase> ClonedRecords = new List<RecordBase>();
-            foreach (RecordBase record in seriesTemplate)
+            foreach(RecordBase record in seriesTemplate)
             {
 
                 Record newRecord = null;
 
-                if (record is BeginRecord)
+                if(record is BeginRecord)
                 {
                     newRecord = new BeginRecord();
                 }
-                else if (record is EndRecord)
+                else if(record is EndRecord)
                 {
                     newRecord = new EndRecord();
                 }
-                else if (record is SeriesRecord record1)
+                else if(record is SeriesRecord record1)
                 {
                     SeriesRecord seriesRecord = (SeriesRecord)record1.Clone();
                     newSeries = new HSSFSeries(seriesRecord);
                     newRecord = seriesRecord;
                 }
-                else if (record is LinkedDataRecord dataRecord)
+                else if(record is LinkedDataRecord dataRecord)
                 {
                     LinkedDataRecord linkedDataRecord = (LinkedDataRecord)dataRecord.Clone();
-                    if (newSeries != null)
+                    if(newSeries != null)
                     {
                         newSeries.InsertData(linkedDataRecord);
                     }
                     newRecord = linkedDataRecord;
                 }
-                else if (record is DataFormatRecord formatRecord)
+                else if(record is DataFormatRecord formatRecord)
                 {
                     DataFormatRecord dataFormatRecord = (DataFormatRecord)formatRecord.Clone();
 
-                    dataFormatRecord.SeriesIndex = ((short)seriesIdx);
-                    dataFormatRecord.SeriesNumber = ((short)seriesIdx);
+                    dataFormatRecord.SeriesIndex = ((short) seriesIdx);
+                    dataFormatRecord.SeriesNumber = ((short) seriesIdx);
 
                     newRecord = dataFormatRecord;
                 }
-                else if (record is SeriesTextRecord textRecord)
+                else if(record is SeriesTextRecord textRecord)
                 {
                     SeriesTextRecord seriesTextRecord = (SeriesTextRecord)textRecord.Clone();
-                    if (newSeries != null)
+                    if(newSeries != null)
                     {
                         newSeries.SetSeriesTitleText(seriesTextRecord);
                     }
                     newRecord = seriesTextRecord;
                 }
-                else if (record is Record record2)
+                else if(record is Record record2)
                 {
-                    newRecord = (Record)record2.Clone();
+                    newRecord = (Record) record2.Clone();
                 }
 
-                if (newRecord != null)
+                if(newRecord != null)
                 {
                     ClonedRecords.Add(newRecord);
                 }
             }
 
             /* check if a user model series object was Created */
-            if (newSeries == null)
+            if(newSeries == null)
             {
                 return null;
             }
 
             /* transfer series to record list */
-            foreach (RecordBase record in ClonedRecords)
+            foreach(RecordBase record in ClonedRecords)
             {
                 records.Insert(idx++, record);
             }
@@ -1358,24 +1364,24 @@ namespace NPOI.HSSF.UserModel
             /* store first series as template and find last series index */
 
             IEnumerator iter = records.GetEnumerator();
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 RecordBase record = (RecordBase)iter.Current;
                 idx++;
 
-                if (record is BeginRecord)
+                if(record is BeginRecord)
                 {
                     deep++;
                 }
-                else if (record is EndRecord)
+                else if(record is EndRecord)
                 {
                     deep--;
 
-                    if (lastSeriesDeep == deep)
+                    if(lastSeriesDeep == deep)
                     {
                         lastSeriesDeep = -1;
 
-                        if (RemoveSeries)
+                        if(RemoveSeries)
                         {
                             RemoveSeries = false;
                             result = true;
@@ -1383,25 +1389,25 @@ namespace NPOI.HSSF.UserModel
                         }
                     }
 
-                    if (chartDeep == deep)
+                    if(chartDeep == deep)
                     {
                         break;
                     }
                 }
 
-                if (record is ChartRecord)
+                if(record is ChartRecord)
                 {
-                    if (record == chartRecord)
+                    if(record == chartRecord)
                     {
                         chartDeep = deep;
                         chartEntered = true;
                     }
                 }
-                else if (record is SeriesRecord)
+                else if(record is SeriesRecord)
                 {
-                    if (chartEntered)
+                    if(chartEntered)
                     {
-                        if (series.series == record)
+                        if(series.series == record)
                         {
                             lastSeriesDeep = deep;
                             RemoveSeries = true;
@@ -1412,16 +1418,16 @@ namespace NPOI.HSSF.UserModel
                         }
                     }
                 }
-                else if (record is DataFormatRecord dataFormatRecord)
+                else if(record is DataFormatRecord dataFormatRecord)
                 {
-                    if (chartEntered && !RemoveSeries)
+                    if(chartEntered && !RemoveSeries)
                     {
-                        dataFormatRecord.SeriesIndex = ((short)seriesIdx);
-                        dataFormatRecord.SeriesNumber = ((short)seriesIdx);
+                        dataFormatRecord.SeriesIndex = ((short) seriesIdx);
+                        dataFormatRecord.SeriesNumber = ((short) seriesIdx);
                     }
                 }
 
-                if (RemoveSeries)
+                if(RemoveSeries)
                 {
                     records.Remove(record);
                 }

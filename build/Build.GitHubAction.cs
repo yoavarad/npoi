@@ -43,8 +43,7 @@ class CustomGitHubActionsAttribute : GitHubActionsAttribute
 
         job.Steps = newSteps.ToArray();
 
-        return new GitHubActionsJobContinueOnError(job)
-        {
+        return new GitHubActionsJobContinueOnError(job) {
             ContinueOnError = image == GitHubActionsImage.WindowsLatest
         };
     }
@@ -68,34 +67,34 @@ class GitHubActionsJobContinueOnError : GitHubActionsJob
     {
         writer.WriteLine($"{Name}:");
 
-        using (writer.Indent())
+        using(writer.Indent())
         {
             writer.WriteLine($"name: {Name}");
             writer.WriteLine($"runs-on: {Image.GetValue()}");
 
-            if (ContinueOnError)
+            if(ContinueOnError)
                 writer.WriteLine("continue-on-error: true");
 
-            if (TimeoutMinutes > 0)
+            if(TimeoutMinutes > 0)
                 writer.WriteLine($"timeout-minutes: {TimeoutMinutes}");
 
-            if (!ConcurrencyGroup.IsNullOrWhiteSpace() || ConcurrencyCancelInProgress)
+            if(!ConcurrencyGroup.IsNullOrWhiteSpace() || ConcurrencyCancelInProgress)
             {
                 writer.WriteLine("concurrency:");
-                using (writer.Indent())
+                using(writer.Indent())
                 {
                     var group = ConcurrencyGroup;
-                    if (group.IsNullOrWhiteSpace())
+                    if(group.IsNullOrWhiteSpace())
                         group = "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}";
 
                     writer.WriteLine($"group: {group}");
-                    if (ConcurrencyCancelInProgress)
+                    if(ConcurrencyCancelInProgress)
                         writer.WriteLine("cancel-in-progress: true");
                 }
             }
 
             writer.WriteLine("steps:");
-            using (writer.Indent())
+            using(writer.Indent())
             {
                 Steps.ForEach(x => x.Write(writer));
             }
@@ -116,15 +115,15 @@ class GitHubActionsSetupDotNetStep : GitHubActionsStep
     {
         writer.WriteLine("- uses: actions/setup-dotnet@v5");
 
-        using (writer.Indent())
+        using(writer.Indent())
         {
             writer.WriteLine("with:");
-            using (writer.Indent())
+            using(writer.Indent())
             {
                 writer.WriteLine("dotnet-version: |");
-                using (writer.Indent())
+                using(writer.Indent())
                 {
-                    foreach (var version in Versions)
+                    foreach(var version in Versions)
                     {
                         writer.WriteLine(version);
                     }

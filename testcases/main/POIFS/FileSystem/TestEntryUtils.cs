@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,14 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.POIFS.FileSystem;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using NPOI.POIFS.FileSystem;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.Util;
-using System.IO;
 
 namespace TestCases.POIFS.FileSystem
 {
@@ -68,14 +69,14 @@ namespace TestCases.POIFS.FileSystem
             EntryUtils.CopyNodeRecursively(dirB, fsD.Root);
             ClassicAssert.AreEqual(1, fsD.Root.EntryCount);
             ClassicAssert.IsNotNull(fsD.Root.GetEntry("DirB"));
-            ClassicAssert.AreEqual(0, ((DirectoryEntry)fsD.Root.GetEntry("DirB")).EntryCount);
+            ClassicAssert.AreEqual(0, ((DirectoryEntry) fsD.Root.GetEntry("DirB")).EntryCount);
 
             EntryUtils.CopyNodeRecursively(dirA, fsD.Root);
             ClassicAssert.AreEqual(2, fsD.Root.EntryCount);
             ClassicAssert.IsNotNull(fsD.Root.GetEntry("DirB"));
-            ClassicAssert.AreEqual(0, ((DirectoryEntry)fsD.Root.GetEntry("DirB")).EntryCount);
+            ClassicAssert.AreEqual(0, ((DirectoryEntry) fsD.Root.GetEntry("DirB")).EntryCount);
             ClassicAssert.IsNotNull(fsD.Root.GetEntry("DirA"));
-            ClassicAssert.AreEqual(2, ((DirectoryEntry)fsD.Root.GetEntry("DirA")).EntryCount);
+            ClassicAssert.AreEqual(2, ((DirectoryEntry) fsD.Root.GetEntry("DirA")).EntryCount);
 
             // Copy the whole lot
             fsD = new POIFSFileSystem();
@@ -86,8 +87,8 @@ namespace TestCases.POIFS.FileSystem
             ClassicAssert.IsNotNull(fsD.Root.GetEntry(dirA.Name));
             ClassicAssert.IsNotNull(fsD.Root.GetEntry(dirB.Name));
             ClassicAssert.IsNotNull(fsD.Root.GetEntry(entryR.Name));
-            ClassicAssert.AreEqual(0, ((DirectoryEntry)fsD.Root.GetEntry("DirB")).EntryCount);
-            ClassicAssert.AreEqual(2, ((DirectoryEntry)fsD.Root.GetEntry("DirA")).EntryCount);
+            ClassicAssert.AreEqual(0, ((DirectoryEntry) fsD.Root.GetEntry("DirB")).EntryCount);
+            ClassicAssert.AreEqual(2, ((DirectoryEntry) fsD.Root.GetEntry("DirA")).EntryCount);
         }
         [Test]
         public void TestAreDocumentsIdentical()

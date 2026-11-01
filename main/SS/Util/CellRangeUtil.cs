@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Util
 {
+    using NPOI.SS.Util;
     using System;
     using System.Collections;
-    using NPOI.SS.Util;
     using System.Collections.Generic;
 
     /**
@@ -71,11 +71,11 @@ namespace NPOI.SS.Util
             {
                 return NO_INTERSECTION;
             }
-            else if (Contains(crA, crB))
+            else if(Contains(crA, crB))
             {
                 return INSIDE;
             }
-            else if (Contains(crB, crA))
+            else if(Contains(crB, crA))
             {
                 return ENCLOSES;
             }
@@ -95,7 +95,7 @@ namespace NPOI.SS.Util
          */
         public static CellRangeAddress[] MergeCellRanges(CellRangeAddress[] cellRanges)
         {
-            if (cellRanges.Length < 1)
+            if(cellRanges.Length < 1)
             {
                 return [];
             }
@@ -107,20 +107,20 @@ namespace NPOI.SS.Util
         private static List<CellRangeAddress> MergeCellRanges(List<CellRangeAddress> cellRangeList)
         {
             // loop until either only one item is left or we did not merge anything any more
-            while (cellRangeList.Count > 1)
+            while(cellRangeList.Count > 1)
             {
                 bool somethingGotMerged = false;
                 // look at all cell-ranges
-                for (int i = 0; i < cellRangeList.Count; i++)
+                for(int i = 0; i < cellRangeList.Count; i++)
                 {
                     CellRangeAddress range1 = cellRangeList[i];
                     // compare each cell range to all other cell-ranges
-                    for (int j = i + 1; j < cellRangeList.Count; j++)
+                    for(int j = i + 1; j < cellRangeList.Count; j++)
                     {
                         CellRangeAddress range2 = cellRangeList[j];
 
                         CellRangeAddress[] mergeResult = MergeRanges(range1, range2);
-                        if (mergeResult == null)
+                        if(mergeResult == null)
                         {
                             continue;
                         }
@@ -131,14 +131,14 @@ namespace NPOI.SS.Util
                         // remove range2
                         cellRangeList.RemoveAt(j--);
                         // Add any extra results beyond the first
-                        for (int k = 1; k < mergeResult.Length; k++)
+                        for(int k = 1; k < mergeResult.Length; k++)
                         {
                             j++;
                             cellRangeList.Insert(j, mergeResult[k]);
                         }
                     }
                 }
-                if (!somethingGotMerged)
+                if(!somethingGotMerged)
                 {
                     break;
                 }
@@ -155,11 +155,11 @@ namespace NPOI.SS.Util
         {
 
             int x = Intersect(range1, range2);
-            switch (x)
+            switch(x)
             {
                 // nothing in common: at most they could be adjacent to each other and thus form a single bigger area  
                 case CellRangeUtil.NO_INTERSECTION:
-                    if (HasExactSharedBorder(range1, range2))
+                    if(HasExactSharedBorder(range1, range2))
                     {
                         return new CellRangeAddress[] { CreateEnclosingCellRange(range1, range2), };
                     }
@@ -298,7 +298,7 @@ namespace NPOI.SS.Util
         private static CellRangeAddress[] ToArray(ArrayList temp)
         {
             CellRangeAddress[] result = new CellRangeAddress[temp.Count];
-            result = (CellRangeAddress[])temp.ToArray(typeof(CellRangeAddress));
+            result = (CellRangeAddress[]) temp.ToArray(typeof(CellRangeAddress));
             return result;
         }
 
@@ -331,7 +331,7 @@ namespace NPOI.SS.Util
             int oFirstCol = crB.FirstColumn;
             int oLastCol = crB.LastColumn;
 
-            if (crA.FirstRow > 0 && crA.FirstRow - 1 == oLastRow ||
+            if(crA.FirstRow > 0 && crA.FirstRow - 1 == oLastRow ||
                 oFirstRow > 0 && oFirstRow - 1 == crA.LastRow)
             {
                 // ranges have a horizontal border in common
@@ -339,7 +339,7 @@ namespace NPOI.SS.Util
                 return crA.FirstColumn == oFirstCol && crA.LastColumn == oLastCol;
             }
 
-            if (crA.FirstColumn > 0 && crA.FirstColumn - 1 == oLastCol ||
+            if(crA.FirstColumn > 0 && crA.FirstColumn - 1 == oLastCol ||
                 oFirstCol > 0 && crA.LastColumn == oFirstCol - 1)
             {
                 // ranges have a vertical border in common
@@ -356,7 +356,7 @@ namespace NPOI.SS.Util
          */
         public static CellRangeAddress CreateEnclosingCellRange(CellRangeAddress crA, CellRangeAddress crB)
         {
-            if (crB == null)
+            if(crB == null)
             {
                 return crA.Copy();
             }

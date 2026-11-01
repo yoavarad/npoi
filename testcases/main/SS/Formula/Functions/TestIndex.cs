@@ -18,18 +18,19 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using TestCases.SS.Formula.Functions;
-    using NPOI.SS.Formula.Functions;
-    using Index = NPOI.SS.Formula.Functions.Index;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
-    using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
+    using TestCases.SS.Formula.Functions;
+    using Index = NPOI.SS.Formula.Functions.Index;
 
     /**
      * Tests for the INDEX() function.</p>
@@ -82,14 +83,14 @@ namespace TestCases.SS.Formula.Functions
                 int rowNum, int colNum, double expectedResult)
         {
             ValueEval[] values = new ValueEval[dValues.Length];
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
                 values[i] = new NumberEval(dValues[i]);
             }
             AreaEval arg0 = EvalFactory.CreateAreaEval(areaRefString, values);
 
             ValueEval[] args;
-            if (colNum > 0)
+            if(colNum > 0)
             {
                 args = new ValueEval[] { arg0, new NumberEval(rowNum), new NumberEval(colNum), };
             }
@@ -107,7 +108,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval ve = FUNC_INST.Evaluate(args, -1, -1);
             ve = WorkbookEvaluator.DereferenceResult(ve, -1, -1);
             ClassicAssert.AreEqual(typeof(NumberEval), ve.GetType());
-            return ((NumberEval)ve).NumberValue;
+            return ((NumberEval) ve).NumberValue;
         }
 
         /**
@@ -129,9 +130,9 @@ namespace TestCases.SS.Formula.Functions
             {
                 actualResult = FUNC_INST.Evaluate(args, -1, -1);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("Unexpected arg eval type (NPOI.hssf.Record.Formula.Eval.MissingArgEval"))
+                if(e.Message.Equals("Unexpected arg eval type (NPOI.hssf.Record.Formula.Eval.MissingArgEval"))
                 {
                     throw new AssertionException("Identified bug 47048b - INDEX() should support missing-arg");
                 }
@@ -141,7 +142,7 @@ namespace TestCases.SS.Formula.Functions
             AreaEval ae = ConfirmAreaEval("B10:B10", actualResult);
             actualResult = ae.GetValue(0, 0);
             ClassicAssert.AreEqual(typeof(NumberEval), actualResult.GetType());
-            ClassicAssert.AreEqual(26.0, ((NumberEval)actualResult).NumberValue, 0.0);
+            ClassicAssert.AreEqual(26.0, ((NumberEval) actualResult).NumberValue, 0.0);
         }
 
         /**

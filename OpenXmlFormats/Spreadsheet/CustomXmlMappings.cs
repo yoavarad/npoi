@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -285,7 +285,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "PreserveSortAFLayout", this.PreserveSortAFLayout);
             XmlHelper.WriteAttribute(sw, "Append", this.Append);
             XmlHelper.WriteAttribute(sw, "AutoFit", this.AutoFit);
-            
+
             if(dataBindingField != null)
             {
                 sw.Write('>');
@@ -513,7 +513,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         [XmlAttribute]
         public bool FileBinding
         {
-            get { return null == this.fileBindingField ? false : (bool)this.fileBindingField; } // default value not defined in xsd
+            get { return null == this.fileBindingField ? false : (bool) this.fileBindingField; } // default value not defined in xsd
             set { this.fileBindingField = value; }
         }
         [XmlIgnore]
@@ -526,7 +526,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         [XmlAttribute]
         public uint ConnectionID
         {
-            get { return null == this.connectionIDField ? 0 : (uint)this.connectionIDField; } // default value not defined in xsd
+            get { return null == this.connectionIDField ? 0 : (uint) this.connectionIDField; } // default value not defined in xsd
             set { this.connectionIDField = value; }
         }
 

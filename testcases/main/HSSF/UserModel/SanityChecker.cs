@@ -19,14 +19,14 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.Collections;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.HSSF.UserModel;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
 
     /**
      * Designed to Check wither the records written actually make sense.
@@ -90,7 +90,7 @@ namespace TestCases.HSSF.UserModel
             public int Match(IList records, int recordIdx)
             {
                 int firstRecord = FindFirstRecord(records, GetRecord(), recordIdx);
-                if (IsRequired())
+                if(IsRequired())
                 {
                     return MatchRequired(firstRecord, records, recordIdx);
                 }
@@ -102,7 +102,7 @@ namespace TestCases.HSSF.UserModel
 
             private int MatchOptional(int firstRecord, IList records, int recordIdx)
             {
-                if (firstRecord == -1)
+                if(firstRecord == -1)
                 {
                     return recordIdx;
                 }
@@ -112,7 +112,7 @@ namespace TestCases.HSSF.UserModel
 
             private int MatchRequired(int firstRecord, IList records, int recordIdx)
             {
-                if (firstRecord == -1)
+                if(firstRecord == -1)
                 {
                     Assert.Fail("Manditory record missing or out of order: " + record);
                 }
@@ -122,20 +122,20 @@ namespace TestCases.HSSF.UserModel
 
             private int MatchOneOrMany(IList records, int recordIdx)
             {
-                if (IsZeroOrOne())
+                if(IsZeroOrOne())
                 {
                     // Check no other records
-                    if (FindFirstRecord(records, GetRecord(), recordIdx + 1) != -1)
+                    if(FindFirstRecord(records, GetRecord(), recordIdx + 1) != -1)
                         Assert.Fail("More than one record Matched for " + GetRecord().Name);
                 }
-                else if (IsZeroToMany())
+                else if(IsZeroToMany())
                 {
-                    if (together)
+                    if(together)
                     {
                         int nextIdx = FindFirstRecord(records, record, recordIdx + 1);
-                        while (nextIdx != -1)
+                        while(nextIdx != -1)
                         {
-                            if (nextIdx - 1 != recordIdx)
+                            if(nextIdx - 1 != recordIdx)
                                 Assert.Fail("Records are not together " + record.Name);
                             recordIdx = nextIdx;
                             nextIdx = FindFirstRecord(records, record, recordIdx + 1);
@@ -235,8 +235,8 @@ namespace TestCases.HSSF.UserModel
         public void CheckHSSFWorkbook(HSSFWorkbook wb)
         {
             CheckWorkbookRecords(wb.Workbook);
-            for (int i = 0; i < wb.NumberOfSheets; i++)
-                CheckSheetRecords(((HSSFSheet)wb.GetSheetAt(i)).Sheet);
+            for(int i = 0; i < wb.NumberOfSheets; i++)
+                CheckSheetRecords(((HSSFSheet) wb.GetSheetAt(i)).Sheet);
 
         }
 
@@ -274,9 +274,9 @@ namespace TestCases.HSSF.UserModel
         /* package */
         static int FindFirstRecord(IList records, Type record, int startIndex)
         {
-            for (int i = startIndex; i < records.Count; i++)
+            for(int i = startIndex; i < records.Count; i++)
             {
-                if (record.Name.Equals(records[i].GetType().Name))
+                if(record.Name.Equals(records[i].GetType().Name))
                     return i;
             }
             return -1;
@@ -285,7 +285,7 @@ namespace TestCases.HSSF.UserModel
         public void CheckRecordOrder(IList records, CheckRecord[] check)
         {
             int recordIdx = 0;
-            for (int checkIdx = 0; checkIdx < check.Length; checkIdx++)
+            for(int checkIdx = 0; checkIdx < check.Length; checkIdx++)
             {
                 recordIdx = check[checkIdx].Match(records, recordIdx);
             }

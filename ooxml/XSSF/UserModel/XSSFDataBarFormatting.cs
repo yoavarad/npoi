@@ -18,10 +18,10 @@
  */
 namespace NPOI.XSSF.UserModel
 {
-    using System;
     using NPOI.OOXML.XSSF.UserModel;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * High level representation for DataBar / Data Bar Formatting 
@@ -43,7 +43,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_databar.IsSetShowValue())
+                if(_databar.IsSetShowValue())
                     return !_databar.showValue;
                 return false;
             }
@@ -64,7 +64,7 @@ namespace NPOI.XSSF.UserModel
                 // TODO How does XSSF encode this?
             }
         }
-        
+
 
         public int WidthMin
         {
@@ -77,7 +77,7 @@ namespace NPOI.XSSF.UserModel
                 // TODO How does XSSF encode this?
             }
         }
-        
+
         public int WidthMax
         {
             get
@@ -99,7 +99,7 @@ namespace NPOI.XSSF.UserModel
             }
             set
             {
-                _databar.color = ((XSSFColor)value).GetCTColor();
+                _databar.color = ((XSSFColor) value).GetCTColor();
             }
         }
 

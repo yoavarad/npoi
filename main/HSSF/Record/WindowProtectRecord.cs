@@ -18,9 +18,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title: Window Protect Record
@@ -51,7 +51,7 @@ namespace NPOI.HSSF.Record
         {
         }
         public WindowProtectRecord(bool protect)
-            :this(0)
+            : this(0)
         {
             Protect = (protect);
         }

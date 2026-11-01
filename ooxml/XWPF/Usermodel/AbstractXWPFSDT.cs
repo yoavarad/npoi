@@ -16,8 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * Experimental abstract class that is a base for XWPFSDT and XWPFSDTCell
@@ -34,7 +34,7 @@ namespace NPOI.XWPF.UserModel
 
         public AbstractXWPFSDT(CT_SdtPr pr, IBody part)
         {
-            if (pr == null)
+            if(pr == null)
             {
                 title = "";
                 tag = "";
@@ -42,7 +42,7 @@ namespace NPOI.XWPF.UserModel
             else
             {
                 CT_String[] aliases = pr.GetAliasArray();
-                if (aliases != null && aliases.Length > 0)
+                if(aliases != null && aliases.Length > 0)
                 {
                     title = aliases[0].val;
                 }
@@ -51,7 +51,7 @@ namespace NPOI.XWPF.UserModel
                     title = "";
                 }
                 CT_String[] tags = pr.GetAliasArray();
-                if (tags != null && tags.Length > 0)
+                if(tags != null && tags.Length > 0)
                 {
                     tag = tags[0].val;
                 }

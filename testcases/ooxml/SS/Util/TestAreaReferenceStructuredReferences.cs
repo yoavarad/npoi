@@ -17,15 +17,15 @@
 
 namespace TestCases.SS.Util
 {
-    using System;
     using NPOI.SS;
     using NPOI.SS.Formula;
-    using NPOI.SS.Util;
     using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
+    using System;
 
     /// <summary>
     /// Tests the <see cref="AreaReference"/> constructor overload and the

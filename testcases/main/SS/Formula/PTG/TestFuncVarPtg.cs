@@ -17,11 +17,12 @@
 
 namespace TestCases.SS.Formula.PTG
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * @author Josh Micich
@@ -45,7 +46,7 @@ namespace TestCases.SS.Formula.PTG
             ClassicAssert.AreEqual(2, ptgs.Length);
             ClassicAssert.AreEqual(typeof(AreaPtg), ptgs[0].GetType());
 
-            switch (ptgs[0].PtgClass)
+            switch(ptgs[0].PtgClass)
             {
                 case Ptg.CLASS_REF:
                     // correct behaviour

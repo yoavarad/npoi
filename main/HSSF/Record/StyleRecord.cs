@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -38,8 +38,8 @@ namespace NPOI.HSSF.Record
     {
         public const short sid = 0x293;
 
-	    private static BitField styleIndexMask = BitFieldFactory.GetInstance(0x0FFF);
-	    private static BitField isBuiltinFlag  = BitFieldFactory.GetInstance(0x8000);
+        private static BitField styleIndexMask = BitFieldFactory.GetInstance(0x0FFF);
+        private static BitField isBuiltinFlag  = BitFieldFactory.GetInstance(0x8000);
 
         // shared by both user defined and builtin styles
         private int field_1_xf_index;   // TODO: bitfield candidate
@@ -71,7 +71,7 @@ namespace NPOI.HSSF.Record
         public StyleRecord(RecordInputStream in1)
         {
             field_1_xf_index = in1.ReadShort();
-            if (IsBuiltin)
+            if(IsBuiltin)
             {
                 field_2_builtin_style = in1.ReadByte();
                 field_3_outline_style_level = in1.ReadByte();
@@ -82,11 +82,11 @@ namespace NPOI.HSSF.Record
 
                 // Some files from Crystal Reports lack
                 //  the remaining fields, which Is naughty
-                if (in1.Remaining <1)
+                if(in1.Remaining <1)
                 {
                     // Some files from Crystal Reports lack the is16BitUnicode byte
                     //  the remaining fields, which is naughty
-                    if (field_2_name_length != 0)
+                    if(field_2_name_length != 0)
                     {
                         throw new RecordFormatException("Ran out of data reading style record");
                     }
@@ -95,14 +95,14 @@ namespace NPOI.HSSF.Record
                 }
                 else
                 {
-				    field_3_stringHasMultibyte = in1.ReadByte() != 0x00;
-				    if (field_3_stringHasMultibyte)
+                    field_3_stringHasMultibyte = in1.ReadByte() != 0x00;
+                    if(field_3_stringHasMultibyte)
                     {
                         field_4_name = StringUtil.ReadUnicodeLE(in1, field_2_name_length);
                     }
                     else
                     {
-                        field_4_name = StringUtil.ReadCompressedUnicode(in1,field_2_name_length);
+                        field_4_name = StringUtil.ReadCompressedUnicode(in1, field_2_name_length);
                     }
                 }
             }
@@ -130,7 +130,7 @@ namespace NPOI.HSSF.Record
 
         public short XFIndex
         {
-            get { return (short)(field_1_xf_index & 0x1FFF); }
+            get { return (short) (field_1_xf_index & 0x1FFF); }
             set { field_1_xf_index = SetField(field_1_xf_index, value, 0x1FFF, 0); }
         }
 
@@ -145,7 +145,8 @@ namespace NPOI.HSSF.Record
         public String Name
         {
             get { return field_4_name; }
-            set { 
+            set
+            {
                 field_4_name = value;
                 field_3_stringHasMultibyte = StringUtil.HasMultibyte(value);
                 field_1_xf_index = isBuiltinFlag.Clear(field_1_xf_index);
@@ -153,8 +154,8 @@ namespace NPOI.HSSF.Record
         }
 
         // end user defined
- 
- 
+
+
         /**
          * Get the row or column level of the style (if builtin 1||2)
          */
@@ -177,10 +178,10 @@ namespace NPOI.HSSF.Record
             buffer.Append("    .xf_index_raw    = ")
                 .Append(HexDump.ShortToHex(field_1_xf_index)).Append("\n");
             buffer.Append("        .type        = ")
-                .Append(IsBuiltin?"built-in":"user-defined").Append("\n");
+                .Append(IsBuiltin ? "built-in" : "user-defined").Append("\n");
             buffer.Append("        .xf_index    = ")
                 .Append(HexDump.ShortToHex(XFIndex)).Append("\n");
-            if (IsBuiltin)
+            if(IsBuiltin)
             {
                 buffer.Append("    .builtin_style   = ").Append(HexDump.ByteToHex(field_2_builtin_style)).Append("\n");
                 buffer.Append("    .outline_level   = ").Append(HexDump.ByteToHex(field_3_outline_style_level)).Append("\n");
@@ -195,13 +196,13 @@ namespace NPOI.HSSF.Record
 
         private static short SetField(int fieldValue, int new_value, int mask, int ShiftLeft)
         {
-            return (short)((fieldValue & ~mask) | ((new_value << ShiftLeft) & mask));
+            return (short) ((fieldValue & ~mask) | ((new_value << ShiftLeft) & mask));
         }
 
         public override void Serialize(ILittleEndianOutput o)
         {
             o.WriteShort(field_1_xf_index);
-            if (IsBuiltin)
+            if(IsBuiltin)
             {
                 o.WriteByte(field_2_builtin_style);
                 o.WriteByte(field_3_outline_style_level);
@@ -210,7 +211,7 @@ namespace NPOI.HSSF.Record
             {
                 o.WriteShort(field_4_name.Length);
                 o.WriteByte(field_3_stringHasMultibyte ? 0x01 : 0x00);
-                if (field_3_stringHasMultibyte)
+                if(field_3_stringHasMultibyte)
                 {
                     StringUtil.PutUnicodeLE(Name, o);
                 }
@@ -225,7 +226,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (IsBuiltin)
+                if(IsBuiltin)
                 {
                     return 4; // short, byte, byte
                 }

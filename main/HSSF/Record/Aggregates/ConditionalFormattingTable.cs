@@ -18,13 +18,13 @@
 namespace NPOI.HSSF.Record.Aggregates
 {
 
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /**
      * Holds all the conditional formatting for a workbook sheet.<p/>
@@ -50,7 +50,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
 
             List<CFRecordsAggregate> temp = new List<CFRecordsAggregate>();
-            while (rs.PeekNextClass() == typeof(CFHeaderRecord)||
+            while(rs.PeekNextClass() == typeof(CFHeaderRecord)||
                 rs.PeekNextClass() == typeof(CFHeader12Record))
             {
                 temp.Add(CFRecordsAggregate.CreateCFAggregate(rs));
@@ -60,7 +60,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public override void VisitContainedRecords(RecordVisitor rv)
         {
-            foreach (CFRecordsAggregate subAgg in _cfHeaders)
+            foreach(CFRecordsAggregate subAgg in _cfHeaders)
             {
                 subAgg.VisitContainedRecords(rv);
             }
@@ -98,7 +98,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private void CheckIndex(int index)
         {
-            if (index < 0 || index >= _cfHeaders.Count)
+            if(index < 0 || index >= _cfHeaders.Count)
             {
                 throw new ArgumentException("Specified CF index " + index
                         + " is outside the allowable range (0.." + (_cfHeaders.Count - 1) + ")");
@@ -107,11 +107,11 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public void UpdateFormulasAfterCellShift(FormulaShifter shifter, int externSheetIndex)
         {
-            for (int i = 0; i < _cfHeaders.Count; i++)
+            for(int i = 0; i < _cfHeaders.Count; i++)
             {
                 CFRecordsAggregate subAgg = _cfHeaders[i];
                 bool shouldKeep = subAgg.UpdateFormulasAfterCellShift(shifter, externSheetIndex);
-                if (!shouldKeep)
+                if(!shouldKeep)
                 {
                     _cfHeaders.RemoveAt(i);
                     i--;

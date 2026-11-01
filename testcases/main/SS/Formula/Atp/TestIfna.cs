@@ -1,7 +1,8 @@
-﻿using NPOI.HSSF.UserModel;
+using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -70,7 +71,7 @@ namespace TestCases.SS.Formula.Atp
             ClassicAssert.AreEqual(expectedResult.FormatAsString(), result.FormatAsString(), "Testing result for: " + formulaText);
         }
 
-        private static void ConfirmError(IFormulaEvaluator fe, ICell cell, String formulaText,ErrorEval expectedError)
+        private static void ConfirmError(IFormulaEvaluator fe, ICell cell, String formulaText, ErrorEval expectedError)
         {
             fe.DebugEvaluationOutputForNextEval = true;
             cell.SetCellFormula(formulaText);

@@ -16,8 +16,9 @@
 ==================================================================== */
 namespace TestCases.SS.Formula.Functions
 {
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
 
     /**
     * Tests DGET() as loaded from a test data spreadsheet.
@@ -35,4 +36,3 @@ namespace TestCases.SS.Formula.Functions
         }
     }
 }
-

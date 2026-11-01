@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -67,8 +67,8 @@ namespace NPOI.HSSF.Record.Chart
         {
 
             field_1_flags = in1.ReadShort();
-            field_2_mdBlank = (byte)in1.ReadByte();
-            field_3_reserved = (byte)in1.ReadByte();
+            field_2_mdBlank = (byte) in1.ReadByte();
+            field_3_reserved = (byte) in1.ReadByte();
         }
 
         public override String ToString()
@@ -212,7 +212,7 @@ namespace NPOI.HSSF.Record.Chart
             set
             {
                 field_1_flags = alwaysAutoPlotArea.SetShortBoolean(field_1_flags, value);
-                if (value)
+                if(value)
                     IsManPlotArea = value;
             }
         }

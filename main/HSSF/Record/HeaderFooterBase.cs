@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /**
      * Common header/footer base class
@@ -37,21 +37,21 @@ namespace NPOI.HSSF.Record
 
         protected HeaderFooterBase(RecordInputStream in1)
         {
-            if (in1.Remaining > 0)
+            if(in1.Remaining > 0)
             {
                 int field_1_footer_len = in1.ReadShort();
                 //61287 -- if the footer_len == 0, there may not be a multibyte flag
-			    if (field_1_footer_len == 0)
+                if(field_1_footer_len == 0)
                 {
-				    field_3_text = "";
-				    if (in1.Remaining == 0)
+                    field_3_text = "";
+                    if(in1.Remaining == 0)
                     {
-					    return;
-				    }
-			    }
+                        return;
+                    }
+                }
                 field_2_hasMultibyte = in1.ReadByte() != 0x00;
 
-                if (field_2_hasMultibyte)
+                if(field_2_hasMultibyte)
                 {
                     field_3_text = in1.ReadUnicodeLEString(field_1_footer_len);
                 }
@@ -88,9 +88,9 @@ namespace NPOI.HSSF.Record
             {
                 return field_3_text;
             }
-            set 
+            set
             {
-                if (value == null)
+                if(value == null)
                 {
                     throw new ArgumentException("text must not be null");
                 }
@@ -98,21 +98,21 @@ namespace NPOI.HSSF.Record
                 field_3_text = value;
 
                 // Check it'll fit into the space in the record
-                if (this.DataSize > RecordInputStream.MAX_RECORD_DATA_SIZE)
+                if(this.DataSize > RecordInputStream.MAX_RECORD_DATA_SIZE)
                 {
                     throw new ArgumentException("Header/Footer string too long (limit is "
                             + RecordInputStream.MAX_RECORD_DATA_SIZE + " bytes)");
-                }               
+                }
             }
         }
 
         public override void Serialize(ILittleEndianOutput out1)
         {
-            if (TextLength > 0)
+            if(TextLength > 0)
             {
                 out1.WriteShort(TextLength);
                 out1.WriteByte(field_2_hasMultibyte ? 0x01 : 0x00);
-                if (field_2_hasMultibyte)
+                if(field_2_hasMultibyte)
                 {
                     StringUtil.PutUnicodeLE(field_3_text, out1);
                 }
@@ -127,7 +127,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (TextLength< 1)
+                if(TextLength< 1)
                 {
                     return 0;
                 }
@@ -136,6 +136,3 @@ namespace NPOI.HSSF.Record
         }
     }
 }
-
-
-

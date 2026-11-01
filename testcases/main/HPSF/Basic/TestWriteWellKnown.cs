@@ -17,17 +17,17 @@
 
 namespace TestCases.HPSF.Basic
 {
+    using NPOI.HPSF;
+    using NPOI.HPSF.Wellknown;
+    using NPOI.POIFS.FileSystem;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-
-    using NPOI.HPSF;
-    using NPOI.HPSF.Wellknown;
-    using NPOI.POIFS.FileSystem;
-    using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
 
     /**
      * Tests HPSF's high-level writing functionality for the well-known property
@@ -170,7 +170,7 @@ namespace TestCases.HPSF.Basic
         public void TestWriteWellKnown1()
         {
             POIDataSamples _samples = POIDataSamples.GetHPSFInstance();
-        
+
             FileInfo doc1 = TempFile.CreateTempFile("POI_HPSF_Test1.", ".tmp");
             FileInfo doc2 = TempFile.CreateTempFile("POI_HPSF_Test2.", ".tmp");
             FileInfo doc3 = TempFile.CreateTempFile("POI_HPSF_Test3.", ".tmp");
@@ -180,14 +180,14 @@ namespace TestCases.HPSF.Basic
             IOUtils.Copy(fis, fos);
             fos.Close();
             fis.Close();
-        
+
             CustomProperties cps1 = Write1stFile(doc1, doc2);
             CustomProperties cps2 = Write2ndFile(doc2, doc3);
             Write3rdFile(doc3, null);
-        
+
             ClassicAssert.AreEqual(cps1, cps2);
         }
-    
+
         /*
          * Write all properties supported by HPSF to the summary information
          * (e.g. author, edit date, application name) and to the document
@@ -249,9 +249,9 @@ namespace TestCases.HPSF.Basic
             CustomProperties cps = dsi.CustomProperties;
             ClassicAssert.IsNull(cps);
             cps = new CustomProperties();
-            cps.Put("Schl\u00fcssel \u00e4",    "Wert \u00e4");
-            cps.Put("Schl\u00fcssel \u00e4\u00f6",   "Wert \u00e4\u00f6");
-            cps.Put("Schl\u00fcssel \u00e4\u00f6\u00fc",  "Wert \u00e4\u00f6\u00fc");
+            cps.Put("Schl\u00fcssel \u00e4", "Wert \u00e4");
+            cps.Put("Schl\u00fcssel \u00e4\u00f6", "Wert \u00e4\u00f6");
+            cps.Put("Schl\u00fcssel \u00e4\u00f6\u00fc", "Wert \u00e4\u00f6\u00fc");
             cps.Put("Schl\u00fcssel \u00e4\u00f6\u00fc\u00d6", "Wert \u00e4\u00f6\u00fc\u00d6");
             cps.Put("positive_int", POSITIVE_INTEGER);
             cps.Put("positive_Long", POSITIVE_LONG);
@@ -267,17 +267,17 @@ namespace TestCases.HPSF.Basic
             cps.Put("min_Long", MIN_LONG);
             cps.Put("max_Double", MAX_DOUBLE);
             cps.Put("min_Double", MIN_DOUBLE);
-        
+
             // Check the keys went in
             ClassicAssert.IsTrue(cps.ContainsKey("Schl\u00fcssel \u00e4"));
             ClassicAssert.IsTrue(cps.ContainsKey("Boolean"));
-        
+
             // Check the values went in
             ClassicAssert.AreEqual("Wert \u00e4", cps.Get("Schl\u00fcssel \u00e4"));
             ClassicAssert.AreEqual(true, cps.Get("Boolean"));
             ClassicAssert.IsTrue(cps.ContainsValue(true));
             ClassicAssert.IsTrue(cps.ContainsValue("Wert \u00e4"));
-        
+
             // Check that things that aren't in aren't in
             ClassicAssert.IsFalse(cps.ContainsKey("False Boolean"));
             ClassicAssert.IsFalse(cps.ContainsValue(false));
@@ -285,7 +285,7 @@ namespace TestCases.HPSF.Basic
             // Save as our custom properties
             dsi.CustomProperties = cps;
 
-        
+
             /* Write the summary information stream and the document summary
              * information stream to the POI filesystem. */
             si.Write(poifs.Root, SummaryInformation.DEFAULT_STREAM_NAME);
@@ -297,10 +297,10 @@ namespace TestCases.HPSF.Basic
             poifs.WriteFileSystem(out1);
             out1.Close();
             poifs.Close();
-        
+
             return cps;
         }
-    
+
         /*
          * Open <em>doc2</em> for reading and check summary information and
          * document summary information. All properties written before must be
@@ -419,10 +419,10 @@ namespace TestCases.HPSF.Basic
             poifs.WriteFileSystem(out1);
             out1.Close();
             poifs.Close();
-        
+
             return cps;
         }
-    
+
         /*
          * Open {@code doc3} for reading and check summary information
          * and document summary information. All properties removed before must not
@@ -483,7 +483,7 @@ namespace TestCases.HPSF.Basic
             ClassicAssert.AreEqual(0, dsi.SlideCount);
             ClassicAssert.IsTrue(dsi.WasNull);
             poifs.Close();
-        
+
             return dsi.CustomProperties;
         }
 
@@ -495,10 +495,10 @@ namespace TestCases.HPSF.Basic
             dis.Close();
             return si;
         }
-    
+
         internal static DocumentSummaryInformation GetDocumentSummaryInformation(NPOIFSFileSystem poifs)
         {
-            if (!poifs.Root.HasEntry(DocumentSummaryInformation.DEFAULT_STREAM_NAME))
+            if(!poifs.Root.HasEntry(DocumentSummaryInformation.DEFAULT_STREAM_NAME))
             {
                 return null;
             }

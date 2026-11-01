@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -27,7 +27,8 @@ namespace TestCases.XSSF.Streaming
 {
     using NPOI.Util;
     using NPOI.XSSF.Streaming;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     [TestFixture]
     public sealed class TestSheetDataWriter
@@ -45,7 +46,7 @@ namespace TestCases.XSSF.Streaming
         [Test]
         public void TestReplaceWithQuestionMark()
         {
-            for (int i = 0; i < unicodeSurrogates.Length; i++)
+            for(int i = 0; i < unicodeSurrogates.Length; i++)
             {
                 ClassicAssert.IsFalse(SheetDataWriter.ReplaceWithQuestionMark(unicodeSurrogates[i]));
             }
@@ -71,7 +72,7 @@ namespace TestCases.XSSF.Streaming
                 {
                     byte[] data = IOUtils.ToByteArray(is1);
                     int index = 0;
-                    if (data[0] == 0xEF && data[1] == 0xBB && data[2] == 0xBF)
+                    if(data[0] == 0xEF && data[1] == 0xBB && data[2] == 0xBF)
                         index = 3;
                     text = Encoding.UTF8.GetString(data, index, data.Length - index);
                 }
@@ -102,7 +103,7 @@ namespace TestCases.XSSF.Streaming
                 {
                     byte[] data = IOUtils.ToByteArray(is1);
                     int index = 0;
-                    if (data[0] == 0xEF && data[1] == 0xBB && data[2] == 0xBF)
+                    if(data[0] == 0xEF && data[1] == 0xBB && data[2] == 0xBF)
                         index = 3;
                     text = Encoding.UTF8.GetString(data, index, data.Length - index);
                 }

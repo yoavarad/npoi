@@ -17,10 +17,11 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link StyleRecord}
@@ -41,9 +42,9 @@ namespace TestCases.HSSF.Record
             {
                 ser = sr.Serialize();
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.Equals("Incorrect number of bytes written - expected 27 but got 18"))
+                if(e.Message.Equals("Incorrect number of bytes written - expected 27 but got 18"))
                 {
                     throw new AssertionException("Identified bug 46385");
                 }

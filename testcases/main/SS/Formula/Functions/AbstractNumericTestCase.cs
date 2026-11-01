@@ -21,8 +21,9 @@
 
 namespace TestCases.SS.Formula.Functions
 {
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
      *
@@ -55,11 +56,11 @@ namespace TestCases.SS.Formula.Functions
         {
             double posZero = Math.Abs(almostZero);
             double negZero = -1 * posZero;
-            if (Double.IsNaN(baseval))
+            if(Double.IsNaN(baseval))
             {
                 ClassicAssert.IsTrue(Double.IsNaN(baseval), message + ": Expected " + baseval + " but was " + checkval);
             }
-            else if (Double.IsInfinity(baseval))
+            else if(Double.IsInfinity(baseval))
             {
                 ClassicAssert.IsTrue(Double.IsInfinity(baseval) && ((baseval < 0) == (checkval < 0)), message + ": Expected " + baseval + " but was " + checkval);
             }

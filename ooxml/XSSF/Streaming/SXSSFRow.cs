@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,12 +14,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.SS;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NPOI.SS;
-using NPOI.SS.UserModel;
 
 namespace NPOI.XSSF.Streaming
 {
@@ -42,7 +42,7 @@ namespace NPOI.XSSF.Streaming
         {
             _sheet = sheet;
         }
-        
+
         public CellIterator AllCellsIterator()
         {
             return new CellIterator(LastCellNum, _cells);
@@ -69,7 +69,7 @@ namespace NPOI.XSSF.Streaming
         {
             get
             {
-                return (short)(_height == -1 ? Sheet.DefaultRowHeightInPoints * 20 : _height);
+                return (short) (_height == -1 ? Sheet.DefaultRowHeightInPoints * 20 : _height);
             }
             set { _height = value; }
         }
@@ -78,7 +78,7 @@ namespace NPOI.XSSF.Streaming
         {
             get
             {
-                return (float)(_height == -1 ? Sheet.DefaultRowHeightInPoints : _height / 20.0);
+                return (float) (_height == -1 ? Sheet.DefaultRowHeightInPoints : _height / 20.0);
             }
 
             set
@@ -136,14 +136,15 @@ namespace NPOI.XSSF.Streaming
         {
             get
             {
-                if (!IsFormatted) return null;
+                if(!IsFormatted)
+                    return null;
 
                 return Sheet.Workbook.GetCellStyleAt(_style);
             }
 
             set
             {
-                if (value == null)
+                if(value == null)
                 {
                     _style = -1;
                 }
@@ -189,7 +190,7 @@ namespace NPOI.XSSF.Streaming
          */
         public int CompareTo(SXSSFRow other)
         {
-            if (this.Sheet != other.Sheet)
+            if(this.Sheet != other.Sheet)
             {
                 throw new InvalidOperationException("The compared rows must belong to the same sheet");
             }
@@ -201,8 +202,8 @@ namespace NPOI.XSSF.Streaming
 
         public override bool Equals(Object obj)
         {
-            if (obj is not SXSSFRow other)
-        {
+            if(obj is not SXSSFRow other)
+            {
                 return false;
             }
 
@@ -243,12 +244,12 @@ namespace NPOI.XSSF.Streaming
 
         private void UpdateIndexWhenAdd(int cellnum)
         {
-            if (cellnum < _firstCellNum || _firstCellNum == -1)
+            if(cellnum < _firstCellNum || _firstCellNum == -1)
             {
                 _firstCellNum = cellnum;
             }
 
-            if (cellnum >= _lastCellNum)
+            if(cellnum >= _lastCellNum)
             {
                 _lastCellNum = cellnum + 1;
             }
@@ -263,7 +264,7 @@ namespace NPOI.XSSF.Streaming
         {
             SpreadsheetVersion v = SpreadsheetVersion.EXCEL2007;
             int maxcol = SpreadsheetVersion.EXCEL2007.LastColumnIndex;
-            if (cellIndex < 0 || cellIndex > maxcol)
+            if(cellIndex < 0 || cellIndex > maxcol)
             {
                 throw new ArgumentException("Invalid column index (" + cellIndex
                         + ").  Allowable column range for " + v.DefaultExtension + " is (0.."
@@ -282,10 +283,10 @@ namespace NPOI.XSSF.Streaming
             CheckBounds(cellnum);
 
             SXSSFCell cell = null;
-            if (_cells.TryGetValue(cellnum, out SXSSFCell cell1))
+            if(_cells.TryGetValue(cellnum, out SXSSFCell cell1))
                 cell = cell1;
-            
-            switch (policy)
+
+            switch(policy)
             {
                 case MissingCellPolicy.RETURN_NULL_AND_BLANK:
                     return cell;
@@ -314,20 +315,20 @@ namespace NPOI.XSSF.Streaming
             int index = GetCellIndex((SXSSFCell)cell);
             _cells.Remove(index);
             _sortedCellCache = null;
-            if (index == _firstCellNum)
+            if(index == _firstCellNum)
             {
                 InvalidateFirstCellNum();
             }
 
-            if (index >= _lastCellNum -1)
+            if(index >= _lastCellNum -1)
             {
                 InvalidateLastCellNum();
             }
         }
-        
+
         private void InvalidateFirstCellNum()
         {
-            if (_cells.Keys.Count == 0)
+            if(_cells.Keys.Count == 0)
             {
                 _firstCellNum = -1;
             }
@@ -336,10 +337,10 @@ namespace NPOI.XSSF.Streaming
                 _firstCellNum = _cells.Keys.Min();
             }
         }
-        
+
         private void InvalidateLastCellNum()
         {
-            if (_cells.Count == 0)
+            if(_cells.Count == 0)
             {
                 _lastCellNum = -1;
             }
@@ -349,7 +350,7 @@ namespace NPOI.XSSF.Streaming
             }
         }
 
-        
+
         /**
          * Return the column number of a cell if it is in this row
          * Otherwise return -1
@@ -360,9 +361,9 @@ namespace NPOI.XSSF.Streaming
         /*package*/
         public int GetCellIndex(SXSSFCell cell)
         {
-            foreach (var entry in _cells)
+            foreach(var entry in _cells)
             {
-                if (entry.Value == cell)
+                if(entry.Value == cell)
                 {
                     return entry.Key;
                 }
@@ -370,7 +371,7 @@ namespace NPOI.XSSF.Streaming
             return -1;
         }
 
-        
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
@@ -378,9 +379,9 @@ namespace NPOI.XSSF.Streaming
 
         private List<ICell> GetSortedCells()
         {
-            if (_sortedCellCache == null)
+            if(_sortedCellCache == null)
             {
-                _sortedCellCache = _cells.OrderBy(kv => kv.Key).Select(kv => (ICell)kv.Value).ToList();
+                _sortedCellCache = _cells.OrderBy(kv => kv.Key).Select(kv => (ICell) kv.Value).ToList();
             }
             return _sortedCellCache;
         }
@@ -415,7 +416,7 @@ namespace NPOI.XSSF.Streaming
             }
 
             public void Dispose()
-            { 
+            {
             }
 
             public IEnumerator<ICell> GetEnumerator()
@@ -451,7 +452,7 @@ namespace NPOI.XSSF.Streaming
             {
                 get
                 {
-                    return _cells.TryGetValue(pos, out SXSSFCell cell) ? cell: null;
+                    return _cells.TryGetValue(pos, out SXSSFCell cell) ? cell : null;
                 }
             }
 
@@ -475,7 +476,7 @@ namespace NPOI.XSSF.Streaming
 
             public bool MoveNext()
             {
-                if (HasNext())
+                if(HasNext())
                 {
                     pos++;
                     return true;
@@ -486,9 +487,9 @@ namespace NPOI.XSSF.Streaming
 
             public ICell Next()
             {
-                if (HasNext())
+                if(HasNext())
                 {
-                    if (_cells.ContainsKey(pos))
+                    if(_cells.ContainsKey(pos))
                         return _cells[pos++];
                     else
                     {
@@ -517,5 +518,3 @@ namespace NPOI.XSSF.Streaming
 
 
 }
-
-

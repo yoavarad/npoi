@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.SS.Formula.Eval;
+using System;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -20,7 +20,7 @@ namespace NPOI.SS.Formula.Functions
                 String haystack = TextFunction.EvaluateStringArg(arg1, srcRowIndex, srcColumnIndex);
                 return Eval(haystack, needle, 0);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -34,26 +34,26 @@ namespace NPOI.SS.Formula.Functions
                 String haystack = TextFunction.EvaluateStringArg(arg1, srcRowIndex, srcColumnIndex);
                 // evaluate third arg and convert from 1-based to 0-based index
                 int startpos = TextFunction.EvaluateIntArg(arg2, srcRowIndex, srcColumnIndex) - 1;
-                if (startpos < 0)
+                if(startpos < 0)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 return Eval(haystack, needle, startpos);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
         private ValueEval Eval(String haystack, String needle, int startIndex)
         {
-            if (startIndex >= haystack.Length)
+            if(startIndex >= haystack.Length)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            
+
             int result;
-            if (_isCaseSensitive)
+            if(_isCaseSensitive)
             {
                 result = haystack.IndexOf(needle, startIndex, StringComparison.CurrentCulture);
             }
@@ -62,7 +62,7 @@ namespace NPOI.SS.Formula.Functions
                 //result = haystack.ToUpper().IndexOf(needle.ToUpper(), startIndex);
                 result = haystack.IndexOf(needle, startIndex, StringComparison.CurrentCultureIgnoreCase);
             }
-            if (result == -1)
+            if(result == -1)
             {
                 return ErrorEval.VALUE_INVALID;
             }

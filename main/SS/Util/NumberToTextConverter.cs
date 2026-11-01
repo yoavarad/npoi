@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -144,7 +144,7 @@ namespace NPOI.SS.Util
         {
             String result = ToText(value);
             String decimalSeparator = locale.NumberFormat.NumberDecimalSeparator;
-            if (decimalSeparator != ".")
+            if(decimalSeparator != ".")
             {
                 result = result.Replace(".", decimalSeparator);
             }
@@ -156,27 +156,27 @@ namespace NPOI.SS.Util
 
             long rawBits = pRawBits;
             bool isNegative = rawBits < 0; // sign bit is in the same place for long and double
-            if (isNegative)
+            if(isNegative)
             {
                 rawBits &= 0x7FFFFFFFFFFFFFFFL;
             }
-            if (rawBits == 0)
+            if(rawBits == 0)
             {
                 return isNegative ? "-0" : "0";
             }
             ExpandedDouble ed = new ExpandedDouble(rawBits);
-            if (ed.GetBinaryExponent() < -1022)
+            if(ed.GetBinaryExponent() < -1022)
             {
                 // value is 'denormalised' which means it is less than 2^-1022
                 // excel displays all these numbers as zero, even though calculations work OK
                 return isNegative ? "-0" : "0";
             }
-            if (ed.GetBinaryExponent() == 1024)
+            if(ed.GetBinaryExponent() == 1024)
             {
                 // Special number NaN /InfInity
                 // Normally one would not create HybridDecimal objects from these values
                 // except in these cases Excel really tries to render them as if they were normal numbers
-                if (rawBits == EXCEL_NAN_BITS)
+                if(rawBits == EXCEL_NAN_BITS)
                 {
                     return "3.484840871308E+308";
                 }
@@ -187,7 +187,7 @@ namespace NPOI.SS.Util
             }
             NormalisedDecimal nd = ed.NormaliseBaseTen();
             StringBuilder sb = new StringBuilder(MAX_TEXT_LEN + 1);
-            if (isNegative)
+            if(isNegative)
             {
                 sb.Append('-');
             }
@@ -199,10 +199,10 @@ namespace NPOI.SS.Util
             NormalisedDecimal rnd = pnd.RoundUnits();
             int decExponent = rnd.GetDecimalExponent();
             String decimalDigits;
-            if (Math.Abs(decExponent) > 98)
+            if(Math.Abs(decExponent) > 98)
             {
                 decimalDigits = rnd.GetSignificantDecimalDigitsLastDigitRounded();
-                if (decimalDigits.Length == 16)
+                if(decimalDigits.Length == 16)
                 {
                     // rounding caused carry
                     decExponent++;
@@ -213,7 +213,7 @@ namespace NPOI.SS.Util
                 decimalDigits = rnd.GetSignificantDecimalDigits();
             }
             int countSigDigits = CountSignifantDigits(decimalDigits);
-            if (decExponent < 0)
+            if(decExponent < 0)
             {
                 FormatLessThanOne(sb, decimalDigits, decExponent, countSigDigits);
             }
@@ -229,10 +229,10 @@ namespace NPOI.SS.Util
             int nLeadingZeros = -decExponent - 1;
             int normalLength = 2 + nLeadingZeros + countSigDigits; // 2 == "0.".Length
 
-            if (NeedsScientificNotation(normalLength))
+            if(NeedsScientificNotation(normalLength))
             {
                 sb.Append(decimalDigits[0]);
-                if (countSigDigits > 1)
+                if(countSigDigits > 1)
                 {
                     sb.Append('.');
                     sb.Append(decimalDigits.Substring(1, countSigDigits-1));
@@ -242,7 +242,7 @@ namespace NPOI.SS.Util
                 return;
             }
             sb.Append("0.");
-            for (int i = nLeadingZeros; i > 0; i--)
+            for(int i = nLeadingZeros; i > 0; i--)
             {
                 sb.Append('0');
             }
@@ -252,11 +252,11 @@ namespace NPOI.SS.Util
         private static void FormatGreaterThanOne(StringBuilder sb, String decimalDigits, int decExponent, int countSigDigits)
         {
 
-            if (decExponent > 19)
+            if(decExponent > 19)
             {
                 // scientific notation
                 sb.Append(decimalDigits[0]);
-                if (countSigDigits > 1)
+                if(countSigDigits > 1)
                 {
                     sb.Append('.');
                     sb.Append(decimalDigits.Substring(1, countSigDigits-1));
@@ -266,7 +266,7 @@ namespace NPOI.SS.Util
                 return;
             }
             int nFractionalDigits = countSigDigits - decExponent - 1;
-            if (nFractionalDigits > 0)
+            if(nFractionalDigits > 0)
             {
                 sb.Append(decimalDigits.Substring(0, decExponent + 1));
                 sb.Append('.');
@@ -274,7 +274,7 @@ namespace NPOI.SS.Util
                 return;
             }
             sb.Append(decimalDigits.Substring(0, countSigDigits));
-            for (int i = -nFractionalDigits; i > 0; i--)
+            for(int i = -nFractionalDigits; i > 0; i--)
             {
                 sb.Append('0');
             }
@@ -288,10 +288,10 @@ namespace NPOI.SS.Util
         private static int CountSignifantDigits(String sb)
         {
             int result = sb.Length - 1;
-            while (sb[result] == '0')
+            while(sb[result] == '0')
             {
                 result--;
-                if (result < 0)
+                if(result < 0)
                 {
                     throw new Exception("No non-zero digits found");
                 }
@@ -301,10 +301,10 @@ namespace NPOI.SS.Util
 
         private static void AppendExp(StringBuilder sb, int val)
         {
-            if (val < 10)
+            if(val < 10)
             {
                 sb.Append('0');
-                sb.Append((char)('0' + val));
+                sb.Append((char) ('0' + val));
                 return;
             }
             sb.Append(val);

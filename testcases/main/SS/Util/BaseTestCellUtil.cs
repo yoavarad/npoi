@@ -19,7 +19,8 @@ namespace TestCases.SS.Util
 {
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using TestCases.SS;
@@ -82,7 +83,7 @@ namespace TestCases.SS.Util
             IRow r = s.CreateRow(0);
             ICell c = r.CreateCell(0);
             // A valid BorderStyle constant, as a Short
-            CellUtil.SetCellStyleProperty(c, CellUtil.BORDER_BOTTOM, (short)BorderStyle.DashDot);
+            CellUtil.SetCellStyleProperty(c, CellUtil.BORDER_BOTTOM, (short) BorderStyle.DashDot);
             ClassicAssert.AreEqual(BorderStyle.DashDot, c.CellStyle.BorderBottom);
 
             // A valid BorderStyle constant, as an Enum
@@ -303,9 +304,9 @@ namespace TestCases.SS.Util
                 CellUtil.SetFont(A1, font2);
                 Assert.Fail("setFont not allowed if font belongs to a different workbook");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if (e.Message.StartsWith("Font does not belong to this workbook"))
+                if(e.Message.StartsWith("Font does not belong to this workbook"))
                 {
                     // expected
                 }
@@ -362,6 +363,6 @@ namespace TestCases.SS.Util
             ClassicAssert.AreEqual(num1, num2);
             wb1.Close();
         }
-}
+    }
 
 }

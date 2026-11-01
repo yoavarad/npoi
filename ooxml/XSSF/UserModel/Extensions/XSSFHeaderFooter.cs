@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.XSSF.UserModel.Helpers;
-using System;
 using NPOI.HSSF.UserModel;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel.Helpers;
+using System;
 namespace NPOI.XSSF.UserModel.Extensions
 {
     /// <summary>
@@ -63,7 +63,7 @@ namespace NPOI.XSSF.UserModel.Extensions
                     return "";
                 return value;
             }
-            
+
         }
 
         /**
@@ -108,11 +108,11 @@ namespace NPOI.XSSF.UserModel.Extensions
             get
             {
                 String text = helper.GetCenterSection(Text);
-                if (stripFields)
+                if(stripFields)
                     return StripFields(text);
                 return text;
             }
-            set 
+            set
             {
                 this.Text = (helper.SetCenterSection(Text, value));
             }
@@ -126,11 +126,11 @@ namespace NPOI.XSSF.UserModel.Extensions
             get
             {
                 String text = helper.GetLeftSection(Text);
-                if (stripFields)
+                if(stripFields)
                     return StripFields(text);
                 return text;
             }
-            set 
+            set
             {
                 this.Text = helper.SetLeftSection(Text, value);
             }
@@ -144,16 +144,14 @@ namespace NPOI.XSSF.UserModel.Extensions
             get
             {
                 String text = helper.GetRightSection(Text);
-                if (stripFields)
+                if(stripFields)
                     return StripFields(text);
                 return text;
             }
-            set 
+            set
             {
                 this.Text = (helper.SetRightSection(Text, value));
             }
         }
     }
 }
-
-

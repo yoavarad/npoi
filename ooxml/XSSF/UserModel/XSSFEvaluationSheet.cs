@@ -37,7 +37,7 @@ namespace NPOI.XSSF.UserModel
 
         public XSSFEvaluationSheet(ISheet sheet)
         {
-            _xs = (XSSFSheet)sheet;
+            _xs = (XSSFSheet) sheet;
             _lastDefinedRow = _xs.LastRowNum;
         }
 
@@ -65,7 +65,7 @@ namespace NPOI.XSSF.UserModel
         }
 
         public XSSFSheet XSSFSheet => _xs;
-        
+
         public IEvaluationCell GetCell(int rowIndex, int columnIndex)
         {
             // shortcut evaluation if reference is outside the bounds of existing data
@@ -74,13 +74,13 @@ namespace NPOI.XSSF.UserModel
                 return null;
 
             // cache for performance: ~30% speedup due to caching
-            if (_cellCache == null)
+            if(_cellCache == null)
             {
                 _cellCache = new Dictionary<CellKey, IEvaluationCell>(_xs.LastRowNum * 3);
-                foreach (IRow row in _xs)
+                foreach(IRow row in _xs)
                 {
                     int rowNum = row.RowNum;
-                    foreach (ICell cell in row)
+                    foreach(ICell cell in row)
                     {
                         // cast is safe, the iterator is just defined using the interface
                         CellKey key1 = new CellKey(rowNum, cell.ColumnIndex);
@@ -93,25 +93,25 @@ namespace NPOI.XSSF.UserModel
             CellKey key = new CellKey(rowIndex, columnIndex);
 
             IEvaluationCell evalcell = null;
-            if (_cellCache.TryGetValue(key, out IEvaluationCell value))
+            if(_cellCache.TryGetValue(key, out IEvaluationCell value))
             {
-                evalcell = value;           
-            }           
+                evalcell = value;
+            }
 
             // If cache is stale, update cache with this one cell
             // This is a compromise between rebuilding the entire cache
             // (which would quickly defeat the benefit of the cache)
             // and not caching at all.
             // See bug 59958: Add cells on the fly to the evaluation sheet cache on cache miss
-            if (evalcell == null)
+            if(evalcell == null)
             {
                 XSSFRow row = _xs.GetRow(rowIndex) as XSSFRow;
-                if (row == null)
+                if(row == null)
                 {
                     return null;
                 }
                 XSSFCell cell = row.GetCell(columnIndex) as XSSFCell;
-                if (cell == null)
+                if(cell == null)
                 {
                     return null;
                 }
@@ -136,7 +136,7 @@ namespace NPOI.XSSF.UserModel
 
             public override int GetHashCode()
             {
-                if (_hash == -1)
+                if(_hash == -1)
                 {
                     _hash = (17 * 37 + _row) * 37 + _col;
                 }
@@ -145,7 +145,7 @@ namespace NPOI.XSSF.UserModel
 
             public override bool Equals(Object obj)
             {
-                if (obj == null || obj is not CellKey oKey)
+                if(obj == null || obj is not CellKey oKey)
                     return false;
 
                 // assumes other object is one of us, otherwise ClassCastException is thrown
@@ -154,4 +154,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-

@@ -55,7 +55,7 @@ namespace NPOI.SS.Formula.PTG
             {
                 builder.Append(Row+1);
             }
-        
+
             if(IsColRelative)
             {
                 builder.Append(" ColOffset: ").Append(Column);
@@ -64,7 +64,7 @@ namespace NPOI.SS.Formula.PTG
             {
                 builder.Append(CellReference.ConvertNumToColString(Column));
             }
-        
+
             return builder.ToString();
         }
     }

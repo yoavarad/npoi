@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -140,7 +140,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_1_x;
             }
-            set 
+            set
             {
                 this.field_1_x = value;
             }
@@ -155,7 +155,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_2_y;
             }
-            set 
+            set
             {
                 this.field_2_y = value;
             }
@@ -171,7 +171,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_3_topRow;
             }
-            set 
+            set
             {
                 this.field_3_topRow = value;
             }
@@ -185,7 +185,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_4_leftColumn;
             }
-            set 
+            set
             {
                 this.field_4_leftColumn = value;
             }
@@ -206,7 +206,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_5_activePane;
             }
-            set 
+            set
             {
                 this.field_5_activePane = value;
             }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace NPOI.HSSF.Record.AutoFilter
@@ -7,8 +7,8 @@ namespace NPOI.HSSF.Record.AutoFilter
     {
 
         public AutoFilterInfoRecord()
-        { 
-        
+        {
+
         }
 
         private short field_1_cEntries = 0;

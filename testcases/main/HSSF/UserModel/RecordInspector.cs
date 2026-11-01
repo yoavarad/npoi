@@ -18,12 +18,11 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using NPOI.HSSF.UserModel;
-    using System.Collections;
-
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
+    using NPOI.HSSF.UserModel;
+    using System;
+    using System.Collections;
 
     /**
      * Test utility class to get {@link Record}s out HSSF objects
@@ -57,7 +56,7 @@ namespace TestCases.HSSF.UserModel
             {
                 get
                 {
-                    return (Record[])_list.ToArray(typeof(Record));
+                    return (Record[]) _list.ToArray(typeof(Record));
                 }
             }
         }
@@ -71,7 +70,7 @@ namespace TestCases.HSSF.UserModel
         public static Record[] GetRecords(NPOI.SS.UserModel.ISheet hSheet, int streamOffset)
         {
             RecordCollector rc = new RecordCollector();
-            ((HSSFSheet)hSheet).Sheet.VisitContainedRecords(rc, streamOffset);
+            ((HSSFSheet) hSheet).Sheet.VisitContainedRecords(rc, streamOffset);
             return rc.Records;
         }
     }

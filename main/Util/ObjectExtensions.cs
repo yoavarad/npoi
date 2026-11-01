@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using System;
 using NPOI.Util.ArrayExtensions;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace NPOI.Util
 {
@@ -11,7 +11,8 @@ namespace NPOI.Util
 
         public static bool IsPrimitive(this Type type)
         {
-            if (type == typeof(String)) return true;
+            if(type == typeof(String))
+                return true;
             return (type.IsValueType & type.IsPrimitive);
         }
 
@@ -21,16 +22,20 @@ namespace NPOI.Util
         }
         private static Object InternalCopy(Object originalObject, IDictionary<Object, Object> visited)
         {
-            if (originalObject == null) return null;
+            if(originalObject == null)
+                return null;
             var typeToReflect = originalObject.GetType();
-            if (IsPrimitive(typeToReflect)) return originalObject;
-            if (visited.TryGetValue(originalObject, out object copy)) return copy;
-            if (typeof(Delegate).IsAssignableFrom(typeToReflect)) return null;
+            if(IsPrimitive(typeToReflect))
+                return originalObject;
+            if(visited.TryGetValue(originalObject, out object copy))
+                return copy;
+            if(typeof(Delegate).IsAssignableFrom(typeToReflect))
+                return null;
             var cloneObject = CloneMethod.Invoke(originalObject, null);
-            if (typeToReflect.IsArray)
+            if(typeToReflect.IsArray)
             {
                 var arrayType = typeToReflect.GetElementType();
-                if (IsPrimitive(arrayType) == false)
+                if(IsPrimitive(arrayType) == false)
                 {
                     Array clonedArray = (Array)cloneObject;
                     clonedArray.ForEach((array, indices) => array.SetValue(InternalCopy(clonedArray.GetValue(indices), visited), indices));
@@ -45,7 +50,7 @@ namespace NPOI.Util
 
         private static void RecursiveCopyBaseTypePrivateFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect)
         {
-            if (typeToReflect.BaseType != null)
+            if(typeToReflect.BaseType != null)
             {
                 RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject, typeToReflect.BaseType);
                 CopyFields(originalObject, visited, cloneObject, typeToReflect.BaseType, BindingFlags.Instance | BindingFlags.NonPublic, info => info.IsPrivate);
@@ -54,10 +59,12 @@ namespace NPOI.Util
 
         private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool> filter = null)
         {
-            foreach (FieldInfo fieldInfo in typeToReflect.GetFields(bindingFlags))
+            foreach(FieldInfo fieldInfo in typeToReflect.GetFields(bindingFlags))
             {
-                if (filter != null && filter(fieldInfo) == false) continue;
-                if (IsPrimitive(fieldInfo.FieldType)) continue;
+                if(filter != null && filter(fieldInfo) == false)
+                    continue;
+                if(IsPrimitive(fieldInfo.FieldType))
+                    continue;
                 var originalFieldValue = fieldInfo.GetValue(originalObject);
                 var clonedFieldValue = InternalCopy(originalFieldValue, visited);
                 fieldInfo.SetValue(cloneObject, clonedFieldValue);
@@ -65,7 +72,7 @@ namespace NPOI.Util
         }
         public static T Copy<T>(this T original)
         {
-            return (T)Copy((Object)original);
+            return (T) Copy((Object) original);
         }
     }
 
@@ -77,7 +84,8 @@ namespace NPOI.Util
         }
         public override int GetHashCode(object obj)
         {
-            if (obj == null) return 0;
+            if(obj == null)
+                return 0;
             return obj.GetHashCode();
         }
     }
@@ -88,10 +96,12 @@ namespace NPOI.Util
         {
             public static void ForEach(this Array array, Action<Array, int[]> action)
             {
-                if (array.LongLength == 0) return;
+                if(array.LongLength == 0)
+                    return;
                 ArrayTraverse walker = new ArrayTraverse(array);
-                do action(array, walker.Position);
-                while (walker.Step());
+                do
+                    action(array, walker.Position);
+                while(walker.Step());
             }
         }
 
@@ -103,7 +113,7 @@ namespace NPOI.Util
             public ArrayTraverse(Array array)
             {
                 maxLengths = new int[array.Rank];
-                for (int i = 0; i < array.Rank; ++i)
+                for(int i = 0; i < array.Rank; ++i)
                 {
                     maxLengths[i] = array.GetLength(i) - 1;
                 }
@@ -112,12 +122,12 @@ namespace NPOI.Util
 
             public bool Step()
             {
-                for (int i = 0; i < Position.Length; ++i)
+                for(int i = 0; i < Position.Length; ++i)
                 {
-                    if (Position[i] < maxLengths[i])
+                    if(Position[i] < maxLengths[i])
                     {
                         Position[i]++;
-                        for (int j = 0; j < i; j++)
+                        for(int j = 0; j < i; j++)
                         {
                             Position[j] = 0;
                         }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,12 +25,12 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.Text;
-using System.Collections;
-using System.IO;
 using NPOI.POIFS.FileSystem;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.POIFS.Dev
 {
@@ -54,11 +54,11 @@ namespace NPOI.POIFS.Dev
                                       String indentString)
         {
             List<String> objects = new List<String>();
-            if (viewable is DictionaryEntry entry)
+            if(viewable is DictionaryEntry entry)
             {
                 ProcessViewable(entry.Value, drilldown, indentLevel, indentString, objects);
             }
-            else if (viewable is POIFSViewable)
+            else if(viewable is POIFSViewable)
             {
                 ProcessViewable(viewable, drilldown, indentLevel, indentString, objects);
             }
@@ -80,20 +80,20 @@ namespace NPOI.POIFS.Dev
 
             objects.Add(Indent(indentLevel, indentString,
                                inspected.ShortDescription));
-            if (drilldown)
+            if(drilldown)
             {
-                if (inspected is OPOIFSDocument)
+                if(inspected is OPOIFSDocument)
                 {
                     objects.AddRange(InspectViewable("POIFSDocument content is too long so ignored", drilldown,
                                                       indentLevel + 1,
                                                       indentString));
                     return;
                 }
-                if (inspected.PreferArray)
+                if(inspected.PreferArray)
                 {
                     Object[] data = inspected.ViewableArray;
 
-                    foreach (Object datum in data)
+                    foreach(Object datum in data)
                     {
                         objects.AddRange(InspectViewable(datum, drilldown,
                                                        indentLevel + 1,
@@ -104,7 +104,7 @@ namespace NPOI.POIFS.Dev
                 {
                     IEnumerator<Object> iter = inspected.ViewableIterator;
 
-                    while (iter.MoveNext())
+                    while(iter.MoveNext())
                     {
                         objects.AddRange(InspectViewable(iter.Current,
                                                        drilldown,
@@ -128,15 +128,15 @@ namespace NPOI.POIFS.Dev
             StringBuilder finalBuffer  = new StringBuilder();
             StringBuilder indentPrefix = new StringBuilder();
 
-            for (int j = 0; j < indentLevel; j++)
+            for(int j = 0; j < indentLevel; j++)
             {
                 indentPrefix.Append(indentString);
             }
 
-            using (StringReader reader = new StringReader(data))
+            using(StringReader reader = new StringReader(data))
             {
                 string line = reader.ReadLine();
-                while (line != null)
+                while(line != null)
                 {
                     finalBuffer.Append(indentPrefix).Append(line).Append(Environment.NewLine);
                     line = reader.ReadLine();

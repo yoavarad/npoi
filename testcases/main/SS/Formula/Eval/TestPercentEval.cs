@@ -18,11 +18,12 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.SS.Formula.Functions;
 
     /**
@@ -37,8 +38,8 @@ namespace TestCases.SS.Formula.Eval
         private static void Confirm(ValueEval arg, double expectedResult)
         {
             ValueEval[] args = {
-			arg,
-		};
+            arg,
+        };
 
             double result = NumericFunctionInvoker.Invoke(PercentEval.instance, args, 0, 0);
 
@@ -77,9 +78,9 @@ namespace TestCases.SS.Formula.Eval
             {
                 cv = fe.Evaluate(cell);
             }
-            catch (SystemException e)
+            catch(SystemException e)
             {
-                if (e.InnerException is NullReferenceException)
+                if(e.InnerException is NullReferenceException)
                 {
                     throw new AssertionException("Identified bug 44608");
                 }

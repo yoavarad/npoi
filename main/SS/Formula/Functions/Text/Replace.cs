@@ -20,10 +20,10 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.SS.Formula.Eval;
+    using System;
+    using System.Text;
 
     /**
      * An implementation of the Replace function:
@@ -42,7 +42,7 @@ using Cysharp.Text;
          */
         public override ValueEval EvaluateFunc(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
-            if (args.Length != 4)
+            if(args.Length != 4)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -52,19 +52,19 @@ using Cysharp.Text;
             int numChars = EvaluateIntArg(args[2], srcCellRow, srcCellCol);
             String newStr = EvaluateStringArg(args[3], srcCellRow, srcCellCol);
 
-            if (startNum < 1 || numChars < 0)
+            if(startNum < 1 || numChars < 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
             using var strBuff = ZString.CreateStringBuilder();
             strBuff.Append(oldStr);
             // remove any characters that should be replaced
-            if (startNum <= oldStr.Length && numChars != 0)
+            if(startNum <= oldStr.Length && numChars != 0)
             {
                 strBuff.Remove(startNum - 1, Math.Min(numChars, oldStr.Length - startNum + 1));
             }
             // now insert (or append) newStr
-            if (startNum > strBuff.Length)
+            if(startNum > strBuff.Length)
             {
                 strBuff.Append(newStr);
             }

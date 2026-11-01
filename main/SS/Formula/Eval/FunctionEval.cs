@@ -23,9 +23,9 @@ using NPOI.SS.Formula.Atp;
 
 namespace NPOI.SS.Formula.Eval
 {
-    using System;
-    using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.Function;
+    using NPOI.SS.Formula.Functions;
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Index = NPOI.SS.Formula.Functions.Index;
@@ -66,7 +66,7 @@ namespace NPOI.SS.Formula.Eval
 
         private static FunctionMetadataRegistry GetInstance()
         {
-            if (_instance == null)
+            if(_instance == null)
             {
                 _instance = FunctionMetadataReader.CreateRegistry();
             }
@@ -77,7 +77,7 @@ namespace NPOI.SS.Formula.Eval
         public static Function GetBasicFunction(int functionIndex)
         {
             // check for 'free ref' functions first
-            switch (functionIndex)
+            switch(functionIndex)
             {
                 case FunctionID.INDIRECT:
                 case FunctionID.EXTERNAL_FUNC:
@@ -85,7 +85,7 @@ namespace NPOI.SS.Formula.Eval
             }
             // else - must be plain function
             Function result = functions[functionIndex];
-            if (result == null)
+            if(result == null)
             {
                 throw new NotImplementedException("FuncIx=" + functionIndex);
             }
@@ -465,9 +465,9 @@ namespace NPOI.SS.Formula.Eval
         public static void RegisterFunction(String name, Function func)
         {
             FunctionMetadata metaData = FunctionMetadataRegistry.GetFunctionByName(name);
-            if (metaData == null)
+            if(metaData == null)
             {
-                if (AnalysisToolPak.IsATPFunction(name))
+                if(AnalysisToolPak.IsATPFunction(name))
                 {
                     throw new ArgumentException(name + " is a function from the Excel Analysis Toolpack. " +
                                                 "Use AnalysisToolpack.RegisterFunction(String name, FreeRefFunction func) instead.");
@@ -479,7 +479,7 @@ namespace NPOI.SS.Formula.Eval
             }
 
             int idx = metaData.Index;
-            if (functions[idx] is NotImplementedFunction)
+            if(functions[idx] is NotImplementedFunction)
             {
                 functions[idx] = func;
             }
@@ -500,11 +500,11 @@ namespace NPOI.SS.Formula.Eval
         public static ReadOnlyCollection<String> GetSupportedFunctionNames()
         {
             List<String> lst = new List<String>();
-            for (int i = 0; i < functions.Length; i++)
+            for(int i = 0; i < functions.Length; i++)
             {
                 Function func = functions[i];
                 FunctionMetadata metaData = FunctionMetadataRegistry.GetFunctionByIndex(i);
-                if (func != null && func is not NotImplementedFunction)
+                if(func != null && func is not NotImplementedFunction)
                 {
                     lst.Add(metaData.Name);
                 }
@@ -523,10 +523,10 @@ namespace NPOI.SS.Formula.Eval
         public static ReadOnlyCollection<String> GetNotSupportedFunctionNames()
         {
             List<String> lst = new List<String>();
-            for (int i = 0; i < functions.Length; i++)
+            for(int i = 0; i < functions.Length; i++)
             {
                 Function func = functions[i];
-                if (func != null && (func is NotImplementedFunction))
+                if(func != null && (func is NotImplementedFunction))
                 {
                     FunctionMetadata metaData = FunctionMetadataRegistry.GetFunctionByIndex(i);
                     lst.Add(metaData.Name);

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,12 +25,12 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TestCases.Util
 {
@@ -57,17 +57,17 @@ namespace TestCases.Util
             POILogger l1 = POILogFactory.GetLogger( "org.apache.poi.hssf.test" );
             POILogger l2 = POILogFactory.GetLogger( "org.apache.poi.hdf.test" );
 
-            l1.Log( POILogger.FATAL, "testing cat org.apache.poi.hssf.*:FATAL" );
-            l1.Log( POILogger.ERROR, "testing cat org.apache.poi.hssf.*:ERROR" );
-            l1.Log( POILogger.WARN, "testing cat org.apache.poi.hssf.*:WARN" );
-            l1.Log( POILogger.INFO, "testing cat org.apache.poi.hssf.*:INFO" );
-            l1.Log( POILogger.DEBUG, "testing cat org.apache.poi.hssf.*:DEBUG" );
+            l1.Log(POILogger.FATAL, "testing cat org.apache.poi.hssf.*:FATAL");
+            l1.Log(POILogger.ERROR, "testing cat org.apache.poi.hssf.*:ERROR");
+            l1.Log(POILogger.WARN, "testing cat org.apache.poi.hssf.*:WARN");
+            l1.Log(POILogger.INFO, "testing cat org.apache.poi.hssf.*:INFO");
+            l1.Log(POILogger.DEBUG, "testing cat org.apache.poi.hssf.*:DEBUG");
 
-            l2.Log( POILogger.FATAL, "testing cat org.apache.poi.hdf.*:FATAL" );
-            l2.Log( POILogger.ERROR, "testing cat org.apache.poi.hdf.*:ERROR" );
-            l2.Log( POILogger.WARN, "testing cat org.apache.poi.hdf.*:WARN" );
-            l2.Log( POILogger.INFO, "testing cat org.apache.poi.hdf.*:INFO" );
-            l2.Log( POILogger.DEBUG, "testing cat org.apache.poi.hdf.*:DEBUG" );
+            l2.Log(POILogger.FATAL, "testing cat org.apache.poi.hdf.*:FATAL");
+            l2.Log(POILogger.ERROR, "testing cat org.apache.poi.hdf.*:ERROR");
+            l2.Log(POILogger.WARN, "testing cat org.apache.poi.hdf.*:WARN");
+            l2.Log(POILogger.INFO, "testing cat org.apache.poi.hdf.*:INFO");
+            l2.Log(POILogger.DEBUG, "testing cat org.apache.poi.hdf.*:DEBUG");
 
         }
     }

@@ -82,13 +82,13 @@ namespace NPOI.POIFS.Crypt.Dsig
         protected void SetPrefix(XmlNode el)
         {
             String prefix = signatureConfig.GetNamespacePrefixes()[(el.NamespaceURI)];
-            if (prefix != null && el.Prefix == null)
+            if(prefix != null && el.Prefix == null)
             {
                 el.Prefix = (/*setter*/prefix);
             }
 
             XmlNodeList nl = el.ChildNodes;
-            for (int i = 0; i < nl.Count; i++)
+            for(int i = 0; i < nl.Count; i++)
             {
                 SetPrefix(nl.Item(i));
             }

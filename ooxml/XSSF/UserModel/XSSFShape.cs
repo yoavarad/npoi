@@ -28,7 +28,7 @@ namespace NPOI.XSSF.UserModel
      *
      * @author Yegor Kozlov
      */
-    public abstract class XSSFShape: IShape
+    public abstract class XSSFShape : IShape
     {
         [Obsolete]
         public static int EMU_PER_PIXEL = 9525;
@@ -91,7 +91,8 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if(IEGanchor == null) {
+                if(IEGanchor == null)
+                {
                     return parent.cellanchor;
                 }
                 return IEGanchor;
@@ -137,12 +138,14 @@ namespace NPOI.XSSF.UserModel
             {
                 return GetShapeProperties().noFill != null;
             }
-            set 
+            set
             {
                 NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
                 //unset solid and pattern Fills if they are Set
-                if (props.IsSetPattFill()) props.unsetPattFill();
-                if (props.IsSetSolidFill()) props.unsetSolidFill();
+                if(props.IsSetPattFill())
+                    props.unsetPattFill();
+                if(props.IsSetSolidFill())
+                    props.unsetSolidFill();
 
                 props.noFill = new CT_NoFillProperties();
             }
@@ -157,7 +160,7 @@ namespace NPOI.XSSF.UserModel
             NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
             CT_SolidColorFillProperties fill = props.IsSetSolidFill() ? props.solidFill : props.AddNewSolidFill();
             CT_SRgbColor rgb = new CT_SRgbColor();
-            rgb.val = (new byte[] { (byte)red, (byte)green, (byte)blue });
+            rgb.val = (new byte[] { (byte) red, (byte) green, (byte) blue });
             fill.srgbClr = (rgb);
         }
 
@@ -170,7 +173,7 @@ namespace NPOI.XSSF.UserModel
             CT_LineProperties ln = props.IsSetLn() ? props.ln : props.AddNewLn();
             CT_SolidColorFillProperties fill = ln.IsSetSolidFill() ? ln.solidFill : ln.AddNewSolidFill();
             CT_SRgbColor rgb = new CT_SRgbColor();
-            rgb.val = (new byte[] { (byte)red, (byte)green, (byte)blue });
+            rgb.val = (new byte[] { (byte) red, (byte) green, (byte) blue });
             fill.srgbClr = (rgb);
         }
 
@@ -205,13 +208,16 @@ namespace NPOI.XSSF.UserModel
             {
                 NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
 
-                if(value == LineStyle.None) {
+                if(value == LineStyle.None)
+                {
                     props.ln = null;
-                } else {
+                }
+                else
+                {
 
                     CT_LineProperties ln = props.IsSetLn() ? props.ln : props.AddNewLn();
                     CT_PresetLineDashProperties dashStyle = new CT_PresetLineDashProperties();
-                    dashStyle.val = (ST_PresetLineDashVal)value;
+                    dashStyle.val = (ST_PresetLineDashVal) value;
                     ln.prstDash = dashStyle;
                     props.ln = ln;
                 }
@@ -234,7 +240,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
-                if (props.IsSetLn())
+                if(props.IsSetLn())
                 {
                     return props.ln.w*1.0 / Units.EMU_PER_POINT;
                 }
@@ -247,7 +253,7 @@ namespace NPOI.XSSF.UserModel
             {
                 NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
                 CT_LineProperties ln = props.IsSetLn() ? props.ln : props.AddNewLn();
-                ln.w = (int)(value * Units.EMU_PER_POINT);
+                ln.w = (int) (value * Units.EMU_PER_POINT);
             }
         }
 
@@ -256,7 +262,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
-                return props.IsSetLn() ? (LineEndingCapType)props.ln.cap : LineEndingCapType.None;
+                return props.IsSetLn() ? (LineEndingCapType) props.ln.cap : LineEndingCapType.None;
             }
             set
             {
@@ -275,7 +281,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
-                return props.IsSetLn() ? (CompoundLineType)props.ln.cmpd : CompoundLineType.None;
+                return props.IsSetLn() ? (CompoundLineType) props.ln.cmpd : CompoundLineType.None;
             }
             set
             {
@@ -285,11 +291,8 @@ namespace NPOI.XSSF.UserModel
                 }
                 NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_ShapeProperties props = GetShapeProperties();
                 CT_LineProperties ln = props.IsSetLn() ? props.ln : props.AddNewLn();
-                ln.cmpd = (ST_CompoundLine)value;
+                ln.cmpd = (ST_CompoundLine) value;
             }
         }
     }
 }
-
-
-

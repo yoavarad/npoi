@@ -19,9 +19,8 @@
 
 namespace NPOI.SS.UserModel
 {
-    using System;
-
     using NPOI.SS.Util;
+    using System;
 
     /**
      * The 'Conditional Formatting' facet of <c>Sheet</c>

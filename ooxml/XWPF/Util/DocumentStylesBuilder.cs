@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Wordprocessing;
+using NPOI.OpenXmlFormats.Wordprocessing;
 using NPOI.XWPF.UserModel;
 
 namespace NPOI.OOXML.XWPF.Util
@@ -65,7 +65,7 @@ namespace NPOI.OOXML.XWPF.Util
             ctStyle.pPr = (ppr);
 
             CT_RPr rpr = new CT_RPr();
-            rpr.AddNewSz().val = (ulong)ptSize * 2;
+            rpr.AddNewSz().val = (ulong) ptSize * 2;
             ctStyle.rPr = rpr;
         }
 
@@ -87,7 +87,7 @@ namespace NPOI.OOXML.XWPF.Util
         {
             DocumentStylesBuilder builder;
 
-            if (doc != null)
+            if(doc != null)
             {
                 builder = new DocumentStylesBuilder(doc);
             }

@@ -1,6 +1,6 @@
-using System.IO;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Presentation;
+using System.IO;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -15,7 +15,7 @@ namespace NPOI.XSLF.UserModel
             : base(parent, part)
         {
             layout = XSLFXmlHelper.Read<CT_SlideLayout>(part);
-            if (layout.cSld == null)
+            if(layout.cSld == null)
             {
                 throw new POIXMLException("Slide layout has no common slide data: " + part.PartName.Name);
             }

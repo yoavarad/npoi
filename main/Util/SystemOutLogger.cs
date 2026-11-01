@@ -57,14 +57,17 @@ namespace NPOI.Util
         /// <param name="obj1">The object to log.  This is Converted to a string.</param>
         /// <param name="exception">An exception to be logged</param>
         public override void Log(int level, Object obj1,
-                        Exception exception) {
-        if (Check(level)) {
-            Console.WriteLine("["+_cat+"] "+obj1);
-            if(exception != null) {
-                System.Console.Write(exception.StackTrace);
+                        Exception exception)
+        {
+            if(Check(level))
+            {
+                Console.WriteLine("["+_cat+"] "+obj1);
+                if(exception != null)
+                {
+                    System.Console.Write(exception.StackTrace);
+                }
             }
         }
-    }
 
 
         /// <summary>
@@ -79,7 +82,7 @@ namespace NPOI.Util
             {
                 string temp = Environment.GetEnvironmentVariable("NPOI_LOG_LEVEL");
 #if NETFRAMEWORK
-                if (temp == null)
+                if(temp == null)
                 {
                     temp = ConfigurationManager.AppSettings["poi.log.level"];
                 }
@@ -96,7 +99,7 @@ namespace NPOI.Util
                 currentLevel = POILogger.DEBUG;
             }
 
-            if (level >= currentLevel)
+            if(level >= currentLevel)
             {
                 return true;
             }

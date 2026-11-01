@@ -18,7 +18,8 @@ using NPOI.OpenXmlFormats.Vml;
 using NPOI.OpenXmlFormats.Vml.Office;
 using NPOI.OpenXmlFormats.Vml.Spreadsheet;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
@@ -210,12 +211,16 @@ namespace TestCases.XSSF.UserModel
         }
 
         [Test]
-        public void TestEvilUnclosedBRFixing() {
+        public void TestEvilUnclosedBRFixing()
+        {
             XSSFVMLDrawing vml = new XSSFVMLDrawing();
             Stream stream = POIDataSamples.GetOpenXML4JInstance().OpenResourceAsStream("bug-60626.vml");
-            try {
+            try
+            {
                 vml.Read(stream);
-            } finally {
+            }
+            finally
+            {
                 stream.Close();
             }
             Regex p = new Regex("<br\\s?/>", RegexOptions.Compiled);

@@ -19,14 +19,14 @@
 
 namespace NPOI.XSSF.UserModel.Helpers
 {
-    using System;
-    using System.Globalization;
-    using System.Xml;
-    using System.Xml.XPath;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.POIFS.Crypt;
     using NPOI.Util;
     using Org.BouncyCastle.Security;
+    using System;
+    using System.Globalization;
+    using System.Xml;
+    using System.Xml.XPath;
 
     public class XSSFPasswordHelper
     {
@@ -36,7 +36,7 @@ namespace NPOI.XSSF.UserModel.Helpers
         }
         public static void SetPassword(CT_SheetProtection xobj, String password, HashAlgorithm hashAlgo, String prefix)
         {
-            if (password == null)
+            if(password == null)
             {
                 xobj.password = null;
                 xobj.algorithmName = null;
@@ -45,7 +45,7 @@ namespace NPOI.XSSF.UserModel.Helpers
                 xobj.spinCount = null;
                 return;
             }
-            if (hashAlgo == null)
+            if(hashAlgo == null)
             {
                 int hash = CryptoFunctions.CreateXorVerifier1(password);
                 xobj.password = String.Format("{0:X4}", hash).ToUpper();
@@ -74,19 +74,24 @@ namespace NPOI.XSSF.UserModel.Helpers
         {
             XPathNavigator cur = xobj.CreateNavigator();
 
-            if (password == null)
+            if(password == null)
             {
                 //dose the prefix is namespace? check it!!!
-                if (cur.MoveToAttribute("password", prefix)) cur.DeleteSelf();
-                if (cur.MoveToAttribute("algorithmName", prefix)) cur.DeleteSelf();
-                if (cur.MoveToAttribute("hashValue", prefix)) cur.DeleteSelf();
-                if (cur.MoveToAttribute("saltValue", prefix)) cur.DeleteSelf();
-                if (cur.MoveToAttribute("spinCount", prefix)) cur.DeleteSelf();
+                if(cur.MoveToAttribute("password", prefix))
+                    cur.DeleteSelf();
+                if(cur.MoveToAttribute("algorithmName", prefix))
+                    cur.DeleteSelf();
+                if(cur.MoveToAttribute("hashValue", prefix))
+                    cur.DeleteSelf();
+                if(cur.MoveToAttribute("saltValue", prefix))
+                    cur.DeleteSelf();
+                if(cur.MoveToAttribute("spinCount", prefix))
+                    cur.DeleteSelf();
                 return;
             }
 
             //cur.ToFirstContentToken();
-            if (hashAlgo == null)
+            if(hashAlgo == null)
             {
                 int hash = CryptoFunctions.CreateXorVerifier1(password);
                 cur.CreateAttribute(prefix, "password", null, String.Format("{0:X4}", hash).ToUpper());
@@ -120,14 +125,15 @@ namespace NPOI.XSSF.UserModel.Helpers
 
         public static bool ValidatePassword(CT_SheetProtection xobj, String password, String prefix)
         {
-            if (password == null) return false;
+            if(password == null)
+                return false;
 
             string xorHashVal = xobj.password;
             string algoName = xobj.algorithmName;
             string hashVal = xobj.hashValue;
             string saltVal = xobj.saltValue;
             string spinCount = xobj.spinCount;
-            if (xorHashVal != null)
+            if(xorHashVal != null)
             {
                 int hash1 = Int32.Parse(xorHashVal, NumberStyles.HexNumber);
                 int hash2 = CryptoFunctions.CreateXorVerifier1(password);
@@ -135,7 +141,7 @@ namespace NPOI.XSSF.UserModel.Helpers
             }
             else
             {
-                if (hashVal == null || algoName == null || saltVal == null || spinCount == null)
+                if(hashVal == null || algoName == null || saltVal == null || spinCount == null)
                 {
                     return false;
                 }
@@ -162,7 +168,8 @@ namespace NPOI.XSSF.UserModel.Helpers
         public static bool ValidatePassword(XmlNode xobj, String password, String prefix)
         {
             // TODO: is "velvetSweatshop" the default password?
-            if (password == null) return false;
+            if(password == null)
+                return false;
 
             XPathNavigator cur = xobj.CreateNavigator();
             cur.MoveToAttribute("password", prefix);
@@ -177,7 +184,7 @@ namespace NPOI.XSSF.UserModel.Helpers
             String spinCount = cur.Value;
             //cur.Dispose();
 
-            if (xorHashVal != null)
+            if(xorHashVal != null)
             {
                 int hash1 = Int32.Parse(xorHashVal, NumberStyles.HexNumber);
                 int hash2 = CryptoFunctions.CreateXorVerifier1(password);
@@ -185,7 +192,7 @@ namespace NPOI.XSSF.UserModel.Helpers
             }
             else
             {
-                if (hashVal == null || algoName == null || saltVal == null || spinCount == null)
+                if(hashVal == null || algoName == null || saltVal == null || spinCount == null)
                 {
                     return false;
                 }
@@ -202,7 +209,7 @@ namespace NPOI.XSSF.UserModel.Helpers
 
         private static XmlQualifiedName GetAttrName(String prefix, String name)
         {
-            if (string.IsNullOrEmpty(prefix))
+            if(string.IsNullOrEmpty(prefix))
             {
                 return new XmlQualifiedName(name);
             }

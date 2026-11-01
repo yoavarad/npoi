@@ -437,15 +437,15 @@ namespace NPOI.HPSF
         ];
 
         /* Initialize the number-to-name and number-to-length map: */
-        static Variant() 
+        static Variant()
         {
             Dictionary<long,String> number2Name = new Dictionary<long,String>(NUMBER_TO_NAME_LIST.Length);
             Dictionary<long,int> number2Len = new Dictionary<long, int>(NUMBER_TO_NAME_LIST.Length);
 
-            foreach (Object[] nn in NUMBER_TO_NAME_LIST)
+            foreach(Object[] nn in NUMBER_TO_NAME_LIST)
             {
-                number2Name[(long)nn[0]] = (String)nn[1];
-                number2Len[(long)nn[0]] = (int)nn[2];
+                number2Name[(long) nn[0]] = (String) nn[1];
+                number2Len[(long) nn[0]] = (int) nn[2];
             }
             numberToName = number2Name;
             numberToLength = number2Len;
@@ -462,17 +462,17 @@ namespace NPOI.HPSF
         {
             long vt = variantType;
             String name = "";
-            if ((vt & VT_VECTOR) != 0)
+            if((vt & VT_VECTOR) != 0)
             {
                 name = "Vector of ";
                 vt -= VT_VECTOR;
             }
-            else if ((vt & VT_ARRAY) != 0)
+            else if((vt & VT_ARRAY) != 0)
             {
                 name = "Array of ";
                 vt -= VT_ARRAY;
             }
-            else if ((vt & VT_BYREF) != 0)
+            else if((vt & VT_BYREF) != 0)
             {
                 name = "ByRef of ";
                 vt -= VT_BYREF;

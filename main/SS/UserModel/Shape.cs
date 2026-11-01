@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -34,7 +34,7 @@ namespace NPOI.SS.UserModel
         int FillColor { get; set; }
         double LineWidth { get; set; }
         LineStyle LineStyle { get; set; }
-        LineEndingCapType LineEndingCapType{ get; set; }
+        LineEndingCapType LineEndingCapType { get; set; }
         CompoundLineType CompoundLineType { get; set; }
         bool IsNoFill { get; set; }
         int CountOfAllChildren { get; }

@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.OpenXml4Net.Exceptions;
+using System;
 
 namespace NPOI.OpenXml4Net
 {

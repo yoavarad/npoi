@@ -19,11 +19,10 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
-    using System.IO;
-
     using NPOI.Util;
+    using System;
+    using System.IO;
+    using System.Text;
 
     /**
      * Subrecords are part of the OBJ class.
@@ -39,7 +38,7 @@ namespace NPOI.HSSF.Record
             int secondUShort = in1.ReadUShort(); // Often (but not always) the datasize for the sub-record
 
 
-            switch (sid)
+            switch(sid)
             {
                 case CommonObjectDataSubRecord.sid:
                     return new CommonObjectDataSubRecord(in1, secondUShort);
@@ -52,7 +51,7 @@ namespace NPOI.HSSF.Record
                 case NoteStructureSubRecord.sid:
                     return new NoteStructureSubRecord(in1, secondUShort);
                 case LbsDataSubRecord.sid:
-                    return new LbsDataSubRecord(in1, secondUShort, (int)cmoOt);
+                    return new LbsDataSubRecord(in1, secondUShort, (int) cmoOt);
                 case FtCblsSubRecord.sid:
                     return new FtCblsSubRecord(in1, secondUShort);
                 case FtPioGrbitSubRecord.sid:
@@ -68,10 +67,10 @@ namespace NPOI.HSSF.Record
         public byte[] Serialize()
         {
             int size = DataSize + 4;
-            using (MemoryStream baos = RecyclableMemory.GetStream(size))
+            using(MemoryStream baos = RecyclableMemory.GetStream(size))
             {
                 Serialize(new LittleEndianOutputStream(baos));
-                if (baos.Length != size)
+                if(baos.Length != size)
                 {
                     throw new Exception("write size mismatch");
                 }
@@ -119,9 +118,9 @@ namespace NPOI.HSSF.Record
         }
         public override short Sid
         {
-            get 
+            get
             {
-                return (short)_sid;
+                return (short) _sid;
             }
         }
         public override void Serialize(ILittleEndianOutput out1)

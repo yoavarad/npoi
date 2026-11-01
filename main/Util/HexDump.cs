@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -25,11 +25,11 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.Text; 
 using Cysharp.Text;
-using System.IO;
+using System;
 using System.Globalization;
+using System.IO;
+using System.Text;
 
 
 namespace NPOI.Util
@@ -43,8 +43,8 @@ namespace NPOI.Util
     public class HexDump
     {
 
-        private static readonly char[] _hexcodes = new char[] { 
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 
+        private static readonly char[] _hexcodes = new char[] {
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
         '\0', '\0'
      };
         private static readonly int[] _shifts = new int[] { 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 0 };
@@ -70,7 +70,7 @@ namespace NPOI.Util
         {
             StringBuilder buffer = new StringBuilder();
             buffer.Length = 0;
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 2; i++)
             {
                 buffer.Append(_hexcodes[(value >> _shifts[i + 6]) & 15]);
             }
@@ -81,9 +81,9 @@ namespace NPOI.Util
         {
             StringBuilder buffer = new StringBuilder();
             buffer.Length = 0;
-            for (int i = 0; i < 8; i++)
+            for(int i = 0; i < 8; i++)
             {
-                buffer.Append(_hexcodes[((int)(value >> _shifts[i + _shifts.Length - 8])) & 15]);
+                buffer.Append(_hexcodes[((int) (value >> _shifts[i + _shifts.Length - 8])) & 15]);
             }
             return buffer.ToString();
         }
@@ -108,7 +108,7 @@ namespace NPOI.Util
 
         public static String Dump(byte[] data, long offset, int index, int length)
         {
-            if (data == null || data.Length == 0)
+            if(data == null || data.Length == 0)
             {
                 return "No Data" + EOL;
             }
@@ -118,7 +118,7 @@ namespace NPOI.Util
                 : Math.Min(data.Length, index + length);
 
 
-            if ((index < 0) || (index >= data.Length))
+            if((index < 0) || (index >= data.Length))
             {
                 String err = "illegal index: " + index + " into array of length " + data.Length;
                 throw new IndexOutOfRangeException(err);
@@ -127,19 +127,19 @@ namespace NPOI.Util
             long display_offset = offset + index;
             StringBuilder buffer = new StringBuilder(74);
 
-            for (int j = index; j < data_length; j += 16)
+            for(int j = index; j < data_length; j += 16)
             {
                 int chars_read = data_length - j;
 
-                if (chars_read > 16)
+                if(chars_read > 16)
                 {
                     chars_read = 16;
                 }
 
                 buffer.Append(Dump(display_offset)).Append(' ');
-                for (int k = 0; k < 16; k++)
+                for(int k = 0; k < 16; k++)
                 {
-                    if (k < chars_read)
+                    if(k < chars_read)
                     {
                         buffer.Append(Dump(data[k + j])).Append(' ');
                     }
@@ -148,7 +148,7 @@ namespace NPOI.Util
                         buffer.Append("   ");
                     }
                 }
-                for (int k = 0; k < chars_read; k++)
+                for(int k = 0; k < chars_read; k++)
                 {
                     buffer.Append(ToAscii(data[k + j]));
                 }
@@ -160,9 +160,10 @@ namespace NPOI.Util
         public static char ToAscii(int dataB)
         {
             char charB = (char)(dataB & 0xFF);
-            if (char.IsControl(charB)) return '.';
+            if(char.IsControl(charB))
+                return '.';
 
-            switch ((byte)charB)
+            switch((byte) charB)
             {
                 case 0xFF:
                 case 0xDD: // printable, but not compilable with current compiler encoding
@@ -184,30 +185,30 @@ namespace NPOI.Util
 
         public static void Dump(Stream inStream, int start, int bytesToDump)
         {
-            using (MemoryStream stream = new MemoryStream())
+            using(MemoryStream stream = new MemoryStream())
             {
-                if (bytesToDump == -1)
+                if(bytesToDump == -1)
                 {
                     int c = inStream.ReadByte();
-                    while (c != -1)
+                    while(c != -1)
                     {
-                        stream.WriteByte((byte)c);
+                        stream.WriteByte((byte) c);
                         c = inStream.ReadByte();
                     }
                 }
                 else
                 {
                     int bytesRemaining = bytesToDump;
-                    while (bytesRemaining-- > 0)
+                    while(bytesRemaining-- > 0)
                     {
                         int c = inStream.ReadByte();
-                        if (c == -1)
+                        if(c == -1)
                             break;
                         else
-                            stream.WriteByte((byte)c);
+                            stream.WriteByte((byte) c);
                     }
                 }
-                Dump(stream.GetBuffer(), 0L, null, start, (int)stream.Length);
+                Dump(stream.GetBuffer(), 0L, null, start, (int) stream.Length);
             }
         }
 
@@ -215,10 +216,10 @@ namespace NPOI.Util
         {
             //lock (typeof(HexDump))
             {
-                if (data.Length == 0)
+                if(data.Length == 0)
                 {
                     byte[] info = Encoding.UTF8.GetBytes(string.Format(CultureInfo.InvariantCulture, "No Data{0}", EOL));
-                    if (stream != null)
+                    if(stream != null)
                     {
                         //Console.Write(info);
                         stream.Write(info, 0, info.Length);
@@ -226,28 +227,28 @@ namespace NPOI.Util
                     }
                     return;
                 }
-                if ((index < 0) || (index >= data.Length))
+                if((index < 0) || (index >= data.Length))
                 {
                     string message = string.Format(CultureInfo.InvariantCulture, "illegal index: {0} into array of length {1}", index, data.Length);
                     throw new IndexOutOfRangeException(message);
                 }
-                if (data.Length != 0)
+                if(data.Length != 0)
                 {
 
                     long display_offset = offset + index;
                     StringBuilder buffer = new StringBuilder(74);
                     int data_length = Math.Min(data.Length, index + length);
-                    for (int i = index; i < data_length; i += 16)
+                    for(int i = index; i < data_length; i += 16)
                     {
                         int chars_read = data_length - i;
-                        if (chars_read > 16)
+                        if(chars_read > 16)
                         {
                             chars_read = 16;
                         }
                         buffer.Append(Dump(display_offset)).Append(' ');
-                        for (int j = 0; j < 16; j++)
+                        for(int j = 0; j < 16; j++)
                         {
-                            if (j < chars_read)
+                            if(j < chars_read)
                             {
                                 buffer.Append(Dump(data[j + i]));
                             }
@@ -257,11 +258,11 @@ namespace NPOI.Util
                             }
                             buffer.Append(' ');
                         }
-                        for (int k = 0; k < chars_read; k++)
+                        for(int k = 0; k < chars_read; k++)
                         {
-                            if ((data[k + i] >= ' ') && (data[k + i] < 127))
+                            if((data[k + i] >= ' ') && (data[k + i] < 127))
                             {
-                                buffer.Append((char)data[k + i]);
+                                buffer.Append((char) data[k + i]);
                             }
                             else
                             {
@@ -270,7 +271,7 @@ namespace NPOI.Util
                         }
                         buffer.Append(EOL);
                         byte[] bytes = Encoding.UTF8.GetBytes(buffer.ToString());
-                        if (stream != null)
+                        if(stream != null)
                         {
                             //Console.Write(buffer.ToString());
                             stream.Write(bytes, 0, bytes.Length);
@@ -293,32 +294,33 @@ namespace NPOI.Util
          * @param start       The index to use as the starting position for the left hand side label
          * @param bytesToDump The number of bytes to output.  Use -1 to read until the end of file.
          */
-        public static void Dump(Stream in1, Stream out1, int start, int bytesToDump ) 
+        public static void Dump(Stream in1, Stream out1, int start, int bytesToDump)
         {
             MemoryStream buf = new MemoryStream();
-            if (bytesToDump == -1)
+            if(bytesToDump == -1)
             {
                 int c = in1.ReadByte();
-                while (c != -1)
+                while(c != -1)
                 {
-                    buf.WriteByte((byte)c);
+                    buf.WriteByte((byte) c);
                     c = in1.ReadByte();
                 }
             }
             else
             {
                 int bytesRemaining = bytesToDump;
-                while (bytesRemaining-- > 0)
+                while(bytesRemaining-- > 0)
                 {
                     int c = in1.ReadByte();
-                    if (c == -1) {
+                    if(c == -1)
+                    {
                         break;
                     }
-                    buf.WriteByte((byte)c);
+                    buf.WriteByte((byte) c);
                 }
             }
 
-            Dump(buf.GetBuffer(), 0, out1, start, (int)buf.Length);
+            Dump(buf.GetBuffer(), 0, out1, start, (int) buf.Length);
         }
 
         /// <summary>
@@ -374,9 +376,9 @@ namespace NPOI.Util
             long value = pValue;
             do
             {
-                result[--charPos] = _hexcodes[(int)(value & 0x0F)];
+                result[--charPos] = _hexcodes[(int) (value & 0x0F)];
                 value >>= 4;
-            } while (charPos > 1);
+            } while(charPos > 1);
 
             // Prefix added to avoid ambiguity
             result[0] = '0';
@@ -386,17 +388,17 @@ namespace NPOI.Util
 
         public static string ToHex(byte value)
         {
-            return ToHex((long)value, 2);
+            return ToHex((long) value, 2);
         }
 
         public static string ToHex(short value)
         {
-            return ToHex((long)value, 4);
+            return ToHex((long) value, 4);
         }
 
         public static string ToHex(int value)
         {
-            return ToHex((long)value, 8);
+            return ToHex((long) value, 8);
         }
 
         public static string ToHex(long value)
@@ -408,11 +410,11 @@ namespace NPOI.Util
         {
             StringBuilder buffer = new StringBuilder();
             buffer.Append('[');
-            if (value != null && value.Length > 0)
+            if(value != null && value.Length > 0)
             {
-                for (int i = 0; i < value.Length; i++)
+                for(int i = 0; i < value.Length; i++)
                 {
-                    if (i > 0)
+                    if(i > 0)
                     {
                         buffer.Append(", ");
                     }
@@ -427,14 +429,14 @@ namespace NPOI.Util
         {
             StringBuilder buffer = new StringBuilder();
             buffer.Append('[');
-            for (int i = 0; i < value.Length; i++)
+            for(int i = 0; i < value.Length; i++)
             {
-                if (i > 0)
+                if(i > 0)
                 {
                     buffer.Append(", ");
                 }
                 buffer.Append(ToHex(value[i]));
-                
+
             }
             buffer.Append(']');
             return buffer.ToString();
@@ -443,9 +445,9 @@ namespace NPOI.Util
         private static string ToHex(long value, int digits)
         {
             StringBuilder buffer = new StringBuilder(digits);
-            for (int i = 0; i < digits; i++)
+            for(int i = 0; i < digits; i++)
             {
-                buffer.Append(_hexcodes[(int)((value >> _shifts[i + (16 - digits)]) & 15L)]);
+                buffer.Append(_hexcodes[(int) ((value >> _shifts[i + (16 - digits)]) & 15L)]);
             }
             return buffer.ToString();
         }
@@ -454,23 +456,23 @@ namespace NPOI.Util
         {
             int digits = value.Length == 0 ? 0 : (int)Math.Round(Math.Log(value.Length) / Math.Log(10) + 0.50000001);
             StringBuilder formatString = new StringBuilder();
-            for (int i = 0; i < digits; i++)
+            for(int i = 0; i < digits; i++)
                 formatString.Append('0');
             formatString.Append(": ");
             using var retVal = ZString.CreateStringBuilder();
-            retVal.Append(((double)0).ToString(formatString.ToString(), CultureInfo.InvariantCulture));
-            if (value.Length == 0)
+            retVal.Append(((double) 0).ToString(formatString.ToString(), CultureInfo.InvariantCulture));
+            if(value.Length == 0)
                 retVal.Append("0");
             int j = -1;
-            for (int x = 0; x < value.Length; x++)
+            for(int x = 0; x < value.Length; x++)
             {
-                if (++j == bytesPerLine)
+                if(++j == bytesPerLine)
                 {
                     retVal.Append('\n');
-                    retVal.Append(((double)x).ToString(formatString.ToString(), CultureInfo.InvariantCulture));
+                    retVal.Append(((double) x).ToString(formatString.ToString(), CultureInfo.InvariantCulture));
                     j = 0;
                 }
-                else if (x > 0)
+                else if(x > 0)
                 {
                     retVal.Append(", ");
                 }
@@ -496,9 +498,9 @@ namespace NPOI.Util
             int l = data.Length;
             char[] out1 = new char[l << 1];
             // two characters form the hex value.
-            for (int i = 0, j = 0; i < l; i++)
+            for(int i = 0, j = 0; i < l; i++)
             {
-                out1[j++] = toDigits[(int)(0xF0 & data[i]) >> 4];
+                out1[j++] = toDigits[(int) (0xF0 & data[i]) >> 4];
                 out1[j++] = toDigits[0x0F & data[i]];
             }
             return out1;

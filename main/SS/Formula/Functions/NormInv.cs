@@ -1,11 +1,11 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NPOI.SS.Formula.Functions
 {
-    public class NormInv:Fixed3ArgFunction,FreeRefFunction
+    public class NormInv : Fixed3ArgFunction, FreeRefFunction
     {
         public static NormInv instance = new NormInv();
         internal static double inverse(double probability, double mean, double stdev)
@@ -18,25 +18,25 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 Double probability = evaluateValue(arg1, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(probability))
+                if(double.IsNaN(probability))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
-                else if (probability <= 0 || probability >= 1)
+                else if(probability <= 0 || probability >= 1)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
                 Double mean = evaluateValue(arg2, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(mean))
+                if(double.IsNaN(mean))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 Double stdev = evaluateValue(arg3, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(stdev))
+                if(double.IsNaN(stdev))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
-                else if (stdev <= 0)
+                else if(stdev <= 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
@@ -44,14 +44,14 @@ namespace NPOI.SS.Formula.Functions
                 return new NumberEval(inverse(
                         probability, mean, stdev));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 3)
+            if(args.Length == 3)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], args[2]);
             }

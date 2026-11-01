@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Save External Links record (BookBool)
@@ -61,7 +61,7 @@ namespace NPOI.HSSF.Record
 
         public short SaveLinkValues
         {
-            get{return field_1_save_link_values;}
+            get { return field_1_save_link_values; }
             set { field_1_save_link_values = value; }
         }
 

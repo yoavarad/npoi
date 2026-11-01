@@ -17,10 +17,9 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
 
     /**
      * @author <a href="rjankiraman@emptoris.com">Radhakrishnan J</a>

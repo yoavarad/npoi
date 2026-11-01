@@ -17,11 +17,11 @@
  * ====================================================================
  */
 
-using NPOI.SS.Formula;
-using System;
-using NPOI.SS.UserModel;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.Formula;
 using NPOI.SS.Formula.PTG;
+using NPOI.SS.UserModel;
+using System;
 namespace NPOI.XSSF.UserModel.Helpers
 {
     //class XSSFFormulaRenderingWorkbook : IFormulaRenderingWorkbook
@@ -106,24 +106,24 @@ namespace NPOI.XSSF.UserModel.Helpers
         {
             // update named ranges
             int numberOfNames = _wb.NumberOfNames;
-            foreach (IName nm in _wb.GetAllNames())
-            { 
-                if (nm.SheetIndex == -1 || nm.SheetIndex == sheetIndex)
+            foreach(IName nm in _wb.GetAllNames())
+            {
+                if(nm.SheetIndex == -1 || nm.SheetIndex == sheetIndex)
                 {
                     UpdateName(nm, oldName, newName);
                 }
             }
 
             // update formulas
-            foreach (ISheet sh in _wb)
+            foreach(ISheet sh in _wb)
             {
-                foreach (IRow row in sh)
+                foreach(IRow row in sh)
                 {
-                    foreach (ICell cell in row)
+                    foreach(ICell cell in row)
                     {
-                        if (cell.CellType == CellType.Formula)
+                        if(cell.CellType == CellType.Formula)
                         {
-                            UpdateFormula((XSSFCell)cell, oldName, newName);
+                            UpdateFormula((XSSFCell) cell, oldName, newName);
                         }
                     }
                 }
@@ -139,19 +139,20 @@ namespace NPOI.XSSF.UserModel.Helpers
         private void UpdateFormula(XSSFCell cell, String oldName, String newName)
         {
             CT_CellFormula f = cell.GetCTCell().f;
-            if (f != null)
+            if(f != null)
             {
                 String formula = f.Value;
-                if (formula != null && formula.Length > 0)
+                if(formula != null && formula.Length > 0)
                 {
                     int sheetIndex = _wb.GetSheetIndex(cell.Sheet);
                     Ptg[] ptgs = FormulaParser.Parse(formula, _fpwb, FormulaType.Cell, sheetIndex, -1);
-                    foreach (Ptg ptg in ptgs)
+                    foreach(Ptg ptg in ptgs)
                     {
                         UpdatePtg(ptg, oldName, newName);
                     }
                     String updatedFormula = FormulaRenderer.ToFormulaString(_fpwb, ptgs);
-                    if (!formula.Equals(updatedFormula)) f.Value = (updatedFormula);
+                    if(!formula.Equals(updatedFormula))
+                        f.Value = (updatedFormula);
                 }
             }
         }
@@ -165,33 +166,34 @@ namespace NPOI.XSSF.UserModel.Helpers
         private void UpdateName(IName name, String oldName, String newName)
         {
             String formula = name.RefersToFormula;
-            if (formula != null)
+            if(formula != null)
             {
                 int sheetIndex = name.SheetIndex;
                 Ptg[] ptgs = FormulaParser.Parse(formula, _fpwb, FormulaType.NamedRange, sheetIndex, -1);
-                foreach (Ptg ptg in ptgs)
+                foreach(Ptg ptg in ptgs)
                 {
                     UpdatePtg(ptg, oldName, newName);
                 }
                 String updatedFormula = FormulaRenderer.ToFormulaString(_fpwb, ptgs);
-                if (!formula.Equals(updatedFormula)) name.RefersToFormula = (updatedFormula);
+                if(!formula.Equals(updatedFormula))
+                    name.RefersToFormula = (updatedFormula);
             }
         }
 
         private static void UpdatePtg(Ptg ptg, String oldName, String newName)
         {
-            if (ptg is Pxg pxg)
+            if(ptg is Pxg pxg)
             {
-                if (pxg.ExternalWorkbookNumber < 1)
+                if(pxg.ExternalWorkbookNumber < 1)
                 {
-                    if (pxg.SheetName != null &&
+                    if(pxg.SheetName != null &&
                         pxg.SheetName.Equals(oldName))
                     {
                         pxg.SheetName = (newName);
                     }
-                    if (pxg is Pxg3D pxg3D)
+                    if(pxg is Pxg3D pxg3D)
                     {
-                        if (pxg3D.LastSheetName != null &&
+                        if(pxg3D.LastSheetName != null &&
                             pxg3D.LastSheetName.Equals(oldName))
                         {
                             pxg3D.LastSheetName = (/*setter*/newName);
@@ -204,4 +206,3 @@ namespace NPOI.XSSF.UserModel.Helpers
     }
 
 }
-

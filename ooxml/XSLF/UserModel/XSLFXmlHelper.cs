@@ -1,3 +1,6 @@
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXmlFormats.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -5,9 +8,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXml4Net.Util;
-using NPOI.OpenXmlFormats.Presentation;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -25,9 +25,9 @@ namespace NPOI.XSLF.UserModel
                     DtdProcessing = DtdProcessing.Prohibit,
                     XmlResolver = null
                 });
-                return (T)new XmlSerializer(typeof(T)).Deserialize(reader);
+                return (T) new XmlSerializer(typeof(T)).Deserialize(reader);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 throw new POIXMLException("Invalid PresentationML in " + part.PartName.Name, e);
             }
@@ -54,7 +54,7 @@ namespace NPOI.XSLF.UserModel
             where T : POIXMLDocumentPart
         {
             var relationship = string.IsNullOrEmpty(id) ? null : owner.GetPackagePart().GetRelationship(id);
-            if (relationship == null || relationship.TargetMode != TargetMode.Internal ||
+            if(relationship == null || relationship.TargetMode != TargetMode.Internal ||
                 relationship.RelationshipType != descriptor.Relation ||
                 !(owner.GetRelationById(id) is T part) ||
                 part.GetPackagePart().ContentType != descriptor.ContentType ||
@@ -71,20 +71,20 @@ namespace NPOI.XSLF.UserModel
             where T : POIXMLDocumentPart
         {
             var parts = new List<T>();
-            if (list == null)
+            if(list == null)
             {
                 return parts;
             }
             var identifiers = new HashSet<uint>();
             var referencedParts = new HashSet<T>();
-            foreach (XmlNode node in list.ChildNodes)
+            foreach(XmlNode node in list.ChildNodes)
             {
-                if (!(node is XmlElement entry) || entry.LocalName != entryName ||
+                if(!(node is XmlElement entry) || entry.LocalName != entryName ||
                     entry.NamespaceURI != CT_Presentation.Namespace)
                 {
                     continue;
                 }
-                if (!uint.TryParse(entry.GetAttribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture,
+                if(!uint.TryParse(entry.GetAttribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture,
                     out var identifier) || identifier < 2147483648U || !identifiers.Add(identifier))
                 {
                     throw new POIXMLException("Invalid or duplicate " + entryName + " identifier in " +
@@ -92,7 +92,7 @@ namespace NPOI.XSLF.UserModel
                 }
                 var part = GetReferencedPart<T>(owner,
                     entry.GetAttribute("id", CT_Presentation.RelationshipsNamespace), descriptor);
-                if (!referencedParts.Add(part))
+                if(!referencedParts.Add(part))
                 {
                     throw new POIXMLException("Duplicate " + entryName + " part reference in " +
                         owner.GetPackagePart().PartName.Name);

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,14 +24,14 @@ using System.Text;
 
 namespace NPOI.SS.Formula
 {
-    public class CacheAreaEval:AreaEvalBase
+    public class CacheAreaEval : AreaEvalBase
     {
         readonly ValueEval[] _values;
-        public CacheAreaEval(AreaI ptg, ValueEval[] values):base(ptg)
+        public CacheAreaEval(AreaI ptg, ValueEval[] values) : base(ptg)
         {
             _values = values;
         }
-        public CacheAreaEval(int firstRow, int firstColumn, int lastRow, int lastColumn, ValueEval[] values):
+        public CacheAreaEval(int firstRow, int firstColumn, int lastRow, int lastColumn, ValueEval[] values) :
             base(firstRow, firstColumn, lastRow, lastColumn)
         {
             _values = values;
@@ -60,16 +60,16 @@ namespace NPOI.SS.Formula
             int startRow = area.FirstRow - FirstRow;
             int startCol = area.FirstColumn - FirstColumn;
 
-            for (int j = 0; j < height; j++)
+            for(int j = 0; j < height; j++)
             {
-                for (int i = 0; i < width; i++)
+                for(int i = 0; i < width; i++)
                 {
                     ValueEval temp;
 
                     /* CacheAreaEval is only temporary value representation, does not equal sheet selection
                      * so any attempts going beyond the selection results in BlankEval
                      */
-                    if (startRow + j > LastRow || startCol + i > LastColumn)
+                    if(startRow + j > LastRow || startCol + i > LastColumn)
                     {
                         temp = BlankEval.instance;
                     }
@@ -85,7 +85,7 @@ namespace NPOI.SS.Formula
         }
         public override TwoDEval GetRow(int rowIndex)
         {
-            if (rowIndex >= Height)
+            if(rowIndex >= Height)
             {
                 throw new ArgumentException("Invalid rowIndex " + rowIndex
                         + ".  Allowable range is (0.." + Height + ").");
@@ -93,7 +93,7 @@ namespace NPOI.SS.Formula
             int absRowIndex = FirstRow + rowIndex;
             ValueEval[] values = new ValueEval[Width];
 
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
                 values[i] = GetRelativeValue(rowIndex, i);
             }
@@ -102,7 +102,7 @@ namespace NPOI.SS.Formula
 
         public override TwoDEval GetColumn(int columnIndex)
         {
-            if (columnIndex >= Width)
+            if(columnIndex >= Width)
             {
                 throw new ArgumentException("Invalid columnIndex " + columnIndex
                         + ".  Allowable range is (0.." + Width + ").");
@@ -110,7 +110,7 @@ namespace NPOI.SS.Formula
             int absColIndex = FirstColumn+ columnIndex;
             ValueEval[] values = new ValueEval[Height];
 
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
                 values[i] = GetRelativeValue(i, columnIndex);
             }

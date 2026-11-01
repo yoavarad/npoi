@@ -60,7 +60,7 @@ namespace NPOI.HSSF.Record
             field_4_last_col = in1.ReadShort();
             field_5_zero = in1.ReadShort();
             //POI-61045 -- in practice, there can be an extra 2 bytes
-            if (in1.Available() == 2)
+            if(in1.Available() == 2)
             {
                 //logger.log(POILogger.INFO, "DimensionsRecord has extra 2 bytes.");
                 in1.ReadShort();
@@ -74,7 +74,7 @@ namespace NPOI.HSSF.Record
 
         public int FirstRow
         {
-            get{return field_1_first_row;}
+            get { return field_1_first_row; }
             set { field_1_first_row = value; }
         }
 
@@ -136,7 +136,7 @@ namespace NPOI.HSSF.Record
             out1.WriteInt(LastRow);
             out1.WriteShort(FirstCol);
             out1.WriteShort(LastCol);
-            out1.WriteShort(( short ) 0);
+            out1.WriteShort((short) 0);
         }
 
         protected override int DataSize

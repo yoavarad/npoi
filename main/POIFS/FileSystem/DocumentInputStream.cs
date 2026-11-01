@@ -17,8 +17,8 @@
 
 namespace NPOI.POIFS.FileSystem
 {
-    using System.IO;
     using NPOI.Util;
+    using System.IO;
 
     /// <summary>
     /// This class provides methods to read a DocumentEntry managed by a
@@ -53,22 +53,22 @@ namespace NPOI.POIFS.FileSystem
         /// </exception>
         public DocumentInputStream(DocumentEntry document)
         {
-            if (document is not DocumentNode documentNode)
+            if(document is not DocumentNode documentNode)
             {
                 throw new IOException("Cannot open internal document storage");
             }
 
             DirectoryNode parentNode = (DirectoryNode)document.Parent;
 
-            if (documentNode.Document != null)
+            if(documentNode.Document != null)
             {
                 delegate1 = new ODocumentInputStream(documentNode);
             }
-            else if (parentNode.OFileSystem != null)
+            else if(parentNode.OFileSystem != null)
             {
                 delegate1 = new ODocumentInputStream(documentNode);
             }
-            else if (parentNode.NFileSystem != null)
+            else if(parentNode.NFileSystem != null)
             {
                 delegate1 = new NDocumentInputStream(documentNode);
             }
@@ -188,7 +188,7 @@ namespace NPOI.POIFS.FileSystem
 
         public virtual short ReadShort()
         {
-            return (short)ReadUShort();
+            return (short) ReadUShort();
         }
 
         public virtual void ReadFully(byte[] buf)

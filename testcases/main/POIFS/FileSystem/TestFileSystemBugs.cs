@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,11 +17,12 @@
 
 namespace TestCases.POIFS.FileSystem
 {
+    using NPOI.POIFS.FileSystem;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using NPOI.POIFS.FileSystem;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using TestCases;
 
     /**
@@ -36,16 +37,16 @@ namespace TestCases.POIFS.FileSystem
         protected List<NPOIFSFileSystem> openedFSs;
         protected void tearDown()
         {
-            if (openedFSs != null && openedFSs.Count > 0)
+            if(openedFSs != null && openedFSs.Count > 0)
             {
-                foreach (NPOIFSFileSystem fs in openedFSs)
+                foreach(NPOIFSFileSystem fs in openedFSs)
                 {
                     try
                     {
-                        if (fs != null)
+                        if(fs != null)
                             fs.Close();
                     }
-                    catch (Exception e)
+                    catch(Exception e)
                     {
                         Console.WriteLine("Error closing FS: " + e);
                     }
@@ -70,7 +71,7 @@ namespace TestCases.POIFS.FileSystem
         protected DirectoryNode[] openSamples(Stream[] inps, bool oldFails)
         {
             NPOIFSFileSystem nfs = new NPOIFSFileSystem(inps[0]);
-            if (openedFSs == null)
+            if(openedFSs == null)
                 openedFSs = new List<NPOIFSFileSystem>();
             openedFSs.Add(nfs);
 
@@ -78,16 +79,16 @@ namespace TestCases.POIFS.FileSystem
             try
             {
                 ofs = new OPOIFSFileSystem(inps[1]);
-                if (oldFails)
+                if(oldFails)
                     Assert.Fail("POIFSFileSystem should have failed but didn't");
             }
             catch
             {
-                if (!oldFails)
+                if(!oldFails)
                     throw;
             }
 
-            if (ofs == null)
+            if(ofs == null)
                 return new DirectoryNode[] { nfs.Root };
             return new DirectoryNode[] { ofs.Root, nfs.Root };
         }
@@ -100,7 +101,7 @@ namespace TestCases.POIFS.FileSystem
         public void TestNotesOLE2Files()
         {
             // Check the contents
-            foreach (DirectoryNode root in openSample("Notes.ole2", false))
+            foreach(DirectoryNode root in openSample("Notes.ole2", false))
             {
                 ClassicAssert.AreEqual(1, root.EntryCount);
                 IEnumerator<Entry> it = root.Entries;
@@ -141,7 +142,7 @@ namespace TestCases.POIFS.FileSystem
         [Test]
         public void TestCorruptedProperties()
         {
-            foreach (DirectoryNode root in openSample("unknown_properties.msg", true))
+            foreach(DirectoryNode root in openSample("unknown_properties.msg", true))
             {
                 ClassicAssert.AreEqual(42, root.EntryCount);
             }
@@ -153,7 +154,7 @@ namespace TestCases.POIFS.FileSystem
         [Test]
         public void TestHeavilyNestedReWrite()
         {
-            foreach (DirectoryNode root in openSSSample("ex42570-20305.xls", false))
+            foreach(DirectoryNode root in openSSSample("ex42570-20305.xls", false))
             {
                 // Record the structure
                 Dictionary<String, int> entries = new Dictionary<String, int>();
@@ -161,7 +162,7 @@ namespace TestCases.POIFS.FileSystem
 
                 // Prepare to copy
                 DirectoryNode dest;
-                if (root.NFileSystem != null)
+                if(root.NFileSystem != null)
                 {
                     dest = (new NPOIFSFileSystem()).Root;
                 }
@@ -175,7 +176,7 @@ namespace TestCases.POIFS.FileSystem
 
                 // Re-load, always as NPOIFS
                 MemoryStream baos = new MemoryStream();
-                if (root.NFileSystem != null)
+                if(root.NFileSystem != null)
                 {
                     root.NFileSystem.WriteFileSystem(baos);
                 }
@@ -192,13 +193,13 @@ namespace TestCases.POIFS.FileSystem
         }
         private void fetchSizes(String path, DirectoryNode dir, Dictionary<String, int> entries)
         {
-            foreach (Entry entry in dir)
+            foreach(Entry entry in dir)
             {
-                if (entry is DirectoryNode)
+                if(entry is DirectoryNode)
                 {
                     String ourPath = path + entry.Name + "/";
                     entries.Add(ourPath, -1);
-                    fetchSizes(ourPath, (DirectoryNode)entry, entries);
+                    fetchSizes(ourPath, (DirectoryNode) entry, entries);
                 }
                 else
                 {
@@ -209,14 +210,14 @@ namespace TestCases.POIFS.FileSystem
         }
         private void CheckSizes(String path, DirectoryNode dir, Dictionary<String, int> entries)
         {
-            foreach (Entry entry in dir)
+            foreach(Entry entry in dir)
             {
-                if (entry is DirectoryNode)
+                if(entry is DirectoryNode)
                 {
                     String ourPath = path + entry.Name + "/";
                     ClassicAssert.IsTrue(entries.ContainsKey(ourPath));
                     ClassicAssert.AreEqual(-1, entries[(ourPath)]);
-                    CheckSizes(ourPath, (DirectoryNode)entry, entries);
+                    CheckSizes(ourPath, (DirectoryNode) entry, entries);
                 }
                 else
                 {

@@ -36,7 +36,7 @@ namespace NPOI.SS.Formula.Function
         public const int FUNCTION_INDEX_IF = 1;
         public const short FUNCTION_INDEX_SUM = 4;
         public const int FUNCTION_INDEX_CHOOSE = 100;
-	    public const short FUNCTION_INDEX_INDIRECT = 148;
+        public const short FUNCTION_INDEX_INDIRECT = 148;
         public const short FUNCTION_INDEX_EXTERNAL = 255;
         private static FunctionMetadataRegistry _instance;
 
@@ -45,7 +45,7 @@ namespace NPOI.SS.Formula.Function
 
         private static FunctionMetadataRegistry GetInstance()
         {
-            if (_instance == null)
+            if(_instance == null)
             {
                 _instance = FunctionMetadataReader.CreateRegistry();
             }
@@ -84,11 +84,11 @@ namespace NPOI.SS.Formula.Function
         public static short LookupIndexByName(String name)
         {
             FunctionMetadata fd = GetInstance().GetFunctionByNameInternal(name);
-            if (fd == null)
+            if(fd == null)
             {
                 return -1;
             }
-            return (short)fd.Index;
+            return (short) fd.Index;
         }
 
         private FunctionMetadata GetFunctionByNameInternal(String name)

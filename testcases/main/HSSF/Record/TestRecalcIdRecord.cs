@@ -17,11 +17,11 @@
 
 namespace TestCases.HSSF.Record
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using NPOI.Util;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using TestCases.HSSF.Record;
     /**
      *
      * @author Josh Micich
@@ -59,9 +59,9 @@ namespace TestCases.HSSF.Record
             {
                 r = new RecalcIdRecord(in1);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.Equals("expected 449 but got 49409"))
+                if(e.Message.Equals("expected 449 but got 49409"))
                 {
                     throw new AssertionException("Identified bug 48096");
                 }

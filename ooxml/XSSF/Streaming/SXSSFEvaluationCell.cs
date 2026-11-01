@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,16 +14,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System;
 using NPOI.SS.Formula;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.Util;
 using NPOI.XSSF.UserModel;
+using System;
 
 namespace NPOI.XSSF.Streaming
 {
-    public class SXSSFEvaluationCell : IEvaluationCell 
+    public class SXSSFEvaluationCell : IEvaluationCell
     {
         private readonly SXSSFEvaluationSheet _evalSheet;
         private readonly SXSSFCell _cell;
@@ -97,7 +97,7 @@ namespace NPOI.XSSF.Streaming
             {
                 return _cell.ColumnIndex;
             }
-            
+
         }
 
         public int ErrorCellValue
@@ -106,7 +106,7 @@ namespace NPOI.XSSF.Streaming
             {
                 return _cell.ErrorCellValue;
             }
-            
+
         }
 
         public double NumericCellValue
@@ -150,9 +150,9 @@ namespace NPOI.XSSF.Streaming
 
         public CellRangeAddress ArrayFormulaRange
         {
-            get 
-            { 
-                return _cell.ArrayFormulaRange; 
+            get
+            {
+                return _cell.ArrayFormulaRange;
             }
         }
         /// <summary>

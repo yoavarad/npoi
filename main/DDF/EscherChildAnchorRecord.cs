@@ -18,9 +18,9 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /// <summary>
     /// The escher child achor record is used to specify the position of a shape under an
@@ -49,10 +49,14 @@ namespace NPOI.DDF
             int bytesRemaining = ReadHeader(data, offset);
             int pos = offset + 8;
             int size = 0;
-            field_1_dx1 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_2_dy1 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_3_dx2 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_4_dy2 = LittleEndian.GetInt(data, pos + size); size += 4;
+            field_1_dx1 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_2_dy1 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_3_dx2 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_4_dy2 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
             return 8 + size;
         }
 
@@ -67,13 +71,20 @@ namespace NPOI.DDF
         {
             listener.BeforeRecordSerialize(offset, RecordId, this);
             int pos = offset;
-            LittleEndian.PutShort(data, pos, Options); pos += 2;
-            LittleEndian.PutShort(data, pos, RecordId); pos += 2;
-            LittleEndian.PutInt(data, pos, RecordSize - 8); pos += 4;
-            LittleEndian.PutInt(data, pos, field_1_dx1); pos += 4;
-            LittleEndian.PutInt(data, pos, field_2_dy1); pos += 4;
-            LittleEndian.PutInt(data, pos, field_3_dx2); pos += 4;
-            LittleEndian.PutInt(data, pos, field_4_dy2); pos += 4;
+            LittleEndian.PutShort(data, pos, Options);
+            pos += 2;
+            LittleEndian.PutShort(data, pos, RecordId);
+            pos += 2;
+            LittleEndian.PutInt(data, pos, RecordSize - 8);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_1_dx1);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_2_dy1);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_3_dx2);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_4_dy2);
+            pos += 4;
 
             listener.AfterRecordSerialize(pos, RecordId, pos - offset, this);
             return pos - offset;

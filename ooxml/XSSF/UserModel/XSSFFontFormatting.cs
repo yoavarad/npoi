@@ -52,17 +52,18 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_font.sizeOfVertAlignArray() == 0) return FontSuperScript.None;
+                if(_font.sizeOfVertAlignArray() == 0)
+                    return FontSuperScript.None;
 
                 CT_VerticalAlignFontProperty prop = _font.GetVertAlignArray(0);
-                return (FontSuperScript)(prop.val - 1);
+                return (FontSuperScript) (prop.val - 1);
             }
-            set 
+            set
             {
                 _font.SetVertAlignArray(null);
-                if (value != FontSuperScript.None)
+                if(value != FontSuperScript.None)
                 {
-                    _font.AddNewVertAlign().val = (ST_VerticalAlignRun)(value + 1);
+                    _font.AddNewVertAlign().val = (ST_VerticalAlignRun) (value + 1);
                 }
             }
         }
@@ -75,37 +76,40 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_font.sizeOfColorArray() == 0) return -1;
+                if(_font.sizeOfColorArray() == 0)
+                    return -1;
 
                 int idx = 0;
                 CT_Color color = _font.GetColorArray(0);
-                if (color.IsSetIndexed()) idx = (int)color.indexed;
-                return (short)idx;
+                if(color.IsSetIndexed())
+                    idx = (int) color.indexed;
+                return (short) idx;
             }
-            set 
+            set
             {
                 _font.SetColorArray(null);
-                if (value != -1)
+                if(value != -1)
                 {
                     var clr=_font.AddNewColor();
-                    clr.indexed = (uint)(value);
+                    clr.indexed = (uint) (value);
                     clr.indexedSpecified = true;
                 }
             }
         }
-        
+
         public IColor FontColor
         {
             get
             {
-                if (_font.sizeOfColorArray() == 0) return null;
+                if(_font.sizeOfColorArray() == 0)
+                    return null;
 
                 return XSSFColor.From(_font.GetColorArray(0), _colorMap);
             }
             set
             {
                 XSSFColor xcolor = XSSFColor.ToXSSFColor(value);
-                if (xcolor == null)
+                if(xcolor == null)
                 {
                     _font.color.Clear();
                 }
@@ -125,17 +129,18 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_font.sizeOfSzArray() == 0) return -1;
+                if(_font.sizeOfSzArray() == 0)
+                    return -1;
 
                 CT_FontSize sz = _font.GetSzArray(0);
-                return (short)(20 * sz.val);
+                return (short) (20 * sz.val);
             }
-            set 
+            set
             {
                 _font.SetSzArray(null);
-                if (value != -1)
+                if(value != -1)
                 {
-                    _font.AddNewSz().val = (double)value / 20;
+                    _font.AddNewSz().val = (double) value / 20;
                 }
             }
         }
@@ -155,21 +160,27 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_font.sizeOfUArray() == 0) return FontUnderlineType.None;
+                if(_font.sizeOfUArray() == 0)
+                    return FontUnderlineType.None;
                 CT_UnderlineProperty u = _font.GetUArray(0);
-                switch (u.val)
+                switch(u.val)
                 {
-                    case ST_UnderlineValues.single: return FontUnderlineType.Single;
-                    case ST_UnderlineValues.@double: return FontUnderlineType.Double;
-                    case ST_UnderlineValues.singleAccounting: return FontUnderlineType.SingleAccounting;
-                    case ST_UnderlineValues.doubleAccounting: return FontUnderlineType.DoubleAccounting;
-                    default: return FontUnderlineType.None;
+                    case ST_UnderlineValues.single:
+                        return FontUnderlineType.Single;
+                    case ST_UnderlineValues.@double:
+                        return FontUnderlineType.Double;
+                    case ST_UnderlineValues.singleAccounting:
+                        return FontUnderlineType.SingleAccounting;
+                    case ST_UnderlineValues.doubleAccounting:
+                        return FontUnderlineType.DoubleAccounting;
+                    default:
+                        return FontUnderlineType.None;
                 }
             }
-            set 
+            set
             {
                 _font.SetUArray(null);
-                if (value != FontUnderlineType.None)
+                if(value != FontUnderlineType.None)
                 {
                     FontUnderline fenum = FontUnderline.ValueOf(value);
                     ST_UnderlineValues val = (ST_UnderlineValues)(fenum.Value);
@@ -213,8 +224,10 @@ namespace NPOI.XSSF.UserModel
         {
             _font.SetIArray(null);
             _font.SetBArray(null);
-            if (italic) _font.AddNewI().val = true;
-            if (bold) _font.AddNewB().val = true;
+            if(italic)
+                _font.AddNewI().val = true;
+            if(bold)
+                _font.AddNewB().val = true;
         }
 
         /**

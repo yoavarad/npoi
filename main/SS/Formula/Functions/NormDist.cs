@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,41 +18,41 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 Double xval = evaluateValue(arg1, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(xval))
+                if(double.IsNaN(xval))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 Double mean = evaluateValue(arg2, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(mean))
+                if(double.IsNaN(mean))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 Double stdev = evaluateValue(arg3, srcRowIndex, srcColumnIndex);
-                if (double.IsNaN(stdev))
+                if(double.IsNaN(stdev))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
-                else if (stdev <= 0)
+                else if(stdev <= 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
                 var cumulative = OperandResolver.CoerceValueToBoolean(arg4, false);
-                if (cumulative==null)
+                if(cumulative==null)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
 
                 return new NumberEval(probability(
-                        xval, mean, stdev, (bool)cumulative));
+                        xval, mean, stdev, (bool) cumulative));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 4)
+            if(args.Length == 4)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], args[2], args[3]);
             }

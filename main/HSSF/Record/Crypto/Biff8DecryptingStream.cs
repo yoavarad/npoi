@@ -17,12 +17,11 @@
 
 namespace NPOI.HSSF.Record.Crypto
 {
-    using System;
-    using System.IO;
-    using NPOI.Util;
-
     using NPOI.HSSF.Record;
     using NPOI.POIFS.Crypt;
+    using NPOI.Util;
+    using System;
+    using System.IO;
 
     /**
      *
@@ -42,27 +41,27 @@ namespace NPOI.HSSF.Record.Crypto
             {
                 byte[] initialBuf = IOUtils.SafelyAllocate(initialOffset, CryptoFunctions.MAX_RECORD_LENGTH);
                 InputStream stream = input;
-                if (initialOffset == 0)
+                if(initialOffset == 0)
                 {
                     stream = input;
                 }
                 else
                 {
                     stream = new PushbackInputStream(input, initialOffset);
-                    ((PushbackInputStream)stream).Unread(initialBuf);
+                    ((PushbackInputStream) stream).Unread(initialBuf);
                 }
 
                 var dec = info.Decryptor;
                 dec.SetChunkSize(RC4_REKEYING_INTERVAL);
-                ccis = (ChunkedCipherInputStream)dec.GetDataStream(stream, int.MaxValue, 0);
+                ccis = (ChunkedCipherInputStream) dec.GetDataStream(stream, int.MaxValue, 0);
 
-                if (initialOffset > 0)
+                if(initialOffset > 0)
                 {
                     // Advance cipher state across initial bytes (as plain header bytes)
                     ccis.ReadFully(initialBuf);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw new RecordFormatException("Failed to initialise decrypting stream: " + ex.Message, ex);
             }
@@ -96,7 +95,8 @@ namespace NPOI.HSSF.Record.Crypto
         {
             long bits = ReadLong();
             double d = BitConverter.Int64BitsToDouble(bits);
-            if (double.IsNaN(d)) throw new InvalidOperationException("Unexpected NaN");
+            if(double.IsNaN(d))
+                throw new InvalidOperationException("Unexpected NaN");
             return d;
         }
 
@@ -107,7 +107,7 @@ namespace NPOI.HSSF.Record.Crypto
 
         public void ReadFully(byte[] buf, int off, int len)
         {
-            if (shouldSkipEncryptionOnCurrentRecord)
+            if(shouldSkipEncryptionOnCurrentRecord)
             {
                 ccis.ReadPlain(buf, off, buf.Length);
             }
@@ -119,14 +119,14 @@ namespace NPOI.HSSF.Record.Crypto
 
         public byte ReadByte()
         {
-            if (shouldSkipEncryptionOnCurrentRecord)
+            if(shouldSkipEncryptionOnCurrentRecord)
             {
                 ReadPlain(buffer, 0, LittleEndianConsts.BYTE_SIZE);
                 return buffer[0];
             }
             else
             {
-                return (byte)ccis.ReadByte();
+                return (byte) ccis.ReadByte();
             }
         }
 
@@ -151,7 +151,7 @@ namespace NPOI.HSSF.Record.Crypto
 
         public int ReadInt()
         {
-            if (shouldSkipEncryptionOnCurrentRecord)
+            if(shouldSkipEncryptionOnCurrentRecord)
             {
                 ReadPlain(buffer, 0, LittleEndianConsts.INT_SIZE);
                 return LittleEndian.GetInt(buffer);
@@ -164,7 +164,7 @@ namespace NPOI.HSSF.Record.Crypto
 
         public long ReadLong()
         {
-            if (shouldSkipEncryptionOnCurrentRecord)
+            if(shouldSkipEncryptionOnCurrentRecord)
             {
                 ReadPlain(buffer, 0, LittleEndianConsts.LONG_SIZE);
                 return LittleEndian.GetLong(buffer);
@@ -214,4 +214,3 @@ namespace NPOI.HSSF.Record.Crypto
         }
     }
 }
-

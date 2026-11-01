@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.PivotTable
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -32,22 +32,22 @@ namespace NPOI.HSSF.Record.PivotTable
     {
         public const short sid = 0x00B1;
 
-		/**
+        /**
          * values for the {@link ViewFieldsRecord#sxaxis} field
          */
-		private enum Axis
-		{
-			NoAxis = 0,
-			Row = 1,
-			Column = 2,
-			Page = 4,
-			Data = 8
-		}
+        private enum Axis
+        {
+            NoAxis = 0,
+            Row = 1,
+            Column = 2,
+            Page = 4,
+            Data = 8
+        }
 
         /** the value of the <c>cchName</c> field when the name is not present */
         private const int STRING_NOT_PRESENT_LEN = 0xFFFF;
         /** 5 shorts */
-	    private const int BASE_SIZE = 10;
+        private const int BASE_SIZE = 10;
         private readonly int sxaxis;
         private readonly int cSub;
         private readonly int grbitSub;
@@ -63,10 +63,10 @@ namespace NPOI.HSSF.Record.PivotTable
             cItm = in1.ReadShort();
 
             int cchName = in1.ReadUShort();
-            if (cchName != STRING_NOT_PRESENT_LEN)
+            if(cchName != STRING_NOT_PRESENT_LEN)
             {
                 int flag = in1.ReadByte();
-                if ((flag & 0x01) != 0)
+                if((flag & 0x01) != 0)
                 {
                     _name = in1.ReadUnicodeLEString(cchName);
                 }
@@ -86,7 +86,7 @@ namespace NPOI.HSSF.Record.PivotTable
             out1.WriteShort(grbitSub);
             out1.WriteShort(cItm);
 
-            if (_name != null)
+            if(_name != null)
             {
                 StringUtil.WriteUnicodeString(out1, _name);
             }
@@ -101,7 +101,7 @@ namespace NPOI.HSSF.Record.PivotTable
         {
             get
             {
-                if (_name == null)
+                if(_name == null)
                 {
                     return BASE_SIZE;
                 }

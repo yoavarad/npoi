@@ -19,7 +19,8 @@ namespace TestCases.SS.UserModel
 {
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
 
 
@@ -71,7 +72,7 @@ namespace TestCases.SS.UserModel
             row.CreateCell(5).SetCellValue("10.0000");
 
             // autosize not-Evaluated cells, formula cells are sized as if the result is 0
-            for (int i = 0; i < 6; i++) 
+            for(int i = 0; i < 6; i++)
                 sheet.AutoSizeColumn(i);
 
             ClassicAssert.IsTrue(sheet.GetColumnWidth(0) < sheet.GetColumnWidth(1));  // width of '0' is less then width of '10'
@@ -82,7 +83,8 @@ namespace TestCases.SS.UserModel
             // Evaluate formulas and re-autosize
             EvaluateWorkbook(workbook);
 
-            for (int i = 0; i < 6; i++) sheet.AutoSizeColumn(i);
+            for(int i = 0; i < 6; i++)
+                sheet.AutoSizeColumn(i);
 
             ClassicAssert.IsTrue(sheet.GetColumnWidth(0) < sheet.GetColumnWidth(1));  // width of '0' is less then width of '10'
             ClassicAssert.AreEqual(sheet.GetColumnWidth(1), sheet.GetColumnWidth(2)); // columns 1, 2 and 3 should have the same width
@@ -106,7 +108,8 @@ namespace TestCases.SS.UserModel
             row.CreateCell(3).CellFormula = (/*setter*/"1 > 0"); // a formula that returns true
 
             // autosize not-Evaluated cells, formula cells are sized as if the result is 0
-            for (int i = 0; i < 4; i++) sheet.AutoSizeColumn(i);
+            for(int i = 0; i < 4; i++)
+                sheet.AutoSizeColumn(i);
 
             ClassicAssert.IsTrue(sheet.GetColumnWidth(1) > sheet.GetColumnWidth(0));  // 'true' is wider than '0'
             ClassicAssert.AreEqual(sheet.GetColumnWidth(1), sheet.GetColumnWidth(2));  // 10 and '10' should be sized Equally
@@ -115,7 +118,8 @@ namespace TestCases.SS.UserModel
             // Evaluate formulas and re-autosize
             EvaluateWorkbook(workbook);
 
-            for (int i = 0; i < 4; i++) sheet.AutoSizeColumn(i);
+            for(int i = 0; i < 4; i++)
+                sheet.AutoSizeColumn(i);
 
             ClassicAssert.IsTrue(sheet.GetColumnWidth(1) > sheet.GetColumnWidth(0));  // 'true' is wider than '0'
             ClassicAssert.AreEqual(sheet.GetColumnWidth(1), sheet.GetColumnWidth(2));  // columns 1, 2 and 3 should have the same width
@@ -168,7 +172,7 @@ namespace TestCases.SS.UserModel
             cell7.CellStyle = (/*setter*/style3); // should be sized as 'Jan'
 
             // autosize not-Evaluated cells, formula cells are sized as if the result is 0
-            for (int i = 0; i < 8; i++) 
+            for(int i = 0; i < 8; i++)
                 sheet.AutoSizeColumn(i);
             ClassicAssert.AreEqual(sheet.GetColumnWidth(2), sheet.GetColumnWidth(1)); // date formatted as 'm'
             ClassicAssert.IsTrue(sheet.GetColumnWidth(3) > sheet.GetColumnWidth(1));  // 'mmm' is wider than 'm'
@@ -182,7 +186,8 @@ namespace TestCases.SS.UserModel
             // Evaluate formulas and re-autosize
             EvaluateWorkbook(workbook);
 
-            for (int i = 0; i < 8; i++) sheet.AutoSizeColumn(i);
+            for(int i = 0; i < 8; i++)
+                sheet.AutoSizeColumn(i);
 
             ClassicAssert.AreEqual(sheet.GetColumnWidth(2), sheet.GetColumnWidth(1)); // date formatted as 'm'
             ClassicAssert.IsTrue(sheet.GetColumnWidth(3) > sheet.GetColumnWidth(1));  // 'mmm' is wider than 'm'
@@ -206,7 +211,7 @@ namespace TestCases.SS.UserModel
 
             ICellStyle style1 = workbook.CreateCellStyle();
             IFont font1 = workbook.CreateFont();
-            font1.FontHeight = (/*setter*/(short)(2 * defaultFont.FontHeight));
+            font1.FontHeight = (/*setter*/(short) (2 * defaultFont.FontHeight));
             style1.SetFont(font1);
 
             row.CreateCell(0).SetCellValue("x");
@@ -219,7 +224,8 @@ namespace TestCases.SS.UserModel
             cell5.SetCellValue("Software Foundation");
             cell5.CellStyle = (/*setter*/style1); // same as in column 4 but the font is twice larger than the default font
 
-            for (int i = 0; i < 10; i++) sheet.AutoSizeColumn(i);
+            for(int i = 0; i < 10; i++)
+                sheet.AutoSizeColumn(i);
 
             ClassicAssert.IsTrue(2 * sheet.GetColumnWidth(0) < sheet.GetColumnWidth(1)); // width is roughly proportional to the number of characters
             ClassicAssert.IsTrue(2 * sheet.GetColumnWidth(1) < sheet.GetColumnWidth(2));
@@ -238,7 +244,7 @@ namespace TestCases.SS.UserModel
             IRow row = sheet.CreateRow(0);
 
             ICellStyle style1 = workbook.CreateCellStyle();
-            style1.Rotation = (/*setter*/(short)90);
+            style1.Rotation = (/*setter*/(short) 90);
 
             ICell cell0 = row.CreateCell(0);
             cell0.SetCellValue("Apache Software Foundation");
@@ -247,7 +253,8 @@ namespace TestCases.SS.UserModel
             ICell cell1 = row.CreateCell(1);
             cell1.SetCellValue("Apache Software Foundation");
 
-            for (int i = 0; i < 2; i++) sheet.AutoSizeColumn(i);
+            for(int i = 0; i < 2; i++)
+                sheet.AutoSizeColumn(i);
 
             double w0 = sheet.GetColumnWidth(0);
             double w1 = sheet.GetColumnWidth(1);
@@ -331,14 +338,14 @@ namespace TestCases.SS.UserModel
         private void EvaluateWorkbook(IWorkbook workbook)
         {
             IFormulaEvaluator eval = workbook.GetCreationHelper().CreateFormulaEvaluator();
-            for (int i = 0; i < workbook.NumberOfSheets; i++)
+            for(int i = 0; i < workbook.NumberOfSheets; i++)
             {
                 ISheet sheet = workbook.GetSheetAt(i);
-                foreach (IRow r in sheet)
+                foreach(IRow r in sheet)
                 {
-                    foreach (ICell c in r)
+                    foreach(ICell c in r)
                     {
-                        if (c.CellType == CellType.Formula)
+                        if(c.CellType == CellType.Formula)
                         {
                             eval.EvaluateFormulaCell(c);
                         }
@@ -350,14 +357,14 @@ namespace TestCases.SS.UserModel
         internal static void FixFonts(IWorkbook workbook)
         {
             //if (!JvmBugs.HasLineBreakMeasurerBug()) return;
-            for (int i = workbook.NumberOfFonts - 1; i >= 0; i--)
+            for(int i = workbook.NumberOfFonts - 1; i >= 0; i--)
             {
                 IFont f = workbook.GetFontAt((short)0);
-                if ("Calibri".Equals(f.FontName))
+                if("Calibri".Equals(f.FontName))
                 {
                     f.FontName = (/*setter*/"Lucida Sans");
                 }
-                else if ("Cambria".Equals(f.FontName))
+                else if("Cambria".Equals(f.FontName))
                 {
                     f.FontName = (/*setter*/"Lucida Bright");
                 }

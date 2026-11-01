@@ -17,12 +17,11 @@
 
 namespace NPOI.HSSF.Record.Common
 {
-    using System;
-
     using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using System.Text;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Title: FtrHeader (Future Record Header) common record part
@@ -99,7 +98,7 @@ namespace NPOI.HSSF.Record.Common
             }
         }
 
- 
+
         public CellRangeAddress AssociatedRange
         {
             get

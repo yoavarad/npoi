@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,19 +31,19 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         }
         public static CT_Surface Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Surface ctObj = new CT_Surface();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "thickness")
+                if(childNode.LocalName == "thickness")
                     ctObj.thickness = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pictureOptions")
+                else if(childNode.LocalName == "pictureOptions")
                     ctObj.pictureOptions = CT_PictureOptions.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -55,15 +55,15 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.thickness != null)
+            if(this.thickness != null)
                 this.thickness.Write(sw, "thickness");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.pictureOptions != null)
+            if(this.pictureOptions != null)
                 this.pictureOptions.Write(sw, "pictureOptions");
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -151,24 +151,24 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
 
         public static CT_Surface3DChart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Surface3DChart ctObj = new CT_Surface3DChart();
             ctObj.ser = new List<CT_SurfaceSer>();
             ctObj.bandFmts = new List<CT_BandFmt>();
             ctObj.axId = new List<CT_UnsignedInt>();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "wireframe")
+                if(childNode.LocalName == "wireframe")
                     ctObj.wireframe = CT_Boolean.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ser")
+                else if(childNode.LocalName == "ser")
                     ctObj.ser.Add(CT_SurfaceSer.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "bandFmts")
+                else if(childNode.LocalName == "bandFmts")
                     ctObj.bandFmts.Add(CT_BandFmt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "axId")
+                else if(childNode.LocalName == "axId")
                     ctObj.axId.Add(CT_UnsignedInt.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -180,32 +180,32 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.wireframe != null)
+            if(this.wireframe != null)
                 this.wireframe.Write(sw, "wireframe");
-            if (this.ser != null)
+            if(this.ser != null)
             {
-                foreach (CT_SurfaceSer x in this.ser)
+                foreach(CT_SurfaceSer x in this.ser)
                 {
                     x.Write(sw, "ser");
                 }
             }
-            if (this.bandFmts != null)
+            if(this.bandFmts != null)
             {
-                foreach (CT_BandFmt x in this.bandFmts)
+                foreach(CT_BandFmt x in this.bandFmts)
                 {
                     x.Write(sw, "bandFmts");
                 }
             }
-            if (this.axId != null)
+            if(this.axId != null)
             {
-                foreach (CT_UnsignedInt x in this.axId)
+                foreach(CT_UnsignedInt x in this.axId)
                 {
                     x.Write(sw, "axId");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }
@@ -314,25 +314,25 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
 
         public static CT_SurfaceSer Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SurfaceSer ctObj = new CT_SurfaceSer();
             ctObj.extLst = new List<CT_Extension>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "idx")
+                if(childNode.LocalName == "idx")
                     ctObj.idx = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "order")
+                else if(childNode.LocalName == "order")
                     ctObj.order = CT_UnsignedInt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tx")
+                else if(childNode.LocalName == "tx")
                     ctObj.tx = CT_SerTx.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spPr")
+                else if(childNode.LocalName == "spPr")
                     ctObj.spPr = CT_ShapeProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cat")
+                else if(childNode.LocalName == "cat")
                     ctObj.cat = CT_AxDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "val")
+                else if(childNode.LocalName == "val")
                     ctObj.val = CT_NumDataSource.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst.Add(CT_Extension.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -344,21 +344,21 @@ namespace NPOI.OpenXmlFormats.Dml.Chart
         {
             sw.WriteStart("c", nodeName);
             sw.Write('>');
-            if (this.idx != null)
+            if(this.idx != null)
                 this.idx.Write(sw, "idx");
-            if (this.order != null)
+            if(this.order != null)
                 this.order.Write(sw, "order");
-            if (this.tx != null)
+            if(this.tx != null)
                 this.tx.Write(sw, "tx");
-            if (this.spPr != null)
+            if(this.spPr != null)
                 this.spPr.Write(sw, "spPr");
-            if (this.cat != null)
+            if(this.cat != null)
                 this.cat.Write(sw, "cat");
-            if (this.val != null)
+            if(this.val != null)
                 this.val.Write(sw, "val");
-            if (this.extLst != null)
+            if(this.extLst != null)
             {
-                foreach (CT_Extension x in this.extLst)
+                foreach(CT_Extension x in this.extLst)
                 {
                     x.Write(sw, "extLst");
                 }

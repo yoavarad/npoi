@@ -17,11 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using System.Text;
     using NPOI.Util;
+    using System;
     using System.Globalization;
-    
+    using System.Text;
+
 
 
     /**
@@ -53,12 +53,12 @@ namespace NPOI.SS.Formula.PTG
         public IntPtg(ILittleEndianInput in1)
             : this(in1.ReadUShort())
         {
-            
+
         }
 
         public IntPtg(int value)
         {
-            if (!IsInRange(value))
+            if(!IsInRange(value))
             {
                 throw new ArgumentException("value is out of range: " + value);
             }

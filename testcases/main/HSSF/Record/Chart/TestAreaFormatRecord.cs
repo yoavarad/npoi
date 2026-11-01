@@ -20,10 +20,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the AreaFormatRecord
@@ -73,16 +74,16 @@ namespace TestCases.HSSF.Record.Chart
             AreaFormatRecord record = new AreaFormatRecord();
             record.ForegroundColor = (0xFFFFFF);
             record.BackgroundColor = (0x000000);
-            record.Pattern = ((short)1);
+            record.Pattern = ((short) 1);
             record.IsAutomatic = (true);
             record.IsInvert = (false);
-            record.ForecolorIndex = ((short)0x4e);
-            record.BackcolorIndex = ((short)0x4d);
+            record.ForecolorIndex = ((short) 0x4e);
+            record.BackcolorIndex = ((short) 0x4d);
 
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

@@ -19,16 +19,16 @@
 
 namespace NPOI.SS.UserModel
 {
-    using System;
-
     using NPOI.HSSF.Record.CF;
+    using System;
 
     /**
      * High level representation for the Color Scale / Colour Scale /
      *  Color Gradient Formatting component of Conditional Formatting Settings
      */
-    public interface IColorScaleFormatting {
-        
+    public interface IColorScaleFormatting
+    {
+
         /**
         * get or sets the number of control points to use to map
         *  the colours. Should normally be 2 or 3.

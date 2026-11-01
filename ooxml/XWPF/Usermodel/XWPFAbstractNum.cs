@@ -17,10 +17,10 @@
 
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
-    using System.Collections.Generic;
     using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * @author Philipp Epp
@@ -86,11 +86,11 @@ namespace NPOI.XWPF.UserModel
         internal void InitLvl()
         {
             List<CT_Lvl> list = new List<CT_Lvl>();
-            for (int i = 0; i < 9; i++)
+            for(int i = 0; i < 9; i++)
             {
                 CT_Lvl lvl = new CT_Lvl();
                 lvl.start.val = "1";
-                lvl.tentative = i==0? ST_OnOff.on : ST_OnOff.off;
+                lvl.tentative = i==0 ? ST_OnOff.on : ST_OnOff.off;
                 lvl.ilvl = i.ToString();
                 lvl.lvlJc.val = ST_Jc.left;
                 lvl.numFmt.val = ST_NumberFormat.bullet;
@@ -111,7 +111,7 @@ namespace NPOI.XWPF.UserModel
 
         internal void SetLevelTentative(int lvl, bool tentative)
         {
-            if (tentative)
+            if(tentative)
                 this.ctAbstractNum.lvl[lvl].tentative = ST_OnOff.on;
             else
                 this.ctAbstractNum.lvl[lvl].tentative = ST_OnOff.off;

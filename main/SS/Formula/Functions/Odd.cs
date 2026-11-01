@@ -31,12 +31,12 @@ namespace NPOI.SS.Formula.Functions
 
         public override double Evaluate(double d)
         {
-            if (d == 0)
+            if(d == 0)
             {
                 return 1;
             }
             long result;
-            if (d > 0)
+            if(d > 0)
             {
                 result = CalcOdd(d);
             }
@@ -51,7 +51,7 @@ namespace NPOI.SS.Formula.Functions
         {
             double dpm1 = d + 1;
             long x = ((long)dpm1) & PARITY_MASK;
-            if (x == dpm1)
+            if(x == dpm1)
             {
                 return x - 1;
             }

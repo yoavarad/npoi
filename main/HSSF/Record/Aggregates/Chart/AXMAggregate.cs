@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -32,11 +32,11 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public AXMAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_AXM, container)
         {
-            yMult = (YMultRecord)rs.GetNext();
-            startObject = (ChartStartObjectRecord)rs.GetNext();
+            yMult = (YMultRecord) rs.GetNext();
+            startObject = (ChartStartObjectRecord) rs.GetNext();
             attachedLabel = new AttachedLabelAggregate(rs, this);
-            
-            endObject = (ChartEndObjectRecord)rs.GetNext();
+
+            endObject = (ChartEndObjectRecord) rs.GetNext();
         }
         public override void VisitContainedRecords(RecordVisitor rv)
         {

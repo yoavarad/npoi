@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -26,8 +26,8 @@
  * ==============================================================*/
 
 using System;
-using System.IO;
 using System.Globalization;
+using System.IO;
 
 namespace NPOI.Util
 {
@@ -44,7 +44,7 @@ namespace NPOI.Util
         ///<exception cref="IndexOutOfRangeException">if offset is negative</exception>
         public ShortField(int offset)
         {
-            if (offset < 0)
+            if(offset < 0)
             {
                 throw new IndexOutOfRangeException("Illegal offset: "
                                                          + offset);
@@ -58,7 +58,7 @@ namespace NPOI.Util
         /// <param name="offset">offset of the field within its byte array</param>
         /// <param name="value">the initial value</param>
         /// <exception cref="IndexOutOfRangeException">if offset is negative</exception> 
-        public ShortField(int offset, short value):this(offset)
+        public ShortField(int offset, short value) : this(offset)
         {
             this._value = value;
         }
@@ -108,7 +108,7 @@ namespace NPOI.Util
         /// <param name="data">the byte array to write the value to</param>
         /// <exception cref="IndexOutOfRangeException">if the offset is out
         /// of range</exception>
-        public void Set(short value, ref byte [] data)
+        public void Set(short value, ref byte[] data)
         {
             _value = value;
             WriteToBytes(data);
@@ -120,7 +120,7 @@ namespace NPOI.Util
         /// <param name="data">the byte array from which the value is to be read</param>
         /// <exception cref="IndexOutOfRangeException">if the offset is out
         /// of range</exception>
-        public void ReadFromBytes(byte [] data)
+        public void ReadFromBytes(byte[] data)
         {
             _value = LittleEndian.GetShort(data, _offset);
         }
@@ -147,7 +147,7 @@ namespace NPOI.Util
         /// written</param>
         /// <exception cref="IndexOutOfRangeException">if the offset is out
         /// of range</exception>
-        public void WriteToBytes(byte [] data)
+        public void WriteToBytes(byte[] data)
         {
             LittleEndian.PutShort(data, _offset, _value);
         }

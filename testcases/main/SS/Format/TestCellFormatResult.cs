@@ -17,7 +17,8 @@
 namespace TestCases.SS.Format
 {
     using NPOI.SS.Format;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
     using System;
 
@@ -36,7 +37,7 @@ namespace TestCases.SS.Format
                 CellFormatResult result = new CellFormatResult(applies, text, textColor);
                 Assert.Fail("Cannot Initialize CellFormatResult with null text parameter");
             }
-            catch (ArgumentException )
+            catch(ArgumentException)
             {
                 //Expected
             }

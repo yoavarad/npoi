@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -359,10 +359,10 @@ namespace TestCases.XSSF.EventUserModel
                 IName name = workbook.GetName("total");
                 Console.WriteLine("workbook.getName(\"total\").getSheetName() returned: " + name.SheetName);
             }
-            catch(Exception) {
+            catch(Exception)
+            {
                 workbook.Close();
             }
         }
     }
 }
-

@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.Util;
+using System;
 using System.Globalization;
 
 namespace NPOI.HSSF.Record
@@ -23,13 +23,13 @@ namespace NPOI.HSSF.Record
         private BitField fNo3d = BitFieldFactory.GetInstance(0x08);
 
         public ScrollableObjectSubRecord()
-        { 
-        
+        {
+
         }
 
         public ScrollableObjectSubRecord(ILittleEndianInput in1, int size)
         {
-            if (size !=this.DataSize)
+            if(size !=this.DataSize)
             {
                 throw new RecordFormatException(string.Format(CultureInfo.CurrentCulture, "Expected size {0} but got ({1})", this.DataSize, size));
             }
@@ -73,10 +73,11 @@ namespace NPOI.HSSF.Record
         public short CurrentValue
         {
             get { return field_1_iVal; }
-            set {
-                if (field_1_iVal < field_2_iMin || field_1_iVal > field_3_iMax)
+            set
+            {
+                if(field_1_iVal < field_2_iMin || field_1_iVal > field_3_iMax)
                     throw new ArgumentOutOfRangeException("invalid value");
-                field_1_iVal = value; 
+                field_1_iVal = value;
             }
         }
         public short MaxValue
@@ -102,7 +103,7 @@ namespace NPOI.HSSF.Record
         public bool IsHorizontal
         {
             get { return field_6_fHoriz==1; }
-            set { field_6_fHoriz = value ? (short)1 : (short)0; }
+            set { field_6_fHoriz = value ? (short) 1 : (short) 0; }
         }
         public short ScrollbarWidthInPixel
         {
@@ -112,7 +113,7 @@ namespace NPOI.HSSF.Record
         public bool IsVisible
         {
             get { return fDrawFlag.IsSet(field_8_options); }
-            set { field_8_options=fDrawFlag.SetShortBoolean(field_8_options, value);  }
+            set { field_8_options=fDrawFlag.SetShortBoolean(field_8_options, value); }
         }
         public bool IsOnlySilderPortionVisible
         {
@@ -122,12 +123,12 @@ namespace NPOI.HSSF.Record
         public bool IsTrackElevator
         {
             get { return fTrackElevator.IsSet(field_8_options); }
-            set { field_8_options = fTrackElevator.SetShortBoolean(field_8_options, value); }            
+            set { field_8_options = fTrackElevator.SetShortBoolean(field_8_options, value); }
         }
         public bool IsNo3D
         {
             get { return fNo3d.IsSet(field_8_options); }
-            set { field_8_options = fNo3d.SetShortBoolean(field_8_options, value); }                    
+            set { field_8_options = fNo3d.SetShortBoolean(field_8_options, value); }
         }
         public override object Clone()
         {

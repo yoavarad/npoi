@@ -19,10 +19,10 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.HSSF.Record.Cont;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.HSSF.Record.Cont;
 
     /**
      * Supports the STRING record structure.
@@ -52,7 +52,7 @@ namespace NPOI.HSSF.Record
             int field_1_string_length = in1.ReadShort();
             _is16bitUnicode = in1.ReadByte() != 0x00;
 
-            if (_is16bitUnicode)
+            if(_is16bitUnicode)
             {
                 _text = in1.ReadUnicodeLEString(field_1_string_length);
             }

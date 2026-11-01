@@ -18,15 +18,16 @@
 namespace TestCases.HSSF.UserModel
 {
 
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using SkiaSharp;
     using System;
     using System.Collections;
-    using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using System.Collections.Generic;
     using System.IO;
     using TestCases.HSSF;
-    using NPOI.SS.UserModel;
-    using System.Collections.Generic;
-    using SkiaSharp;
 
 
     /**
@@ -48,12 +49,12 @@ namespace TestCases.HSSF.UserModel
             IList lst = wb.GetAllPictures();
             //ClassicAssert.AreEqual(2, lst.Count);
 
-            for (IEnumerator it = lst.GetEnumerator(); it.MoveNext(); )
+            for(IEnumerator it = lst.GetEnumerator(); it.MoveNext();)
             {
                 HSSFPictureData pict = (HSSFPictureData)it.Current;
                 String ext = pict.SuggestFileExtension();
                 byte[] data = pict.Data;
-                if (ext.Equals("jpeg"))
+                if(ext.Equals("jpeg"))
                 {
                     //try to read image data using javax.imageio.* (JDK 1.4+)
                     using SKBitmap jpg = SKBitmap.Decode(new MemoryStream(data));
@@ -61,7 +62,7 @@ namespace TestCases.HSSF.UserModel
                     ClassicAssert.AreEqual(192, jpg.Width);
                     ClassicAssert.AreEqual(176, jpg.Height);
                 }
-                else if (ext.Equals("png"))
+                else if(ext.Equals("png"))
                 {
                     //try to read image data using javax.imageio.* (JDK 1.4+)
                     using SKBitmap png = SKBitmap.Decode(new MemoryStream(data));
@@ -85,20 +86,20 @@ namespace TestCases.HSSF.UserModel
 
             HSSFPictureData pict = lst[(0)];
             String ext = pict.SuggestFileExtension();
-            if (!ext.Equals("png"))
+            if(!ext.Equals("png"))
             {
                 Assert.Fail("Expected a PNG.");
             }
 
             //try to read image data using javax.imageio.* (JDK 1.4+)
             byte[] data = pict.Data;
-            using (MemoryStream ms = new MemoryStream(data))
+            using(MemoryStream ms = new MemoryStream(data))
             {
                 using SKBitmap png = SKBitmap.Decode(ms);
                 ClassicAssert.IsNotNull(png);
                 ClassicAssert.AreEqual(78, png.Width);
                 ClassicAssert.AreEqual(76, png.Height);
-                ClassicAssert.AreEqual((int)PictureType.PNG, pict.Format);
+                ClassicAssert.AreEqual((int) PictureType.PNG, pict.Format);
                 ClassicAssert.AreEqual("image/png", pict.MimeType);
             }
         }
@@ -111,7 +112,7 @@ namespace TestCases.HSSF.UserModel
 
             // TODO - add GetFormat() to interface PictureData and genericise wb.AllPictures
             List<HSSFPictureData> lst = (List<HSSFPictureData>)wb.GetAllPictures();
-            foreach (HSSFPictureData pict in lst)
+            foreach(HSSFPictureData pict in lst)
             {
                 ClassicAssert.IsNotNull(pict);
             }

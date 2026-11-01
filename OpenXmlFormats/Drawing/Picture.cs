@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Xml;
@@ -63,15 +63,15 @@ namespace NPOI.OpenXmlFormats.Dml.Picture
             sw.WriteStart(nodeName);
             sw.WriteAttribute("xmlns:pic", "http://schemas.openxmlformats.org/drawingml/2006/picture");
             sw.Write('>');
-            if (this.nvPicPr != null)
+            if(this.nvPicPr != null)
             {
                 this.nvPicPr.Write(sw, "pic:nvPicPr");
             }
-            if (this.blipFill != null)
+            if(this.blipFill != null)
             {
                 this.blipFill.Write(sw, "pic:blipFill");
             }
-            if (this.spPr != null)
+            if(this.spPr != null)
             {
                 this.spPr.Write(sw, "pic:spPr");
             }
@@ -80,9 +80,10 @@ namespace NPOI.OpenXmlFormats.Dml.Picture
 
         public static CT_Picture Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if(node == null) return null;
+            if(node == null)
+                return null;
             CT_Picture ctObj = new CT_Picture();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
                 if(childNode.LocalName == "nvPicPr")
                     ctObj.nvPicPrField = CT_PictureNonVisual.Parse(childNode, namespaceManager);
@@ -137,11 +138,11 @@ namespace NPOI.OpenXmlFormats.Dml.Picture
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.cNvPr!=null)
+            if(this.cNvPr!=null)
             {
                 this.cNvPr.Write(sw, "cNvPr");
             }
-            if (this.cNvPicPr != null)
+            if(this.cNvPicPr != null)
             {
                 this.cNvPicPr.Write(sw, "cNvPicPr");
             }
@@ -150,9 +151,10 @@ namespace NPOI.OpenXmlFormats.Dml.Picture
 
         public static CT_PictureNonVisual Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if(node == null) return null;
+            if(node == null)
+                return null;
             CT_PictureNonVisual ctObj = new CT_PictureNonVisual();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
                 if(childNode.LocalName == "cNvPr")
                     ctObj.cNvPrField = CT_NonVisualDrawingProps.Parse(childNode, namespaceManager);

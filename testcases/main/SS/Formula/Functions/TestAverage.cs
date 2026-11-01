@@ -16,8 +16,9 @@
 ==================================================================== */
 
 using NPOI.SS.Formula.Eval;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.SS.Formula.Functions;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 namespace TestCases.SS.Formula.Functions
 {
 
@@ -32,44 +33,44 @@ namespace TestCases.SS.Formula.Functions
 
         private static ValueEval InvokeAverage(ValueEval[] args)
         {
-            return AggregateFunction.AVERAGE.Evaluate(args, -1, (short)-1);
+            return AggregateFunction.AVERAGE.Evaluate(args, -1, (short) -1);
         }
 
         private void ConfirmAverage(ValueEval[] args, double expected)
         {
             ValueEval result = InvokeAverage(args);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, 0);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, 0);
         }
 
         private void ConfirmAverage(ValueEval[] args, ErrorEval expectedError)
         {
             ValueEval result = InvokeAverage(args);
             ClassicAssert.AreEqual(typeof(ErrorEval), result.GetType());
-            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval) result).ErrorCode);
         }
         [Test]
         public void TestBasic()
         {
 
             ValueEval[] values = {
-				new NumberEval(1),
-				new NumberEval(2),
-				new NumberEval(3),
-				new NumberEval(4),
-		};
+                new NumberEval(1),
+                new NumberEval(2),
+                new NumberEval(3),
+                new NumberEval(4),
+        };
 
             ConfirmAverage(values, 2.5);
 
             values = new ValueEval[] {
-				new NumberEval(1),
-				new NumberEval(2),
-				BlankEval.instance,
-				new NumberEval(3),
-				BlankEval.instance,
-				new NumberEval(4),
-				BlankEval.instance,
-		};
+                new NumberEval(1),
+                new NumberEval(2),
+                BlankEval.instance,
+                new NumberEval(3),
+                BlankEval.instance,
+                new NumberEval(4),
+                BlankEval.instance,
+        };
 
             ConfirmAverage(values, 2.5);
         }
@@ -81,11 +82,11 @@ namespace TestCases.SS.Formula.Functions
         public void TestUnusualArgs()
         {
             ValueEval[] values = {
-				new NumberEval(1),
-				new NumberEval(2),
-				BoolEval.TRUE,
-				BoolEval.FALSE,
-		};
+                new NumberEval(1),
+                new NumberEval(2),
+                BoolEval.TRUE,
+                BoolEval.FALSE,
+        };
 
             ConfirmAverage(values, 1.0);
 
@@ -94,11 +95,11 @@ namespace TestCases.SS.Formula.Functions
         public void TestErrors()
         {
             ValueEval[] values = {
-				new NumberEval(1),
-				ErrorEval.NAME_INVALID,
-				new NumberEval(3),
-				ErrorEval.DIV_ZERO,
-		};
+                new NumberEval(1),
+                ErrorEval.NAME_INVALID,
+                new NumberEval(3),
+                ErrorEval.DIV_ZERO,
+        };
             ConfirmAverage(values, ErrorEval.NAME_INVALID);
         }
     }

@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.UserModel
 {
+    using NPOI.Util.Collections;
     using System;
     using System.Collections;
-    using NPOI.Util.Collections;
     using System.Globalization;
 
     /// <summary>
@@ -81,10 +81,10 @@ namespace NPOI.HSSF.UserModel
         public int GetCharWidth(char c)
         {
             object widthInteger = charWidths[c];
-            if (widthInteger == null)
+            if(widthInteger == null)
                 return 'W' == c ? 0 : GetCharWidth('W');
             else
-                return (int)widthInteger;
+                return (int) widthInteger;
         }
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace NPOI.HSSF.UserModel
         /// <param name="widths">The widths.</param>
         public void AddChars(char[] Chars, int[] widths)
         {
-            for (int i = 0; i < Chars.Length; i++)
+            for(int i = 0; i < Chars.Length; i++)
             {
-                if (Chars[i] != ' ')
+                if(Chars[i] != ' ')
                 {
                     charWidths[Chars[i]] = widths[i];
                 }
@@ -148,7 +148,7 @@ namespace NPOI.HSSF.UserModel
             String CharsStr = fontMetricsProps[BuildFontCharsProperty(fontName)];
 
             // Ensure that this Is a font we know about
-            if (heightStr == null || widthsStr == null || CharsStr == null)
+            if(heightStr == null || widthsStr == null || CharsStr == null)
             {
                 // We don't know all we need to about this font
                 // Since we don't know its sizes, we can't work with it
@@ -159,11 +159,11 @@ namespace NPOI.HSSF.UserModel
             FontDetails d = new FontDetails(fontName, height);
             String[] CharsStrArray = Split(CharsStr, ",", -1);
             String[] widthsStrArray = Split(widthsStr, ",", -1);
-            if (CharsStrArray.Length != widthsStrArray.Length)
+            if(CharsStrArray.Length != widthsStrArray.Length)
                 throw new Exception("Number of Chars does not number of widths for font " + fontName);
-            for (int i = 0; i < widthsStrArray.Length; i++)
+            for(int i = 0; i < widthsStrArray.Length; i++)
             {
-                if (CharsStrArray[i].Trim().Length != 0)
+                if(CharsStrArray[i].Trim().Length != 0)
                     d.AddChar(CharsStrArray[i].Trim()[0], int.Parse(widthsStrArray[i], CultureInfo.InvariantCulture));
             }
             return d;
@@ -177,7 +177,7 @@ namespace NPOI.HSSF.UserModel
         public int GetStringWidth(String str)
         {
             int width = 0;
-            for (int i = 0; i < str.Length; i++)
+            for(int i = 0; i < str.Length; i++)
             {
                 width += GetCharWidth(str[i]);
             }

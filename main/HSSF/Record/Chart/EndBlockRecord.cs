@@ -18,10 +18,10 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -54,12 +54,15 @@ namespace NPOI.HSSF.Record.Chart
             grbitFrt = in1.ReadShort();
             ObjectKind = (ObjectKind) in1.ReadShort();
             // Often, but not always has 6 unused bytes at the end
-		    if(in1.Available() == 0) {
-			    unused = [];
-		    } else {
-			    unused = new byte[6];
-			    in1.ReadFully(unused);
-		    }
+            if(in1.Available() == 0)
+            {
+                unused = [];
+            }
+            else
+            {
+                unused = new byte[6];
+                in1.ReadFully(unused);
+            }
 
         }
 
@@ -110,7 +113,7 @@ namespace NPOI.HSSF.Record.Chart
             record.rt = rt;
             record.grbitFrt = grbitFrt;
             record.ObjectKind = ObjectKind;
-            record.unused = (byte[])unused.Clone();
+            record.unused = (byte[]) unused.Clone();
             return record;
         }
 

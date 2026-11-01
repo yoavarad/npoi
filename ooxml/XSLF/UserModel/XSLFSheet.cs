@@ -1,6 +1,6 @@
+using NPOI.OpenXml4Net.OPC;
 using System.IO;
 using System.Linq;
-using NPOI.OpenXml4Net.OPC;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -26,9 +26,9 @@ namespace NPOI.XSLF.UserModel
         public XMLSlideShow GetSlideShow()
         {
             var parent = GetParent();
-            while (parent != null)
+            while(parent != null)
             {
-                if (parent is XMLSlideShow slideShow)
+                if(parent is XMLSlideShow slideShow)
                 {
                     return slideShow;
                 }
@@ -66,7 +66,7 @@ namespace NPOI.XSLF.UserModel
             using var output = new MemoryStream();
             WriteXml(output);
             var xml = output.ToArray();
-            if (savedXml != null && savedXml.SequenceEqual(xml))
+            if(savedXml != null && savedXml.SequenceEqual(xml))
             {
                 return;
             }
@@ -80,7 +80,7 @@ namespace NPOI.XSLF.UserModel
         internal T GetRequiredRelation<T>(XSLFRelation descriptor) where T : POIXMLDocumentPart
         {
             var relationships = GetPackagePart().GetRelationshipsByType(descriptor.Relation);
-            if (relationships.Size != 1)
+            if(relationships.Size != 1)
             {
                 throw new POIXMLException("Expected one " + descriptor.Relation + " relationship in " +
                     GetPackagePart().PartName.Name);

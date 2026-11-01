@@ -18,9 +18,9 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.Collections;
-    using NPOI.Util;
     using System.Collections.Generic;
 
     /// <summary>
@@ -45,7 +45,7 @@ namespace NPOI.DDF
 
             int pos = offset;
 
-            for (int i = 0; i < numProperties; i++)
+            for(int i = 0; i < numProperties; i++)
             {
                 short propId;
                 int propData;
@@ -56,7 +56,7 @@ namespace NPOI.DDF
 
                 byte propertyType = EscherProperties.GetPropertyType((short)propNumber);
                 EscherProperty ep;
-                switch (propertyType)
+                switch(propertyType)
                 {
                     case EscherPropertyMetaData.TYPE_BOOL:
                         ep = new EscherBoolProperty(propId, propData);
@@ -68,11 +68,11 @@ namespace NPOI.DDF
                         ep = new EscherShapePathProperty(propId, propData);
                         break;
                     default:
-                        if (!isComplex)
+                        if(!isComplex)
                         {
                             ep = new EscherSimpleProperty(propId, propData);
                         }
-                        else if (propertyType == EscherPropertyMetaData.TYPE_ARRAY)
+                        else if(propertyType == EscherPropertyMetaData.TYPE_ARRAY)
                         {
                             ep = new EscherArrayProperty(propId, IOUtils.SafelyAllocate(propData, MAX_RECORD_LENGTH));
                         }
@@ -87,12 +87,12 @@ namespace NPOI.DDF
             }
 
             // Get complex data
-            for (IEnumerator iterator = results.GetEnumerator(); iterator.MoveNext(); )
+            for(IEnumerator iterator = results.GetEnumerator(); iterator.MoveNext();)
             {
                 EscherProperty p = (EscherProperty)iterator.Current;
-                if (p is EscherComplexProperty property)
+                if(p is EscherComplexProperty property)
                 {
-                    if (property is EscherArrayProperty arrayProperty)
+                    if(property is EscherArrayProperty arrayProperty)
                     {
                         pos += arrayProperty.SetArrayData(data, pos);
                     }
@@ -100,7 +100,7 @@ namespace NPOI.DDF
                     {
                         byte[] complexData = property.ComplexData;
                         int leftover = data.Length - pos;
-                        if (leftover < complexData.Length)
+                        if(leftover < complexData.Length)
                         {
                             throw new InvalidOperationException("Could not read complex escher property, lenght was " + complexData.Length + ", but had only " +
                                     leftover + " bytes left");

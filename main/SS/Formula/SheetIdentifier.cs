@@ -46,11 +46,11 @@ namespace NPOI.SS.Formula
         }
         protected virtual void AsFormulaString(StringBuilder sb)
         {
-            if (_bookName != null)
+            if(_bookName != null)
             {
                 sb.Append(" [").Append(_sheetIdentifier.Name).Append("]");
             }
-            if (_sheetIdentifier.IsQuoted)
+            if(_sheetIdentifier.IsQuoted)
             {
                 sb.Append("'").Append(_sheetIdentifier.Name).Append("'");
             }

@@ -17,15 +17,15 @@
 
 namespace TestCases.HSSF.UserModel
 {
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
-    using NPOI.HSSF.UserModel;
-
     using TestCases.HSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.Record;
-    using NPOI.Util;
-    using NPOI.SS.UserModel;
 
     /**
      * @author aviks
@@ -50,9 +50,9 @@ namespace TestCases.HSSF.UserModel
             {
                 HSSFTestDataSamples.OpenSampleWorkbook("43493.xls");
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.InnerException.InnerException is IndexOutOfRangeException)
+                if(e.InnerException.InnerException is IndexOutOfRangeException)
                 {
                     throw new AssertionException("Identified bug 43493");
                 }
@@ -61,7 +61,7 @@ namespace TestCases.HSSF.UserModel
         }
 
         [Test]
-        [Ignore("TestUnfixedBugs")] 
+        [Ignore("TestUnfixedBugs")]
         public void Test49612()
         {
             IWorkbook wb = HSSFTestDataSamples.OpenSampleWorkbook("49612.xls");

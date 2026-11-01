@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TestCases.SS;
 using NPOI.HSSF.UserModel;
 using NPOI.SS;
 using NPOI.SS.UserModel;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using TestCases.SS;
 
 namespace TestCases.HSSF
 {
@@ -22,12 +22,12 @@ namespace TestCases.HSSF
 
         public IWorkbook WriteOutAndReadBack(IWorkbook original)
         {
-            if (!(original is HSSFWorkbook))
+            if(!(original is HSSFWorkbook))
             {
                 throw new ArgumentException("Expected an instance of HSSFWorkbook");
             }
 
-            return HSSFTestDataSamples.WriteOutAndReadBack((HSSFWorkbook)original);
+            return HSSFTestDataSamples.WriteOutAndReadBack((HSSFWorkbook) original);
         }
 
         public IWorkbook CreateWorkbook()
@@ -43,7 +43,7 @@ namespace TestCases.HSSF
         //************ End SXSSF-specific methods ***************//
         public IFormulaEvaluator CreateFormulaEvaluator(IWorkbook wb)
         {
-            return new HSSFFormulaEvaluator((HSSFWorkbook)wb);
+            return new HSSFFormulaEvaluator((HSSFWorkbook) wb);
         }
         public byte[] GetTestDataFileContent(String fileName)
         {

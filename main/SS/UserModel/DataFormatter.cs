@@ -139,7 +139,7 @@ namespace NPOI.SS.UserModel
          *  in a numeric format 
          */
         private static readonly Regex alternateGrouping = new Regex("([#0]([^.#0])[#0]{3})", RegexOptions.Compiled);
-    
+
         /**
          * Cells formatted with a date or time format and which contain invalid date or time values
          *  show 255 pound signs ("#").
@@ -149,7 +149,8 @@ namespace NPOI.SS.UserModel
         static DataFormatter()
         {
             using var buf = ZString.CreateStringBuilder();
-            for (int i = 0; i < 255; i++) buf.Append('#');
+            for(int i = 0; i < 255; i++)
+                buf.Append('#');
             invalidDateTimeString = buf.ToString();
         }
 
@@ -178,7 +179,7 @@ namespace NPOI.SS.UserModel
         /** A default FormatBase to use when a number pattern cannot be Parsed. */
         private FormatBase defaultNumFormat;
         private CultureInfo locale;
-        
+
         /*
          * A map to cache formats.
          *  Map<String,FormatBase> Formats
@@ -217,7 +218,7 @@ namespace NPOI.SS.UserModel
         public DataFormatter(bool emulateCSV)
             : this(CultureInfo.CurrentCulture, true, emulateCSV)
         {
-            
+
         }
 
         /**
@@ -226,7 +227,7 @@ namespace NPOI.SS.UserModel
         public DataFormatter(CultureInfo locale)
             : this(locale, false)
         {
-            
+
         }
 
         /**
@@ -237,7 +238,7 @@ namespace NPOI.SS.UserModel
         public DataFormatter(CultureInfo locale, bool emulateCSV)
             : this(locale, false, emulateCSV)
         {
-            
+
         }
 
         /**
@@ -298,26 +299,27 @@ namespace NPOI.SS.UserModel
          */
         private FormatBase GetFormat(ICell cell, ConditionalFormattingEvaluator cfEvaluator)
         {
-            if (cell == null) return null;
+            if(cell == null)
+                return null;
 
             ExcelNumberFormat numFmt = ExcelNumberFormat.From(cell, cfEvaluator);
 
-            if (numFmt == null)
+            if(numFmt == null)
             {
                 return null;
             }
 
             int formatIndex = numFmt.Idx;
             String formatStr = numFmt.Format;
-             if (formatStr == null || formatStr.Trim().Length == 0)
-             {
-                 return null;
-             }
-             return GetFormat(cell.NumericCellValue, formatIndex, formatStr);
-         }
+            if(formatStr == null || formatStr.Trim().Length == 0)
+            {
+                return null;
+            }
+            return GetFormat(cell.NumericCellValue, formatIndex, formatStr);
+        }
 
-         private FormatBase GetFormat(double cellValue, int formatIndex, String formatStrIn)
-         {
+        private FormatBase GetFormat(double cellValue, int formatIndex, String formatStrIn)
+        {
             //      // Might be better to separate out the n p and z formats, falling back to p when n and z are not set.
             //      // That however would require other code to be re factored.
             //      String[] formatBits = formatStrIn.split(";");
@@ -333,7 +335,7 @@ namespace NPOI.SS.UserModel
             // For now, if we detect 2+ parts, we call out to CellFormat to handle it
             // TODO Going forward, we should really merge the logic between the two classes
 
-            if (firstAt != -1 &&
+            if(firstAt != -1 &&
                 (firstAt != formatStr.LastIndexOf(';')
                  || rangeConditionalPattern.IsMatch(formatStr)
                 ))
@@ -344,16 +346,16 @@ namespace NPOI.SS.UserModel
                     CellFormat cfmt = CellFormat.GetInstance(locale, formatStr);
                     // CellFormat requires callers to identify date vs not, so do so
                     object cellValueO = (cellValue);
-                    if (DateUtil.IsADateFormat(formatIndex, formatStr) &&
+                    if(DateUtil.IsADateFormat(formatIndex, formatStr) &&
                         // don't try to handle Date value 0, let a 3 or 4-part format take care of it
-                        (double)cellValueO != 0.0)
+                        (double) cellValueO != 0.0)
                     {
                         cellValueO = DateUtil.GetJavaDate(cellValue);
                     }
                     // Wrap and return (non-cachable - CellFormat does that)
                     return new CellFormatResultWrapper(cfmt.Apply(cellValueO), emulateCSV);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     logger.Log(POILogger.WARN, "Formatting failed for format " + formatStr + ", falling back", e);
                 }
@@ -361,15 +363,15 @@ namespace NPOI.SS.UserModel
 
             // Excel supports positive/negative/zero, but java
             // doesn't, so we need to do it specially
-            
+
             int lastAt = formatStr.LastIndexOf(';');
             // p and p;n are ok by default. p;n;z and p;n;z;s need to be fixed.
-            if (firstAt != -1 && firstAt != lastAt)
+            if(firstAt != -1 && firstAt != lastAt)
             {
                 int secondAt = formatStr.IndexOf(';', firstAt + 1);
-                if (secondAt == lastAt)
+                if(secondAt == lastAt)
                 { // p;n;z
-                    if (cellValue == 0.0)
+                    if(cellValue == 0.0)
                     {
                         formatStr = formatStr.Substring(lastAt + 1);
                     }
@@ -380,7 +382,7 @@ namespace NPOI.SS.UserModel
                 }
                 else
                 {
-                    if (cellValue == 0.0)
+                    if(cellValue == 0.0)
                     { // p;n;z;s
                         formatStr = formatStr.Substring(secondAt + 1, lastAt - (secondAt + 1));
                     }
@@ -392,18 +394,18 @@ namespace NPOI.SS.UserModel
             }
 
             // Excel's # with value 0 will output empty where Java will output 0. This hack removes the # from the format.
-            if (emulateCSV && cellValue == 0.0 && formatStr.Contains('#') && !formatStr.Contains('0'))
+            if(emulateCSV && cellValue == 0.0 && formatStr.Contains('#') && !formatStr.Contains('0'))
             {
                 formatStr = formatStr.Replace("#", "");
             }
 
             formats.TryGetValue(formatStr, out FormatBase format);
-            if (format != null)
+            if(format != null)
             {
                 return format;
             }
             // Is it one of the special built in types, General or @?
-            if (formatStr.Equals("General", StringComparison.CurrentCultureIgnoreCase) || "@".Equals(formatStr))
+            if(formatStr.Equals("General", StringComparison.CurrentCultureIgnoreCase) || "@".Equals(formatStr))
             {
                 return generalNumberFormat;
             }
@@ -435,15 +437,15 @@ namespace NPOI.SS.UserModel
             string formatStr = colorPattern.Replace(sFormat, "");
 
             // Strip off the locale information, we use an instance-wide locale for everything
-            MatchCollection matches = localePatternGroup.Matches(formatStr); 
-            foreach (Match match in matches)
+            MatchCollection matches = localePatternGroup.Matches(formatStr);
+            foreach(Match match in matches)
             {
                 string matchedstring = match.Value;
                 int beginpos = matchedstring.IndexOf('$') + 1;
                 int endpos = matchedstring.IndexOf('-');
                 string symbol = matchedstring.Substring(beginpos, endpos - beginpos);
 
-                if (symbol.IndexOf('$') > -1)
+                if(symbol.IndexOf('$') > -1)
                 {
                     using var sb = ZString.CreateStringBuilder();
 
@@ -452,35 +454,35 @@ namespace NPOI.SS.UserModel
                     sb.Append(symbol.Substring(symbol.IndexOf('$'), symbol.Length- symbol.IndexOf('$')));
                     symbol = sb.ToString();
                 }
-                matchedstring = localePatternGroup.Replace(matchedstring, symbol); 
+                matchedstring = localePatternGroup.Replace(matchedstring, symbol);
 
                 formatStr = formatStr.Remove(match.Index, match.Length);
                 formatStr = formatStr.Insert(match.Index, matchedstring);
             }
 
             // Check for special cases
-            if (formatStr == null || formatStr.Trim().Length == 0)
+            if(formatStr == null || formatStr.Trim().Length == 0)
             {
                 return GetDefaultFormat(cellValue);
             }
 
-            if ("General".Equals(formatStr, StringComparison.CurrentCultureIgnoreCase) || "@".Equals(formatStr))
+            if("General".Equals(formatStr, StringComparison.CurrentCultureIgnoreCase) || "@".Equals(formatStr))
             {
                 return generalNumberFormat;
             }
 
 
-            if (DateUtil.IsADateFormat(formatIndex, formatStr) &&
+            if(DateUtil.IsADateFormat(formatIndex, formatStr) &&
                     DateUtil.IsValidExcelDate(cellValue))
             {
                 return CreateDateFormat(formatStr, cellValue);
             }
 
             // Excel supports fractions in format strings, which Java doesn't
-            if (formatStr.Contains("#/") || formatStr.Contains("?/"))
+            if(formatStr.Contains("#/") || formatStr.Contains("?/"))
             {
                 String[] chunks = formatStr.Split(";".ToCharArray());
-                for (int i = 0; i < chunks.Length; i++)
+                for(int i = 0; i < chunks.Length; i++)
                 {
                     string chunk = chunks[i].Replace("?", "#");
                     //Match matcher = fractionStripper.Match(chunk);
@@ -489,7 +491,7 @@ namespace NPOI.SS.UserModel
                     chunk = chunk.Replace(" +", " ");
                     Match fractionMatcher = fractionPattern.Match(chunk);
                     //take the first match
-                    if (fractionMatcher.Success)
+                    if(fractionMatcher.Success)
                     {
                         string wholePart = (fractionMatcher.Groups[1] == null || !fractionMatcher.Groups[1].Success) ? "" : defaultFractionWholePartFormat;
                         return new FractionFormat(wholePart, fractionMatcher.Groups[3].Value);
@@ -503,11 +505,11 @@ namespace NPOI.SS.UserModel
             }
 
 
-            if (Regex.IsMatch(formatStr, numPattern))
+            if(Regex.IsMatch(formatStr, numPattern))
             {
                 return CreateNumberFormat(formatStr, cellValue);
             }
-            if (emulateCSV)
+            if(emulateCSV)
             {
                 return new ConstantStringFormat(cleanFormatForNumber(formatStr));
             }
@@ -520,7 +522,7 @@ namespace NPOI.SS.UserModel
             if(Use4DigitYearsInAllDateFormats)
             {
                 int ypos2 = format.IndexOf("yy");
-                
+
                 if(ypos2 < 0)
                 {
                     return format;
@@ -529,7 +531,7 @@ namespace NPOI.SS.UserModel
                 {
                     int ypos3 = format.IndexOf("yyy");
                     int ypos4 = format.IndexOf("yyyy");
-                    
+
                     if(ypos4 == ypos2)
                     {
                         string part1 = format.Substring(0, ypos2 + 4);
@@ -544,7 +546,7 @@ namespace NPOI.SS.UserModel
                     {
                         string part1 = format.Substring(0, ypos2 + 2);
                         string part2 = format.Substring(ypos2 + 2);
-                        
+
                         return part1 + "yy" + AdjustTo4DigitYearsIfConfigured(part2);
                     }
                 }
@@ -566,7 +568,7 @@ namespace NPOI.SS.UserModel
             formatStr = formatStr.Replace("\\\\T", "'T'"); // Quote the T is iso8601 style dates
 
             bool hasAmPm = Regex.IsMatch(formatStr, amPmPattern);
-            if (hasAmPm)
+            if(hasAmPm)
             {
                 formatStr = Regex.Replace(formatStr, amPmPattern, "@");
             }
@@ -588,48 +590,48 @@ namespace NPOI.SS.UserModel
             bool mIsMonth = true;
             bool isElapsed = false;
             List<int> ms = new List<int>();
-            for (int j = 0; j < chars.Length; j++)
+            for(int j = 0; j < chars.Length; j++)
             {
                 char c = chars[j];
-                if (c == '\'')
+                if(c == '\'')
                 {
                     sb.Append(c);
                     j++;
 
                     // skip until the next quote
-                    while (j < chars.Length)
+                    while(j < chars.Length)
                     {
                         c = chars[j];
                         sb.Append(c);
-                        if (c == '\'')
+                        if(c == '\'')
                         {
                             break;
                         }
                         j++;
                     }
                 }
-                else if (c == '[' && !isElapsed)
+                else if(c == '[' && !isElapsed)
                 {
                     isElapsed = true;
                     mIsMonth = false;
                     sb.Append(c);
                 }
-                else if (c == ']' && isElapsed)
+                else if(c == ']' && isElapsed)
                 {
                     isElapsed = false;
                     sb.Append(c);
                 }
-                else if (isElapsed)
+                else if(isElapsed)
                 {
-                    if (c == 'h' || c == 'H')
+                    if(c == 'h' || c == 'H')
                     {
                         sb.Append('H');
                     }
-                    else if (c == 'm' || c == 'M')
+                    else if(c == 'm' || c == 'M')
                     {
                         sb.Append('m');
                     }
-                    else if (c == 's' || c == 'S')
+                    else if(c == 's' || c == 'S')
                     {
                         sb.Append('s');
                     }
@@ -638,10 +640,10 @@ namespace NPOI.SS.UserModel
                         sb.Append(c);
                     }
                 }
-                else if (c == 'h' || c == 'H')
+                else if(c == 'h' || c == 'H')
                 {
                     mIsMonth = false;
-                    if (hasAmPm)
+                    if(hasAmPm)
                     {
                         sb.Append('h');
                     }
@@ -650,9 +652,9 @@ namespace NPOI.SS.UserModel
                         sb.Append('H');
                     }
                 }
-                else if (c == 'm' || c == 'M')
+                else if(c == 'm' || c == 'M')
                 {
-                    if (mIsMonth)
+                    if(mIsMonth)
                     {
                         sb.Append('M');
                         ms.Add(
@@ -664,13 +666,13 @@ namespace NPOI.SS.UserModel
                         sb.Append('m');
                     }
                 }
-                else if (c == 's' || c == 'S')
+                else if(c == 's' || c == 'S')
                 {
                     sb.Append('s');
                     // if 'M' precedes 's' it should be minutes ('m')
-                    foreach (int index in ms)
+                    foreach(int index in ms)
                     {
-                        if (sb[index] == 'M')
+                        if(sb[index] == 'M')
                         {
                             sb[index] = 'm';
                         }
@@ -678,15 +680,15 @@ namespace NPOI.SS.UserModel
                     mIsMonth = true;
                     ms.Clear();
                 }
-                else if (char.IsLetter(c))
+                else if(char.IsLetter(c))
                 {
                     mIsMonth = true;
                     ms.Clear();
-                    if (c == 'y' || c == 'Y')
+                    if(c == 'y' || c == 'Y')
                     {
                         sb.Append('y');
                     }
-                    else if (c == 'd' || c == 'D')
+                    else if(c == 'd' || c == 'D')
                     {
                         sb.Append('d');
                     }
@@ -697,7 +699,7 @@ namespace NPOI.SS.UserModel
                 }
                 else
                 {
-                    if (Char.IsWhiteSpace(c))
+                    if(Char.IsWhiteSpace(c))
                     {
                         ms.Clear();
                     }
@@ -711,7 +713,7 @@ namespace NPOI.SS.UserModel
                 //return new SimpleDateFormat(formatStr);
                 return new ExcelStyleDateFormatter(formatStr, dateSymbols);
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
 
                 // the pattern could not be Parsed correctly,
@@ -725,32 +727,32 @@ namespace NPOI.SS.UserModel
         {
             StringBuilder sb = new StringBuilder(formatStr);
 
-            if (emulateCSV)
+            if(emulateCSV)
             {
                 // Requested spacers with "_" are replaced by a single space.
                 // Full-column-width padding "*" are removed.
                 // Not processing fractions at this time. Replace ? with space.
                 // This matches CSV output.
-                for (int i = 0; i < sb.Length; i++)
+                for(int i = 0; i < sb.Length; i++)
                 {
                     char c = sb[i];
-                    if (c == '_' || c == '*' || c == '?')
+                    if(c == '_' || c == '*' || c == '?')
                     {
-                        if (i > 0 && sb[i - 1] == '\\')
+                        if(i > 0 && sb[i - 1] == '\\')
                         {
                             // It's escaped, don't worry
                             continue;
                         }
-                        if (c == '?')
+                        if(c == '?')
                         {
                             sb[i] = ' ';
                         }
-                        else if (i < sb.Length - 1)
+                        else if(i < sb.Length - 1)
                         {
                             // Remove the character we're supposed
                             //  to match the space of / pad to the
                             //  column width with
-                            if (c == '_')
+                            if(c == '_')
                             {
                                 sb[i + 1] = ' ';
                             }
@@ -771,17 +773,17 @@ namespace NPOI.SS.UserModel
                 //  remove those as we don't do spacing
                 // If they requested full-column-width
                 //  padding, with "*", remove those too
-                for (int i = 0; i < sb.Length; i++)
+                for(int i = 0; i < sb.Length; i++)
                 {
                     char c = sb[i];
-                    if (c == '_' || c == '*')
+                    if(c == '_' || c == '*')
                     {
-                        if (i > 0 && sb[i - 1] == '\\')
+                        if(i > 0 && sb[i - 1] == '\\')
                         {
                             // It's escaped, don't worry
                             continue;
                         }
-                        if (i < sb.Length - 1)
+                        if(i < sb.Length - 1)
                         {
                             // Remove the character we're supposed
                             //  to match the space of / pad to the
@@ -797,18 +799,18 @@ namespace NPOI.SS.UserModel
 
             // Now, handle the other aspects like 
             //  quoting and scientific notation
-            for (int i = 0; i < sb.Length; i++)
+            for(int i = 0; i < sb.Length; i++)
             {
                 char c = sb[i];
                 // remove quotes and back slashes
-                if (c == '\\' || c == '"')
+                if(c == '\\' || c == '"')
                 {
                     sb.Remove(i, 1);
                     i--;
 
                     // for scientific/engineering notation
                 }
-                else if (c == '+' && i > 0 && sb[i - 1] == 'E')
+                else if(c == '+' && i > 0 && sb[i - 1] == 'E')
                 {
                     sb.Remove(i, 1);
                     i--;
@@ -903,13 +905,13 @@ namespace NPOI.SS.UserModel
             NumberFormatInfo symbols = decimalSymbols;
 
             // Do we need to change the grouping character?
-            if (agm.Success)
+            if(agm.Success)
             {
                 char grouping = agm.Groups[2].Value[0];
                 // Only replace the grouping character if it is not the default
                 // grouping character for the US locale (',') in order to enable
                 // correct grouping for non-US locales.
-                if (grouping != ',')
+                if(grouping != ',')
                 {
                     symbols = locale.NumberFormat.Clone() as NumberFormatInfo;
                     symbols.NumberGroupSeparator = grouping.ToString();
@@ -925,7 +927,7 @@ namespace NPOI.SS.UserModel
                 //setExcelStyleRoundingMode(df);
                 return new InternalDecimalFormatWithScale(format, symbols);
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
 
                 // the pattern could not be Parsed correctly,
@@ -946,7 +948,7 @@ namespace NPOI.SS.UserModel
         private FormatBase GetDefaultFormat(double cellValue)
         {
             // for numeric cells try user supplied default
-            if (defaultNumFormat != null)
+            if(defaultNumFormat != null)
             {
                 return defaultNumFormat;
 
@@ -971,16 +973,17 @@ namespace NPOI.SS.UserModel
         private String GetFormattedDateString(ICell cell, ConditionalFormattingEvaluator cfEvaluator)
         {
             FormatBase dateFormat = GetFormat(cell, cfEvaluator);
-            if (dateFormat is ExcelStyleDateFormatter formatter) {
+            if(dateFormat is ExcelStyleDateFormatter formatter)
+            {
                 // Hint about the raw excel value
                 formatter.SetDateToBeFormatted(
                       cell.NumericCellValue
                 );
             }
             var d = cell.DateCellValue;
-            if (d == null)
+            if(d == null)
                 return "";
-            return PerformDateFormatting((DateTime)d, dateFormat);
+            return PerformDateFormatting((DateTime) d, dateFormat);
         }
 
         /**
@@ -1001,15 +1004,15 @@ namespace NPOI.SS.UserModel
 
             FormatBase numberFormat = GetFormat(cell, cfEvaluator);
             double d = cell.NumericCellValue;
-            if (numberFormat == null)
+            if(numberFormat == null)
             {
                 return d.ToString(locale);
             }
             //return numberFormat.Format(d, currentCulture);
             string formatted = numberFormat.Format(d);
-            if (formatted.StartsWith('.'))
+            if(formatted.StartsWith('.'))
                 formatted = "0" + formatted;
-            if (formatted.StartsWith("-."))
+            if(formatted.StartsWith("-."))
                 formatted = "-0" + formatted.Substring(1);
             //return formatted.ReplaceFirst("E(\\d)", "E+$1"); // to match Excel's E-notation
             return Regex.Replace(formatted, "E(\\d)", "E+$1");
@@ -1030,7 +1033,7 @@ namespace NPOI.SS.UserModel
          */
         private string PerformDateFormatting(DateTime d, FormatBase dateFormat)
         {
-            if (dateFormat != null)
+            if(dateFormat != null)
             {
                 return dateFormat.Format(d);
             }
@@ -1044,13 +1047,13 @@ namespace NPOI.SS.UserModel
         public string FormatRawCellContents(double value, int formatIndex, string formatString, bool use1904Windowing)
         {
             // Is it a date?
-            if (DateUtil.IsADateFormat(formatIndex, formatString))
+            if(DateUtil.IsADateFormat(formatIndex, formatString))
             {
-                if (DateUtil.IsValidExcelDate(value))
+                if(DateUtil.IsValidExcelDate(value))
                 {
                     FormatBase dateFormat = GetFormat(value, formatIndex, formatString);
 
-                    if (dateFormat is ExcelStyleDateFormatter formatter)
+                    if(dateFormat is ExcelStyleDateFormatter formatter)
                     {
                         // Hint about the raw excel value
                         formatter.SetDateToBeFormatted(value);
@@ -1061,14 +1064,14 @@ namespace NPOI.SS.UserModel
                 }
 
                 // RK: Invalid dates are 255 #s.
-                if (emulateCSV)
+                if(emulateCSV)
                 {
                     return invalidDateTimeString;
                 }
             }
             // else Number
             FormatBase numberFormat = GetFormat(value, formatIndex, formatString);
-            if (numberFormat == null)
+            if(numberFormat == null)
             {
                 return value.ToString(locale);
             }
@@ -1079,7 +1082,7 @@ namespace NPOI.SS.UserModel
             // original method.
             string result;
             string textValue = NumberToTextConverter.ToText(value);
-            if (textValue.IndexOf('E') > -1)
+            if(textValue.IndexOf('E') > -1)
             {
                 result = numberFormat.Format(value);
             }
@@ -1088,7 +1091,7 @@ namespace NPOI.SS.UserModel
                 result = numberFormat.Format(BigDecimal.Parse(textValue, System.Globalization.CultureInfo.InvariantCulture));
             }
             // Complete scientific notation by adding the missing +.
-            if (result.Contains('E') && !result.Contains("E-"))
+            if(result.Contains('E') && !result.Contains("E-"))
             {
                 result = result.Replace("E", "E+");
             }
@@ -1163,16 +1166,16 @@ namespace NPOI.SS.UserModel
          */
         public String FormatCellValue(ICell cell, IFormulaEvaluator evaluator, ConditionalFormattingEvaluator cfEvaluator)
         {
-            if (cell == null)
+            if(cell == null)
             {
                 return "";
             }
 
             CellType cellType = cell.CellType;
 
-            if (cellType == CellType.Formula)
+            if(cellType == CellType.Formula)
             {
-                if (evaluator == null)
+                if(evaluator == null)
                 {
                     if(UseCachedValuesForFormulaCells)
                     {
@@ -1195,7 +1198,7 @@ namespace NPOI.SS.UserModel
                     cellType = evaluator.EvaluateFormulaCell(cell);
                 }
             }
-            switch (cellType)
+            switch(cellType)
             {
                 case CellType.Formula:
                     // should only occur if evaluator is null
@@ -1203,7 +1206,7 @@ namespace NPOI.SS.UserModel
 
                 case CellType.Numeric:
 
-                    if (DateUtil.IsCellDateFormatted(cell, cfEvaluator))
+                    if(DateUtil.IsCellDateFormatted(cell, cfEvaluator))
                     {
                         return GetFormattedDateString(cell, cfEvaluator);
                     }
@@ -1242,9 +1245,9 @@ namespace NPOI.SS.UserModel
          */
         public void SetDefaultNumberFormat(FormatBase format)
         {
-            foreach (var key in formats.Keys)
+            foreach(var key in formats.Keys)
             {
-                if (formats[key] == generalNumberFormat)
+                if(formats[key] == generalNumberFormat)
                 {
                     formats[key] = format;
                 }
@@ -1278,8 +1281,10 @@ namespace NPOI.SS.UserModel
      */
         public void Update(IObservable<object> observable, object localeObj)
         {
-            if (localeObj is not CultureInfo newLocale) return;
-            if (newLocale.Equals(locale)) return;
+            if(localeObj is not CultureInfo newLocale)
+                return;
+            if(newLocale.Equals(locale))
+                return;
 
             locale = newLocale;
 
@@ -1322,7 +1327,7 @@ namespace NPOI.SS.UserModel
 
             protected override StringBuilder Format(object obj, StringBuilder toAppendTo, int pos)
             {
-                if (emulateCSV)
+                if(emulateCSV)
                 {
                     return toAppendTo.Append(result.Text);
                 }

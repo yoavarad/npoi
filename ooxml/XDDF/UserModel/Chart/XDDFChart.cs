@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -18,11 +18,6 @@
  */
 
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-
 using NPOI.Openxml4Net.Exceptions;
 using NPOI.OpenXml4Net.Exceptions;
 using NPOI.OpenXml4Net.OPC;
@@ -33,6 +28,10 @@ using NPOI.SS.Util;
 using NPOI.Util.Optional;
 using NPOI.XDDF.UserModel.Text;
 using NPOI.XSSF.UserModel;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Xml;
 
 namespace NPOI.XDDF.UserModel.Chart
@@ -394,7 +393,7 @@ namespace NPOI.XDDF.UserModel.Chart
 
         public XDDFView3D GetOrAddView3D()
         {
-            if (chart.view3D == null)
+            if(chart.view3D == null)
             {
                 chart.view3D = new CT_View3D();
             }
@@ -404,7 +403,7 @@ namespace NPOI.XDDF.UserModel.Chart
         private static CT_Area3DChart AddNewArea3DChart(CT_PlotArea plotArea)
         {
             CT_Area3DChart newChart = new CT_Area3DChart();
-            if (plotArea.area3DChart == null)
+            if(plotArea.area3DChart == null)
                 plotArea.area3DChart = [];
             plotArea.area3DChart.Add(newChart);
             return newChart;
@@ -413,7 +412,7 @@ namespace NPOI.XDDF.UserModel.Chart
         private static CT_Bar3DChart AddNewBar3DChart(CT_PlotArea plotArea)
         {
             CT_Bar3DChart newChart = new CT_Bar3DChart();
-            if (plotArea.bar3DChart == null)
+            if(plotArea.bar3DChart == null)
                 plotArea.bar3DChart = [];
             plotArea.bar3DChart.Add(newChart);
             return newChart;
@@ -422,7 +421,7 @@ namespace NPOI.XDDF.UserModel.Chart
         private static CT_Line3DChart AddNewLine3DChart(CT_PlotArea plotArea)
         {
             CT_Line3DChart newChart = new CT_Line3DChart();
-            if (plotArea.line3DChart == null)
+            if(plotArea.line3DChart == null)
                 plotArea.line3DChart = [];
             plotArea.line3DChart.Add(newChart);
             return newChart;
@@ -431,7 +430,7 @@ namespace NPOI.XDDF.UserModel.Chart
         private static CT_SurfaceChart AddNewSurfaceChart(CT_PlotArea plotArea)
         {
             CT_SurfaceChart newChart = new CT_SurfaceChart();
-            if (plotArea.surfaceChart == null)
+            if(plotArea.surfaceChart == null)
                 plotArea.surfaceChart = [];
             plotArea.surfaceChart.Add(newChart);
             return newChart;
@@ -440,7 +439,7 @@ namespace NPOI.XDDF.UserModel.Chart
         private static CT_Surface3DChart AddNewSurface3DChart(CT_PlotArea plotArea)
         {
             CT_Surface3DChart newChart = new CT_Surface3DChart();
-            if (plotArea.surface3DChart == null)
+            if(plotArea.surface3DChart == null)
                 plotArea.surface3DChart = [];
             plotArea.surface3DChart.Add(newChart);
             return newChart;
@@ -562,7 +561,7 @@ namespace NPOI.XDDF.UserModel.Chart
             return dateAxis;
         }
 
-        public XDDFChartData<T, V> CreateData<T, V>(ChartTypes type, 
+        public XDDFChartData<T, V> CreateData<T, V>(ChartTypes type,
             XDDFChartAxis category, XDDFValueAxis values)
         {
             Dictionary<long, XDDFChartAxis> categories = null;
@@ -817,7 +816,7 @@ namespace NPOI.XDDF.UserModel.Chart
         /// <remarks>
         /// @since POI 4.0.0
         /// </remarks>
-        protected void FillSheet<T,V>(XSSFSheet sheet, 
+        protected void FillSheet<T, V>(XSSFSheet sheet,
             IXDDFDataSource<T> categoryData,
             IXDDFNumericalDataSource<V> valuesData)
         {
@@ -832,7 +831,7 @@ namespace NPOI.XDDF.UserModel.Chart
                 // This lets Excel handle the culture-sensitive display while 
                 // keeping the underlying data numeric.
                 // TypeCode 5 (SByte) through 15 (Decimal) are the numeric types.
-                if (val is IConvertible conv && conv.GetTypeCode() >= TypeCode.SByte && conv.GetTypeCode() <= TypeCode.Decimal)
+                if(val is IConvertible conv && conv.GetTypeCode() >= TypeCode.SByte && conv.GetTypeCode() <= TypeCode.Decimal)
                 {
                     categoryCell.SetCellValue(conv.ToDouble(CultureInfo.InvariantCulture));
                 }
@@ -926,7 +925,7 @@ namespace NPOI.XDDF.UserModel.Chart
                     throw new POIXMLException(e);
                 }
             }
-            
+
             PackagePart part = GetPackagePart();
             using(Stream outputStream = part.GetOutputStream())
             {

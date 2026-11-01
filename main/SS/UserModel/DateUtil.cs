@@ -17,12 +17,12 @@
 
 namespace NPOI.SS.UserModel
 {
-    using System.Globalization;
-    using System;
-    using System.Text.RegularExpressions;
-    using System.Text;
-    using NPOI.Util;
     using NPOI.SS.Formula;
+    using NPOI.Util;
+    using System;
+    using System.Globalization;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Contains methods for dealing with Excel dates.
@@ -51,7 +51,7 @@ namespace NPOI.SS.UserModel
         private static Regex date_ptrn1 = new Regex("^\\[\\$\\-.*?\\]", RegexOptions.Compiled);
         private static Regex date_ptrn2 = new Regex("^\\[[a-zA-Z]+\\]", RegexOptions.Compiled);
         private static Regex date_ptrn3a = new Regex("[yYmMdDhHsS]", RegexOptions.Compiled);
-        // add "\u5e74 \u6708 \u65e5"（年月日） for Chinese/Japanese date format:2017年2月7日
+        // add "\u5e74 \u6708 \u65e5"拢篓脛锚脭脗脠脮拢漏 for Chinese/Japanese date format:2017脛锚2脭脗7脠脮
         private static Regex date_ptrn3b = new Regex("^[\\[\\]yYmMdDhHsS\\-T/\u5e74\u6708\u65e5,. :\"\\\\]+0*[ampAMP/]*$", RegexOptions.Compiled);
 
         //  elapsed time patterns: [h],[m] and [s]
@@ -70,7 +70,7 @@ namespace NPOI.SS.UserModel
         public static int absoluteDay(DateTime cal, bool use1904windowing)
         {
             int daynum = (cal - new DateTime(1899, 12, 31)).Days;
-            if (cal > new DateTime(1900, 3, 1) && use1904windowing)
+            if(cal > new DateTime(1900, 3, 1) && use1904windowing)
             {
                 daynum++;
             }
@@ -89,7 +89,7 @@ namespace NPOI.SS.UserModel
         /// <returns>number of days in years prior to yr</returns>
         private static int DaysInPriorYears(int yr, bool use1904windowing)
         {
-            if ((!use1904windowing && yr < 1900) || (use1904windowing && yr < 1904))
+            if((!use1904windowing && yr < 1900) || (use1904windowing && yr < 1904))
             {
                 throw new ArgumentException("'year' must be 1900 or greater");
             }
@@ -125,14 +125,14 @@ namespace NPOI.SS.UserModel
         /// <returns></returns>
         public static double GetExcelDate(int year, int month, int day, int hour, int minute, int second, bool use1904windowing)
         {
-            if ((!use1904windowing && year < 1900)  //1900 date system must bigger than 1900
+            if((!use1904windowing && year < 1900)  //1900 date system must bigger than 1900
                 || (use1904windowing && year < 1904))   //1904 date system must bigger than 1904
             {
                 return BAD_DATE;
             }
 
             DateTime startdate;
-            if (use1904windowing)
+            if(use1904windowing)
             {
                 startdate = new DateTime(1904, 1, 1);
             }
@@ -141,35 +141,35 @@ namespace NPOI.SS.UserModel
                 startdate = new DateTime(1900, 1, 1);
             }
             int nextyearmonth = 0;
-            if (month > 12)
+            if(month > 12)
             {
                 nextyearmonth = month - 12;
                 month = 12;
             }
             int nextmonthday = 0;
 
-            if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12))
+            if((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12))
             {
                 //big month
-                if (day > 31)
+                if(day > 31)
                 {
                     nextmonthday = day - 31;
                     day = 31;
                 }
             }
-            else if ((month == 4 || month == 6 || month == 9 || month == 11))
+            else if((month == 4 || month == 6 || month == 9 || month == 11))
             {
                 //small month
-                if (day > 30)
+                if(day > 30)
                 {
                     nextmonthday = day - 30;
                     day = 30;
                 }
             }
-            else if (DateTime.IsLeapYear(year))
+            else if(DateTime.IsLeapYear(year))
             {
                 //Feb. with leap year
-                if (day > 29)
+                if(day > 29)
                 {
                     nextmonthday = day - 29;
                     day = 29;
@@ -178,14 +178,14 @@ namespace NPOI.SS.UserModel
             else
             {
                 //Feb without leap year
-                if (day > 28)
+                if(day > 28)
                 {
                     nextmonthday = day - 28;
                     day = 28;
                 }
             }
 
-            if (day <= 0)
+            if(day <= 0)
             {
                 nextmonthday = day - 1;
                 day = 1;
@@ -196,11 +196,11 @@ namespace NPOI.SS.UserModel
             date = date.AddDays(nextmonthday);
             double value = (date - startdate).TotalDays + 1;
 
-            if (!use1904windowing && value >= 60)
+            if(!use1904windowing && value >= 60)
             {
                 value++;
             }
-            else if (use1904windowing)
+            else if(use1904windowing)
             {
                 value--;
             }
@@ -215,14 +215,14 @@ namespace NPOI.SS.UserModel
         /// <returns>Excel representation of Date (-1 if error - test for error by Checking for less than 0.1)</returns>
         public static double GetExcelDate(DateTime date, bool use1904windowing)
         {
-            if ((!use1904windowing && date.Year < 1900)  //1900 date system must bigger than 1900
+            if((!use1904windowing && date.Year < 1900)  //1900 date system must bigger than 1900
                 || (use1904windowing && date.Year < 1904))   //1904 date system must bigger than 1904
             {
                 return BAD_DATE;
             }
 
             DateTime startdate;
-            if (use1904windowing)
+            if(use1904windowing)
             {
                 startdate = new DateTime(1904, 1, 1);
             }
@@ -233,11 +233,11 @@ namespace NPOI.SS.UserModel
 
             double value = (date - startdate).TotalDays + 1;
 
-            if (!use1904windowing && value >= 60)
+            if(!use1904windowing && value >= 60)
             {
                 value++;
             }
-            else if (use1904windowing)
+            else if(use1904windowing)
             {
                 value--;
             }
@@ -329,7 +329,7 @@ namespace NPOI.SS.UserModel
          */
         public static DateTime GetJavaDate(double date, bool use1904windowing)
         {
-            return GetJavaCalendar(date, use1904windowing, (TimeZoneInfo)null, false);
+            return GetJavaCalendar(date, use1904windowing, (TimeZoneInfo) null, false);
         }
         /**
          *  Given an Excel date with either 1900 or 1904 date windowing,
@@ -418,19 +418,19 @@ namespace NPOI.SS.UserModel
         {
             int startYear = 1900;
             int dayAdjust = -1; // Excel thinks 2/29/1900 is a valid date, which it isn't
-            if (use1904windowing)
+            if(use1904windowing)
             {
                 startYear = 1904;
                 dayAdjust = 1; // 1904 date windowing uses 1/2/1904 as the first day
             }
-            else if (wholeDays < 61)
+            else if(wholeDays < 61)
             {
                 // Date is prior to 3/1/1900, so adjust because Excel thinks 2/29/1900 exists
                 // If Excel date == 2/29/1900, will become 3/1/1900 in Java representation
                 dayAdjust = 0;
             }
             DateTime dt = (new DateTime(startYear, 1, 1)).AddDays(wholeDays + dayAdjust - 1).AddMilliseconds(millisecondsInDay);
-            if (roundSeconds)
+            if(roundSeconds)
             {
                 dt = dt.AddMilliseconds(500);
                 dt = dt.AddMilliseconds(-dt.Millisecond);
@@ -440,7 +440,7 @@ namespace NPOI.SS.UserModel
 
         public static DateTime GetJavaCalendar(double date)
         {
-            return GetJavaCalendar(date, false, (TimeZoneInfo)null, false);
+            return GetJavaCalendar(date, false, (TimeZoneInfo) null, false);
         }
 
         /**
@@ -453,7 +453,7 @@ namespace NPOI.SS.UserModel
          */
         public static DateTime GetJavaCalendar(double date, bool use1904windowing)
         {
-            return GetJavaCalendar(date, use1904windowing, (TimeZoneInfo)null, false);
+            return GetJavaCalendar(date, use1904windowing, (TimeZoneInfo) null, false);
         }
 
         public static DateTime GetJavaCalendarUTC(double date, bool use1904windowing)
@@ -476,7 +476,7 @@ namespace NPOI.SS.UserModel
         /// <returns>null if date is not a valid Excel date</returns>
         public static DateTime GetJavaCalendar(double date, bool use1904windowing, TimeZoneInfo timeZone, bool roundSeconds)
         {
-            if (!IsValidExcelDate(date))
+            if(!IsValidExcelDate(date))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid Excel date double value: {0}", date));
             }
@@ -512,7 +512,7 @@ namespace NPOI.SS.UserModel
         [Obsolete("The class TimeZone was marked obsolete, Use the Overload using TimeZoneInfo instead.")]
         public static DateTime GetJavaCalendar(double date, bool use1904windowing, TimeZone timeZone, bool roundSeconds)
         {
-            if (!IsValidExcelDate(date))
+            if(!IsValidExcelDate(date))
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid Excel date double value: {0}", date));
             }
@@ -542,7 +542,7 @@ namespace NPOI.SS.UserModel
             {
                 return ConvertTimeInternal(timeStr);
             }
-            catch (FormatException e)
+            catch(FormatException e)
             {
                 String msg = "Bad time format '" + timeStr
                     + "' expected 'HH:MM' or 'HH:MM:SS' - " + e.Message;
@@ -557,17 +557,21 @@ namespace NPOI.SS.UserModel
         private static double ConvertTimeInternal(String timeStr)
         {
             int len = timeStr.Length;
-            if (len < 4 || len > 8)
+            if(len < 4 || len > 8)
             {
                 throw new FormatException("Bad length");
             }
             String[] parts = timeStr.Split(TIME_SEPARATOR_PATTERN);
 
             String secStr;
-            switch (parts.Length)
+            switch(parts.Length)
             {
-                case 2: secStr = "00"; break;
-                case 3: secStr = parts[2]; break;
+                case 2:
+                    secStr = "00";
+                    break;
+                case 3:
+                    secStr = parts[2];
+                    break;
                 default:
                     throw new FormatException("Expected 2 or 3 fields but got (" + parts.Length + ")");
             }
@@ -605,7 +609,8 @@ namespace NPOI.SS.UserModel
         public static bool IsADateFormat(ExcelNumberFormat numFmt)
         {
 
-            if (numFmt == null) return false;
+            if(numFmt == null)
+                return false;
 
             return IsADateFormat(numFmt.Idx, numFmt.Format);
         }
@@ -626,14 +631,14 @@ namespace NPOI.SS.UserModel
         /// </returns>
         public static bool IsADateFormat(int formatIndex, String formatString)
         {
-            lock (syncIsADateFormat)
+            lock(syncIsADateFormat)
             {
-                if (formatString != null && formatIndex == lastFormatIndex && formatString.Equals(lastFormatString))
+                if(formatString != null && formatIndex == lastFormatIndex && formatString.Equals(lastFormatString))
                 {
                     return cached;
                 }
                 // First up, Is this an internal date format?
-                if (IsInternalDateFormat(formatIndex))
+                if(IsInternalDateFormat(formatIndex))
                 {
                     lastFormatIndex = formatIndex;
                     lastFormatString = formatString;
@@ -642,7 +647,7 @@ namespace NPOI.SS.UserModel
                 }
 
                 // If we didn't get a real string, it can't be
-                if (formatString == null || formatString.Length == 0)
+                if(formatString == null || formatString.Length == 0)
                 {
                     lastFormatIndex = formatIndex;
                     lastFormatString = formatString;
@@ -657,15 +662,15 @@ namespace NPOI.SS.UserModel
                 fs = Regex.Replace(fs, ";@", "");
                 int length = fs.Length;
                 StringBuilder sb = new StringBuilder(length);
-                for (int i = 0; i < length; i++)
+                for(int i = 0; i < length; i++)
                 {
                     char c = fs[i];
-                    if (i < length - 1)
+                    if(i < length - 1)
                     {
                         char nc = fs[i + 1];
-                        if (c == '\\')
+                        if(c == '\\')
                         {
-                            switch (nc)
+                            switch(nc)
                             {
                                 case '-':
                                 case ',':
@@ -676,7 +681,7 @@ namespace NPOI.SS.UserModel
                                     continue;
                             }
                         }
-                        else if (c == ';' && nc == '@')
+                        else if(c == ';' && nc == '@')
                         {
                             i++;
                             // skip ";@" duplets
@@ -690,7 +695,7 @@ namespace NPOI.SS.UserModel
 
                 // short-circuit if it indicates elapsed time: [h], [m] or [s]
                 //if (Regex.IsMatch(fs, "^\\[([hH]+|[mM]+|[sS]+)\\]"))
-                if (date_ptrn4.IsMatch(fs))
+                if(date_ptrn4.IsMatch(fs))
                 {
                     lastFormatIndex = formatIndex;
                     lastFormatString = formatString;
@@ -715,13 +720,13 @@ namespace NPOI.SS.UserModel
                 //  which would place dates before 1900/1904 in red
                 // For now, only consider the first one
                 int separatorIndex = fs.IndexOf(';');
-                if (separatorIndex > 0 && separatorIndex < fs.Length - 1)
+                if(separatorIndex > 0 && separatorIndex < fs.Length - 1)
                 {
                     fs = fs.Substring(0, separatorIndex);
                 }
                 // Ensure it has some date letters in it
                 // (Avoids false positives on the rest of pattern 3)
-                if (!date_ptrn3a.IsMatch(fs))
+                if(!date_ptrn3a.IsMatch(fs))
                 //if (!Regex.Match(fs, "[yYmMdDhHsS]").Success)
                 {
                     return false;
@@ -759,7 +764,7 @@ namespace NPOI.SS.UserModel
             {
                 return ParseYYYYMMDDDateInternal(dateStr);
             }
-            catch (FormatException e)
+            catch(FormatException e)
             {
                 String msg = "Bad time format " + dateStr
                     + " expected 'YYYY/MM/DD' - " + e.Message;
@@ -773,7 +778,7 @@ namespace NPOI.SS.UserModel
         /// <returns></returns>
         private static DateTime ParseYYYYMMDDDateInternal(String timeStr)
         {
-            if (timeStr.Length != 10)
+            if(timeStr.Length != 10)
             {
                 throw new FormatException("Bad length");
             }
@@ -814,11 +819,11 @@ namespace NPOI.SS.UserModel
             {
                 result = int.Parse(strVal, CultureInfo.InvariantCulture);
             }
-            catch (FormatException)
+            catch(FormatException)
             {
                 throw new FormatException("Bad int format '" + strVal + "' for " + fieldName + " field");
             }
-            if (result < lowerLimit || result > upperLimit)
+            if(result < lowerLimit || result > upperLimit)
             {
                 throw new FormatException(fieldName + " value (" + result
                         + ") is outside the allowable range(0.." + upperLimit + ")");
@@ -833,7 +838,7 @@ namespace NPOI.SS.UserModel
         {
             bool retval = false;
 
-            switch (format)
+            switch(format)
             {
                 // Internal Date Formats as described on page 427 in
                 // Microsoft Excel Dev's Kit...
@@ -884,14 +889,16 @@ namespace NPOI.SS.UserModel
          */
         public static bool IsCellDateFormatted(ICell cell, ConditionalFormattingEvaluator cfEvaluator)
         {
-            if (cell == null) return false;
+            if(cell == null)
+                return false;
             bool bDate = false;
 
             double d = cell.NumericCellValue;
-            if (DateUtil.IsValidExcelDate(d))
+            if(DateUtil.IsValidExcelDate(d))
             {
                 ExcelNumberFormat nf = ExcelNumberFormat.From(cell, cfEvaluator);
-                if (nf == null) return false;
+                if(nf == null)
+                    return false;
                 bDate = IsADateFormat(nf);
             }
             return bDate;
@@ -903,11 +910,12 @@ namespace NPOI.SS.UserModel
         /// <param name="cell">The cell.</param>
         public static bool IsCellInternalDateFormatted(ICell cell)
         {
-            if (cell == null) return false;
+            if(cell == null)
+                return false;
             bool bDate = false;
 
             double d = cell.NumericCellValue;
-            if (DateUtil.IsValidExcelDate(d))
+            if(DateUtil.IsValidExcelDate(d))
             {
                 ICellStyle style = cell.CellStyle;
                 int i = style.DataFormat;

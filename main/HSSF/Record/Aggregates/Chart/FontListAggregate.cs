@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
 {
@@ -33,16 +33,16 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public FontListAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_FONTLIST, container)
         {
-            frtFontList = (FrtFontListRecord)rs.GetNext();
-            startObject = (ChartStartObjectRecord)rs.GetNext();
+            frtFontList = (FrtFontListRecord) rs.GetNext();
+            startObject = (ChartStartObjectRecord) rs.GetNext();
             FontRecord f = null;
             FbiRecord fbi = null;
-            while (rs.PeekNextChartSid() == FontRecord.sid)
+            while(rs.PeekNextChartSid() == FontRecord.sid)
             {
-                f = (FontRecord)rs.GetNext();
-                if (rs.PeekNextChartSid() == FbiRecord.sid)
+                f = (FontRecord) rs.GetNext();
+                if(rs.PeekNextChartSid() == FbiRecord.sid)
                 {
-                    fbi = (FbiRecord)rs.GetNext();
+                    fbi = (FbiRecord) rs.GetNext();
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                 dicFonts.Add(f, fbi);
             }
 
-            endObject = (ChartEndObjectRecord)rs.GetNext();
+            endObject = (ChartEndObjectRecord) rs.GetNext();
         }
 
         public override void VisitContainedRecords(RecordVisitor rv)
@@ -60,10 +60,10 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(frtFontList);
             rv.VisitRecord(startObject);
             IsInStartObject = true;
-            foreach (KeyValuePair<FontRecord, FbiRecord> kv in dicFonts)
+            foreach(KeyValuePair<FontRecord, FbiRecord> kv in dicFonts)
             {
                 rv.VisitRecord(kv.Key);
-                if (kv.Value != null)
+                if(kv.Value != null)
                     rv.VisitRecord(kv.Value);
             }
             IsInStartObject = false;

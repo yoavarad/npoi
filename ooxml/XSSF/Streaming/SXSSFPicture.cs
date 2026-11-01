@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,16 +17,16 @@
 
 namespace NPOI.XSSF.Streaming
 {
-    using System.IO;
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Dml;
+    using NPOI.OpenXmlFormats.Dml.Spreadsheet;
+    using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
     using NPOI.XSSF.UserModel;
-    using NPOI.OpenXml4Net.OPC;
-    using NPOI.OpenXmlFormats.Spreadsheet;
-    using NPOI.OpenXmlFormats.Dml;
-    using NPOI.OpenXmlFormats.Dml.Spreadsheet;
     using SkiaSharp;
+    using System.IO;
 
     /// <summary>
     /// <para>
@@ -161,7 +161,7 @@ namespace NPOI.XSSF.Streaming
             float w = 0;
             int col2 = anchor.Col1 - 1;
 
-            while (w <= scaledWidth)
+            while(w <= scaledWidth)
             {
                 w += GetColumnWidthInPixels(++col2);
             }
@@ -177,7 +177,7 @@ namespace NPOI.XSSF.Streaming
             double h = 0;
             int row2 = anchor.Row1 - 1;
 
-            while (h <= scaledHeight)
+            while(h <= scaledHeight)
             {
                 h += GetRowHeightInPixels(++row2);
             }
@@ -190,8 +190,8 @@ namespace NPOI.XSSF.Streaming
             anchor.Dy2 = (/*setter*/dy2);
 
             CT_PositiveSize2D size2d = GetCTPicture().spPr.xfrm.ext;
-            size2d.cx = (/*setter*/(long)(scaledWidth * Units.EMU_PER_PIXEL));
-            size2d.cy = (/*setter*/(long)(scaledHeight * Units.EMU_PER_PIXEL));
+            size2d.cx = (/*setter*/(long) (scaledWidth * Units.EMU_PER_PIXEL));
+            size2d.cy = (/*setter*/(long) (scaledHeight * Units.EMU_PER_PIXEL));
 
             return anchor;
         }
@@ -203,7 +203,7 @@ namespace NPOI.XSSF.Streaming
             CT_Col col = sheet.GetColumnHelper().GetColumn(columnIndex, false);
             double numChars = col == null || !col.IsSetWidth() ? DEFAULT_COLUMN_WIDTH : col.width;
 
-            return (float)numChars * Units.DEFAULT_CHARACTER_WIDTH;
+            return (float) numChars * Units.DEFAULT_CHARACTER_WIDTH;
         }
 
         private float GetRowHeightInPixels(int rowIndex)
@@ -235,7 +235,7 @@ namespace NPOI.XSSF.Streaming
             {
                 return ImageUtils.GetImageDimension(part.GetInputStream(), type);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 //return a "singulariry" if ImageIO failed to read the image
                 logger.Log(POILogger.WARN, e);
@@ -310,7 +310,7 @@ namespace NPOI.XSSF.Streaming
         public bool IsNoFill
         {
             get { return _picture.IsNoFill; }
-            set { _picture.IsNoFill = value;}
+            set { _picture.IsNoFill = value; }
         }
 
         public string ShapeName => this.GetShapeName();
@@ -343,4 +343,3 @@ namespace NPOI.XSSF.Streaming
         }
     }
 }
-

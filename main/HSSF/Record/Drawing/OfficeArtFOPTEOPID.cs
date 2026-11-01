@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,7 +13,7 @@ namespace NPOI.HSSF.Record.Drawing
         public OfficeArtFOPTEOPID(ushort value)
         {
             this.field_opid = value;
-            this.OpId = (ushort)(value & 0x3FFF);
+            this.OpId = (ushort) (value & 0x3FFF);
             this.IsBlipId = (value & 0x4000) != 0;
             this.IsComplex = (value & 0x8000) != 0;
         }

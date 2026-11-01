@@ -17,15 +17,15 @@
 
 namespace NPOI
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-    using NPOI.POIFS.FileSystem;
     using NPOI.HPSF;
-    using System.Collections.Generic;
     using NPOI.POIFS.Crypt;
+    using NPOI.POIFS.Crypt.CryptoAPI;
+    using NPOI.POIFS.FileSystem;
     using NPOI.Util;
-    using NPOI.POIFS.Crypt.CryptoAPI;  
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Security;
     using System.Security.Cryptography;
 
@@ -77,9 +77,9 @@ namespace NPOI
         /// </summary>
         /// <param name="fs">The fs.</param>
         public POIDocument(NPOIFSFileSystem fs)
-            : this(fs.Root) 
+            : this(fs.Root)
         {
-            
+
         }
         /**
      * Constructs from the default POIFS
@@ -99,12 +99,13 @@ namespace NPOI
          */
         public void CreateInformationProperties()
         {
-            if (!initialized) ReadProperties();
-            if (sInf == null)
+            if(!initialized)
+                ReadProperties();
+            if(sInf == null)
             {
                 sInf = PropertySetFactory.CreateSummaryInformation();
             }
-            if (dsInf == null)
+            if(dsInf == null)
             {
                 dsInf = PropertySetFactory.CreateDocumentSummaryInformation();
             }
@@ -122,10 +123,11 @@ namespace NPOI
         {
             get
             {
-                if (!initialized) ReadProperties();
+                if(!initialized)
+                    ReadProperties();
                 return dsInf;
             }
-            set 
+            set
             {
                 dsInf = value;
             }
@@ -139,10 +141,11 @@ namespace NPOI
         {
             get
             {
-                if (!initialized) ReadProperties();
+                if(!initialized)
+                    ReadProperties();
                 return sInf;
             }
-            set 
+            set
             {
                 sInf = value;
             }
@@ -165,11 +168,11 @@ namespace NPOI
 
             // DocumentSummaryInformation
             ps = GetPropertySet(DocumentSummaryInformation.DEFAULT_STREAM_NAME);
-            if (ps != null && ps is DocumentSummaryInformation information)
+            if(ps != null && ps is DocumentSummaryInformation information)
             {
                 dsInf = information;
             }
-            else if (ps != null)
+            else if(ps != null)
             {
                 logger.Log(POILogger.WARN, "DocumentSummaryInformation property Set came back with wrong class - ", ps.GetType());
             }
@@ -179,11 +182,11 @@ namespace NPOI
             }
             // SummaryInformation
             ps = GetPropertySet(SummaryInformation.DEFAULT_STREAM_NAME);
-            if (ps is SummaryInformation summaryInformation)
+            if(ps is SummaryInformation summaryInformation)
             {
                 sInf = summaryInformation;
             }
-            else if (ps != null)
+            else if(ps != null)
             {
                 logger.Log(POILogger.WARN, "SummaryInformation property Set came back with wrong class - ", ps.GetType());
             }
@@ -191,7 +194,7 @@ namespace NPOI
             {
                 logger.Log(POILogger.WARN, "SummaryInformation property set came back as null");
             }
-            
+
 
             // Mark the fact that we've now loaded up the properties
             initialized = true;
@@ -223,7 +226,7 @@ namespace NPOI
             String step = "getting";
             try
             {
-                if (encryptionInfo != null && encryptionInfo.IsDocPropsEncrypted())
+                if(encryptionInfo != null && encryptionInfo.IsDocPropsEncrypted())
                 {
                     step = "getting encrypted";
                     var encryptedStream = GetEncryptedPropertyStreamName();
@@ -245,7 +248,7 @@ namespace NPOI
                 }
 
                 //directory can be null when creating new documents
-                if (dirNode == null || !dirNode.HasEntryCaseInsensitive(setName))
+                if(dirNode == null || !dirNode.HasEntryCaseInsensitive(setName))
                 {
                     return null;
                 }
@@ -264,20 +267,20 @@ namespace NPOI
                     dis.Close();
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 logger.Log(POILogger.WARN, "Error " + step + " property set with name " + setName, e);
                 return null;
             }
             finally
             {
-                if (encPoifs != null)
+                if(encPoifs != null)
                 {
                     try
                     {
                         encPoifs.Close();
                     }
-                    catch (IOException e)
+                    catch(IOException e)
                     {
                         logger.Log(POILogger.WARN, "Error closing encrypted property poifs", e);
                     }
@@ -323,7 +326,7 @@ namespace NPOI
             WritePropertySet(SummaryInformation.DEFAULT_STREAM_NAME, SummaryInformation, fs, writtenEntries);
             WritePropertySet(DocumentSummaryInformation.DEFAULT_STREAM_NAME, DocumentSummaryInformation, fs, writtenEntries);
 
-            if (!encryptProps)
+            if(!encryptProps)
             {
                 return;
             }
@@ -334,7 +337,7 @@ namespace NPOI
             WritePropertySet(DocumentSummaryInformation.DEFAULT_STREAM_NAME, new DocumentSummaryInformation(), outFS);
 
             // remove summary, if previously available
-            if (outFS.Root.HasEntryCaseInsensitive(SummaryInformation.DEFAULT_STREAM_NAME))
+            if(outFS.Root.HasEntryCaseInsensitive(SummaryInformation.DEFAULT_STREAM_NAME))
             {
                 outFS.Root.GetEntryCaseInsensitive(SummaryInformation.DEFAULT_STREAM_NAME).Delete();
             }
@@ -344,7 +347,7 @@ namespace NPOI
             {
                 enc.SetSummaryEntries(outFS.Root, GetEncryptedPropertyStreamName(), fs);
             }
-            catch (Exception e) when(e is CryptographicException || e is SecurityException)
+            catch(Exception e) when(e is CryptographicException || e is SecurityException)
             {
                 throw new IOException("Encryption error", e);
             }
@@ -352,14 +355,14 @@ namespace NPOI
 
         private void WritePropertySet(String name, PropertySet ps, NPOIFSFileSystem outFS, List<String> writtenEntries)
         {
-            if (ps == null) 
+            if(ps == null)
             {
                 return;
             }
 
             WritePropertySet(name, ps, outFS);
-            
-            if (writtenEntries != null) 
+
+            if(writtenEntries != null)
             {
                 writtenEntries.Add(name);
             }
@@ -376,11 +379,11 @@ namespace NPOI
             try
             {
                 MutablePropertySet mSet = new MutablePropertySet(Set);
-                using (MemoryStream bOut = new MemoryStream())
+                using(MemoryStream bOut = new MemoryStream())
                 {
                     mSet.Write(bOut);
                     byte[] data = bOut.ToArray();
-                    using (MemoryStream bIn = new MemoryStream(data))
+                    using(MemoryStream bIn = new MemoryStream(data))
                     {
                         // Create or Update the Property Set stream in the POIFS
                         outFS.CreateOrUpdateDocument(bIn, name);
@@ -388,7 +391,7 @@ namespace NPOI
                     //logger.Log(POILogger.INFO, "Wrote property Set " + name + " of size " + data.Length);
                 }
             }
-            catch (WritingNotSupportedException)
+            catch(WritingNotSupportedException)
             {
                 //logger.log(POILogger.ERROR, "Couldn't Write property Set with name " + name + " as not supported by HPSF yet");
             }
@@ -402,15 +405,15 @@ namespace NPOI
          */
         protected void ValidateInPlaceWritePossible()
         {
-            if (directory == null)
+            if(directory == null)
             {
                 throw new InvalidOperationException("Newly created Document, cannot save in-place");
             }
-            if (directory.Parent != null)
+            if(directory.Parent != null)
             {
                 throw new InvalidOperationException("This is not the root Document, cannot save embedded resource in-place");
             }
-            if (directory.FileSystem == null ||
+            if(directory.FileSystem == null ||
                 !directory.FileSystem.IsInPlaceWriteable())
             {
                 throw new InvalidOperationException("Opened read-only or via an InputStream, a Writeable File is required");
@@ -429,7 +432,7 @@ namespace NPOI
          * 
          * @ thrown on errors writing to the file
          */
-        public abstract void Write() ;
+        public abstract void Write();
         /**
          * Writes the document out to the specified new {@link File}. If the file 
          * exists, it will be replaced, otherwise a new one will be created
@@ -438,7 +441,7 @@ namespace NPOI
          * 
          * @ thrown on errors writing to the file
          */
-        public abstract void Write(FileInfo newFile) ;
+        public abstract void Write(FileInfo newFile);
         /**
          * Writes the document out to the specified output stream. The
          * stream is not closed as part of this operation.
@@ -471,8 +474,10 @@ namespace NPOI
          */
         public virtual void Close()
         {
-            if (directory != null) {
-                if (directory.NFileSystem != null) {
+            if(directory != null)
+            {
+                if(directory.NFileSystem != null)
+                {
                     directory.NFileSystem.Close();
                     ClearDirectory();
                 }
@@ -500,7 +505,7 @@ namespace NPOI
          */
         protected bool InitDirectory()
         {
-            if (directory == null)
+            if(directory == null)
             {
                 directory = new NPOIFSFileSystem().Root;
                 return true;
@@ -515,7 +520,7 @@ namespace NPOI
          * @param newDirectory the new directory
          * @return the old/previous directory
          */
-        
+
         protected internal DirectoryNode ReplaceDirectory(DirectoryNode newDirectory)
         {
             DirectoryNode dn = directory;

@@ -29,7 +29,7 @@ namespace NPOI.SS.Formula.Functions
     {
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length != 0)
+            if(args.Length != 0)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -38,4 +38,3 @@ namespace NPOI.SS.Formula.Functions
         public abstract ValueEval Evaluate(int srcRowIndex, int srcColumnIndex);
     }
 }
-

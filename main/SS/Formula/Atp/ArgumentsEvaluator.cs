@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,10 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.SS.Formula.Eval;
-using System;
 using NPOI.SS.UserModel;
+using System;
+using System.Collections.Generic;
 namespace NPOI.SS.Formula.Atp
 {
     /**
@@ -49,11 +49,11 @@ namespace NPOI.SS.Formula.Atp
         {
             ValueEval ve = OperandResolver.GetSingleValue(arg, srcCellRow, (short)srcCellCol);
 
-            if (ve is StringEval eval)
+            if(ve is StringEval eval)
             {
                 String strVal = eval.StringValue;
                 Double dVal = OperandResolver.ParseDouble(strVal);
-                if (!Double.IsNaN(dVal))
+                if(!Double.IsNaN(dVal))
                 {
                     return dVal;
                 }
@@ -74,21 +74,21 @@ namespace NPOI.SS.Formula.Atp
          */
         public static double[] EvaluateDatesArg(ValueEval arg, int srcCellRow, int srcCellCol)
         {
-            if (arg == null)
+            if(arg == null)
             {
                 return [];
             }
 
-            if (arg is StringEval)
+            if(arg is StringEval)
             {
                 return new double[] { ArgumentsEvaluator.EvaluateDateArg(arg, srcCellRow, srcCellCol) };
             }
-            else if (arg is AreaEvalBase area)
+            else if(arg is AreaEvalBase area)
             {
                 List<Double> valuesList = new List<Double>();
-                for (int i = area.FirstRow; i <= area.LastRow; i++)
+                for(int i = area.FirstRow; i <= area.LastRow; i++)
                 {
-                    for (int j = area.FirstColumn; j <= area.LastColumn; j++)
+                    for(int j = area.FirstColumn; j <= area.LastColumn; j++)
                     {
                         // getValue() is replaced with getAbsoluteValue() because loop variables i, j are
                         // absolute indexes values, but getValue() works with relative indexes values
@@ -96,7 +96,7 @@ namespace NPOI.SS.Formula.Atp
                     }
                 }
                 double[] values = new double[valuesList.Count];
-                for (int i = 0; i < valuesList.Count; i++)
+                for(int i = 0; i < valuesList.Count; i++)
                 {
                     values[i] = valuesList[(i)];
                 }
@@ -116,7 +116,7 @@ namespace NPOI.SS.Formula.Atp
          */
         public static double EvaluateNumberArg(ValueEval arg, int srcCellRow, int srcCellCol)
         {
-            if (arg == null)
+            if(arg == null)
             {
                 return 0f;
             }

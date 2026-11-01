@@ -18,12 +18,11 @@
 namespace NPOI.HSSF.Record.Aggregates
 {
 
-    using System;
-    using System.Collections.Generic;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
-
     using NPOI.SS.Util;
+    using System;
+    using System.Collections.Generic;
     /**
      * 
      * @author Josh Micich
@@ -41,19 +40,19 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             _mergedRegions = new List<CellRangeAddress>();
         }
-       
+
         /**
          * Reads zero or more consecutive {@link MergeCellsRecord}s
          * @param rs
          */
         public void Read(RecordStream rs)
         {
-            
-            while (rs.PeekNextClass() == typeof(MergeCellsRecord))
+
+            while(rs.PeekNextClass() == typeof(MergeCellsRecord))
             {
                 MergeCellsRecord mcr = (MergeCellsRecord)rs.GetNext();
                 int nRegions = mcr.NumAreas;
-                for (int i = 0; i < nRegions; i++)
+                for(int i = 0; i < nRegions; i++)
                 {
                     _mergedRegions.Add(mcr.GetAreaAt(i));
                 }
@@ -66,7 +65,7 @@ namespace NPOI.HSSF.Record.Aggregates
             {
                 // a bit cheaper than the default impl
                 int nRegions = _mergedRegions.Count;
-                if (nRegions < 1)
+                if(nRegions < 1)
                 {
                     // no need to write a single empty MergeCellsRecord
                     return 0;
@@ -84,7 +83,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public override void VisitContainedRecords(RecordVisitor rv)
         {
             int nRegions = _mergedRegions.Count;
-            if (nRegions < 1)
+            if(nRegions < 1)
             {
                 // no need to write a single empty MergeCellsRecord
                 return;
@@ -95,12 +94,12 @@ namespace NPOI.HSSF.Record.Aggregates
 
             CellRangeAddress[] cras = (CellRangeAddress[])_mergedRegions.ToArray();
 
-            for (int i = 0; i < nFullMergedCellsRecords; i++)
+            for(int i = 0; i < nFullMergedCellsRecords; i++)
             {
                 int startIx = i * MAX_MERGED_REGIONS;
                 rv.VisitRecord(new MergeCellsRecord(cras, startIx, MAX_MERGED_REGIONS));
             }
-            if (nLeftoverMergedRegions > 0)
+            if(nLeftoverMergedRegions > 0)
             {
                 int startIx = nFullMergedCellsRecords * MAX_MERGED_REGIONS;
                 rv.VisitRecord(new MergeCellsRecord(cras, startIx, nLeftoverMergedRegions));
@@ -108,7 +107,7 @@ namespace NPOI.HSSF.Record.Aggregates
         }
         public void AddRecords(MergeCellsRecord[] mcrs)
         {
-            for (int i = 0; i < mcrs.Length; i++)
+            for(int i = 0; i < mcrs.Length; i++)
             {
                 AddMergeCellsRecord(mcrs[i]);
             }
@@ -117,7 +116,7 @@ namespace NPOI.HSSF.Record.Aggregates
         private void AddMergeCellsRecord(MergeCellsRecord mcr)
         {
             int nRegions = mcr.NumAreas;
-            for (int i = 0; i < nRegions; i++)
+            for(int i = 0; i < nRegions; i++)
             {
                 _mergedRegions.Add(mcr.GetAreaAt(i));
             }
@@ -135,7 +134,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public CellRangeAddress Get(int index)
         {
             CheckIndex(index);
-            return (CellRangeAddress)_mergedRegions[index];
+            return (CellRangeAddress) _mergedRegions[index];
         }
 
         public void Remove(int index)
@@ -146,7 +145,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         private void CheckIndex(int index)
         {
-            if (index < 0 || index >= _mergedRegions.Count)
+            if(index < 0 || index >= _mergedRegions.Count)
             {
                 throw new ArgumentException("Specified CF index " + index
                         + " is outside the allowable range (0.." + (_mergedRegions.Count - 1) + ")");

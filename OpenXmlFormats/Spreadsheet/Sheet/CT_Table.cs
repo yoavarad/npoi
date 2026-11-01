@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -93,66 +93,66 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             //this.sortStateField = new CT_SortState();
             //this.autoFilterField = new CT_AutoFilter();
             this.tableTypeField = ST_TableType.worksheet;
-            this.headerRowCountField = ((uint)(1));
+            this.headerRowCountField = ((uint) (1));
             this.insertRowField = false;
             this.insertRowShiftField = false;
-            this.totalsRowCountField = ((uint)(0));
+            this.totalsRowCountField = ((uint) (0));
             this.totalsRowShownField = true;
             this.publishedField = false;
         }
         public static CT_Table Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Table ctObj = new CT_Table();
-            if (node.Attributes["id"] != null)
+            if(node.Attributes["id"] != null)
                 ctObj.id = XmlHelper.ReadUInt(node.Attributes["id"]);
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
             ctObj.displayName = XmlHelper.ReadString(node.Attributes["displayName"]);
             ctObj.comment = XmlHelper.ReadString(node.Attributes["comment"]);
             ctObj.@ref = XmlHelper.ReadString(node.Attributes["ref"]);
-            if (node.Attributes["tableType"] != null)
-                ctObj.tableType = (ST_TableType)Enum.Parse(typeof(ST_TableType), node.Attributes["tableType"].Value);
-            if (node.Attributes["headerRowCount"] != null)
+            if(node.Attributes["tableType"] != null)
+                ctObj.tableType = (ST_TableType) Enum.Parse(typeof(ST_TableType), node.Attributes["tableType"].Value);
+            if(node.Attributes["headerRowCount"] != null)
                 ctObj.headerRowCount = XmlHelper.ReadUInt(node.Attributes["headerRowCount"]);
-            if (node.Attributes["insertRow"] != null)
+            if(node.Attributes["insertRow"] != null)
                 ctObj.insertRow = XmlHelper.ReadBool(node.Attributes["insertRow"]);
-            if (node.Attributes["insertRowShift"] != null)
+            if(node.Attributes["insertRowShift"] != null)
                 ctObj.insertRowShift = XmlHelper.ReadBool(node.Attributes["insertRowShift"]);
-            if (node.Attributes["totalsRowCount"] != null)
+            if(node.Attributes["totalsRowCount"] != null)
                 ctObj.totalsRowCount = XmlHelper.ReadUInt(node.Attributes["totalsRowCount"]);
-            if (node.Attributes["totalsRowShown"] != null)
+            if(node.Attributes["totalsRowShown"] != null)
                 ctObj.totalsRowShown = XmlHelper.ReadBool(node.Attributes["totalsRowShown"]);
-            if (node.Attributes["published"] != null)
+            if(node.Attributes["published"] != null)
                 ctObj.published = XmlHelper.ReadBool(node.Attributes["published"]);
-            if (node.Attributes["headerRowDxfId"] != null)
+            if(node.Attributes["headerRowDxfId"] != null)
                 ctObj.headerRowDxfId = XmlHelper.ReadUInt(node.Attributes["headerRowDxfId"]);
-            if (node.Attributes["dataDxfId"] != null)
+            if(node.Attributes["dataDxfId"] != null)
                 ctObj.dataDxfId = XmlHelper.ReadUInt(node.Attributes["dataDxfId"]);
-            if (node.Attributes["totalsRowDxfId"] != null)
+            if(node.Attributes["totalsRowDxfId"] != null)
                 ctObj.totalsRowDxfId = XmlHelper.ReadUInt(node.Attributes["totalsRowDxfId"]);
-            if (node.Attributes["headerRowBorderDxfId"] != null)
+            if(node.Attributes["headerRowBorderDxfId"] != null)
                 ctObj.headerRowBorderDxfId = XmlHelper.ReadUInt(node.Attributes["headerRowBorderDxfId"]);
-            if (node.Attributes["tableBorderDxfId"] != null)
+            if(node.Attributes["tableBorderDxfId"] != null)
                 ctObj.tableBorderDxfId = XmlHelper.ReadUInt(node.Attributes["tableBorderDxfId"]);
-            if (node.Attributes["totalsRowBorderDxfId"] != null)
+            if(node.Attributes["totalsRowBorderDxfId"] != null)
                 ctObj.totalsRowBorderDxfId = XmlHelper.ReadUInt(node.Attributes["totalsRowBorderDxfId"]);
             ctObj.headerRowCellStyle = XmlHelper.ReadString(node.Attributes["headerRowCellStyle"]);
             ctObj.dataCellStyle = XmlHelper.ReadString(node.Attributes["dataCellStyle"]);
             ctObj.totalsRowCellStyle = XmlHelper.ReadString(node.Attributes["totalsRowCellStyle"]);
-            if (node.Attributes["connectionId"] != null)
+            if(node.Attributes["connectionId"] != null)
                 ctObj.connectionId = XmlHelper.ReadUInt(node.Attributes["connectionId"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "autoFilter")
+                if(childNode.LocalName == "autoFilter")
                     ctObj.autoFilter = CT_AutoFilter.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sortState")
+                else if(childNode.LocalName == "sortState")
                     ctObj.sortState = CT_SortState.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tableColumns")
+                else if(childNode.LocalName == "tableColumns")
                     ctObj.tableColumns = CT_TableColumns.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tableStyleInfo")
+                else if(childNode.LocalName == "tableStyleInfo")
                     ctObj.tableStyleInfo = CT_TableStyleInfo.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -191,15 +191,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "totalsRowCellStyle", this.totalsRowCellStyle);
             XmlHelper.WriteAttribute(sw, "connectionId", this.connectionId);
             sw.Write('>');
-            if (this.autoFilter != null)
+            if(this.autoFilter != null)
                 this.autoFilter.Write(sw, "autoFilter");
-            if (this.sortState != null)
+            if(this.sortState != null)
                 this.sortState.Write(sw, "sortState");
-            if (this.tableColumns != null)
+            if(this.tableColumns != null)
                 this.tableColumns.Write(sw, "tableColumns");
-            if (this.tableStyleInfo != null)
+            if(this.tableStyleInfo != null)
                 this.tableStyleInfo.Write(sw, "tableStyleInfo");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.Write("</table>");
         }
@@ -662,15 +662,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_TableColumns Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TableColumns ctObj = new CT_TableColumns();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.tableColumn = new List<CT_TableColumn>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "tableColumn")
+                if(childNode.LocalName == "tableColumn")
                     ctObj.tableColumn.Add(CT_TableColumn.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -681,9 +681,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
             sw.Write('>');
-            if (this.tableColumn != null)
+            if(this.tableColumn != null)
             {
-                foreach (CT_TableColumn x in this.tableColumn)
+                foreach(CT_TableColumn x in this.tableColumn)
                 {
                     x.Write(sw, "tableColumn");
                 }
@@ -692,17 +692,17 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_TableColumn InsertNewTableColumn(int columnIndex)
         {
-            if (this.tableColumnField == null)
+            if(this.tableColumnField == null)
             {
                 this.tableColumnField = new List<CT_TableColumn>();
             }
             var newTableColumn = new CT_TableColumn();
-            this.tableColumn.Insert(columnIndex,newTableColumn);
+            this.tableColumn.Insert(columnIndex, newTableColumn);
             return newTableColumn;
         }
         public List<CT_TableColumn> GetTableColumnList()
         {
-            if (this.tableColumnField == null)
+            if(this.tableColumnField == null)
             {
                 this.tableColumnField = new List<CT_TableColumn>();
             }
@@ -715,7 +715,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_TableColumn AddNewTableColumn()
         {
-            if (this.tableColumnField == null)
+            if(this.tableColumnField == null)
             {
                 this.tableColumnField = new List<CT_TableColumn>();
             }
@@ -726,11 +726,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_TableColumn GetTableColumnArray(int index)
         {
-            if (this.tableColumnField == null)
+            if(this.tableColumnField == null)
             {
                 return null;
             }
-            if (index < 0 || index >= this.tableColumnField.Count)
+            if(index < 0 || index >= this.tableColumnField.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
@@ -830,36 +830,36 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_TableColumn Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TableColumn ctObj = new CT_TableColumn();
-            if (node.Attributes["id"] != null)
+            if(node.Attributes["id"] != null)
                 ctObj.id = XmlHelper.ReadUInt(node.Attributes["id"]);
             ctObj.uniqueName = XmlHelper.ReadString(node.Attributes["uniqueName"]);
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
-            if (node.Attributes["totalsRowFunction"] != null)
-                ctObj.totalsRowFunction = (ST_TotalsRowFunction)Enum.Parse(typeof(ST_TotalsRowFunction), node.Attributes["totalsRowFunction"].Value);
+            if(node.Attributes["totalsRowFunction"] != null)
+                ctObj.totalsRowFunction = (ST_TotalsRowFunction) Enum.Parse(typeof(ST_TotalsRowFunction), node.Attributes["totalsRowFunction"].Value);
             ctObj.totalsRowLabel = XmlHelper.ReadString(node.Attributes["totalsRowLabel"]);
-            if (node.Attributes["queryTableFieldId"] != null)
+            if(node.Attributes["queryTableFieldId"] != null)
                 ctObj.queryTableFieldId = XmlHelper.ReadUInt(node.Attributes["queryTableFieldId"]);
-            if (node.Attributes["headerRowDxfId"] != null)
+            if(node.Attributes["headerRowDxfId"] != null)
                 ctObj.headerRowDxfId = XmlHelper.ReadUInt(node.Attributes["headerRowDxfId"]);
-            if (node.Attributes["dataDxfId"] != null)
+            if(node.Attributes["dataDxfId"] != null)
                 ctObj.dataDxfId = XmlHelper.ReadUInt(node.Attributes["dataDxfId"]);
-            if (node.Attributes["totalsRowDxfId"] != null)
+            if(node.Attributes["totalsRowDxfId"] != null)
                 ctObj.totalsRowDxfId = XmlHelper.ReadUInt(node.Attributes["totalsRowDxfId"]);
             ctObj.headerRowCellStyle = XmlHelper.ReadString(node.Attributes["headerRowCellStyle"]);
             ctObj.dataCellStyle = XmlHelper.ReadString(node.Attributes["dataCellStyle"]);
             ctObj.totalsRowCellStyle = XmlHelper.ReadString(node.Attributes["totalsRowCellStyle"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "calculatedColumnFormula")
+                if(childNode.LocalName == "calculatedColumnFormula")
                     ctObj.calculatedColumnFormula = CT_TableFormula.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "totalsRowFormula")
+                else if(childNode.LocalName == "totalsRowFormula")
                     ctObj.totalsRowFormula = CT_TableFormula.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "xmlColumnPr")
+                else if(childNode.LocalName == "xmlColumnPr")
                     ctObj.xmlColumnPr = CT_XmlColumnPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -884,13 +884,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "dataCellStyle", this.dataCellStyle);
             XmlHelper.WriteAttribute(sw, "totalsRowCellStyle", this.totalsRowCellStyle);
             sw.Write('>');
-            if (this.calculatedColumnFormula != null)
+            if(this.calculatedColumnFormula != null)
                 this.calculatedColumnFormula.Write(sw, "calculatedColumnFormula");
-            if (this.totalsRowFormula != null)
+            if(this.totalsRowFormula != null)
                 this.totalsRowFormula.Write(sw, "totalsRowFormula");
-            if (this.xmlColumnPr != null)
+            if(this.xmlColumnPr != null)
                 this.xmlColumnPr.Write(sw, "xmlColumnPr");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement(nodeName);
         }
@@ -1182,10 +1182,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_TableFormula Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TableFormula ctObj = new CT_TableFormula();
-            if (node.Attributes["array"] != null)
+            if(node.Attributes["array"] != null)
                 ctObj.array = XmlHelper.ReadBool(node.Attributes["array"]);
             ctObj.Value = node.InnerText;
             return ctObj;

@@ -17,10 +17,11 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Test helper class for invoking functions with numeric results.
@@ -69,7 +70,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 return invokeInternal(f, args, srcCellRow, srcCellCol);
             }
-            catch (NumericEvalEx e)
+            catch(NumericEvalEx e)
             {
                 throw new AssertionException("Evaluation of function (" + f.GetType().Name
                         + ") failed: " + e.Message);
@@ -83,23 +84,23 @@ namespace TestCases.SS.Formula.Functions
             ValueEval EvalResult = null;
             try
             {
-                EvalResult = target.Evaluate(args, srcCellRow, (short)srcCellCol);
+                EvalResult = target.Evaluate(args, srcCellRow, (short) srcCellCol);
             }
-            catch (NotImplementedException e)
+            catch(NotImplementedException e)
             {
                 throw new NumericEvalEx("Not implemented:" + e.Message);
             }
 
-            if (EvalResult == null)
+            if(EvalResult == null)
             {
                 throw new NumericEvalEx("Result object was null");
             }
-            if (EvalResult is ErrorEval)
+            if(EvalResult is ErrorEval)
             {
                 ErrorEval ee = (ErrorEval)EvalResult;
                 throw new NumericEvalEx(formatErrorMessage(ee));
             }
-            if (!(EvalResult is NumericValueEval))
+            if(!(EvalResult is NumericValueEval))
             {
                 throw new NumericEvalEx("Result object type (" + EvalResult.GetType().Name
                         + ") is invalid.  Expected implementor of ("
@@ -111,7 +112,7 @@ namespace TestCases.SS.Formula.Functions
         }
         private static String formatErrorMessage(ErrorEval ee)
         {
-            if (errorCodesAreEqual(ee, ErrorEval.VALUE_INVALID))
+            if(errorCodesAreEqual(ee, ErrorEval.VALUE_INVALID))
             {
                 return "Error code: #VALUE! (invalid value)";
             }
@@ -119,7 +120,7 @@ namespace TestCases.SS.Formula.Functions
         }
         private static bool errorCodesAreEqual(ErrorEval a, ErrorEval b)
         {
-            if (a == b)
+            if(a == b)
             {
                 return true;
             }

@@ -17,7 +17,8 @@
 
 namespace TestCases.SS.UserModel
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.HSSF;
 
     /**
@@ -29,7 +30,7 @@ namespace TestCases.SS.UserModel
         public TestHSSFBorderStyle()
             : base(HSSFITestDataProvider.Instance)
         {
-            
+
         }
     }
 }

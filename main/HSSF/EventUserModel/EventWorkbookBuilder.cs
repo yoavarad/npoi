@@ -17,11 +17,10 @@
 
 namespace NPOI.HSSF.EventUserModel
 {
-    using System.Collections;
-
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
+    using System.Collections;
     using System.Collections.Generic;
 
     /// <summary>
@@ -61,25 +60,25 @@ namespace NPOI.HSSF.EventUserModel
             List<Record> wbRecords = new List<Record>();
 
             // Core Workbook records go first
-            if (bounds != null)
+            if(bounds != null)
             {
-                for (int i = 0; i < bounds.Length; i++)
+                for(int i = 0; i < bounds.Length; i++)
                 {
                     wbRecords.Add(bounds[i]);
                 }
             }
-            if (sst != null)
+            if(sst != null)
             {
                 wbRecords.Add(sst);
             }
 
             // Now we can have the ExternSheetRecords,
             //  preceded by a SupBookRecord
-            if (externs != null)
+            if(externs != null)
             {
                 wbRecords.Add(SupBookRecord.CreateInternalReferences(
-                        (short)externs.Length));
-                for (int i = 0; i < externs.Length; i++)
+                        (short) externs.Length));
+                for(int i = 0; i < externs.Length; i++)
                 {
                     wbRecords.Add(externs[i]);
                 }
@@ -134,7 +133,7 @@ namespace NPOI.HSSF.EventUserModel
             /// <returns></returns>
             public BoundSheetRecord[] GetBoundSheetRecords()
             {
-                return (BoundSheetRecord[])boundSheetRecords.ToArray(
+                return (BoundSheetRecord[]) boundSheetRecords.ToArray(
                         typeof(BoundSheetRecord)
                 );
             }
@@ -144,7 +143,7 @@ namespace NPOI.HSSF.EventUserModel
             /// <returns></returns>
             public ExternSheetRecord[] GetExternSheetRecords()
             {
-                return (ExternSheetRecord[])externSheetRecords.ToArray(
+                return (ExternSheetRecord[]) externSheetRecords.ToArray(
                         typeof(ExternSheetRecord)
                 );
             }
@@ -163,14 +162,15 @@ namespace NPOI.HSSF.EventUserModel
             /// <returns></returns>
             public HSSFWorkbook GetStubHSSFWorkbook()
             {
-	            // Create a base workbook
-		            HSSFWorkbook wb = HSSFWorkbook.Create(GetStubWorkbook());
-		            // Stub the sheets, so sheet name lookups work
-		            foreach (BoundSheetRecord bsr in boundSheetRecords) {
-		                wb.CreateSheet(bsr.Sheetname);
-		            }
-		            // Ready for Formula use!
-		            return wb;
+                // Create a base workbook
+                HSSFWorkbook wb = HSSFWorkbook.Create(GetStubWorkbook());
+                // Stub the sheets, so sheet name lookups work
+                foreach(BoundSheetRecord bsr in boundSheetRecords)
+                {
+                    wb.CreateSheet(bsr.Sheetname);
+                }
+                // Ready for Formula use!
+                return wb;
             }
             /// <summary>
             /// Gets the stub workbook.
@@ -206,15 +206,15 @@ namespace NPOI.HSSF.EventUserModel
             /// <param name="record">The record.</param>
             public void ProcessRecordInternally(Record record)
             {
-                if (record is BoundSheetRecord)
+                if(record is BoundSheetRecord)
                 {
                     boundSheetRecords.Add(record);
                 }
-                else if (record is ExternSheetRecord)
+                else if(record is ExternSheetRecord)
                 {
                     externSheetRecords.Add(record);
                 }
-                else if (record is SSTRecord record1)
+                else if(record is SSTRecord record1)
                 {
                     sstRecord = record1;
                 }

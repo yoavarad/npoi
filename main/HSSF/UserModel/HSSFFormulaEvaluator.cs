@@ -17,13 +17,13 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-    using System.Collections;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Formula.UDF;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     /**
@@ -158,19 +158,19 @@ namespace NPOI.HSSF.UserModel
         protected override CellValue EvaluateFormulaCellValue(ICell cell)
         {
             ValueEval eval = _bookEvaluator.Evaluate(new HSSFEvaluationCell((HSSFCell)cell));
-            if (eval is BoolEval be)
+            if(eval is BoolEval be)
             {
                 return CellValue.ValueOf(be.BooleanValue);
             }
-            if (eval is NumberEval numberEval)
+            if(eval is NumberEval numberEval)
             {
                 return new CellValue(numberEval.NumberValue);
             }
-            if (eval is StringEval ne)
+            if(eval is StringEval ne)
             {
                 return new CellValue(ne.StringValue);
             }
-            if (eval is ErrorEval errorEval)
+            if(eval is ErrorEval errorEval)
             {
                 return CellValue.GetError(errorEval.ErrorCode);
             }
@@ -194,11 +194,11 @@ namespace NPOI.HSSF.UserModel
          */
         public override ICell EvaluateInCell(ICell cell)
         {
-            if (cell == null)
+            if(cell == null)
             {
                 return null;
             }
-            if (cell.CellType == CellType.Formula)
+            if(cell.CellType == CellType.Formula)
             {
                 CellValue cv = EvaluateFormulaCellValue(cell);
                 SetCellValue(cell, cv);

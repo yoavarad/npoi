@@ -17,12 +17,11 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.HSSF.Util;
+    using NPOI.SS.Util;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.HSSF.Util;
-
-    using NPOI.SS.Util;
 
     /**
      * The <c>HyperlinkRecord</c> wraps an HLINK-record 
@@ -54,13 +53,13 @@ namespace NPOI.HSSF.Record
         /**
          * Tail of a URL link
          */
-        public static readonly byte[] URL_uninterpretedTail = HexRead.ReadFromString("79 58 81 F4  3B 1D 7F 48   AF 2C 82 5D  C4 85 27 63   00 00 00 00  A5 AB 00 00"); 
+        public static readonly byte[] URL_uninterpretedTail = HexRead.ReadFromString("79 58 81 F4  3B 1D 7F 48   AF 2C 82 5D  C4 85 27 63   00 00 00 00  A5 AB 00 00");
         /**
          * Tail of a file link
          */
         public static readonly byte[] FILE_uninterpretedTail = HexRead.ReadFromString("FF FF AD DE  00 00 00 00   00 00 00 00  00 00 00 00   00 00 00 00  00 00 00 00");
         private static readonly int TAIL_SIZE = FILE_uninterpretedTail.Length;
-        
+
         public const short sid = 0x1b8;
 
         /** cell range of this hyperlink */
@@ -132,33 +131,33 @@ namespace NPOI.HSSF.Record
              * of the serialization implementation used to save this structure. This value MUST equal 2.
              */
             int streamVersion = in1.ReadInt();
-            if (streamVersion != 0x00000002)
+            if(streamVersion != 0x00000002)
             {
                 throw new RecordFormatException("Stream Version must be 0x2 but found " + streamVersion);
             }
             _linkOpts = in1.ReadInt();
 
-            if ((_linkOpts & HLINK_LABEL) != 0)
+            if((_linkOpts & HLINK_LABEL) != 0)
             {
                 int label_len = in1.ReadInt();
                 _label = in1.ReadUnicodeLEString(label_len);
             }
-            if ((_linkOpts & HLINK_TARGET_FRAME) != 0)
+            if((_linkOpts & HLINK_TARGET_FRAME) != 0)
             {
                 int len = in1.ReadInt();
                 _targetFrame = in1.ReadUnicodeLEString(len);
             }
-            if ((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) != 0)
+            if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) != 0)
             {
                 _moniker = null;
                 int nChars = in1.ReadInt();
                 _address = in1.ReadUnicodeLEString(nChars);
             }
-            if ((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) == 0)
+            if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) == 0)
             {
                 _moniker = new GUID(in1);
 
-                if (URL_MONIKER.Equals(_moniker))
+                if(URL_MONIKER.Equals(_moniker))
                 {
                     int length = in1.ReadInt();
                     /*
@@ -168,7 +167,7 @@ namespace NPOI.HSSF.Record
                      * then the tail bytes fields are not present.
                      */
                     int remaining = in1.Remaining;
-                    if (length == remaining)
+                    if(length == remaining)
                     {
                         int nChars = length / 2;
                         _address = in1.ReadUnicodeLEString(nChars);
@@ -188,7 +187,7 @@ namespace NPOI.HSSF.Record
                         _uninterpretedTail = ReadTail(URL_uninterpretedTail, in1);
                     }
                 }
-                else if (FILE_MONIKER.Equals(_moniker))
+                else if(FILE_MONIKER.Equals(_moniker))
                 {
                     _fileOpts = in1.ReadShort();
 
@@ -196,7 +195,7 @@ namespace NPOI.HSSF.Record
                     _shortFilename = StringUtil.ReadCompressedUnicode(in1, len);
                     _uninterpretedTail = ReadTail(FILE_uninterpretedTail, in1);
                     int size = in1.ReadInt();
-                    if (size > 0)
+                    if(size > 0)
                     {
                         int charDataSize = in1.ReadInt();
 
@@ -210,7 +209,7 @@ namespace NPOI.HSSF.Record
                         _address = null;
                     }
                 }
-                else if (STD_MONIKER.Equals(_moniker))
+                else if(STD_MONIKER.Equals(_moniker))
                 {
                     _fileOpts = in1.ReadShort();
 
@@ -223,13 +222,13 @@ namespace NPOI.HSSF.Record
                 }
             }
 
-            if ((_linkOpts & HLINK_PLACE) != 0)
+            if((_linkOpts & HLINK_PLACE) != 0)
             {
                 int len = in1.ReadInt();
                 _textMark = in1.ReadUnicodeLEString(len);
             }
 
-            if (in1.Remaining > 0)
+            if(in1.Remaining > 0)
             {
                 Console.WriteLine(HexDump.ToHex(in1.ReadRemainder()));
             }
@@ -265,8 +264,8 @@ namespace NPOI.HSSF.Record
          */
         public int FirstColumn
         {
-            get{return _range.FirstColumn;}
-            set{_range.FirstColumn = value;}
+            get { return _range.FirstColumn; }
+            set { _range.FirstColumn = value; }
         }
 
         /**
@@ -276,8 +275,8 @@ namespace NPOI.HSSF.Record
         */
         public int LastColumn
         {
-            get{return _range.LastColumn;}
-            set{_range.LastColumn= value;}
+            get { return _range.LastColumn; }
+            set { _range.LastColumn= value; }
         }
 
         /**
@@ -287,8 +286,8 @@ namespace NPOI.HSSF.Record
          */
         public int FirstRow
         {
-           get{ return _range.FirstRow;}
-            set{_range.FirstRow = value;}
+            get { return _range.FirstRow; }
+            set { _range.FirstRow = value; }
         }
 
         /**
@@ -329,12 +328,12 @@ namespace NPOI.HSSF.Record
         }
         private static String CleanString(String s)
         {
-            if (s == null)
+            if(s == null)
             {
                 return null;
             }
             int idx = s.IndexOf('\u0000');
-            if (idx < 0)
+            if(idx < 0)
             {
                 return s;
             }
@@ -342,7 +341,7 @@ namespace NPOI.HSSF.Record
         }
         private static String AppendNullTerm(String s)
         {
-            if (s == null)
+            if(s == null)
             {
                 return null;
             }
@@ -360,7 +359,7 @@ namespace NPOI.HSSF.Record
             {
                 return CleanString(_label);
             }
-            set 
+            set
             {
                 _label = AppendNullTerm(value);
             }
@@ -375,18 +374,18 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if ((_linkOpts & HLINK_URL) != 0 && _moniker!=null && FILE_MONIKER.Equals(_moniker))
+                if((_linkOpts & HLINK_URL) != 0 && _moniker!=null && FILE_MONIKER.Equals(_moniker))
                     return CleanString(_address != null ? _address : _shortFilename);
-                else if ((_linkOpts & HLINK_PLACE) != 0)
+                else if((_linkOpts & HLINK_PLACE) != 0)
                     return CleanString(_textMark);
                 else
                     return CleanString(_address);
             }
             set
             {
-                if ((_linkOpts & HLINK_URL) != 0 && _moniker != null && FILE_MONIKER.Equals(_moniker))
+                if((_linkOpts & HLINK_URL) != 0 && _moniker != null && FILE_MONIKER.Equals(_moniker))
                     _shortFilename = AppendNullTerm(value);
-                else if ((_linkOpts & HLINK_PLACE) != 0)
+                else if((_linkOpts & HLINK_PLACE) != 0)
                     _textMark = AppendNullTerm(value);
                 else
                     _address = AppendNullTerm(value);
@@ -398,7 +397,7 @@ namespace NPOI.HSSF.Record
             {
                 return CleanString(_textMark);
             }
-            set 
+            set
             {
                 _textMark = AppendNullTerm(value);
             }
@@ -427,7 +426,7 @@ namespace NPOI.HSSF.Record
             {
                 return CleanString(_shortFilename);
             }
-            set 
+            set
             {
                 _shortFilename = AppendNullTerm(value);
             }
@@ -469,28 +468,28 @@ namespace NPOI.HSSF.Record
             out1.WriteInt(0x00000002); // TODO const
             out1.WriteInt(_linkOpts);
 
-            if ((_linkOpts & HLINK_LABEL) != 0)
+            if((_linkOpts & HLINK_LABEL) != 0)
             {
                 out1.WriteInt(_label.Length);
                 StringUtil.PutUnicodeLE(_label, out1);
             }
-            if ((_linkOpts & HLINK_TARGET_FRAME) != 0)
+            if((_linkOpts & HLINK_TARGET_FRAME) != 0)
             {
                 out1.WriteInt(_targetFrame.Length);
                 StringUtil.PutUnicodeLE(_targetFrame, out1);
             }
 
-            if ((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) != 0)
+            if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) != 0)
             {
                 out1.WriteInt(_address.Length);
                 StringUtil.PutUnicodeLE(_address, out1);
             }
-            if ((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) == 0)
+            if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) == 0)
             {
                 _moniker.Serialize(out1);
-                if (_moniker != null && URL_MONIKER.Equals(_moniker))
+                if(_moniker != null && URL_MONIKER.Equals(_moniker))
                 {
-                    if (_uninterpretedTail == null) 
+                    if(_uninterpretedTail == null)
                     {
                         out1.WriteInt(_address.Length * 2);
                         StringUtil.PutUnicodeLE(_address, out1);
@@ -502,14 +501,14 @@ namespace NPOI.HSSF.Record
                         WriteTail(_uninterpretedTail, out1);
                     }
                 }
-                else if (_moniker != null && FILE_MONIKER.Equals(_moniker))
+                else if(_moniker != null && FILE_MONIKER.Equals(_moniker))
                 {
                     out1.WriteShort(_fileOpts);
                     out1.WriteInt(_shortFilename.Length);
                     StringUtil.PutCompressedUnicode(_shortFilename, out1);
 
                     WriteTail(_uninterpretedTail, out1);
-                    if (string.IsNullOrEmpty(_address))
+                    if(string.IsNullOrEmpty(_address))
                     {
                         out1.WriteInt(0);
                     }
@@ -523,7 +522,7 @@ namespace NPOI.HSSF.Record
                     }
                 }
             }
-            if ((_linkOpts & HLINK_PLACE) != 0)
+            if((_linkOpts & HLINK_PLACE) != 0)
             {
                 out1.WriteInt(_textMark.Length);
                 StringUtil.PutUnicodeLE(_textMark, out1);
@@ -540,48 +539,48 @@ namespace NPOI.HSSF.Record
                 size += GUID.ENCODED_SIZE;
                 size += 4;  //label_opts
                 size += 4;  //_linkOpts
-                if ((_linkOpts & HLINK_LABEL) != 0)
+                if((_linkOpts & HLINK_LABEL) != 0)
                 {
                     size += 4;  //link Length
                     size += _label.Length * 2;
                 }
-                if ((_linkOpts & HLINK_TARGET_FRAME) != 0)
+                if((_linkOpts & HLINK_TARGET_FRAME) != 0)
                 {
                     size += 4;  // int nChars
                     size += _targetFrame.Length * 2;
                 }
-                if ((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) != 0)
+                if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) != 0)
                 {
                     size += 4;  // int nChars
                     size += _address.Length * 2;
                 }
-                if ((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) == 0)
+                if((_linkOpts & HLINK_URL) != 0 && (_linkOpts & HLINK_UNC_PATH) == 0)
                 {
                     size += GUID.ENCODED_SIZE;  //moniker Length
-                    if (_moniker!=null&&URL_MONIKER.Equals(_moniker))
+                    if(_moniker!=null&&URL_MONIKER.Equals(_moniker))
                     {
                         size += 4;  //Address Length
                         size += _address.Length * 2;
-                        if (_uninterpretedTail != null)
+                        if(_uninterpretedTail != null)
                         {
                             size += TAIL_SIZE;
                         }
                     }
-                    else if (_moniker != null && FILE_MONIKER.Equals(_moniker))
+                    else if(_moniker != null && FILE_MONIKER.Equals(_moniker))
                     {
                         size += 2;  //_fileOpts
                         size += 4;  //Address Length
                         size += _shortFilename == null ? 0 : _shortFilename.Length;
                         size += TAIL_SIZE;
                         size += 4;
-                        if (!string.IsNullOrEmpty(_address))
+                        if(!string.IsNullOrEmpty(_address))
                         {
                             size += 6;
                             size += _address.Length * 2;
                         }
                     }
                 }
-                if ((_linkOpts & HLINK_PLACE) != 0)
+                if((_linkOpts & HLINK_PLACE) != 0)
                 {
                     size += 4;  //Address Length
                     size += _textMark.Length * 2;
@@ -599,15 +598,15 @@ namespace NPOI.HSSF.Record
             buffer.Append("    .guid        = ").Append(_guid.FormatAsString()).Append("\n");
             buffer.Append("    .linkOpts          = ").Append(HexDump.IntToHex(this._linkOpts)).Append("\n");
             buffer.Append("    .label          = ").Append(Label).Append("\n");
-            if ((_linkOpts & HLINK_TARGET_FRAME) != 0)
+            if((_linkOpts & HLINK_TARGET_FRAME) != 0)
             {
                 buffer.Append("    .targetFrame= ").Append(TargetFrame).Append("\n");
             }
-            if((_linkOpts & HLINK_URL) != 0 && _moniker != null) 
+            if((_linkOpts & HLINK_URL) != 0 && _moniker != null)
             {
                 buffer.Append("    .moniker          = ").Append(_moniker.FormatAsString()).Append("\n");
             }
-            if ((_linkOpts & HLINK_PLACE) != 0) 
+            if((_linkOpts & HLINK_PLACE) != 0)
             {
                 buffer.Append("    .targetFrame= ").Append(TextMark).Append("\n");
             }
@@ -654,9 +653,9 @@ namespace NPOI.HSSF.Record
         /// </summary>        
         public void CreateUrlLink()
         {
-            _range = new CellRangeAddress(0, 0, 0, 0); 
+            _range = new CellRangeAddress(0, 0, 0, 0);
             _guid = STD_MONIKER;
-            
+
             _linkOpts = HLINK_URL | HLINK_ABS | HLINK_LABEL;
             Label = "";
             _moniker = URL_MONIKER;
@@ -699,7 +698,7 @@ namespace NPOI.HSSF.Record
             HyperlinkRecord rec = new HyperlinkRecord();
             rec._range = _range.Copy();
             rec._guid = _guid;
-            
+
             rec._linkOpts = _linkOpts;
             rec._fileOpts = _fileOpts;
             rec._label = _label;

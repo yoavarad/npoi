@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.UDF
 {
+    using NPOI.SS.Formula.Functions;
     using System;
     using System.Collections.Generic;
-    using NPOI.SS.Formula.Functions;
     /**
      * A UDFFinder that can retrieve functions both by name and by fake index.
      *
@@ -39,7 +39,7 @@ namespace NPOI.SS.Formula.UDF
         public override FreeRefFunction FindFunction(String name)
         {
             FreeRefFunction func = base.FindFunction(name);
-            if (func != null)
+            if(func != null)
             {
                 int idx = GetFunctionIndex(name);
                 _funcMap[idx] = name;
@@ -58,8 +58,3 @@ namespace NPOI.SS.Formula.UDF
         }
     }
 }
-
-
-
-
-

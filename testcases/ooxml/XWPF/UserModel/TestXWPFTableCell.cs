@@ -17,11 +17,12 @@
  * ====================================================================
  */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.OpenXmlFormats.Wordprocessing;
+using NPOI.XWPF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
-using NPOI.XWPF.UserModel;
 
 namespace TestCases.XWPF.UserModel
 {
@@ -118,13 +119,13 @@ namespace TestCases.XWPF.UserModel
         {
             XWPFDocument docx = XWPFTestDataSamples.OpenSampleDocument("TestTableCellAlign.docx");
             IList<XWPFTable> tables = docx.Tables;
-            foreach (XWPFTable table in tables)
+            foreach(XWPFTable table in tables)
             {
                 List<XWPFTableRow> tableRows = table.Rows;
-                foreach (XWPFTableRow tableRow in tableRows)
+                foreach(XWPFTableRow tableRow in tableRows)
                 {
                     List<XWPFTableCell> tableCells = tableRow.GetTableCells();
-                    foreach (XWPFTableCell tableCell in tableCells)
+                    foreach(XWPFTableCell tableCell in tableCells)
                     {
                         // getVerticalAlignment should return either an XWPFVertAlign enum or null if not set
                         tableCell.GetVerticalAlignment();
@@ -136,7 +137,7 @@ namespace TestCases.XWPF.UserModel
         [Test]
         public void TestAddParagraph()
         {
-            using (XWPFDocument doc = new XWPFDocument())
+            using(XWPFDocument doc = new XWPFDocument())
             {
                 XWPFTable table = doc.CreateTable();
                 XWPFTableRow tr = table.CreateRow();
@@ -158,7 +159,7 @@ namespace TestCases.XWPF.UserModel
         [Test]
         public void TestRemoveParagraph()
         {
-            using (XWPFDocument doc = new XWPFDocument())
+            using(XWPFDocument doc = new XWPFDocument())
             {
                 XWPFTable table = doc.CreateTable();
                 XWPFTableRow tr = table.CreateRow();

@@ -20,7 +20,8 @@ using NPOI;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.IO;
 using TestCases.HSSF;
 
@@ -72,10 +73,10 @@ namespace TestCases.OOXML
             byte[] testData = { 1, 2, 3 };
             ByteArrayInputStream testInput = new ByteArrayInputStream(testData);
             InputStream is1 = FileMagicContainer.PrepareToCheckMagic(testInput);
-        
+
             // detect header
             ClassicAssert.IsFalse(DocumentFactoryHelper.HasOOXMLHeader(is1));
-        
+
             // check if InputStream is still intact
             byte[] act = IOUtils.ToByteArray(is1);
             ClassicAssert.IsTrue(Arrays.Equals(testData, act));
@@ -85,5 +86,3 @@ namespace TestCases.OOXML
         }
     }
 }
-
-

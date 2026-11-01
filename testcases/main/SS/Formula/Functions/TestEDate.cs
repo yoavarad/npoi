@@ -1,8 +1,9 @@
-﻿using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 
 namespace TestCases.SS.Formula.Functions
 {
@@ -67,7 +68,7 @@ namespace TestCases.SS.Formula.Functions
             DateTime resultDate = DateUtil.GetJavaDate(result.NumberValue);
 
             CompareDateTimes(resultDate, startDate.AddMonths(offset));
-            
+
         }
 
         [Test]
@@ -111,7 +112,7 @@ namespace TestCases.SS.Formula.Functions
             NumberEval result = (NumberEval)eDate.Evaluate(new ValueEval[] { new RefEvalImplementation(BlankEval.instance), new NumberEval(0) }, null);
             ClassicAssert.AreEqual(-1.0d, result.NumberValue, "0 startDate triggers BAD_DATE currently, thus -1.0!");
 
-            result = (NumberEval)eDate.Evaluate(new ValueEval[] { new NumberEval(1), new RefEvalImplementation(BlankEval.instance) }, null);
+            result = (NumberEval) eDate.Evaluate(new ValueEval[] { new NumberEval(1), new RefEvalImplementation(BlankEval.instance) }, null);
             ClassicAssert.AreEqual(1.0d, result.NumberValue, "Blank is handled as 0 otherwise");
         }
 

@@ -17,18 +17,18 @@
 namespace NPOI.SS.Formula
 {
 
+    using NPOI.SS.UserModel;
     using System;
-    using System.Text;
     using System.Collections;
     using System.Collections.Generic;
-    using NPOI.SS.UserModel;
+    using System.Text;
 
     [Serializable]
     public class WorkbookNotFoundException : Exception
     {
-        public WorkbookNotFoundException(String msg):base(msg)
+        public WorkbookNotFoundException(String msg) : base(msg)
         {
-            
+
         }
     }
     /**
@@ -55,12 +55,12 @@ namespace NPOI.SS.Formula
         public static void Setup(String[] workbookNames, WorkbookEvaluator[] evaluators)
         {
             int nItems = workbookNames.Length;
-            if (evaluators.Length != nItems)
+            if(evaluators.Length != nItems)
             {
                 throw new ArgumentException("Number of workbook names is " + nItems
                         + " but number of evaluators is " + evaluators.Length);
             }
-            if (nItems < 1)
+            if(nItems < 1)
             {
                 throw new ArgumentException("Must provide at least one collaborating worbook");
             }
@@ -69,9 +69,9 @@ namespace NPOI.SS.Formula
         }
         public static void Setup(Dictionary<String, WorkbookEvaluator> evaluatorsByName)
         {
-            if (evaluatorsByName.Count < 1)
+            if(evaluatorsByName.Count < 1)
             {
-                throw new  ArgumentException("Must provide at least one collaborating worbook");
+                throw new ArgumentException("Must provide at least one collaborating worbook");
             }
             List<WorkbookEvaluator> temp = new List<WorkbookEvaluator>(evaluatorsByName.Count);
             temp.AddRange(evaluatorsByName.Values);
@@ -81,11 +81,11 @@ namespace NPOI.SS.Formula
         public static void SetupFormulaEvaluator(Dictionary<String, IFormulaEvaluator> evaluators)
         {
             Dictionary<String, WorkbookEvaluator> evaluatorsByName = new Dictionary<String, WorkbookEvaluator>(evaluators.Count);
-            foreach (KeyValuePair<string, IFormulaEvaluator> swb in evaluators)
+            foreach(KeyValuePair<string, IFormulaEvaluator> swb in evaluators)
             {
                 string wbName = swb.Key;
                 IFormulaEvaluator eval = swb.Value;
-                if (eval is IWorkbookEvaluatorProvider provider)
+                if(eval is IWorkbookEvaluatorProvider provider)
                 {
                     evaluatorsByName.Add(wbName, provider.GetWorkbookEvaluator());
                 }
@@ -105,11 +105,11 @@ namespace NPOI.SS.Formula
         private static Dictionary<String, WorkbookEvaluator> ToUniqueMap(String[] workbookNames, WorkbookEvaluator[] evaluators, int nItems)
         {
             Dictionary<String, WorkbookEvaluator> evaluatorsByName = new Dictionary<String, WorkbookEvaluator>(nItems * 3 / 2);
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 String wbName = workbookNames[i];
                 WorkbookEvaluator wbEval = evaluators[i];
-                if (evaluatorsByName.ContainsKey(wbName))
+                if(evaluatorsByName.ContainsKey(wbName))
                 {
                     throw new ArgumentException("Duplicate workbook name '" + wbName + "'");
                 }
@@ -120,9 +120,9 @@ namespace NPOI.SS.Formula
         private CollaboratingWorkbooksEnvironment(Dictionary<String, WorkbookEvaluator> evaluatorsByName, WorkbookEvaluator[] evaluators)
         {
             Dictionary<WorkbookEvaluator, String> uniqueEvals = new Dictionary<WorkbookEvaluator, String>(evaluators.Length);
-            foreach (KeyValuePair<string, WorkbookEvaluator> me in evaluatorsByName)
+            foreach(KeyValuePair<string, WorkbookEvaluator> me in evaluatorsByName)
             {
-                if (uniqueEvals.TryGetValue(me.Value, out string eval))
+                if(uniqueEvals.TryGetValue(me.Value, out string eval))
                 {
                     String msg = "Attempted to register same workbook under names '" +
                         eval + "' and '" + me.Key + "'";
@@ -133,7 +133,7 @@ namespace NPOI.SS.Formula
             UnhookOldEnvironments(evaluators);
             HookNewEnvironment(evaluators, this);
             _unhooked = false;
-            _evaluators = (WorkbookEvaluator[])evaluators.Clone();
+            _evaluators = (WorkbookEvaluator[]) evaluators.Clone();
             _evaluatorsByName = evaluatorsByName;
         }
 
@@ -145,9 +145,9 @@ namespace NPOI.SS.Formula
             int nItems = evaluators.Length;
             IEvaluationListener evalListener = evaluators[0].GetEvaluationListener();
             // make sure that all evaluators have the same listener
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
-                if (evalListener != evaluators[i].GetEvaluationListener())
+                if(evalListener != evaluators[i].GetEvaluationListener())
                 {
                     // This would be very complex To support
                     throw new Exception("Workbook evaluators must all have the same evaluation listener");
@@ -155,7 +155,7 @@ namespace NPOI.SS.Formula
             }
             EvaluationCache cache = new EvaluationCache(evalListener);
 
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 evaluators[i].AttachToEnvironment(env, cache, i);
             }
@@ -165,13 +165,13 @@ namespace NPOI.SS.Formula
         private static void UnhookOldEnvironments(WorkbookEvaluator[] evaluators)
         {
             ArrayList oldEnvs = new ArrayList();
-            for (int i = 0; i < evaluators.Length; i++)
+            for(int i = 0; i < evaluators.Length; i++)
             {
                 oldEnvs.Add(evaluators[i].GetEnvironment());
             }
             CollaboratingWorkbooksEnvironment[] oldCWEs = new CollaboratingWorkbooksEnvironment[oldEnvs.Count];
-            oldCWEs = (CollaboratingWorkbooksEnvironment[])oldEnvs.ToArray(typeof(CollaboratingWorkbooksEnvironment));
-            for (int i = 0; i < oldCWEs.Length; i++)
+            oldCWEs = (CollaboratingWorkbooksEnvironment[]) oldEnvs.ToArray(typeof(CollaboratingWorkbooksEnvironment));
+            for(int i = 0; i < oldCWEs.Length; i++)
             {
                 oldCWEs[i].Unhook();
             }
@@ -182,11 +182,11 @@ namespace NPOI.SS.Formula
          */
         private void Unhook()
         {
-            if (_evaluators.Length < 1)
+            if(_evaluators.Length < 1)
             {
                 return;
             }
-            for (int i = 0; i < _evaluators.Length; i++)
+            for(int i = 0; i < _evaluators.Length; i++)
             {
                 _evaluators[i].DetachFromEnvironment();
             }
@@ -195,20 +195,20 @@ namespace NPOI.SS.Formula
 
         public WorkbookEvaluator GetWorkbookEvaluator(String workbookName)
         {
-            if (_unhooked)
+            if(_unhooked)
             {
                 throw new InvalidOperationException("This environment Has been unhooked");
             }
             WorkbookEvaluator result;
-            if (_evaluatorsByName.TryGetValue(workbookName, out WorkbookEvaluator value))
+            if(_evaluatorsByName.TryGetValue(workbookName, out WorkbookEvaluator value))
             {
-                result = (WorkbookEvaluator)value;
+                result = (WorkbookEvaluator) value;
             }
             else
             {
                 StringBuilder sb = new StringBuilder(256);
                 sb.Append("Could not resolve external workbook name '").Append(workbookName).Append("'.");
-                if (_evaluators.Length < 1)
+                if(_evaluators.Length < 1)
                 {
                     sb.Append(" Workbook environment has not been set up.");
                 }
@@ -217,9 +217,9 @@ namespace NPOI.SS.Formula
                     sb.Append(" The following workbook names are valid: (");
                     IEnumerator i = _evaluatorsByName.Keys.GetEnumerator();
                     int count = 0;
-                    while (i.MoveNext())
+                    while(i.MoveNext())
                     {
-                        if (count++ > 0)
+                        if(count++ > 0)
                         {
                             sb.Append(", ");
                         }

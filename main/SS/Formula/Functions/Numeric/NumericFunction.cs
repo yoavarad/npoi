@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     public abstract class OneArg : Fixed1ArgFunction
     {
@@ -38,7 +38,7 @@ namespace NPOI.SS.Formula.Functions
                 result = Evaluate(d);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -46,7 +46,7 @@ namespace NPOI.SS.Formula.Functions
         }
         protected double Eval(ValueEval[] args, int srcCellRow, short srcCellCol)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
@@ -72,7 +72,7 @@ namespace NPOI.SS.Formula.Functions
                 result = Evaluate(d0, d1);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -104,7 +104,7 @@ namespace NPOI.SS.Formula.Functions
 
         public static void CheckValue(double result)
         {
-            if (Double.IsNaN(result) || Double.IsInfinity(result))
+            if(Double.IsNaN(result) || Double.IsInfinity(result))
             {
                 throw new EvaluationException(ErrorEval.NUM_ERROR);
             }
@@ -118,7 +118,7 @@ namespace NPOI.SS.Formula.Functions
                 result = Eval(args, srcCellRow, srcCellCol);
                 CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

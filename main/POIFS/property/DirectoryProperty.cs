@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -26,9 +26,9 @@
  * ==============================================================*/
 
 using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 namespace NPOI.POIFS.Properties
 {
@@ -36,7 +36,7 @@ namespace NPOI.POIFS.Properties
     /// Trivial extension of Property for POIFSDocuments
     /// @author Marc Johnson (mjohnson at apache dot org)
     /// </summary>
-    public class DirectoryProperty: Property, Parent, IEnumerable<Property>
+    public class DirectoryProperty : Property, Parent, IEnumerable<Property>
     {
         // List of Property instances
         private readonly List<Property> _children;
@@ -48,7 +48,7 @@ namespace NPOI.POIFS.Properties
         /// Initializes a new instance of the <see cref="DirectoryProperty"/> class.
         /// </summary>
         /// <param name="name">the name of the directory</param>
-        public DirectoryProperty(String name):base()
+        public DirectoryProperty(String name) : base()
         {
             _children = new List<Property>();
             _children_names = new List<string>();
@@ -65,7 +65,7 @@ namespace NPOI.POIFS.Properties
         /// <param name="index">index number</param>
         /// <param name="array">byte data</param>
         /// <param name="offset">offset into byte data</param>
-        public DirectoryProperty(int index, byte [] array,int offset):base(index, array, offset)
+        public DirectoryProperty(int index, byte[] array, int offset) : base(index, array, offset)
         {
             _children = new List<Property>();
             _children_names = new List<string>();
@@ -86,7 +86,7 @@ namespace NPOI.POIFS.Properties
             property.Name=newName;
             String cleanNewName = property.Name;
 
-            if (_children_names.Contains(cleanNewName))
+            if(_children_names.Contains(cleanNewName))
             {
 
                 // revert the Change
@@ -111,7 +111,7 @@ namespace NPOI.POIFS.Properties
         {
 
             bool result = _children.Remove(property);
-            if (result)
+            if(result)
             {
                 _children_names.Remove(property.Name);
             }
@@ -136,9 +136,9 @@ namespace NPOI.POIFS.Properties
                 return this == o;
             }
 
-            public override int GetHashCode ()
+            public override int GetHashCode()
             {
-                return base.GetHashCode ();
+                return base.GetHashCode();
             }
 
             /// <summary>
@@ -165,31 +165,31 @@ namespace NPOI.POIFS.Properties
 
                 int num = name1.Length - name2.Length;
 
-                if (num == 0)
+                if(num == 0)
                 {
                     //if (name1.CompareTo(VBA_PROJECT) == 0)
-                    if (name1.Equals(VBA_PROJECT, StringComparison.CurrentCulture))
+                    if(name1.Equals(VBA_PROJECT, StringComparison.CurrentCulture))
                     {
                         num = 1;
                     }
                     //else if (name2.CompareTo(VBA_PROJECT) == 0)
-                    else if (name2.Equals(VBA_PROJECT, StringComparison.CurrentCulture))
+                    else if(name2.Equals(VBA_PROJECT, StringComparison.CurrentCulture))
                     {
                         num = -1;
                     }
                     else
                     {
-                        if (name1.StartsWith("__", StringComparison.Ordinal) && name2.StartsWith("__", StringComparison.Ordinal))
+                        if(name1.StartsWith("__", StringComparison.Ordinal) && name2.StartsWith("__", StringComparison.Ordinal))
                         {
                             // Betweeen __SRP_0 and __SRP_1 just sort as normal
                             num = String.Compare(name1, name2, StringComparison.OrdinalIgnoreCase);
                         }
-                        else if (name1.StartsWith("__", StringComparison.Ordinal))
+                        else if(name1.StartsWith("__", StringComparison.Ordinal))
                         {
                             // If only name1 is __XXX then this will be placed after name2
                             num = 1;
                         }
-                        else if (name2.StartsWith("__", StringComparison.Ordinal))
+                        else if(name2.StartsWith("__", StringComparison.Ordinal))
                         {
                             // If only name2 is __XXX then this will be placed after name1
                             num = -1;
@@ -215,7 +215,7 @@ namespace NPOI.POIFS.Properties
         /// </value>
         public override bool IsDirectory
         {
-            get{return true;}
+            get { return true; }
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace NPOI.POIFS.Properties
         /// </summary>
         public override void PreWrite()
         {
-            if (_children.Count > 0)
+            if(_children.Count > 0)
             {
                 Property[] children = new Property[this._children.Count];
 
@@ -232,33 +232,33 @@ namespace NPOI.POIFS.Properties
                 Array.Sort(children, new PropertyComparator());
                 int midpoint = children.Length / 2;
 
-                this.ChildProperty=children[ midpoint ].Index;
-                children[ 0 ].PreviousChild=null;
-                children[ 0 ].NextChild=null;
-                for (int j = 1; j < midpoint; j++)
+                this.ChildProperty=children[midpoint].Index;
+                children[0].PreviousChild=null;
+                children[0].NextChild=null;
+                for(int j = 1; j < midpoint; j++)
                 {
-                    children[ j ].PreviousChild=children[ j - 1 ];
-                    children[ j ].NextChild=null;
+                    children[j].PreviousChild=children[j - 1];
+                    children[j].NextChild=null;
                 }
-                if (midpoint != 0)
+                if(midpoint != 0)
                 {
-                    children[ midpoint ]
-                        .PreviousChild=children[ midpoint - 1 ];
+                    children[midpoint]
+                        .PreviousChild=children[midpoint - 1];
                 }
-                if (midpoint != (children.Length - 1))
+                if(midpoint != (children.Length - 1))
                 {
-                    children[ midpoint ].NextChild=children[ midpoint + 1 ];
-                    for (int j = midpoint + 1; j < children.Length - 1; j++)
+                    children[midpoint].NextChild=children[midpoint + 1];
+                    for(int j = midpoint + 1; j < children.Length - 1; j++)
                     {
-                        children[ j ].PreviousChild=null;
-                        children[ j ].NextChild=children[ j + 1 ];
+                        children[j].PreviousChild=null;
+                        children[j].NextChild=children[j + 1];
                     }
-                    children[ children.Length - 1 ].PreviousChild=null;
-                    children[ children.Length - 1 ].NextChild=null;
+                    children[children.Length - 1].PreviousChild=null;
+                    children[children.Length - 1].NextChild=null;
                 }
                 else
                 {
-                    children[ midpoint ].NextChild=null;
+                    children[midpoint].NextChild=null;
                 }
             }
         }
@@ -270,7 +270,7 @@ namespace NPOI.POIFS.Properties
         /// <value>Iterator of children; may refer to an empty collection</value>
         public IEnumerator<Property> Children
         {
-            get{return _children.GetEnumerator();}
+            get { return _children.GetEnumerator(); }
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace NPOI.POIFS.Properties
         {
             String name = property.Name;
 
-            if (_children_names.Contains(name))
+            if(_children_names.Contains(name))
             {
                 throw new IOException("Duplicate name \"" + name + "\"");
             }

@@ -19,13 +19,14 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record.Cont;
-    using System.Text;
-    using System.IO;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Text;
 
     /**
      * Tests that records size calculates correctly.
@@ -36,7 +37,7 @@ namespace TestCases.HSSF.Record
     public class TestUnicodeString
     {
         private static int MAX_DATA_SIZE = RecordInputStream.MAX_RECORD_DATA_SIZE;
-            /** a 4 character string requiring 16 bit encoding */
+        /** a 4 character string requiring 16 bit encoding */
         private static String STR_16_BIT = "A\u591A\u8A00\u8A9E";
 
         public TestUnicodeString()
@@ -53,12 +54,12 @@ namespace TestCases.HSSF.Record
 
             //Test a small string that is uncompressed
             s = MakeUnicodeString(STR_16_BIT);
-            s.OptionFlags = ((byte)0x01);
+            s.OptionFlags = ((byte) 0x01);
             ConfirmSize(11, s);
 
             //Test a compressed small string that has rich text formatting
             s.String = "Test";
-            s.OptionFlags = ((byte)0x8);
+            s.OptionFlags = ((byte) 0x8);
             UnicodeString.FormatRun r = new UnicodeString.FormatRun((short)0, (short)1);
             s.AddFormatRun(r);
             UnicodeString.FormatRun r2 = new UnicodeString.FormatRun((short)2, (short)2);
@@ -67,12 +68,12 @@ namespace TestCases.HSSF.Record
 
             //Test a uncompressed small string that has rich text formatting
             s.String = STR_16_BIT;
-            s.OptionFlags = ((byte)0x9);
+            s.OptionFlags = ((byte) 0x9);
             ConfirmSize(21, s);
 
             //Test a compressed small string that has rich text and extended text
             s.String = "Test";
-            s.OptionFlags = ((byte)0xC);
+            s.OptionFlags = ((byte) 0xC);
             ConfirmSize(17, s);
             // Extended phonetics data
             // Minimum size is 14
@@ -84,7 +85,7 @@ namespace TestCases.HSSF.Record
 
             //Test a uncompressed small string that has rich text and extended text
             s.String = STR_16_BIT;
-            s.OptionFlags = ((byte)0xD);
+            s.OptionFlags = ((byte) 0xD);
             ConfirmSize(39, s);
 
             s.ExtendedRst = (null);
@@ -100,8 +101,8 @@ namespace TestCases.HSSF.Record
             //Test an uncompressed string
             //Note that we can only ever Get to a maximim size of 8227 since an uncompressed
             //string is1 writing double bytes.
-            s = MakeUnicodeString((MAX_DATA_SIZE - 2 - 1) / 2,true);
-            s.OptionFlags = (byte)0x1;
+            s = MakeUnicodeString((MAX_DATA_SIZE - 2 - 1) / 2, true);
+            s.OptionFlags = (byte) 0x1;
             ConfirmSize(MAX_DATA_SIZE - 1, s);
         }
         [Test]
@@ -109,18 +110,18 @@ namespace TestCases.HSSF.Record
         {
             //Test a rich text string
             UnicodeString s = MakeUnicodeString(MAX_DATA_SIZE - 2 - 1 - 8 - 2);
-            s.AddFormatRun(new UnicodeString.FormatRun((short)1, (short)0));
-            s.AddFormatRun(new UnicodeString.FormatRun((short)2, (short)1));
-            s.OptionFlags=((byte)0x8);
+            s.AddFormatRun(new UnicodeString.FormatRun((short) 1, (short) 0));
+            s.AddFormatRun(new UnicodeString.FormatRun((short) 2, (short) 1));
+            s.OptionFlags=((byte) 0x8);
             ConfirmSize(MAX_DATA_SIZE, s);
 
             //Test an uncompressed rich text string
             //Note that we can only ever Get to a maximim size of 8227 since an uncompressed
             //string is1 writing double bytes.
-            s = MakeUnicodeString((MAX_DATA_SIZE - 2 - 1 - 8 - 2) / 2,true);
-            s.AddFormatRun(new UnicodeString.FormatRun((short)1, (short)0));
-            s.AddFormatRun(new UnicodeString.FormatRun((short)2, (short)1));
-            s.OptionFlags = ((byte)0x9);
+            s = MakeUnicodeString((MAX_DATA_SIZE - 2 - 1 - 8 - 2) / 2, true);
+            s.AddFormatRun(new UnicodeString.FormatRun((short) 1, (short) 0));
+            s.AddFormatRun(new UnicodeString.FormatRun((short) 2, (short) 1));
+            s.OptionFlags = ((byte) 0x9);
             ConfirmSize(MAX_DATA_SIZE - 1, s);
         }
         [Test]
@@ -196,8 +197,8 @@ namespace TestCases.HSSF.Record
             ClassicAssert.AreEqual(20, b.Length);
 
             // First 4 bytes from the outputstream
-            ClassicAssert.AreEqual((sbyte)-1, (sbyte)b[0]);
-            ClassicAssert.AreEqual((sbyte)-1, (sbyte)b[1]);
+            ClassicAssert.AreEqual((sbyte) -1, (sbyte) b[0]);
+            ClassicAssert.AreEqual((sbyte) -1, (sbyte) b[1]);
             ClassicAssert.AreEqual(14, b[2]);
             ClassicAssert.AreEqual(00, b[3]);
 
@@ -245,10 +246,10 @@ namespace TestCases.HSSF.Record
         public void TestExtRstFromData()
         {
             byte[] data = new byte[] {
-             01, 00, 0x0C, 00, 
-             00, 00, 0x37, 00, 
-             00, 00, 
-             00, 00, 00, 00, 
+             01, 00, 0x0C, 00,
+             00, 00, 0x37, 00,
+             00, 00,
+             00, 00, 00, 00,
              00, 00 // Cruft at the end, as found from real files
        };
             ClassicAssert.AreEqual(16, data.Length);
@@ -270,8 +271,8 @@ namespace TestCases.HSSF.Record
         public void TestCorruptExtRstDetection()
         {
             byte[] data = new byte[] {
-             0x79, 0x79, 0x11, 0x11, 
-             0x22, 0x22, 0x33, 0x33, 
+             0x79, 0x79, 0x11, 0x11,
+             0x22, 0x22, 0x33, 0x33,
        };
             ClassicAssert.AreEqual(8, data.Length);
 
@@ -335,7 +336,7 @@ namespace TestCases.HSSF.Record
         {
             ContinuableRecordOutput out1 = ContinuableRecordOutput.CreateForCountingOnly();
             out1.WriteContinue();
-            for (int i = amountUsedInCurrentRecord; i > 0; i--)
+            for(int i = amountUsedInCurrentRecord; i > 0; i--)
             {
                 out1.WriteByte(0);
             }
@@ -349,14 +350,14 @@ namespace TestCases.HSSF.Record
         private static UnicodeString MakeUnicodeString(String s)
         {
             UnicodeString st = new UnicodeString(s);
-            st.OptionFlags = ((byte)0);
+            st.OptionFlags = ((byte) 0);
             return st;
         }
 
         private static UnicodeString MakeUnicodeString(int numChars)
         {
             StringBuilder b = new StringBuilder(numChars);
-            for (int i = 0; i < numChars; i++)
+            for(int i = 0; i < numChars; i++)
             {
                 b.Append(i % 10);
             }
@@ -370,7 +371,7 @@ namespace TestCases.HSSF.Record
         {
             StringBuilder b = new StringBuilder(numChars);
             int charBase = is16Bit ? 0x8A00 : 'A';
-            for (int i = 0; i < numChars; i++)
+            for(int i = 0; i < numChars; i++)
             {
                 char ch = (char)((i % 16) + charBase);
                 b.Append(ch);

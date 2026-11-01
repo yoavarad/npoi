@@ -1,10 +1,10 @@
+using NPOI.HSSF.Record;
+using NPOI.HSSF.Record.Aggregates;
+using NPOI.HSSF.Record.Chart;
+using NPOI.SS.UserModel;
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
-using NPOI.HSSF.Record;
-using NPOI.HSSF.Record.Chart;
-using NPOI.HSSF.Record.Aggregates;
-using NPOI.Util;
-using NPOI.SS.UserModel;
 
 namespace NPOI.HSSF.Model
 {
@@ -36,71 +36,71 @@ namespace NPOI.HSSF.Model
             _plsRecords = new List<PLSAggregate>();
             records = new List<RecordBase>(128);
 
-            if (rs.PeekNextSid() != BOFRecord.sid)
+            if(rs.PeekNextSid() != BOFRecord.sid)
             {
                 throw new Exception("BOF record expected");
             }
             BOFRecord bof = (BOFRecord)rs.GetNext();
-            if (bof.Type != BOFRecordType.Chart)
+            if(bof.Type != BOFRecordType.Chart)
             {
                 throw new RuntimeException("Bad BOF record type");
             }
 
             records.Add(bof);
-            while (rs.HasNext())
+            while(rs.HasNext())
             {
                 int recSid = rs.PeekNextSid();
 
                 Record.Record rec = rs.GetNext();
-                if (recSid == EOFRecord.sid)
+                if(recSid == EOFRecord.sid)
                 {
                     records.Add(rec);
                     break;
                 }
 
-                if (recSid == ChartRecord.sid)
+                if(recSid == ChartRecord.sid)
                 {
 
                     continue;
                 }
 
-                if (recSid == ChartFRTInfoRecord.sid)
+                if(recSid == ChartFRTInfoRecord.sid)
                 {
-                    _chartFrtInfo = (ChartFRTInfoRecord)rec;
+                    _chartFrtInfo = (ChartFRTInfoRecord) rec;
                 }
-                else if (recSid == HeaderRecord.sid)
+                else if(recSid == HeaderRecord.sid)
                 {
-                    header = (HeaderRecord)rec;
+                    header = (HeaderRecord) rec;
                 }
-                else if (recSid == FooterRecord.sid)
+                else if(recSid == FooterRecord.sid)
                 {
-                    footer = (FooterRecord)rec;
+                    footer = (FooterRecord) rec;
                 }
-                else if (recSid == HCenterRecord.sid)
+                else if(recSid == HCenterRecord.sid)
                 {
-                    _hCenter = (HCenterRecord)rec;
+                    _hCenter = (HCenterRecord) rec;
                 }
-                else if (recSid == VCenterRecord.sid)
+                else if(recSid == VCenterRecord.sid)
                 {
-                    _vCenter = (VCenterRecord)rec;
+                    _vCenter = (VCenterRecord) rec;
                 }
-                else if (recSid == LeftMarginRecord.sid)
+                else if(recSid == LeftMarginRecord.sid)
                 {
-                    _leftMargin = (LeftMarginRecord)rec;
+                    _leftMargin = (LeftMarginRecord) rec;
                 }
-                else if (recSid == RightMarginRecord.sid)
+                else if(recSid == RightMarginRecord.sid)
                 {
-                    _rightMargin = (RightMarginRecord)rec;
+                    _rightMargin = (RightMarginRecord) rec;
                 }
-                else if (recSid == TopMarginRecord.sid)
+                else if(recSid == TopMarginRecord.sid)
                 {
-                    _topMargin = (TopMarginRecord)rec;
+                    _topMargin = (TopMarginRecord) rec;
                 }
-                else if (recSid == BottomMarginRecord.sid)
+                else if(recSid == BottomMarginRecord.sid)
                 {
-                    _bottomMargin = (BottomMarginRecord)rec;
+                    _bottomMargin = (BottomMarginRecord) rec;
                 }
-                else if (recSid == UnknownRecord.PLS_004D) // PLS
+                else if(recSid == UnknownRecord.PLS_004D) // PLS
                 {
                     PLSAggregate pls = new PLSAggregate(rs);
                     PLSAggregateVisitor rv = new PLSAggregateVisitor(records);
@@ -109,29 +109,29 @@ namespace NPOI.HSSF.Model
 
                     continue;
                 }
-                else if (recSid == PrintSetupRecord.sid)
+                else if(recSid == PrintSetupRecord.sid)
                 {
-                    printSetup = (PrintSetupRecord)rec;
+                    printSetup = (PrintSetupRecord) rec;
                 }
-                else if (recSid == PrintSizeRecord.sid)
+                else if(recSid == PrintSizeRecord.sid)
                 {
-                    _printSize = (PrintSizeRecord)rec;
+                    _printSize = (PrintSizeRecord) rec;
                 }
-                else if (recSid == HeaderFooterRecord.sid)
+                else if(recSid == HeaderFooterRecord.sid)
                 {
                     HeaderFooterRecord hf = (HeaderFooterRecord)rec;
-                    if (hf.IsCurrentSheet)
+                    if(hf.IsCurrentSheet)
                         _headerFooter = hf;
                     else
                         _sviewHeaderFooters.Add(hf);
                 }
-                else if (recSid == ProtectRecord.sid)
+                else if(recSid == ProtectRecord.sid)
                 {
-                    _protect = (ProtectRecord)rec;
+                    _protect = (ProtectRecord) rec;
                 }
                 records.Add(rec);
             }
-            
+
         }
 
         private sealed class PLSAggregateVisitor : RecordVisitor
@@ -145,7 +145,7 @@ namespace NPOI.HSSF.Model
 
             public void VisitRecord(NPOI.HSSF.Record.Record r)
             {
-                container.Add((RecordBase)r);
+                container.Add((RecordBase) r);
             }
 
             #endregion
@@ -153,7 +153,7 @@ namespace NPOI.HSSF.Model
 
         private static void CheckNotPresent(Record.Record rec)
         {
-            if (rec != null)
+            if(rec != null)
             {
                 throw new RecordFormatException("Duplicate PageSettingsBlock record (sid=0x"
                         + StringUtil.ToHexString(rec.Sid) + ")");
@@ -167,14 +167,18 @@ namespace NPOI.HSSF.Model
 
         private IMargin GetMarginRec(MarginType margin)
         {
-            switch (margin)
+            switch(margin)
             {
-                case MarginType.LeftMargin: return _leftMargin;
-                case MarginType.RightMargin: return _rightMargin;
-                case MarginType.TopMargin: return _topMargin;
-                case MarginType.BottomMargin: return _bottomMargin;
+                case MarginType.LeftMargin:
+                    return _leftMargin;
+                case MarginType.RightMargin:
+                    return _rightMargin;
+                case MarginType.TopMargin:
+                    return _topMargin;
+                case MarginType.BottomMargin:
+                    return _bottomMargin;
                 default:
-                    throw new InvalidOperationException("Unknown margin constant:  " + (short)margin);
+                    throw new InvalidOperationException("Unknown margin constant:  " + (short) margin);
             }
         }
 
@@ -187,13 +191,13 @@ namespace NPOI.HSSF.Model
         public double GetMargin(MarginType margin)
         {
             IMargin m = GetMarginRec(margin);
-            if (m != null)
+            if(m != null)
             {
                 return m.Margin;
             }
             else
             {
-                switch (margin)
+                switch(margin)
                 {
                     case MarginType.LeftMargin:
                         return .7;
@@ -216,9 +220,9 @@ namespace NPOI.HSSF.Model
         public void SetMargin(MarginType margin, double size)
         {
             IMargin m = GetMarginRec(margin);
-            if (m == null)
+            if(m == null)
             {
-                switch (margin)
+                switch(margin)
                 {
                     case MarginType.LeftMargin:
                         _leftMargin = new LeftMarginRecord();
@@ -257,12 +261,12 @@ namespace NPOI.HSSF.Model
             records.Add(new FooterRecord(string.Empty));
             records.Add(CreateHCenterRecord());
             records.Add(CreateVCenterRecord());
-            records.Add((LeftMarginRecord)CreateMarginRecord(MarginType.LeftMargin, 0.7));
-            records.Add((RightMarginRecord)CreateMarginRecord(MarginType.RightMargin, 0.7));
-            records.Add((TopMarginRecord)CreateMarginRecord(MarginType.TopMargin, 0.7));
-            records.Add((BottomMarginRecord)CreateMarginRecord(MarginType.BottomMargin, 0.7));
+            records.Add((LeftMarginRecord) CreateMarginRecord(MarginType.LeftMargin, 0.7));
+            records.Add((RightMarginRecord) CreateMarginRecord(MarginType.RightMargin, 0.7));
+            records.Add((TopMarginRecord) CreateMarginRecord(MarginType.TopMargin, 0.7));
+            records.Add((BottomMarginRecord) CreateMarginRecord(MarginType.BottomMargin, 0.7));
             //ignore pls
-            
+
             records.Add(CreatePrintSetupRecord());
             records.Add(CreatePrintSizeRecord());
             records.Add(CreateFontBasisRecord1());
@@ -425,26 +429,26 @@ namespace NPOI.HSSF.Model
         private static TickRecord CreateTickRecord1()
         {
             TickRecord r = new TickRecord();
-            r.MajorTickType = ((byte)2);
-            r.MinorTickType = ((byte)0);
-            r.LabelPosition = ((byte)3);
-            r.Background = ((byte)1);
+            r.MajorTickType = ((byte) 2);
+            r.MinorTickType = ((byte) 0);
+            r.LabelPosition = ((byte) 3);
+            r.Background = ((byte) 1);
             r.LabelColorRgb = (0);
-            r.Zero1 = ((short)0);
-            r.Zero2 = ((short)0);
-            r.Zero3 = ((short)45);
+            r.Zero1 = ((short) 0);
+            r.Zero2 = ((short) 0);
+            r.Zero3 = ((short) 45);
             r.IsAutorotate = (true);
             r.IsAutoTextBackground = (true);
-            r.Rotation = ((short)0);
+            r.Rotation = ((short) 0);
             r.IsAutorotate = (true);
-            r.TickColor = ((short)77);
+            r.TickColor = ((short) 77);
             return r;
         }
 
         private static TickRecord CreateTickRecord2()
         {
             TickRecord r = CreateTickRecord1();
-            r.Zero3 = ((short)0);
+            r.Zero3 = ((short) 0);
             return r;
         }
 
@@ -473,9 +477,9 @@ namespace NPOI.HSSF.Model
         private static CatSerRangeRecord CreateCatSerRangeRecord()
         {
             CatSerRangeRecord r = new CatSerRangeRecord();
-            r.CrossPoint = ((short)1);
-            r.LabelInterval = ((short)1);
-            r.MarkInterval = ((short)1);
+            r.CrossPoint = ((short) 1);
+            r.LabelInterval = ((short) 1);
+            r.MarkInterval = ((short) 1);
             r.IsBetween = (true);
             r.IsMaxCross = (false);
             r.IsReverse = (false);
@@ -504,8 +508,8 @@ namespace NPOI.HSSF.Model
         private static BarRecord CreateBarRecord()
         {
             BarRecord r = new BarRecord();
-            r.BarSpace = ((short)0);
-            r.CategorySpace = ((short)150);
+            r.BarSpace = ((short) 0);
+            r.CategorySpace = ((short) 150);
             r.IsHorizontal = (false);
             r.IsStacked = (false);
             r.IsDisplayAsPercentage = (false);
@@ -552,7 +556,7 @@ namespace NPOI.HSSF.Model
             r.FormatType = TextFormatInfo.FontScaleNotSet;
             return r;
         }
-        
+
         #endregion
 
         #region ATTACHEDLABEL
@@ -575,7 +579,7 @@ namespace NPOI.HSSF.Model
             r.LinkType = 0;
             r.ReferenceType = 1;
             r.IsCustomNumberFormat = (false);
-            r.IndexNumberFmtRecord = ((short)0);
+            r.IndexNumberFmtRecord = ((short) 0);
             r.FormulaOfLink = (null);
             return r;
         }
@@ -585,7 +589,7 @@ namespace NPOI.HSSF.Model
             TextRecord r = new TextRecord();
             r.HorizontalAlignment = (TextRecord.HORIZONTAL_ALIGNMENT_CENTER);
             r.VerticalAlignment = (TextRecord.VERTICAL_ALIGNMENT_CENTER);
-            r.DisplayMode = ((short)1);
+            r.DisplayMode = ((short) 1);
             r.RgbColor = (0x00000000);
             r.X = (-37);
             r.Y = (-60);
@@ -604,9 +608,9 @@ namespace NPOI.HSSF.Model
             r.ShowValueAsPercentage = (false);
             r.ShowBubbleSizes = (false);
             r.ShowLabel = (false);
-            r.IndexOfColorValue = ((short)77);
-            r.DataLabelPlacement = ((short)0);
-            r.TextRotation = ((short)0);
+            r.IndexOfColorValue = ((short) 77);
+            r.DataLabelPlacement = ((short) 0);
+            r.TextRotation = ((short) 0);
             return r;
         }
 
@@ -621,11 +625,11 @@ namespace NPOI.HSSF.Model
         private static FontIndexRecord CreateFontXRecord(int index)
         {
             FontIndexRecord r = new FontIndexRecord();
-            r.FontIndex = ((short)index);
+            r.FontIndex = ((short) index);
             return r;
         }
         #endregion
-        
+
         private static ShtPropsRecord CreateShtPropsRecord()
         {
             ShtPropsRecord r = new ShtPropsRecord();
@@ -639,7 +643,7 @@ namespace NPOI.HSSF.Model
         //*(LegendException [Begin ATTACHEDLABEL [TEXTPROPS] End]) End
         private static void CreateRuleSERIESFORMAT(List<Record.Record> records)
         {
-            
+
             //Series
             records.Add(CreateSeriesRecord());
             records.Add(new BeginRecord());
@@ -658,19 +662,19 @@ namespace NPOI.HSSF.Model
             SeriesRecord r = new SeriesRecord();
             r.CategoryDataType = (SeriesRecord.CATEGORY_DATA_TYPE_NUMERIC);
             r.ValuesDataType = (SeriesRecord.VALUES_DATA_TYPE_NUMERIC);
-            r.NumCategories = ((short)32);
-            r.NumValues = ((short)31);
+            r.NumCategories = ((short) 32);
+            r.NumValues = ((short) 31);
             r.BubbleSeriesType = (SeriesRecord.BUBBLE_SERIES_TYPE_NUMERIC);
-            r.NumBubbleValues = ((short)0);
+            r.NumBubbleValues = ((short) 0);
             return r;
         }
 
         private static DataFormatRecord CreateDataFormatRecord()
         {
             DataFormatRecord r = new DataFormatRecord();
-            r.PointNumber = ((short)-1);
-            r.SeriesIndex = ((short)0);
-            r.SeriesNumber = ((short)0);
+            r.PointNumber = ((short) -1);
+            r.SeriesIndex = ((short) 0);
+            r.SeriesNumber = ((short) 0);
             r.UseExcel4Colors = (false);
             return r;
         }
@@ -696,8 +700,8 @@ namespace NPOI.HSSF.Model
         }
         #endregion
         #endregion
-        
-        
+
+
         private static DrawingRecord CreateDrawingRecord()
         {
             //throw new NotImplementedException();
@@ -720,7 +724,7 @@ namespace NPOI.HSSF.Model
         private static IMargin CreateMarginRecord(MarginType margin, double size)
         {
             IMargin m;
-            switch (margin)
+            switch(margin)
             {
                 case MarginType.LeftMargin:
                     m = new LeftMarginRecord();
@@ -745,26 +749,26 @@ namespace NPOI.HSSF.Model
         {
             PrintSetupRecord retval = new PrintSetupRecord();
 
-            retval.PaperSize = ((short)0);
-            retval.Scale = ((short)18);
-            retval.PageStart = ((short)1);
-            retval.FitWidth = ((short)1);
-            retval.FitHeight = ((short)1);
-            retval.Options = ((short)4);
-            retval.HResolution = ((short)0);
-            retval.VResolution = ((short)0);
+            retval.PaperSize = ((short) 0);
+            retval.Scale = ((short) 18);
+            retval.PageStart = ((short) 1);
+            retval.FitWidth = ((short) 1);
+            retval.FitHeight = ((short) 1);
+            retval.Options = ((short) 4);
+            retval.HResolution = ((short) 0);
+            retval.VResolution = ((short) 0);
             retval.HeaderMargin = (0.3);
             retval.FooterMargin = (0.3);
-            retval.Copies = ((short)1);
+            retval.Copies = ((short) 1);
             return retval;
         }
         private static BOFRecord CreateBOFRecord()
         {
             BOFRecord retval = new BOFRecord();
-            retval.Version = ((short)600);
+            retval.Version = ((short) 600);
             retval.Type = BOFRecordType.Chart;
-            retval.Build = ((short)0x1CFE);
-            retval.BuildYear = ((short)1997);
+            retval.Build = ((short) 0x1CFE);
+            retval.BuildYear = ((short) 1997);
             retval.HistoryBitMask = (0x40C9);
             retval.RequiredVersion = (106);
             return retval;
@@ -800,15 +804,15 @@ namespace NPOI.HSSF.Model
             return r;
         }
 
-        
+
         private static FbiRecord CreateFontBasisRecord1()
         {
             FbiRecord r = new FbiRecord();
-            r.XBasis = ((short)9720);
-            r.YBasis = ((short)4350);
-            r.HeightBasis = ((short)240);
-            r.Scale = ((short)0);
-            r.IndexToFontTable = ((short)24);
+            r.XBasis = ((short) 9720);
+            r.YBasis = ((short) 4350);
+            r.HeightBasis = ((short) 240);
+            r.Scale = ((short) 0);
+            r.IndexToFontTable = ((short) 24);
             return r;
         }
 
@@ -816,7 +820,7 @@ namespace NPOI.HSSF.Model
         {
             FbiRecord r = CreateFontBasisRecord1();
             r.Scale = 1;
-            r.IndexToFontTable = ((short)25);
+            r.IndexToFontTable = ((short) 25);
             return r;
         }
 
@@ -871,11 +875,11 @@ namespace NPOI.HSSF.Model
             AreaFormatRecord r = new AreaFormatRecord();
             r.ForegroundColor = (16777215);	 // RGB Color
             r.BackgroundColor = (0);			// RGB Color
-            r.Pattern = ((short)1);			 // TODO: Add Pattern constants to record
+            r.Pattern = ((short) 1);			 // TODO: Add Pattern constants to record
             r.IsAutomatic = (true);
             r.IsInvert = (false);
-            r.ForecolorIndex = ((short)78);
-            r.BackcolorIndex = ((short)77);
+            r.ForecolorIndex = ((short) 78);
+            r.BackcolorIndex = ((short) 77);
             return r;
         }
 
@@ -884,11 +888,11 @@ namespace NPOI.HSSF.Model
             AreaFormatRecord r = new AreaFormatRecord();
             r.ForegroundColor = (0x00c0c0c0);
             r.BackgroundColor = (0x00000000);
-            r.Pattern = ((short)1);
+            r.Pattern = ((short) 1);
             r.IsAutomatic = (false);
             r.IsInvert = (false);
-            r.ForecolorIndex = ((short)22);
-            r.BackcolorIndex = ((short)79);
+            r.ForecolorIndex = ((short) 22);
+            r.BackcolorIndex = ((short) 79);
             return r;
         }
 
@@ -897,10 +901,10 @@ namespace NPOI.HSSF.Model
             LineFormatRecord r = new LineFormatRecord();
             r.LineColor = (0);
             r.LinePattern = (LineFormatRecord.LINE_PATTERN_SOLID);
-            r.Weight = ((short)-1);
+            r.Weight = ((short) -1);
             r.IsAuto = (true);
             r.IsDrawTicks = (drawTicks);
-            r.ColourPaletteIndex = ((short)77);  // what colour is this?
+            r.ColourPaletteIndex = ((short) 77);  // what colour is this?
             return r;
         }
 
@@ -909,11 +913,11 @@ namespace NPOI.HSSF.Model
             LineFormatRecord r = new LineFormatRecord();
             r.LineColor = (0x00808080);
             r.LinePattern = LineFormatRecord.LINE_PATTERN_SOLID;
-            r.Weight = ((short)0);
+            r.Weight = ((short) 0);
             r.IsAuto = (false);
             r.IsDrawTicks = (false);
             r.IsUnknown = (false);
-            r.ColourPaletteIndex = ((short)23);
+            r.ColourPaletteIndex = ((short) 23);
             return r;
         }
         #endregion

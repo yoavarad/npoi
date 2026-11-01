@@ -18,9 +18,10 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.Formula.Functions;
 
     /**
@@ -45,15 +46,15 @@ namespace TestCases.SS.Formula.Eval
             short colNum = (short)5;
             AreaPtg areaPtg = new AreaPtg(firstRow, lastRow, colNum, colNum, false, false, false, false);
             ValueEval[] values = {
-				new NumberEval(27),
-				new NumberEval(29),
-				new NumberEval(35),	// value in row 10
+                new NumberEval(27),
+                new NumberEval(29),
+                new NumberEval(35),	// value in row 10
 				new NumberEval(37),
-				new NumberEval(38),
-		};
+                new NumberEval(38),
+        };
             ValueEval[] args = {
-			EvalFactory.CreateAreaEval(areaPtg, values),
-		};
+            EvalFactory.CreateAreaEval(areaPtg, values),
+        };
 
             double result = NumericFunctionInvoker.Invoke(EvalInstances.UnaryPlus, args, 10, (short)20);
 

@@ -17,10 +17,11 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link RecordInputStream}
@@ -67,9 +68,9 @@ namespace TestCases.HSSF.Record
             {
                 actual = in1.ReadUnicodeLEString(18);
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if ("compressByte in continue records must be 1 while Reading unicode LE string".Equals(e.Message))
+                if("compressByte in continue records must be 1 while Reading unicode LE string".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 45866");
                 }

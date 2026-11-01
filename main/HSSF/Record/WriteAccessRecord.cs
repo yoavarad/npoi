@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -38,11 +38,11 @@ namespace NPOI.HSSF.Record
     {
         public const short sid = 0x5c;
         private String field_1_username=string.Empty;
-        
-	    private const byte PAD_CHAR = (byte) ' ';
-	    private const int DATA_SIZE = 112;
-        	/** this record is always padded to a constant length */
-	    private static byte[] PADDING = new byte[DATA_SIZE];
+
+        private const byte PAD_CHAR = (byte) ' ';
+        private const int DATA_SIZE = 112;
+        /** this record is always padded to a constant length */
+        private static byte[] PADDING = new byte[DATA_SIZE];
 
         static WriteAccessRecord()
         {
@@ -60,7 +60,7 @@ namespace NPOI.HSSF.Record
 
         public WriteAccessRecord(RecordInputStream in1)
         {
-            if (in1.Remaining > DATA_SIZE)
+            if(in1.Remaining > DATA_SIZE)
             {
                 throw new RecordFormatException("Expected data size (" + DATA_SIZE + ") but got ("
                         + in1.Remaining + ")");
@@ -70,7 +70,7 @@ namespace NPOI.HSSF.Record
 
             int nChars = in1.ReadUShort();
             int is16BitFlag = in1.ReadUByte();
-            if (nChars > DATA_SIZE || (is16BitFlag & 0xFE) != 0)
+            if(nChars > DATA_SIZE || (is16BitFlag & 0xFE) != 0)
             {
                 // String header looks wrong (probably missing)
                 // OOO doc says this is optional anyway.
@@ -80,9 +80,9 @@ namespace NPOI.HSSF.Record
                 LittleEndian.PutByte(data, 2, is16BitFlag);
                 in1.ReadFully(data, 3, data.Length - 3);
                 char[] data1=new char[data.Length];
-                for (int i = 0; i < data.Length; i++)
+                for(int i = 0; i < data.Length; i++)
                 {
-                    data1[i] = (char)data[i];
+                    data1[i] = (char) data[i];
                 }
                 String rawValue = new String(data1);
                 Username = rawValue.Trim();
@@ -90,7 +90,7 @@ namespace NPOI.HSSF.Record
             }
 
             String rawText;
-            if ((is16BitFlag & 0x01) == 0x00)
+            if((is16BitFlag & 0x01) == 0x00)
             {
                 rawText = StringUtil.ReadCompressedUnicode(in1, nChars);
             }
@@ -102,7 +102,7 @@ namespace NPOI.HSSF.Record
 
             // consume padding
             int padSize = in1.Remaining;
-            while (padSize > 0)
+            while(padSize > 0)
             {
                 // in some cases this seems to be garbage (non spaces)
                 in1.ReadUByte();
@@ -125,11 +125,12 @@ namespace NPOI.HSSF.Record
             {
                 return field_1_username;
             }
-            set {
+            set
+            {
                 bool is16bit = StringUtil.HasMultibyte(value);
                 int encodedByteCount = 3 + Username.Length * (is16bit ? 2 : 1);
                 int paddingSize = DATA_SIZE - encodedByteCount;
-                if (paddingSize < 0)
+                if(paddingSize < 0)
                 {
                     throw new ArgumentException("Name is too long: " + value);
                 }
@@ -155,7 +156,7 @@ namespace NPOI.HSSF.Record
 
             out1.WriteShort(username.Length);
             out1.WriteByte(is16bit ? 0x01 : 0x00);
-            if (is16bit)
+            if(is16bit)
             {
                 StringUtil.PutUnicodeLE(username, out1);
             }

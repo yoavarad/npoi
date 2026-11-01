@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats.Presentation;
+using System;
+using System.Collections.Generic;
 
 namespace NPOI.XSLF.UserModel
 {

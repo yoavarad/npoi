@@ -20,10 +20,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the DataFormatRecord
@@ -52,7 +53,7 @@ namespace TestCases.HSSF.Record.Chart
         {
 
             DataFormatRecord record = new DataFormatRecord(TestcaseRecordInputStream.Create((short)0x1006, data));
-            ClassicAssert.AreEqual(record.PointNumber, unchecked((short)0xFFFF));
+            ClassicAssert.AreEqual(record.PointNumber, unchecked((short) 0xFFFF));
             ClassicAssert.AreEqual(0, record.SeriesIndex);
             ClassicAssert.AreEqual(0, record.SeriesNumber);
             ClassicAssert.AreEqual(0, record.FormatFlags);
@@ -65,16 +66,16 @@ namespace TestCases.HSSF.Record.Chart
         public void TestStore()
         {
             DataFormatRecord record = new DataFormatRecord();
-            record.PointNumber = (unchecked((short)0xFFFF));
-            record.SeriesIndex = ((short)0);
-            record.SeriesNumber = ((short)0);
-            record.FormatFlags = ((short)0);
+            record.PointNumber = (unchecked((short) 0xFFFF));
+            record.SeriesIndex = ((short) 0);
+            record.SeriesNumber = ((short) 0);
+            record.FormatFlags = ((short) 0);
             record.UseExcel4Colors = (false);
 
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

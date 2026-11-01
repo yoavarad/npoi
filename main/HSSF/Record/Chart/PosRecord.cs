@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -16,8 +16,8 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Text;
 using NPOI.Util;
+using System.Text;
 
 namespace NPOI.HSSF.Record.Chart
 {
@@ -25,7 +25,7 @@ namespace NPOI.HSSF.Record.Chart
     /// pecifies positioning mode for position information saved in a Pos record.
     /// </summary>
     public enum PositionMode : short
-    { 
+    {
         /// <summary>
         /// Relative position to the chart, in points.
         /// </summary>
@@ -54,8 +54,8 @@ namespace NPOI.HSSF.Record.Chart
     {
 
         public PosRecord()
-        { 
-        
+        {
+
         }
 
         public const short sid = 0x104F;
@@ -136,13 +136,13 @@ namespace NPOI.HSSF.Record.Chart
         /// </summary>
         public PositionMode MDTopLt
         {
-            get 
+            get
             {
-                return (PositionMode)mdTopLt;
+                return (PositionMode) mdTopLt;
             }
-            set 
+            set
             {
-                mdTopLt = (short)value;
+                mdTopLt = (short) value;
             }
         }
         /// <summary>
@@ -152,10 +152,11 @@ namespace NPOI.HSSF.Record.Chart
         {
             get
             {
-                return (PositionMode)mdBotRt;
+                return (PositionMode) mdBotRt;
             }
-            set {
-                mdBotRt = (short)value;
+            set
+            {
+                mdBotRt = (short) value;
             }
         }
         /// <summary>
@@ -172,7 +173,7 @@ namespace NPOI.HSSF.Record.Chart
         public short X2
         {
             get { return x2; }
-            set { x2 = value; }            
+            set { x2 = value; }
         }
         /// <summary>
         /// specifies a position. The meaning is specified in the earlier table showing the valid combinations mdTopLt and mdBotRt by type.

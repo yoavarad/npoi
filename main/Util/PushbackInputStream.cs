@@ -31,18 +31,18 @@ namespace NPOI.Util
     using System;
     using System.IO;
 
-	public class PushbackInputStream : FilterInputStream
+    public class PushbackInputStream : FilterInputStream
     {
         protected byte[] buf;
         private int bufint = -1;
         protected int pos;
-        public PushbackInputStream(InputStream input): this(input, 1)
-		{
-		}
+        public PushbackInputStream(InputStream input) : this(input, 1)
+        {
+        }
         public PushbackInputStream(InputStream input, int size)
             : base(input)
         {
-            if (size <= 0)
+            if(size <= 0)
             {
                 throw new ArgumentException("size <= 0");
             }
@@ -69,21 +69,21 @@ namespace NPOI.Util
         /// Methods were called after the stream was closed.
         /// </exception>
 		public override int ReadByte()
-		{
-			if (bufint != -1)
-			{
-				int tmp = bufint;
-				bufint = -1;
-				return tmp;
-			}
+        {
+            if(bufint != -1)
+            {
+                int tmp = bufint;
+                bufint = -1;
+                return tmp;
+            }
 
-			return input.ReadByte();
-		}
+            return input.ReadByte();
+        }
 
         public override int Read()
         {
             ensureOpen();
-            if (pos < buf.Length)
+            if(pos < buf.Length)
             {
                 return buf[pos++] & 0xff;
             }
@@ -92,23 +92,23 @@ namespace NPOI.Util
         public override int Read(byte[] b, int off, int len)
         {
             ensureOpen();
-            if (b == null)
+            if(b == null)
             {
                 throw new ArgumentNullException();
             }
-            else if (off < 0 || len < 0 || len > b.Length - off)
+            else if(off < 0 || len < 0 || len > b.Length - off)
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (len == 0)
+            else if(len == 0)
             {
                 return 0;
             }
 
             int avail = buf.Length - pos;
-            if (avail > 0)
+            if(avail > 0)
             {
-                if (len < avail)
+                if(len < avail)
                 {
                     avail = len;
                 }
@@ -117,10 +117,10 @@ namespace NPOI.Util
                 off += avail;
                 len -= avail;
             }
-            if (len > 0)
+            if(len > 0)
             {
                 len = base.Read(b, off, len);
-                if (len == -1)
+                if(len == -1)
                 {
                     return avail == 0 ? -1 : avail;
                 }
@@ -155,31 +155,31 @@ namespace NPOI.Util
         /// <exception cref="System.ObjectDisposedException">
         /// Methods were called after the stream was closed.
         /// </exception>
-  //      public override int Read(byte[] buffer, int offset, int count)
-		//{
-		//	if (bufint != -1 && count > 0)
-		//	{
-		//		// TODO Can this case be made more efficient?
-		//		buffer[offset] = (byte) bufint;
-		//		bufint = -1;
-		//		return 1;
-		//	}
+        //      public override int Read(byte[] buffer, int offset, int count)
+        //{
+        //	if (bufint != -1 && count > 0)
+        //	{
+        //		// TODO Can this case be made more efficient?
+        //		buffer[offset] = (byte) bufint;
+        //		bufint = -1;
+        //		return 1;
+        //	}
 
-		//	return input.Read(buffer, offset, count);
-		//}
+        //	return input.Read(buffer, offset, count);
+        //}
 
         /// <summary>
         /// Unreads the specified b.
         /// </summary>
         /// <param name="b">The b.</param>
-		public virtual void Unread(int b)
-		{
+        public virtual void Unread(int b)
+        {
             ensureOpen();
-            if (pos == 0)
+            if(pos == 0)
             {
                 throw new IOException("Push back buffer is full");
             }
-            buf[--pos] = (byte)b;
+            buf[--pos] = (byte) b;
         }
         public void Unread(byte[] b)
         {
@@ -207,7 +207,7 @@ namespace NPOI.Util
         }
         private void ensureOpen()
         {
-            if (input == null)
+            if(input == null)
                 throw new IOException("Stream closed");
         }
         /// <summary>
@@ -220,7 +220,7 @@ namespace NPOI.Util
         public void Unread(byte[] b, int off, int len)
         {
             ensureOpen();
-            if (len > pos)
+            if(len > pos)
             {
                 throw new IOException("Push back buffer is full");
             }
@@ -231,22 +231,22 @@ namespace NPOI.Util
         public override long Skip(long n)
         {
             ensureOpen();
-            if (n <= 0)
+            if(n <= 0)
             {
                 return 0;
             }
 
             long pskip = buf.Length - pos;
-            if (pskip > 0)
+            if(pskip > 0)
             {
-                if (n < pskip)
+                if(n < pskip)
                 {
                     pskip = n;
                 }
-                pos += (int)pskip;
+                pos += (int) pskip;
                 n -= pskip;
             }
-            if (n > 0)
+            if(n > 0)
             {
                 pskip += base.Skip(n);
             }
@@ -319,7 +319,7 @@ namespace NPOI.Util
         /// </summary>
         public override void Close()
         {
-            if (input == null)
+            if(input == null)
                 return;
             input.Close();
             input = null;
@@ -418,5 +418,5 @@ namespace NPOI.Util
         {
             input.WriteByte(value);
         }
-	}
+    }
 }

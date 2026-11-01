@@ -27,24 +27,24 @@ namespace NPOI.SS.Formula.Functions
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0)
         {
             ValueEval arg = arg0;
-            if (arg is RefEval re)
+            if(arg is RefEval re)
             {
                 // always use the first sheet
                 arg = re.GetInnerValueEval(re.FirstSheetIndex);
             }
-            else if (arg is AreaEval eval)
+            else if(arg is AreaEval eval)
             {
                 // when the arg is an area, choose the top left cell
                 arg = eval.GetRelativeValue(0, 0);
             }
 
-            if (arg is StringEval)
+            if(arg is StringEval)
             {
                 // Text values are returned unmodified
                 return arg;
             }
 
-            if (arg is ErrorEval)
+            if(arg is ErrorEval)
             {
                 // Error values also returned unmodified
                 return arg;

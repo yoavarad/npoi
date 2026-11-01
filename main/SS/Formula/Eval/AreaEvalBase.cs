@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.Eval
 {
-    using System;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
+    using System;
 
 
     /**
@@ -46,7 +46,7 @@ namespace NPOI.SS.Formula.Eval
             _nColumns = _lastColumn - _firstColumn + 1;
             _nRows = _lastRow - _firstRow + 1;
 
-            if (sheets != null)
+            if(sheets != null)
             {
                 _firstSheet = sheets.FirstSheetIndex;
                 _lastSheet = sheets.LastSheetIndex;
@@ -64,17 +64,17 @@ namespace NPOI.SS.Formula.Eval
         protected AreaEvalBase(AreaI ptg)
             : this(ptg, null)
         {
-            
+
         }
         protected AreaEvalBase(AreaI ptg, ISheetRange sheets)
             : this(sheets, ptg.FirstRow, ptg.FirstColumn, ptg.LastRow, ptg.LastColumn)
         {
-            
+
         }
 
         public int FirstColumn
         {
-            get{return _firstColumn;}
+            get { return _firstColumn; }
         }
 
         public int FirstRow
@@ -135,7 +135,7 @@ namespace NPOI.SS.Formula.Eval
 
         public bool IsColumn
         {
-            get{return _firstColumn == _lastColumn;}
+            get { return _firstColumn == _lastColumn; }
         }
 
         public bool IsRow
@@ -147,12 +147,12 @@ namespace NPOI.SS.Formula.Eval
             int rowOffsetIx = row - _firstRow;
             int colOffsetIx = col - _firstColumn;
 
-            if (rowOffsetIx < 0 || rowOffsetIx >= _nRows)
+            if(rowOffsetIx < 0 || rowOffsetIx >= _nRows)
             {
                 throw new ArgumentException("Specified row index (" + row
                         + ") is outside the allowed range (" + _firstRow + ".." + _lastRow + ")");
             }
-            if (colOffsetIx < 0 || colOffsetIx >= _nColumns)
+            if(colOffsetIx < 0 || colOffsetIx >= _nColumns)
             {
                 throw new ArgumentException("Specified column index (" + col
                         + ") is outside the allowed range (" + _firstColumn + ".." + col + ")");

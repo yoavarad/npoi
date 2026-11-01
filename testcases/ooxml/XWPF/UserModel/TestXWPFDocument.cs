@@ -24,7 +24,8 @@ namespace TestCases.XWPF.UserModel
     using NPOI.XWPF;
     using NPOI.XWPF.Extractor;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -156,9 +157,9 @@ namespace TestCases.XWPF.UserModel
 
             //Combine all runs of all paragraphs
             StringBuilder builder = new StringBuilder();
-            foreach (var paragraph in outputDocument.Paragraphs)
+            foreach(var paragraph in outputDocument.Paragraphs)
             {
-                foreach (var run in  paragraph.Runs)
+                foreach(var run in paragraph.Runs)
                 {
                     builder.Append(run.GetText(0));
                 }
@@ -173,7 +174,7 @@ namespace TestCases.XWPF.UserModel
 
             var dataRow = table.Rows[1];
             builder.Clear();
-            foreach (var tableCellParagraph in dataRow.GetCell(0).Paragraphs)
+            foreach(var tableCellParagraph in dataRow.GetCell(0).Paragraphs)
             {
                 foreach(var run in tableCellParagraph.Runs)
                 {
@@ -207,7 +208,7 @@ namespace TestCases.XWPF.UserModel
             //This is calling FindAndReplaceTextInParagraph for each paragraph in document
             foreach(var replacer in replacers)
                 doc.FindAndReplaceText(replacer.Key, replacer.Value);
-            
+
             //Save Word Document
             XWPFDocument outputDocument = XWPFTestDataSamples.WriteOutAndReadBack(doc);
 
@@ -220,7 +221,7 @@ namespace TestCases.XWPF.UserModel
             ClassicAssert.AreEqual(initialText, savedText);
 
             //Check
-            ClassicAssert.AreEqual("Some initial text на разный манер (inserted) and so on:Asking1: Question1Asking2: Question2Result on:1. Say that На русском с пробелами with a very long sentence and one more replacer in the end for (русский язык) sure 5Triple replace with TwiceTwice и ещё одним Twice повторением.Last text", 
+            ClassicAssert.AreEqual("Some initial text на разный манер (inserted) and so on:Asking1: Question1Asking2: Question2Result on:1. Say that На русском с пробелами with a very long sentence and one more replacer in the end for (русский язык) sure 5Triple replace with TwiceTwice и ещё одним Twice повторением.Last text",
                 savedText);
         }
 

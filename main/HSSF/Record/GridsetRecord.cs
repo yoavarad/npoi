@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        GridSet Record.
@@ -69,7 +69,7 @@ namespace NPOI.HSSF.Record
             }
             set
             {
-                if (value == true)
+                if(value == true)
                 {
                     field_1_gridset_flag = 1;
                 }

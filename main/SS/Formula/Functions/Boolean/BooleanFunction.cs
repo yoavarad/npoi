@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
+    using System;
     using System.Globalization;
 
     /**
@@ -44,24 +44,24 @@ namespace NPOI.SS.Formula.Functions
 
             bool result = InitialResultValue;
             bool atLeastOneNonBlank = false;
-           
+
             /*
              * Note: no short-circuit bool loop exit because any ErrorEvals will override the result
              */
-            foreach (ValueEval arg in args)
+            foreach(ValueEval arg in args)
             {
                 bool? tempVe;
-                if (arg is TwoDEval ae)
+                if(arg is TwoDEval ae)
                 {
                     int height = ae.Height;
                     int width = ae.Width;
-                    for (int rrIx = 0; rrIx < height; rrIx++)
+                    for(int rrIx = 0; rrIx < height; rrIx++)
                     {
-                        for (int rcIx = 0; rcIx < width; rcIx++)
+                        for(int rcIx = 0; rcIx < width; rcIx++)
                         {
                             ValueEval ve = ae.GetValue(rrIx, rcIx);
                             tempVe = OperandResolver.CoerceValueToBoolean(ve, true);
-                            if (tempVe != null)
+                            if(tempVe != null)
                             {
                                 result = PartialEvaluate(result, Convert.ToBoolean(tempVe, CultureInfo.InvariantCulture));
                                 atLeastOneNonBlank = true;
@@ -71,15 +71,15 @@ namespace NPOI.SS.Formula.Functions
                     continue;
                 }
 
-                if (arg is RefEval re)
+                if(arg is RefEval re)
                 {
                     int firstSheetIndex = re.FirstSheetIndex;
                     int lastSheetIndex = re.LastSheetIndex;
-                    for (int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
+                    for(int sIx = firstSheetIndex; sIx <= lastSheetIndex; sIx++)
                     {
                         ValueEval ve = re.GetInnerValueEval(sIx);
                         tempVe = OperandResolver.CoerceValueToBoolean(ve, true);
-                        if (tempVe != null)
+                        if(tempVe != null)
                         {
                             result = PartialEvaluate(result, tempVe.Value);
                             atLeastOneNonBlank = true;
@@ -88,7 +88,7 @@ namespace NPOI.SS.Formula.Functions
                     continue;
                 }
 
-                if (arg == MissingArgEval.instance)
+                if(arg == MissingArgEval.instance)
                 {
                     tempVe = false; // missing parameters are treated as FALSE
                 }
@@ -98,14 +98,14 @@ namespace NPOI.SS.Formula.Functions
                 }
 
 
-                if (tempVe != null)
+                if(tempVe != null)
                 {
                     result = PartialEvaluate(result, Convert.ToBoolean(tempVe, CultureInfo.InvariantCulture));
                     atLeastOneNonBlank = true;
                 }
             }
 
-            if (!atLeastOneNonBlank)
+            if(!atLeastOneNonBlank)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
@@ -114,7 +114,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRow, int srcCol)
         {
-            if (args.Length < 1)
+            if(args.Length < 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -123,20 +123,20 @@ namespace NPOI.SS.Formula.Functions
             {
                 boolResult = Calculate(args);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
             return BoolEval.ValueOf(boolResult);
         }
-        
+
         public static Function FALSE = new FALSEFunction();
 
         public static Function TRUE = new TRUEFunction();
 
         public static Function NOT = new NOTFunction();
 
-        public ValueEval EvaluateArray(ValueEval[] args, int srcRowIndex, int srcColumnIndex) 
+        public ValueEval EvaluateArray(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
             return Evaluate(args, srcRowIndex, srcColumnIndex);
         }
@@ -177,19 +177,22 @@ namespace NPOI.SS.Formula.Functions
 
         private static ValueEval EvaluateNot(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            
-            Func<ValueEval, ValueEval> notInner = (va) => {
+
+            Func<ValueEval, ValueEval> notInner = (va) =>
+            {
                 try
                 {
                     ValueEval ve = OperandResolver.GetSingleValue(va, srcRowIndex, srcColumnIndex);
                     bool? b = OperandResolver.CoerceValueToBoolean(ve, false);
                     bool boolArgVal = b.HasValue && b.Value;
                     return BoolEval.ValueOf(!boolArgVal);
-                } catch (EvaluationException e) {
+                }
+                catch (EvaluationException e)
+                {
                     return e.GetErrorEval();
                 }
             };

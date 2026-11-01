@@ -51,7 +51,7 @@ namespace NPOI
             PackageRelationship rel = GetPackageRelationship(parent, part);
             POIXMLRelation descriptor = GetDescriptor(rel.RelationshipType);
 
-            if (descriptor == null || descriptor.RelationClass == null)
+            if(descriptor == null || descriptor.RelationClass == null)
             {
                 LOGGER.Log(POILogger.DEBUG, "using default POIXMLDocumentPart for " + rel.RelationshipType);
                 return new POIXMLDocumentPart(parent, part);
@@ -63,12 +63,12 @@ namespace NPOI
                 {
                     return CreateDocumentPart(cls, PARENT_PART, new Object[] { parent, part });
                 }
-                catch (MissingMethodException)
+                catch(MissingMethodException)
                 {
                     return CreateDocumentPart(cls, ORPHAN_PART, new Object[] { part });
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new POIXMLException(e);
             }
@@ -120,7 +120,7 @@ namespace NPOI
             {
                 return CreateDocumentPart(cls, null, null);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new POIXMLException(e);
             }
@@ -136,16 +136,16 @@ namespace NPOI
             try
             {
                 String partName = part.PartName.Name;
-                foreach (PackageRelationship pr in parent.GetPackagePart().Relationships)
+                foreach(PackageRelationship pr in parent.GetPackagePart().Relationships)
                 {
                     String packName = pr.TargetUri.OriginalString;// toASCIIString();
-                    if (packName.Equals(partName, StringComparison.CurrentCultureIgnoreCase))
+                    if(packName.Equals(partName, StringComparison.CurrentCultureIgnoreCase))
                     {
                         return pr;
                     }
                 }
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 throw new POIXMLException("error while determining package relations", e);
             }
@@ -156,7 +156,3 @@ namespace NPOI
 
 
 }
-
-
-
-

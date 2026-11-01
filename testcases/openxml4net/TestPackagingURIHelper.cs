@@ -16,7 +16,8 @@
 ==================================================================== */
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXmlFormats;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -35,7 +36,7 @@ namespace TestCases.OpenXml4Net.OPC
         public void TestRelativizeUri()
         {
             CultureInfo orig = Thread.CurrentThread.CurrentCulture;
-            foreach (var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
+            foreach(var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
             {
                 Thread.CurrentThread.CurrentCulture = ci;
                 Uri Uri1 = new Uri("/word/document.xml", UriKind.Relative);
@@ -88,7 +89,7 @@ namespace TestCases.OpenXml4Net.OPC
         public void TestCreatePartNameRelativeString()
         {
             CultureInfo orig = Thread.CurrentThread.CurrentCulture;
-            foreach (var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
+            foreach(var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
             {
                 Thread.CurrentThread.CurrentCulture = ci;
                 PackagePartName partNameToValid = PackagingUriHelper
@@ -117,7 +118,7 @@ namespace TestCases.OpenXml4Net.OPC
         public void TestCreatePartNameRelativeUri()
         {
             CultureInfo orig = Thread.CurrentThread.CurrentCulture;
-            foreach (var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
+            foreach(var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
             {
                 Thread.CurrentThread.CurrentCulture = ci;
                 PackagePartName partNameToValid = PackagingUriHelper
@@ -148,13 +149,13 @@ namespace TestCases.OpenXml4Net.OPC
                 "#'Instructions (Text)'!B21",
                 "javascript://"
          };
-            foreach (String s in href)
+            foreach(String s in href)
             {
                 try
                 {
                     Uri Uri = PackagingUriHelper.ToUri(s);
                 }
-                catch (UriFormatException)
+                catch(UriFormatException)
                 {
                     Assert.Fail("Failed to create Uri from " + s);
                 }
@@ -189,10 +190,10 @@ namespace TestCases.OpenXml4Net.OPC
                 "" };
 
             CultureInfo orig = Thread.CurrentThread.CurrentCulture;
-            foreach (var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
+            foreach(var ci in System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.NeutralCultures))
             {
                 Thread.CurrentThread.CurrentCulture = ci;
-                for (int idx = 0; idx < href.Length; idx++)
+                for(int idx = 0; idx < href.Length; idx++)
                 {
                     try
                     {
@@ -200,7 +201,7 @@ namespace TestCases.OpenXml4Net.OPC
                         String fileName = PackagingUriHelper.GetFilenameWithoutExtension(Uri);
                         ClassicAssert.AreEqual(fileNameNoExt[idx], fileName, "GetFilenameWithoutExtension fails with culture : " + ci.Name);
                     }
-                    catch (UriFormatException)
+                    catch(UriFormatException)
                     {
                         Assert.Fail("Failed to create Uri from " + href[idx]);
                     }

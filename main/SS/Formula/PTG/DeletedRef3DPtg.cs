@@ -17,13 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.SS.Formula;
-    using NPOI.Util;
-    
-
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using System;
 
     /**
      * Title:        Deleted Reference 3D Ptg 

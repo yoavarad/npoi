@@ -24,9 +24,9 @@
 
 namespace NPOI.POIFS.Crypt.Dsig
 {
+    using NPOI.POIFS.Crypt;
     using System;
     using System.Runtime.Serialization;
-    using NPOI.POIFS.Crypt;
 
     /**
      * Digest Information data transfer class.

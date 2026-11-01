@@ -26,7 +26,7 @@ namespace NPOI.HSSF.UserModel
     /// or within another containing shape.
     /// @author Glen Stampoultzis (glens at apache.org)
     /// </summary>
-    public abstract class HSSFAnchor: IChildAnchor
+    public abstract class HSSFAnchor : IChildAnchor
     {
         protected bool _isHorizontallyFlipped = false;
         protected bool _isVerticallyFlipped = false;
@@ -53,15 +53,15 @@ namespace NPOI.HSSF.UserModel
         }
         public static HSSFAnchor CreateAnchorFromEscher(EscherContainerRecord container)
         {
-            if (null != container.GetChildById(EscherChildAnchorRecord.RECORD_ID))
+            if(null != container.GetChildById(EscherChildAnchorRecord.RECORD_ID))
             {
-                return new HSSFChildAnchor((EscherChildAnchorRecord)container.GetChildById(EscherChildAnchorRecord.RECORD_ID));
+                return new HSSFChildAnchor((EscherChildAnchorRecord) container.GetChildById(EscherChildAnchorRecord.RECORD_ID));
             }
             else
             {
-                if (null != container.GetChildById(EscherClientAnchorRecord.RECORD_ID))
+                if(null != container.GetChildById(EscherClientAnchorRecord.RECORD_ID))
                 {
-                    return new HSSFClientAnchor((EscherClientAnchorRecord)container.GetChildById(EscherClientAnchorRecord.RECORD_ID));
+                    return new HSSFClientAnchor((EscherClientAnchorRecord) container.GetChildById(EscherClientAnchorRecord.RECORD_ID));
                 }
                 return null;
             }

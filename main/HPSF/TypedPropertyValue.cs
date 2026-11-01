@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations Under the License.
 ==================================================================== */
 
-using System;
 using NPOI.Util;
+using System;
 
 namespace NPOI.HPSF
 {
@@ -40,19 +40,21 @@ namespace NPOI.HPSF
             get { return _value; }
         }
 
-        internal void Read( LittleEndianByteArrayInputStream lei ) {
+        internal void Read(LittleEndianByteArrayInputStream lei)
+        {
             _type = lei.ReadShort();
             short padding = lei.ReadShort();
-            if ( padding != 0 ) {
+            if(padding != 0)
+            {
                 //LOG.log( POILogger.WARN, "TypedPropertyValue padding at offset "
                 //        + lei.getReadIndex() + " MUST be 0, but it's value is " + padding );
             }
-            ReadValue( lei );
+            ReadValue(lei);
         }
 
-        internal void ReadValue(LittleEndianByteArrayInputStream lei )
+        internal void ReadValue(LittleEndianByteArrayInputStream lei)
         {
-            switch (_type)
+            switch(_type)
             {
                 case Variant.VT_EMPTY:
                 case Variant.VT_NULL:
@@ -74,7 +76,7 @@ namespace NPOI.HPSF
                 case Variant.VT_UI2:
                     _value = lei.ReadUShort();
                     break;
-            
+
                 case Variant.VT_INT:
                 case Variant.VT_I4:
                     _value = lei.ReadInt();
@@ -90,16 +92,17 @@ namespace NPOI.HPSF
                     _value = lei.ReadLong();
                     break;
 
-                case Variant.VT_UI8: {
+                case Variant.VT_UI8:
+                {
                     byte[] biBytesLE = new byte[LittleEndianConsts.LONG_SIZE];
                     lei.ReadFully(biBytesLE);
 
                     // first byte needs to be 0 for unsigned BigInteger
                     byte[] biBytesBE = new byte[9];
                     int i = biBytesLE.Length;
-                    foreach (byte b in biBytesLE)
+                    foreach(byte b in biBytesLE)
                     {
-                        if (i<=8) 
+                        if(i<=8)
                         {
                             biBytesBE[i] = b;
                         }
@@ -109,13 +112,13 @@ namespace NPOI.HPSF
                     break;
                 }
 
-            
+
                 case Variant.VT_R4:
                     byte[] b4 = new byte[LittleEndianConsts.INT_SIZE];
                     lei.ReadFully(b4);
                     _value = BitConverter.ToSingle(b4, 0); //Float.IntBitsToFloat(lei.ReadInt());
                     break;
-            
+
                 case Variant.VT_R8:
                     _value = lei.ReadDouble();
                     break;
@@ -125,7 +128,7 @@ namespace NPOI.HPSF
                     cur.Read(lei);
                     _value = cur;
                     break;
-            
+
 
                 case Variant.VT_DATE:
                     Date date = new Date();
@@ -253,14 +256,16 @@ namespace NPOI.HPSF
             }
         }
 
-        internal static void SkipPadding( LittleEndianByteArrayInputStream lei )
+        internal static void SkipPadding(LittleEndianByteArrayInputStream lei)
         {
             int offset = lei.GetReadIndex();
             int skipBytes = (4 - (offset & 3)) & 3;
-            for (int i=0; i<skipBytes; i++) {
+            for(int i = 0; i<skipBytes; i++)
+            {
                 lei.Mark(1);
                 int b = lei.Read();
-                if (b == -1 || b != 0) {
+                if(b == -1 || b != 0)
+                {
                     lei.Reset();
                     break;
                 }

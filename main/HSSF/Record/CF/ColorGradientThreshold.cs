@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Record.CF
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /**
      * Color Gradient / Color Scale specific Threshold / value (CFVO),

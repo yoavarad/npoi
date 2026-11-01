@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NPOI.SS.UserModel
 {
-    public enum LineStyle:int
+    public enum LineStyle : int
     {
         None = -1,
         Solid = 0, // Solid (continuous) pen
@@ -38,5 +38,5 @@ namespace NPOI.SS.UserModel
         ThickThin,      // Double lines: one thick, one thin
         ThinThick,      // Double lines: one thin, one thick
         TripleLines     // Three lines: thin, thick, thin
-	}
+    }
 }

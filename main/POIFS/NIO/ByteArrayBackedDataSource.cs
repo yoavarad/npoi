@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
-using System;
 using NPOI.Util;
+using System;
+using System.IO;
 
 namespace NPOI.POIFS.NIO
 {
@@ -31,7 +31,7 @@ namespace NPOI.POIFS.NIO
 
         private byte[] buffer;
         private long size;
-        
+
         public ByteArrayBackedDataSource(byte[] data, int size)
         {
             this.buffer = data;
@@ -43,7 +43,7 @@ namespace NPOI.POIFS.NIO
         }
         public override ByteBuffer Read(int length, long position)
         {
-            if (position >= size)
+            if(position >= size)
             {
                 throw new IndexOutOfRangeException(
                       "Unable to read " + length + " bytes from " +
@@ -52,7 +52,7 @@ namespace NPOI.POIFS.NIO
             }
 
             int toRead = (int)Math.Min(length, size - position);
-            return ByteBuffer.CreateBuffer(buffer, (int)position, toRead);
+            return ByteBuffer.CreateBuffer(buffer, (int) position, toRead);
 
         }
 
@@ -61,16 +61,16 @@ namespace NPOI.POIFS.NIO
         {
             long endPosition = position + src.Length;
 
-            if (endPosition > buffer.Length)
+            if(endPosition > buffer.Length)
             {
                 Extend(endPosition);
             }
 
             // Now copy
-            src.Read(buffer, (int)position, src.Length);
+            src.Read(buffer, (int) position, src.Length);
 
             // Update size if needed
-            if (endPosition > size)
+            if(endPosition > size)
             {
                 size = endPosition;
             }
@@ -80,23 +80,23 @@ namespace NPOI.POIFS.NIO
         {
             // Consider extending by a bit more than requested
             long difference = length - buffer.Length;
-            if (difference < buffer.Length * 0.25)
+            if(difference < buffer.Length * 0.25)
             {
-                difference = (long)(buffer.Length * 0.25);
+                difference = (long) (buffer.Length * 0.25);
             }
-            if (difference < 4096)
+            if(difference < 4096)
             {
                 difference = 4096;
             }
             long totalLen = difference+buffer.Length;
             byte[] nb = IOUtils.SafelyAllocate(totalLen, MAX_RECORD_LENGTH);
-            Array.Copy(buffer, 0, nb, 0, (int)size);
+            Array.Copy(buffer, 0, nb, 0, (int) size);
             buffer = nb;
         }
 
         public override void CopyTo(Stream stream)
         {
-            stream.Write(buffer, 0, (int)size);
+            stream.Write(buffer, 0, (int) size);
         }
 
         public override long Size

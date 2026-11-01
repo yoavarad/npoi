@@ -16,8 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
     using System.Text;
 
 
@@ -130,7 +130,7 @@ namespace NPOI.XWPF.UserModel
         public CT_SdtBlock Build()
         {
             // append end field char for TOC - only once
-            if (!isBuilt)
+            if(!isBuilt)
             {
                 CT_SdtContentBlock contentBlock = block.sdtContent;
                 CT_P p = contentBlock.AddNewP();

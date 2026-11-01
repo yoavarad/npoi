@@ -27,7 +27,7 @@ namespace NPOI.Openxml4Net.Exceptions
         public ODFNotOfficeXmlFileException(String message)
             : base(message)
         {
-            
+
         }
     }
 }

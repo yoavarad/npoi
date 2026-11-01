@@ -18,9 +18,9 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /// <summary>
     /// This record simply holds the number of shapes in the drawing group and the
@@ -47,8 +47,10 @@ namespace NPOI.DDF
             int bytesRemaining = ReadHeader(data, offset);
             int pos = offset + 8;
             int size = 0;
-            field_1_numShapes = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_2_lastMSOSPID = LittleEndian.GetInt(data, pos + size); size += 4;
+            field_1_numShapes = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_2_lastMSOSPID = LittleEndian.GetInt(data, pos + size);
+            size += 4;
             //        bytesRemaining -= size;
             //        remainingData  =  new byte[bytesRemaining];
             //        Array.Copy( data, pos + size, remainingData, 0, bytesRemaining );
@@ -173,7 +175,7 @@ namespace NPOI.DDF
         /// <value>The drawing group id.</value>
         public short DrawingGroupId
         {
-            get { return (short)(Options >> 4); }
+            get { return (short) (Options >> 4); }
         }
 
         /// <summary>

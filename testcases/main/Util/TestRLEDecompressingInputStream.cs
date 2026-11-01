@@ -18,7 +18,8 @@
 namespace TestCases.Util
 {
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.IO;
     using System.Text;
@@ -166,7 +167,7 @@ namespace TestCases.Util
                     stream.Close();
                 }
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 //throw new Exception(e);
                 throw e;
@@ -177,7 +178,7 @@ namespace TestCases.Util
                 //expanded = out1.ToString(StringUtil.UTF8.Name());
                 expanded = Encoding.UTF8.GetString(out1.ToArray());
             }
-            catch (EncoderFallbackException e)
+            catch(EncoderFallbackException e)
             {
                 //throw new Exception(e);
                 throw e;

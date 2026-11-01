@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -54,7 +54,7 @@ namespace NPOI.OpenXmlFormats
 
         public override string ToString()
         {
-            using (StringWriter stringWriter = new StringWriter())
+            using(StringWriter stringWriter = new StringWriter())
             {
                 serializer.Serialize(stringWriter, _props);
                 return stringWriter.ToString();

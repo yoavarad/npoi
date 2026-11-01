@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -67,7 +67,7 @@ namespace NPOI.Util
         {
             return GetLogger(type.Name);
         }
-        
+
         /// <summary>
         /// Get a logger, based on a String
         /// </summary>
@@ -76,17 +76,20 @@ namespace NPOI.Util
         public static POILogger GetLogger(String cat)
         {
             POILogger logger = null;
-            
+
             // If we haven't found out what logger to use yet,
             //  then do so now
             // Don't look it up until we're first asked, so
             //  that our users can set the system property
             //  between class loading and first use
-            if(_loggerClassName == null) {
+            if(_loggerClassName == null)
+            {
 #if NETFRAMEWORK
-        	    try {
-        		    _loggerClassName = ConfigurationManager.AppSettings["loggername"];
-        	    } catch(Exception) {}
+                try
+                {
+                    _loggerClassName = ConfigurationManager.AppSettings["loggername"];
+                }
+                catch(Exception) { }
 #endif
                 if(_loggerClassName == null)
                 {
@@ -95,34 +98,42 @@ namespace NPOI.Util
                 }
 
                 // Use the default logger if none specified,
-        	    //  or none could be fetched
-        	    if(_loggerClassName == null) {
-        		    _loggerClassName = _nullLogger.GetType().Name;
-        	    }
-            }
-            
-            // Short circuit for the null logger, which
-            //  ignores all categories
-            if(_loggerClassName.Equals(_nullLogger.GetType().Name)) {
-        	    return _nullLogger;
+                //  or none could be fetched
+                if(_loggerClassName == null)
+                {
+                    _loggerClassName = _nullLogger.GetType().Name;
+                }
             }
 
-            
+            // Short circuit for the null logger, which
+            //  ignores all categories
+            if(_loggerClassName.Equals(_nullLogger.GetType().Name))
+            {
+                return _nullLogger;
+            }
+
+
             // Fetch the right logger for them, creating
             //  it if that's required 
-            if (_loggers.ContainsKey(cat)) {
-                logger = (POILogger)_loggers[cat];
-            } else {
-                try {
+            if(_loggers.ContainsKey(cat))
+            {
+                logger = (POILogger) _loggers[cat];
+            }
+            else
+            {
+                try
+                {
                     //logger=assembly.CreateInstance(_loggerClassName) as POILogger;
                     Type loggerClass = Type.GetType(_loggerClassName);
                     logger =  Activator.CreateInstance(loggerClass) as POILogger;
                     logger.Initialize(cat);
-                } catch(Exception) {
-                  // Give up and use the null logger
-                  logger = _nullLogger;
                 }
-                
+                catch(Exception)
+                {
+                    // Give up and use the null logger
+                    logger = _nullLogger;
+                }
+
                 // Save for next time
                 _loggers[cat] = logger;
             }

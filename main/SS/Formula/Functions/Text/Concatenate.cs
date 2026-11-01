@@ -20,9 +20,9 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.SS.Formula.Eval;
+    using System.Text;
 
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
@@ -36,10 +36,11 @@ using Cysharp.Text;
         {
             using var sb = ZString.CreateStringBuilder();
 
-            for(int i=0, iSize=args.Length; i<iSize; i++) {
-				sb.Append(EvaluateStringArg(args[i], srcCellRow, srcCellCol));
-			}
-			return new StringEval(sb.ToString());
+            for(int i = 0, iSize = args.Length; i<iSize; i++)
+            {
+                sb.Append(EvaluateStringArg(args[i], srcCellRow, srcCellCol));
+            }
+            return new StringEval(sb.ToString());
 
         }
     }

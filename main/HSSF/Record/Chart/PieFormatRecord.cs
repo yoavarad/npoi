@@ -1,5 +1,5 @@
-﻿using System.Text;
 using NPOI.Util;
+using System.Text;
 
 namespace NPOI.HSSF.Record.Chart
 {
@@ -71,7 +71,7 @@ namespace NPOI.HSSF.Record.Chart
         public int Explode
         {
             get { return field_1_pcExplode; }
-            set { field_1_pcExplode = (short)value; }
+            set { field_1_pcExplode = (short) value; }
         }
     }
 }

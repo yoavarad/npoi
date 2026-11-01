@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -213,7 +213,7 @@ namespace NPOI.XSSF.UserModel
 
         public long Left
         {
-            get { return (long )Math.Round(mMin.x); }
+            get { return (long) Math.Round(mMin.x); }
         }
         public long Rigth
         {
@@ -221,11 +221,11 @@ namespace NPOI.XSSF.UserModel
         }
         public long Top
         {
-            get { return (long)Math.Round(mMin.y); }
+            get { return (long) Math.Round(mMin.y); }
         }
         public long Bottom
         {
-            get { return (long)Math.Round(mMax.y); }
+            get { return (long) Math.Round(mMax.y); }
         }
         internal double dLeft
         {
@@ -241,8 +241,8 @@ namespace NPOI.XSSF.UserModel
 
         public LinkedList<DblVect2D> mCtrlPoint { get; private set; }   //Control point coordinate
 
-        public long Width   { get => Math.Abs(Rigth - Left); }
-        public long Height  { get => Math.Abs(Top - Bottom); }
+        public long Width { get => Math.Abs(Rigth - Left); }
+        public long Height { get => Math.Abs(Top - Bottom); }
         public LinkedList<Coords> Points
         {
             get

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.IO;
 using System.Xml;
@@ -190,17 +190,17 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_FrameLayout
     {
 
-    
+
         rows,
 
-    
+
         cols,
 
-    
+
         none,
     }
 
-    
+
     [Serializable]
 
     [XmlType(Namespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main")]
@@ -369,13 +369,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_FrameScrollbar
     {
 
-    
+
         on,
 
-    
+
         off,
 
-    
+
         auto,
     }
 
@@ -441,32 +441,32 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool anchorLockFieldSpecified;
         public static CT_FramePr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FramePr ctObj = new CT_FramePr();
-            if (node.Attributes["w:dropCap"] != null)
-                ctObj.dropCap = (ST_DropCap)Enum.Parse(typeof(ST_DropCap), node.Attributes["w:dropCap"].Value);
+            if(node.Attributes["w:dropCap"] != null)
+                ctObj.dropCap = (ST_DropCap) Enum.Parse(typeof(ST_DropCap), node.Attributes["w:dropCap"].Value);
             ctObj.lines = XmlHelper.ReadString(node.Attributes["w:lines"]);
             ctObj.w = XmlHelper.ReadULong(node.Attributes["w:w"]);
             ctObj.h = XmlHelper.ReadULong(node.Attributes["w:h"]);
             ctObj.vSpace = XmlHelper.ReadULong(node.Attributes["w:vSpace"]);
             ctObj.hSpace = XmlHelper.ReadULong(node.Attributes["w:hSpace"]);
-            if (node.Attributes["w:wrap"] != null)
-                ctObj.wrap = (ST_Wrap)Enum.Parse(typeof(ST_Wrap), node.Attributes["w:wrap"].Value);
-            if (node.Attributes["w:hAnchor"] != null)
-                ctObj.hAnchor = (ST_HAnchor)Enum.Parse(typeof(ST_HAnchor), node.Attributes["w:hAnchor"].Value);
-            if (node.Attributes["w:vAnchor"] != null)
-                ctObj.vAnchor = (ST_VAnchor)Enum.Parse(typeof(ST_VAnchor), node.Attributes["w:vAnchor"].Value);
+            if(node.Attributes["w:wrap"] != null)
+                ctObj.wrap = (ST_Wrap) Enum.Parse(typeof(ST_Wrap), node.Attributes["w:wrap"].Value);
+            if(node.Attributes["w:hAnchor"] != null)
+                ctObj.hAnchor = (ST_HAnchor) Enum.Parse(typeof(ST_HAnchor), node.Attributes["w:hAnchor"].Value);
+            if(node.Attributes["w:vAnchor"] != null)
+                ctObj.vAnchor = (ST_VAnchor) Enum.Parse(typeof(ST_VAnchor), node.Attributes["w:vAnchor"].Value);
             ctObj.x = XmlHelper.ReadString(node.Attributes["w:x"]);
-            if (node.Attributes["w:xAlign"] != null)
-                ctObj.xAlign = (ST_XAlign)Enum.Parse(typeof(ST_XAlign), node.Attributes["w:xAlign"].Value);
+            if(node.Attributes["w:xAlign"] != null)
+                ctObj.xAlign = (ST_XAlign) Enum.Parse(typeof(ST_XAlign), node.Attributes["w:xAlign"].Value);
             ctObj.y = XmlHelper.ReadString(node.Attributes["w:y"]);
-            if (node.Attributes["w:yAlign"] != null)
-                ctObj.yAlign = (ST_YAlign)Enum.Parse(typeof(ST_YAlign), node.Attributes["w:yAlign"].Value);
-            if (node.Attributes["w:hRule"] != null)
-                ctObj.hRule = (ST_HeightRule)Enum.Parse(typeof(ST_HeightRule), node.Attributes["w:hRule"].Value);
-            if (node.Attributes["w:anchorLock"] != null)
-                ctObj.anchorLock = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:anchorLock"].Value,true);
+            if(node.Attributes["w:yAlign"] != null)
+                ctObj.yAlign = (ST_YAlign) Enum.Parse(typeof(ST_YAlign), node.Attributes["w:yAlign"].Value);
+            if(node.Attributes["w:hRule"] != null)
+                ctObj.hRule = (ST_HeightRule) Enum.Parse(typeof(ST_HeightRule), node.Attributes["w:hRule"].Value);
+            if(node.Attributes["w:anchorLock"] != null)
+                ctObj.anchorLock = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:anchorLock"].Value, true);
             return ctObj;
         }
 
@@ -853,13 +853,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_DropCap
     {
 
-    
+
         none,
 
-    
+
         drop,
 
-    
+
         margin,
     }
 
@@ -869,22 +869,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Wrap
     {
 
-    
+
         auto,
 
-    
+
         notBeside,
 
-    
+
         around,
 
-    
+
         tight,
 
-    
+
         through,
 
-    
+
         none,
     }
 
@@ -894,13 +894,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_HAnchor
     {
 
-    
+
         text,
 
-    
+
         margin,
 
-    
+
         page,
     }
 
@@ -910,13 +910,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_VAnchor
     {
 
-    
+
         text,
 
-    
+
         margin,
 
-    
+
         page,
     }
 
@@ -926,19 +926,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_XAlign
     {
 
-    
+
         left,
 
-    
+
         center,
 
-    
+
         right,
 
-    
+
         inside,
 
-    
+
         outside,
     }
 
@@ -948,22 +948,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_YAlign
     {
 
-    
+
         inline,
 
-    
+
         top,
 
-    
+
         center,
 
-    
+
         bottom,
 
-    
+
         inside,
 
-    
+
         outside,
     }
 
@@ -973,13 +973,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_HeightRule
     {
 
-    
+
         auto,
 
-    
+
         exact,
 
-    
+
         atLeast,
     }
 }

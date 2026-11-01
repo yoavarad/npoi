@@ -1,12 +1,12 @@
-﻿using System;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
+using Cysharp.Text;
 using NPOI.OpenXml4Net.Util;
 using NPOI.OpenXmlFormats.Vml;
-using Cysharp.Text;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Wordprocessing
 {
@@ -54,15 +54,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
             set
             {
-               this.itemsElementNameField = value;
+                this.itemsElementNameField = value;
             }
         }
 
         public void Set(object obj)
         {
-            if (obj is CT_Group group)
+            if(obj is CT_Group group)
             {
-                foreach (var item in group.Items)
+                foreach(var item in group.Items)
                 {
                     /*XmlSerializer xmlse = new XmlSerializer(item.GetType());
                     // StringBuilder output = new StringBuilder();
@@ -80,7 +80,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
                     xmlDoc.LoadXml(output.ToString());*/
 
-                    lock (this)
+                    lock(this)
                     {
                         this.itemsField.Add(item);
                         this.itemsElementNameField.Add(ItemsChoiceType9.vml);
@@ -105,7 +105,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
                 xmlDoc.LoadXml(output.ToString());
 
-                lock (this)
+                lock(this)
                 {
                     this.itemsField.Add(xmlDoc.DocumentElement.CloneNode(true));
                     this.itemsElementNameField.Add(ItemsChoiceType9.vml);
@@ -174,20 +174,21 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Picture Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Picture ctObj = new CT_Picture();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "movie")
+                if(childNode.LocalName == "movie")
                     ctObj.movie = CT_Rel.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "control")
+                else if(childNode.LocalName == "control")
                     ctObj.control = CT_Control.Parse(childNode, namespaceManager);
                 else if(childNode.Prefix == "o")
-                { 
+                {
                     ctObj.ItemsElementName.Add(ItemsChoiceType9.office);
                     ctObj.Items.Add(childNode);
-                }else if(childNode.Prefix=="v")
+                }
+                else if(childNode.Prefix=="v")
                 {
                     ctObj.ItemsElementName.Add(ItemsChoiceType9.vml);
                     ctObj.Items.Add(childNode);
@@ -202,21 +203,21 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.movie != null)
+            if(this.movie != null)
                 this.movie.Write(sw, "movie");
-            if (this.control != null)
+            if(this.control != null)
                 this.control.Write(sw, "control");
-            foreach (var childnode in Items)
+            foreach(var childnode in Items)
             {
-                if (childnode is XmlNode node)
+                if(childnode is XmlNode node)
                 {
                     sw.Write(node.OuterXml);
                 }
-                else if (childnode is CT_Shape shape)
+                else if(childnode is CT_Shape shape)
                 {
                     shape.Write(sw, "shape");
                 }
-                else if (childnode is CT_Shapetype shapetype)
+                else if(childnode is CT_Shapetype shapetype)
                 {
                     shapetype.Write(sw, "shapetype");
                 }
@@ -249,12 +250,12 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Background Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Background ctObj = new CT_Background();
             ctObj.color = XmlHelper.ReadString(node.Attributes["w:color"]);
-            if (node.Attributes["w:themeColor"] != null)
-                ctObj.themeColor = (ST_ThemeColor)Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
+            if(node.Attributes["w:themeColor"] != null)
+                ctObj.themeColor = (ST_ThemeColor) Enum.Parse(typeof(ST_ThemeColor), node.Attributes["w:themeColor"].Value);
             ctObj.themeTint = XmlHelper.ReadBytes(node.Attributes["w:themeTint"]);
             ctObj.themeShade = XmlHelper.ReadBytes(node.Attributes["w:themeShade"]);
 
@@ -429,14 +430,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Object Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Object ctObj = new CT_Object();
             ctObj.dxaOrig = XmlHelper.ReadULong(node.Attributes["w:dxaOrig"]);
             ctObj.dyaOrig = XmlHelper.ReadULong(node.Attributes["w:dyaOrig"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "control")
+                if(childNode.LocalName == "control")
                     ctObj.control = CT_Control.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -450,7 +451,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:dxaOrig", this.dxaOrig);
             XmlHelper.WriteAttribute(sw, "w:dyaOrig", this.dyaOrig);
             sw.Write('>');
-            if (this.control != null)
+            if(this.control != null)
                 this.control.Write(sw, "control");
             sw.WriteEndW(nodeName);
         }
@@ -465,7 +466,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_Control Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Control ctObj = new CT_Control();
             ctObj.name = XmlHelper.ReadString(node.Attributes["w:name"]);

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -44,7 +44,7 @@ namespace NPOI.POIFS.Crypt.XOR
             encryptedVerifier = is1.ReadUShort();
         }
 
-        protected XOREncryptionVerifier(XOREncryptionVerifier other) 
+        protected XOREncryptionVerifier(XOREncryptionVerifier other)
         {
             encryptedKey = other.encryptedKey;
             encryptedVerifier = other.encryptedVerifier;

@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System.Text;
     using NPOI.Util;
     using System;
+    using System.Text;
 
     /**
      * Title:        Precision Record
@@ -66,7 +66,7 @@ namespace NPOI.HSSF.Record
             }
             set
             {
-                if (value == true)
+                if(value == true)
                 {
                     field_1_precision = 1;
                 }

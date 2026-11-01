@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -43,7 +43,7 @@ namespace NPOI.HSSF.Record
             field_1_row = in1.ReadUShort();
             field_2_column = in1.ReadShort();
 
-            if (isBiff2)
+            if(isBiff2)
             {
                 field_3_cell_attrs = in1.ReadUShort() << 8;
                 field_3_cell_attrs += in1.ReadUByte();
@@ -118,7 +118,7 @@ namespace NPOI.HSSF.Record
             sb.Append("[").Append(recordName).Append("]\n");
             sb.Append("    .row    = ").Append(HexDump.ShortToHex(Row)).Append("\n");
             sb.Append("    .col    = ").Append(HexDump.ShortToHex(Column)).Append("\n");
-            if (IsBiff2)
+            if(IsBiff2)
             {
                 sb.Append("    .cellattrs = ").Append(HexDump.ShortToHex(CellAttrs)).Append("\n");
             }

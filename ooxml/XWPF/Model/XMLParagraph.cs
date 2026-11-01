@@ -16,8 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.Model
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * Base class for XWPF paragraphs

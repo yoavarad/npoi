@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -17,10 +17,11 @@
 
 namespace TestCases.SS.Formula.Atp
 {
-    using System;
     using NPOI.SS.Formula.Atp;
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * @author jfaenomoto@gmail.com
@@ -36,7 +37,7 @@ namespace TestCases.SS.Formula.Atp
                 DateParser.ParseDate("potato");
                 Assert.Fail("Shouldn't parse potato!");
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 ClassicAssert.AreEqual(ErrorEval.VALUE_INVALID, e.GetErrorEval());
             }
@@ -50,7 +51,7 @@ namespace TestCases.SS.Formula.Atp
                 DateParser.ParseDate("potato/cucumber/banana");
                 Assert.Fail("Shouldn't parse this thing!");
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 ClassicAssert.AreEqual(ErrorEval.VALUE_INVALID, e.GetErrorEval());
             }
@@ -64,7 +65,7 @@ namespace TestCases.SS.Formula.Atp
                 DateParser.ParseDate("13/13/13");
                 Assert.Fail("Shouldn't parse this thing!");
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 ClassicAssert.AreEqual(ErrorEval.VALUE_INVALID, e.GetErrorEval());
             }

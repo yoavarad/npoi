@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -26,18 +26,17 @@
  * ==============================================================*/
 
 
+using NPOI.POIFS.Common;
+using NPOI.POIFS.Dev;
+using NPOI.POIFS.EventFileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
 using System;
-using System.Text;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-
-using NPOI.POIFS.Common;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Dev;
-using NPOI.POIFS.Properties;
-using NPOI.POIFS.EventFileSystem;
-using NPOI.Util;
+using System.IO;
+using System.Text;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -61,7 +60,7 @@ namespace NPOI.POIFS.FileSystem
         public OPOIFSDocument(string name, RawDataBlock[] blocks, int length)
         {
             _size = length;
-            if (blocks.Length == 0)
+            if(blocks.Length == 0)
                 _bigBigBlockSize = POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS;
             else
             {
@@ -78,14 +77,14 @@ namespace NPOI.POIFS.FileSystem
         private static DocumentBlock[] ConvertRawBlocksToBigBlocks(ListManagedBlock[] blocks)
         {
             DocumentBlock[] result = new DocumentBlock[blocks.Length];
-            for (int i = 0; i < result.Length; i++)
-                result[i] = new DocumentBlock((RawDataBlock)blocks[i]);
+            for(int i = 0; i < result.Length; i++)
+                result[i] = new DocumentBlock((RawDataBlock) blocks[i]);
             return result;
         }
 
         private static SmallDocumentBlock[] ConvertRawBlocksToSmallBlocks(ListManagedBlock[] blocks)
         {
-            if (blocks is SmallDocumentBlock[] documentBlocks)
+            if(blocks is SmallDocumentBlock[] documentBlocks)
                 return documentBlocks;
             SmallDocumentBlock[] result = new SmallDocumentBlock[blocks.Length];
             System.Array.Copy(blocks, 0, result, 0, blocks.Length);
@@ -113,7 +112,7 @@ namespace NPOI.POIFS.FileSystem
             _property = new DocumentProperty(name, _size);
             _property.Document = this;
 
-            if (Property.IsSmall(_size))
+            if(Property.IsSmall(_size))
             {
                 _big_store = new BigBlockStore(bigBlockSize, EMPTY_BIG_BLOCK_ARRAY);
                 _small_store = new SmallBlockStore(bigBlockSize, ConvertRawBlocksToSmallBlocks(blocks));
@@ -131,17 +130,17 @@ namespace NPOI.POIFS.FileSystem
 
             _size = 0;
             _bigBigBlockSize = bigBlockSize;
-            while (true)
+            while(true)
             {
                 DocumentBlock block = new DocumentBlock(stream, bigBlockSize);
                 int blockSize = block.Size;
 
-                if (blockSize > 0)
+                if(blockSize > 0)
                 {
                     blocks.Add(block);
                     _size += blockSize;
                 }
-                if (block.PartiallyRead)
+                if(block.PartiallyRead)
                     break;
             }
 
@@ -150,7 +149,7 @@ namespace NPOI.POIFS.FileSystem
             _property = new DocumentProperty(name, _size);
             _property.Document = this;
 
-            if (_property.ShouldUseSmallBlocks)
+            if(_property.ShouldUseSmallBlocks)
             {
                 _small_store = new SmallBlockStore(bigBlockSize, SmallDocumentBlock.Convert(bigBlockSize, bigBlocks, _size));
                 _big_store = new BigBlockStore(bigBlockSize, []);
@@ -158,7 +157,7 @@ namespace NPOI.POIFS.FileSystem
             else
             {
                 _small_store = new SmallBlockStore(bigBlockSize, EMPTY_SMALL_BLOCK_ARRAY);
-        }
+            }
 
         }
         /// <summary>
@@ -172,12 +171,12 @@ namespace NPOI.POIFS.FileSystem
         }
 
         public OPOIFSDocument(string name, int size, POIFSBigBlockSize bigBlockSize, POIFSDocumentPath path, POIFSWriterListener writer)
-            {
+        {
             _size = size;
             _bigBigBlockSize = bigBlockSize;
             _property = new DocumentProperty(name, _size);
             _property.Document = this;
-            if (_property.ShouldUseSmallBlocks)
+            if(_property.ShouldUseSmallBlocks)
             {
                 _small_store = new SmallBlockStore(_bigBigBlockSize, path, name, size, writer);
                 _big_store = new BigBlockStore(_bigBigBlockSize, EMPTY_BIG_BLOCK_ARRAY);
@@ -190,7 +189,7 @@ namespace NPOI.POIFS.FileSystem
         }
 
         public OPOIFSDocument(string name, int size, POIFSDocumentPath path, POIFSWriterListener writer)
-            :this(name, size, POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS, path, writer)
+            : this(name, size, POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS, path, writer)
         {
         }
         /// <summary>
@@ -200,8 +199,8 @@ namespace NPOI.POIFS.FileSystem
         /// <param name="blocks">the small blocks making up the POIFSDocument</param>
         /// <param name="length">the actual length of the POIFSDocument</param>
         public OPOIFSDocument(string name, ListManagedBlock[] blocks, int length)
-            :this(name, POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS, blocks, length)
-            {
+            : this(name, POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS, blocks, length)
+        {
         }
 
         /// <summary>
@@ -224,7 +223,7 @@ namespace NPOI.POIFS.FileSystem
             DataInputBlock currentBlock = GetDataInputBlock(offset);
 
             int blockAvailable = currentBlock.Available();
-            if (blockAvailable > len)
+            if(blockAvailable > len)
             {
                 currentBlock.ReadFully(buffer, 0, len);
                 return;
@@ -233,11 +232,11 @@ namespace NPOI.POIFS.FileSystem
             int remaining = len;
             int writePos = 0;
             int currentOffset = offset;
-            while (remaining > 0)
+            while(remaining > 0)
             {
                 bool blockIsExpiring = remaining >= blockAvailable;
                 int reqSize;
-                if (blockIsExpiring)
+                if(blockIsExpiring)
                 {
                     reqSize = blockAvailable;
                 }
@@ -249,11 +248,11 @@ namespace NPOI.POIFS.FileSystem
                 remaining -= reqSize;
                 writePos += reqSize;
                 currentOffset += reqSize;
-                if (blockIsExpiring)
+                if(blockIsExpiring)
                 {
-                    if (currentOffset == _size)
+                    if(currentOffset == _size)
                     {
-                        if (remaining > 0)
+                        if(remaining > 0)
                         {
                             throw new InvalidOperationException("reached end of document stream unexpectedly");
                         }
@@ -278,9 +277,9 @@ namespace NPOI.POIFS.FileSystem
 
         public DataInputBlock GetDataInputBlock(int offset)
         {
-            if (offset >= _size)
+            if(offset >= _size)
             {
-                if (offset > _size)
+                if(offset > _size)
                 {
                     throw new RuntimeException("Request for Offset " + offset + " doc size is " + _size);
                 }
@@ -288,7 +287,7 @@ namespace NPOI.POIFS.FileSystem
                 return null;
             }
 
-            if (_property.ShouldUseSmallBlocks)
+            if(_property.ShouldUseSmallBlocks)
             {
                 return SmallDocumentBlock.GetDataInputBlock(_small_store.Blocks, offset);
             }
@@ -401,22 +400,22 @@ namespace NPOI.POIFS.FileSystem
 
                 try
                 {
-                    using (MemoryStream stream = new MemoryStream())
+                    using(MemoryStream stream = new MemoryStream())
                     {
                         BlockWritable[] blocks = null;
-                        if (this._big_store.Valid)
+                        if(this._big_store.Valid)
                         {
                             blocks = this._big_store.Blocks;
                         }
-                        else if (this._small_store.Valid)
+                        else if(this._small_store.Valid)
                         {
                             blocks = this._small_store.Blocks;
                         }
-                        if (blocks != null)
+                        if(blocks != null)
                         {
 
                             ByteArrayOutputStream output = new ByteArrayOutputStream();
-                            foreach (BlockWritable bw in blocks)
+                            foreach(BlockWritable bw in blocks)
                             {
                                 bw.WriteBlocks(output);
                             }
@@ -425,7 +424,7 @@ namespace NPOI.POIFS.FileSystem
                         }
                     }
                 }
-                catch (IOException exception)
+                catch(IOException exception)
                 {
                     result = exception.Message;
                 }
@@ -448,7 +447,7 @@ namespace NPOI.POIFS.FileSystem
 
         protected virtual void OnBeforeWriting(POIFSWriterEventArgs e)
         {
-            if (BeforeWriting != null)
+            if(BeforeWriting != null)
             {
                 BeforeWriting(this, e);
             }
@@ -466,7 +465,7 @@ namespace NPOI.POIFS.FileSystem
             internal SmallBlockStore(POIFSBigBlockSize bigBlockSize, SmallDocumentBlock[] blocks)
             {
                 this.bigBlockSize = bigBlockSize;
-                smallBlocks = (SmallDocumentBlock[])blocks.Clone();
+                smallBlocks = (SmallDocumentBlock[]) blocks.Clone();
                 this.path = null;
                 this.name = null;
                 this.size = -1;

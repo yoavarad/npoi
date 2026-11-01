@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -44,7 +44,7 @@ namespace NPOI.HSSF.Record
         private short field_4_fit_width;
         private short field_5_fit_height;
         private short field_6_options;
-        
+
         private BitField lefttoright =
         BitFieldFactory.GetInstance(0x01);   // print over then down
         private BitField landscape =
@@ -65,7 +65,7 @@ namespace NPOI.HSSF.Record
         BitFieldFactory.GetInstance(0x200);   // note is printed at the end
         private BitField ierror =
         BitFieldFactory.GetInstance(0xC00);   // printed style of cell errors
-       
+
 
         private short field_7_hresolution;
         private short field_8_vresolution;
@@ -75,7 +75,7 @@ namespace NPOI.HSSF.Record
 
         public PrintSetupRecord()
         {
-            
+
         }
 
         /**
@@ -108,7 +108,7 @@ namespace NPOI.HSSF.Record
 
         public short Scale
         {
-            get{return field_2_scale;}
+            get { return field_2_scale; }
             set { field_2_scale = value; }
         }
 
@@ -184,7 +184,7 @@ namespace NPOI.HSSF.Record
 
         public bool UsePage
         {
-            get{return usepage.IsSet(field_6_options);}
+            get { return usepage.IsSet(field_6_options); }
             set { field_6_options = usepage.SetShortBoolean(field_6_options, value); }
         }
 
@@ -222,7 +222,7 @@ namespace NPOI.HSSF.Record
         public short CellError
         {
             get { return ierror.GetShortValue(field_6_options); }
-            set 
+            set
             {
                 field_6_options = ierror.SetShortValue(field_6_options, value);
             }

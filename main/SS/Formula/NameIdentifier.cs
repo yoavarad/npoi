@@ -49,7 +49,7 @@ namespace NPOI.SS.Formula
             StringBuilder sb = new StringBuilder(64);
             sb.Append(this.GetType().Name);
             sb.Append(" [");
-            if (_isQuoted)
+            if(_isQuoted)
             {
                 sb.Append("'").Append(_name).Append("'");
             }

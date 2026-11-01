@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {
@@ -43,10 +43,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal
         {
             get { return _buff.Length; }
         }
-        
+
         public void Write(int b)
         {
-            _buff.WriteByte((byte)b);
+            _buff.WriteByte((byte) b);
         }
         public override void SetLength(long value)
         {
@@ -102,7 +102,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
 
         public void Write(byte[] b)
         {
-            _buff.Write(b, (int)_buff.Position, b.Length);
+            _buff.Write(b, (int) _buff.Position, b.Length);
         }
     }
 }

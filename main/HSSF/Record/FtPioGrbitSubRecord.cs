@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
     using NPOI.Util;
+    using System;
     using System.Text;
 
 
@@ -95,7 +95,7 @@ namespace NPOI.HSSF.Record
 
         public FtPioGrbitSubRecord(ILittleEndianInput in1, int size)
         {
-            if (size != length)
+            if(size != length)
             {
                 throw new RecordFormatException("Unexpected size (" + size + ")");
             }
@@ -109,13 +109,13 @@ namespace NPOI.HSSF.Record
          */
         public void SetFlagByBit(int bitmask, bool enabled)
         {
-            if (enabled)
+            if(enabled)
             {
-                flags |= (short)bitmask;
+                flags |= (short) bitmask;
             }
             else
             {
-                flags &= (short)(0xFFFF ^ bitmask);
+                flags &= (short) (0xFFFF ^ bitmask);
             }
         }
 

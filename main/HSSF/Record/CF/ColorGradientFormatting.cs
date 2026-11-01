@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.CF
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record.Common;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -51,19 +51,19 @@ namespace NPOI.HSSF.Record.CF
             in1.ReadByte();  // Reserved
             int numI = in1.ReadByte();
             int numG = in1.ReadByte();
-            if (numI != numG)
+            if(numI != numG)
             {
                 //log.Log(POILogger.WARN, "Inconsistent Color Gradient defintion, found " + numI + " vs " + numG + " entries");
             }
-            options = (byte)in1.ReadByte();
+            options = (byte) in1.ReadByte();
 
             thresholds = new ColorGradientThreshold[numI];
-            for (int i = 0; i < thresholds.Length; i++)
+            for(int i = 0; i < thresholds.Length; i++)
             {
                 thresholds[i] = new ColorGradientThreshold(in1);
             }
             colors = new ExtendedColor[numG];
-            for (int i = 0; i < colors.Length; i++)
+            for(int i = 0; i < colors.Length; i++)
             {
                 in1.ReadDouble(); // Slightly pointless step counter
                 colors[i] = new ExtendedColor(in1);
@@ -75,7 +75,7 @@ namespace NPOI.HSSF.Record.CF
             get { return thresholds.Length; }
             set
             {
-                if (value != thresholds.Length)
+                if(value != thresholds.Length)
                 {
                     ColorGradientThreshold[] nt = new ColorGradientThreshold[value];
                     ExtendedColor[] nc = new ExtendedColor[value];
@@ -95,8 +95,10 @@ namespace NPOI.HSSF.Record.CF
         public ColorGradientThreshold[] Thresholds
         {
             get { return thresholds; }
-            set {
-                this.thresholds = value == null ? null : (ColorGradientThreshold[])value.Clone(); ;
+            set
+            {
+                this.thresholds = value == null ? null : (ColorGradientThreshold[]) value.Clone();
+                ;
                 updateThresholdPositions();
             }
         }
@@ -104,8 +106,8 @@ namespace NPOI.HSSF.Record.CF
         public ExtendedColor[] Colors
         {
             get { return colors; }
-            set { this.colors = (value == null) ? null : (ExtendedColor[])value.Clone(); }
-            
+            set { this.colors = (value == null) ? null : (ExtendedColor[]) value.Clone(); }
+
         }
 
         public bool IsClampToCurve
@@ -125,7 +127,7 @@ namespace NPOI.HSSF.Record.CF
         private void updateThresholdPositions()
         {
             double step = 1d / (thresholds.Length - 1);
-            for (int i = 0; i < thresholds.Length; i++)
+            for(int i = 0; i < thresholds.Length; i++)
             {
                 thresholds[i].Position = (/*setter*/step * i);
             }
@@ -137,11 +139,11 @@ namespace NPOI.HSSF.Record.CF
             buffer.Append("    [Color Gradient Formatting]\n");
             buffer.Append("          .clamp     = ").Append(IsClampToCurve).Append("\n");
             buffer.Append("          .background= ").Append(IsAppliesToBackground).Append("\n");
-            foreach (Threshold t in thresholds)
+            foreach(Threshold t in thresholds)
             {
                 buffer.Append(t.ToString());
             }
-            foreach (ExtendedColor c in colors)
+            foreach(ExtendedColor c in colors)
             {
                 buffer.Append(c.ToString());
             }
@@ -165,18 +167,18 @@ namespace NPOI.HSSF.Record.CF
             get
             {
                 int len = 6;
-                foreach (Threshold t in thresholds)
+                foreach(Threshold t in thresholds)
                 {
                     len += t.DataLength;
                 }
-                foreach (ExtendedColor c in colors)
+                foreach(ExtendedColor c in colors)
                 {
                     len += c.DataLength;
                     len += 8;
                 }
                 return len;
             }
-            
+
         }
 
         public void Serialize(ILittleEndianOutput out1)
@@ -187,13 +189,13 @@ namespace NPOI.HSSF.Record.CF
             out1.WriteByte(thresholds.Length);
             out1.WriteByte(options);
 
-            foreach (ColorGradientThreshold t in thresholds)
+            foreach(ColorGradientThreshold t in thresholds)
             {
                 t.Serialize(out1);
             }
 
             double step = 1d / (colors.Length - 1);
-            for (int i = 0; i < colors.Length; i++)
+            for(int i = 0; i < colors.Length; i++)
             {
                 out1.WriteDouble(i * step);
 

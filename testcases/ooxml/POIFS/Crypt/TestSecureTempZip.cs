@@ -24,7 +24,8 @@ namespace TestCases.POIFS.Crypt
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
     using NPOI.XSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using Org.BouncyCastle.Security;
     using System;
     using System.Collections;

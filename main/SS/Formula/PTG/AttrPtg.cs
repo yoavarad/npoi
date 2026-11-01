@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.PTG
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    
+
 
 
     /**
@@ -80,13 +80,13 @@ namespace NPOI.SS.Formula.PTG
 
         public AttrPtg(ILittleEndianInput in1)
         {
-            field_1_options =(byte)in1.ReadByte();
+            field_1_options =(byte) in1.ReadByte();
             field_2_data = in1.ReadShort();
-            if (IsOptimizedChoose)
+            if(IsOptimizedChoose)
             {
                 int nCases = field_2_data;
                 int[] jumpTable = new int[nCases];
-                for (int i = 0; i < jumpTable.Length; i++)
+                for(int i = 0; i < jumpTable.Length; i++)
                 {
                     jumpTable[i] = in1.ReadUShort();
                 }
@@ -102,8 +102,8 @@ namespace NPOI.SS.Formula.PTG
         }
         private AttrPtg(int options, int data, int[] jt, int chooseFuncOffset)
         {
-            field_1_options = (byte)options;
-            field_2_data = (short)data;
+            field_1_options = (byte) options;
+            field_2_data = (short) data;
             _jumpTable = jt;
             _chooseFuncOffset = chooseFuncOffset;
         }
@@ -167,7 +167,7 @@ namespace NPOI.SS.Formula.PTG
         // lets hope no one uses this anymore
         public bool IsBaxcel
         {
-            get{return baxcel.IsSet(field_1_options);}
+            get { return baxcel.IsSet(field_1_options); }
         }
 
         // biff3&4 only  shouldn't happen anymore
@@ -189,14 +189,14 @@ namespace NPOI.SS.Formula.PTG
         {
             get
             {
-                return (int[])_jumpTable.Clone();
+                return (int[]) _jumpTable.Clone();
             }
         }
         public int ChooseFuncOffset
         {
             get
             {
-                if (_jumpTable == null)
+                if(_jumpTable == null)
                 {
                     throw new InvalidOperationException("Not tAttrChoose");
                 }
@@ -208,33 +208,33 @@ namespace NPOI.SS.Formula.PTG
             StringBuilder sb = new StringBuilder(64);
             sb.Append(GetType().Name).Append(" [");
 
-            if (IsSemiVolatile)
+            if(IsSemiVolatile)
             {
                 sb.Append("volatile ");
             }
-            if (IsSpace)
+            if(IsSpace)
             {
                 sb.Append("space count=").Append((field_2_data >> 8) & 0x00FF);
                 sb.Append(" type=").Append(field_2_data & 0x00FF).Append(" ");
             }
             // the rest seem to be mutually exclusive
-            if (IsOptimizedIf)
+            if(IsOptimizedIf)
             {
                 sb.Append("if dist=").Append(Data);
             }
-            else if (IsOptimizedChoose)
+            else if(IsOptimizedChoose)
             {
                 sb.Append("choose nCases=").Append(Data);
             }
-            else if (IsSkip)
+            else if(IsSkip)
             {
                 sb.Append("skip dist=").Append(Data);
             }
-            else if (IsSum)
+            else if(IsSum)
             {
                 sb.Append("sum ");
             }
-            else if (IsBaxcel)
+            else if(IsBaxcel)
             {
                 sb.Append("assign ");
             }
@@ -248,9 +248,9 @@ namespace NPOI.SS.Formula.PTG
             out1.WriteByte(field_1_options);
             out1.WriteShort(field_2_data);
             int[] jt = _jumpTable;
-            if (jt != null)
+            if(jt != null)
             {
-                for (int i = 0; i < jt.Length; i++)
+                for(int i = 0; i < jt.Length; i++)
                 {
                     out1.WriteShort(jt[i]);
                 }
@@ -265,25 +265,25 @@ namespace NPOI.SS.Formula.PTG
         {
             get
             {
-                if (_jumpTable != null)
+                if(_jumpTable != null)
                 {
                     return SIZE + (_jumpTable.Length + 1) * LittleEndianConsts.SHORT_SIZE;
                 }
-               return SIZE;
+                return SIZE;
             }
         }
 
         public String ToFormulaString(String[] operands)
         {
-            if (space.IsSet(field_1_options))
+            if(space.IsSet(field_1_options))
             {
                 return operands[0];
             }
-            else if (optiIf.IsSet(field_1_options))
+            else if(optiIf.IsSet(field_1_options))
             {
                 return ToFormulaString() + "(" + operands[0] + ")";
             }
-            else if (optiSkip.IsSet(field_1_options))
+            else if(optiSkip.IsSet(field_1_options))
             {
                 return ToFormulaString() + operands[0];   //goto Isn't a real formula element should not show up
             }
@@ -306,31 +306,31 @@ namespace NPOI.SS.Formula.PTG
 
         public override String ToFormulaString()
         {
-            if (semiVolatile.IsSet(field_1_options))
+            if(semiVolatile.IsSet(field_1_options))
             {
                 return "ATTR(semiVolatile)";
             }
-            if (optiIf.IsSet(field_1_options))
+            if(optiIf.IsSet(field_1_options))
             {
                 return "IF";
             }
-            if (optiChoose.IsSet(field_1_options))
+            if(optiChoose.IsSet(field_1_options))
             {
                 return "CHOOSE";
             }
-            if (optiSkip.IsSet(field_1_options))
+            if(optiSkip.IsSet(field_1_options))
             {
                 return "";
             }
-            if (optiSum.IsSet(field_1_options))
+            if(optiSum.IsSet(field_1_options))
             {
                 return "SUM";
             }
-            if (baxcel.IsSet(field_1_options))
+            if(baxcel.IsSet(field_1_options))
             {
                 return "ATTR(baxcel)";
             }
-            if (space.IsSet(field_1_options))
+            if(space.IsSet(field_1_options))
             {
                 return "";
             }
@@ -340,13 +340,13 @@ namespace NPOI.SS.Formula.PTG
         public override Object Clone()
         {
             int[] jt;
-            if (_jumpTable == null)
+            if(_jumpTable == null)
             {
                 jt = null;
             }
             else
             {
-                jt = (int[])_jumpTable.Clone();
+                jt = (int[]) _jumpTable.Clone();
             }
             return new AttrPtg(field_1_options, field_2_data, jt, _chooseFuncOffset);
         }

@@ -15,13 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.Formula;
-using NPOI.XSSF.UserModel;
-using System;
-using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.UDF;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using System;
 using System.Collections.Generic;
 namespace NPOI.XSSF.UserModel
 {
@@ -70,18 +70,18 @@ namespace NPOI.XSSF.UserModel
         {
             return new XSSFFormulaEvaluator(workbook, stabilityClassifier, udfFinder);
         }
-        
+
         public override void NotifySetFormula(ICell cell)
         {
-            _bookEvaluator.NotifyUpdateCell(new XSSFEvaluationCell((XSSFCell)cell));
+            _bookEvaluator.NotifyUpdateCell(new XSSFEvaluationCell((XSSFCell) cell));
         }
         public override void NotifyDeleteCell(ICell cell)
         {
-            _bookEvaluator.NotifyDeleteCell(new XSSFEvaluationCell((XSSFCell)cell));
+            _bookEvaluator.NotifyDeleteCell(new XSSFEvaluationCell((XSSFCell) cell));
         }
         public override void NotifyUpdateCell(ICell cell)
         {
-            _bookEvaluator.NotifyUpdateCell(new XSSFEvaluationCell((XSSFCell)cell));
+            _bookEvaluator.NotifyUpdateCell(new XSSFEvaluationCell((XSSFCell) cell));
         }
         /**
          * Loops over all cells in all sheets of the supplied
@@ -119,7 +119,8 @@ namespace NPOI.XSSF.UserModel
 	     */
         protected override IEvaluationCell ToEvaluationCell(ICell cell)
         {
-            if (cell is not XSSFCell xssfCell){
+            if(cell is not XSSFCell xssfCell)
+            {
                 throw new ArgumentException("Unexpected type of cell: " + cell.GetType().Name + "." +
                         " Only XSSFCells can be evaluated.");
             }

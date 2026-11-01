@@ -17,12 +17,13 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link Bin2Dec}
@@ -43,7 +44,7 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval result = invokeValue(number1);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType(), "Had: " + result.ToString());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).StringValue, msg);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).StringValue, msg);
         }
 
         private static void ConfirmValueError(String msg, String number1, ErrorEval numError)
@@ -79,7 +80,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = new Bin2Dec().Evaluate(args, ctx);
 
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual("0", ((NumberEval)result).StringValue);
+            ClassicAssert.AreEqual("0", ((NumberEval) result).StringValue);
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace TestCases.SS.Formula.Functions
             ValueEval result = new Bin2Dec().Evaluate(args, -1, -1);
 
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual("0", ((NumberEval)result).StringValue);
+            ClassicAssert.AreEqual("0", ((NumberEval) result).StringValue);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -40,13 +40,13 @@ namespace NPOI.Util
         public DocumentFormatException(string exception, Exception ex)
             : base(exception, ex)
         {
-            
+
         }
 
         public DocumentFormatException(Exception thr)
             : base(thr)
         {
-            
+
         }
 
         /// <summary>
@@ -65,5 +65,3 @@ namespace NPOI.Util
         }
     }
 }
-
-

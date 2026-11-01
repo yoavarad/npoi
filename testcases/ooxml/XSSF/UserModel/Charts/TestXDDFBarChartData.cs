@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Dml.Chart;
+using NPOI.OpenXmlFormats.Dml.Chart;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XDDF.UserModel.Chart;
@@ -16,10 +16,10 @@ namespace TestCases.XSSF.UserModel.Charts
     {
         private static readonly object[][] plotData = new object[][]
         {
-            ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], 
+            ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         };
-        
+
         [TestCase(BarGrouping.Stacked, ST_BarGrouping.stacked)]
         [TestCase(BarGrouping.Clustered, ST_BarGrouping.clustered)]
         [TestCase(BarGrouping.Standard, ST_BarGrouping.standard)]
@@ -40,18 +40,18 @@ namespace TestCases.XSSF.UserModel.Charts
             var xs =XDDFDataSourcesFactory.FromStringCellRange(sheet, CellRangeAddress.ValueOf("A1:J1"));
             var ys = XDDFDataSourcesFactory.FromNumericCellRange(sheet, CellRangeAddress.ValueOf("A2:J2"));
             barChartData.AddSeries(xs, ys);
-            
+
             barChartData.BarGrouping = barGrouping;
-            
+
             chart.Plot(barChartData);
-            
+
             ClassicAssert.IsInstanceOf<XSSFChart>(chart);
             XSSFChart xssfChart = (XSSFChart)chart;
             CT_BarChart ctBarChart = xssfChart.GetCTChart().plotArea.barChart.FirstOrDefault();
             ClassicAssert.NotNull(ctBarChart);
             ClassicAssert.AreEqual(expectedBarGrouping, ctBarChart!.grouping.val);
         }
-        
+
         [Test]
         public void TestBarGroupingBeClusteredWhenNoBarGroupingIsSet()
         {
@@ -69,9 +69,9 @@ namespace TestCases.XSSF.UserModel.Charts
             var xs = XDDFDataSourcesFactory.FromStringCellRange(sheet, CellRangeAddress.ValueOf("A1:J1"));
             var ys = XDDFDataSourcesFactory.FromNumericCellRange(sheet, CellRangeAddress.ValueOf("A2:J2"));
             barChartData.AddSeries(xs, ys);
-            
+
             chart.Plot(barChartData);
-            
+
             ClassicAssert.IsInstanceOf<XSSFChart>(chart);
             XSSFChart xssfChart = (XSSFChart)chart;
             CT_BarChart ctBarChart = xssfChart.GetCTChart().plotArea.barChart.FirstOrDefault();
@@ -98,7 +98,7 @@ namespace TestCases.XSSF.UserModel.Charts
             using XSSFWorkbook readBack = XSSFTestDataSamples.WriteOutAndReadBack(wb);
             XSSFChart readChart = ((XSSFSheet)readBack.GetSheetAt(0)).GetDrawingPatriarch().GetCharts().Single();
             XmlDocument xml = new XmlDocument();
-            using (Stream stream = readChart.GetPackagePart().GetInputStream())
+            using(Stream stream = readChart.GetPackagePart().GetInputStream())
             {
                 xml.Load(stream);
             }

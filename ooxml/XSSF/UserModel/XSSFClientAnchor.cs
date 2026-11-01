@@ -15,7 +15,6 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Spreadsheet;
 using NPOI.SS;
@@ -23,10 +22,11 @@ using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.Util;
 using SkiaSharp;
+using System;
 
 namespace NPOI.XSSF.UserModel
 {
-        /// <summary>
+    /// <summary>
     /// <para>
     /// A client anchor is attached to an excel worksheet.  It anchors against:
     /// <list type="number">
@@ -129,7 +129,7 @@ namespace NPOI.XSSF.UserModel
             cell2.rowOff = (dy2);
         }
 
-                /// <summary>
+        /// <summary>
         /// Create XSSFClientAnchor from existing xml beans, sized and positioned relative to a pair of cells.
         /// Sets the type to <see cref="AnchorType.MOVE_AND_RESIZE" />.
         /// </summary>
@@ -190,7 +190,8 @@ namespace NPOI.XSSF.UserModel
             , int dy1
             , int dx2
             , int dy2
-        ) : this() {
+        ) : this()
+        {
             IFont   ift = ((XSSFWorkbook)Sheet.Workbook).GetStylesSource().GetFontAt(0);
             using SKFont ft  = SheetUtil.IFont2Font(ift);
             using var paint = new SKPaint { Typeface = ft.Typeface, TextSize = ft.Size };
@@ -198,9 +199,12 @@ namespace NPOI.XSSF.UserModel
 
             double colwidth;                                                                //default or base column width (in pixel)
             var width = ((XSSFSheet)Sheet).worksheet.sheetFormatPr.defaultColWidth;         //string length with padding
-            if(width != 0.0) {
+            if(width != 0.0)
+            {
                 colwidth = width * MDW;
-            } else {
+            }
+            else
+            {
                 var length = ((XSSFSheet)Sheet).worksheet.sheetFormatPr.baseColWidth;       //string length with out padding
                 var fontwidth = Math.Truncate((length * MDW + 5) / MDW * 256) / 256;
                 var tmp = 256 * fontwidth + Math.Truncate(128 / MDW);
@@ -222,15 +226,20 @@ namespace NPOI.XSSF.UserModel
             this.height = Math.Abs(dy1 - dy2);
         }
 
-        protected long EMUtoMakerCol(ISheet Sheet, double MDW, double Colwith, int EMU, CT_Marker Mkr) {
+        protected long EMUtoMakerCol(ISheet Sheet, double MDW, double Colwith, int EMU, CT_Marker Mkr)
+        {
             double width_px;
             Mkr.colOff = EMU;
             Mkr.col = 0;
-            for(int iCol = 0; iCol < SpreadsheetVersion.EXCEL2007.MaxColumns; iCol++) {
+            for(int iCol = 0; iCol < SpreadsheetVersion.EXCEL2007.MaxColumns; iCol++)
+            {
                 width_px = Colwith;
-                foreach(var cols in ((XSSFSheet)Sheet).worksheet.cols) {
-                    foreach(var col in cols.col) {
-                        if(col.min <= iCol + 1 && iCol + 1 <= col.max) {
+                foreach(var cols in ((XSSFSheet) Sheet).worksheet.cols)
+                {
+                    foreach(var col in cols.col)
+                    {
+                        if(col.min <= iCol + 1 && iCol + 1 <= col.max)
+                        {
                             width_px = col.width * MDW;
                             goto lblforbreak;
                         }
@@ -238,29 +247,38 @@ namespace NPOI.XSSF.UserModel
                 }
 lblforbreak:
                 int EMUwidth = Units.PixelToEMU((int)Math.Round(width_px, 1));
-                if(Mkr.colOff >= EMUwidth) {
+                if(Mkr.colOff >= EMUwidth)
+                {
                     Mkr.colOff -= EMUwidth;
                     Mkr.col++;
-                } else {
+                }
+                else
+                {
                     return Mkr.colOff;
                 }
             }
             return -1;
         }
 
-        protected long EMUtoMakerRow(ISheet Sheet, int EMU, CT_Marker Mkr) {
+        protected long EMUtoMakerRow(ISheet Sheet, int EMU, CT_Marker Mkr)
+        {
             Mkr.rowOff = EMU;
             Mkr.row= 0;
-            for(int iRow = 0; iRow < SpreadsheetVersion.EXCEL2007.MaxRows; iRow++) {
+            for(int iRow = 0; iRow < SpreadsheetVersion.EXCEL2007.MaxRows; iRow++)
+            {
                 double height = ((XSSFSheet) Sheet).DefaultRowHeightInPoints;
                 var row = (XSSFRow)((XSSFSheet) Sheet).GetRow(iRow);
-                if(row != null) {
+                if(row != null)
+                {
                     height = row.HeightInPoints;
                 }
-                if(Mkr.rowOff >= Units.ToEMU(height)) {
+                if(Mkr.rowOff >= Units.ToEMU(height))
+                {
                     Mkr.rowOff -= Units.ToEMU(height);
                     Mkr.row++;
-                } else {
+                }
+                else
+                {
                     return Mkr.rowOff;
                 }
             }
@@ -301,10 +319,10 @@ lblforbreak:
             // start with width - offset, then keep adding column widths until the next one Puts us over w
             long wPos = cw - cell.colOff;
 
-            while (wPos < w)
+            while(wPos < w)
             {
                 c++;
-                cw = Units.ColumnWidthToEMU((int)sheet.GetColumnWidth(c));
+                cw = Units.ColumnWidthToEMU((int) sheet.GetColumnWidth(c));
                 wPos += cw;
             }
             // now wPos >= w, so end column = c, now figure offset
@@ -315,7 +333,7 @@ lblforbreak:
             // start with height - offset, then keep adding row heights until the next one Puts us over h
             long hPos = rh - cell.rowOff;
 
-            while (hPos < h)
+            while(hPos < h)
             {
                 r++;
                 rh = Units.ToEMU(GetRowHeight(sheet, r));
@@ -353,12 +371,13 @@ lblforbreak:
             {
                 return cell2 != null ? cell2 : calcCell(Cell1, size.cx, size.cy);
             }
-            
+
         }
 
         public override bool Equals(Object o)
         {
-            if (o == null || o is not XSSFClientAnchor anchor) return false;
+            if(o == null || o is not XSSFClientAnchor anchor)
+                return false;
 
             return Dx1 == anchor.Dx1 &&
                    Dx2 == anchor.Dx2 &&
@@ -393,7 +412,7 @@ lblforbreak:
             {
                 return Cell1;
             }
-            set 
+            set
             {
                 cell1 = value;
             }
@@ -411,15 +430,15 @@ lblforbreak:
             {
                 return Cell2;
             }
-            set 
+            set
             {
                 cell2 = value;
             }
         }
 
 
-         internal bool IsSet()
-         {
+        internal bool IsSet()
+        {
             CT_Marker c1 = Cell1;
             CT_Marker c2 = Cell2;
             return !(c1.col == 0 && c2.col == 0 &&
@@ -455,7 +474,7 @@ lblforbreak:
         {
             get
             {
-                return (int)Cell1.colOff;
+                return (int) Cell1.colOff;
             }
             set
             {
@@ -467,7 +486,7 @@ lblforbreak:
         {
             get
             {
-                return (int)Cell1.rowOff;
+                return (int) Cell1.rowOff;
             }
             set
             {
@@ -479,7 +498,7 @@ lblforbreak:
         {
             get
             {
-                return (int)Cell2.rowOff;
+                return (int) Cell2.rowOff;
             }
             set
             {
@@ -491,7 +510,7 @@ lblforbreak:
         {
             get
             {
-                return (int)Cell2.colOff;
+                return (int) Cell2.colOff;
             }
             set
             {
@@ -561,6 +580,3 @@ lblforbreak:
         #endregion
     }
 }
-
-
-

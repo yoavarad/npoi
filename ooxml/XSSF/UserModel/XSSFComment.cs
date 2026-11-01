@@ -15,14 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.OpenXmlFormats.Vml;
+using NPOI.OpenXmlFormats.Vml.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using NPOI.XSSF.Model;
 using NPOI.Util;
-using NPOI.OpenXmlFormats.Vml.Spreadsheet;
+using NPOI.XSSF.Model;
+using System;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -51,7 +51,7 @@ namespace NPOI.XSSF.UserModel
 
             // we potentially need to adjust the column/row information in the shape
             // the same way as we do in setRow()/setColumn()
-            if (vmlShape != null && vmlShape.SizeOfClientDataArray() > 0)
+            if(vmlShape != null && vmlShape.SizeOfClientDataArray() > 0)
             {
                 CellReference ref1 = new CellReference(comment.@ref);
                 CT_ClientData clientData = vmlShape.GetClientDataArray(0);
@@ -74,12 +74,12 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return _comments.GetAuthor((int)_comment.authorId);
+                return _comments.GetAuthor((int) _comment.authorId);
             }
-            set 
+            set
             {
                 _comment.authorId = (
-                    (uint)_comments.FindAuthor(value)
+                    (uint) _comments.FindAuthor(value)
                 );
             }
         }
@@ -93,7 +93,7 @@ namespace NPOI.XSSF.UserModel
             set
             {
                 CellAddress oldRef = new CellAddress(_comment.@ref);
-                if (value.Equals(oldRef))
+                if(value.Equals(oldRef))
                 {
                     // nothing to do
                     return;
@@ -101,7 +101,7 @@ namespace NPOI.XSSF.UserModel
                 _comment.@ref = value.FormatAsString();
                 _comments.ReferenceUpdated(oldRef, _comment);
 
-                if (_vmlShape != null)
+                if(_vmlShape != null)
                 {
                     CT_ClientData clientData = _vmlShape.GetClientDataArray(0);
                     clientData.SetRowArray(0, value.Row);
@@ -142,7 +142,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return Address.Row;
             }
-            set 
+            set
             {
                 SetAddress(value, Column);
             }
@@ -156,14 +156,14 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 bool visible = false;
-                if (_vmlShape != null)
+                if(_vmlShape != null)
                 {
                     String style = _vmlShape.style;
-                    if (style != null)
+                    if(style != null)
                         visible = style.Contains("visibility:visible");
                     else
                     {
-                        if (_vmlShape.GetClientDataArray(0) == null)
+                        if(_vmlShape.GetClientDataArray(0) == null)
                             return false;
                         else
                             visible = _vmlShape.GetClientDataArray(0).visibleSpecified;
@@ -171,12 +171,12 @@ namespace NPOI.XSSF.UserModel
                 }
                 return visible;
             }
-            set 
+            set
             {
-                if (_vmlShape != null)
+                if(_vmlShape != null)
                 {
                     String style;
-                    if (value)
+                    if(value)
                     {
                         style = "position:absolute;visibility:visible";
                         _vmlShape.GetClientDataArray(0).visible = OpenXmlFormats.Vml.Spreadsheet.ST_TrueFalseBlank.@true;
@@ -190,7 +190,7 @@ namespace NPOI.XSSF.UserModel
 
                     }
                     _vmlShape.style = (style);
-                }   
+                }
             }
         }
 
@@ -201,15 +201,16 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_str == null)
+                if(_str == null)
                 {
-                    if (_comment.text != null) _str = new XSSFRichTextString(_comment.text);
+                    if(_comment.text != null)
+                        _str = new XSSFRichTextString(_comment.text);
                 }
                 return _str;
             }
-            set 
+            set
             {
-                if (value is not XSSFRichTextString textString)
+                if(value is not XSSFRichTextString textString)
                 {
                     throw new ArgumentException("Only XSSFRichTextString argument is supported");
                 }
@@ -235,7 +236,7 @@ namespace NPOI.XSSF.UserModel
                 String position = _vmlShape.GetClientDataArray(0).GetAnchorArray(0);
                 int[] pos = new int[8];
                 int i = 0;
-                foreach (String s in position.Split(",".ToCharArray()))
+                foreach(String s in position.Split(",".ToCharArray()))
                 {
                     pos[i++] = int.Parse(s.Trim());
                 }
@@ -260,7 +261,8 @@ namespace NPOI.XSSF.UserModel
 
         public override bool Equals(Object obj)
         {
-            if (obj is not XSSFComment other) {
+            if(obj is not XSSFComment other)
+            {
                 return false;
             }
 
@@ -274,4 +276,3 @@ namespace NPOI.XSSF.UserModel
         }
     }
 }
-

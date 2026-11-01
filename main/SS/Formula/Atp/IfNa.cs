@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace NPOI.SS.Formula.Atp
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -26,10 +26,10 @@ namespace NPOI.SS.Formula.Atp
             {
                 return OperandResolver.GetSingleValue(args[0], ec.RowIndex, ec.ColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 ValueEval error = e.GetErrorEval();
-                if (error != ErrorEval.NA)
+                if(error != ErrorEval.NA)
                 {
                     return error;
                 }
@@ -38,7 +38,7 @@ namespace NPOI.SS.Formula.Atp
             {
                 return OperandResolver.GetSingleValue(args[1], ec.RowIndex, ec.ColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

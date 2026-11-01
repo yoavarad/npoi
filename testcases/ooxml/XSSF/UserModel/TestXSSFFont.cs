@@ -85,7 +85,7 @@ namespace TestCases.XSSF.UserModel
             // And Set with the Charset index
             xssfFont.SetCharSet(FontCharset.ARABIC.Value);
             ClassicAssert.AreEqual(FontCharset.ARABIC.Value, xssfFont.Charset);
-            xssfFont.SetCharSet((byte)(FontCharset.ARABIC.Value));
+            xssfFont.SetCharSet((byte) (FontCharset.ARABIC.Value));
             ClassicAssert.AreEqual(FontCharset.ARABIC.Value, xssfFont.Charset);
 
             // This one isn't allowed
@@ -95,7 +95,7 @@ namespace TestCases.XSSF.UserModel
                 xssfFont.SetCharSet(9999);
                 Assert.Fail("Shouldn't be able to Set an invalid charset");
             }
-            catch (POIXMLException) { }
+            catch(POIXMLException) { }
 
 
             // Now try with a few sample files
@@ -103,13 +103,13 @@ namespace TestCases.XSSF.UserModel
             // Normal charset
             XSSFWorkbook workbook = XSSFTestDataSamples.OpenSampleWorkbook("Formatting.xlsx");
             ClassicAssert.AreEqual(0,
-                  ((XSSFCellStyle)workbook.GetSheetAt(0).GetRow(0).GetCell(0).CellStyle).GetFont().Charset
+                  ((XSSFCellStyle) workbook.GetSheetAt(0).GetRow(0).GetCell(0).CellStyle).GetFont().Charset
             );
 
             // GB2312 charact Set
             workbook = XSSFTestDataSamples.OpenSampleWorkbook("49273.xlsx");
             ClassicAssert.AreEqual(134,
-                  ((XSSFCellStyle)workbook.GetSheetAt(0).GetRow(0).GetCell(0).CellStyle).GetFont().Charset
+                  ((XSSFCellStyle) workbook.GetSheetAt(0).GetRow(0).GetCell(0).CellStyle).GetFont().Charset
             );
         }
         [Test]
@@ -184,7 +184,7 @@ namespace TestCases.XSSF.UserModel
             XSSFFont xssfFont = new XSSFFont(ctFont);
             ClassicAssert.AreEqual(14, xssfFont.FontHeightInPoints);
 
-            xssfFont.FontHeightInPoints = (short)20;
+            xssfFont.FontHeightInPoints = (short) 20;
             ClassicAssert.AreEqual(20.0, ctFont.GetSzArray(0).val, 0.0);
         }
         [Test]
@@ -211,14 +211,14 @@ namespace TestCases.XSSF.UserModel
         {
             CT_Font ctFont = new CT_Font();
             CT_Color color = ctFont.AddNewColor();
-            color.indexed = (uint)(XSSFFont.DEFAULT_FONT_COLOR);
+            color.indexed = (uint) (XSSFFont.DEFAULT_FONT_COLOR);
             ctFont.SetColorArray(0, color);
 
             XSSFFont xssfFont = new XSSFFont(ctFont);
             ClassicAssert.AreEqual(IndexedColors.Black.Index, xssfFont.Color);
 
             xssfFont.Color = IndexedColors.Red.Index;
-            ClassicAssert.AreEqual((uint)IndexedColors.Red.Index, ctFont.GetColorArray(0).indexed);
+            ClassicAssert.AreEqual((uint) IndexedColors.Red.Index, ctFont.GetColorArray(0).indexed);
         }
         [Test]
         public void TestRgbColor()
@@ -236,7 +236,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(ctFont.GetColorArray(0).GetRgb()[2], xssfFont.GetXSSFColor().RGB[2]);
             ClassicAssert.AreEqual(ctFont.GetColorArray(0).GetRgb()[3], xssfFont.GetXSSFColor().RGB[3]);
 
-            xssfFont.Color = ((short)23);
+            xssfFont.Color = ((short) 23);
 
             byte[] bytes = Encoding.ASCII.GetBytes(HexDump.ToHex(0xF1F1F1));
             color.rgb = (bytes);
@@ -258,10 +258,10 @@ namespace TestCases.XSSF.UserModel
             ctFont.SetColorArray(0, color);
 
             XSSFFont xssfFont = new XSSFFont(ctFont);
-            ClassicAssert.AreEqual((short)ctFont.GetColorArray(0).theme, xssfFont.GetThemeColor());
+            ClassicAssert.AreEqual((short) ctFont.GetColorArray(0).theme, xssfFont.GetThemeColor());
 
             xssfFont.SetThemeColor(IndexedColors.Red.Index);
-            ClassicAssert.AreEqual((uint)IndexedColors.Red.Index, ctFont.GetColorArray(0).theme);
+            ClassicAssert.AreEqual((uint) IndexedColors.Red.Index, ctFont.GetColorArray(0).theme);
         }
         [Test]
         public void TestFamily()
@@ -310,7 +310,7 @@ namespace TestCases.XSSF.UserModel
             IWorkbook wb = new XSSFWorkbook();
 
             // cannot check on result because on some machines we get back false here!
-            SheetUtil.CanComputeColumnWidth(wb.GetFontAt((short)0));
+            SheetUtil.CanComputeColumnWidth(wb.GetFontAt((short) 0));
 
             wb.Close();
         }

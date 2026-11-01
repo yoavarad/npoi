@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -18,9 +18,9 @@
 
 namespace NPOI.SS
 {
+    using Cysharp.Text;
     using System.Collections.Generic;
-    using System.Text; 
-using Cysharp.Text;
+    using System.Text;
     using System.Xml;
 
     public class HtmlDocumentFacade
@@ -211,13 +211,13 @@ using Cysharp.Text;
         public string GetOrCreateCssClass(string tagName, string classNamePrefix,
             string style)
         {
-            if (!stylesheet.ContainsKey(tagName))
+            if(!stylesheet.ContainsKey(tagName))
                 stylesheet.Add(tagName, new Dictionary<string, string>(1));
 
             Dictionary<string, string> styleToClassName = stylesheet[tagName];
 
             string knownClass;
-            if (styleToClassName.TryGetValue(style, out string value))
+            if(styleToClassName.TryGetValue(style, out string value))
             {
                 knownClass = value;
                 return knownClass;
@@ -232,20 +232,20 @@ using Cysharp.Text;
         {
             get
             {
-                if (title == null)
+                if(title == null)
                     return null;
                 return titleText.InnerText;
             }
             set
             {
-                if (string.IsNullOrEmpty(value) && this.title != null)
+                if(string.IsNullOrEmpty(value) && this.title != null)
                 {
                     this.head.RemoveChild(this.title);
                     this.title = null;
                     this.titleText = null;
                 }
 
-                if (this.title == null)
+                if(this.title == null)
                 {
                     this.title = document.CreateElement("title");
                     this.titleText = document.CreateTextNode(value);
@@ -292,11 +292,11 @@ using Cysharp.Text;
 
         public void UpdateStylesheet()
         {
-           using var stringBuilder = ZString.CreateStringBuilder();
-            foreach (KeyValuePair<string, Dictionary<string, string>> kvTag in stylesheet)
+            using var stringBuilder = ZString.CreateStringBuilder();
+            foreach(KeyValuePair<string, Dictionary<string, string>> kvTag in stylesheet)
             {
                 string tagName = kvTag.Key;
-                foreach (KeyValuePair<string, string> kvStyle in kvTag.Value)
+                foreach(KeyValuePair<string, string> kvStyle in kvTag.Value)
                 {
                     string style = kvStyle.Key;
                     string className = kvStyle.Value;

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,16 +29,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         //}
         public static CT_Comment Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Comment ctObj = new CT_Comment();
             ctObj.@ref = XmlHelper.ReadString(node.Attributes["ref"]);
-            if (node.Attributes["authorId"] != null)
+            if(node.Attributes["authorId"] != null)
                 ctObj.authorId = XmlHelper.ReadUInt(node.Attributes["authorId"]);
             ctObj.guid = XmlHelper.ReadString(node.Attributes["guid"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "text")
+                if(childNode.LocalName == "text")
                     ctObj.text = CT_Rst.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -50,7 +50,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "authorId", this.authorId, true);
             XmlHelper.WriteAttribute(sw, "guid", this.guid);
             sw.Write('>');
-            if (this.text != null)
+            if(this.text != null)
                 this.text.Write(sw, "text");
             sw.WriteEndElement(nodeName);
         }

@@ -20,9 +20,9 @@
  */
 namespace NPOI.SS.Formula.Eval
 {
-    using System;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.Util;
+    using System;
 
     //public class RelationalValues
     //{
@@ -40,20 +40,20 @@ namespace NPOI.SS.Formula.Eval
         private static int DoCompare(ValueEval va, ValueEval vb)
         {
             // special cases when one operand is blank or missing
-            if (va == BlankEval.instance|| va is MissingArgEval)
+            if(va == BlankEval.instance|| va is MissingArgEval)
             {
                 return CompareBlank(vb);
             }
-            if (vb == BlankEval.instance || vb is MissingArgEval)
+            if(vb == BlankEval.instance || vb is MissingArgEval)
             {
                 return -CompareBlank(va);
             }
 
-            if (va is BoolEval bA)
+            if(va is BoolEval bA)
             {
-                if (vb is BoolEval bB)
+                if(vb is BoolEval bB)
                 {
-                    if (bA.BooleanValue == bB.BooleanValue)
+                    if(bA.BooleanValue == bB.BooleanValue)
                     {
                         return 0;
                     }
@@ -61,27 +61,27 @@ namespace NPOI.SS.Formula.Eval
                 }
                 return 1;
             }
-            if (vb is BoolEval)
+            if(vb is BoolEval)
             {
                 return -1;
             }
-            if (va is StringEval sA)
+            if(va is StringEval sA)
             {
-                if (vb is StringEval sB)
+                if(vb is StringEval sB)
                 {
                     return string.Compare(sA.StringValue, sB.StringValue, StringComparison.OrdinalIgnoreCase);
                 }
                 return 1;
             }
-            if (vb is StringEval)
+            if(vb is StringEval)
             {
                 return -1;
             }
-            if (va is NumberEval nA)
+            if(va is NumberEval nA)
             {
-                if (vb is NumberEval nB)
+                if(vb is NumberEval nB)
                 {
-                    if (nA.NumberValue == nB.NumberValue)
+                    if(nA.NumberValue == nB.NumberValue)
                     {
                         // Excel considers -0.0 == 0.0 which is different to Double.compare()
                         return 0;
@@ -94,20 +94,20 @@ namespace NPOI.SS.Formula.Eval
         }
         private static int CompareBlank(ValueEval v)
         {
-            if (v == BlankEval.instance|| v is MissingArgEval)
+            if(v == BlankEval.instance|| v is MissingArgEval)
             {
                 return 0;
             }
-            if (v is BoolEval boolEval)
+            if(v is BoolEval boolEval)
             {
                 return boolEval.BooleanValue ? -1 : 0;
             }
-            if (v is NumberEval ne)
+            if(v is NumberEval ne)
             {
                 //return ne.NumberValue.CompareTo(0.0);
                 return NumberComparer.Compare(0.0, ne.NumberValue);
             }
-            if (v is StringEval se)
+            if(v is StringEval se)
             {
                 return se.StringValue.Length < 1 ? 0 : -1;
             }
@@ -124,7 +124,7 @@ namespace NPOI.SS.Formula.Eval
                 vA = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 vB = OperandResolver.GetSingleValue(arg1, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -139,14 +139,14 @@ namespace NPOI.SS.Formula.Eval
 
             int w1, w2, h1, h2;
             int a1FirstCol = 0, a1FirstRow = 0;
-            if (arg0 is AreaEval eval)
+            if(arg0 is AreaEval eval)
             {
                 w1 = eval.Width;
                 h1 = eval.Height;
                 a1FirstCol = eval.FirstColumn;
                 a1FirstRow = eval.FirstRow;
             }
-            else if (arg0 is RefEval ref1)
+            else if(arg0 is RefEval ref1)
             {
                 w1 = 1;
                 h1 = 1;
@@ -159,14 +159,14 @@ namespace NPOI.SS.Formula.Eval
                 h1 = 1;
             }
             int a2FirstCol = 0, a2FirstRow = 0;
-            if (arg1 is AreaEval ae)
+            if(arg1 is AreaEval ae)
             {
                 w2 = ae.Width;
                 h2 = ae.Height;
                 a2FirstCol = ae.FirstColumn;
                 a2FirstRow = ae.FirstRow;
             }
-            else if (arg1 is RefEval ref1)
+            else if(arg1 is RefEval ref1)
             {
                 w2 = 1;
                 h2 = 1;
@@ -185,16 +185,16 @@ namespace NPOI.SS.Formula.Eval
             ValueEval[] vals = new ValueEval[height * width];
 
             int idx = 0;
-            for (int i = 0; i < height; i++)
+            for(int i = 0; i < height; i++)
             {
-                for (int j = 0; j < width; j++)
+                for(int j = 0; j < width; j++)
                 {
                     ValueEval vA;
                     try
                     {
                         vA = OperandResolver.GetSingleValue(arg0, a1FirstRow + i, a1FirstCol + j);
                     }
-                    catch (EvaluationException e)
+                    catch(EvaluationException e)
                     {
                         vA = e.GetErrorEval();
                     }
@@ -203,15 +203,15 @@ namespace NPOI.SS.Formula.Eval
                     {
                         vB = OperandResolver.GetSingleValue(arg1, a2FirstRow + i, a2FirstCol + j);
                     }
-                    catch (EvaluationException e)
+                    catch(EvaluationException e)
                     {
                         vB = e.GetErrorEval();
                     }
-                    if (vA is ErrorEval)
+                    if(vA is ErrorEval)
                     {
                         vals[idx++] = vA;
                     }
-                    else if (vB is ErrorEval)
+                    else if(vB is ErrorEval)
                     {
                         vals[idx++] = vB;
                     }
@@ -225,7 +225,7 @@ namespace NPOI.SS.Formula.Eval
                 }
             }
 
-            if (vals.Length == 1)
+            if(vals.Length == 1)
             {
                 return vals[0];
             }

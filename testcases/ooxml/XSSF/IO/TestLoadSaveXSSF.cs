@@ -17,7 +17,8 @@
 
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System.Collections;
 namespace TestCases.XSSF.IO
 {
@@ -38,7 +39,7 @@ namespace TestCases.XSSF.IO
             ICell cell = row.GetCell((short)1);
             ClassicAssert.IsNotNull(cell);
             ClassicAssert.AreEqual(111.0, cell.NumericCellValue, 0.0);
-            cell = row.GetCell((short)0);
+            cell = row.GetCell((short) 0);
             ClassicAssert.AreEqual("Lorem", cell.RichStringCellValue.String);
         }
 
@@ -64,5 +65,3 @@ namespace TestCases.XSSF.IO
         }
     }
 }
-
-

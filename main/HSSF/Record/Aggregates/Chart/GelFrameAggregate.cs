@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
@@ -35,24 +35,24 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public GelFrameAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_GELFRAME, container)
         {
-            gelFrame1 = (GelFrameRecord)rs.GetNext();
+            gelFrame1 = (GelFrameRecord) rs.GetNext();
             int sid = rs.PeekNextChartSid();
-            if (sid == GelFrameRecord.sid)
+            if(sid == GelFrameRecord.sid)
             {
-                gelFrame2 = (GelFrameRecord)rs.GetNext();
+                gelFrame2 = (GelFrameRecord) rs.GetNext();
                 sid = rs.PeekNextChartSid();
             }
-            if (sid == ContinueRecord.sid)
+            if(sid == ContinueRecord.sid)
             {
-                while (rs.PeekNextChartSid() == ContinueRecord.sid)
+                while(rs.PeekNextChartSid() == ContinueRecord.sid)
                 {
-                    continues.Add((ContinueRecord)rs.GetNext());
+                    continues.Add((ContinueRecord) rs.GetNext());
                 }
             }
-            if (rs.PeekNextChartSid() == BeginRecord.sid)
+            if(rs.PeekNextChartSid() == BeginRecord.sid)
             {
                 rs.GetNext();
-                picF = (PicFRecord)rs.GetNext();
+                picF = (PicFRecord) rs.GetNext();
                 Record r = rs.GetNext();//EndRecord
                 Debug.Assert(r.GetType() == typeof(EndRecord));
             }
@@ -60,11 +60,11 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public override void VisitContainedRecords(RecordVisitor rv)
         {
             rv.VisitRecord(gelFrame1);
-            if (gelFrame2 != null)
+            if(gelFrame2 != null)
                 rv.VisitRecord(gelFrame2);
-            foreach (ContinueRecord cr in continues)
+            foreach(ContinueRecord cr in continues)
                 rv.VisitRecord(cr);
-            if (picF != null)
+            if(picF != null)
             {
                 rv.VisitRecord(BeginRecord.instance);
                 rv.VisitRecord(picF);

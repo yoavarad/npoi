@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -134,7 +134,7 @@ namespace TestCases.SS.UserModel
             sheet = wb.GetSheet("Sales Plan");
             GetRulesFor(9, 2);
             ClassicAssert.AreNotEqual(0, rules.Count, "No rules for " + ref1);
-            ClassicAssert.AreEqual("FFFFFF00", GetColor(rules[0].Rule.PatternFormatting.FillBackgroundColorColor), 
+            ClassicAssert.AreEqual("FFFFFF00", GetColor(rules[0].Rule.PatternFormatting.FillBackgroundColorColor),
                 "wrong bg color for " + ref1);
         }
 

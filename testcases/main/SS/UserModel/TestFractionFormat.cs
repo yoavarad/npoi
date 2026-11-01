@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,13 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.SS.UserModel;
-using TestCases.HSSF;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using TestCases.HSSF;
 
 namespace TestCases.SS.UserModel
 {
@@ -57,23 +58,23 @@ namespace TestCases.SS.UserModel
             String[] headers = truthLine.Split("\t".ToCharArray());
             truthLine = reader.ReadLine();
 
-            for (int i = 1; i < sheet.LastRowNum && truthLine != null; i++)
+            for(int i = 1; i < sheet.LastRowNum && truthLine != null; i++)
             {
                 IRow r = sheet.GetRow(i);
                 String[] truths = truthLine.Split("\t".ToCharArray());
                 // Intentionally ignore the last column (tika-1132), for now
-                for (short j = 3; j < 12; j++)
+                for(short j = 3; j < 12; j++)
                 {
                     ICell cell = r.GetCell(j, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                     String truth = Clean(truths[j]);
                     String testKey = truths[0] + ":" + truths[1] + ":" + headers[j];
                     String formatted = Clean(formatter.FormatCellValue(cell, Evaluator));
-                    if (truths.Length <= j)
+                    if(truths.Length <= j)
                     {
                         continue;
                     }
 
-                    
+
                     ClassicAssert.AreEqual(truth, formatted, testKey);
                 }
                 truthLine = reader.ReadLine();

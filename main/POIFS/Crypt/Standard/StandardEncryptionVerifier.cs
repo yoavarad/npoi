@@ -16,22 +16,25 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Standard
 {
-    using System;
-    using System.Diagnostics;
     using NPOI.POIFS.Crypt;
     using NPOI.Util;
+    using System;
+    using System.Diagnostics;
 
     /**
      * Used when Checking if a key is valid for a document 
      */
-    public class StandardEncryptionVerifier : EncryptionVerifier , EncryptionRecord {
+    public class StandardEncryptionVerifier : EncryptionVerifier, EncryptionRecord
+    {
         private static int SPIN_COUNT = 50000;
         private int verifierHashSize;
 
-        internal StandardEncryptionVerifier(ILittleEndianInput is1, StandardEncryptionHeader header) {
+        internal StandardEncryptionVerifier(ILittleEndianInput is1, StandardEncryptionHeader header)
+        {
             int saltSize = is1.ReadInt();
 
-            if (saltSize != 16) {
+            if(saltSize != 16)
+            {
                 throw new Exception("Salt size != 16 !?");
             }
 
@@ -56,7 +59,8 @@ namespace NPOI.POIFS.Crypt.Standard
             HashAlgorithm = (header.HashAlgorithm);
         }
 
-        protected internal StandardEncryptionVerifier(CipherAlgorithm cipherAlgorithm, HashAlgorithm hashAlgorithm, int keyBits, int blockSize, ChainingMode chainingMode) {
+        protected internal StandardEncryptionVerifier(CipherAlgorithm cipherAlgorithm, HashAlgorithm hashAlgorithm, int keyBits, int blockSize, ChainingMode chainingMode)
+        {
             CipherAlgorithm = (cipherAlgorithm);
             HashAlgorithm = (hashAlgorithm);
             ChainingMode = (chainingMode);
@@ -65,24 +69,29 @@ namespace NPOI.POIFS.Crypt.Standard
         }
 
         // make method visible for this package
-        protected internal void SetSalt(byte[] salt) {
-            if (salt == null || salt.Length != 16) {
+        protected internal void SetSalt(byte[] salt)
+        {
+            if(salt == null || salt.Length != 16)
+            {
                 throw new EncryptedDocumentException("invalid verifier salt");
             }
             base.Salt = (salt);
         }
 
         // make method visible for this package
-        protected internal void SetEncryptedVerifier(byte[] encryptedVerifier) {
+        protected internal void SetEncryptedVerifier(byte[] encryptedVerifier)
+        {
             base.EncryptedVerifier = (encryptedVerifier);
         }
 
         // make method visible for this package
-        protected internal void SetEncryptedVerifierHash(byte[] encryptedVerifierHash) {
+        protected internal void SetEncryptedVerifierHash(byte[] encryptedVerifierHash)
+        {
             base.EncryptedVerifierHash = (encryptedVerifierHash);
         }
 
-        public void Write(LittleEndianByteArrayOutputStream bos) {
+        public void Write(LittleEndianByteArrayOutputStream bos)
+        {
             // see [MS-OFFCRYPTO] - 2.3.4.9
             byte[] salt = Salt;
             Debug.Assert(salt.Length == 16);
@@ -109,7 +118,8 @@ namespace NPOI.POIFS.Crypt.Standard
             bos.Write(encryptedVerifierHash);
         }
 
-        protected int GetVerifierHashSize() {
+        protected int GetVerifierHashSize()
+        {
             return verifierHashSize;
         }
     }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -27,14 +27,14 @@ using System.Text;
 namespace TestCases.XSSF.EventUserModel
 {
 
-    using System.Text.RegularExpressions;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.XSSF.EventUserModel;
     using NPOI.XSSF.Model;
     using NPOI.XSSF.UserModel;
-    using NPOI.XSSF.EventUserModel;
     using NUnit.Framework;
-    using NPOI.OpenXmlFormats.Spreadsheet;
     using NUnit.Framework.Legacy;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Tests for <see cref="XSSFReader" />
@@ -122,4 +122,3 @@ namespace TestCases.XSSF.EventUserModel
 
     }
 }
-

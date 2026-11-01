@@ -19,8 +19,8 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
     using NPOI.Util;
+    using System;
 
 
     /**
@@ -58,7 +58,7 @@ namespace NPOI.HSSF.Record
         //}
         public static Record Create(RecordInputStream in1)
         {
-            switch (in1.Remaining)
+            switch(in1.Remaining)
             {
                 case 0:
                     return Instance;
@@ -94,7 +94,7 @@ namespace NPOI.HSSF.Record
         }
         protected override int DataSize
         {
-            get 
+            get
             {
                 int size = 0;
                 //if (_unknownData != null) size += _unknownData.Length;

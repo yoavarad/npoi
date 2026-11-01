@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -24,7 +24,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
     /// <summary>
     /// DVAXIS = Axis Begin [ValueRange] [AXM] AXS [CRTMLFRT] End
     /// </summary>
-    public class DVAxisAggregate: ChartRecordAggregate
+    public class DVAxisAggregate : ChartRecordAggregate
     {
         private AxisRecord axis;
         private ValueRangeRecord valueRange;
@@ -39,9 +39,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public DVAxisAggregate(RecordStream rs, ChartRecordAggregate container, AxisRecord axis)
             : base(RuleName_DVAXIS, container)
         {
-            if (axis == null)
+            if(axis == null)
             {
-                this.axis = (AxisRecord)rs.GetNext();
+                this.axis = (AxisRecord) rs.GetNext();
                 rs.GetNext();
             }
             else
@@ -49,14 +49,14 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                 this.axis = axis;
             }
 
-            if (rs.PeekNextChartSid() == ValueRangeRecord.sid)
-                valueRange = (ValueRangeRecord)rs.GetNext();
+            if(rs.PeekNextChartSid() == ValueRangeRecord.sid)
+                valueRange = (ValueRangeRecord) rs.GetNext();
 
-            if (rs.PeekNextChartSid() == YMultRecord.sid)
+            if(rs.PeekNextChartSid() == YMultRecord.sid)
                 axm = new AXMAggregate(rs, this);
 
             axs = new AXSAggregate(rs, this);
-            if (rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
+            if(rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
                 crtmlfrt = new CrtMlFrtAggregate(rs, this);
 
             Record r = rs.GetNext();//EndRecord
@@ -66,14 +66,14 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         {
             rv.VisitRecord(axis);
             rv.VisitRecord(BeginRecord.instance);
-            if (valueRange != null)
+            if(valueRange != null)
                 rv.VisitRecord(valueRange);
-            if (axm != null)
+            if(axm != null)
                 axm.VisitContainedRecords(rv);
 
             axs.VisitContainedRecords(rv);
 
-            if (crtmlfrt != null)
+            if(crtmlfrt != null)
                 crtmlfrt.VisitContainedRecords(rv);
 
             WriteEndBlock(rv);

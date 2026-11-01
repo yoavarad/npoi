@@ -17,17 +17,18 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Record;
-    using NPOI.Util;
+    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
-    using TestCases.HSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
+    using System;
+    using System.Collections;
+    using System.IO;
+    using TestCases.HSSF;
 
     /**
      * @author Brian Sanders (bsanders at risklabs dot com)
@@ -58,8 +59,8 @@ namespace TestCases.HSSF.UserModel
 
             //creating custom palette
             HSSFPalette palette = book.GetCustomPalette();
-            palette.SetColorAtIndex((short)0x12, (byte)101, (byte)230, (byte)100);
-            palette.SetColorAtIndex((short)0x3b, (byte)0, (byte)255, (byte)52);
+            palette.SetColorAtIndex((short) 0x12, (byte) 101, (byte) 230, (byte) 100);
+            palette.SetColorAtIndex((short) 0x3b, (byte) 0, (byte) 255, (byte) 52);
 
             //writing to disk; reading in and verifying palette
             string tmppath = TempFile.GetTempFilePath("TestCustomPalette", ".xls");
@@ -81,13 +82,13 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(expectedRGB[1], actualRGB[1], msg);
             ClassicAssert.AreEqual(expectedRGB[2], actualRGB[2], msg);
 
-            color = palette.GetColor((short)0x12);
+            color = palette.GetColor((short) 0x12);
             ClassicAssert.IsNotNull(color, "Unexpected null in custom palette (modified)");
             actualRGB = color.RGB;
             msg = "Expected palette modification to be preserved across save";
-            ClassicAssert.AreEqual((short)101, actualRGB[0], msg);
-            ClassicAssert.AreEqual((short)230, actualRGB[1], msg);
-            ClassicAssert.AreEqual((short)100, actualRGB[2], msg);
+            ClassicAssert.AreEqual((short) 101, actualRGB[0], msg);
+            ClassicAssert.AreEqual((short) 230, actualRGB[1], msg);
+            ClassicAssert.AreEqual((short) 100, actualRGB[2], msg);
         }
 
         /**
@@ -111,45 +112,45 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(64, cellA.CellStyle.FillForegroundColor);
             ClassicAssert.AreEqual(64, cellA.CellStyle.FillBackgroundColor);
             ClassicAssert.AreEqual(HSSFColor.COLOR_NORMAL, cellA.CellStyle.GetFont(book).Color);
-            ClassicAssert.AreEqual(0, (short)cellA.CellStyle.FillPattern);
-            ClassicAssert.AreEqual("0:0:0", p.GetColor((short)64).GetHexString());
-            ClassicAssert.AreEqual(null, p.GetColor((short)32767));
+            ClassicAssert.AreEqual(0, (short) cellA.CellStyle.FillPattern);
+            ClassicAssert.AreEqual("0:0:0", p.GetColor((short) 64).GetHexString());
+            ClassicAssert.AreEqual(null, p.GetColor((short) 32767));
 
             // Red
             ClassicAssert.AreEqual("I'm red", cellB.StringCellValue);
             ClassicAssert.AreEqual(64, cellB.CellStyle.FillForegroundColor);
             ClassicAssert.AreEqual(64, cellB.CellStyle.FillBackgroundColor);
             ClassicAssert.AreEqual(10, cellB.CellStyle.GetFont(book).Color);
-            ClassicAssert.AreEqual(0, (short)cellB.CellStyle.FillPattern);
-            ClassicAssert.AreEqual("0:0:0", p.GetColor((short)64).GetHexString());
-            ClassicAssert.AreEqual("FFFF:0:0", p.GetColor((short)10).GetHexString());
+            ClassicAssert.AreEqual(0, (short) cellB.CellStyle.FillPattern);
+            ClassicAssert.AreEqual("0:0:0", p.GetColor((short) 64).GetHexString());
+            ClassicAssert.AreEqual("FFFF:0:0", p.GetColor((short) 10).GetHexString());
 
             // Red + green bg
             ClassicAssert.AreEqual("I'm red with a green bg", cellC.StringCellValue);
             ClassicAssert.AreEqual(11, cellC.CellStyle.FillForegroundColor);
             ClassicAssert.AreEqual(64, cellC.CellStyle.FillBackgroundColor);
             ClassicAssert.AreEqual(10, cellC.CellStyle.GetFont(book).Color);
-            ClassicAssert.AreEqual(1, (short)cellC.CellStyle.FillPattern);
-            ClassicAssert.AreEqual("0:FFFF:0", p.GetColor((short)11).GetHexString());
-            ClassicAssert.AreEqual("FFFF:0:0", p.GetColor((short)10).GetHexString());
+            ClassicAssert.AreEqual(1, (short) cellC.CellStyle.FillPattern);
+            ClassicAssert.AreEqual("0:FFFF:0", p.GetColor((short) 11).GetHexString());
+            ClassicAssert.AreEqual("FFFF:0:0", p.GetColor((short) 10).GetHexString());
 
             // Pink with yellow
             ClassicAssert.AreEqual("I'm pink with a yellow pattern (none)", cellD.StringCellValue);
             ClassicAssert.AreEqual(13, cellD.CellStyle.FillForegroundColor);
             ClassicAssert.AreEqual(64, cellD.CellStyle.FillBackgroundColor);
             ClassicAssert.AreEqual(14, cellD.CellStyle.GetFont(book).Color);
-            ClassicAssert.AreEqual(0, (short)cellD.CellStyle.FillPattern);
-            ClassicAssert.AreEqual("FFFF:FFFF:0", p.GetColor((short)13).GetHexString());
-            ClassicAssert.AreEqual("FFFF:0:FFFF", p.GetColor((short)14).GetHexString());
+            ClassicAssert.AreEqual(0, (short) cellD.CellStyle.FillPattern);
+            ClassicAssert.AreEqual("FFFF:FFFF:0", p.GetColor((short) 13).GetHexString());
+            ClassicAssert.AreEqual("FFFF:0:FFFF", p.GetColor((short) 14).GetHexString());
 
             // Pink with yellow - full
             ClassicAssert.AreEqual("I'm pink with a yellow pattern (full)", cellE.StringCellValue);
             ClassicAssert.AreEqual(13, cellE.CellStyle.FillForegroundColor);
             ClassicAssert.AreEqual(64, cellE.CellStyle.FillBackgroundColor);
             ClassicAssert.AreEqual(14, cellE.CellStyle.GetFont(book).Color);
-            ClassicAssert.AreEqual(0, (short)cellE.CellStyle.FillPattern);
-            ClassicAssert.AreEqual("FFFF:FFFF:0", p.GetColor((short)13).GetHexString());
-            ClassicAssert.AreEqual("FFFF:0:FFFF", p.GetColor((short)14).GetHexString());
+            ClassicAssert.AreEqual(0, (short) cellE.CellStyle.FillPattern);
+            ClassicAssert.AreEqual("FFFF:FFFF:0", p.GetColor((short) 13).GetHexString());
+            ClassicAssert.AreEqual("FFFF:0:FFFF", p.GetColor((short) 14).GetHexString());
         }
         [Test]
         public void TestFindSimilar()
@@ -159,40 +160,40 @@ namespace TestCases.HSSF.UserModel
 
 
             // Add a few edge colours in
-            p.SetColorAtIndex((short)8, unchecked((byte)-1), (byte)0, (byte)0);
-            p.SetColorAtIndex((short)9, (byte)0, unchecked((byte)-1), (byte)0);
-            p.SetColorAtIndex((short)10, (byte)0, (byte)0, unchecked((byte)-1));
+            p.SetColorAtIndex((short) 8, unchecked((byte) -1), (byte) 0, (byte) 0);
+            p.SetColorAtIndex((short) 9, (byte) 0, unchecked((byte) -1), (byte) 0);
+            p.SetColorAtIndex((short) 10, (byte) 0, (byte) 0, unchecked((byte) -1));
 
             // And some near a few of them
-            p.SetColorAtIndex((short)11, unchecked((byte)-1), (byte)2, (byte)2);
-            p.SetColorAtIndex((short)12, unchecked((byte)-2), (byte)2, (byte)10);
-            p.SetColorAtIndex((short)13, unchecked((byte)-4), (byte)0, (byte)0);
-            p.SetColorAtIndex((short)14, unchecked((byte)-8), (byte)0, (byte)0);
+            p.SetColorAtIndex((short) 11, unchecked((byte) -1), (byte) 2, (byte) 2);
+            p.SetColorAtIndex((short) 12, unchecked((byte) -2), (byte) 2, (byte) 10);
+            p.SetColorAtIndex((short) 13, unchecked((byte) -4), (byte) 0, (byte) 0);
+            p.SetColorAtIndex((short) 14, unchecked((byte) -8), (byte) 0, (byte) 0);
 
             ClassicAssert.AreEqual(
-                    "FFFF:0:0", p.GetColor((short)8).GetHexString()
+                    "FFFF:0:0", p.GetColor((short) 8).GetHexString()
             );
 
             // Now Check we get the right stuff back
             ClassicAssert.AreEqual(
-                    p.GetColor((short)8).GetHexString(),
-                    p.FindSimilarColor(unchecked((byte)-1), (byte)0, (byte)0).GetHexString()
+                    p.GetColor((short) 8).GetHexString(),
+                    p.FindSimilarColor(unchecked((byte) -1), (byte) 0, (byte) 0).GetHexString()
             );
             ClassicAssert.AreEqual(
-                    p.GetColor((short)8).GetHexString(),
-                    p.FindSimilarColor(unchecked((byte)-2), (byte)0, (byte)0).GetHexString()
+                    p.GetColor((short) 8).GetHexString(),
+                    p.FindSimilarColor(unchecked((byte) -2), (byte) 0, (byte) 0).GetHexString()
             );
             ClassicAssert.AreEqual(
-                    p.GetColor((short)8).GetHexString(),
-                    p.FindSimilarColor(unchecked((byte)-1), (byte)1, (byte)0).GetHexString()
+                    p.GetColor((short) 8).GetHexString(),
+                    p.FindSimilarColor(unchecked((byte) -1), (byte) 1, (byte) 0).GetHexString()
             );
             ClassicAssert.AreEqual(
-                    p.GetColor((short)11).GetHexString(),
-                    p.FindSimilarColor(unchecked((byte)-1), (byte)2, (byte)1).GetHexString()
+                    p.GetColor((short) 11).GetHexString(),
+                    p.FindSimilarColor(unchecked((byte) -1), (byte) 2, (byte) 1).GetHexString()
             );
             ClassicAssert.AreEqual(
-                    p.GetColor((short)12).GetHexString(),
-                    p.FindSimilarColor(unchecked((byte)-1), (byte)2, (byte)10).GetHexString()
+                    p.GetColor((short) 12).GetHexString(),
+                    p.FindSimilarColor(unchecked((byte) -1), (byte) 2, (byte) 10).GetHexString()
             );
 
             book.Close();
@@ -234,9 +235,9 @@ namespace TestCases.HSSF.UserModel
         public void TestBadIndexes()
         {
             //too small
-            hssfPalette.SetColorAtIndex((short)2, (byte)255, (byte)255, (byte)255);
+            hssfPalette.SetColorAtIndex((short) 2, (byte) 255, (byte) 255, (byte) 255);
             //too large
-            hssfPalette.SetColorAtIndex((short)0x45, (byte)255, (byte)255, (byte)255);
+            hssfPalette.SetColorAtIndex((short) 0x45, (byte) 255, (byte) 255, (byte) 255);
 
             //should still Match defaults; 
             CompareToDefaults(new ColorComparator2());
@@ -246,7 +247,7 @@ namespace TestCases.HSSF.UserModel
         {
             var colors = HSSFColor.GetIndexHash();
             IEnumerator it = colors.Keys.GetEnumerator();
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 int index = (int)it.Current;
                 HSSFColor expectedColor = (HSSFColor)colors[index];
@@ -262,7 +263,7 @@ namespace TestCases.HSSF.UserModel
                 HSSFColor hssfColor = hssfPalette.AddColor((byte)10, (byte)10, (byte)10);
                 Assert.Fail();
             }
-            catch (Exception)
+            catch(Exception)
             {
                 // Failing because by default there are no colours left in the palette.
             }
@@ -284,10 +285,10 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsNull(hssfColor);
 
             palette.SetColorAtIndex(
-                    (short)(PaletteRecord.STANDARD_PALETTE_SIZE - 1),
-                    (byte)color.Red, (byte)color.Green,
-                    (byte)color.Blue);
-            hssfColor = palette.GetColor((short)(PaletteRecord.STANDARD_PALETTE_SIZE - 1));
+                    (short) (PaletteRecord.STANDARD_PALETTE_SIZE - 1),
+                    (byte) color.Red, (byte) color.Green,
+                    (byte) color.Blue);
+            hssfColor = palette.GetColor((short) (PaletteRecord.STANDARD_PALETTE_SIZE - 1));
             ClassicAssert.IsNotNull(hssfColor);
             ClassicAssert.AreEqual(55, hssfColor.Indexed);
             CollectionAssert.AreEqual(new short[] { 0, 107, 107 }, hssfColor.GetTriplet());

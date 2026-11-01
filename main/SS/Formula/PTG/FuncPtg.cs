@@ -17,12 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
+    using NPOI.HSSF.Record;
+    using NPOI.SS.Formula.Function;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.HSSF.Record;
-    
-    using NPOI.SS.Formula.Function;
 
 
     /**
@@ -37,20 +36,23 @@ namespace NPOI.SS.Formula.PTG
         public const byte sid = 0x21;
         public const int SIZE = 3;
         // not used: private int numParams = 0;
-    public static FuncPtg Create(ILittleEndianInput in1) {
-        return Create(in1.ReadUShort());
-    }
-    private FuncPtg(int funcIndex, FunctionMetadata fm):
-        base(funcIndex, fm.ReturnClassCode, fm.ParameterClassCodes, fm.MinParams)  // minParams same as max since these are not var-arg funcs {
-    {
-    }
-    public static FuncPtg Create(int functionIndex) {
-        FunctionMetadata fm = FunctionMetadataRegistry.GetFunctionByIndex(functionIndex);
-        if(fm == null) {
-            throw new Exception("Invalid built-in function index (" + functionIndex + ")");
+        public static FuncPtg Create(ILittleEndianInput in1)
+        {
+            return Create(in1.ReadUShort());
         }
-        return new FuncPtg(functionIndex, fm);
-    }
+        private FuncPtg(int funcIndex, FunctionMetadata fm) :
+            base(funcIndex, fm.ReturnClassCode, fm.ParameterClassCodes, fm.MinParams)  // minParams same as max since these are not var-arg funcs {
+        {
+        }
+        public static FuncPtg Create(int functionIndex)
+        {
+            FunctionMetadata fm = FunctionMetadataRegistry.GetFunctionByIndex(functionIndex);
+            if(fm == null)
+            {
+                throw new Exception("Invalid built-in function index (" + functionIndex + ")");
+            }
+            return new FuncPtg(functionIndex, fm);
+        }
 
         public override void Write(ILittleEndianOutput out1)
         {

@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -40,7 +40,7 @@ namespace NPOI.HSSF.Record.Chart
 
         public SeriesListRecord(short[] seriesNumbers)
         {
-            field_1_seriesNumbers = (seriesNumbers == null) ? null : (short[])seriesNumbers.Clone();
+            field_1_seriesNumbers = (seriesNumbers == null) ? null : (short[]) seriesNumbers.Clone();
         }
 
         /**
@@ -52,11 +52,12 @@ namespace NPOI.HSSF.Record.Chart
         public SeriesListRecord(RecordInputStream in1)
         {
             int nItems = in1.ReadUShort();
-    	    short[] ss = new short[nItems];
-    	    for (int i = 0; i < nItems; i++) {
-			    ss[i] = in1.ReadShort();
-    			
-		    }
+            short[] ss = new short[nItems];
+            for(int i = 0; i < nItems; i++)
+            {
+                ss[i] = in1.ReadShort();
+
+            }
             field_1_seriesNumbers = ss;
 
         }
@@ -78,7 +79,7 @@ namespace NPOI.HSSF.Record.Chart
         {
             int nItems = field_1_seriesNumbers.Length;
             out1.WriteShort(nItems);
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 out1.WriteShort(field_1_seriesNumbers[i]);
             }

@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using System;
@@ -24,7 +24,7 @@ namespace NPOI.SS.Formula.Functions
                 this.pattern = new Regex(patternString, RegexOptions.Compiled);
                 var idx = groupOrder.IndexOf('y');
                 this.hasYear = idx != -1;
-                if (hasYear)
+                if(hasYear)
                 {
                     yearIndex = idx;
                 }
@@ -53,18 +53,18 @@ namespace NPOI.SS.Formula.Functions
             {
                 String dateText = OperandResolver.CoerceValueToString(
                 OperandResolver.GetSingleValue(dateTextArg, srcRowIndex, srcColumnIndex));
-                if (string.IsNullOrEmpty(dateText))
+                if(string.IsNullOrEmpty(dateText))
                 {
                     return BlankEval.instance;
                 }
-                foreach (Format format in Format.Values())
+                foreach(Format format in Format.Values())
                 {
                     var m = format.pattern.Match(dateText);
-                    if (m.Success)
+                    if(m.Success)
                     {
                         var matchGroups = m.Groups;
                         List<String> groups = new List<string>();
-                        for (int i = 1; i <= matchGroups.Count; ++i)
+                        for(int i = 1; i <= matchGroups.Count; ++i)
                         {
                             groups.Add(matchGroups[i].Value);
                         }
@@ -77,11 +77,11 @@ namespace NPOI.SS.Formula.Functions
                     }
                 }
             }
-            catch (FormatException)
+            catch(FormatException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -94,14 +94,14 @@ namespace NPOI.SS.Formula.Functions
             {
                 return int.Parse(monthPart);
             }
-            catch (FormatException)
+            catch(FormatException)
             {
             }
 
             string[] months = DateTimeFormatInfo.InvariantInfo.MonthNames;
-            for (int month = 0; month < months.Length; ++month)
+            for(int month = 0; month < months.Length; ++month)
             {
-                if (months[month].ToLower().StartsWith(monthPart.ToLower()))
+                if(months[month].ToLower().StartsWith(monthPart.ToLower()))
                 {
                     return month + 1;
                 }

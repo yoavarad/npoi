@@ -19,12 +19,13 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util.Collections;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Cont;
     using NPOI.Util;
+    using NPOI.Util.Collections;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
 
     /**
@@ -82,7 +83,7 @@ namespace TestCases.HSSF.Record
             ConfirmSize(SSTRecord.SST_RECORD_OVERHEAD
                     + COMPRESSED_PLAIN_STRING_OVERHEAD
                     + tooBig - 1
-                // continue record
+                    // continue record
                     + SSTRecord.STD_RECORD_OVERHEAD
                     + OPTION_FIELD_SIZE + 1);
         }
@@ -95,7 +96,7 @@ namespace TestCases.HSSF.Record
             strings.Add(MakeUnicodeString(SMALL_STRING));
             ConfirmSize(SSTRecord.SST_RECORD_OVERHEAD
                     + SSTRecord.MAX_DATA_SPACE
-                // second string
+                    // second string
                     + SSTRecord.STD_RECORD_OVERHEAD
                     + COMPRESSED_PLAIN_STRING_OVERHEAD
                     + SMALL_STRING.Length);
@@ -111,7 +112,7 @@ namespace TestCases.HSSF.Record
             ConfirmSize(SSTRecord.SST_RECORD_OVERHEAD
                     + COMPRESSED_PLAIN_STRING_OVERHEAD
                     + almostPerfectFit
-                // second string
+                    // second string
                     + SSTRecord.STD_RECORD_OVERHEAD
                     + COMPRESSED_PLAIN_STRING_OVERHEAD
                     + oneCharString.Length);
@@ -126,7 +127,7 @@ namespace TestCases.HSSF.Record
         private static UnicodeString MakeUnicodeString(String s)
         {
             UnicodeString st = new UnicodeString(s);
-            st.OptionFlags = ((byte)0);
+            st.OptionFlags = ((byte) 0);
             return st;
         }
         private void ConfirmSize(int expectedSize)

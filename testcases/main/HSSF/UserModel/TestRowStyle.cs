@@ -22,15 +22,14 @@
  */
 namespace TestCases.HSSF.UserModel
 {
-    using System.IO;
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using TestCases.HSSF;
-    using NPOI.Util;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
 
     /**
      * Class to Test row styling functionality
@@ -71,7 +70,7 @@ namespace TestCases.HSSF.UserModel
             fnt.Color = (NPOI.HSSF.Util.HSSFColor.Red.Index);
             fnt.IsBold = true;
             cs.SetFont(fnt);
-            for (short rownum = (short)0; rownum < 100; rownum++)
+            for(short rownum = (short) 0; rownum < 100; rownum++)
             {
                 r = s.CreateRow(rownum);
                 r.RowStyle = (cs);
@@ -105,7 +104,7 @@ namespace TestCases.HSSF.UserModel
 
 
             // with Calendar:
-            row = s.CreateRow((short)1);
+            row = s.CreateRow((short) 1);
             cs.DataFormat = (HSSFDataFormat.GetBuiltinFormat("m/d/yy"));
             row.RowStyle = (cs);
             row.CreateCell(0);
@@ -145,21 +144,21 @@ namespace TestCases.HSSF.UserModel
             cs.BorderLeft = (BorderStyle.Thin);
             cs.BorderRight = (BorderStyle.Thin);
             cs.BorderTop = (BorderStyle.Thin);
-            cs.FillForegroundColor = ((short)0xA);
+            cs.FillForegroundColor = ((short) 0xA);
             cs.FillPattern = FillPattern.Bricks;
-            fnt.Color = ((short)0xf);
+            fnt.Color = ((short) 0xf);
             fnt.IsItalic = (true);
-            cs2.FillForegroundColor = ((short)0x0);
+            cs2.FillForegroundColor = ((short) 0x0);
             cs2.FillPattern = FillPattern.Bricks;
             cs2.SetFont(fnt);
-            for (short rownum = (short)0; rownum < 100; rownum++)
+            for(short rownum = (short) 0; rownum < 100; rownum++)
             {
                 r = s.CreateRow(rownum);
                 r.RowStyle = (cs);
                 r.CreateCell(0);
 
                 rownum++;
-                if (rownum >= 100)
+                if(rownum >= 100)
                     break; // I feel too lazy to Check if this isreqd :-/ 
 
                 r = s.CreateRow(rownum);
@@ -176,7 +175,7 @@ namespace TestCases.HSSF.UserModel
             s = wb2.GetSheetAt(0);
             ClassicAssert.IsNotNull(s, "Sheet is not null");
 
-            for (short rownum = (short)0; rownum < 100; rownum++)
+            for(short rownum = (short) 0; rownum < 100; rownum++)
             {
                 r = s.GetRow(rownum);
                 ClassicAssert.IsNotNull(r, "Row is not null");
@@ -190,13 +189,13 @@ namespace TestCases.HSSF.UserModel
                 ClassicAssert.AreEqual(FillPattern.Bricks, cs.FillPattern, "FillPattern for row: ");
 
                 rownum++;
-                if (rownum >= 100)
+                if(rownum >= 100)
                     break; // I feel too lazy to Check if this isreqd :-/ 
 
                 r = s.GetRow(rownum);
                 ClassicAssert.IsNotNull(r, "Row is not null");
                 cs2 = r.RowStyle;
-                ClassicAssert.AreEqual(cs2.FillForegroundColor, (short)0x0, "FillForegroundColor for row: ");
+                ClassicAssert.AreEqual(cs2.FillForegroundColor, (short) 0x0, "FillForegroundColor for row: ");
                 ClassicAssert.AreEqual(cs2.FillPattern, FillPattern.Bricks, "FillPattern for row: ");
             }
             IOUtils.CloseQuietly(wb2);

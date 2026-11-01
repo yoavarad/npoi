@@ -17,10 +17,9 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF.Record.CF;
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * High level representation for Icon / Multi-State / Databar /
@@ -51,7 +50,7 @@ namespace NPOI.HSSF.UserModel
             }
             set
             {
-                threshold.Type = (byte)value.id;
+                threshold.Type = (byte) value.id;
             }
         }
 

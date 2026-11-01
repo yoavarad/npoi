@@ -17,14 +17,15 @@
 
 namespace TestCases.SS.Formula.Eval
 {
-    using System;
-    using System.Collections.ObjectModel;
-    using System.IO;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.IO;
     using TestCases.HSSF;
     using TestCases.SS.Formula.Functions;
 
@@ -95,16 +96,16 @@ namespace TestCases.SS.Formula.Eval
 
         private static void ConfirmExpectedResult(String msg, ICell expected, CellValue actual)
         {
-            if (expected == null)
+            if(expected == null)
             {
                 throw new AssertFailedException(msg + " - Bad Setup data expected value is null");
             }
-            if (actual == null)
+            if(actual == null)
             {
                 throw new AssertFailedException(msg + " - actual value was null");
             }
 
-            switch (expected.CellType)
+            switch(expected.CellType)
             {
                 case CellType.Blank:
                     ClassicAssert.AreEqual(CellType.Blank, actual.CellType, msg);
@@ -133,7 +134,7 @@ namespace TestCases.SS.Formula.Eval
         [SetUp]
         public void SetUp()
         {
-            if (workbook == null)
+            if(workbook == null)
             {
                 workbook = HSSFTestDataSamples.OpenSampleWorkbook(SS.FILENAME);
                 sheet = workbook.GetSheet(SS.TEST_SHEET_NAME);
@@ -154,7 +155,7 @@ namespace TestCases.SS.Formula.Eval
             String successMsg = "There were "
                     + _EvaluationSuccessCount + " successful Evaluation(s) and "
                     + _functionSuccessCount + " function(s) without error";
-            if (_functionFailureCount > 0)
+            if(_functionFailureCount > 0)
             {
                 String msg = _functionFailureCount + " function(s) failed in "
                 + _EvaluationFailureCount + " Evaluation(s).  " + successMsg;
@@ -174,32 +175,32 @@ namespace TestCases.SS.Formula.Eval
             ReadOnlyCollection<String> funcs = FunctionEval.GetSupportedFunctionNames();
 
             int rowIndex = startRowIndex;
-            while (true)
+            while(true)
             {
                 IRow r = sheet.GetRow(rowIndex);
 
                 // only Evaluate non empty row
-                if (r != null)
+                if(r != null)
                 {
                     String targetFunctionName = GetTargetFunctionName(r);
                     String targetTestName = GetTargetTestName(r);
-                    if (targetFunctionName == null)
+                    if(targetFunctionName == null)
                     {
                         throw new AssertFailedException("Test spreadsheet cell empty on row ("
                                 + (rowIndex + 1) + "). Expected function name or '"
                                 + SS.FUNCTION_NAMES_END_SENTINEL + "'");
                     }
-                    if (targetFunctionName.Equals(SS.FUNCTION_NAMES_END_SENTINEL))
+                    if(targetFunctionName.Equals(SS.FUNCTION_NAMES_END_SENTINEL))
                     {
                         // found end of functions list
                         break;
                     }
-                    if (testFocusFunctionName == null || targetFunctionName.Equals(testFocusFunctionName, StringComparison.CurrentCultureIgnoreCase))
+                    if(testFocusFunctionName == null || targetFunctionName.Equals(testFocusFunctionName, StringComparison.CurrentCultureIgnoreCase))
                     {
 
                         // expected results are on the row below
                         ICell expectedValueCell = r.GetCell(SS.COLUMN_INDEX_EXPECTED_VALUE);
-                        if (expectedValueCell == null)
+                        if(expectedValueCell == null)
                         {
                             int missingRowNum = rowIndex + 1;
                             throw new AssertFailedException("Missing expected values cell for function '"
@@ -207,15 +208,19 @@ namespace TestCases.SS.Formula.Eval
                                     missingRowNum + ")");
                         }
 
-                        switch (ProcessFunctionRow(evaluator, targetFunctionName, targetTestName, r, expectedValueCell))
+                        switch(ProcessFunctionRow(evaluator, targetFunctionName, targetTestName, r, expectedValueCell))
                         {
-                            case Result.ALL_EVALUATIONS_SUCCEEDED: _functionSuccessCount++; break;
-                            case Result.SOME_EVALUATIONS_FAILED: _functionFailureCount++; break;
+                            case Result.ALL_EVALUATIONS_SUCCEEDED:
+                                _functionSuccessCount++;
+                                break;
+                            case Result.SOME_EVALUATIONS_FAILED:
+                                _functionFailureCount++;
+                                break;
                             default:
                                 throw new Exception("unexpected result");
                             case Result.NO_EVALUATIONS_FOUND: // do nothing
                                 String uname = targetFunctionName.ToUpper();
-                                if (startRowIndex >= SS.START_FUNCTIONS_ROW_INDEX &&
+                                if(startRowIndex >= SS.START_FUNCTIONS_ROW_INDEX &&
                                         funcs.Contains(uname))
                                 {
                                     logger.Log(POILogger.WARN, uname + ": function is supported but missing test data");
@@ -240,7 +245,7 @@ namespace TestCases.SS.Formula.Eval
             int result = Result.NO_EVALUATIONS_FOUND; // so far
 
             ICell c = formulasRow.GetCell(SS.COLUMN_INDEX_ACTUAL_VALUE);
-            if (c == null || c.CellType != CellType.Formula)
+            if(c == null || c.CellType != CellType.Formula)
             {
                 return result;
             }
@@ -253,12 +258,12 @@ namespace TestCases.SS.Formula.Eval
                 + " @ " + formulasRow.RowNum + ":" + SS.COLUMN_INDEX_ACTUAL_VALUE,
                         expectedValueCell, actualValue);
                 _EvaluationSuccessCount++;
-                if (result != Result.SOME_EVALUATIONS_FAILED)
+                if(result != Result.SOME_EVALUATIONS_FAILED)
                 {
                     result = Result.ALL_EVALUATIONS_SUCCEEDED;
                 }
             }
-            catch (AssertFailedException e)
+            catch(AssertFailedException e)
             {
                 _EvaluationFailureCount++;
                 Console.WriteLine(e.StackTrace);
@@ -314,22 +319,22 @@ namespace TestCases.SS.Formula.Eval
          */
         private static String GetTargetFunctionName(IRow r)
         {
-            if (r == null)
+            if(r == null)
             {
                 Console.WriteLine("Warning - given null row, can't figure out function name");
                 return null;
             }
             ICell cell = r.GetCell(SS.COLUMN_INDEX_FUNCTION_NAME);
-            if (cell == null)
+            if(cell == null)
             {
                 Console.WriteLine("Warning - Row " + r.RowNum + " has no cell " + SS.COLUMN_INDEX_FUNCTION_NAME + ", can't figure out function name");
                 return null;
             }
-            if (cell.CellType == CellType.Blank)
+            if(cell.CellType == CellType.Blank)
             {
                 return null;
             }
-            if (cell.CellType == CellType.String)
+            if(cell.CellType == CellType.String)
             {
                 return cell.RichStringCellValue.String;
             }
@@ -342,22 +347,22 @@ namespace TestCases.SS.Formula.Eval
          */
         private static String GetTargetTestName(IRow r)
         {
-            if (r == null)
+            if(r == null)
             {
                 Console.WriteLine("Warning - given null row, can't figure out test name");
                 return null;
             }
             ICell cell = r.GetCell(SS.COLUMN_INDEX_TEST_NAME);
-            if (cell == null)
+            if(cell == null)
             {
                 Console.WriteLine("Warning - Row " + r.RowNum + " has no cell " + SS.COLUMN_INDEX_TEST_NAME + ", can't figure out test name");
                 return null;
             }
-            if (cell.CellType == CellType.Blank)
+            if(cell.CellType == CellType.Blank)
             {
                 return null;
             }
-            if (cell.CellType == CellType.String)
+            if(cell.CellType == CellType.String)
             {
                 return cell.RichStringCellValue.String;
             }

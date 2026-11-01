@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Dml.Chart;
+using NPOI.OpenXmlFormats.Dml.Chart;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XDDF.UserModel.Chart;
@@ -85,8 +85,7 @@ namespace TestCases.XSSF.UserModel.Charts
 
         private static List<string> AxisTypes(CT_PlotArea plotArea)
         {
-            return plotArea.GetAxesInDocumentOrder().Select(axis => axis switch
-            {
+            return plotArea.GetAxesInDocumentOrder().Select(axis => axis switch {
                 CT_CatAx => "catAx",
                 CT_ValAx => "valAx",
                 CT_DateAx => "dateAx",
@@ -108,7 +107,7 @@ namespace TestCases.XSSF.UserModel.Charts
         private static XmlDocument ChartXml(XSSFChart chart, out XmlNamespaceManager ns)
         {
             XmlDocument xml = new XmlDocument();
-            using (Stream stream = chart.GetPackagePart().GetInputStream())
+            using(Stream stream = chart.GetPackagePart().GetInputStream())
             {
                 xml.Load(stream);
             }

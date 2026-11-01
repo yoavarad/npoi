@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -22,7 +22,8 @@ namespace TestCases.XSSF.Model
     using NPOI.XSSF;
     using NPOI.XSSF.Model;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
 
     [TestFixture]
@@ -95,7 +96,8 @@ namespace TestCases.XSSF.Model
         }
 
         [Test]
-        public void readWithReferencesToTwoExternalBooks() {
+        public void readWithReferencesToTwoExternalBooks()
+        {
             XSSFWorkbook wb = XSSFTestDataSamples.OpenSampleWorkbook("ref2-56737.xlsx");
 
             ClassicAssert.IsNotNull(wb.ExternalLinksTable);

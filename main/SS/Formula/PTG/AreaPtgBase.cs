@@ -17,11 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.Util;
-    using NPOI.SS.Util;
     using NPOI.HSSF.Record;
-    
+    using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
+
 
 
     /**
@@ -79,9 +79,9 @@ namespace NPOI.SS.Formula.PTG
             CellReference firstCell = ar.FirstCell;
             CellReference lastCell = ar.LastCell;
             FirstRow = (firstCell.Row);
-            FirstColumn = (firstCell.Col == -1 ? 0 : (int)firstCell.Col);
+            FirstColumn = (firstCell.Col == -1 ? 0 : (int) firstCell.Col);
             LastRow = (lastCell.Row);
-            LastColumn = (lastCell.Col == -1 ? 0xFF : (int)lastCell.Col);
+            LastColumn = (lastCell.Col == -1 ? 0xFF : (int) lastCell.Col);
             IsFirstColRelative = (!firstCell.IsColAbsolute);
             IsLastColRelative = (!lastCell.IsColAbsolute);
             IsFirstRowRelative = (!firstCell.IsRowAbsolute);
@@ -90,7 +90,7 @@ namespace NPOI.SS.Formula.PTG
         protected AreaPtgBase(int firstRow, int lastRow, int firstColumn, int lastColumn,
                 bool firstRowRelative, bool lastRowRelative, bool firstColRelative, bool lastColRelative)
         {
-            if (lastRow >= firstRow)
+            if(lastRow >= firstRow)
             {
                 FirstRow=(firstRow);
                 LastRow=(lastRow);
@@ -105,7 +105,7 @@ namespace NPOI.SS.Formula.PTG
                 IsLastRowRelative = (firstRowRelative);
             }
 
-            if (lastColumn >= firstColumn)
+            if(lastColumn >= firstColumn)
             {
                 FirstColumn=(firstColumn);
                 LastColumn=(lastColumn);
@@ -130,7 +130,7 @@ namespace NPOI.SS.Formula.PTG
          */
         public void SortTopLeftToBottomRight()
         {
-            if (FirstRow > LastRow)
+            if(FirstRow > LastRow)
             {
                 //swap first row and last row numbers and relativity
                 //Note: cannot just swap the fields because row relativity is stored in fields 3 and 4
@@ -141,7 +141,7 @@ namespace NPOI.SS.Formula.PTG
                 LastRow = (firstRow);
                 IsLastRowRelative = (firstRowRel);
             }
-            if (FirstColumn > LastColumn)
+            if(FirstColumn > LastColumn)
             {
                 //swap first column and last column numbers and relativity
                 //Note: cannot just swap the fields because row relativity is stored in fields 3 and 4
@@ -259,7 +259,7 @@ namespace NPOI.SS.Formula.PTG
         {
             get
             {
-                return (short)field_4_last_column;
+                return (short) field_4_last_column;
             }
         }
 
@@ -305,7 +305,7 @@ namespace NPOI.SS.Formula.PTG
             CellReference topLeft = new CellReference(FirstRow, FirstColumn, !IsFirstRowRelative, !IsFirstColRelative);
             CellReference botRight = new CellReference(LastRow, LastColumn, !IsLastRowRelative, !IsLastColRelative);
 
-            if (AreaReference.IsWholeColumnReference(SpreadsheetVersion.EXCEL97, topLeft, botRight))
+            if(AreaReference.IsWholeColumnReference(SpreadsheetVersion.EXCEL97, topLeft, botRight))
             {
                 return (new AreaReference(topLeft, botRight, SpreadsheetVersion.EXCEL97)).FormatAsString();
             }

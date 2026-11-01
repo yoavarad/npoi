@@ -17,17 +17,17 @@
 ==================================================================== */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using NPOI.POIFS.Common;
 using NPOI.POIFS.Dev;
+using NPOI.POIFS.EventFileSystem;
 using NPOI.POIFS.NIO;
 using NPOI.POIFS.Properties;
 using NPOI.POIFS.Storage;
 using NPOI.Util;
-using NPOI.POIFS.EventFileSystem;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -39,7 +39,7 @@ namespace NPOI.POIFS.FileSystem
      * This is the new NIO version
      */
 
-    public class NPOIFSFileSystem : BlockStore, POIFSViewable , ICloseable
+    public class NPOIFSFileSystem : BlockStore, POIFSViewable, ICloseable
     {
         //arbitrarily selected; may need to increase
         private static int MAX_RECORD_LENGTH = 100_000;
@@ -86,7 +86,7 @@ namespace NPOI.POIFS.FileSystem
             _bat_blocks = new List<BATBlock>();
             _root = null;
 
-            if (newFS)
+            if(newFS)
             {
                 // Data needs to Initially hold just the header block,
                 //  a single bat block, and an empty properties section
@@ -131,7 +131,7 @@ namespace NPOI.POIFS.FileSystem
         public NPOIFSFileSystem(FileInfo file)
             : this(file, true)
         {
-            
+
         }
         /**
          * <p>Creates a POIFSFileSystem from a <tt>File</tt>. This uses less memory than
@@ -195,9 +195,9 @@ namespace NPOI.POIFS.FileSystem
             try
             {
                 // Initialize the datasource
-                if (srcFile != null)
+                if(srcFile != null)
                 {
-                    if (srcFile.Length == 0)
+                    if(srcFile.Length == 0)
                         throw new EmptyFileException();
                     //FileBackedDataSource d = new FileBackedDataSource(srcFile, readOnly);
                     channel = new FileStream(srcFile.FullName, FileMode.Open, FileAccess.Read);
@@ -222,25 +222,25 @@ namespace NPOI.POIFS.FileSystem
                 }
                 finally
                 {
-                    if (channel != null)
+                    if(channel != null)
                         channel.Close();
                 }
             }
-            catch (IOException)
+            catch(IOException)
             {
-                if (closeChannelOnError && channel != null)
+                if(closeChannelOnError && channel != null)
                 {
                     channel.Close();
                     channel = null;
                 }
                 throw;
             }
-            catch (RuntimeException)
+            catch(RuntimeException)
             {
                 // Comes from Iterators etc.
                 // TODO Decide if we can handle these better whilst
                 //  still sticking to the iterator contract
-                if (closeChannelOnError && channel != null)
+                if(closeChannelOnError && channel != null)
                 {
                     channel.Close();
                     channel = null;
@@ -304,7 +304,7 @@ namespace NPOI.POIFS.FileSystem
                 //  working with an InputStream.
                 // The max possible size is when each BAT block entry is used
                 long maxSize = BATBlock.CalculateMaximumSize(_header);
-                if (maxSize > int.MaxValue)
+                if(maxSize > int.MaxValue)
                 {
                     throw new ArgumentException("Unable read a >2gb file via an InputStream");
                 }
@@ -315,7 +315,7 @@ namespace NPOI.POIFS.FileSystem
                 data.Position = headerBuffer.Length;
 
                 //IOUtils.ReadFully(channel, data.Buffer);
-                data.Position += IOUtils.ReadFully(channel, data.Buffer, data.Position, (int)maxSize);
+                data.Position += IOUtils.ReadFully(channel, data.Buffer, data.Position, (int) maxSize);
                 success = true;
 
                 // Turn it into a DataSource
@@ -324,7 +324,7 @@ namespace NPOI.POIFS.FileSystem
             finally
             {
                 // As per the constructor contract, always close the stream
-                if (channel != null)
+                if(channel != null)
                     channel.Close();
                 CloseInputStream(stream, success);
             }
@@ -342,9 +342,9 @@ namespace NPOI.POIFS.FileSystem
             {
                 stream.Close();
             }
-            catch (IOException e)
+            catch(IOException e)
             {
-                if (success)
+                if(success)
                 {
                     throw new Exception(e.Message);
                 }
@@ -367,17 +367,17 @@ namespace NPOI.POIFS.FileSystem
             ChainLoopDetector loopDetector = GetChainLoopDetector();
 
             // Read the FAT blocks
-            foreach (int fatAt in _header.BATArray)
+            foreach(int fatAt in _header.BATArray)
             {
                 ReadBAT(fatAt, loopDetector);
             }
             // Work out how many FAT blocks remain in the XFATs
             int remainingFATs = _header.BATCount - _header.BATArray.Length;
-       
+
             // Now read the XFAT blocks, and the FATs within them
             BATBlock xfat;
             int nextAt = _header.XBATIndex;
-            for (int i = 0; i < _header.XBATCount; i++)
+            for(int i = 0; i < _header.XBATCount; i++)
             {
                 loopDetector.Claim(nextAt);
                 ByteBuffer fatData = GetBlockAt(nextAt);
@@ -387,10 +387,11 @@ namespace NPOI.POIFS.FileSystem
                 _xbat_blocks.Add(xfat);
                 // Process all the (used) FATs from this XFAT
                 int xbatFATs = Math.Min(remainingFATs, bigBlockSize.GetXBATEntriesPerBlock());
-                for(int j=0; j<xbatFATs; j++) 
+                for(int j = 0; j<xbatFATs; j++)
                 {
                     int fatAt = xfat.GetValueAt(j);
-                    if (fatAt == POIFSConstants.UNUSED_BLOCK || fatAt == POIFSConstants.END_OF_CHAIN) break;
+                    if(fatAt == POIFSConstants.UNUSED_BLOCK || fatAt == POIFSConstants.END_OF_CHAIN)
+                        break;
                     ReadBAT(fatAt, loopDetector);
                 }
                 remainingFATs -= xbatFATs;
@@ -405,7 +406,7 @@ namespace NPOI.POIFS.FileSystem
             List<BATBlock> sbats = new List<BATBlock>();
             _mini_store = new NPOIFSMiniStore(this, _property_table.Root, sbats, _header);
             nextAt = _header.SBATStart;
-            for (int i = 0; i < _header.SBATCount && nextAt != POIFSConstants.END_OF_CHAIN; i++)
+            for(int i = 0; i < _header.SBATCount && nextAt != POIFSConstants.END_OF_CHAIN; i++)
             {
                 loopDetector.Claim(nextAt);
                 ByteBuffer fatData = GetBlockAt(nextAt);
@@ -444,7 +445,7 @@ namespace NPOI.POIFS.FileSystem
         public override ByteBuffer GetBlockAt(int offset)
         {
             ByteBuffer output = null;
-            if (!TryGetBlockAt(offset, out output))
+            if(!TryGetBlockAt(offset, out output))
             {
                 throw new IndexOutOfRangeException("Block " + offset + " not found");
             }
@@ -462,7 +463,7 @@ namespace NPOI.POIFS.FileSystem
 
             buffer = null;
 
-            if (startAt >= _data.Size)
+            if(startAt >= _data.Size)
                 return false;
 
             try
@@ -470,7 +471,7 @@ namespace NPOI.POIFS.FileSystem
                 buffer = _data.Read(bigBlockSize.GetBigBlockSize(), startAt);
                 return true;
             }
-            catch (IndexOutOfRangeException e)
+            catch(IndexOutOfRangeException e)
             {
                 throw new IndexOutOfRangeException("Block " + offset + " not found - ", e);
             }
@@ -482,7 +483,7 @@ namespace NPOI.POIFS.FileSystem
          */
         public override ByteBuffer CreateBlockIfNeeded(int offset)
         {
-            if (TryGetBlockAt(offset, out var byteBuffer))
+            if(TryGetBlockAt(offset, out var byteBuffer))
                 return byteBuffer;
 
             // The header block doesn't count, so add one
@@ -535,13 +536,13 @@ namespace NPOI.POIFS.FileSystem
             int offset = 0;
             foreach(BATBlock temp in _bat_blocks)
             {
-                if (temp.HasFreeSectors)
+                if(temp.HasFreeSectors)
                 {
                     // Claim one of them and return it
-                    for (int j = 0; j < numSectors; j++)
+                    for(int j = 0; j < numSectors; j++)
                     {
                         int batValue = temp.GetValueAt(j);
-                        if (batValue == POIFSConstants.UNUSED_BLOCK)
+                        if(batValue == POIFSConstants.UNUSED_BLOCK)
                         {
                             // Bingo
                             return offset + j;
@@ -560,19 +561,19 @@ namespace NPOI.POIFS.FileSystem
             _bat_blocks.Add(bat);
 
             // Now store a reference to the BAT in the required place 
-            if (_header.BATCount >= 109)
+            if(_header.BATCount >= 109)
             {
                 // Needs to come from an XBAT
                 BATBlock xbat = null;
-                foreach (BATBlock x in _xbat_blocks)
+                foreach(BATBlock x in _xbat_blocks)
                 {
-                    if (x.HasFreeSectors)
+                    if(x.HasFreeSectors)
                     {
                         xbat = x;
                         break;
                     }
                 }
-                if (xbat == null)
+                if(xbat == null)
                 {
                     // Oh joy, we need a new XBAT too...
                     xbat = CreateBAT(offset + 1, false);
@@ -585,7 +586,7 @@ namespace NPOI.POIFS.FileSystem
                     offset++;
 
                     // Chain it
-                    if (_xbat_blocks.Count == 0)
+                    if(_xbat_blocks.Count == 0)
                     {
                         _header.XBATStart = offset;
                     }
@@ -601,9 +602,9 @@ namespace NPOI.POIFS.FileSystem
                 else
                 {
                     // Allocate us in the XBAT
-                    for (int i = 0; i < bigBlockSize.GetXBATEntriesPerBlock(); i++)
+                    for(int i = 0; i < bigBlockSize.GetXBATEntriesPerBlock(); i++)
                     {
-                        if (xbat.GetValueAt(i) == POIFSConstants.UNUSED_BLOCK)
+                        if(xbat.GetValueAt(i) == POIFSConstants.UNUSED_BLOCK)
                         {
                             xbat.SetValueAt(i, offset);
                             break;
@@ -752,8 +753,9 @@ namespace NPOI.POIFS.FileSystem
          */
         public bool IsInPlaceWriteable()
         {
-            if (_data is FileBackedDataSource source) {
-                if (source.IsWriteable)
+            if(_data is FileBackedDataSource source)
+            {
+                if(source.IsWriteable)
                 {
                     return true;
                 }
@@ -770,7 +772,7 @@ namespace NPOI.POIFS.FileSystem
          */
         public void WriteFileSystem()
         {
-            if (_data is FileBackedDataSource)
+            if(_data is FileBackedDataSource)
             {
                 // Good, correct type
             }
@@ -823,14 +825,14 @@ namespace NPOI.POIFS.FileSystem
             hbw.WriteBlock(GetBlockAt(-1));
 
             // BATs
-            foreach (BATBlock bat in _bat_blocks)
+            foreach(BATBlock bat in _bat_blocks)
             {
                 ByteBuffer block = GetBlockAt(bat.OurBlockIndex);
                 //byte[] block = GetBlockAt(bat.OurBlockIndex);
                 BlockAllocationTableWriter.WriteBlock(bat, block);
             }
             // XBats
-            foreach (BATBlock bat in _xbat_blocks)
+            foreach(BATBlock bat in _xbat_blocks)
             {
                 ByteBuffer block = GetBlockAt(bat.OurBlockIndex);
                 BlockAllocationTableWriter.WriteBlock(bat, block);
@@ -855,7 +857,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                if (_root == null)
+                if(_root == null)
                 {
                     _root = new DirectoryNode(_property_table.Root, this, null);
                 }
@@ -887,7 +889,8 @@ namespace NPOI.POIFS.FileSystem
         public void Remove(EntryNode entry)
         {
             // If it's a document, free the blocks
-            if (entry is DocumentEntry) {
+            if(entry is DocumentEntry)
+            {
                 NPOIFSDocument doc = new NPOIFSDocument((DocumentProperty)entry.Property, this);
                 doc.Free();
             }
@@ -905,12 +908,12 @@ namespace NPOI.POIFS.FileSystem
 
         protected Object[] GetViewableArray()
         {
-            if (PreferArray)
+            if(PreferArray)
             {
                 Array ar = ((POIFSViewable)Root).ViewableArray;
                 Object[] rval = new Object[ar.Length];
 
-                for (int i = 0; i < ar.Length; i++)
+                for(int i = 0; i < ar.Length; i++)
                     rval[i] = ar.GetValue(i);
 
                 return rval;
@@ -929,7 +932,7 @@ namespace NPOI.POIFS.FileSystem
 
         protected IEnumerator<Object> GetViewableIterator()
         {
-            if (!PreferArray)
+            if(!PreferArray)
             {
                 return Root.ViewableIterator;
             }
@@ -973,7 +976,7 @@ namespace NPOI.POIFS.FileSystem
 
         public bool PreferArray
         {
-            get { return ((POIFSViewable)Root).PreferArray; }
+            get { return ((POIFSViewable) Root).PreferArray; }
         }
 
         public string ShortDescription

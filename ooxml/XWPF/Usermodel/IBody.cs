@@ -17,10 +17,10 @@
 
 namespace NPOI.XWPF.UserModel
 {
+    using NPOI.OpenXmlFormats.Wordprocessing;
     using System;
     using System.Collections.Generic;
     using System.Xml;
-    using NPOI.OpenXmlFormats.Wordprocessing;
 
     /**
      * An IBody represents the different parts of the document which

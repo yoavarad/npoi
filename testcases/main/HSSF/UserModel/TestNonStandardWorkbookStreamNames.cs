@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
     using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using TestCases.HSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
 
     /**
      * Tests for how HSSFWorkbook behaves with XLS files
@@ -58,7 +59,7 @@ namespace TestCases.HSSF.UserModel
                 fs.Root.GetEntry("Workbook");
                 Assert.Fail();
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
 
             }
@@ -86,14 +87,14 @@ namespace TestCases.HSSF.UserModel
                 fs.Root.GetEntry("Workbook");
                 Assert.Fail();
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
             // And not a Summary one
             try
             {
                 fs.Root.GetEntry("\005SummaryInformation");
                 Assert.Fail();
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
 
             // Try to open the workbook
             HSSFWorkbook wb = new HSSFWorkbook(fs);
@@ -104,7 +105,7 @@ namespace TestCases.HSSF.UserModel
         [Test]
         public void TestWrite()
         {
-            foreach (String file in new String[] { xlsA, xlsB })
+            foreach(String file in new String[] { xlsA, xlsB })
             {
                 Stream is1 = HSSFTestDataSamples.OpenSampleFileStream(file);
                 POIFSFileSystem fs = new POIFSFileSystem(is1);
@@ -125,13 +126,13 @@ namespace TestCases.HSSF.UserModel
                     fs2.Root.GetEntry("BOOK");
                     Assert.Fail();
                 }
-                catch (FileNotFoundException) { }
+                catch(FileNotFoundException) { }
                 try
                 {
                     fs2.Root.GetEntry("WORKBOOK");
                     Assert.Fail();
                 }
-                catch (FileNotFoundException) { }
+                catch(FileNotFoundException) { }
 
                 // And it can be Opened
                 HSSFWorkbook wb2 = new HSSFWorkbook(fs2);
@@ -165,7 +166,7 @@ namespace TestCases.HSSF.UserModel
                 fs2.Root.GetEntry("WORKBOOK");
                 Assert.Fail();
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
 
             }

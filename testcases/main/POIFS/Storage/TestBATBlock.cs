@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -24,16 +24,15 @@
  * Contributors:
  * 
  * ==============================================================*/
+using NPOI.POIFS.Common;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Common;
-using NPOI.Util;
+using System.Text;
 
 namespace TestCases.POIFS.Storage
 {
@@ -77,7 +76,7 @@ namespace TestCases.POIFS.Storage
         {
             int[] rvalue = new int[count];
 
-            for (int j = 0; j < count; j++)
+            for(int j = 0; j < count; j++)
             {
                 rvalue[j] = j;
             }
@@ -87,15 +86,15 @@ namespace TestCases.POIFS.Storage
         private void VerifyContents(BATBlock[] blocks, int entries)
         {
             byte[] expected = new byte[512 * blocks.Length];
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
             {
-                expected[i] = (byte)0xFF;
+                expected[i] = (byte) 0xFF;
             }
             int offset = 0;
 
-            for (int j = 0; j < entries; j++)
+            for(int j = 0; j < entries; j++)
             {
-                expected[offset++] = (byte)j;
+                expected[offset++] = (byte) j;
                 expected[offset++] = 0;
                 expected[offset++] = 0;
                 expected[offset++] = 0;
@@ -103,14 +102,14 @@ namespace TestCases.POIFS.Storage
             MemoryStream stream = new MemoryStream(512
                                                * blocks.Length);
 
-            for (int j = 0; j < blocks.Length; j++)
+            for(int j = 0; j < blocks.Length; j++)
             {
                 blocks[j].WriteBlocks(stream);
             }
             byte[] actual = stream.ToArray();
 
             ClassicAssert.AreEqual(expected.Length, actual.Length);
-            for (int j = 0; j < expected.Length; j++)
+            for(int j = 0; j < expected.Length; j++)
             {
                 ClassicAssert.AreEqual(expected[j], actual[j]);
             }
@@ -160,50 +159,50 @@ namespace TestCases.POIFS.Storage
                                         int start_block)
         {
             byte[] expected = new byte[512 * blocks.Length];
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
             {
-                expected[i] = (byte)0xFF;
+                expected[i] = (byte) 0xFF;
             }
             int offset = 0;
 
-            for (int j = 0; j < entries; j++)
+            for(int j = 0; j < entries; j++)
             {
-                if ((j % 127) == 0)
+                if((j % 127) == 0)
                 {
-                    if (j != 0)
+                    if(j != 0)
                     {
                         offset += 4;
                     }
                 }
-                expected[offset++] = (byte)j;
+                expected[offset++] = (byte) j;
                 expected[offset++] = 0;
                 expected[offset++] = 0;
                 expected[offset++] = 0;
             }
-            for (int j = 0; j < (blocks.Length - 1); j++)
+            for(int j = 0; j < (blocks.Length - 1); j++)
             {
                 offset = 508 + (j * 512);
-                expected[offset++] = (byte)(start_block + j + 1);
+                expected[offset++] = (byte) (start_block + j + 1);
                 expected[offset++] = 0;
                 expected[offset++] = 0;
                 expected[offset++] = 0;
             }
             offset = (blocks.Length * 512) - 4;
-            expected[offset++] = unchecked((byte)-2);
-            expected[offset++] = unchecked((byte)-1);
-            expected[offset++] = unchecked((byte)-1);
-            expected[offset++] = unchecked((byte)-1);
+            expected[offset++] = unchecked((byte) -2);
+            expected[offset++] = unchecked((byte) -1);
+            expected[offset++] = unchecked((byte) -1);
+            expected[offset++] = unchecked((byte) -1);
             MemoryStream stream = new MemoryStream(512
                                                * blocks.Length);
 
-            for (int j = 0; j < blocks.Length; j++)
+            for(int j = 0; j < blocks.Length; j++)
             {
                 blocks[j].WriteBlocks(stream);
             }
             byte[] actual = stream.ToArray();
 
             ClassicAssert.AreEqual(expected.Length, actual.Length);
-            for (int j = 0; j < expected.Length; j++)
+            for(int j = 0; j < expected.Length; j++)
             {
                 ClassicAssert.AreEqual(expected[j], actual[j], "offset " + j);
             }
@@ -224,7 +223,7 @@ namespace TestCases.POIFS.Storage
                 0, 1, 1, 2
             };
 
-            for (int j = 0; j < blockCounts.Length; j++)
+            for(int j = 0; j < blockCounts.Length; j++)
             {
                 ClassicAssert.AreEqual(
                      requirements[j],
@@ -350,7 +349,8 @@ namespace TestCases.POIFS.Storage
             ClassicAssert.AreEqual(3, block512.GetUsedSectors(false));
 
             // Allocate all
-            for (int i = 0; i < b512.GetBATEntriesPerBlock(); i++) {
+            for(int i = 0; i < b512.GetBATEntriesPerBlock(); i++)
+            {
                 block512.SetValueAt(i, 82);
             }
             // Check
@@ -377,7 +377,8 @@ namespace TestCases.POIFS.Storage
             ClassicAssert.AreEqual(3, block4096.GetUsedSectors(false));
 
             // Allocate all
-            for (int i = 0; i < b4096.GetBATEntriesPerBlock(); i++) {
+            for(int i = 0; i < b4096.GetBATEntriesPerBlock(); i++)
+            {
                 block4096.SetValueAt(i, 82);
             }
             // Check

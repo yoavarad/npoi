@@ -20,7 +20,8 @@ namespace TestCases.XWPF.UserModel
 
     using NPOI.OpenXmlFormats.Wordprocessing;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
 
@@ -65,14 +66,14 @@ namespace TestCases.XWPF.UserModel
             XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("Bug54849.docx");
             IList<XWPFFootnote> footnotes = doc.GetFootnotes();
             int hits = 0;
-            foreach (XWPFFootnote fn in footnotes)
+            foreach(XWPFFootnote fn in footnotes)
             {
-                foreach (IBodyElement e in fn.BodyElements)
+                foreach(IBodyElement e in fn.BodyElements)
                 {
-                    if (e is XWPFParagraph)
+                    if(e is XWPFParagraph)
                     {
                         String txt = ((XWPFParagraph)e).Text;
-                        if (txt.IndexOf("Footnote_sdt") > -1)
+                        if(txt.IndexOf("Footnote_sdt") > -1)
                         {
                             hits++;
                         }

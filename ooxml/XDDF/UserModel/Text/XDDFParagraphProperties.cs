@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,10 +24,9 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Text
 {
+    using NPOI.OpenXmlFormats.Dml;
     using NPOI.Util;
     using NPOI.XDDF.UserModel;
-
-    using NPOI.OpenXmlFormats.Dml;
     using System.Linq;
 
     public class XDDFParagraphProperties
@@ -355,7 +354,7 @@ namespace NPOI.XDDF.UserModel.Text
         {
             if(props.IsSetTabLst())
             {
-                return [.. props.tabLst.tab.Select(p=> new XDDFTabStop(p))];
+                return [.. props.tabLst.tab.Select(p => new XDDFTabStop(p))];
             }
             else
             {
@@ -405,5 +404,3 @@ namespace NPOI.XDDF.UserModel.Text
         }
     }
 }
-
-

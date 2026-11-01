@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record.PivotTable
 {
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System.Text;
 
 
 

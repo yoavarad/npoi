@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,10 +14,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.PTG;
 using NPOI.XSSF.UserModel;
+using System;
 
 namespace NPOI.XSSF.Streaming
 {
@@ -27,7 +27,7 @@ namespace NPOI.XSSF.Streaming
 
         public static SXSSFEvaluationWorkbook Create(SXSSFWorkbook book)
         {
-            if (book == null)
+            if(book == null)
             {
                 return null;
             }

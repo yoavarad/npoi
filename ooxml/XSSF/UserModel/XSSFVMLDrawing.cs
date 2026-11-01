@@ -15,21 +15,21 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
-using System;
-using NPOI.XSSF.Util;
-using System.IO;
+using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using NPOI.OpenXml4Net.OPC;
-using System.Text.RegularExpressions;
 using NPOI.OpenXmlFormats.Vml;
-using System.Xml.Serialization;
-using System.Xml;
-using System.Collections;
 using NPOI.OpenXmlFormats.Vml.Office;
 using NPOI.OpenXmlFormats.Vml.Spreadsheet;
-using System.Text;
-using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using NPOI.Util;
+using NPOI.XSSF.Util;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -113,41 +113,41 @@ namespace NPOI.XSSF.UserModel
             //InflaterInputStream iis = (InflaterInputStream)is1;
             StreamReader sr = new StreamReader(is1);
             string data = sr.ReadToEnd();
-            
-            //Stream vmlsm = new EvilUnclosedBRFixingInputStream(is1); --TODO:: add later
-            
-             doc.LoadXml(
-                  data.Replace("<br>", "<br/>").Replace("</br>", "<br/>")
-            );
 
-             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-             nsmgr.AddNamespace("o", "urn:schemas-microsoft-com:office:office");
-             nsmgr.AddNamespace("x", "urn:schemas-microsoft-com:office:excel");
-             nsmgr.AddNamespace("v", "urn:schemas-microsoft-com:vml");
-             _items = new ArrayList();
+            //Stream vmlsm = new EvilUnclosedBRFixingInputStream(is1); --TODO:: add later
+
+            doc.LoadXml(
+                 data.Replace("<br>", "<br/>").Replace("</br>", "<br/>")
+           );
+
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+            nsmgr.AddNamespace("o", "urn:schemas-microsoft-com:office:office");
+            nsmgr.AddNamespace("x", "urn:schemas-microsoft-com:office:excel");
+            nsmgr.AddNamespace("v", "urn:schemas-microsoft-com:vml");
+            _items = new ArrayList();
             XmlNodeList nodes=doc.SelectNodes("/xml/*",nsmgr);
-            foreach (XmlNode nd in nodes)
+            foreach(XmlNode nd in nodes)
             {
                 string xmltext = nd.OuterXml;
-                if (nd.LocalName == QNAME_SHAPE_LAYOUT.Name)
+                if(nd.LocalName == QNAME_SHAPE_LAYOUT.Name)
                 {
                     CT_ShapeLayout sl=CT_ShapeLayout.Parse(nd, nsmgr);
                     _items.Add(sl);
                 }
-                else if (nd.LocalName == QNAME_SHAPE_TYPE.Name)
+                else if(nd.LocalName == QNAME_SHAPE_TYPE.Name)
                 {
                     CT_Shapetype st = CT_Shapetype.Parse(nd, nsmgr);
                     _items.Add(st);
                     _shapeTypeId = st.id;
                 }
-                else if (nd.LocalName == QNAME_SHAPE.Name)
+                else if(nd.LocalName == QNAME_SHAPE.Name)
                 {
                     CT_Shape shape = CT_Shape.Parse(nd, nsmgr);
                     String id = shape.id;
-                    if (id != null)
+                    if(id != null)
                     {
                         MatchCollection m = ptrn_shapeId.Matches(id);
-                        if (m.Count>0) 
+                        if(m.Count>0)
                             _shapeId = Math.Max(_shapeId, int.Parse(m[0].Groups[1].Value));
                     }
                     _items.Add(shape);
@@ -179,7 +179,7 @@ namespace NPOI.XSSF.UserModel
 
         internal void Write(Stream out1)
         {
-            using (StreamWriter sw = new StreamWriter(out1))
+            using(StreamWriter sw = new StreamWriter(out1))
             {
                 sw.Write("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
                 sw.Write("<xml");
@@ -190,22 +190,22 @@ namespace NPOI.XSSF.UserModel
                 sw.Write(" xmlns:p=\"urn:schemas-microsoft-com:office:powerpoint\"");
                 sw.Write('>');
 
-                for (int i = 0; i < _items.Count; i++)
+                for(int i = 0; i < _items.Count; i++)
                 {
                     object xc = _items[i];
-                    if (xc is XmlNode node)
+                    if(xc is XmlNode node)
                     {
                         sw.Write(node.OuterXml.Replace(" xmlns:v=\"urn:schemas-microsoft-com:vml\"", "").Replace(" xmlns:x=\"urn:schemas-microsoft-com:office:excel\"", "").Replace(" xmlns:o=\"urn:schemas-microsoft-com:office:office\"", "").Replace("&#xD;&#xA;", ""));
                     }
-                    else if (xc is CT_Shapetype shapetype)
+                    else if(xc is CT_Shapetype shapetype)
                     {
                         shapetype.Write(sw, "shapetype");
                     }
-                    else if (xc is CT_ShapeLayout layout)
+                    else if(xc is CT_ShapeLayout layout)
                     {
-                        layout.Write(sw, "shapelayout");               
+                        layout.Write(sw, "shapelayout");
                     }
-                    else if (xc is CT_Shape shape)
+                    else if(xc is CT_Shape shape)
                     {
                         shape.Write(sw, "shape");
                     }
@@ -263,7 +263,7 @@ namespace NPOI.XSSF.UserModel
             shape.style="position:absolute; visibility:hidden";
             shape.fillcolor = ("#ffffe1");
             shape.insetmode = (ST_InsetMode.auto);
-            shape.AddNewFill().color=("#ffffe1");   
+            shape.AddNewFill().color=("#ffffe1");
             CT_Shadow shadow = shape.AddNewShadow();
             shadow.on= NPOI.OpenXmlFormats.Vml.ST_TrueFalse.t;
             shadow.color = "black";
@@ -290,18 +290,18 @@ namespace NPOI.XSSF.UserModel
          */
         internal CT_Shape FindCommentShape(int row, int col)
         {
-            foreach (object itm in _items)
+            foreach(object itm in _items)
             {
-                if (itm is CT_Shape sh)
+                if(itm is CT_Shape sh)
                 {
-                    if (sh.sizeOfClientDataArray() > 0)
+                    if(sh.sizeOfClientDataArray() > 0)
                     {
                         CT_ClientData cldata = sh.GetClientDataArray(0);
-                        if (cldata.ObjectType == ST_ObjectType.Note)
+                        if(cldata.ObjectType == ST_ObjectType.Note)
                         {
                             int crow = cldata.GetRowArray(0);
                             int ccol = cldata.GetColumnArray(0);
-                            if (crow == row && ccol == col)
+                            if(crow == row && ccol == col)
                             {
                                 return sh;
                             }
@@ -317,9 +317,8 @@ namespace NPOI.XSSF.UserModel
             CT_Shape shape = FindCommentShape(row, col);
             if(shape == null)
                 return false;
-             _items.Remove(shape);
-             return true;
+            _items.Remove(shape);
+            return true;
         }
     }
 }
-

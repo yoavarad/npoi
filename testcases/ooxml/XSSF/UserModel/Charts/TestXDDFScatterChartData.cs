@@ -15,13 +15,13 @@
    limitations under the License.
    ==================================================================== */
 
-using NPOI.SS.Util;
 using NPOI.SS.UserModel;
-using System;
+using NPOI.SS.Util;
+using NPOI.XDDF.UserModel.Chart;
+using NPOI.XSSF.UserModel;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using NPOI.XSSF.UserModel;
-using NPOI.XDDF.UserModel.Chart;
+using System;
 
 namespace TestCases.XSSF.UserModel.Charts
 {

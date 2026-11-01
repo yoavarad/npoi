@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Represents a NoteStructure (0xD) sub record.
@@ -30,7 +30,7 @@ namespace NPOI.HSSF.Record
      *
      * @author Yegor Kozlov
      */
-    public class NoteStructureSubRecord: SubRecord, ICloneable
+    public class NoteStructureSubRecord : SubRecord, ICloneable
     {
         public const short sid = 0x0D;
         private const int ENCODED_SIZE = 22;
@@ -53,7 +53,8 @@ namespace NPOI.HSSF.Record
          */
         public NoteStructureSubRecord(ILittleEndianInput in1, int size)
         {
-            if (size != ENCODED_SIZE) {
+            if(size != ENCODED_SIZE)
+            {
                 throw new RecordFormatException("Unexpected size (" + size + ")");
             }
             //just grab the raw data

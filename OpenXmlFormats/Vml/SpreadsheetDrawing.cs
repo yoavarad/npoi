@@ -1,11 +1,11 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Xml;
-using NPOI.OpenXml4Net.Util;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Vml.Spreadsheet
 {
@@ -169,28 +169,28 @@ namespace NPOI.OpenXmlFormats.Vml.Spreadsheet
         //}
         public static CT_ClientData Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ClientData ctObj = new CT_ClientData();
-            if (node.Attributes["ObjectType"] != null)
-                ctObj.ObjectType = (ST_ObjectType)Enum.Parse(typeof(ST_ObjectType), node.Attributes["ObjectType"].Value);
+            if(node.Attributes["ObjectType"] != null)
+                ctObj.ObjectType = (ST_ObjectType) Enum.Parse(typeof(ST_ObjectType), node.Attributes["ObjectType"].Value);
             ctObj.column = new List<Int32>();
             ctObj.row = new List<Int32>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "Anchor")
+                if(childNode.LocalName == "Anchor")
                     ctObj.anchor = childNode.InnerText;
-                else if (childNode.LocalName == "AutoFill")
+                else if(childNode.LocalName == "AutoFill")
                     ctObj.autoFill = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalseBlank(childNode.InnerText);
-                else if (childNode.LocalName == "Visible")
+                else if(childNode.LocalName == "Visible")
                     ctObj.visible = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalseBlank(childNode.InnerText);
-                else if (childNode.LocalName == "MoveWithCells")
+                else if(childNode.LocalName == "MoveWithCells")
                     ctObj.moveWithCells = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalseBlank(childNode.InnerText);
-                else if (childNode.LocalName == "SizeWithCells")
+                else if(childNode.LocalName == "SizeWithCells")
                     ctObj.sizeWithCells = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalseBlank(childNode.InnerText);
-                else if (childNode.LocalName == "Column")
+                else if(childNode.LocalName == "Column")
                     ctObj.column.Add(Int32.Parse(childNode.InnerText));
-                else if (childNode.LocalName == "Row")
+                else if(childNode.LocalName == "Row")
                     ctObj.row.Add(Int32.Parse(childNode.InnerText));
             }
             return ctObj;
@@ -203,28 +203,28 @@ namespace NPOI.OpenXmlFormats.Vml.Spreadsheet
             sw.WriteStart("x", nodeName);
             XmlHelper.WriteAttribute(sw, "ObjectType", this.ObjectType.ToString());
             sw.Write('>');
-            if (this.moveWithCells == ST_TrueFalseBlank.t || this.moveWithCells == ST_TrueFalseBlank.@true)
+            if(this.moveWithCells == ST_TrueFalseBlank.t || this.moveWithCells == ST_TrueFalseBlank.@true)
                 sw.Write("<x:MoveWithCells/>");
-            if (this.sizeWithCells == ST_TrueFalseBlank.t || this.sizeWithCells == ST_TrueFalseBlank.@true)
+            if(this.sizeWithCells == ST_TrueFalseBlank.t || this.sizeWithCells == ST_TrueFalseBlank.@true)
                 sw.Write("<x:SizeWithCells/>");
-            if (this.anchor != null)
+            if(this.anchor != null)
                 sw.WriteElementAndContent("x:Anchor", this.anchor);
-            if (this.autoFill != ST_TrueFalseBlank.NONE)
+            if(this.autoFill != ST_TrueFalseBlank.NONE)
                 sw.WriteElementAndContent("x:AutoFill", this.autoFill.ToString());
-            if (this.visible != ST_TrueFalseBlank.NONE)
+            if(this.visible != ST_TrueFalseBlank.NONE)
                 sw.WriteElementAndContent("x:Visible", this.visible.ToString());
-            if (this.row != null)
+            if(this.row != null)
             {
-                foreach (Int32 x in this.row)
+                foreach(Int32 x in this.row)
                 {
                     sw.Write("<x:Row>");
                     sw.Write(x);
                     sw.Write("</x:Row>");
                 }
             }
-            if (this.column != null)
+            if(this.column != null)
             {
-                foreach (Int32 x in this.column)
+                foreach(Int32 x in this.column)
                 {
                     sw.Write("<x:Column>");
                     sw.Write(x);
@@ -237,14 +237,14 @@ namespace NPOI.OpenXmlFormats.Vml.Spreadsheet
 
         public void AddNewRow(int rowNum)
         {
-            if (rowField != null)
+            if(rowField != null)
             {
                 rowField.Add(rowNum);
             }
         }
         public void AddNewColumn(int columnNum)
         {
-            if (columnField != null)
+            if(columnField != null)
             {
                 columnField.Add(columnNum);
             }

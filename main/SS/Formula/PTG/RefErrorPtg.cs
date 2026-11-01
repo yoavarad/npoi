@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using System.Text;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -60,7 +60,7 @@ namespace NPOI.SS.Formula.PTG
         }
         public int Reserved
         {
-            get{return field_1_reserved;}
+            get { return field_1_reserved; }
             set { field_1_reserved = value; }
         }
 

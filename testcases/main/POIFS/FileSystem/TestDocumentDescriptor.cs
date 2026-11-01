@@ -26,16 +26,15 @@
  * ==============================================================*/
 
 
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.FileSystem;
-using NPOI.Util;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
 
 namespace TestCases.POIFS.FileSystem
 {
@@ -80,21 +79,21 @@ namespace TestCases.POIFS.FileSystem
             a1, a2, a3, a4, a5
         };
 
-            for (int j = 0; j < paths.Length; j++)
+            for(int j = 0; j < paths.Length; j++)
             {
-                for (int k = 0; k < paths.Length; k++)
+                for(int k = 0; k < paths.Length; k++)
                 {
-                    for (int m = 0; m < names.Length; m++)
+                    for(int m = 0; m < names.Length; m++)
                     {
                         DocumentDescriptor d1 = new DocumentDescriptor(paths[j],
                                                     names[m]);
 
-                        for (int n = 0; n < names.Length; n++)
+                        for(int n = 0; n < names.Length; n++)
                         {
                             DocumentDescriptor d2 =
                                 new DocumentDescriptor(paths[k], names[n]);
 
-                            if (m == n)
+                            if(m == n)
                             {
                                 ClassicAssert.AreEqual(d1, d2, "" + j + "," + k + "," + m + ","
                                              + n);
@@ -144,22 +143,22 @@ namespace TestCases.POIFS.FileSystem
             })
         };
 
-            for (int k = 0; k < builtUpPaths.Length; k++)
+            for(int k = 0; k < builtUpPaths.Length; k++)
             {
-                for (int j = 0; j < fullPaths.Length; j++)
+                for(int j = 0; j < fullPaths.Length; j++)
                 {
-                    for (int m = 0; m < names.Length; m++)
+                    for(int m = 0; m < names.Length; m++)
                     {
                         DocumentDescriptor d1 =
                             new DocumentDescriptor(fullPaths[j], names[m]);
 
-                        for (int n = 0; n < names.Length; n++)
+                        for(int n = 0; n < names.Length; n++)
                         {
                             DocumentDescriptor d2 =
                                 new DocumentDescriptor(builtUpPaths[k],
                                                        names[n]);
 
-                            if ((k == j) && (m == n))
+                            if((k == j) && (m == n))
                             {
                                 ClassicAssert.AreEqual(d1, d2, "" + j + "," + k + "," + m + ","
                                              + n);
@@ -189,16 +188,16 @@ namespace TestCases.POIFS.FileSystem
             })
         };
 
-            for (int k = 0; k < builtUpPaths.Length; k++)
+            for(int k = 0; k < builtUpPaths.Length; k++)
             {
-                for (int j = 0; j < badPaths.Length; j++)
+                for(int j = 0; j < badPaths.Length; j++)
                 {
-                    for (int m = 0; m < names.Length; m++)
+                    for(int m = 0; m < names.Length; m++)
                     {
                         DocumentDescriptor d1 =
                             new DocumentDescriptor(badPaths[j], names[m]);
 
-                        for (int n = 0; n < names.Length; n++)
+                        for(int n = 0; n < names.Length; n++)
                         {
                             DocumentDescriptor d2 =
                                 new DocumentDescriptor(builtUpPaths[k],

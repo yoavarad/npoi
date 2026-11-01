@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -37,7 +37,7 @@ namespace TestCases.XSSF.UserModel
     public sealed class TestMatrixFormulasFromXMLSpreadsheet
     {
         private static POILogger LOG = POILogFactory.GetLogger(typeof(TestMatrixFormulasFromXMLSpreadsheet));
-        
+
         private static XSSFWorkbook workbook;
         private static ISheet sheet;
         private static IFormulaEvaluator evaluator;
@@ -236,5 +236,3 @@ namespace TestCases.XSSF.UserModel
         }
     }
 }
-
-

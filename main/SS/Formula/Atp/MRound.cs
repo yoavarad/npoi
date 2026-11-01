@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Atp
 {
-    using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.Functions;
     using System;
 
 
@@ -48,7 +48,7 @@ namespace NPOI.SS.Formula.Atp
         {
             double number, multiple, result;
 
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -58,24 +58,24 @@ namespace NPOI.SS.Formula.Atp
                 number = OperandResolver.CoerceValueToDouble(OperandResolver.GetSingleValue(args[0], ec.RowIndex, ec.ColumnIndex));
                 multiple = OperandResolver.CoerceValueToDouble(OperandResolver.GetSingleValue(args[1], ec.RowIndex, ec.ColumnIndex));
 
-                if (multiple == 0.0)
+                if(multiple == 0.0)
                 {
                     result = 0.0;
                 }
                 else
                 {
-                    if (number * multiple < 0)
+                    if(number * multiple < 0)
                     {
                         // Returns #NUM! because the number and the multiple have different signs
                         throw new EvaluationException(ErrorEval.NUM_ERROR);
                     }
                     result = multiple * Math.Round(number / multiple, MidpointRounding.AwayFromZero);
-                    
+
                 }
                 NumericFunction.CheckValue(result);
                 return new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

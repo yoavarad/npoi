@@ -1,4 +1,5 @@
-﻿using NPOI.OpenXml4Net.Util;
+using EnumsNET;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,10 +7,9 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using EnumsNET;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
-{ 
+{
     public enum ST_TargetScreenSize
     {
         [Description("544x376")]
@@ -78,7 +78,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private bool codePageFieldSpecified;
         public static CT_WebPublishing Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_WebPublishing ctObj = new CT_WebPublishing();
             ctObj.css = XmlHelper.ReadBool(node.Attributes["css"]);
@@ -86,9 +86,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             ctObj.longFileNames = XmlHelper.ReadBool(node.Attributes["longFileNames"]);
             ctObj.vml = XmlHelper.ReadBool(node.Attributes["vml"]);
             ctObj.allowPng = XmlHelper.ReadBool(node.Attributes["allowPng"]);
-            if (node.Attributes["targetScreenSize"] != null)
+            if(node.Attributes["targetScreenSize"] != null)
             {
-               ctObj.targetScreenSize = Enums.Parse<ST_TargetScreenSize>(node.Attributes["targetScreenSize"].Value,false, EnumFormat.Description);
+                ctObj.targetScreenSize = Enums.Parse<ST_TargetScreenSize>(node.Attributes["targetScreenSize"].Value, false, EnumFormat.Description);
             }
             ctObj.dpi = XmlHelper.ReadUInt(node.Attributes["dpi"]);
             ctObj.codePage = XmlHelper.ReadUInt(node.Attributes["codePage"]);
@@ -120,7 +120,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             this.vmlField = false;
             this.allowPngField = false;
             this.targetScreenSizeField = ST_TargetScreenSize.Item800x600;
-            this.dpiField = ((uint)(96));
+            this.dpiField = ((uint) (96));
         }
 
         [DefaultValue(true)]
@@ -262,7 +262,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_WebPublishObject Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_WebPublishObject ctObj = new CT_WebPublishObject();
             ctObj.id = XmlHelper.ReadUInt(node.Attributes["id"]);
@@ -375,15 +375,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private bool countFieldSpecified;
         public static CT_WebPublishObjects Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_WebPublishObjects ctObj = new CT_WebPublishObjects();
             ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.countSpecified = node.Attributes["count"] != null;
             ctObj.webPublishObject = new List<CT_WebPublishObject>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "webPublishObject")
+                if(childNode.LocalName == "webPublishObject")
                     ctObj.webPublishObject.Add(CT_WebPublishObject.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -396,9 +396,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count);
             sw.Write('>');
-            if (this.webPublishObject != null)
+            if(this.webPublishObject != null)
             {
-                foreach (CT_WebPublishObject x in this.webPublishObject)
+                foreach(CT_WebPublishObject x in this.webPublishObject)
                 {
                     x.Write(sw, "webPublishObject");
                 }

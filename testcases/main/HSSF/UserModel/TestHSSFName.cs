@@ -17,9 +17,6 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.Reflection;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
@@ -27,6 +24,10 @@ namespace TestCases.HSSF.UserModel
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Reflection;
     using TestCases.SS.UserModel;
 
     /**
@@ -58,7 +59,7 @@ namespace TestCases.HSSF.UserModel
             FieldInfo f;
             f = typeof(HSSFName).GetField("_definedNameRec", BindingFlags.Instance | BindingFlags.NonPublic);
             //f.SetAccessible(true);
-            return (NameRecord)f.GetValue(definedName);
+            return (NameRecord) f.GetValue(definedName);
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace TestCases.HSSF.UserModel
 
             // set repeating rows and columns twice for the first sheet
             CellRangeAddress cra = CellRangeAddress.ValueOf("A1:A3");
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 2; i++)
             {
                 sheet.RepeatingColumns = (cra);
                 sheet.RepeatingRows = (cra);
@@ -96,7 +97,7 @@ namespace TestCases.HSSF.UserModel
 
             // check that Setting RR&C on a second sheet causes a new Print_Titles built-in
             // name to be Created
-            sheet = (HSSFSheet)nwb.CreateSheet("SecondSheet");
+            sheet = (HSSFSheet) nwb.CreateSheet("SecondSheet");
             cra = CellRangeAddress.ValueOf("B1:C1");
             sheet.RepeatingColumns = (cra);
             sheet.RepeatingRows = (cra);
@@ -225,7 +226,7 @@ namespace TestCases.HSSF.UserModel
                 wb.GetCreationHelper().CreateAreaReference(name2.RefersToFormula);
                 Assert.Fail("attempt to supply an invalid reference to AreaReference constructor results in exception");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             { // TODO - use a different exception for this condition
                 // expected during successful Test
             }
@@ -243,7 +244,7 @@ namespace TestCases.HSSF.UserModel
             wb.CreateSheet("CSCO");
 
             Ptg[] ptgs = HSSFFormulaParser.Parse("CSCO!$E$71", wb, FormulaType.NamedRange, 0);
-            foreach (Ptg ptg in ptgs)
+            foreach(Ptg ptg in ptgs)
             {
                 ClassicAssert.AreEqual('R', ptg.RVAType);
             }

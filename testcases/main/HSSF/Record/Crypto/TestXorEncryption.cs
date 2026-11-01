@@ -17,14 +17,15 @@
 
 namespace TestCases.HSSF.Record.Crypto
 {
-    using System;
     using NPOI.HSSF.Record.Crypto;
     using NPOI.HSSF.UserModel;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.FileSystem;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
 
     [TestFixture]
@@ -35,12 +36,14 @@ namespace TestCases.HSSF.Record.Crypto
 
         // to not affect other tests Running in the same JVM
         [TearDown]
-        public void ResetPassword() {
+        public void ResetPassword()
+        {
             Biff8EncryptionKey.CurrentUserPassword = (/*setter*/null);
         }
 
         [Test]
-        public void TestXorEncryption1() {
+        public void TestXorEncryption1()
+        {
             // Xor-Password: abc
             // 2.5.343 XORObfuscation
             // key = 20810
@@ -59,7 +62,8 @@ namespace TestCases.HSSF.Record.Crypto
 
         [Test]
         [Ignore("not implemented")]
-        public void TestUserFile() {
+        public void TestUserFile()
+        {
             Biff8EncryptionKey.CurrentUserPassword = (/*setter*/"abc");
             NPOIFSFileSystem fs = new NPOIFSFileSystem(HSSFTestDataSamples.GetSampleFile("xor-encryption-abc.xls"), true);
             IWorkbook hwb = new HSSFWorkbook(fs.Root, true);

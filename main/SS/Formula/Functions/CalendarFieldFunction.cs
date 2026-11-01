@@ -60,11 +60,11 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 val = OperandResolver.CoerceValueToDouble(ve);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
-            if (val < 0)
+            if(val < 0)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -73,15 +73,18 @@ namespace NPOI.SS.Formula.Functions
 
         private int GetCalField(double serialDate)
         {
-            if ((int)serialDate == 0)
+            if((int) serialDate == 0)
             {
                 // Special weird case
                 // day zero should be 31-Dec-1899,  but Excel seems to think it is 0-Jan-1900
-                switch (_dateFieldId)
+                switch(_dateFieldId)
                 {
-                    case YEAR_ID: return 1900;
-                    case MONTH_ID: return 1;
-                    case DAY_OF_MONTH_ID: return 0;
+                    case YEAR_ID:
+                        return 1900;
+                    case MONTH_ID:
+                        return 1;
+                    case DAY_OF_MONTH_ID:
+                        return 0;
                 }
                 //throw new InvalidOperationException("bad date field " + _dateFieldId);
             }
@@ -94,27 +97,27 @@ namespace NPOI.SS.Formula.Functions
             //Calendar c = new GregorianCalendar();
             //c.setTime(d);
             int result = 0;
-            if (_dateFieldId == YEAR_ID)
+            if(_dateFieldId == YEAR_ID)
             {
                 result = d.Year;
             }
-            else if (_dateFieldId == MONTH_ID)
+            else if(_dateFieldId == MONTH_ID)
             {
                 result = d.Month;
             }
-            else if (_dateFieldId == DAY_OF_MONTH_ID)
+            else if(_dateFieldId == DAY_OF_MONTH_ID)
             {
                 result = d.Day;
             }
-            else if (_dateFieldId == HOUR_OF_DAY_ID)
+            else if(_dateFieldId == HOUR_OF_DAY_ID)
             {
                 result = d.Hour;
             }
-            else if (_dateFieldId == MINUTE_ID)
+            else if(_dateFieldId == MINUTE_ID)
             {
                 result = d.Minute;
             }
-            else if (_dateFieldId == SECOND_ID)
+            else if(_dateFieldId == SECOND_ID)
             {
                 result = d.Second;
             }
@@ -122,4 +125,3 @@ namespace NPOI.SS.Formula.Functions
         }
     }
 }
-

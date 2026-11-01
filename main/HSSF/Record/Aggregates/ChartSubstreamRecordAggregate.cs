@@ -17,10 +17,8 @@
 
 namespace NPOI.HSSF.Record.Aggregates
 {
-    using System;
-
-
     using NPOI.HSSF.Model;
+    using System;
     using System.Collections.Generic;
     using System.IO;
 
@@ -42,19 +40,19 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public ChartSubstreamRecordAggregate(RecordStream rs)
         {
-            _bofRec = (BOFRecord)rs.GetNext();
+            _bofRec = (BOFRecord) rs.GetNext();
             List<RecordBase> temp = new List<RecordBase>();
-            while (rs.PeekNextClass() != typeof(EOFRecord))
+            while(rs.PeekNextClass() != typeof(EOFRecord))
             {
                 Type a = rs.PeekNextClass();
-                if (PageSettingsBlock.IsComponentRecord(rs.PeekNextSid()))
+                if(PageSettingsBlock.IsComponentRecord(rs.PeekNextSid()))
                 {
-                    if (_psBlock != null)
+                    if(_psBlock != null)
                     {
-                        if (rs.PeekNextSid() == HeaderFooterRecord.sid)
+                        if(rs.PeekNextSid() == HeaderFooterRecord.sid)
                         {
                             // test samples: 45538_classic_Footer.xls, 45538_classic_Header.xls
-                            _psBlock.AddLateHeaderFooter((HeaderFooterRecord)rs.GetNext());
+                            _psBlock.AddLateHeaderFooter((HeaderFooterRecord) rs.GetNext());
                             continue;
                         }
                         throw new InvalidDataException(
@@ -68,7 +66,7 @@ namespace NPOI.HSSF.Record.Aggregates
             }
             _recs = temp;
             Record eof = rs.GetNext(); // no need to save EOF in field
-            if (eof is not EOFRecord)
+            if(eof is not EOFRecord)
             {
                 throw new InvalidOperationException("Bad chart EOF");
             }
@@ -76,21 +74,21 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public override void VisitContainedRecords(RecordVisitor rv)
         {
-            if (_recs.Count==0)
+            if(_recs.Count==0)
             {
                 return;
             }
             rv.VisitRecord(_bofRec);
-            for (int i = 0; i < _recs.Count; i++)
+            for(int i = 0; i < _recs.Count; i++)
             {
                 RecordBase rb = _recs[i];
-                if (rb is RecordAggregate aggregate)
+                if(rb is RecordAggregate aggregate)
                 {
                     aggregate.VisitContainedRecords(rv);
                 }
                 else
                 {
-                    rv.VisitRecord((Record)rb);
+                    rv.VisitRecord((Record) rb);
                 }
             }
             rv.VisitRecord(EOFRecord.instance);
@@ -98,5 +96,3 @@ namespace NPOI.HSSF.Record.Aggregates
 
     }
 }
-
-

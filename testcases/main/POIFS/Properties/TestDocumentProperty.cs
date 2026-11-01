@@ -25,16 +25,15 @@
  * 
  * ==============================================================*/
 
+using NPOI.POIFS.Common;
+using NPOI.POIFS.Properties;
+using NPOI.POIFS.Storage;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using System.Text;
 using System.Collections;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-
-using NPOI.POIFS.Common;
-using NPOI.POIFS.Storage;
-using NPOI.POIFS.Properties;
+using System.Text;
 using TestCases.POIFS.Storage;
 
 namespace TestCases.POIFS.Properties
@@ -125,7 +124,7 @@ namespace TestCases.POIFS.Properties
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(128, output.Length);
-            for (int j = 0; j < 128; j++)
+            for(int j = 0; j < 128; j++)
             {
                 ClassicAssert.AreEqual(expected[j],
                              output[j], "mismatch at offset " + j);
@@ -138,7 +137,7 @@ namespace TestCases.POIFS.Properties
         {
             DocumentProperty property = new DocumentProperty(name, size);
 
-            if (size >= 4096)
+            if(size >= 4096)
             {
                 ClassicAssert.IsTrue(!property.ShouldUseSmallBlocks);
             }
@@ -149,40 +148,40 @@ namespace TestCases.POIFS.Properties
             byte[] Testblock = new byte[128];
             int index = 0;
 
-            for (; index < 0x40; index++)
+            for(; index < 0x40; index++)
             {
-                Testblock[index] = (byte)0;
+                Testblock[index] = (byte) 0;
             }
             int limit = Math.Min(31, name.Length);
 
-            Testblock[index++] = (byte)(2 * (limit + 1));
-            Testblock[index++] = (byte)0;
-            Testblock[index++] = (byte)2;
-            Testblock[index++] = (byte)1;
-            for (; index < 0x50; index++)
+            Testblock[index++] = (byte) (2 * (limit + 1));
+            Testblock[index++] = (byte) 0;
+            Testblock[index++] = (byte) 2;
+            Testblock[index++] = (byte) 1;
+            for(; index < 0x50; index++)
             {
-                Testblock[index] = (byte)0xFF;
+                Testblock[index] = (byte) 0xFF;
             }
-            for (; index < 0x78; index++)
+            for(; index < 0x78; index++)
             {
-                Testblock[index] = (byte)0;
+                Testblock[index] = (byte) 0;
             }
             int sz = size;
 
-            Testblock[index++] = (byte)sz;
+            Testblock[index++] = (byte) sz;
             sz /= 256;
-            Testblock[index++] = (byte)sz;
+            Testblock[index++] = (byte) sz;
             sz /= 256;
-            Testblock[index++] = (byte)sz;
+            Testblock[index++] = (byte) sz;
             sz /= 256;
-            Testblock[index++] = (byte)sz;
-            for (; index < 0x80; index++)
+            Testblock[index++] = (byte) sz;
+            for(; index < 0x80; index++)
             {
-                Testblock[index] = (byte)0x0;
+                Testblock[index] = (byte) 0x0;
             }
             byte[] name_bytes = Encoding.GetEncoding(1252).GetBytes(name);
 
-            for (index = 0; index < limit; index++)
+            for(index = 0; index < limit; index++)
             {
                 Testblock[index * 2] = name_bytes[index];
             }
@@ -192,7 +191,7 @@ namespace TestCases.POIFS.Properties
             byte[] output = stream.ToArray();
 
             ClassicAssert.AreEqual(Testblock.Length, output.Length);
-            for (int j = 0; j < Testblock.Length; j++)
+            for(int j = 0; j < Testblock.Length; j++)
             {
                 ClassicAssert.AreEqual(Testblock[j],
                              output[j], "mismatch at offset " + j);

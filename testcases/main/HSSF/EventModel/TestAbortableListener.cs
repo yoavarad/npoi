@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.EventModel
 {
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.EventUserModel;
     using NPOI.HSSF.Record;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System.IO;
     using TestCases.HSSF;
 
     /**
@@ -40,7 +41,7 @@ namespace TestCases.HSSF.EventModel
             {
                 return new POIFSFileSystem(is1);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -107,7 +108,7 @@ namespace TestCases.HSSF.EventModel
                 countSeen++;
                 lastRecordSeen = record;
 
-                if (countSeen == abortAfterIndex)
+                if(countSeen == abortAfterIndex)
                 {
                     return 1234;
                 }

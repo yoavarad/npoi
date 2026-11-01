@@ -96,7 +96,7 @@ namespace NPOI.SS.UserModel
 
         private readonly int index;
         private readonly HSSFColor hssfColor;
-        
+
 
         IndexedColors(int idx, HSSFColor color)
         {
@@ -138,7 +138,7 @@ namespace NPOI.SS.UserModel
             Orchid = new IndexedColors(28, new HSSFColor.Orchid());
             Coral = new IndexedColors(29, new HSSFColor.Coral());
             RoyalBlue = new IndexedColors(30, new HSSFColor.RoyalBlue());
-            LightCornflowerBlue = new IndexedColors(31,new HSSFColor.LightCornflowerBlue());
+            LightCornflowerBlue = new IndexedColors(31, new HSSFColor.LightCornflowerBlue());
             SkyBlue = new IndexedColors(40, new HSSFColor.SkyBlue());
             LightTurquoise = new IndexedColors(41, new HSSFColor.LightTurquoise());
             LightGreen = new IndexedColors(42, new HSSFColor.LightGreen());
@@ -288,7 +288,7 @@ namespace NPOI.SS.UserModel
 
         public static IndexedColors TryValueOf(int index)
         {
-            if (mappingIndex.TryGetValue(index, out IndexedColors of))
+            if(mappingIndex.TryGetValue(index, out IndexedColors of))
                 return of;
 
             return null;
@@ -296,7 +296,7 @@ namespace NPOI.SS.UserModel
 
         public static IndexedColors ValueOf(string colorName)
         {
-            if (mappingName.ContainsKey(colorName.ToLower()))
+            if(mappingName.ContainsKey(colorName.ToLower()))
                 return mappingName[colorName.ToLower()];
 
             return null;
@@ -305,7 +305,7 @@ namespace NPOI.SS.UserModel
         public static IndexedColors ValueOf(int index)
         {
             var indexedColors = TryValueOf(index);
-            
+
             if(indexedColors == null)
                 throw new ArgumentException("Illegal IndexedColor index: " + index);
 
@@ -337,7 +337,7 @@ namespace NPOI.SS.UserModel
                 stringBuilder.Append('#');
 
                 byte[] rgb = this.hssfColor.RGB;
-                foreach (byte s in rgb)
+                foreach(byte s in rgb)
                 {
                     stringBuilder.Append(s.ToString("x2"));
                 }
@@ -354,7 +354,7 @@ namespace NPOI.SS.UserModel
         {
             get
             {
-                return (short)index;
+                return (short) index;
             }
         }
     }

@@ -18,10 +18,11 @@
 namespace TestCases.HSSF.Record.Pivot
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.PivotTable;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.HSSF.Record;
 
     /**
@@ -46,9 +47,9 @@ namespace TestCases.HSSF.Record.Pivot
             {
                 rec = new ExtendedPivotTableViewFieldsRecord(in1);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.Equals("Expected to find a ContinueRecord in order to read remaining 65535 of 65535 chars"))
+                if(e.Message.Equals("Expected to find a ContinueRecord in order to read remaining 65535 of 65535 chars"))
                 {
                     throw new AssertionException("Identified bug 46693a");
                 }
@@ -71,9 +72,9 @@ namespace TestCases.HSSF.Record.Pivot
             {
                 rec = new ExtendedPivotTableViewFieldsRecord(in1);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.Equals("Not enough data (0) to read requested (2) bytes"))
+                if(e.Message.Equals("Not enough data (0) to read requested (2) bytes"))
                 {
                     throw new AssertionException("Identified bug 46918");
                 }

@@ -17,20 +17,19 @@
 
 namespace NPOI.HSSF.Extractor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    using NPOI.HSSF.UserModel;
-    using NPOI.HSSF.Record;
-    using NPOI.POIFS.FileSystem;
     using NPOI;
     using NPOI.HPSF;
     using NPOI.HSSF.EventUserModel;
     using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
+    using NPOI.POIFS.FileSystem;
     //using NPOI.HSSF.Util;
     using NPOI.SS.Util;
+    using System;
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.Text;
 
     /// <summary>
     /// A text extractor for Excel files, that is based
@@ -49,7 +48,7 @@ namespace NPOI.HSSF.Extractor
         private bool formulasNotResults = false;
 
         public EventBasedExcelExtractor(POIFSFileSystem fs)
-            : base((POIDocument)null)
+            : base((POIDocument) null)
         {
 
             this.fs = fs;
@@ -62,8 +61,9 @@ namespace NPOI.HSSF.Extractor
         /// <value>The doc summary information.</value>
         public override DocumentSummaryInformation DocSummaryInformation
         {
-            get { 
-                throw new NotImplementedException("Metadata extraction not supported in streaming mode, please use ExcelExtractor"); 
+            get
+            {
+                throw new NotImplementedException("Metadata extraction not supported in streaming mode, please use ExcelExtractor");
             }
         }
         /// <summary>
@@ -102,7 +102,7 @@ namespace NPOI.HSSF.Extractor
         /// <value>if set to <c>true</c> [formulas not results].</value>
         public bool FormulasNotResults
         {
-            get 
+            get
             {
                 return this.formulasNotResults;
             }
@@ -125,7 +125,7 @@ namespace NPOI.HSSF.Extractor
                 TextListener tl = TriggerExtraction();
 
                 text = tl.text.ToString();
-                if (!text.EndsWith('\n'))
+                if(!text.EndsWith('\n'))
                 {
                     text = text + "\n";
                 }
@@ -185,7 +185,7 @@ namespace NPOI.HSSF.Extractor
                 String thisText = null;
                 int thisRow = -1;
 
-                switch (record.Sid)
+                switch(record.Sid)
                 {
                     case BoundSheetRecord.sid:
                         BoundSheetRecord sr = (BoundSheetRecord)record;
@@ -193,33 +193,34 @@ namespace NPOI.HSSF.Extractor
                         break;
                     case BOFRecord.sid:
                         BOFRecord bof = (BOFRecord)record;
-                        if (bof.Type == BOFRecordType.Worksheet)
+                        if(bof.Type == BOFRecordType.Worksheet)
                         {
                             sheetNum++;
                             rowNum = -1;
 
-                            if (includeSheetNames)
+                            if(includeSheetNames)
                             {
-                                if (text.Length > 0) text.Append("\n");
+                                if(text.Length > 0)
+                                    text.Append("\n");
                                 text.Append(sheetNames[sheetNum]);
                             }
                         }
                         break;
                     case SSTRecord.sid:
-                        sstRecord = (SSTRecord)record;
+                        sstRecord = (SSTRecord) record;
                         break;
 
                     case FormulaRecord.sid:
                         FormulaRecord frec = (FormulaRecord)record;
                         thisRow = frec.Row;
 
-                        if (formulasNotResults)
+                        if(formulasNotResults)
                         {
-                            thisText = HSSFFormulaParser.ToFormulaString((HSSFWorkbook)null, frec.ParsedExpression);
+                            thisText = HSSFFormulaParser.ToFormulaString((HSSFWorkbook) null, frec.ParsedExpression);
                         }
                         else
                         {
-                            if (frec.HasCachedResultString)
+                            if(frec.HasCachedResultString)
                             {
                                 // Formula result is a string
                                 // This is stored in the next record
@@ -233,7 +234,7 @@ namespace NPOI.HSSF.Extractor
                         }
                         break;
                     case StringRecord.sid:
-                        if (outputNextStringValue)
+                        if(outputNextStringValue)
                         {
                             // String for formula
                             StringRecord srec = (StringRecord)record;
@@ -250,7 +251,7 @@ namespace NPOI.HSSF.Extractor
                     case LabelSSTRecord.sid:
                         LabelSSTRecord lsrec = (LabelSSTRecord)record;
                         thisRow = lsrec.Row;
-                        if (sstRecord == null)
+                        if(sstRecord == null)
                         {
                             throw new Exception("No SST record found");
                         }
@@ -270,12 +271,12 @@ namespace NPOI.HSSF.Extractor
                         break;
                 }
 
-                if (thisText != null)
+                if(thisText != null)
                 {
-                    if (thisRow != rowNum)
+                    if(thisRow != rowNum)
                     {
                         rowNum = thisRow;
-                        if (text.Length > 0)
+                        if(text.Length > 0)
                             text.Append("\n");
                     }
                     else
@@ -299,14 +300,14 @@ namespace NPOI.HSSF.Extractor
                 int formatIndex = ft.GetFormatIndex(cell);
                 String formatString = ft.GetFormatString(cell);
 
-                if (formatString == null)
+                if(formatString == null)
                 {
                     return value.ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
                     // Is it a date?
-                    if (NPOI.SS.UserModel.DateUtil.IsADateFormat(formatIndex, formatString) &&
+                    if(NPOI.SS.UserModel.DateUtil.IsADateFormat(formatIndex, formatString) &&
                             NPOI.SS.UserModel.DateUtil.IsValidExcelDate(value))
                     {
                         // Java wants M not m for month
@@ -321,7 +322,7 @@ namespace NPOI.HSSF.Extractor
                     }
                     else
                     {
-                        if (formatString == "General")
+                        if(formatString == "General")
                         {
                             // Some sort of wierd default
                             return value.ToString(CultureInfo.InvariantCulture);

@@ -17,13 +17,14 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using TestCases.SS;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.SS;
 
     /**
      * Common superclass for Testing usermodel API for array formulas.<br/>
@@ -81,7 +82,7 @@ namespace TestCases.SS.UserModel
                 CellRangeAddress c= cell.ArrayFormulaRange;
                 Assert.Fail("expected exception");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 ClassicAssert.AreEqual("Cell A1 is not part of an array formula.", e.Message);
             }
@@ -128,7 +129,7 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreSame(cells[1], sheet.GetRow(4).GetCell(2));
             ClassicAssert.AreSame(cells[2], sheet.GetRow(5).GetCell(2));
 
-            foreach (ICell acell in cells)
+            foreach(ICell acell in cells)
             {
                 ClassicAssert.IsTrue(acell.IsPartOfArrayFormulaGroup);
                 ClassicAssert.AreEqual(CellType.Formula, acell.CellType);
@@ -155,7 +156,7 @@ namespace TestCases.SS.UserModel
                         new CellRangeAddress(10, 10, 10, 10));
                 Assert.Fail("expected exception");
             }
-            catch (FormulaParseException)
+            catch(FormulaParseException)
             {
                 //expected exception
             }
@@ -179,7 +180,7 @@ namespace TestCases.SS.UserModel
                 CellRangeAddress c= cell.ArrayFormulaRange;
                 Assert.Fail("expected exception");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 ClassicAssert.AreEqual("Cell A1 is not part of an array formula.", e.Message);
             }
@@ -189,7 +190,7 @@ namespace TestCases.SS.UserModel
                 sheet.RemoveArrayFormula(cell);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Cell A1 is not part of an array formula.", e.Message);
             }
@@ -216,7 +217,7 @@ namespace TestCases.SS.UserModel
             // RemoveArrayFormula should return the same cells as SetArrayFormula
             ClassicAssert.IsTrue(Arrays.Equals(cr.FlattenedCells, dcells.FlattenedCells));
 
-            foreach (ICell acell in cr)
+            foreach(ICell acell in cr)
             {
                 ClassicAssert.IsFalse(acell.IsPartOfArrayFormulaGroup);
                 ClassicAssert.AreEqual(CellType.Blank, acell.CellType);
@@ -224,14 +225,14 @@ namespace TestCases.SS.UserModel
 
             // cells C4:C6 are not included in array formula,
             // invocation of sheet.RemoveArrayFormula on any of them throws ArgumentException
-            foreach (ICell acell in cr)
+            foreach(ICell acell in cr)
             {
                 try
                 {
                     sheet.RemoveArrayFormula(acell);
                     Assert.Fail("expected exception");
                 }
-                catch (ArgumentException e)
+                catch(ArgumentException e)
                 {
                     String ref1 = new CellReference(acell).FormatAsString();
                     ClassicAssert.AreEqual("Cell " + ref1 + " is not part of an array formula.", e.Message);
@@ -265,7 +266,7 @@ namespace TestCases.SS.UserModel
             workbook1.Close();
 
             sheet1 = workbook2.GetSheetAt(0);
-            for (int rownum = 3; rownum <= 5; rownum++)
+            for(int rownum = 3; rownum <= 5; rownum++)
             {
                 ICell cell1 = sheet1.GetRow(rownum).GetCell(2);
                 ClassicAssert.IsTrue(cell1.IsPartOfArrayFormulaGroup);
@@ -275,7 +276,7 @@ namespace TestCases.SS.UserModel
             }
 
             sheet2 = workbook2.GetSheetAt(1);
-            for (int rownum = 1; rownum <= 3; rownum++)
+            for(int rownum = 1; rownum <= 3; rownum++)
             {
                 ICell cell1 = sheet2.GetRow(rownum).GetCell(3);
                 ClassicAssert.IsTrue(cell1.IsPartOfArrayFormulaGroup);
@@ -304,7 +305,7 @@ namespace TestCases.SS.UserModel
             //multi-cell array formula
             ICellRange<ICell> mrange =
                     sheet.SetArrayFormula("A1:A3*B1:B3", CellRangeAddress.ValueOf("C1:C3"));
-            foreach (ICell mcell in mrange)
+            foreach(ICell mcell in mrange)
             {
                 ClassicAssert.AreEqual(CellType.Formula, mcell.CellType);
                 ClassicAssert.AreEqual(0.0, mcell.NumericCellValue, 0);
@@ -335,7 +336,7 @@ namespace TestCases.SS.UserModel
             //once you create a multi-cell array formula, you cannot change the type of its cells
             ICellRange<ICell> mrange =
                     sheet.SetArrayFormula("A1:A3*B1:B3", CellRangeAddress.ValueOf("C1:C3"));
-            foreach (ICell mcell in mrange)
+            foreach(ICell mcell in mrange)
             {
                 try
                 {
@@ -343,7 +344,7 @@ namespace TestCases.SS.UserModel
                     mcell.SetCellType(CellType.Numeric);
                     Assert.Fail("expected exception");
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
                     CellReference ref1 = new CellReference(mcell);
                     String msg = "Cell " + ref1.FormatAsString() + " is part of a multi-cell array formula. You cannot change part of an array.";
@@ -381,7 +382,7 @@ namespace TestCases.SS.UserModel
             //multi-cell array formula
             ICellRange<ICell> mrange =
                     sheet.SetArrayFormula("A1:A3*B1:B3", CellRangeAddress.ValueOf("C1:C3"));
-            foreach (ICell mcell in mrange)
+            foreach(ICell mcell in mrange)
             {
                 //we cannot Set individual formulas for cells included in an array formula
                 try
@@ -390,7 +391,7 @@ namespace TestCases.SS.UserModel
                     mcell.CellFormula = (/*setter*/"A1+A2");
                     Assert.Fail("expected exception");
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
                     CellReference ref1 = new CellReference(mcell);
                     String msg = "Cell " + ref1.FormatAsString() + " is part of a multi-cell array formula. You cannot change part of an array.";
@@ -429,7 +430,7 @@ namespace TestCases.SS.UserModel
             //we cannot remove cells included in a multi-cell array formula
             ICellRange<ICell> mrange =
                     sheet.SetArrayFormula("A1:A3*B1:B3", CellRangeAddress.ValueOf("C1:C3"));
-            foreach (ICell mcell in mrange)
+            foreach(ICell mcell in mrange)
             {
                 int columnIndex = mcell.ColumnIndex;
                 IRow mrow = mcell.Row;
@@ -438,7 +439,7 @@ namespace TestCases.SS.UserModel
                     mrow.RemoveCell(mcell);
                     Assert.Fail("expected exception");
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
                     CellReference ref1 = new CellReference(mcell);
                     String msg = "Cell " + ref1.FormatAsString() + " is part of a multi-cell array formula. You cannot change part of an array.";
@@ -479,7 +480,7 @@ namespace TestCases.SS.UserModel
             //we cannot remove rows with cells included in a multi-cell array formula
             ICellRange<ICell> mrange =
                     sheet.SetArrayFormula("A1:A3*B1:B3", CellRangeAddress.ValueOf("C1:C3"));
-            foreach (ICell mcell in mrange)
+            foreach(ICell mcell in mrange)
             {
                 int columnIndex = mcell.ColumnIndex;
                 IRow mrow = mcell.Row;
@@ -488,7 +489,7 @@ namespace TestCases.SS.UserModel
                     sheet.RemoveRow(mrow);
                     Assert.Fail("expected exception");
                 }
-                catch (InvalidOperationException)
+                catch(InvalidOperationException)
                 {
                     // String msg = "Row[rownum=" + mrow.RowNum + "] Contains cell(s) included in a multi-cell array formula. You cannot change part of an array.";
                     //ClassicAssert.AreEqual(msg, e.Message);
@@ -531,21 +532,22 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(expectedNumMergedRegions, sheet.NumMergedRegions);
             // we cannot merge cells included in an array formula
             sheet.SetArrayFormula("A1:A4*B1:B4", CellRangeAddress.ValueOf("C2:F5"));
-            foreach (String ref1 in Arrays.AsList(
+            foreach(String ref1 in Arrays.AsList(
                     "C2:F5", // identity
                     "D3:E4", "B1:G6", // contains
                     "B1:C2", "F1:G2", "F5:G6", "B5:C6", // 1x1 corner intersection
                     "B1:C6", "B1:G2", "F1:G6", "B5:G6", // 1-row/1-column intersection
                     "B1:D3", "E1:G3", "E4:G6", "B4:D6", // 2x2 corner intersection
                     "B1:D6", "B1:G3", "E1:G6", "B4:G6"  // 2-row/2-column intersection
-            )) {
+            ))
+            {
                 CellRangeAddress cra = CellRangeAddress.ValueOf(ref1);
                 try
                 {
                     sheet.AddMergedRegion(cra);
                     Assert.Fail("expected exception with ref " + ref1);
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
                     String msg = "The range " + cra.FormatAsString() + " intersects with a multi-cell array formula. You cannot merge cells of an array.";
                     ClassicAssert.AreEqual(msg, e.Message);
@@ -555,11 +557,12 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(expectedNumMergedRegions, sheet.NumMergedRegions);
 
             // we can merge non-intersecting cells
-            foreach (String ref1 in Arrays.AsList(
+            foreach(String ref1 in Arrays.AsList(
                     "C1:F1", //above
                     "G2:G5", //right
                     "C6:F6",  //bottom
-                    "B2:B5", "H7:J9")) {
+                    "B2:B5", "H7:J9"))
+            {
                 CellRangeAddress cra = CellRangeAddress.ValueOf(ref1);
                 try
                 {
@@ -567,7 +570,7 @@ namespace TestCases.SS.UserModel
                     expectedNumMergedRegions++;
                     ClassicAssert.AreEqual(expectedNumMergedRegions, sheet.NumMergedRegions);
                 }
-                catch (InvalidOperationException e)
+                catch(InvalidOperationException e)
                 {
                     Assert.Fail("did not expect exception with ref: " + ref1 +"\n" + e.Message);
                 }
@@ -599,7 +602,7 @@ namespace TestCases.SS.UserModel
                 sheet.ShiftRows(0, 0, 1);
                 Assert.Fail("expected exception");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 String msg = "Row[rownum=0] contains cell(s) included in a multi-cell array formula. You cannot change part of an array.";
                 ClassicAssert.AreEqual(msg, e.Message);
@@ -647,10 +650,10 @@ namespace TestCases.SS.UserModel
             Assume.That(arrayFormula.Intersects(mergedRegion));
             try
             {
-                sheet.SetArrayFormula("SUM(A1:A3)",  arrayFormula);
+                sheet.SetArrayFormula("SUM(A1:A3)", arrayFormula);
                 Assert.Fail("expected exception: should not be able to create an array formula that intersects with a merged region");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
                 // expected
             }

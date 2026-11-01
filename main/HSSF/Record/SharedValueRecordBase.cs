@@ -79,7 +79,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return (short)_range.FirstColumn;
+                return (short) _range.FirstColumn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return (short)_range.LastColumn;
+                return (short) _range.LastColumn;
             }
         }
         protected override int DataSize

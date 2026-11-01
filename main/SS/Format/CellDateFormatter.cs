@@ -15,12 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Text.RegularExpressions;
-using System.Text;
 using NPOI.SS.Util;
-using System.Globalization;
 using NPOI.Util;
+using System;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NPOI.SS.Format
 {
@@ -66,13 +66,13 @@ namespace NPOI.SS.Format
 
                 int pos = desc.Length;
                 char firstCh = part[0];
-                switch (firstCh)
+                switch(firstCh)
                 {
                     case 's':
                     case 'S':
-                        if (mStart >= 0)
+                        if(mStart >= 0)
                         {
-                            for (int i = 0; i < mLen; i++)
+                            for(int i = 0; i < mLen; i++)
                                 desc[mStart + i] = 'm';
                             mStart = -1;
                         }
@@ -89,16 +89,16 @@ namespace NPOI.SS.Format
                     case 'D':
                         mStart = -1;
                         //if (part.Length <= 2)
-                            return part.ToLower();
-                        //else
-                        //    return part.ToLower().Replace('d', 'E');
+                        return part.ToLower();
+                    //else
+                    //    return part.ToLower().Replace('d', 'E');
 
                     case 'm':
                     case 'M':
                         mStart = pos;
                         mLen = part.Length;
                         // For 'm' after 'h', output minutes ('m') not month ('M')
-                        if (hStart >= 0)
+                        if(hStart >= 0)
                             return part.ToLower();
                         else
                             return part.ToUpper();
@@ -106,7 +106,7 @@ namespace NPOI.SS.Format
                     case 'y':
                     case 'Y':
                         mStart = -1;
-                        if (part.Length == 3)
+                        if(part.Length == 3)
                             part = "yyyy";
                         return part.ToLower();
 
@@ -121,7 +121,7 @@ namespace NPOI.SS.Format
                     case 'A':
                     case 'p':
                     case 'P':
-                        if (part.Length > 1)
+                        if(part.Length > 1)
                         {
                             // am/pm marker
                             mStart = -1;
@@ -129,13 +129,13 @@ namespace NPOI.SS.Format
                             _formatter.ShowM = char.ToLower(part[1]) == 'm';
                             // For some reason "am/pm" becomes AM or PM, but "a/p" becomes a or p
                             _formatter.amPmUpper = _formatter.ShowM || char.IsUpper(part[0]);
-                            if (_formatter.ShowM)
+                            if(_formatter.ShowM)
                                 return "tt";
                             else
                                 return "t";
                             //return "a";
                         }
-                    //noinspection fallthrough
+                        //noinspection fallthrough
                         return null;
                     default:
                         return null;
@@ -144,9 +144,9 @@ namespace NPOI.SS.Format
 
             public void Finish(StringBuilder toAppendTo)
             {
-                if (hStart >= 0 && !_formatter.ShowAmPm)
+                if(hStart >= 0 && !_formatter.ShowAmPm)
                 {
-                    for (int i = 0; i < hLen; i++)
+                    for(int i = 0; i < hLen; i++)
                     {
                         toAppendTo[hStart + i] = 'H';
                     }
@@ -179,7 +179,7 @@ namespace NPOI.SS.Format
                     CellFormatType.DATE, partHandler);
             partHandler.Finish(descBuf);
             dateFmt = new SimpleDateFormat(descBuf.ToString());
-            
+
             // tweak the format pattern to pass tests on JDK 1.7,
             // See https://issues.apache.org/bugzilla/show_bug.cgi?id=53369
 
@@ -190,34 +190,34 @@ namespace NPOI.SS.Format
         /** {@inheritDoc} */
         public override void FormatValue(StringBuilder toAppendTo, Object value)
         {
-            if (value == null)
+            if(value == null)
                 value = 0.0;
             //if (value is Number) {
-            if (NPOI.Util.Number.IsNumber(value))
+            if(NPOI.Util.Number.IsNumber(value))
             {
                 double v;
                 double.TryParse(value.ToString(), out v);
-                if (v == 0.0)
+                if(v == 0.0)
                     value = EXCEL_EPOCH_DATE;
                 else
-                    value = new DateTime((long)(EXCEL_EPOCH_TIME.Ticks + v));
+                    value = new DateTime((long) (EXCEL_EPOCH_TIME.Ticks + v));
             }
             DateTime newValue = (DateTime)value;
             //in excel, if  millisecond part value like .009, (that is above 5 millisecond)
             //and millisecond part pattern is .00 (changed to .ff), the result need round up,
             //millisecond part is 01 not 00. so try to adjuse the value.
-            if (millisecondPartLength > 0)
+            if(millisecondPartLength > 0)
             {
                 double second = (newValue.Millisecond / 1000.0 * Math.Pow(10, millisecondPartLength));
                 second = second - Math.Truncate(second);
-                if (second >= 0.5)
+                if(second >= 0.5)
                 {
                     newValue = newValue.AddMilliseconds((1 - second) / Math.Pow(10, millisecondPartLength) * 1000);
                 }
             }
 
             dateFmt.Format(newValue, toAppendTo, CultureInfo.CurrentCulture);
-            
+
             //throw new NotImplementedException();
             //AttributedCharacterIterator it = dateFmt.FormatToCharacterIterator(
             //        value);

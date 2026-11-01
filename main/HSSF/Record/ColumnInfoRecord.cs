@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -63,7 +63,7 @@ namespace NPOI.HSSF.Record
             _col_width = in1.ReadUShort();
             _xf_index = in1.ReadUShort();
             _options = in1.ReadUShort();
-            switch (in1.Remaining)
+            switch(in1.Remaining)
             {
                 case 2: // usual case
                     field_6_reserved = in1.ReadUShort();
@@ -88,15 +88,15 @@ namespace NPOI.HSSF.Record
          */
         public bool FormatMatches(ColumnInfoRecord other)
         {
-            if (_xf_index != other._xf_index)
+            if(_xf_index != other._xf_index)
             {
                 return false;
             }
-            if (_options != other._options)
+            if(_options != other._options)
             {
                 return false;
             }
-            if (_col_width != other._col_width)
+            if(_col_width != other._col_width)
             {
                 return false;
             }
@@ -110,7 +110,7 @@ namespace NPOI.HSSF.Record
 
         public int FirstColumn
         {
-            get{return _first_col;}
+            get { return _first_col; }
             set { _first_col = value; }
         }
 
@@ -266,6 +266,6 @@ namespace NPOI.HSSF.Record
             return rec;
         }
 
-        
+
     }
 }

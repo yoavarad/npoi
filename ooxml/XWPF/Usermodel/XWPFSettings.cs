@@ -16,15 +16,15 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
-    using NPOI.OpenXmlFormats.Wordprocessing;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Wordprocessing;
     using NPOI.POIFS.Crypt;
-    using System.IO;
-    using System.Xml.Serialization;
-    using System.Xml;
     using Org.BouncyCastle.Security;
+    using System;
+    using System.IO;
     using System.Linq;
+    using System.Xml;
+    using System.Xml.Serialization;
 
     public class XWPFSettings : POIXMLDocumentPart
     {
@@ -63,7 +63,7 @@ namespace NPOI.XWPF.UserModel
         public long GetZoomPercent()
         {
             CT_Zoom zoom = ctSettings.zoom;
-            if (!ctSettings.IsSetZoom())
+            if(!ctSettings.IsSetZoom())
             {
                 zoom = ctSettings.AddNewZoom();
             }
@@ -86,7 +86,7 @@ namespace NPOI.XWPF.UserModel
         /// </example>
         public void SetZoomPercent(long zoomPercent)
         {
-            if (!ctSettings.IsSetZoom())
+            if(!ctSettings.IsSetZoom())
             {
                 ctSettings.AddNewZoom();
             }
@@ -111,7 +111,7 @@ namespace NPOI.XWPF.UserModel
         {
             CT_DocProtect ctDocProtect = ctSettings.documentProtection;
 
-            if (ctDocProtect == null)
+            if(ctDocProtect == null)
             {
                 return false;
             }
@@ -137,7 +137,7 @@ namespace NPOI.XWPF.UserModel
         {
             CT_DocProtect ctDocProtect = ctSettings.documentProtection;
 
-            if (ctDocProtect == null)
+            if(ctDocProtect == null)
             {
                 return false;
             }
@@ -186,39 +186,39 @@ namespace NPOI.XWPF.UserModel
             SafeGetDocumentProtection().enforcement = ST_OnOff.on;
             SafeGetDocumentProtection().edit = editValue;
 
-            if (password == null)
+            if(password == null)
             {
-                if (SafeGetDocumentProtection().IsSetCryptProviderType())
+                if(SafeGetDocumentProtection().IsSetCryptProviderType())
                 {
                     SafeGetDocumentProtection().UnsetCryptProviderType();
                 }
 
-                if (SafeGetDocumentProtection().IsSetCryptAlgorithmClass())
+                if(SafeGetDocumentProtection().IsSetCryptAlgorithmClass())
                 {
                     SafeGetDocumentProtection().UnsetCryptAlgorithmClass();
                 }
 
-                if (SafeGetDocumentProtection().IsSetCryptAlgorithmType())
+                if(SafeGetDocumentProtection().IsSetCryptAlgorithmType())
                 {
                     SafeGetDocumentProtection().UnsetCryptAlgorithmType();
                 }
 
-                if (SafeGetDocumentProtection().IsSetCryptAlgorithmSid())
+                if(SafeGetDocumentProtection().IsSetCryptAlgorithmSid())
                 {
                     SafeGetDocumentProtection().UnsetCryptAlgorithmSid();
                 }
 
-                if (SafeGetDocumentProtection().IsSetSalt())
+                if(SafeGetDocumentProtection().IsSetSalt())
                 {
                     SafeGetDocumentProtection().UnsetSalt();
                 }
 
-                if (SafeGetDocumentProtection().IsSetCryptSpinCount())
+                if(SafeGetDocumentProtection().IsSetCryptSpinCount())
                 {
                     SafeGetDocumentProtection().UnsetCryptSpinCount();
                 }
 
-                if (SafeGetDocumentProtection().IsSetHash())
+                if(SafeGetDocumentProtection().IsSetHash())
                 {
                     SafeGetDocumentProtection().UnsetHash();
                 }
@@ -227,33 +227,33 @@ namespace NPOI.XWPF.UserModel
             {
                 ST_CryptProv providerType;
                 int sid;
-                if (hashAlgo == HashAlgorithm.md2)
+                if(hashAlgo == HashAlgorithm.md2)
                 {
                     providerType = ST_CryptProv.rsaFull;
                     sid = 1;
                 }
                 // md4 is not supported by JCE
-                else if (hashAlgo == HashAlgorithm.md5)
+                else if(hashAlgo == HashAlgorithm.md5)
                 {
                     providerType = ST_CryptProv.rsaFull;
                     sid = 3;
                 }
-                else if (hashAlgo == HashAlgorithm.sha1)
+                else if(hashAlgo == HashAlgorithm.sha1)
                 {
                     providerType = ST_CryptProv.rsaFull;
                     sid = 4;
                 }
-                else if (hashAlgo == HashAlgorithm.sha256)
+                else if(hashAlgo == HashAlgorithm.sha256)
                 {
                     providerType = ST_CryptProv.rsaAES;
                     sid = 12;
                 }
-                else if (hashAlgo == HashAlgorithm.sha384)
+                else if(hashAlgo == HashAlgorithm.sha384)
                 {
                     providerType = ST_CryptProv.rsaAES;
                     sid = 13;
                 }
-                else if (hashAlgo == HashAlgorithm.sha512)
+                else if(hashAlgo == HashAlgorithm.sha512)
                 {
                     providerType = ST_CryptProv.rsaAES;
                     sid = 14;
@@ -271,7 +271,8 @@ namespace NPOI.XWPF.UserModel
                 // iteration's result as the input for the next iteration).
                 int spinCount = 100000;
 
-                if (hashAlgo == null) hashAlgo = HashAlgorithm.sha1;
+                if(hashAlgo == null)
+                    hashAlgo = HashAlgorithm.sha1;
 
                 String legacyHash = CryptoFunctions.XorHashPasswordReversed(password);
                 // Implementation Notes List:
@@ -302,18 +303,32 @@ namespace NPOI.XWPF.UserModel
             string salt = SafeGetDocumentProtection().salt;
             string spinCount = SafeGetDocumentProtection().cryptSpinCount;
 
-            if (sid == null || hash == null || salt == null || spinCount == null) return false;
+            if(sid == null || hash == null || salt == null || spinCount == null)
+                return false;
 
             HashAlgorithm hashAlgo;
-            switch (int.Parse(sid))
+            switch(int.Parse(sid))
             {
-                case 1: hashAlgo = HashAlgorithm.md2; break;
-                case 3: hashAlgo = HashAlgorithm.md5; break;
-                case 4: hashAlgo = HashAlgorithm.sha1; break;
-                case 12: hashAlgo = HashAlgorithm.sha256; break;
-                case 13: hashAlgo = HashAlgorithm.sha384; break;
-                case 14: hashAlgo = HashAlgorithm.sha512; break;
-                default: return false;
+                case 1:
+                    hashAlgo = HashAlgorithm.md2;
+                    break;
+                case 3:
+                    hashAlgo = HashAlgorithm.md5;
+                    break;
+                case 4:
+                    hashAlgo = HashAlgorithm.sha1;
+                    break;
+                case 12:
+                    hashAlgo = HashAlgorithm.sha256;
+                    break;
+                case 13:
+                    hashAlgo = HashAlgorithm.sha384;
+                    break;
+                case 14:
+                    hashAlgo = HashAlgorithm.sha512;
+                    break;
+                default:
+                    return false;
             }
 
             String legacyHash = CryptoFunctions.XorHashPasswordReversed(password);
@@ -370,16 +385,16 @@ namespace NPOI.XWPF.UserModel
             }
             set
             {
-                if (value)
+                if(value)
                 {
-                    if (!ctSettings.IsSetTrackRevisions())
+                    if(!ctSettings.IsSetTrackRevisions())
                     {
                         ctSettings.AddNewTrackRevisions();
                     }
                 }
                 else
                 {
-                    if (ctSettings.IsSetTrackRevisions())
+                    if(ctSettings.IsSetTrackRevisions())
                     {
                         ctSettings.UnsetTrackRevisions();
                     }
@@ -389,7 +404,7 @@ namespace NPOI.XWPF.UserModel
 
         protected internal override void Commit()
         {
-            if (ctSettings == null)
+            if(ctSettings == null)
             {
                 throw new InvalidOperationException("Unable to write out settings that were never read in!");
             }
@@ -401,7 +416,7 @@ namespace NPOI.XWPF.UserModel
             //XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces(new XmlQualifiedName[] {
             //    new XmlQualifiedName("w", "http://schemas.openxmlformats.org/wordprocessingml/2006/main")});
             PackagePart part = GetPackagePart();
-            using (Stream out1 = part.GetOutputStream())
+            using(Stream out1 = part.GetOutputStream())
             {
                 SettingsDocument sd = new SettingsDocument(ctSettings);
                 sd.Save(out1);
@@ -411,7 +426,7 @@ namespace NPOI.XWPF.UserModel
         private CT_DocProtect SafeGetDocumentProtection()
         {
             CT_DocProtect documentProtection = ctSettings.documentProtection;
-            if (documentProtection == null)
+            if(documentProtection == null)
             {
                 documentProtection = new CT_DocProtect();
                 ctSettings.documentProtection = (documentProtection);
@@ -424,9 +439,9 @@ namespace NPOI.XWPF.UserModel
             try
             {
                 XmlDocument xmldoc = ConvertStreamToXml(inputStream);
-                ctSettings = SettingsDocument.Parse(xmldoc,NamespaceManager).Settings;
+                ctSettings = SettingsDocument.Parse(xmldoc, NamespaceManager).Settings;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new Exception("SettingsDocument parse failed", e);
             }

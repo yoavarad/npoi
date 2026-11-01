@@ -18,9 +18,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
     /**
      * XCT ?CRN Count 
      *
@@ -46,11 +46,11 @@ namespace NPOI.HSSF.Record
         public CRNCountRecord(RecordInputStream in1)
         {
             field_1_number_crn_records = in1.ReadShort();
-            if (field_1_number_crn_records < 0)
+            if(field_1_number_crn_records < 0)
             {
                 // TODO - seems like the sign bit of this field might be used for some other purpose
                 // see example file for test case "TestBugs.test19599()"
-                field_1_number_crn_records = (short)-field_1_number_crn_records;
+                field_1_number_crn_records = (short) -field_1_number_crn_records;
             }
             field_2_sheet_table_index = in1.ReadShort();
         }
@@ -75,8 +75,8 @@ namespace NPOI.HSSF.Record
 
         public override void Serialize(ILittleEndianOutput out1)
         {
-            out1.WriteShort((short)field_1_number_crn_records);
-            out1.WriteShort((short)field_2_sheet_table_index);
+            out1.WriteShort((short) field_1_number_crn_records);
+            out1.WriteShort((short) field_2_sheet_table_index);
         }
         protected override int DataSize
         {

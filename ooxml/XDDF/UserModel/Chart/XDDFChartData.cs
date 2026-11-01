@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,11 +16,11 @@
 ==================================================================== */
 
 
+using NPOI.OpenXmlFormats.Dml.Chart;
+using NPOI.SS.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using NPOI.SS.Util;
-using NPOI.OpenXmlFormats.Dml.Chart;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
@@ -76,7 +76,7 @@ namespace NPOI.XDDF.UserModel.Chart
         {
             return series[index];
         }
-        public int GetSeriesCount() 
+        public int GetSeriesCount()
         {
             return series.Count;
         }
@@ -190,7 +190,7 @@ namespace NPOI.XDDF.UserModel.Chart
                 FillNumCache(cache, numOfPoints, valuesData);
             }
 
-            private static CT_NumData RetrieveNumCache(CT_AxDataSource axDataSource, 
+            private static CT_NumData RetrieveNumCache(CT_AxDataSource axDataSource,
                 IXDDFDataSource<T> data)
             {
                 CT_NumData numCache;
@@ -335,11 +335,11 @@ namespace NPOI.XDDF.UserModel.Chart
                 cache.SetPtArray(null); // unset old values
                 if(cache.IsSetPtCount())
                 {
-                    cache.ptCount.val = (uint)numOfPoints;
+                    cache.ptCount.val = (uint) numOfPoints;
                 }
                 else
                 {
-                    cache.AddNewPtCount().val = (uint)numOfPoints;
+                    cache.AddNewPtCount().val = (uint) numOfPoints;
                 }
                 for(int i = 0; i < numOfPoints; ++i)
                 {
@@ -347,7 +347,7 @@ namespace NPOI.XDDF.UserModel.Chart
                     if(value != null)
                     {
                         CT_StrVal ctStrVal = cache.AddNewPt();
-                        ctStrVal.idx = (uint)i;
+                        ctStrVal.idx = (uint) i;
                         ctStrVal.v = value;
                     }
                 }
@@ -370,11 +370,11 @@ namespace NPOI.XDDF.UserModel.Chart
                 cache.SetPtArray(null); // unset old values
                 if(cache.IsSetPtCount())
                 {
-                    cache.ptCount.val = (uint)numOfPoints;
+                    cache.ptCount.val = (uint) numOfPoints;
                 }
                 else
                 {
-                    cache.AddNewPtCount().val = (uint)numOfPoints;
+                    cache.AddNewPtCount().val = (uint) numOfPoints;
                 }
                 for(int i = 0; i < numOfPoints; ++i)
                 {
@@ -382,12 +382,12 @@ namespace NPOI.XDDF.UserModel.Chart
                     if(value != null)
                     {
                         CT_NumVal ctNumVal = cache.AddNewPt();
-                        ctNumVal.idx = (uint)i;
+                        ctNumVal.idx = (uint) i;
                         // OpenXML numeric values must be culture-invariant (using '.' as decimal separator).
                         // Since value is object, we check for IConvertible to use the culture-aware ToString overload.
                         // TypeCode 5 (SByte) through 15 (Decimal) are the numeric types.
-                        ctNumVal.v = (value is IConvertible conv && conv.GetTypeCode() >= TypeCode.SByte && conv.GetTypeCode() <= TypeCode.Decimal) 
-                            ? conv.ToString(CultureInfo.InvariantCulture) 
+                        ctNumVal.v = (value is IConvertible conv && conv.GetTypeCode() >= TypeCode.SByte && conv.GetTypeCode() <= TypeCode.Decimal)
+                            ? conv.ToString(CultureInfo.InvariantCulture)
                             : value.ToString();
                     }
                 }

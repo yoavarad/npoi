@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.IO;
 using System.Xml;
@@ -11,7 +11,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         CT_Table ctTable = null;
 
         public TableDocument()
-        { 
+        {
         }
         public TableDocument(CT_Table table)
         {
@@ -36,7 +36,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 ctTable.Write(sw);
             }

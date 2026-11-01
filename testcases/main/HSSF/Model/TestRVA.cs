@@ -17,17 +17,17 @@
 
 namespace TestCases.HSSF.Model
 {
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Text;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using TestCases.HSSF;
-    using NPOI.SS.Formula;
-    using NPOI.HSSF.UserModel;
-    using NPOI.HSSF.Model;
     using TestCases.HSSF.UserModel;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Formula.PTG;
 
     /**
      * Tests 'operand class' transformation performed by
@@ -58,15 +58,15 @@ namespace TestCases.HSSF.Model
             int countErrors = 0;
 
             int rowIx = 0;
-            while (rowIx < 65535)
+            while(rowIx < 65535)
             {
                 IRow row = sheet.GetRow(rowIx);
-                if (row == null)
+                if(row == null)
                 {
                     break;
                 }
                 ICell cell = row.GetCell(0);
-                if (cell == null || cell.CellType == NPOI.SS.UserModel.CellType.Blank)
+                if(cell == null || cell.CellType == NPOI.SS.UserModel.CellType.Blank)
                 {
                     break;
                 }
@@ -75,20 +75,20 @@ namespace TestCases.HSSF.Model
                 {
                     ConfirmCell(cell, formula, wb);
                 }
-                catch (AssertionException e)
+                catch(AssertionException e)
                 {
                     Console.Error.WriteLine("Problem with row[" + rowIx + "] formula '" + formula + "'");
                     Console.Error.WriteLine(e.Message);
                     countFailures++;
                 }
-                catch (Exception)
+                catch(Exception)
                 {
                     Console.Error.WriteLine("Problem with row[" + rowIx + "] formula '" + formula + "'");
                     countErrors++;
                 }
                 rowIx++;
             }
-            if (countErrors + countFailures > 0)
+            if(countErrors + countFailures > 0)
             {
                 String msg = "One or more RVA tests failed: countFailures=" + countFailures
                         + " countFailures=" + countErrors + ". See stderr for details.";
@@ -102,9 +102,9 @@ namespace TestCases.HSSF.Model
             Ptg[] poiPtgs = HSSFFormulaParser.Parse(formula, wb);
             int nExcelTokens = excelPtgs.Length;
             int nPoiTokens = poiPtgs.Length;
-            if (nExcelTokens != nPoiTokens)
+            if(nExcelTokens != nPoiTokens)
             {
-                if (nExcelTokens == nPoiTokens + 1 && excelPtgs[0].GetType() == typeof(AttrPtg))
+                if(nExcelTokens == nPoiTokens + 1 && excelPtgs[0].GetType() == typeof(AttrPtg))
                 {
                     // compensate for missing tAttrVolatile, which belongs in any formula 
                     // involving OFFSET() et al. POI currently does not insert where required
@@ -121,11 +121,11 @@ namespace TestCases.HSSF.Model
             }
             bool hasMismatch = false;
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < nExcelTokens; i++)
+            for(int i = 0; i < nExcelTokens; i++)
             {
                 Ptg poiPtg = poiPtgs[i];
                 Ptg excelPtg = excelPtgs[i];
-                if (excelPtg.GetType() != poiPtg.GetType())
+                if(excelPtg.GetType() != poiPtg.GetType())
                 {
                     hasMismatch = true;
                     sb.Append("  mismatch token type[" + i + "] " + GetShortClassName(excelPtg) + " "
@@ -134,14 +134,14 @@ namespace TestCases.HSSF.Model
                     sb.Append(Environment.NewLine);
                     continue;
                 }
-                if (poiPtg.IsBaseToken)
+                if(poiPtg.IsBaseToken)
                 {
                     continue;
                 }
                 sb.Append("  token[" + i + "] " + excelPtg.ToString() + " "
                         + excelPtg.RVAType);
 
-                if (excelPtg.PtgClass != poiPtg.PtgClass)
+                if(excelPtg.PtgClass != poiPtg.PtgClass)
                 {
                     hasMismatch = true;
                     sb.Append(" - was " + poiPtg.RVAType);
@@ -153,7 +153,7 @@ namespace TestCases.HSSF.Model
             //    Console.WriteLine(formula);
             //    Console.WriteLine(sb.ToString());
             //}
-            if (hasMismatch)
+            if(hasMismatch)
             {
                 throw new AssertionException(sb.ToString());
             }
@@ -165,6 +165,6 @@ namespace TestCases.HSSF.Model
             int pos = cn.LastIndexOf('.');
             return cn.Substring(pos + 1);
         }
-       
+
     }
 }

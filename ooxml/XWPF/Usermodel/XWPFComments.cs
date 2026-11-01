@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -41,13 +41,13 @@ namespace NPOI.XWPF.UserModel
         public XWPFComments(POIXMLDocumentPart parent, PackagePart part)
             : base(parent, part)
         {
-            if (GetParent() is not XWPFDocument)
+            if(GetParent() is not XWPFDocument)
             {
                 throw new RuntimeException("Parent is not a XWPFDocuemnt: " + GetParent());
             }
-            this.document = (XWPFDocument)GetParent();
+            this.document = (XWPFDocument) GetParent();
 
-            if (this.document == null)
+            if(this.document == null)
             {
                 throw new NullReferenceException();
             }
@@ -68,25 +68,25 @@ namespace NPOI.XWPF.UserModel
         {
             try
             {
-                using (var @is = GetPackagePart().GetInputStream())
+                using(var @is = GetPackagePart().GetInputStream())
                 {
                     XmlDocument xmldoc = DocumentHelper.LoadDocument(@is);
                     CommentsDocument doc = CommentsDocument.Parse(xmldoc, NamespaceManager);
                     ctComments = doc.Comments;
-                    foreach (CT_Comment ctComment in ctComments.comment)
+                    foreach(CT_Comment ctComment in ctComments.comment)
                     {
                         comments.Add(new XWPFComment(ctComment, this));
                     }
                 }
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new POIXMLException("Unable to read comments", e);
             }
 
-            foreach (POIXMLDocumentPart poixmlDocumentPart in GetRelations())
+            foreach(POIXMLDocumentPart poixmlDocumentPart in GetRelations())
             {
-                if (poixmlDocumentPart is XWPFPictureData xwpfPicData)
+                if(poixmlDocumentPart is XWPFPictureData xwpfPicData)
                 {
                     pictures.Add(xwpfPicData);
                     document.RegisterPackagePictureData(xwpfPicData);
@@ -142,21 +142,21 @@ namespace NPOI.XWPF.UserModel
             XWPFPictureData xwpfPicData = document.FindPackagePictureData(pictureData, format);
             POIXMLRelation relDesc = XWPFPictureData.RELATIONS[format];
 
-            if (xwpfPicData == null)
+            if(xwpfPicData == null)
             {
                 /* Part doesn't exist, create a new one */
                 int idx = GetXWPFDocument().GetNextPicNameNumber(format);
-                xwpfPicData = (XWPFPictureData)CreateRelationship(relDesc, XWPFFactory.GetInstance(), idx);
+                xwpfPicData = (XWPFPictureData) CreateRelationship(relDesc, XWPFFactory.GetInstance(), idx);
                 /* write bytes to new part */
                 PackagePart picDataPart = xwpfPicData.GetPackagePart();
                 try
                 {
-                    using (Stream @out = picDataPart.GetOutputStream())
+                    using(Stream @out = picDataPart.GetOutputStream())
                     {
                         @out.Write(pictureData, 0, pictureData.Length);
                     }
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new POIXMLException(e);
                 }
@@ -165,7 +165,7 @@ namespace NPOI.XWPF.UserModel
                 pictures.Add(xwpfPicData);
                 return GetRelationId(xwpfPicData);
             }
-            else if (!GetRelations().Contains(xwpfPicData))
+            else if(!GetRelations().Contains(xwpfPicData))
             {
                 /*
                  * Part already existed, but was not related so far. Create
@@ -193,7 +193,7 @@ namespace NPOI.XWPF.UserModel
             //xmlOptions.setSaveSyntheticDocumentElement(new QName(CTComments.type.getName().getNamespaceURI(), "comments"));
 
             PackagePart part = GetPackagePart();
-            using (var @out = part.GetOutputStream())
+            using(var @out = part.GetOutputStream())
             {
                 var doc = new CommentsDocument(ctComments);
                 doc.Save(@out);
@@ -239,7 +239,7 @@ namespace NPOI.XWPF.UserModel
          */
         public XWPFComment GetComment(int pos)
         {
-            if (pos >= 0 && pos < ctComments.comment.Count)
+            if(pos >= 0 && pos < ctComments.comment.Count)
             {
                 return GetComments()[pos];
             }
@@ -254,9 +254,9 @@ namespace NPOI.XWPF.UserModel
          */
         public XWPFComment GetCommentByID(String id)
         {
-            foreach (XWPFComment comment in comments)
+            foreach(XWPFComment comment in comments)
             {
-                if (comment.Id.Equals(id))
+                if(comment.Id.Equals(id))
                 {
                     return comment;
                 }
@@ -269,9 +269,9 @@ namespace NPOI.XWPF.UserModel
          */
         public XWPFComment GetComment(CT_Comment ctComment)
         {
-            foreach (XWPFComment comment in comments)
+            foreach(XWPFComment comment in comments)
             {
-                if (comment.GetCtComment() == ctComment)
+                if(comment.GetCtComment() == ctComment)
                 {
                     return comment;
                 }
@@ -301,7 +301,7 @@ namespace NPOI.XWPF.UserModel
          */
         public bool RemoveComment(int pos)
         {
-            if (pos >= 0 && pos < ctComments.comment.Count)
+            if(pos >= 0 && pos < ctComments.comment.Count)
             {
                 comments.RemoveAt(pos);
                 ctComments.RemoveComment(pos);
@@ -312,11 +312,11 @@ namespace NPOI.XWPF.UserModel
 
         public XWPFDocument GetXWPFDocument()
         {
-            if (null != document)
+            if(null != document)
             {
                 return document;
             }
-            return (XWPFDocument)GetParent();
+            return (XWPFDocument) GetParent();
         }
 
         public void SetXWPFDocument(XWPFDocument document)

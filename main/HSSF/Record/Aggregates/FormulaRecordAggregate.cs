@@ -19,12 +19,12 @@
 namespace NPOI.HSSF.Record.Aggregates
 {
 
-    using System;
     using NPOI.HSSF.Record;
-    using NPOI.SS.Util;
     using NPOI.SS.Formula.PTG;
-    using NPOI.Util;
     using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
 
     /// <summary>
     /// The formula record aggregate is used to join toGether the formula record and it's
@@ -32,7 +32,7 @@ namespace NPOI.HSSF.Record.Aggregates
     /// @author Glen Stampoultzis (glens at apache.org)
     /// </summary>
     [Serializable]
-    public class FormulaRecordAggregate: RecordAggregate, CellValueRecordInterface, IComparable, ICloneable
+    public class FormulaRecordAggregate : RecordAggregate, CellValueRecordInterface, IComparable, ICloneable
     {
         public const short sid = -2000;
 
@@ -50,13 +50,13 @@ namespace NPOI.HSSF.Record.Aggregates
         /// <param name="svm">The SVM.</param>
         public FormulaRecordAggregate(FormulaRecord formulaRec, StringRecord stringRec, SharedValueManager svm)
         {
-            if (svm == null)
+            if(svm == null)
             {
                 throw new ArgumentException("sfm must not be null");
             }
-            if (formulaRec.HasCachedResultString)
+            if(formulaRec.HasCachedResultString)
             {
-                if (stringRec == null)
+                if(stringRec == null)
                 {
                     throw new RecordFormatException("Formula record flag is set but String record was not found");
                 }
@@ -72,10 +72,10 @@ namespace NPOI.HSSF.Record.Aggregates
 
             _formulaRecord = formulaRec;
             _sharedValueManager = svm;
-            if (formulaRec.IsSharedFormula)
+            if(formulaRec.IsSharedFormula)
             {
                 CellReference firstCell = formulaRec.Formula.ExpReference;
-                if (firstCell == null)
+                if(firstCell == null)
                 {
                     HandleMissingSharedFormulaRecord(formulaRec);
                 }
@@ -85,21 +85,23 @@ namespace NPOI.HSSF.Record.Aggregates
                 }
             }
         }
-        	/**
-	     * Should be called by any code which is either deleting this formula cell, or changing
-	     * its type.  This method gives the aggregate a chance to unlink any shared formula
-	     * that may be involved with this cell formula.
-	     */
-	    public void NotifyFormulaChanging() {
-		    if (_sharedFormulaRecord != null) {
-			    _sharedValueManager.Unlink(_sharedFormulaRecord);
-		    }
-	    }
+        /**
+     * Should be called by any code which is either deleting this formula cell, or changing
+     * its type.  This method gives the aggregate a chance to unlink any shared formula
+     * that may be involved with this cell formula.
+     */
+        public void NotifyFormulaChanging()
+        {
+            if(_sharedFormulaRecord != null)
+            {
+                _sharedValueManager.Unlink(_sharedFormulaRecord);
+            }
+        }
         public bool IsPartOfArrayFormula
         {
             get
             {
-                if (_sharedFormulaRecord != null)
+                if(_sharedFormulaRecord != null)
                 {
                     return false;
                 }
@@ -117,12 +119,12 @@ namespace NPOI.HSSF.Record.Aggregates
         /// <param name="offset">offset to begin writing at</param>
         /// <param name="data">byte array containing instance data.</param>
         /// <returns>number of bytes written</returns>
-        public override int Serialize(int offset, byte [] data)
+        public override int Serialize(int offset, byte[] data)
         {
             int pos = offset;
             pos += _formulaRecord.Serialize(pos, data);
 
-            if (_stringRecord != null)
+            if(_stringRecord != null)
             {
                 pos += _stringRecord.Serialize(pos, data);
             }
@@ -140,11 +142,11 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             rv.VisitRecord(_formulaRecord);
             Record sharedFormulaRecord = _sharedValueManager.GetRecordForFirstCell(this);
-            if (sharedFormulaRecord != null)
+            if(sharedFormulaRecord != null)
             {
                 rv.VisitRecord(sharedFormulaRecord);
             }
-            if (_formulaRecord.HasCachedResultString && _stringRecord != null)
+            if(_formulaRecord.HasCachedResultString && _stringRecord != null)
             {
                 rv.VisitRecord(_stringRecord);
             }
@@ -190,7 +192,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             // make sure 'unshared' formula is actually available
             Ptg firstToken = formula.ParsedExpression[0];
-            if (firstToken is ExpPtg)
+            if(firstToken is ExpPtg)
             {
                 throw new RecordFormatException(
                         "SharedFormulaRecord not found for FormulaRecord with (isSharedFormula=true)");
@@ -228,14 +230,14 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public short XFIndex
         {
-            get{return _formulaRecord.XFIndex;}
-            set{_formulaRecord.XFIndex=value;}
+            get { return _formulaRecord.XFIndex; }
+            set { _formulaRecord.XFIndex=value; }
         }
 
         public int Column
         {
-            get{return _formulaRecord.Column;}
-            set{_formulaRecord.Column=value;}
+            get { return _formulaRecord.Column; }
+            set { _formulaRecord.Column=value; }
         }
 
         public int Row
@@ -277,9 +279,9 @@ namespace NPOI.HSSF.Record.Aggregates
             return _formulaRecord.Equals(obj);
         }
 
-        public override int GetHashCode ()
+        public override int GetHashCode()
         {
-            return _formulaRecord.GetHashCode ();
+            return _formulaRecord.GetHashCode();
         }
 
         /// <summary>
@@ -301,7 +303,8 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             get
             {
-                if (_stringRecord == null) return null;
+                if(_stringRecord == null)
+                    return null;
                 return _stringRecord.String;
             }
         }
@@ -319,12 +322,12 @@ namespace NPOI.HSSF.Record.Aggregates
         {
 
             // Save the string into a String Record, creating one if required
-            if (_stringRecord == null)
+            if(_stringRecord == null)
             {
                 _stringRecord = new StringRecord();
             }
             _stringRecord.String=(value);
-            if (value.Length < 1)
+            if(value.Length < 1)
             {
                 _formulaRecord.SetCachedResultTypeEmptyString();
             }
@@ -367,12 +370,12 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             get
             {
-                if (_sharedFormulaRecord != null)
+                if(_sharedFormulaRecord != null)
                 {
                     return _sharedFormulaRecord.GetFormulaTokens(_formulaRecord);
                 }
                 CellReference expRef = _formulaRecord.Formula.ExpReference;
-                if (expRef != null)
+                if(expRef != null)
                 {
                     ArrayRecord arec = _sharedValueManager.GetArrayRecord(expRef.Row, expRef.Col);
                     return arec.FormulaTokens;
@@ -391,7 +394,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public void UnlinkSharedFormula()
         {
             SharedFormulaRecord sfr = _sharedFormulaRecord;
-            if (sfr == null)
+            if(sfr == null)
             {
                 throw new InvalidOperationException("Formula not linked to shared formula");
             }
@@ -403,17 +406,17 @@ namespace NPOI.HSSF.Record.Aggregates
         }
         public CellRangeAddress GetArrayFormulaRange()
         {
-            if (_sharedFormulaRecord != null)
+            if(_sharedFormulaRecord != null)
             {
                 throw new InvalidOperationException("not an array formula cell.");
             }
             CellReference expRef = _formulaRecord.Formula.ExpReference;
-            if (expRef == null)
+            if(expRef == null)
             {
                 throw new InvalidOperationException("not an array formula cell.");
             }
             ArrayRecord arec = _sharedValueManager.GetArrayRecord(expRef.Row, expRef.Col);
-            if (arec == null)
+            if(arec == null)
             {
                 throw new InvalidOperationException("ArrayRecord was not found for the locator " + expRef.FormatAsString());
             }

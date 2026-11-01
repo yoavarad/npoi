@@ -17,15 +17,15 @@
 
 namespace NPOI.HSSF.Extractor
 {
-    using System;
-    using System.IO;
-    using System.Text;
     using NPOI.HSSF;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.POIFS.FileSystem;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.IO;
+    using System.Text;
 
     /**
      * A text extractor for old Excel files, which are too old for
@@ -65,18 +65,18 @@ namespace NPOI.HSSF.Extractor
                 Open(poifs);
                 return;
             }
-            catch (OldExcelFormatException)
+            catch(OldExcelFormatException)
             {
                 // will be handled by workaround below
-                if (poifs != null)
+                if(poifs != null)
                 {
                     poifs.Close();
                 }
             }
-            catch (NotOLE2FileException)
+            catch(NotOLE2FileException)
             {
                 // will be handled by workaround below
-                if (poifs != null)
+                if(poifs != null)
                 {
                     poifs.Close();
                 }
@@ -87,14 +87,14 @@ namespace NPOI.HSSF.Extractor
             {
                 Open(biffStream);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 // ensure that the stream is properly closed here if an Exception
                 // is thrown while opening
                 biffStream.Close();
                 throw;
             }
-            catch (RuntimeException)
+            catch(RuntimeException)
             {
                 // ensure that the stream is properly closed here if an Exception
                 // is thrown while opening
@@ -113,11 +113,11 @@ namespace NPOI.HSSF.Extractor
 
         private void Open(Stream biffStream)
         {
-            BufferedStream bis = (biffStream is BufferedStream stream) 
+            BufferedStream bis = (biffStream is BufferedStream stream)
             ? stream
             : new BufferedStream(biffStream, 8);
 
-            if (FileMagicContainer.ValueOf(bis) == FileMagic.OLE2)
+            if(FileMagicContainer.ValueOf(bis) == FileMagic.OLE2)
             {
                 NPOIFSFileSystem poifs = new NPOIFSFileSystem(bis);
                 try
@@ -145,14 +145,14 @@ namespace NPOI.HSSF.Extractor
             DocumentNode book;
             try
             {
-                book = (DocumentNode)directory.GetEntry(InternalWorkbook.OLD_WORKBOOK_DIR_ENTRY_NAME);
+                book = (DocumentNode) directory.GetEntry(InternalWorkbook.OLD_WORKBOOK_DIR_ENTRY_NAME);
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
                 // some files have "Workbook" instead
-                book = (DocumentNode)directory.GetEntry(InternalWorkbook.WORKBOOK_DIR_ENTRY_NAMES[0]);
+                book = (DocumentNode) directory.GetEntry(InternalWorkbook.WORKBOOK_DIR_ENTRY_NAMES[0]);
             }
-            if (book == null)
+            if(book == null)
             {
                 throw new IOException("No Excel 5/95 Book stream found");
             }
@@ -163,7 +163,7 @@ namespace NPOI.HSSF.Extractor
 
         public static void main(String[] args)
         {
-            if (args.Length < 1)
+            if(args.Length < 1)
             {
                 System.Console.WriteLine("Use:");
                 System.Console.WriteLine("   OldExcelExtractor <filename>");
@@ -176,13 +176,13 @@ namespace NPOI.HSSF.Extractor
 
         private void Prepare()
         {
-            if (!ris.HasNextRecord)
+            if(!ris.HasNextRecord)
                 throw new ArgumentException("File Contains no records!");
             ris.NextRecord();
 
             // Work out what version we're dealing with
             int bofSid = ris.Sid;
-            switch (bofSid)
+            switch(bofSid)
             {
                 case BOFRecord.biff2_sid:
                     biffVersion = 2;
@@ -202,7 +202,7 @@ namespace NPOI.HSSF.Extractor
 
             // Get the type
             BOFRecord bof = new BOFRecord(ris);
-            fileType = (int)bof.Type;
+            fileType = (int) bof.Type;
         }
 
         /**
@@ -243,12 +243,12 @@ namespace NPOI.HSSF.Extractor
                 // TODO track the XFs and Format Strings
 
                 // Process each record in turn, looking for interesting ones
-                while (ris.HasNextRecord)
+                while(ris.HasNextRecord)
                 {
                     int sid = ris.GetNextSid();
                     ris.NextRecord();
 
-                    switch (sid)
+                    switch(sid)
                     {
                         case FILE_PASS_RECORD_SID:
                             throw new EncryptedDocumentException("Encryption not supported for Old Excel files");
@@ -285,10 +285,10 @@ namespace NPOI.HSSF.Extractor
                         case OldFormulaRecord.biff3_sid:
                         case OldFormulaRecord.biff4_sid:
                             // Biff 2 and 5+ share the same SID, due to a bug...
-                            if (biffVersion == 5)
+                            if(biffVersion == 5)
                             {
                                 FormulaRecord fr = new FormulaRecord(ris);
-                                if (fr.CachedResultType == CellType.Numeric)
+                                if(fr.CachedResultType == CellType.Numeric)
                                 {
                                     handleNumericCell(text, fr.Value);
                                 }
@@ -296,7 +296,7 @@ namespace NPOI.HSSF.Extractor
                             else
                             {
                                 OldFormulaRecord fr = new OldFormulaRecord(ris);
-                                if (fr.GetCachedResultType() == CellType.Numeric)
+                                if(fr.GetCachedResultType() == CellType.Numeric)
                                 {
                                     handleNumericCell(text, fr.Value);
                                 }
@@ -333,12 +333,12 @@ namespace NPOI.HSSF.Extractor
         public void Close()
         {
             // some cases require this close here
-            if (toClose != null)
+            if(toClose != null)
             {
                 IOUtils.CloseQuietly(toClose);
                 toClose = null;
             }
-            if (toCloseStream != null)
+            if(toCloseStream != null)
             {
                 IOUtils.CloseQuietly(toCloseStream);
                 toClose = null;

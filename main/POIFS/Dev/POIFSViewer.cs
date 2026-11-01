@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -26,9 +26,9 @@
  * ==============================================================*/
 
 using System;
-using System.Text;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace NPOI.POIFS.Dev
 {
@@ -38,12 +38,12 @@ namespace NPOI.POIFS.Dev
     {
         public static void ViewFile(String filename, bool printName)
         {
-            if (printName)
+            if(printName)
             {
                 StringBuilder flowerbox = new StringBuilder();
 
                 flowerbox.Append(".");
-                for (int j = 0; j < filename.Length; j++)
+                for(int j = 0; j < filename.Length; j++)
                 {
                     flowerbox.Append("-");
                 }
@@ -54,18 +54,18 @@ namespace NPOI.POIFS.Dev
             }
             try
             {
-                using (Stream fileStream = File.OpenRead(filename))
+                using(Stream fileStream = File.OpenRead(filename))
                 {
                     POIFSViewable fs = new NPOIFSFileSystem(fileStream);
 
                     IList<String> strings = POIFSViewEngine.InspectViewable(fs, true, 0, "  ");
-                    foreach (var s in strings)
+                    foreach(var s in strings)
                     {
                         Console.Write(s);
                     }
                 }
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 Console.WriteLine(e.Message);
             }

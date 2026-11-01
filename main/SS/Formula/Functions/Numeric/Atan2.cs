@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
@@ -30,13 +30,13 @@ namespace NPOI.SS.Formula.Functions
     public class Atan2 : TwoArg
     {
 
-		public override double Evaluate(double d0, double d1)
+        public override double Evaluate(double d0, double d1)
         {
-            if (d0 == NumericFunction.ZERO && d1 == NumericFunction.ZERO)
+            if(d0 == NumericFunction.ZERO && d1 == NumericFunction.ZERO)
             {
-				throw new EvaluationException(ErrorEval.DIV_ZERO);
-			}
-			return Math.Atan2(d1, d0);
-		}
+                throw new EvaluationException(ErrorEval.DIV_ZERO);
+            }
+            return Math.Atan2(d1, d0);
+        }
     }
 }

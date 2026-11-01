@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
     using NPOI.HPSF;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -46,9 +46,9 @@ namespace NPOI.HSSF.Record
         {
             sid = in1.Sid;
 
-            if (in1.Sid == biff2_sid)
+            if(in1.Sid == biff2_sid)
             {
-                field_1_string_len = (short)in1.ReadUByte();
+                field_1_string_len = (short) in1.ReadUByte();
             }
             else
             {
@@ -92,7 +92,7 @@ namespace NPOI.HSSF.Record
         protected internal static String GetString(byte[] data, CodepageRecord codepage)
         {
             int cp = Property.DEFAULT_CODEPAGE;
-            if (codepage != null)
+            if(codepage != null)
             {
                 cp = codepage.Codepage & 0xffff;
             }
@@ -100,7 +100,7 @@ namespace NPOI.HSSF.Record
             {
                 return CodePageUtil.GetStringFromCodePage(data, cp);
             }
-            catch (EncoderFallbackException uee)
+            catch(EncoderFallbackException uee)
             {
                 throw new ArgumentException("Unsupported codepage requested", uee);
             }

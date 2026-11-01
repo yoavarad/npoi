@@ -1,4 +1,4 @@
-﻿using NPOI.SS.UserModel;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using System;
 using System.Collections.Generic;
@@ -38,17 +38,17 @@ namespace NPOI.SS.Formula
         /// </summary>
         private Dictionary<String, List<EvaluationConditionalFormatRule>> formats = new Dictionary<string, List<EvaluationConditionalFormatRule>>();
         /// <summary>
-    /// <para>
-    /// Evaluating rules for cells in their region(s) is expensive, so we want to cache them,
-    /// and empty/reevaluate the cache when values change.
-    /// </para>
-    /// <para>
-    /// Rule lists are in priority order, as evaluated by Excel (smallest priority # for XSSF, definition order for HSSF)
-    /// </para>
-    /// <para>
-    /// CellReference : equals().
-    /// </para>
-    /// </summary>
+        /// <para>
+        /// Evaluating rules for cells in their region(s) is expensive, so we want to cache them,
+        /// and empty/reevaluate the cache when values change.
+        /// </para>
+        /// <para>
+        /// Rule lists are in priority order, as evaluated by Excel (smallest priority # for XSSF, definition order for HSSF)
+        /// </para>
+        /// <para>
+        /// CellReference : equals().
+        /// </para>
+        /// </summary>
         private SortedDictionary<CellReference, List<EvaluationConditionalFormatRule>> values = new SortedDictionary<CellReference, List<EvaluationConditionalFormatRule>>();
 
         public ConditionalFormattingEvaluator(IWorkbook wb, IWorkbookEvaluatorProvider provider)
@@ -88,13 +88,13 @@ namespace NPOI.SS.Formula
         public List<EvaluationConditionalFormatRule> GetConditionalFormattingForCell(CellReference cellRef)
         {
             List<EvaluationConditionalFormatRule> rules = values.TryGetValue(cellRef, out List<EvaluationConditionalFormatRule> value) ? value : null;
-            if (rules == null)
+            if(rules == null)
             {
                 // compute and cache them
                 rules = new List<EvaluationConditionalFormatRule>();
 
                 ISheet sheet;
-                if (cellRef.SheetName != null)
+                if(cellRef.SheetName != null)
                 {
                     sheet = workbook.GetSheet(cellRef.SheetName);
                 }
@@ -110,15 +110,15 @@ namespace NPOI.SS.Formula
                  * thus the explicit ordering of the rule lists in #getFormattingRulesForSheet(Sheet)
                  */
                 bool stopIfTrue = false;
-                foreach (EvaluationConditionalFormatRule rule in GetRules(sheet))
+                foreach(EvaluationConditionalFormatRule rule in GetRules(sheet))
                 {
 
-                    if (stopIfTrue)
+                    if(stopIfTrue)
                     {
                         continue; // a previous rule matched and wants no more evaluations
                     }
 
-                    if (rule.Matches(cellRef))
+                    if(rule.Matches(cellRef))
                     {
                         rules.Add(rule);
                         stopIfTrue = rule.Rule.StopIfTrue;
@@ -170,9 +170,9 @@ namespace NPOI.SS.Formula
         {
             String sheetName = sheet.SheetName;
             List<EvaluationConditionalFormatRule> rules = formats.TryGetValue(sheetName, out List<EvaluationConditionalFormatRule> value) ? value : null;
-            if (rules == null)
+            if(rules == null)
             {
-                if (formats.ContainsKey(sheetName))
+                if(formats.ContainsKey(sheetName))
                 {
                     return new List<EvaluationConditionalFormatRule>();
                 }
@@ -180,12 +180,12 @@ namespace NPOI.SS.Formula
                 int count = scf.NumConditionalFormattings;
                 rules = new List<EvaluationConditionalFormatRule>(count);
                 formats.Add(sheetName, rules);
-                for (int i = 0; i < count; i++)
+                for(int i = 0; i < count; i++)
                 {
                     IConditionalFormatting f = scf.GetConditionalFormattingAt(i);
                     //optimization, as this may be expensive for lots of ranges
                     CellRangeAddress[] regions = f.GetFormattingRanges();
-                    for (int r = 0; r < f.NumberOfRules; r++)
+                    for(int r = 0; r < f.NumberOfRules; r++)
                     {
                         IConditionalFormattingRule rule = f.GetRule(r);
                         rules.Add(new EvaluationConditionalFormatRule(workbookEvaluator, sheet, f, i, rule, r, regions));
@@ -223,18 +223,20 @@ namespace NPOI.SS.Formula
         /// </summary>
         /// <param name="sheetName"></param>
         /// <returns>unmodifiable list of all Conditional format rules for the given sheet, if any</returns>
-        public List<EvaluationConditionalFormatRule> GetFormatRulesForSheet(string sheetName) {
+        public List<EvaluationConditionalFormatRule> GetFormatRulesForSheet(string sheetName)
+        {
             return GetFormatRulesForSheet(workbook.GetSheet(sheetName));
         }
-    
+
         /// <summary>
         /// </summary>
         /// <param name="sheet"></param>
         /// <returns>unmodifiable list of all Conditional format rules for the given sheet, if any</returns>
-        public List<EvaluationConditionalFormatRule> GetFormatRulesForSheet(ISheet sheet) {
+        public List<EvaluationConditionalFormatRule> GetFormatRulesForSheet(ISheet sheet)
+        {
             return GetRules(sheet);
         }
-    
+
         /// <summary>
         /// <para>
         /// Conditional formatting rules can apply only to cells in the sheet to which they are attached.
@@ -248,37 +250,47 @@ namespace NPOI.SS.Formula
         /// <param name="conditionalFormattingIndex">of the <see cref="ConditionalFormatting"/> instance in the sheet's array</param>
         /// <param name="ruleIndex">of the <see cref="ConditionalFormattingRule"/> instance within the <see cref="ConditionalFormatting"/></param>
         /// <returns>unmodifiable List of all cells in the rule's region matching the rule's condition</returns>
-        public List<ICell> GetMatchingCells(ISheet sheet, int conditionalFormattingIndex, int ruleIndex) {
-            foreach (EvaluationConditionalFormatRule rule in GetRules(sheet)) {
-                if (rule.Sheet.Equals(sheet) && rule.FormattingIndex == conditionalFormattingIndex && rule.RuleIndex == ruleIndex) {
+        public List<ICell> GetMatchingCells(ISheet sheet, int conditionalFormattingIndex, int ruleIndex)
+        {
+            foreach(EvaluationConditionalFormatRule rule in GetRules(sheet))
+            {
+                if(rule.Sheet.Equals(sheet) && rule.FormattingIndex == conditionalFormattingIndex && rule.RuleIndex == ruleIndex)
+                {
                     return GetMatchingCells(rule);
                 }
             }
             return [];
         }
-    
+
         /// <summary>
         /// </summary>
         /// <param name="rule"></param>
         /// <returns>unmodifiable List of all cells in the rule's region matching the rule's condition</returns>
-        public List<ICell> GetMatchingCells(EvaluationConditionalFormatRule rule) {
+        public List<ICell> GetMatchingCells(EvaluationConditionalFormatRule rule)
+        {
             List<ICell> cells = new List<ICell>();
             ISheet sheet = rule.Sheet;
-        
-            foreach (CellRangeAddress region in rule.Regions) {
-                for (int r = region.FirstRow; r <= region.LastRow; r++) {
+
+            foreach(CellRangeAddress region in rule.Regions)
+            {
+                for(int r = region.FirstRow; r <= region.LastRow; r++)
+                {
                     IRow row = sheet.GetRow(r);
-                    if (row == null) {
+                    if(row == null)
+                    {
                         continue; // no cells to check
                     }
-                    for (int c = region.FirstColumn; c <= region.LastColumn; c++) {
+                    for(int c = region.FirstColumn; c <= region.LastColumn; c++)
+                    {
                         ICell cell = row.GetCell(c);
-                        if (cell == null) {
+                        if(cell == null)
+                        {
                             continue;
                         }
-                    
+
                         List<EvaluationConditionalFormatRule> cellRules = GetConditionalFormattingForCell(cell);
-                        if (cellRules.Contains(rule)) {
+                        if(cellRules.Contains(rule))
+                        {
                             cells.Add(cell);
                         }
                     }

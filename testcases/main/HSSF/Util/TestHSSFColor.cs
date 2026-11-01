@@ -18,13 +18,13 @@
 namespace TestCases.HSSF.Util
 {
 
-    using System;
-    using System.Text;
-    using System.Collections;
     using NPOI.HSSF.Util;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Text;
 
     /**
 * @author Nick Burch

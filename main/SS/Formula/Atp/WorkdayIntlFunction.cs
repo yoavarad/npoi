@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using System;
@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NPOI.SS.Formula.Atp
 {
-    public class WorkdayIntlFunction: FreeRefFunction
+    public class WorkdayIntlFunction : FreeRefFunction
     {
         public static FreeRefFunction instance = new WorkdayIntlFunction(ArgumentsEvaluator.instance);
 
@@ -26,7 +26,7 @@ namespace NPOI.SS.Formula.Atp
          */
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length < 2 || args.Length > 4)
+            if(args.Length < 2 || args.Length > 4)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -41,11 +41,11 @@ namespace NPOI.SS.Formula.Atp
             try
             {
                 start = ArgumentsEvaluator.EvaluateDateArg(args[0], srcCellRow, srcCellCol);
-                days = (int)Math.Floor(ArgumentsEvaluator.EvaluateNumberArg(args[1], srcCellRow, srcCellCol));
-                if (args.Length >= 3)
+                days = (int) Math.Floor(ArgumentsEvaluator.EvaluateNumberArg(args[1], srcCellRow, srcCellCol));
+                if(args.Length >= 3)
                 {
                     weekendType = (int) ArgumentsEvaluator.EvaluateNumberArg(args[2], srcCellRow, srcCellCol);
-                    if (!WorkdayCalculator.instance.GetValidWeekendTypes().Contains(weekendType))
+                    if(!WorkdayCalculator.instance.GetValidWeekendTypes().Contains(weekendType))
                     {
                         return ErrorEval.NUM_ERROR;
                     }
@@ -55,7 +55,7 @@ namespace NPOI.SS.Formula.Atp
                 return new NumberEval(DateUtil.GetExcelDate(
                     WorkdayCalculator.instance.CalculateWorkdays(start, days, weekendType, holidays)));
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }

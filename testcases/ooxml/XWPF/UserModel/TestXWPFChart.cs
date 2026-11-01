@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Dml;
+using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Chart;
 using NPOI.XWPF.UserModel;
 using NUnit.Framework;
@@ -53,7 +53,7 @@ namespace TestCases.XWPF.UserModel
             ClassicAssert.AreEqual("/word/document.xml", chart.GetParent().GetPackagePart().PartName.ToString());
             ClassicAssert.AreEqual("/word/charts/chart1.xml", chart.GetPackagePart().PartName.ToString());
         }
-        [Test(Description ="test method to check adding chart in document")]
+        [Test(Description = "test method to check adding chart in document")]
         public void TestAddChartsToNewDocument()
         {
             XWPFDocument document = new XWPFDocument();

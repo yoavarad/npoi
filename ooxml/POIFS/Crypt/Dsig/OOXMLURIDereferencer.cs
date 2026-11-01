@@ -48,17 +48,17 @@ namespace NPOI.POIFS.Crypt.Dsig
 
         public IData dereference(IURIReference uriReference, SignedXml context)
         {
-            if (baseUriDereferencer == null)
+            if(baseUriDereferencer == null)
             {
                 //baseUriDereferencer = signatureConfig.GetSignatureFactory().URIDereferencer;
                 throw new NotImplementedException();
             }
 
-            if (null == uriReference)
+            if(null == uriReference)
             {
                 throw new NullReferenceException("URIReference cannot be null");
             }
-            if (null == context)
+            if(null == context)
             {
                 throw new NullReferenceException("XMLCrytoContext cannot be null");
             }
@@ -68,13 +68,13 @@ namespace NPOI.POIFS.Crypt.Dsig
             {
                 uri = new Uri(uriReference.getURI());
             }
-            catch (UriFormatException e)
+            catch(UriFormatException e)
             {
                 throw new Exception("could not URL decode the uri: " + uriReference.getURI(), e);
             }
 
             PackagePart part = FindPart(uri);
-            if (part == null)
+            if(part == null)
             {
                 //LOG.Log(POILogger.DEBUG, "cannot Resolve, delegating to base DOM URI dereferencer", uri);
                 //return this.baseUriDereferencer.Dereference(uriReference, context);
@@ -87,7 +87,7 @@ namespace NPOI.POIFS.Crypt.Dsig
                 dataStream = part.GetInputStream();
 
                 // workaround for office 2007 pretty-printed .rels files
-                if (part.PartName.ToString().EndsWith(".rels"))
+                if(part.PartName.ToString().EndsWith(".rels"))
                 {
                     // although xmlsec has an option to ignore line breaks, currently this
                     // only affects .rels files, so we only modify these
@@ -102,7 +102,7 @@ namespace NPOI.POIFS.Crypt.Dsig
                     throw new NotImplementedException();
                 }
             }
-            catch (IOException)
+            catch(IOException)
             {
                 //throw new URIReferenceException("I/O error: " + e.Message, e);
                 throw new NotImplementedException();
@@ -117,7 +117,7 @@ namespace NPOI.POIFS.Crypt.Dsig
             //Console.WriteLine(POILogger.DEBUG, "dereference", uri);
 
             String path = uri.AbsolutePath;
-            if (path == null || "".Equals(path))
+            if(path == null || "".Equals(path))
             {
                 //Console.WriteLine(POILogger.DEBUG, "illegal part name (expected)", uri);
                 return null;
@@ -128,7 +128,7 @@ namespace NPOI.POIFS.Crypt.Dsig
             {
                 ppn = PackagingUriHelper.CreatePartName(path);
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 //Console.WriteLine(POILogger.WARN, "illegal part name (not expected)", uri);
                 return null;

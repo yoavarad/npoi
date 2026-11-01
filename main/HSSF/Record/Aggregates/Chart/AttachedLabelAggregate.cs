@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -58,43 +58,43 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             ChartSheetAggregate cs = GetContainer<ChartSheetAggregate>(ChartRecordAggregate.RuleName_CHARTSHEET);
             _isFirst = cs.AttachLabelCount == 0;
             cs.AttachLabelCount++;
-            text = (TextRecord)rs.GetNext();
+            text = (TextRecord) rs.GetNext();
             rs.GetNext();//BeginRecord
-            pos = (PosRecord)rs.GetNext();
-            if (rs.PeekNextChartSid() == FontIndexRecord.sid)
+            pos = (PosRecord) rs.GetNext();
+            if(rs.PeekNextChartSid() == FontIndexRecord.sid)
             {
-                fontX = (FontIndexRecord)rs.GetNext();
+                fontX = (FontIndexRecord) rs.GetNext();
             }
-            if (rs.PeekNextChartSid() == AlRunsRecord.sid)
+            if(rs.PeekNextChartSid() == AlRunsRecord.sid)
             {
-                alRuns = (AlRunsRecord)rs.GetNext();
+                alRuns = (AlRunsRecord) rs.GetNext();
             }
-            brai = (LinkedDataRecord)rs.GetNext();
-            if (rs.PeekNextChartSid() == SeriesTextRecord.sid)
+            brai = (LinkedDataRecord) rs.GetNext();
+            if(rs.PeekNextChartSid() == SeriesTextRecord.sid)
             {
-                seriesText = (SeriesTextRecord)rs.GetNext();
+                seriesText = (SeriesTextRecord) rs.GetNext();
             }
-            if (rs.PeekNextChartSid() == FrameRecord.sid)
+            if(rs.PeekNextChartSid() == FrameRecord.sid)
             {
                 frame = new FrameAggregate(rs, this);
             }
-            if (rs.PeekNextChartSid() == ObjectLinkRecord.sid)
+            if(rs.PeekNextChartSid() == ObjectLinkRecord.sid)
             {
-                objectLink = (ObjectLinkRecord)rs.GetNext();
+                objectLink = (ObjectLinkRecord) rs.GetNext();
             }
-            if (rs.PeekNextChartSid() == DataLabExtContentsRecord.sid)
+            if(rs.PeekNextChartSid() == DataLabExtContentsRecord.sid)
             {
-                dataLab = (DataLabExtContentsRecord)rs.GetNext();
+                dataLab = (DataLabExtContentsRecord) rs.GetNext();
             }
-            if (rs.PeekNextChartSid() == CrtLayout12Record.sid)
+            if(rs.PeekNextChartSid() == CrtLayout12Record.sid)
             {
-                crtLayout = (CrtLayout12Record)rs.GetNext();
+                crtLayout = (CrtLayout12Record) rs.GetNext();
             }
-            if (rs.PeekNextChartSid() == TextPropsStreamRecord.sid)
+            if(rs.PeekNextChartSid() == TextPropsStreamRecord.sid)
             {
                 textProps = new TextPropsAggregate(rs, this);
             }
-            if (rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
+            if(rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
             {
                 crtMlFrt = new CrtMlFrtAggregate(rs, this);
             }
@@ -107,33 +107,33 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(BeginRecord.instance);
             rv.VisitRecord(pos);
 
-            if (fontX != null)
+            if(fontX != null)
                 rv.VisitRecord(fontX);
 
-            if (alRuns != null)
+            if(alRuns != null)
                 rv.VisitRecord(alRuns);
 
             rv.VisitRecord(brai);
 
-            if (seriesText != null)
+            if(seriesText != null)
                 rv.VisitRecord(seriesText);
 
-            if (frame != null)
+            if(frame != null)
                 frame.VisitContainedRecords(rv);
 
-            if (objectLink != null)
+            if(objectLink != null)
                 rv.VisitRecord(objectLink);
 
-            if (dataLab != null)
+            if(dataLab != null)
                 rv.VisitRecord(dataLab);
 
-            if (crtLayout != null)
+            if(crtLayout != null)
                 rv.VisitRecord(crtLayout);
 
-            if (textProps != null)
+            if(textProps != null)
                 textProps.VisitContainedRecords(rv);
 
-            if (crtMlFrt != null)
+            if(crtMlFrt != null)
                 crtMlFrt.VisitContainedRecords(rv);
 
             WriteEndBlock(rv);

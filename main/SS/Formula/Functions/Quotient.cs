@@ -1,5 +1,5 @@
-﻿using NPOI.SS.Formula.Functions;
 using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Functions;
 namespace NPOI.SS.Formula.Functions
 {
     /**
@@ -31,7 +31,7 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve = OperandResolver.GetSingleValue(venumerator, srcRowIndex, srcColumnIndex);
                 enumerator = OperandResolver.CoerceValueToDouble(ve);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -42,22 +42,22 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve = OperandResolver.GetSingleValue(vedenominator, srcRowIndex, srcColumnIndex);
                 denominator = OperandResolver.CoerceValueToDouble(ve);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
-            if (denominator == 0)
+            if(denominator == 0)
             {
                 return ErrorEval.DIV_ZERO;
             }
 
-            return new NumberEval((int)(enumerator / denominator));
+            return new NumberEval((int) (enumerator / denominator));
         }
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }

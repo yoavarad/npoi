@@ -17,12 +17,13 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
-    using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestFixed
@@ -93,15 +94,15 @@ namespace TestCases.SS.Formula.Functions
             Fixed fixedFunc = new Fixed();
             ValueEval Evaluate = fixedFunc.Evaluate(0, 0, new NumberEval(1234.56789));
             ClassicAssert.IsTrue(Evaluate is StringEval);
-            ClassicAssert.AreEqual("1,234.57", ((StringEval)Evaluate).StringValue);
+            ClassicAssert.AreEqual("1,234.57", ((StringEval) Evaluate).StringValue);
 
             Evaluate = fixedFunc.Evaluate(0, 0, new NumberEval(1234.56789), new NumberEval(1));
             ClassicAssert.IsTrue(Evaluate is StringEval);
-            ClassicAssert.AreEqual("1,234.6", ((StringEval)Evaluate).StringValue);
+            ClassicAssert.AreEqual("1,234.6", ((StringEval) Evaluate).StringValue);
 
             Evaluate = fixedFunc.Evaluate(0, 0, new NumberEval(1234.56789), new NumberEval(1), BoolEval.TRUE);
             ClassicAssert.IsTrue(Evaluate is StringEval);
-            ClassicAssert.AreEqual("1234.6", ((StringEval)Evaluate).StringValue);
+            ClassicAssert.AreEqual("1234.6", ((StringEval) Evaluate).StringValue);
 
             Evaluate = fixedFunc.Evaluate(new ValueEval[] { }, 1, 1);
             ClassicAssert.IsTrue(Evaluate is ErrorEval);
@@ -130,4 +131,3 @@ namespace TestCases.SS.Formula.Functions
         }
     }
 }
-

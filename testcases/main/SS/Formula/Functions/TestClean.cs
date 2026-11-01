@@ -18,8 +18,9 @@ namespace TestCases.SS.Formula.Functions
 {
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     [TestFixture]
     public class TestClean
     {
@@ -37,7 +38,7 @@ namespace TestCases.SS.Formula.Functions
             "\u2116aniket\u2211\uFB5E\u2039", "\u2116aniket\u2211\uFB5E\u2039",
         };
 
-            for (int i = 0; i < asserts.Length; i += 2)
+            for(int i = 0; i < asserts.Length; i += 2)
             {
                 String formulaText = "CLEAN(\"" + asserts[i] + "\")";
                 ConfirmResult(fe, cell, formulaText, asserts[i + 1]);
@@ -49,7 +50,7 @@ namespace TestCases.SS.Formula.Functions
             "CHAR(181)&\"text\"&CHAR(190)", "\u00B5text\u00BE",
             "\"text\"&CHAR(160)&\"'\"", "text\u00A0'",
         };
-            for (int i = 0; i < asserts.Length; i += 2)
+            for(int i = 0; i < asserts.Length; i += 2)
             {
                 String formulaText = "CLEAN(" + asserts[i] + ")";
                 ConfirmResult(fe, cell, formulaText, asserts[i + 1]);

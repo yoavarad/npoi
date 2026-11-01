@@ -19,15 +19,15 @@ namespace NPOI.HSSF.UserModel
 {
     using System;
     using System.Collections;
-    using System.Text.RegularExpressions;
-    using System.Text;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Common class for HSSFHeader and HSSFFooter
     /// </summary>
-    public abstract class HeaderFooter:NPOI.SS.UserModel.IHeaderFooter
+    public abstract class HeaderFooter : NPOI.SS.UserModel.IHeaderFooter
     {
         protected bool stripFields = false;
 
@@ -36,7 +36,7 @@ namespace NPOI.HSSF.UserModel
          * Possibly empty string if no header or footer is set.  Never <c>null</c>.
          */
         public abstract String RawText { get; }
-        
+
         private String[] SplitParts()
         {
             String text = RawText;
@@ -45,22 +45,22 @@ namespace NPOI.HSSF.UserModel
             String _center = "";
             String _right = "";
 
-            while (text.Length > 1)
+            while(text.Length > 1)
             {
-                if (text[0] != '&') 
+                if(text[0] != '&')
                 {
-                        _center = text;
-                        break;
+                    _center = text;
+                    break;
                 }
                 int pos = text.Length;
-                switch (text[1])
+                switch(text[1])
                 {
                     case 'L':
-                        if (text.Contains("&C"))
+                        if(text.Contains("&C"))
                         {
                             pos = Math.Min(pos, text.IndexOf("&C", StringComparison.Ordinal));
                         }
-                        if (text.Contains("&R"))
+                        if(text.Contains("&R"))
                         {
                             pos = Math.Min(pos, text.IndexOf("&R", StringComparison.Ordinal));
                         }
@@ -68,11 +68,11 @@ namespace NPOI.HSSF.UserModel
                         text = text.Substring(pos);
                         break;
                     case 'C':
-                        if (text.Contains("&L"))
+                        if(text.Contains("&L"))
                         {
                             pos = Math.Min(pos, text.IndexOf("&L", StringComparison.Ordinal));
                         }
-                        if (text.Contains("&R"))
+                        if(text.Contains("&R"))
                         {
                             pos = Math.Min(pos, text.IndexOf("&R", StringComparison.Ordinal));
                         }
@@ -80,11 +80,11 @@ namespace NPOI.HSSF.UserModel
                         text = text.Substring(pos);
                         break;
                     case 'R':
-                        if (text.Contains("&C"))
+                        if(text.Contains("&C"))
                         {
                             pos = Math.Min(pos, text.IndexOf("&C", StringComparison.Ordinal));
                         }
-                        if (text.Contains("&L"))
+                        if(text.Contains("&L"))
                         {
                             pos = Math.Min(pos, text.IndexOf("&L", StringComparison.Ordinal));
                         }
@@ -115,7 +115,7 @@ namespace NPOI.HSSF.UserModel
             String _center = parts[1];
             String _right = parts[2];
 
-            if (_center.Length < 1 && _left.Length < 1 && _right.Length < 1)
+            if(_center.Length < 1 && _left.Length < 1 && _right.Length < 1)
             {
                 SetHeaderFooterText(string.Empty);
                 return;
@@ -145,15 +145,15 @@ namespace NPOI.HSSF.UserModel
         /// Get the left side of the header or footer.
         /// </summary>
         /// <value>The string representing the left side.</value>
-        public String Left 
+        public String Left
         {
             get
             {
                 return SplitParts()[0];
             }
-            set 
+            set
             {
-                UpdatePart(0, value); 
+                UpdatePart(0, value);
             }
         }
         /// <summary>
@@ -266,7 +266,8 @@ namespace NPOI.HSSF.UserModel
         /// <value>The special string for the file name.</value>
         public static String File
         {
-            get{
+            get
+            {
                 return FILE_FIELD.sequence;
             }
         }
@@ -370,7 +371,7 @@ namespace NPOI.HSSF.UserModel
             int pos;
 
             // Check we really got something to work on
-            if (text == null || text.Length == 0)
+            if(text == null || text.Length == 0)
             {
                 return text;
             }
@@ -378,7 +379,7 @@ namespace NPOI.HSSF.UserModel
             foreach(Field field in Fields.AllFields)
             {
                 String seq = field.sequence;
-                while ((pos = text.IndexOf(seq, StringComparison.CurrentCulture)) > -1)
+                while((pos = text.IndexOf(seq, StringComparison.CurrentCulture)) > -1)
                 {
                     text = text.Substring(0, pos) +
                         text.Substring(pos + seq.Length);
@@ -388,8 +389,8 @@ namespace NPOI.HSSF.UserModel
             // Now do the tricky, dynamic ones
             // These are things like font sizes and font names
 
-            text = Regex.Replace(text,@"\&\d+", "");
-            text = Regex.Replace(text,"\\&\".*?,.*?\"", "");
+            text = Regex.Replace(text, @"\&\d+", "");
+            text = Regex.Replace(text, "\\&\".*?,.*?\"", "");
 
             // All done
             return text;
@@ -408,9 +409,9 @@ namespace NPOI.HSSF.UserModel
             {
                 return stripFields;
             }
-            set 
+            set
             {
-                this.stripFields = value; 
+                this.stripFields = value;
             }
         }
 
@@ -488,67 +489,67 @@ namespace NPOI.HSSF.UserModel
             private readonly PairField _doubleunderlinefield;
             public Field SHEET_NAME_FIELD
             {
-                get{return _sheetnamefield;}
+                get { return _sheetnamefield; }
             }
             public Field DATE_FIELD
             {
-                get{return _datefield;}
+                get { return _datefield; }
             }
 
             public Field FILE_FIELD
             {
-                get{return _filefield;}
+                get { return _filefield; }
             }
             public Field FULL_FILE_FIELD
             {
-                get{return _fullfilefield;}
+                get { return _fullfilefield; }
             }
 
             public Field PAGE_FIELD
             {
-                get{return _pagefield;}
+                get { return _pagefield; }
             }
             public Field TIME_FIELD
             {
-                get{return _timefield;}
+                get { return _timefield; }
             }
             public Field NUM_PAGES_FIELD
             {
-                get{return _numpagesfield;}
+                get { return _numpagesfield; }
             }
 
             public Field PICTURE_FIELD
             {
-                get{return _picturefield;}
+                get { return _picturefield; }
             }
 
             public PairField BOLD_FIELD
             {
-                get{return _boldfield;}
+                get { return _boldfield; }
             }
             public PairField ITALIC_FIELD
             {
-                get{return _italicfield;}
+                get { return _italicfield; }
             }
             public PairField STRIKETHROUGH_FIELD
             {
-                get{return _strikethroughfield;}
+                get { return _strikethroughfield; }
             }
             public PairField SUBSCRIPT_FIELD
             {
-                get{return _subscriptfield;}
+                get { return _subscriptfield; }
             }
             public PairField SUPERSCRIPT_FIELD
             {
-                get{return _superscriptfield;}
+                get { return _superscriptfield; }
             }
             public PairField UNDERLINE_FIELD
             {
-                get{return _underlinefield;}
+                get { return _underlinefield; }
             }
             public PairField DOUBLE_UNDERLINE_FIELD
             {
-                get{return _doubleunderlinefield;}
+                get { return _doubleunderlinefield; }
             }
 
 

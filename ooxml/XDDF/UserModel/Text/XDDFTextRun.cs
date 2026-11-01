@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -27,13 +27,13 @@ namespace NPOI.XDDF.UserModel.Text
     using NPOI.Common.UserModel.Fonts;
     using NPOI.OOXML;
     using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Dml;
     using NPOI.Util;
+    using NPOI.Util.Optional;
     using NPOI.XDDF.UserModel;
     using NPOI.XSSF.UserModel;
-    using NPOI.OpenXmlFormats.Dml;
     using System.ComponentModel;
     using System.Globalization;
-    using NPOI.Util.Optional;
 
     public class XDDFTextRun
     {

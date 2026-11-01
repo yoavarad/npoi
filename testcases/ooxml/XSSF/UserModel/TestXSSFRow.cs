@@ -15,13 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using NPOI.SS.UserModel;
 using NPOI.XSSF;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
@@ -34,9 +35,9 @@ namespace TestCases.XSSF.UserModel
     public class TestXSSFRow : BaseTestXRow
     {
 
-        public TestXSSFRow():base(XSSFITestDataProvider.instance)
+        public TestXSSFRow() : base(XSSFITestDataProvider.instance)
         {
-            
+
         }
 
         [Test]
@@ -122,7 +123,7 @@ namespace TestCases.XSSF.UserModel
 
             cell = destRow.GetCell(col++);
             ClassicAssert.IsNotNull(cell);
-            ClassicAssert.AreEqual("other!B$5", cell.CellFormula, "Ref3DPtg") ;
+            ClassicAssert.AreEqual("other!B$5", cell.CellFormula, "Ref3DPtg");
 
             //////////////////////////////////////////
 
@@ -139,11 +140,11 @@ namespace TestCases.XSSF.UserModel
 
             cell = destRow.GetCell(col++);
             ClassicAssert.IsNotNull(destRow.GetCell(6));
-            ClassicAssert.AreEqual( "SUM(dest!B$5:D6)", cell.CellFormula, "Area3DPtg");
+            ClassicAssert.AreEqual("SUM(dest!B$5:D6)", cell.CellFormula, "Area3DPtg");
 
             cell = destRow.GetCell(col++);
             ClassicAssert.IsNotNull(destRow.GetCell(7));
-            ClassicAssert.AreEqual( "SUM(other!B$5:D6)", cell.CellFormula, "Area3DPtg");
+            ClassicAssert.AreEqual("SUM(other!B$5:D6)", cell.CellFormula, "Area3DPtg");
 
             workbook.Close();
         }
@@ -243,7 +244,7 @@ namespace TestCases.XSSF.UserModel
 
             // Verify GetEnumerator returns cells in ascending column order
             var cells = new List<ICell>();
-            foreach (ICell cell in row)
+            foreach(ICell cell in row)
             {
                 cells.Add(cell);
             }
@@ -259,7 +260,7 @@ namespace TestCases.XSSF.UserModel
             // Verify .Cells property also returns in column order
             List<ICell> cellsProp = row.Cells;
             ClassicAssert.AreEqual(6, cellsProp.Count);
-            for (int i = 0; i < cells.Count; i++)
+            for(int i = 0; i < cells.Count; i++)
             {
                 ClassicAssert.AreEqual(cells[i].ColumnIndex, cellsProp[i].ColumnIndex);
             }

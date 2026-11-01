@@ -18,8 +18,8 @@
 using NPOI.SS.Formula.Functions;
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     public class AVEDEV : AggregateFunction
     {
@@ -32,7 +32,7 @@ namespace NPOI.SS.Formula.Functions
     {
         protected internal override double Evaluate(double[] values)
         {
-            if (values.Length < 1)
+            if(values.Length < 1)
             {
                 throw new EvaluationException(ErrorEval.DIV_ZERO);
             }
@@ -57,7 +57,7 @@ namespace NPOI.SS.Formula.Functions
     {
         protected internal override double Evaluate(double[] ops)
         {
-            if (ops.Length < 2)
+            if(ops.Length < 2)
             {
                 throw new EvaluationException(ErrorEval.NUM_ERROR);
             }
@@ -99,7 +99,7 @@ namespace NPOI.SS.Formula.Functions
     {
         protected internal override double Evaluate(double[] ops)
         {
-            if (ops.Length < 2)
+            if(ops.Length < 2)
             {
                 throw new EvaluationException(ErrorEval.NUM_ERROR);
             }
@@ -113,7 +113,7 @@ namespace NPOI.SS.Formula.Functions
     {
         protected internal override double Evaluate(double[] values)
         {
-            if (values.Length < 1)
+            if(values.Length < 1)
             {
                 throw new EvaluationException(ErrorEval.DIV_ZERO);
             }
@@ -144,7 +144,7 @@ namespace NPOI.SS.Formula.Functions
     {
         protected internal override double Evaluate(double[] values)
         {
-            if (values.Length < 1)
+            if(values.Length < 1)
             {
                 throw new EvaluationException(ErrorEval.DIV_ZERO);
             }
@@ -155,7 +155,7 @@ namespace NPOI.SS.Formula.Functions
     {
         protected internal override double Evaluate(double[] values)
         {
-            if (values.Length < 1)
+            if(values.Length < 1)
             {
                 throw new EvaluationException(ErrorEval.DIV_ZERO);
             }
@@ -193,7 +193,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 return _countHiddenRows;
             }
-            
+
         }
     }
 
@@ -215,13 +215,13 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve1 = OperandResolver.GetSingleValue(arg1, srcRowIndex, srcColumnIndex);
                 dn = OperandResolver.CoerceValueToDouble(ve1);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 // all errors in the second arg translate to #VALUE!
                 return ErrorEval.VALUE_INVALID;
             }
             // weird Excel behaviour on second arg
-            if (dn < 1.0)
+            if(dn < 1.0)
             {
                 // values between 0.0 and 1.0 result in #NUM!
                 return ErrorEval.NUM_ERROR;
@@ -233,14 +233,14 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 double[] ds = NPOI.SS.Formula.Functions.AggregateFunction.ValueCollector.CollectValues(arg0);
-                if (k > ds.Length)
+                if(k > ds.Length)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
                 result = _isLarge ? StatsLib.kthLargest(ds, k) : StatsLib.kthSmallest(ds, k);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -276,12 +276,12 @@ namespace NPOI.SS.Formula.Functions
                 ValueEval ve1 = OperandResolver.GetSingleValue(arg1, srcRowIndex, srcColumnIndex);
                 dn = OperandResolver.CoerceValueToDouble(ve1);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 // all errors in the second arg translate to #VALUE!
                 return ErrorEval.VALUE_INVALID;
             }
-            if (dn < 0 || dn > 1)
+            if(dn < 0 || dn > 1)
             { // has to be percentage
                 return ErrorEval.NUM_ERROR;
             }
@@ -292,17 +292,17 @@ namespace NPOI.SS.Formula.Functions
                 double[] ds = NPOI.SS.Formula.Functions.AggregateFunction.ValueCollector.CollectValues(arg0);
                 int N = ds.Length;
 
-                if (N == 0 || N > 8191)
+                if(N == 0 || N > 8191)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
 
                 double n = (N - 1) * dn + 1;
-                if (n == 1d)
+                if(n == 1d)
                 {
                     result = StatsLib.kthSmallest(ds, 1);
                 }
-                else if (n == N) //TODO: Double.compare(n, N) == 0, DOSE THE "==" operator equals Double.compare
+                else if(n == N) //TODO: Double.compare(n, N) == 0, DOSE THE "==" operator equals Double.compare
                 {
                     result = StatsLib.kthLargest(ds, 1);
                 }
@@ -316,7 +316,7 @@ namespace NPOI.SS.Formula.Functions
 
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

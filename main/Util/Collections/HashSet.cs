@@ -34,27 +34,27 @@ namespace NPOI.Util.Collections
     /// <summary>
     /// This class comes from Java
     /// </summary>
-	public class HashSet<T>: ICollection<T>
-	{
+	public class HashSet<T> : ICollection<T>
+    {
         private readonly Dictionary<T, object> impl = new Dictionary<T, object>();
 
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
 		public HashSet()
-		{
-		}
+        {
+        }
 
         /// <summary>
         /// Adds the specified o.
         /// </summary>
         /// <param name="o">The o.</param>
 		public void Add(T o)
-		{
-            if (IsReadOnly)
+        {
+            if(IsReadOnly)
                 throw new InvalidOperationException("this hashset is readonly");
-			impl[o] = null;
-		}
+            impl[o] = null;
+        }
 
         /// <summary>
         /// Determines whether [contains] [the specified o].
@@ -64,11 +64,11 @@ namespace NPOI.Util.Collections
         /// 	<c>true</c> if [contains] [the specified o]; otherwise, <c>false</c>.
         /// </returns>
 		public bool Contains(T o)
-		{
-            if (o == null)
+        {
+            if(o == null)
                 return false;
-			return impl.ContainsKey(o);
-		}
+            return impl.ContainsKey(o);
+        }
 
         /// <summary>
         /// Copies the elements of the <see cref="System.Collections.ICollection"/> to an <see cref="System.Array"/>, starting at a particular <see cref="System.Array"/> index.
@@ -92,9 +92,9 @@ namespace NPOI.Util.Collections
         /// The type of the source <see cref="System.Collections.ICollection"/> cannot be cast automatically to the type of the destination <paramref name="array"/>.
         /// </exception>
 		public void CopyTo(T[] array, int index)
-		{
-			impl.Keys.CopyTo(array, index);
-		}
+        {
+            impl.Keys.CopyTo(array, index);
+        }
 
         /// <summary>
         /// Gets the number of elements contained in the <see cref="System.Collections.ICollection"/>.
@@ -104,20 +104,20 @@ namespace NPOI.Util.Collections
         /// The number of elements contained in the <see cref="System.Collections.ICollection"/>.
         /// </returns>
 		public int Count
-		{
-			get { return impl.Count; }
-		}
-        
+        {
+            get { return impl.Count; }
+        }
+
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
         /// An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
         /// </returns>
-		public IEnumerator<T> GetEnumerator()
-		{
-			return impl.Keys.GetEnumerator();
-		}
+        public IEnumerator<T> GetEnumerator()
+        {
+            return impl.Keys.GetEnumerator();
+        }
 
         public bool IsReadOnly
         {
@@ -130,12 +130,12 @@ namespace NPOI.Util.Collections
         /// </summary>
         /// <param name="o">The o.</param>
 		public bool Remove(T o)
-		{
-            if (IsReadOnly)
+        {
+            if(IsReadOnly)
                 throw new InvalidOperationException("this hashset is readonly");
-			impl.Remove(o);
+            impl.Remove(o);
             return true;
-		}
+        }
 
 
         /// <summary>

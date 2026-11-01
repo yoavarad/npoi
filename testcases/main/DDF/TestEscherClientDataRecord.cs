@@ -19,14 +19,14 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     [TestFixture]
     public class TestEscherClientDataRecord
     {
@@ -54,7 +54,7 @@ namespace TestCases.DDF
             int bytesWritten = r.FillFields(data, new DefaultEscherRecordFactory());
 
             ClassicAssert.AreEqual(8, bytesWritten);
-            ClassicAssert.AreEqual(unchecked((short)0xF011), r.RecordId);
+            ClassicAssert.AreEqual(unchecked((short) 0xF011), r.RecordId);
             ClassicAssert.AreEqual("[]", HexDump.ToHex(r.RemainingData));
         }
         [Test]
@@ -74,7 +74,7 @@ namespace TestCases.DDF
         private EscherClientDataRecord CreateRecord()
         {
             EscherClientDataRecord r = new EscherClientDataRecord();
-            r.Options=(short)0x0002;
+            r.Options=(short) 0x0002;
             r.RecordId=EscherClientDataRecord.RECORD_ID;
             r.RemainingData=new byte[] { };
             return r;

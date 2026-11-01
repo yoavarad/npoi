@@ -23,12 +23,12 @@ namespace NPOI.XDDF.UserModel
 
         public static int DegreesToAttribute(double angle)
         {
-            return (int)(OOXML_DEGREE * angle);
+            return (int) (OOXML_DEGREE * angle);
         }
 
         public static double AttributeToDegrees(int angle)
         {
-            return angle / (double)OOXML_DEGREE;
+            return angle / (double) OOXML_DEGREE;
         }
     }
 }

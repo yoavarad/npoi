@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
 {
@@ -71,7 +71,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         protected bool IsInStartObject
         {
             get { return _isInStartObject; }
-            set { _isInStartObject=value;}
+            set { _isInStartObject=value; }
         }
         public const short ChartSpecificFutureRecordLowerSid = 0x800;
         public const short ChartSpecificFutureRecordHigherSid = 0x8FF;
@@ -82,9 +82,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         private bool IsInRule(string ruleName)
         {
             ChartRecordAggregate cra = this;
-            while (cra != null)
+            while(cra != null)
             {
-                if (cra.RuleName == ruleName)
+                if(cra.RuleName == ruleName)
                     return true;
                 cra = cra.Container;
             }
@@ -93,9 +93,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         protected T GetContainer<T>(string ruleName) where T : ChartRecordAggregate
         {
             ChartRecordAggregate cra = this;
-            while (cra != null)
+            while(cra != null)
             {
-                if (cra.RuleName == ruleName)
+                if(cra.RuleName == ruleName)
                     break;
                 cra = cra.Container;
             }
@@ -107,7 +107,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //A StartBlock record MUST not be written if the record is preceded by a StartObject record 
             //but not preceded by the matching EndObject record. That is, StartBlock and EndBlock pairs 
             //MUST not belong to any collection defined by StartObject and EndObject.
-            if (IsInStartObject)
+            if(IsInStartObject)
                 return;
 
             StartBlockRecord sbr = null;
@@ -115,7 +115,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //If there does not exist a StartBlock record with iObjectKind equal to 0x000D without 
             //a matching EndBlock record, then a corresponding StartBlock record with iObjectKind 
             //equal to 0x000D MUST be written.
-            if (blocks.Count == 0)
+            if(blocks.Count == 0)
             {
                 sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Sheet);
                 blocks.Push(sbr);
@@ -128,7 +128,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //equal to 0x0006 MUST be written. If a StartBlock record is written because of rule number 2,
             //then this StartBlock record MUST be written immediately after that record.
 
-            if (IsInRule(RuleName_DAT) && !blocks.Contains(ObjectKind.DatRecord))
+            if(IsInRule(RuleName_DAT) && !blocks.Contains(ObjectKind.DatRecord))
             {
                 sbr = StartBlockRecord.CreateStartBlock(ObjectKind.DatRecord);
                 blocks.Push(sbr);
@@ -140,7 +140,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //record with iObjectKind equal to 0x000C and iObjectInstance1 equal to the number of series prior to 
             //this series in the current Sheet MUST be written. If any StartBlock records are written because of 
             //rule number 2 or 3, then this StartBlock record MUST be written immediately after those records.
-            if (IsInRule(RuleName_SERIESFORMAT) && !blocks.Contains(ObjectKind.Series))
+            if(IsInRule(RuleName_SERIESFORMAT) && !blocks.Contains(ObjectKind.Series))
             {
                 sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Series, 0,
                     GetContainer<SeriesFormatAggregate>(RuleName_SERIESFORMAT).SeriesIndex);
@@ -154,7 +154,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //the yi field of the DataFormat record in the current SS rule, and iObjectInstance1 equal to the xi field 
             //of the DataFormat record in the current SS rule MUST be written. If any StartBlock records are written 
             //because of rule number 2, 3, or 4, then this StartBlock record MUST be written immediately after those records.
-            if (IsInRule(RuleName_SS) && !blocks.Contains(ObjectKind.DataFormatRecord))
+            if(IsInRule(RuleName_SS) && !blocks.Contains(ObjectKind.DataFormatRecord))
             {
                 SSAggregate ss = GetContainer<SSAggregate>(RuleName_SS);
                 sbr = StartBlockRecord.CreateStartBlock(ObjectKind.DataFormatRecord,
@@ -170,7 +170,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //the series MUST be written. If any StartBlock records are written because of rule number 2, 3, 4, or 5, 
             //then this StartBlock record MUST be written immediately after those records.
 
-            if (IsInRule(RuleName_LEGENDEXCEPTION) && !blocks.Contains(ObjectKind.LegendException))
+            if(IsInRule(RuleName_LEGENDEXCEPTION) && !blocks.Contains(ObjectKind.LegendException))
             {
                 SeriesFormatAggregate.LegendExceptionAggregate le =
                     GetContainer<SeriesFormatAggregate.LegendExceptionAggregate>(RuleName_LEGENDEXCEPTION);
@@ -186,7 +186,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //iObjectKind equal to 0x0000 and iObjectInstance1 equal to the iax field of the AxisParent record of the axis 
             //group MUST be written. If any StartBlock records are written because of rule number 2, 3, 4, 5, or 6, then 
             //this StartBlock record MUST be written immediately after those records.
-            if (IsInRule(RuleName_AXISPARENT) && !blocks.Contains(ObjectKind.AxisGroup))
+            if(IsInRule(RuleName_AXISPARENT) && !blocks.Contains(ObjectKind.AxisGroup))
             {
                 AxisParentAggregate ap =  GetContainer<AxisParentAggregate>(RuleName_AXISPARENT);
                 sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AxisGroup, 0,
@@ -202,7 +202,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //iObjectKind equal to 0x0005 and iObjectInstance1 equal to the iax field of the AxisParent record of the axis 
             //group MUST be written. If any StartBlock records are written because of rule number 2, 3, 4, 5, 6, or 7, then 
             //this StartBlock record MUST be written immediately after those records.
-            if (IsInRule(RuleName_CRT) && !blocks.Contains(ObjectKind.ChartGroup))
+            if(IsInRule(RuleName_CRT) && !blocks.Contains(ObjectKind.ChartGroup))
             {
                 AxisParentAggregate ap =  GetContainer<AxisParentAggregate>(RuleName_AXISPARENT);
                 sbr = StartBlockRecord.CreateStartBlock(ObjectKind.ChartGroup, 0,
@@ -215,13 +215,13 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //9
             //If the chart-specific future record is in an axis, and there does not exist a StartBlock record with iObjectKind 
             //equal to 0x0004 without a matching EndBlock record, then:
-            if (IsInRule(RuleName_AXES) && !blocks.Contains(ObjectKind.Axis))
+            if(IsInRule(RuleName_AXES) && !blocks.Contains(ObjectKind.Axis))
             {
                 //If the chart-specific future record exists in the sequence of records that conforms to the IVAXIS rule, 
                 //then a corresponding StartBlock record with iObjectKind equal to 0x0004 and iObjectInstance1 equal to 
                 //0x0000 MUST be written. If any StartBlock records are written because of rule number 2, 3, 4, 5, 6, 7, 
                 //or 8, then this StartBlock record MUST be written immediately after those records.
-                if (IsInRule(RuleName_IVAXIS))
+                if(IsInRule(RuleName_IVAXIS))
                 {
                     sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Axis, 0, 0);
                     blocks.Push(sbr);
@@ -232,7 +232,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                 //then a corresponding StartBlock record with iObjectKind equal to 0x0004 and iObjectInstance1 equal to 0x0002 
                 //MUST be written. If any StartBlock records are written because of rule number 2, 3, 4, 5, 6, 7, or 8, then 
                 //this StartBlock record MUST be written immediately after those records.
-                if (IsInRule(RuleName_SERIESAXIS))
+                if(IsInRule(RuleName_SERIESAXIS))
                 {
                     sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Axis, 0, 2);
                     blocks.Push(sbr);
@@ -244,10 +244,10 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                 //corresponding StartBlock record with iObjectKind equal to 0x0004 and iObjectInstance1 equal to 0x0001 MUST 
                 //be written. If any StartBlock records are written because of rule number 2, 3, 4, 5, 6, 7, or 8, then this 
                 //StartBlock record MUST be written immediately after those records.
-                if (IsInRule(RuleName_DVAXIS))
+                if(IsInRule(RuleName_DVAXIS))
                 {
                     DVAxisAggregate dva = GetContainer<DVAxisAggregate>(RuleName_DVAXIS);
-                    if (dva.Axis.AxisType == AxisRecord.AXIS_TYPE_CATEGORY_OR_X_AXIS)
+                    if(dva.Axis.AxisType == AxisRecord.AXIS_TYPE_CATEGORY_OR_X_AXIS)
                         sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Axis, 0, 1);
                     else
                     {
@@ -271,7 +271,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //than the number of DropBar records written prior to the chart-specific future record in the current Chart Group
             //MUST be written. If any StartBlock records are written because of rule number 2, 3, 4, 5, 6, 7, 8, or 9, then 
             //this StartBlock record MUST be written immediately after those records.
-            if (IsInRule(RuleName_DROPBAR) && !blocks.Contains(ObjectKind.DropBarRecord))
+            if(IsInRule(RuleName_DROPBAR) && !blocks.Contains(ObjectKind.DropBarRecord))
             {
                 sbr = StartBlockRecord.CreateStartBlock(ObjectKind.DropBarRecord);
                 blocks.Push(sbr);
@@ -282,9 +282,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //11
             //If the chart-specific future record is in a legend and there does not exist a StartBlock record with iObjectKind 
             //equal to 0x0009 without a matching EndBlock record, then:
-            if (IsInRule(RuleName_LD) && !blocks.Contains(ObjectKind.Legend))
+            if(IsInRule(RuleName_LD) && !blocks.Contains(ObjectKind.Legend))
             {
-                if (IsInRule(RuleName_CRT))
+                if(IsInRule(RuleName_CRT))
                 {
                     sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Legend, 1);
                     //If the chart-specific future record is in a chart group, then a corresponding StartBlock record with iObjectKind 
@@ -307,9 +307,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //12
             //If the chart-specific future record is in an attached label, and there does not exist a StartBlock record with iObjectKind 
             //equal to 0x0002 without a matching EndBlock record, then:
-            if (IsInRule(RuleName_ATTACHEDLABEL) && !blocks.Contains(ObjectKind.AttachedLabelRecord))
+            if(IsInRule(RuleName_ATTACHEDLABEL) && !blocks.Contains(ObjectKind.AttachedLabelRecord))
             {
-                if (IsInRule(RuleName_DFTTEXT))
+                if(IsInRule(RuleName_DFTTEXT))
                 {
                     //If the chart-specific future record exists in the sequence of records that conforms to the DFTTEXT rule of a
                     //chart group, and the id field of the DefaultText record in the sequence of records that conforms to the DFTTEXT 
@@ -318,9 +318,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                     //are written because of rule number 2, 3, 4, 5, 6, 7, 8, 9, 10, or 11, then this StartBlock record MUST be written 
                     //immediately after those records. Else,
                     DFTTextAggregate dft = GetContainer<DFTTextAggregate>(RuleName_DFTTEXT);
-                    if (IsInRule(RuleName_CRT) && (int)dft.DefaultText.FormatType >= 2)
+                    if(IsInRule(RuleName_CRT) && (int) dft.DefaultText.FormatType >= 2)
                         sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 2,
-                            unchecked((short)0xFFFF));
+                            unchecked((short) 0xFFFF));
                     //If the chart-specific future record exists in the sequence of records that conforms to the DFTTEXT rule of a 
                     //chart group, then a corresponding StartBlock record with iObjectKind equal to 0x0002, iObjectContext equal to
                     //0x0002, and iObjectInstance1 equal to the id field of the DefaultText record in the sequence of records that 
@@ -328,7 +328,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                     //2, 3, 4, 5, 6, 7, 8, 9, 10, or 11, then this StartBlock record MUST be written immediately after those records. Else,
                     else
                         sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 2,
-                            (short)dft.DefaultText.FormatType);
+                            (short) dft.DefaultText.FormatType);
                 }
                 else
                 {
@@ -337,29 +337,29 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                     //StartBlock record with iObjectKind equal to 0x0002, iObjectContext equal to 0x0004 and iObjectInstance1 
                     //equal to 0x0000 MUST be written. If any StartBlock records are written because of rules number 2, 3, 4, 
                     //5, 6, 7, 8, 9, 10 or 11, then this StartBlock record MUST be written immediately after those records. Else,
-                    if (ala.ObjectLink.Link1 == 3)
+                    if(ala.ObjectLink.Link1 == 3)
                         sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 4, 0);
                     //If the wLinkVar1 of the ObjectLink record of the attached label is equal to 0x0002, then a corresponding 
                     //StartBlock record with iObjectKind equal to 0x0002, iObjectContext equal to 0x0004 and iObjectInstance1 
                     //equal to 0x0001 MUST be written. If any StartBlock records are written because of rules number 2, 3, 4, 
                     //5, 6, 7, 8, 9, 10 or 11, then this StartBlock record MUST be written immediately after those records. Else,
-                    else if (ala.ObjectLink.Link1 == 2)
+                    else if(ala.ObjectLink.Link1 == 2)
                         sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 4, 1);
                     //If the wLinkVar1 of the ObjectLink record of the attached label is equal to 0x0007, then a corresponding 
                     //StartBlock record with iObjectKind equal to 0x0002, iObjectContext equal to 0x0004, and iObjectInstance1 
                     //equal to 0x0002 MUST be written. If any StartBlock records are written because of rule number 2, 3, 4, 5,
                     //6, 7, 8, 9, 10, or 11, then this StartBlock record MUST be written immediately after those records. Else,
-                    else if (ala.ObjectLink.Link1 == 7)
+                    else if(ala.ObjectLink.Link1 == 7)
                         sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 4, 2);
 
-                    else if (ala.IsFirst)
+                    else if(ala.IsFirst)
                         sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 0);
                     //If the chart-specific future record is in the first attached label of a chart sheet, then a corresponding 
                     //StartBlock record with iObjectKind equal to 0x0002 and iObjectContext equal to 0x0000 MUST be written. If
                     //any StartBlock records are written because of rule number 2, 3, 4, 5, 6, 7, 8, 9, 10, or 11, then this 
                     //StartBlock record MUST be written immediately after those records. Else,
                     else
-                        sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 5, 
+                        sbr = StartBlockRecord.CreateStartBlock(ObjectKind.AttachedLabelRecord, 5,
                             ala.ObjectLink.Link1, ala.ObjectLink.Link2);
                     //If the chart-specific future record is not in the first attached label of a chart sheet, then a corresponding 
                     //StartBlock record with iObjectKind equal to 0x0002 and iObjectContext equal to 0x0005, iObjectInstance1 
@@ -375,9 +375,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //13
             //If the chart-specific future record exists in the sequence of records that conforms to the FRAME rule, and there 
             //does not exist a StartBlock record with iObjectKind equal to 0x0007 without a matching EndBlock record, then:
-            if (IsInRule(RuleName_FRAME) && !blocks.Contains(ObjectKind.Frame))
+            if(IsInRule(RuleName_FRAME) && !blocks.Contains(ObjectKind.Frame))
             {
-                if (IsInRule(RuleName_ATTACHEDLABEL) || IsInRule(RuleName_LD))
+                if(IsInRule(RuleName_ATTACHEDLABEL) || IsInRule(RuleName_LD))
                 {
                     //If the chart-specific future record is in an attached label or legend, then a corresponding StartBlock record 
                     //with iObjectKind equal to 0x0007, iObjectContext equal to 0x0000, and iObjectInstance1 equal to 0x0000 MUST be 
@@ -385,7 +385,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                     //then this StartBlock record MUST be written immediately after those records. Else,
                     sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Frame, 0, 0);
                 }
-                else if (IsInRule(RuleName_AXES))
+                else if(IsInRule(RuleName_AXES))
                 {
                     //If the chart-specific future record exists in the sequence of records that conforms to the AXES rule, then a 
                     //corresponding StartBlock record with iObjectKind equal to 0x0007, iObjectContext equal to 0x0001, and 
@@ -394,7 +394,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                     //those records. Else,
                     sbr = StartBlockRecord.CreateStartBlock(ObjectKind.Frame, 1, 0);
                 }
-                else if (IsInRule(RuleName_CHARTSHEET))
+                else if(IsInRule(RuleName_CHARTSHEET))
                 {
                     //If the chart-specific future record is in a Sheet, then a corresponding StartBlock record with iObjectKind 
                     //equal to 0x0007, iObjectContext equal to 0x0002, and iObjectInstance1 equal to 0x0000 MUST be written. If any 
@@ -408,13 +408,13 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         }
         protected void WriteEndBlock(RecordVisitor rv)
         {
-            if (IsInStartObject)
+            if(IsInStartObject)
                 return;
 
             StartBlockRecord sbr = blocks.Peek();
             //If there exists a StartBlock record with iObjectKind equal to 0x0000 without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the current Axis Group.
-            if (this.RuleName == RuleName_AXISPARENT && sbr.ObjectKind == ObjectKind.AxisGroup)
+            if(this.RuleName == RuleName_AXISPARENT && sbr.ObjectKind == ObjectKind.AxisGroup)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.AxisGroup));
                 blocks.Pop();
@@ -423,7 +423,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
 
             //If there exists a StartBlock record with iObjectKind equal to 0x0002 without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the current AttachedLabel.
-            if (this.RuleName == RuleName_ATTACHEDLABEL && sbr.ObjectKind == ObjectKind.AttachedLabelRecord)
+            if(this.RuleName == RuleName_ATTACHEDLABEL && sbr.ObjectKind == ObjectKind.AttachedLabelRecord)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.AttachedLabelRecord));
                 blocks.Pop();
@@ -432,7 +432,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
 
             //If there exists a StartBlock record with iObjectKind equal to 0x0004 without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the current Axis.
-            if ((this.RuleName == RuleName_IVAXIS || this.RuleName==RuleName_DVAXIS||this.RuleName==RuleName_SERIESAXIS)
+            if((this.RuleName == RuleName_IVAXIS || this.RuleName==RuleName_DVAXIS||this.RuleName==RuleName_SERIESAXIS)
                 && sbr.ObjectKind == ObjectKind.Axis)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.Axis));
@@ -441,7 +441,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             }
             //If there exists a StartBlock record with iObjectKind equal to 0x0005 without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the current chart group.
-            if (this.RuleName == RuleName_CRT && sbr.ObjectKind == ObjectKind.ChartGroup)
+            if(this.RuleName == RuleName_CRT && sbr.ObjectKind == ObjectKind.ChartGroup)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.ChartGroup));
                 blocks.Pop();
@@ -450,7 +450,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //If there exists a StartBlock record with iObjectKind equal to 0x0006 without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the sequence of records 
             //containing the StartBlock and conforming to the DAT rule.
-            if (this.RuleName == RuleName_DAT && sbr.ObjectKind == ObjectKind.DatRecord)
+            if(this.RuleName == RuleName_DAT && sbr.ObjectKind == ObjectKind.DatRecord)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.DatRecord));
                 blocks.Pop();
@@ -459,7 +459,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //If there exists a StartBlock record with iObjectKind equal to 0x0007 without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the sequence of records 
             //containing the StartBlock and conforming to the FRAME rule.
-            if (this.RuleName == RuleName_FRAME && sbr.ObjectKind == ObjectKind.Frame)
+            if(this.RuleName == RuleName_FRAME && sbr.ObjectKind == ObjectKind.Frame)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.Frame));
                 blocks.Pop();
@@ -467,7 +467,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             }
             //If there exists a StartBlock record with iObjectKind equal to 0x0009 without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the current Legend.
-            if (this.RuleName == RuleName_LD && sbr.ObjectKind == ObjectKind.Legend)
+            if(this.RuleName == RuleName_LD && sbr.ObjectKind == ObjectKind.Legend)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.Legend));
                 blocks.Pop();
@@ -477,7 +477,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //then a matching EndBlock record MUST exist immediately before the End record of the current Begin 
             //and End collection that exists immediately after LegendException in the sequence of records conforming 
             //to the SERIESFORMAT rule.
-            if (this.RuleName == RuleName_LEGENDEXCEPTION && sbr.ObjectKind == ObjectKind.LegendException)
+            if(this.RuleName == RuleName_LEGENDEXCEPTION && sbr.ObjectKind == ObjectKind.LegendException)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.LegendException));
                 blocks.Pop();
@@ -485,7 +485,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             }
             //If there exists a StartBlock record with iObjectKind equal to 0x000C without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the current Series.
-            if (this.RuleName == RuleName_SERIESFORMAT && sbr.ObjectKind == ObjectKind.Series)
+            if(this.RuleName == RuleName_SERIESFORMAT && sbr.ObjectKind == ObjectKind.Series)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.Series));
                 blocks.Pop();
@@ -493,7 +493,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             }
             //If there exists a StartBlock record with iObjectKind equal to 0x000D without a matching EndBlock,
             //then a matching EndBlock record MUST exist immediately before the End record of the current Sheet.
-            if (this.RuleName == RuleName_CHARTFOMATS && sbr.ObjectKind == ObjectKind.Sheet)
+            if(this.RuleName == RuleName_CHARTFOMATS && sbr.ObjectKind == ObjectKind.Sheet)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.Sheet));
                 blocks.Pop();
@@ -502,7 +502,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
 
             //If there exists a StartBlock record with iObjectKind equal to 0x000E without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the current SS production.
-            if (this.RuleName == RuleName_SS && sbr.ObjectKind == ObjectKind.DataFormatRecord)
+            if(this.RuleName == RuleName_SS && sbr.ObjectKind == ObjectKind.DataFormatRecord)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.DataFormatRecord));
                 blocks.Pop();
@@ -511,7 +511,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             //If there exists a StartBlock record with iObjectKind equal to 0x000F without a matching EndBlock, 
             //then a matching EndBlock record MUST exist immediately before the End record of the sequence of 
             //records containing the StartBlock and conforming to the DROPBAR rule.
-            if (this.RuleName == RuleName_DROPBAR && sbr.ObjectKind == ObjectKind.DropBarRecord)
+            if(this.RuleName == RuleName_DROPBAR && sbr.ObjectKind == ObjectKind.DropBarRecord)
             {
                 rv.VisitRecord(EndBlockRecord.CreateEndBlock(ObjectKind.DropBarRecord));
                 blocks.Pop();
@@ -536,15 +536,15 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             }
             public StartBlockRecord Peek()
             {
-                if (blockList.Count == 0)
+                if(blockList.Count == 0)
                     return null;
                 return blockList[blockList.Count - 1];
             }
             public bool Contains(ObjectKind objectKind)
             {
-                foreach (StartBlockRecord item in blockList)
+                foreach(StartBlockRecord item in blockList)
                 {
-                    if (item.ObjectKind == objectKind)
+                    if(item.ObjectKind == objectKind)
                         return true;
                 }
                 return false;

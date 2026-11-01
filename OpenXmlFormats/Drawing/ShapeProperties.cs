@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace NPOI.OpenXmlFormats.Dml
 {
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -38,7 +38,7 @@ namespace NPOI.OpenXmlFormats.Dml
         private bool noChangeShapeTypeField;
         public static CT_ConnectorLocking Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ConnectorLocking ctObj = new CT_ConnectorLocking();
             ctObj.noGrp = XmlHelper.ReadBool(node.Attributes["noGrp"]);
@@ -51,9 +51,9 @@ namespace NPOI.OpenXmlFormats.Dml
             ctObj.noAdjustHandles = XmlHelper.ReadBool(node.Attributes["noAdjustHandles"]);
             ctObj.noChangeArrowheads = XmlHelper.ReadBool(node.Attributes["noChangeArrowheads"]);
             ctObj.noChangeShapeType = XmlHelper.ReadBool(node.Attributes["noChangeShapeType"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -75,7 +75,7 @@ namespace NPOI.OpenXmlFormats.Dml
             XmlHelper.WriteAttribute(sw, "noChangeArrowheads", this.noChangeArrowheads);
             XmlHelper.WriteAttribute(sw, "noChangeShapeType", this.noChangeShapeType);
             sw.Write('>');
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("a", nodeName);
         }
@@ -252,7 +252,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -300,7 +300,7 @@ namespace NPOI.OpenXmlFormats.Dml
         }
         public static CT_PictureLocking Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PictureLocking ctObj = new CT_PictureLocking();
             ctObj.noGrp = XmlHelper.ReadBool(node.Attributes["noGrp"]);
@@ -314,9 +314,9 @@ namespace NPOI.OpenXmlFormats.Dml
             ctObj.noChangeArrowheads = XmlHelper.ReadBool(node.Attributes["noChangeArrowheads"]);
             ctObj.noChangeShapeType = XmlHelper.ReadBool(node.Attributes["noChangeShapeType"]);
             ctObj.noCrop = XmlHelper.ReadBool(node.Attributes["noCrop"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -329,28 +329,28 @@ namespace NPOI.OpenXmlFormats.Dml
             sw.WriteStart("a", nodeName);
             if(noGrp)
                 XmlHelper.WriteAttribute(sw, "noGrp", this.noGrp);
-            if (noSelect)
+            if(noSelect)
                 XmlHelper.WriteAttribute(sw, "noSelect", this.noSelect);
-            if (noRot)
+            if(noRot)
                 XmlHelper.WriteAttribute(sw, "noRot", this.noRot);
-            if (noChangeAspect)
+            if(noChangeAspect)
                 XmlHelper.WriteAttribute(sw, "noChangeAspect", this.noChangeAspect);
-            if (noMove)
+            if(noMove)
                 XmlHelper.WriteAttribute(sw, "noMove", this.noMove);
-            if (noResize)
+            if(noResize)
                 XmlHelper.WriteAttribute(sw, "noResize", this.noResize);
-            if (noEditPoints)
+            if(noEditPoints)
                 XmlHelper.WriteAttribute(sw, "noEditPoints", this.noEditPoints);
-            if (noAdjustHandles)
+            if(noAdjustHandles)
                 XmlHelper.WriteAttribute(sw, "noAdjustHandles", this.noAdjustHandles);
-            if (noChangeArrowheads)
+            if(noChangeArrowheads)
                 XmlHelper.WriteAttribute(sw, "noChangeArrowheads", this.noChangeArrowheads);
-            if (noChangeShapeType)
+            if(noChangeShapeType)
                 XmlHelper.WriteAttribute(sw, "noChangeShapeType", this.noChangeShapeType);
-            if (noCrop)
+            if(noCrop)
                 XmlHelper.WriteAttribute(sw, "noCrop", this.noCrop);
             sw.Write('>');
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("a", nodeName);
         }
@@ -527,7 +527,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -560,7 +560,7 @@ namespace NPOI.OpenXmlFormats.Dml
         }
         public static CT_GraphicalObjectFrameLocking Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GraphicalObjectFrameLocking ctObj = new CT_GraphicalObjectFrameLocking();
             ctObj.noGrp = XmlHelper.ReadBool(node.Attributes["noGrp"]);
@@ -569,9 +569,9 @@ namespace NPOI.OpenXmlFormats.Dml
             ctObj.noChangeAspect = XmlHelper.ReadBool(node.Attributes["noChangeAspect"]);
             ctObj.noMove = XmlHelper.ReadBool(node.Attributes["noMove"]);
             ctObj.noResize = XmlHelper.ReadBool(node.Attributes["noResize"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -589,7 +589,7 @@ namespace NPOI.OpenXmlFormats.Dml
             XmlHelper.WriteAttribute(sw, "noChangeAspect", this.noChangeAspect, false);
             XmlHelper.WriteAttribute(sw, "noMove", this.noMove, false);
             XmlHelper.WriteAttribute(sw, "noResize", this.noResize, false);
-            if (this.extLst != null && this.extLst.ext.Count != 0)
+            if(this.extLst != null && this.extLst.ext.Count != 0)
             {
                 sw.Write('>');
                 this.extLst.Write(sw, "extLst");
@@ -701,7 +701,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -709,20 +709,20 @@ namespace NPOI.OpenXmlFormats.Dml
     {
         public static CT_NonVisualDrawingProps Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualDrawingProps ctObj = new CT_NonVisualDrawingProps();
             ctObj.id = XmlHelper.ReadUInt(node.Attributes["id"]);
             ctObj.name = XmlHelper.ReadString(node.Attributes["name"]);
             ctObj.descr = XmlHelper.ReadString(node.Attributes["descr"]);
             ctObj.hidden = XmlHelper.ReadBool(node.Attributes["hidden"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "hlinkClick")
+                if(childNode.LocalName == "hlinkClick")
                     ctObj.hlinkClick = CT_Hyperlink.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hlinkHover")
+                else if(childNode.LocalName == "hlinkHover")
                     ctObj.hlinkHover = CT_Hyperlink.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -739,11 +739,11 @@ namespace NPOI.OpenXmlFormats.Dml
             if(this.hidden)
                 XmlHelper.WriteAttribute(sw, "hidden", this.hidden);
             sw.Write('>');
-            if (this.hlinkClick != null)
+            if(this.hlinkClick != null)
                 this.hlinkClick.Write(sw, "hlinkClick");
-            if (this.hlinkHover != null)
+            if(this.hlinkHover != null)
                 this.hlinkHover.Write(sw, "hlinkHover");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("pic", nodeName);
         }
@@ -851,7 +851,7 @@ namespace NPOI.OpenXmlFormats.Dml
         {
             get
             {
-                return null == this.hiddenField ? false : (bool)hiddenField;
+                return null == this.hiddenField ? false : (bool) hiddenField;
             }
             set
             {
@@ -868,7 +868,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -882,15 +882,15 @@ namespace NPOI.OpenXmlFormats.Dml
         private bool txBoxField;
         public static CT_NonVisualDrawingShapeProps Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualDrawingShapeProps ctObj = new CT_NonVisualDrawingShapeProps();
             ctObj.txBox = XmlHelper.ReadBool(node.Attributes["txBox"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "spLocks")
+                if(childNode.LocalName == "spLocks")
                     ctObj.spLocks = CT_ShapeLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -903,9 +903,9 @@ namespace NPOI.OpenXmlFormats.Dml
             sw.WriteStart("a", nodeName);
             XmlHelper.WriteAttribute(sw, "txBox", this.txBox, false);
             sw.Write('>');
-            if (this.spLocks != null)
+            if(this.spLocks != null)
                 this.spLocks.Write(sw, "spLocks");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("a", nodeName);
         }
@@ -955,7 +955,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -963,18 +963,18 @@ namespace NPOI.OpenXmlFormats.Dml
     {
         public static CT_NonVisualConnectorProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualConnectorProperties ctObj = new CT_NonVisualConnectorProperties();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "cxnSpLocks")
+                if(childNode.LocalName == "cxnSpLocks")
                     ctObj.cxnSpLocks = CT_ConnectorLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "stCxn")
+                else if(childNode.LocalName == "stCxn")
                     ctObj.stCxn = CT_Connection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "endCxn")
+                else if(childNode.LocalName == "endCxn")
                     ctObj.endCxn = CT_Connection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -986,13 +986,13 @@ namespace NPOI.OpenXmlFormats.Dml
         {
             sw.WriteStart("xdr", nodeName);
             sw.Write('>');
-            if (this.cxnSpLocks != null)
+            if(this.cxnSpLocks != null)
                 this.cxnSpLocks.Write(sw, "cxnSpLocks");
-            if (this.stCxn != null)
+            if(this.stCxn != null)
                 this.stCxn.Write(sw, "stCxn");
-            if (this.endCxn != null)
+            if(this.endCxn != null)
                 this.endCxn.Write(sw, "endCxn");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("xdr", nodeName);
         }
@@ -1066,7 +1066,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -1074,15 +1074,15 @@ namespace NPOI.OpenXmlFormats.Dml
     {
         public static CT_NonVisualPictureProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualPictureProperties ctObj = new CT_NonVisualPictureProperties();
             ctObj.preferRelativeResize = XmlHelper.ReadBool(node.Attributes["preferRelativeResize"], true);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "picLocks")
+                if(childNode.LocalName == "picLocks")
                     ctObj.picLocks = CT_PictureLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1093,12 +1093,12 @@ namespace NPOI.OpenXmlFormats.Dml
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart("pic", nodeName);
-            if (!preferRelativeResize)
+            if(!preferRelativeResize)
                 XmlHelper.WriteAttribute(sw, "preferRelativeResize", this.preferRelativeResize);
             sw.Write('>');
-            if (this.picLocks != null)  
+            if(this.picLocks != null)
                 this.picLocks.Write(sw, "picLocks");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("pic", nodeName);
         }
@@ -1161,7 +1161,7 @@ namespace NPOI.OpenXmlFormats.Dml
 
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -1174,14 +1174,14 @@ namespace NPOI.OpenXmlFormats.Dml
 
         public static CT_NonVisualGroupDrawingShapeProps Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualGroupDrawingShapeProps ctObj = new CT_NonVisualGroupDrawingShapeProps();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "grpSpLocks")
+                if(childNode.LocalName == "grpSpLocks")
                     ctObj.grpSpLocks = CT_GroupLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1193,9 +1193,9 @@ namespace NPOI.OpenXmlFormats.Dml
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.grpSpLocks != null)
+            if(this.grpSpLocks != null)
                 this.grpSpLocks.Write(sw, "grpSpLocks");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement(nodeName);
         }
@@ -1203,7 +1203,7 @@ namespace NPOI.OpenXmlFormats.Dml
         public CT_NonVisualGroupDrawingShapeProps()
         {
             //this.extLstField = new CT_OfficeArtExtensionList();
-           //this.grpSpLocksField = new CT_GroupLocking();
+            //this.grpSpLocksField = new CT_GroupLocking();
         }
 
         [XmlElement(Order = 0)]
@@ -1252,14 +1252,14 @@ namespace NPOI.OpenXmlFormats.Dml
         }
         public static CT_NonVisualGraphicFrameProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NonVisualGraphicFrameProperties ctObj = new CT_NonVisualGraphicFrameProperties();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "graphicFrameLocks")
+                if(childNode.LocalName == "graphicFrameLocks")
                     ctObj.graphicFrameLocks = CT_GraphicalObjectFrameLocking.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1271,9 +1271,9 @@ namespace NPOI.OpenXmlFormats.Dml
         {
             sw.WriteStart("a", nodeName);
             sw.Write('>');
-            if (this.graphicFrameLocks != null)
+            if(this.graphicFrameLocks != null)
                 this.graphicFrameLocks.Write(sw, "graphicFrameLocks");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement("a", nodeName);
         }
@@ -1306,7 +1306,7 @@ namespace NPOI.OpenXmlFormats.Dml
     }
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -1338,7 +1338,7 @@ namespace NPOI.OpenXmlFormats.Dml
         private bool noTextEditField;
         public static CT_ShapeLocking Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ShapeLocking ctObj = new CT_ShapeLocking();
             ctObj.noGrp = XmlHelper.ReadBool(node.Attributes["noGrp"]);
@@ -1352,9 +1352,9 @@ namespace NPOI.OpenXmlFormats.Dml
             ctObj.noChangeArrowheads = XmlHelper.ReadBool(node.Attributes["noChangeArrowheads"]);
             ctObj.noChangeShapeType = XmlHelper.ReadBool(node.Attributes["noChangeShapeType"]);
             ctObj.noTextEdit = XmlHelper.ReadBool(node.Attributes["noTextEdit"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1377,7 +1377,7 @@ namespace NPOI.OpenXmlFormats.Dml
             XmlHelper.WriteAttribute(sw, "noChangeShapeType", this.noChangeShapeType, false);
             XmlHelper.WriteAttribute(sw, "noTextEdit", this.noTextEdit, false);
 
-            if (this.extLst == null)
+            if(this.extLst == null)
             {
                 sw.Write("/>");
             }
@@ -1573,7 +1573,7 @@ namespace NPOI.OpenXmlFormats.Dml
     }
 
     [Serializable]
-    
+
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [XmlType(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main")]
     [XmlRoot(Namespace = "http://schemas.openxmlformats.org/drawingml/2006/main", IsNullable = true)]
@@ -1609,7 +1609,7 @@ namespace NPOI.OpenXmlFormats.Dml
         }
         public static CT_GroupLocking Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupLocking ctObj = new CT_GroupLocking();
             ctObj.noGrp = XmlHelper.ReadBool(node.Attributes["noGrp"]);
@@ -1619,9 +1619,9 @@ namespace NPOI.OpenXmlFormats.Dml
             ctObj.noChangeAspect = XmlHelper.ReadBool(node.Attributes["noChangeAspect"]);
             ctObj.noMove = XmlHelper.ReadBool(node.Attributes["noMove"]);
             ctObj.noResize = XmlHelper.ReadBool(node.Attributes["noResize"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2085,42 +2085,42 @@ namespace NPOI.OpenXmlFormats.Dml
 
         public static CT_ShapeProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ShapeProperties ctObj = new CT_ShapeProperties();
-            if (node.Attributes["bwMode"] != null)
-                ctObj.bwMode = (ST_BlackWhiteMode)Enum.Parse(typeof(ST_BlackWhiteMode), node.Attributes["bwMode"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["bwMode"] != null)
+                ctObj.bwMode = (ST_BlackWhiteMode) Enum.Parse(typeof(ST_BlackWhiteMode), node.Attributes["bwMode"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "xfrm")
+                if(childNode.LocalName == "xfrm")
                     ctObj.xfrm = CT_Transform2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "custGeom")
+                else if(childNode.LocalName == "custGeom")
                     ctObj.custGeom = CT_CustomGeometry2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "prstGeom")
+                else if(childNode.LocalName == "prstGeom")
                     ctObj.prstGeom = CT_PresetGeometry2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noFill")
+                else if(childNode.LocalName == "noFill")
                     ctObj.noFill = new CT_NoFillProperties();
-                else if (childNode.LocalName == "solidFill")
+                else if(childNode.LocalName == "solidFill")
                     ctObj.solidFill = CT_SolidColorFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gradFill")
+                else if(childNode.LocalName == "gradFill")
                     ctObj.gradFill = CT_GradientFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "blipFill")
+                else if(childNode.LocalName == "blipFill")
                     ctObj.blipFill = CT_BlipFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pattFill")
+                else if(childNode.LocalName == "pattFill")
                     ctObj.pattFill = CT_PatternFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "grpFill")
+                else if(childNode.LocalName == "grpFill")
                     ctObj.grpFill = new CT_GroupFillProperties();
-                else if (childNode.LocalName == "ln")
+                else if(childNode.LocalName == "ln")
                     ctObj.ln = CT_LineProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "effectLst")
+                else if(childNode.LocalName == "effectLst")
                     ctObj.effectLst = CT_EffectList.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "effectDag")
+                else if(childNode.LocalName == "effectDag")
                     ctObj.effectDag = CT_EffectContainer.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "scene3d")
+                else if(childNode.LocalName == "scene3d")
                     ctObj.scene3d = CT_Scene3D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sp3d")
+                else if(childNode.LocalName == "sp3d")
                     ctObj.sp3d = CT_Shape3D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2134,35 +2134,35 @@ namespace NPOI.OpenXmlFormats.Dml
             if(this.bwMode!= ST_BlackWhiteMode.none)
                 XmlHelper.WriteAttribute(sw, "bwMode", this.bwMode.ToString());
             sw.Write('>');
-            if (this.xfrm != null)
+            if(this.xfrm != null)
                 this.xfrm.Write(sw, "a:xfrm");
-            if (this.custGeom != null)
+            if(this.custGeom != null)
                 this.custGeom.Write(sw, "custGeom");
-            if (this.prstGeom != null)
+            if(this.prstGeom != null)
                 this.prstGeom.Write(sw, "prstGeom");
-            if (this.noFill != null)
+            if(this.noFill != null)
                 sw.Write("<a:noFill/>");
-            if (this.solidFill != null)
+            if(this.solidFill != null)
                 this.solidFill.Write(sw, "solidFill");
-            if (this.gradFill != null)
+            if(this.gradFill != null)
                 this.gradFill.Write(sw, "gradFill");
-            if (this.blipFill != null)
+            if(this.blipFill != null)
                 this.blipFill.Write(sw, "a:blipFill");
-            if (this.pattFill != null)
+            if(this.pattFill != null)
                 this.pattFill.Write(sw, "pattFill");
-            if (this.grpFill != null)
+            if(this.grpFill != null)
                 sw.Write("<a:grpFill/>");
-            if (this.ln != null)
+            if(this.ln != null)
                 this.ln.Write(sw, "ln");
-            if (this.effectLst != null)
+            if(this.effectLst != null)
                 this.effectLst.Write(sw, "effectLst");
-            if (this.effectDag != null)
+            if(this.effectDag != null)
                 this.effectDag.Write(sw, "effectDag");
-            if (this.scene3d != null)
+            if(this.scene3d != null)
                 this.scene3d.Write(sw, "scene3d");
-            if (this.sp3d != null)
+            if(this.sp3d != null)
                 this.sp3d.Write(sw, "sp3d");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement(nodeName);
         }
@@ -2201,34 +2201,34 @@ namespace NPOI.OpenXmlFormats.Dml
         private bool bwModeFieldSpecified;
         public static CT_GroupShapeProperties Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_GroupShapeProperties ctObj = new CT_GroupShapeProperties();
-            if (node.Attributes["bwMode"] != null)
-                ctObj.bwMode = (ST_BlackWhiteMode)Enum.Parse(typeof(ST_BlackWhiteMode), node.Attributes["bwMode"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["bwMode"] != null)
+                ctObj.bwMode = (ST_BlackWhiteMode) Enum.Parse(typeof(ST_BlackWhiteMode), node.Attributes["bwMode"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "xfrm")
+                if(childNode.LocalName == "xfrm")
                     ctObj.xfrm = CT_GroupTransform2D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noFill")
+                else if(childNode.LocalName == "noFill")
                     ctObj.noFill = new CT_NoFillProperties();
-                else if (childNode.LocalName == "solidFill")
+                else if(childNode.LocalName == "solidFill")
                     ctObj.solidFill = CT_SolidColorFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gradFill")
+                else if(childNode.LocalName == "gradFill")
                     ctObj.gradFill = CT_GradientFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "blipFill")
+                else if(childNode.LocalName == "blipFill")
                     ctObj.blipFill = CT_BlipFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pattFill")
+                else if(childNode.LocalName == "pattFill")
                     ctObj.pattFill = CT_PatternFillProperties.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "grpFill")
+                else if(childNode.LocalName == "grpFill")
                     ctObj.grpFill = new CT_GroupFillProperties();
-                else if (childNode.LocalName == "effectLst")
+                else if(childNode.LocalName == "effectLst")
                     ctObj.effectLst = CT_EffectList.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "effectDag")
+                else if(childNode.LocalName == "effectDag")
                     ctObj.effectDag = CT_EffectContainer.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "scene3d")
+                else if(childNode.LocalName == "scene3d")
                     ctObj.scene3d = CT_Scene3D.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_OfficeArtExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -2242,27 +2242,27 @@ namespace NPOI.OpenXmlFormats.Dml
             if(this.bwMode!= ST_BlackWhiteMode.none)
                 XmlHelper.WriteAttribute(sw, "bwMode", this.bwMode.ToString());
             sw.Write('>');
-            if (this.xfrm != null)
+            if(this.xfrm != null)
                 this.xfrm.Write(sw, "xfrm");
-            if (this.noFill != null)
+            if(this.noFill != null)
                 sw.Write("<a:noFill/>");
-            if (this.solidFill != null)
+            if(this.solidFill != null)
                 this.solidFill.Write(sw, "solidFill");
-            if (this.gradFill != null)
+            if(this.gradFill != null)
                 this.gradFill.Write(sw, "gradFill");
-            if (this.blipFill != null)
+            if(this.blipFill != null)
                 this.blipFill.Write(sw, "a:blipFill");
-            if (this.pattFill != null)
+            if(this.pattFill != null)
                 this.pattFill.Write(sw, "pattFill");
-            if (this.grpFill != null)
+            if(this.grpFill != null)
                 sw.Write("<a:grpFill/>");
-            if (this.effectLst != null)
+            if(this.effectLst != null)
                 this.effectLst.Write(sw, "effectLst");
-            if (this.effectDag != null)
+            if(this.effectDag != null)
                 this.effectDag.Write(sw, "effectDag");
-            if (this.scene3d != null)
+            if(this.scene3d != null)
                 this.scene3d.Write(sw, "scene3d");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement(nodeName);
         }

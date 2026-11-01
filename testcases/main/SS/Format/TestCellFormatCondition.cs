@@ -16,10 +16,10 @@
 ==================================================================== */
 namespace TestCases.SS.Format
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Format;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestCellFormatCondition

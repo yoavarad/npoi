@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.UserModel
 {
+    using NPOI.HSSF.Record;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using System.Threading;
-    using NPOI.HSSF.Record;
 
     /**
      * A Test case for a Test utility class.<br/>
@@ -48,12 +49,12 @@ namespace TestCases.HSSF.UserModel
             records.Add(CreateBoundSheetRec());
             records.Add(EOFRecord.instance);
             SanityChecker.CheckRecord[] check = new SanityChecker.CheckRecord[]{
-				new SanityChecker.CheckRecord(typeof(BOFRecord), '1'),
-				new SanityChecker.CheckRecord(typeof(InterfaceHdrRecord), '0'),
-				new SanityChecker.CheckRecord(typeof(BoundSheetRecord), 'M'),
-				new SanityChecker.CheckRecord(typeof(NameRecord), '*'),
-				new SanityChecker.CheckRecord(typeof(EOFRecord), '1'),
-		    };
+                new SanityChecker.CheckRecord(typeof(BOFRecord), '1'),
+                new SanityChecker.CheckRecord(typeof(InterfaceHdrRecord), '0'),
+                new SanityChecker.CheckRecord(typeof(BoundSheetRecord), 'M'),
+                new SanityChecker.CheckRecord(typeof(NameRecord), '*'),
+                new SanityChecker.CheckRecord(typeof(EOFRecord), '1'),
+            };
             // Check pass
             c.CheckRecordOrder(records, check);
             records.Insert(2, CreateBoundSheetRec());
@@ -66,53 +67,53 @@ namespace TestCases.HSSF.UserModel
 
             // Check Assert.Fail
             ConfirmBadRecordOrder(check, new Record[] {
-				new BOFRecord(),
-				CreateBoundSheetRec(),
-				INTERFACEHDR,
-				EOFRecord.instance,
-		    });
+                new BOFRecord(),
+                CreateBoundSheetRec(),
+                INTERFACEHDR,
+                EOFRecord.instance,
+            });
 
             ConfirmBadRecordOrder(check, new Record[] {
-				new BOFRecord(),
-				INTERFACEHDR,
-				CreateBoundSheetRec(),
-				INTERFACEHDR,
-				EOFRecord.instance,
-		    });
+                new BOFRecord(),
+                INTERFACEHDR,
+                CreateBoundSheetRec(),
+                INTERFACEHDR,
+                EOFRecord.instance,
+            });
 
             ConfirmBadRecordOrder(check, new Record[] {
-				new BOFRecord(),
-				CreateBoundSheetRec(),
-				new NameRecord(),
-				EOFRecord.instance,
-				new NameRecord(),
-		    });
+                new BOFRecord(),
+                CreateBoundSheetRec(),
+                new NameRecord(),
+                EOFRecord.instance,
+                new NameRecord(),
+            });
 
             ConfirmBadRecordOrder(check, new Record[] {
-				INTERFACEHDR,
-				CreateBoundSheetRec(),
-				EOFRecord.instance,
-		    });
+                INTERFACEHDR,
+                CreateBoundSheetRec(),
+                EOFRecord.instance,
+            });
 
             ConfirmBadRecordOrder(check, new Record[] {
-				new BOFRecord(),
-				INTERFACEHDR,
-				EOFRecord.instance,
-		    });
+                new BOFRecord(),
+                INTERFACEHDR,
+                EOFRecord.instance,
+            });
 
             ConfirmBadRecordOrder(check, new Record[] {
-				INTERFACEHDR,
-				CreateBoundSheetRec(),
-				new BOFRecord(),
-				EOFRecord.instance,
-		    });
+                INTERFACEHDR,
+                CreateBoundSheetRec(),
+                new BOFRecord(),
+                EOFRecord.instance,
+            });
 
             ConfirmBadRecordOrder(check, new Record[] {
-				new BOFRecord(),
-				CreateBoundSheetRec(),
-				INTERFACEHDR,
-				EOFRecord.instance,
-		    });
+                new BOFRecord(),
+                CreateBoundSheetRec(),
+                INTERFACEHDR,
+                EOFRecord.instance,
+            });
         }
 
         static SanityChecker.CheckRecord[] check;
@@ -125,7 +126,7 @@ namespace TestCases.HSSF.UserModel
                 IList recs1 = NPOI.Util.Arrays.AsList(recs);
                 c.CheckRecordOrder(recs1, check);
             }
-            catch (AssertionException)
+            catch(AssertionException)
             {
                 // expected during normal Test
                 return;
@@ -143,7 +144,7 @@ namespace TestCases.HSSF.UserModel
             // thread.Start();
             // thread.Join();
             Run();
-            
+
         }
     }
 }

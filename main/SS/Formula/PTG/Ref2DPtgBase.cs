@@ -17,12 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
-    using NPOI.Util;
-
+    using Cysharp.Text;
     using NPOI.SS.Util;
+    using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * @author Josh Micich
@@ -41,9 +40,9 @@ using Cysharp.Text;
         {
 
         }
-        protected Ref2DPtgBase(CellReference cr):base(cr)
+        protected Ref2DPtgBase(CellReference cr) : base(cr)
         {
-            
+
         }
 
         protected Ref2DPtgBase(int row, int column, bool isRowRelative, bool isColumnRelative)

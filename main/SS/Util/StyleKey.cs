@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Util
 {
+    using NPOI.SS.UserModel;
     using System;
     using System.Collections.Generic;
-    using NPOI.SS.UserModel;
 
     /// <summary>
     /// Immutable value-type key capturing every comparable attribute of an
@@ -103,11 +103,16 @@ namespace NPOI.SS.Util
         public static StyleKey From(ICellStyle style)
         {
             byte flags = 0;
-            if (style.IsHidden) flags |= 1;
-            if (style.IsLocked) flags |= 2;
-            if (style.WrapText) flags |= 4;
-            if (style.ShrinkToFit) flags |= 8;
-            if (style.IsQuotePrefixed) flags |= 16;
+            if(style.IsHidden)
+                flags |= 1;
+            if(style.IsLocked)
+                flags |= 2;
+            if(style.WrapText)
+                flags |= 4;
+            if(style.ShrinkToFit)
+                flags |= 8;
+            if(style.IsQuotePrefixed)
+                flags |= 16;
 
             return new StyleKey(
                 style.DataFormat,
@@ -120,17 +125,17 @@ namespace NPOI.SS.Util
                 style.FillForegroundColor,
                 style.FillBackgroundColor,
                 style.BorderDiagonalColor,
-                (int)style.FontIndex,
-                (int)style.Alignment,
-                (int)style.VerticalAlignment,
-                (int)style.FillPattern,
-                (int)style.BorderLeft,
-                (int)style.BorderRight,
-                (int)style.BorderTop,
-                (int)style.BorderBottom,
-                (int)style.BorderDiagonalLineStyle,
-                (int)style.BorderDiagonal,
-                (int)style.ReadingOrder,
+                (int) style.FontIndex,
+                (int) style.Alignment,
+                (int) style.VerticalAlignment,
+                (int) style.FillPattern,
+                (int) style.BorderLeft,
+                (int) style.BorderRight,
+                (int) style.BorderTop,
+                (int) style.BorderBottom,
+                (int) style.BorderDiagonalLineStyle,
+                (int) style.BorderDiagonal,
+                (int) style.ReadingOrder,
                 flags);
         }
 
@@ -145,9 +150,12 @@ namespace NPOI.SS.Util
         public static StyleKey FromPropertyMap(Dictionary<string, object> values)
         {
             byte flags = 0;
-            if (CellUtil.GetBoolean(values, CellUtil.HIDDEN)) flags |= 1;
-            if (CellUtil.GetBoolean(values, CellUtil.LOCKED)) flags |= 2;
-            if (CellUtil.GetBoolean(values, CellUtil.WRAP_TEXT)) flags |= 4;
+            if(CellUtil.GetBoolean(values, CellUtil.HIDDEN))
+                flags |= 1;
+            if(CellUtil.GetBoolean(values, CellUtil.LOCKED))
+                flags |= 2;
+            if(CellUtil.GetBoolean(values, CellUtil.WRAP_TEXT))
+                flags |= 4;
             // ShrinkToFit and IsQuotePrefixed are not currently in the property
             // map (commented out in GetFormatProperties); default to 0.
 
@@ -163,13 +171,13 @@ namespace NPOI.SS.Util
                 CellUtil.GetShort(values, CellUtil.FILL_BACKGROUND_COLOR),
                 0, // BorderDiagonalColor not tracked in property map
                 CellUtil.GetInt(values, CellUtil.FONT),
-                (int)CellUtil.GetHorizontalAlignment(values, CellUtil.ALIGNMENT),
-                (int)CellUtil.GetVerticalAlignment(values, CellUtil.VERTICAL_ALIGNMENT),
-                (int)CellUtil.GetFillPattern(values, CellUtil.FILL_PATTERN),
-                (int)CellUtil.GetBorderStyle(values, CellUtil.BORDER_LEFT),
-                (int)CellUtil.GetBorderStyle(values, CellUtil.BORDER_RIGHT),
-                (int)CellUtil.GetBorderStyle(values, CellUtil.BORDER_TOP),
-                (int)CellUtil.GetBorderStyle(values, CellUtil.BORDER_BOTTOM),
+                (int) CellUtil.GetHorizontalAlignment(values, CellUtil.ALIGNMENT),
+                (int) CellUtil.GetVerticalAlignment(values, CellUtil.VERTICAL_ALIGNMENT),
+                (int) CellUtil.GetFillPattern(values, CellUtil.FILL_PATTERN),
+                (int) CellUtil.GetBorderStyle(values, CellUtil.BORDER_LEFT),
+                (int) CellUtil.GetBorderStyle(values, CellUtil.BORDER_RIGHT),
+                (int) CellUtil.GetBorderStyle(values, CellUtil.BORDER_TOP),
+                (int) CellUtil.GetBorderStyle(values, CellUtil.BORDER_BOTTOM),
                 0, // BorderDiagonalLineStyle not tracked in property map
                 0, // BorderDiagonal not tracked in property map
                 0, // ReadingOrder not tracked in property map

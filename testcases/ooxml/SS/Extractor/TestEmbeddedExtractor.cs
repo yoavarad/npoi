@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -44,7 +44,8 @@ namespace TestCases.SS.Extractor
 
             EmbeddedExtractor ee = new EmbeddedExtractor();
             List<EmbeddedData> edList = new List<EmbeddedData>();
-            foreach (ISheet s in wb) {
+            foreach(ISheet s in wb)
+            {
                 edList.AddRange(ee.ExtractAll(s));
             }
             wb.Close();
@@ -73,7 +74,8 @@ namespace TestCases.SS.Extractor
 
             EmbeddedExtractor ee = new EmbeddedExtractor();
             List<EmbeddedData> edList = new List<EmbeddedData>();
-            foreach (ISheet s in wb) {
+            foreach(ISheet s in wb)
+            {
                 edList.AddRange(ee.ExtractAll(s));
             }
             wb.Close();
@@ -100,8 +102,9 @@ namespace TestCases.SS.Extractor
             ClassicAssert.AreEqual("4m4N8ji2tjpEGPQuw2YwGA==", md5hash(ed3.GetEmbeddedData()));
         }
 
-        public static string md5hash(byte[] input) {
-            
+        public static string md5hash(byte[] input)
+        {
+
             MD5 md5 = MD5.Create();
 
             byte[] hash = md5.ComputeHash(input);
@@ -115,9 +118,9 @@ namespace TestCases.SS.Extractor
             HSSFWorkbook wb = HSSFTestDataSamples.OpenSampleWorkbook("angelo.edu_content_files_19555-nsse-2011-multiyear-benchmark.xls");
             EmbeddedExtractor ee = new EmbeddedExtractor();
 
-            foreach (ISheet s in wb)
+            foreach(ISheet s in wb)
             {
-                foreach (EmbeddedData ed in ee.ExtractAll(s))
+                foreach(EmbeddedData ed in ee.ExtractAll(s))
                 {
                     ClassicAssert.IsNotNull(ed.Filename);
                     ClassicAssert.IsNotNull(ed.GetEmbeddedData());
@@ -128,5 +131,3 @@ namespace TestCases.SS.Extractor
         }
     }
 }
-
-

@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
+    using System;
 
     public interface Accumulator
     {
@@ -43,7 +43,7 @@ namespace NPOI.SS.Formula.Functions
             }
             public override ValueEval GetItem(int index)
             {
-                if (index < 0 || index > _size)
+                if(index < 0 || index > _size)
                 {
                     throw new ArgumentException("Specified index " + index
                             + " is outside range (0.." + (_size - 1) + ")");
@@ -141,17 +141,17 @@ namespace NPOI.SS.Formula.Functions
                 ValueVector vvX = CreateValueVector(arg0);
                 ValueVector vvY = CreateValueVector(arg1);
                 int size = vvX.Size;
-                if (size == 0 || vvY.Size != size)
+                if(size == 0 || vvY.Size != size)
                 {
                     return ErrorEval.NA;
                 }
                 result = EvaluateInternal(vvX, vvY, size);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
-            if (Double.IsNaN(result) || Double.IsInfinity(result))
+            if(Double.IsNaN(result) || Double.IsInfinity(result))
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -173,28 +173,28 @@ namespace NPOI.SS.Formula.Functions
             bool accumlatedSome = false;
             double result = 0.0;
 
-            for (int i = 0; i < size; i++)
+            for(int i = 0; i < size; i++)
             {
                 ValueEval vx = x.GetItem(i);
                 ValueEval vy = y.GetItem(i);
-                if (vx is ErrorEval eval)
+                if(vx is ErrorEval eval)
                 {
-                    if (firstXerr == null)
+                    if(firstXerr == null)
                     {
                         firstXerr = eval;
                         continue;
                     }
                 }
-                if (vy is ErrorEval errorEval)
+                if(vy is ErrorEval errorEval)
                 {
-                    if (firstYerr == null)
+                    if(firstYerr == null)
                     {
                         firstYerr = errorEval;
                         continue;
                     }
                 }
                 // only count pairs if both elements are numbers
-                if (vx is NumberEval nx && vy is NumberEval ny)
+                if(vx is NumberEval nx && vy is NumberEval ny)
                 {
                     accumlatedSome = true;
                     result += acc.Accumulate(nx.NumberValue, ny.NumberValue);
@@ -204,15 +204,15 @@ namespace NPOI.SS.Formula.Functions
                     // all other combinations of value types are silently ignored
                 }
             }
-            if (firstXerr != null)
+            if(firstXerr != null)
             {
                 throw new EvaluationException(firstXerr);
             }
-            if (firstYerr != null)
+            if(firstYerr != null)
             {
                 throw new EvaluationException(firstYerr);
             }
-            if (!accumlatedSome)
+            if(!accumlatedSome)
             {
                 throw new EvaluationException(ErrorEval.DIV_ZERO);
             }
@@ -222,7 +222,7 @@ namespace NPOI.SS.Formula.Functions
         private static double[] TrimToSize(double[] arr, int len)
         {
             double[] tarr = arr;
-            if (arr.Length > len)
+            if(arr.Length > len)
             {
                 tarr = new double[len];
                 Array.Copy(arr, 0, tarr, 0, len);
@@ -275,15 +275,15 @@ namespace NPOI.SS.Formula.Functions
 
         private static ValueVector CreateValueVector(ValueEval arg)
         {
-            if (arg is ErrorEval eval)
+            if(arg is ErrorEval eval)
             {
                 throw new EvaluationException(eval);
             }
-            if (arg is TwoDEval dEval)
+            if(arg is TwoDEval dEval)
             {
                 return new AreaValueArray(dEval);
             }
-            if (arg is RefEval refEval)
+            if(arg is RefEval refEval)
             {
                 return new RefValueArray(refEval);
             }

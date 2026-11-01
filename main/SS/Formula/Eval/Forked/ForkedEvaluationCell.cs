@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.SS.Formula;
 using NPOI.SS.Formula.Eval;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using System;
 
 namespace NPOI.SS.Formula.Eval.Forked
 {
@@ -62,31 +62,31 @@ namespace NPOI.SS.Formula.Eval.Forked
         {
             Type cls = value.GetType();
 
-            if (cls == typeof(NumberEval))
+            if(cls == typeof(NumberEval))
             {
                 _cellType = CellType.Numeric;
-                _numberValue = ((NumberEval)value).NumberValue;
+                _numberValue = ((NumberEval) value).NumberValue;
                 return;
             }
-            if (cls == typeof(StringEval))
+            if(cls == typeof(StringEval))
             {
                 _cellType = CellType.String;
-                _stringValue = ((StringEval)value).StringValue;
+                _stringValue = ((StringEval) value).StringValue;
                 return;
             }
-            if (cls == typeof(BoolEval))
+            if(cls == typeof(BoolEval))
             {
                 _cellType = CellType.Boolean;
-                _boolValue = ((BoolEval)value).BooleanValue;
+                _boolValue = ((BoolEval) value).BooleanValue;
                 return;
             }
-            if (cls == typeof(ErrorEval))
+            if(cls == typeof(ErrorEval))
             {
                 _cellType = CellType.Error;
-                _errorValue = ((ErrorEval)value).ErrorCode;
+                _errorValue = ((ErrorEval) value).ErrorCode;
                 return;
             }
-            if (cls == typeof(BlankEval))
+            if(cls == typeof(BlankEval))
             {
                 _cellType = CellType.Blank;
                 return;
@@ -95,20 +95,30 @@ namespace NPOI.SS.Formula.Eval.Forked
         }
         public void CopyValue(ICell destCell)
         {
-            switch (_cellType)
+            switch(_cellType)
             {
-                case CellType.Blank: destCell.SetCellType(CellType.Blank); return;
-                case CellType.Numeric: destCell.SetCellValue(_numberValue); return;
-                case CellType.Boolean: destCell.SetCellValue(_boolValue); return;
-                case CellType.String: destCell.SetCellValue(_stringValue); return;
-                case CellType.Error: destCell.SetCellErrorValue((byte)_errorValue); return;
+                case CellType.Blank:
+                    destCell.SetCellType(CellType.Blank);
+                    return;
+                case CellType.Numeric:
+                    destCell.SetCellValue(_numberValue);
+                    return;
+                case CellType.Boolean:
+                    destCell.SetCellValue(_boolValue);
+                    return;
+                case CellType.String:
+                    destCell.SetCellValue(_stringValue);
+                    return;
+                case CellType.Error:
+                    destCell.SetCellErrorValue((byte) _errorValue);
+                    return;
             }
             throw new InvalidOperationException("Unexpected data type (" + _cellType + ")");
         }
 
         private void CheckCellType(CellType expectedCellType)
         {
-            if (_cellType != expectedCellType)
+            if(_cellType != expectedCellType)
             {
                 throw new Exception("Wrong data type (" + _cellType + ")");
             }

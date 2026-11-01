@@ -28,19 +28,17 @@
 namespace TestCases.POIFS.FileSystem
 {
 
+    using NPOI.POIFS.FileSystem;
+    using NPOI.POIFS.Properties;
+    using NPOI.POIFS.Storage;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using NPOI.POIFS.FileSystem;
-    using NPOI.Util;
-    using NPOI.POIFS.Storage;
-    using NPOI.POIFS.Properties;
-
-    using TestCases.HSSF;
     using System.Collections.Generic;
+    using System.IO;
+    using TestCases.HSSF;
 
     /**
 * Verify the order of entries <c>DirectoryProperty</c> .
@@ -72,7 +70,7 @@ namespace TestCases.POIFS.FileSystem
             {
                 return new POIFSFileSystem(is1);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
@@ -107,7 +105,7 @@ namespace TestCases.POIFS.FileSystem
 
             // (2) Verify that the fixed property comparator works right
             Array.Sort(props, new DirectoryProperty.PropertyComparator());
-            for (int i = 0; i < props.Length; i++)
+            for(int i = 0; i < props.Length; i++)
             {
                 ClassicAssert.AreEqual(_entries[i], props[i].Name);
             }
@@ -131,7 +129,7 @@ namespace TestCases.POIFS.FileSystem
             Array.Sort(props, new DirectoryProperty.PropertyComparator());
 
             ClassicAssert.AreEqual(_entries.Length, props.Length);
-            for (int i = 0; i < props.Length; i++)
+            for(int i = 0; i < props.Length; i++)
             {
                 ClassicAssert.AreEqual(_entries[i], props[i].Name);
             }
@@ -152,12 +150,12 @@ namespace TestCases.POIFS.FileSystem
             DirectoryProperty p = (DirectoryProperty)vba.Property;
 
             ArrayList lst = new ArrayList();
-            for (IEnumerator it = p.Children; it.MoveNext(); )
+            for(IEnumerator it = p.Children; it.MoveNext();)
             {
                 Property ch = (Property)it.Current;
                 lst.Add(ch);
             }
-            return (Property[])lst.ToArray(typeof(Property));
+            return (Property[]) lst.ToArray(typeof(Property));
         }
 
         private class PropertyComparer : IComparer<Property>
@@ -168,7 +166,7 @@ namespace TestCases.POIFS.FileSystem
                 String name2 = o2.Name;
                 int result = name1.Length - name2.Length;
 
-                if (result == 0)
+                if(result == 0)
                 {
                     //result = name1.CompareTo(name2);
                     result = compareTo(name1, name2);
@@ -185,11 +183,11 @@ namespace TestCases.POIFS.FileSystem
                 char[] v2 = anotherString.ToCharArray();
 
                 int k = 0;
-                while (k < lim)
+                while(k < lim)
                 {
                     char c1 = v1[k];
                     char c2 = v2[k];
-                    if (c1 != c2)
+                    if(c1 != c2)
                     {
                         return c1 - c2;
                     }

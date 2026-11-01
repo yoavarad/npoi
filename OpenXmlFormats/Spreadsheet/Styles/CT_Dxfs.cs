@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,16 +20,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private bool countFieldSpecified;
         public static CT_Dxfs Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Dxfs ctObj = new CT_Dxfs();
             ctObj.InnerXml = node.InnerXml;
             ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.dxfField = new List<CT_Dxf>();
             int index = 0;
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "dxf")
+                if(childNode.LocalName == "dxf")
                     ctObj.dxf.Add(CT_Dxf.Parse(childNode, namespaceManager));
                 else if(childNode.LocalName == "AlternateContent")
                 {
@@ -39,9 +39,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                     //        x:dxf
                     //    mc:Fallback
                     //        x:dxf
-                    foreach (XmlNode acChildNode in childNode.ChildNodes)
+                    foreach(XmlNode acChildNode in childNode.ChildNodes)
                     {
-                        if (acChildNode.LocalName == "Fallback")
+                        if(acChildNode.LocalName == "Fallback")
                         {
                             foreach(XmlNode fbChild in acChildNode.ChildNodes)
                             {
@@ -54,7 +54,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                     }
                     ctObj.dictAlternateContent.Add(index, childNode.OuterXml);
                 }
-                index ++;
+                index++;
             }
             return ctObj;
         }
@@ -66,10 +66,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteStart(nodeName);
             XmlHelper.WriteAttribute(sw, "count", this.count, true);
 
-            if (this.dxf.Count > 0)
+            if(this.dxf.Count > 0)
             {
                 sw.Write('>');
-                for(int i=0; i<this.dxf.Count;i++)
+                for(int i = 0; i<this.dxf.Count; i++)
                 {
                     if(dictAlternateContent.TryGetValue(i, out string value))
                         sw.Write(value);
@@ -86,14 +86,14 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             {
                 sw.Write("/>");
             }
-            
+
         }
 
         public CT_Dxfs()
         {
         }
 
-        public string InnerXml { get; set;}
+        public string InnerXml { get; set; }
 
         [XmlElement]
         public List<CT_Dxf> dxf
@@ -154,24 +154,24 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private CT_ExtensionList extLstField;
         public static CT_Dxf Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Dxf ctObj = new CT_Dxf();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "font")
+                if(childNode.LocalName == "font")
                     ctObj.font = CT_Font.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "numFmt")
+                else if(childNode.LocalName == "numFmt")
                     ctObj.numFmt = CT_NumFmt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fill")
+                else if(childNode.LocalName == "fill")
                     ctObj.fill = CT_Fill.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "alignment")
+                else if(childNode.LocalName == "alignment")
                     ctObj.alignment = CT_CellAlignment.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "border")
+                else if(childNode.LocalName == "border")
                     ctObj.border = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "protection")
+                else if(childNode.LocalName == "protection")
                     ctObj.protection = CT_CellProtection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -183,19 +183,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.font != null)
+            if(this.font != null)
                 this.font.Write(sw, "font");
-            if (this.numFmt != null)
+            if(this.numFmt != null)
                 this.numFmt.Write(sw, "numFmt");
-            if (this.fill != null)
+            if(this.fill != null)
                 this.fill.Write(sw, "fill");
-            if (this.alignment != null)
+            if(this.alignment != null)
                 this.alignment.Write(sw, "alignment");
-            if (this.border != null)
+            if(this.border != null)
                 this.border.Write(sw, "border");
-            if (this.protection != null)
+            if(this.protection != null)
                 this.protection.Write(sw, "protection");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.WriteEndElement(nodeName);
         }

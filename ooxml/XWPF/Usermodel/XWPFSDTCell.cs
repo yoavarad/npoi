@@ -16,8 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * Experimental class to offer rudimentary Read-only Processing of

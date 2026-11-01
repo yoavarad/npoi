@@ -128,7 +128,7 @@ namespace NPOI.OOXML.Tests.XSSF.UserModel
             Assert.That(sheet._parseCount, Is.EqualTo(0), "Before iteration: no parse");
 
             int rowCount = 0;
-            foreach (IRow row in sheet)
+            foreach(IRow row in sheet)
             {
                 rowCount++;
             }
@@ -181,9 +181,9 @@ namespace NPOI.OOXML.Tests.XSSF.UserModel
         public void MultipleSheetsSomeAccessedSomeNot()
         {
             byte[] xlsxBytes;
-            using (var wb = new XSSFWorkbook())
+            using(var wb = new XSSFWorkbook())
             {
-                for (int i = 0; i < 3; i++)
+                for(int i = 0; i < 3; i++)
                 {
                     var s = wb.CreateSheet($"Sheet{i}");
                     s.CreateRow(0).CreateCell(0).SetCellValue(i);
@@ -220,9 +220,9 @@ namespace NPOI.OOXML.Tests.XSSF.UserModel
         {
             // Create a 3-sheet workbook with distinct data
             byte[] originalBytes;
-            using (var wb = new XSSFWorkbook())
+            using(var wb = new XSSFWorkbook())
             {
-                for (int i = 0; i < 3; i++)
+                for(int i = 0; i < 3; i++)
                 {
                     var s = wb.CreateSheet($"Sheet{i}");
                     s.CreateRow(0).CreateCell(0).SetCellValue($"Original{i}");
@@ -235,8 +235,8 @@ namespace NPOI.OOXML.Tests.XSSF.UserModel
 
             // Open, touch only Sheet1, modify it, and save
             byte[] savedBytes;
-            using (var ms = new MemoryStream(originalBytes))
-            using (var wb = new XSSFWorkbook(ms))
+            using(var ms = new MemoryStream(originalBytes))
+            using(var wb = new XSSFWorkbook(ms))
             {
                 var sheet0 = (XSSFSheet)wb.GetSheetAt(0);
                 var sheet1 = (XSSFSheet)wb.GetSheetAt(1);
@@ -255,8 +255,8 @@ namespace NPOI.OOXML.Tests.XSSF.UserModel
             }
 
             // Re-open and verify all sheets survived the roundtrip
-            using (var ms = new MemoryStream(savedBytes))
-            using (var wb = new XSSFWorkbook(ms))
+            using(var ms = new MemoryStream(savedBytes))
+            using(var wb = new XSSFWorkbook(ms))
             {
                 // Sheet0: untouched — should have original data
                 var s0 = wb.GetSheetAt(0);

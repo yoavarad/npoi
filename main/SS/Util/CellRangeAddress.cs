@@ -1,10 +1,9 @@
-﻿using System;
-using System.Text; 
 using Cysharp.Text;
-using NPOI.Util;
 using NPOI.HSSF.Record;
-
 using NPOI.SS.Formula;
+using NPOI.Util;
+using System;
+using System.Text;
 
 namespace NPOI.SS.Util
 {
@@ -22,7 +21,7 @@ namespace NPOI.SS.Util
         public CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             : base(firstRow, lastRow, firstCol, lastCol)
         {
-            if (lastRow < firstRow || lastCol < firstCol)
+            if(lastRow < firstRow || lastCol < firstCol)
                 throw new ArgumentException("Invalid cell range, having lastRow < firstRow || lastCol < firstCol, " +
                     "had rows " + lastRow + " >= " + firstRow + " or cells " + lastCol + " >= " + firstCol);
         }
@@ -35,7 +34,7 @@ namespace NPOI.SS.Util
 
         private static int ReadUShortAndCheck(RecordInputStream in1)
         {
-            if (in1.Remaining < ENCODED_SIZE)
+            if(in1.Remaining < ENCODED_SIZE)
             {
                 // Ran out of data
                 throw new RuntimeException("Ran out of data readin1g CellRangeAddress");
@@ -75,7 +74,7 @@ namespace NPOI.SS.Util
             //for a single-cell reference return A1 instead of A1:A1
             //for full-column ranges or full-row ranges return A:A instead of A,
             //and 1:1 instead of 1
-            if (!cellRefFrom.Equals(cellRefTo)
+            if(!cellRefFrom.Equals(cellRefTo)
                 || IsFullColumnRange || IsFullRowRange)
             {
                 sb.Append(':');
@@ -108,7 +107,7 @@ namespace NPOI.SS.Util
             int sep = reference.IndexOf(':');
             CellReference a;
             CellReference b;
-            if (sep == -1)
+            if(sep == -1)
             {
                 a = new CellReference(reference);
                 b = a;

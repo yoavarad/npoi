@@ -1,4 +1,4 @@
-﻿using NPOI.SS.UserModel;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,9 +6,8 @@ using System.Linq;
 
 namespace NPOI.SS.Util
 {
-    using NPOI.Util;
-
     using NPOI.HSSF.Record;
+    using NPOI.Util;
 
     public class CellRangeAddressList
     {
@@ -40,7 +39,7 @@ namespace NPOI.SS.Util
             int nItems = in1.ReadUShort();
             _list = new List<CellRangeAddress>(nItems);
 
-            for (int k = 0; k < nItems; k++)
+            for(int k = 0; k < nItems; k++)
             {
                 _list.Add(new CellRangeAddress(in1));
             }
@@ -100,11 +99,11 @@ namespace NPOI.SS.Util
         }
         public CellRangeAddress Remove(int rangeIndex)
         {
-            if (_list.Count == 0)
+            if(_list.Count == 0)
             {
                 throw new Exception("List is empty");
             }
-            if (rangeIndex < 0 || rangeIndex >= _list.Count)
+            if(rangeIndex < 0 || rangeIndex >= _list.Count)
             {
                 throw new Exception("Range index (" + rangeIndex
                         + ") is outside allowable range (0.." + (_list.Count - 1) + ")");
@@ -119,7 +118,7 @@ namespace NPOI.SS.Util
          */
         public CellRangeAddress GetCellRangeAddress(int index)
         {
-            return (CellRangeAddress)_list[index];
+            return (CellRangeAddress) _list[index];
         }
         internal int Serialize(int offset, byte[] data)
         {
@@ -131,7 +130,7 @@ namespace NPOI.SS.Util
         {
             int nItems = _list.Count;
             out1.WriteShort(nItems);
-            for (int k = 0; k < nItems; k++)
+            for(int k = 0; k < nItems; k++)
             {
                 CellRangeAddress region = (CellRangeAddress)_list[k];
                 region?.Serialize(out1);
@@ -158,10 +157,10 @@ namespace NPOI.SS.Util
             CellRangeAddressList result = new CellRangeAddressList();
 
             int nItems = _list.Count;
-            for (int k = 0; k < nItems; k++)
+            for(int k = 0; k < nItems; k++)
             {
                 CellRangeAddress region = (CellRangeAddress)_list[k];
-                if (region != null)
+                if(region != null)
                     result.AddCellRangeAddress(region.Copy());
             }
             return result;

@@ -17,13 +17,13 @@
 
 namespace NPOI.HSSF.Util
 {
-    using System;
-    using System.Collections;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using System.Collections.Generic;
-    using NPOI.HSSF.Record;
     using NPOI.SS.Util;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Various utility functions that make working with a cells and rows easier.  The various
@@ -42,49 +42,49 @@ namespace NPOI.HSSF.Util
         /// </summary>
         private static void RemapCellStyle(HSSFCellStyle stylish, Dictionary<short, short> paletteMap)
         {
-            if (paletteMap.TryGetValue(stylish.BorderDiagonalColor, out short value))
+            if(paletteMap.TryGetValue(stylish.BorderDiagonalColor, out short value))
             {
                 stylish.BorderDiagonalColor = value;
             }
-            if (paletteMap.TryGetValue(stylish.BottomBorderColor, out short value1))
+            if(paletteMap.TryGetValue(stylish.BottomBorderColor, out short value1))
             {
                 stylish.BottomBorderColor = value1;
             }
-            if (paletteMap.TryGetValue(stylish.FillBackgroundColor, out short value2))
+            if(paletteMap.TryGetValue(stylish.FillBackgroundColor, out short value2))
             {
                 stylish.FillBackgroundColor = value2;
             }
-            if (paletteMap.TryGetValue(stylish.FillForegroundColor, out short value3))
+            if(paletteMap.TryGetValue(stylish.FillForegroundColor, out short value3))
             {
                 stylish.FillForegroundColor = value3;
             }
-            if (paletteMap.TryGetValue(stylish.LeftBorderColor, out short value4))
+            if(paletteMap.TryGetValue(stylish.LeftBorderColor, out short value4))
             {
                 stylish.LeftBorderColor = value4;
             }
-            if (paletteMap.TryGetValue(stylish.RightBorderColor, out short value5))
+            if(paletteMap.TryGetValue(stylish.RightBorderColor, out short value5))
             {
                 stylish.RightBorderColor = value5;
             }
-            if (paletteMap.TryGetValue(stylish.TopBorderColor, out short value6))
+            if(paletteMap.TryGetValue(stylish.TopBorderColor, out short value6))
             {
                 stylish.TopBorderColor = value6;
             }
         }
         public static void CopyCell(HSSFCell oldCell, HSSFCell newCell, IDictionary<Int32, HSSFCellStyle> styleMap, Dictionary<short, short> paletteMap, Boolean keepFormulas)
         {
-            if (styleMap != null)
+            if(styleMap != null)
             {
-                if (oldCell.CellStyle != null)
+                if(oldCell.CellStyle != null)
                 {
-                    if (oldCell.Sheet.Workbook == newCell.Sheet.Workbook)
+                    if(oldCell.Sheet.Workbook == newCell.Sheet.Workbook)
                     {
                         newCell.CellStyle = oldCell.CellStyle;
                     }
                     else
                     {
                         int styleHashCode = oldCell.CellStyle.GetHashCode();
-                        if (styleMap.TryGetValue(styleHashCode, out HSSFCellStyle value))
+                        if(styleMap.TryGetValue(styleHashCode, out HSSFCellStyle value))
                         {
                             newCell.CellStyle = value;
                         }
@@ -96,7 +96,7 @@ namespace NPOI.HSSF.Util
                             newCell.CellStyle = newCellStyle;
                             //Clone of cell style always clones the font. This makes my life easier
                             IFont theFont = newCellStyle.GetFont(newCell.Sheet.Workbook);
-                            if (theFont.Color > 0 && paletteMap.TryGetValue(theFont.Color, out short value1))
+                            if(theFont.Color > 0 && paletteMap.TryGetValue(theFont.Color, out short value1))
                             {
                                 theFont.Color = value1; //Remap font color
                             }
@@ -109,19 +109,19 @@ namespace NPOI.HSSF.Util
                     newCell.CellStyle = null;
                 }
             }
-            switch (oldCell.CellType)
+            switch(oldCell.CellType)
             {
                 case CellType.String:
                     HSSFRichTextString rts = oldCell.RichStringCellValue as HSSFRichTextString;
                     newCell.SetCellValue(rts);
-                    if (rts != null)
+                    if(rts != null)
                     {
-                        for (int j = 0; j < rts.NumFormattingRuns; j++)
+                        for(int j = 0; j < rts.NumFormattingRuns; j++)
                         {
                             short fontIndex = rts.GetFontOfFormattingRun(j);
                             int startIndex = rts.GetIndexOfFormattingRun(j);
                             int endIndex = 0;
-                            if (j + 1 == rts.NumFormattingRuns)
+                            if(j + 1 == rts.NumFormattingRuns)
                             {
                                 endIndex = rts.Length;
                             }
@@ -149,7 +149,7 @@ namespace NPOI.HSSF.Util
                     newCell.SetCellValue(oldCell.ErrorCellValue);
                     break;
                 case CellType.Formula:
-                    if (keepFormulas)
+                    if(keepFormulas)
                     {
                         newCell.SetCellType(CellType.Formula);
                         newCell.CellFormula = oldCell.CellFormula;

@@ -14,14 +14,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.OpenXml4Net.OPC;
+using NPOI.SS.UserModel;
+using NPOI.Util;
 using NPOI.XSSF.UserModel;
 using System;
-using NPOI.OpenXml4Net.OPC;
-using System.Text;
-using NPOI.SS.UserModel;
-using System.Globalization;
 using System.Collections.Generic;
-using NPOI.Util;
+using System.Globalization;
+using System.Text;
 
 namespace NPOI.XSSF.Extractor
 {
@@ -193,7 +193,7 @@ namespace NPOI.XSSF.Extractor
             get
             {
                 DataFormatter formatter;
-                if (locale == null)
+                if(locale == null)
                 {
                     formatter = new DataFormatter();
                 }
@@ -204,16 +204,16 @@ namespace NPOI.XSSF.Extractor
 
                 StringBuilder text = new StringBuilder();
 
-                foreach (ISheet sh in workbook)
+                foreach(ISheet sh in workbook)
                 {
                     XSSFSheet sheet = (XSSFSheet)sh;
-                    if (includeSheetNames)
+                    if(includeSheetNames)
                     {
                         text.Append(sheet.SheetName + "\n");
                     }
 
                     // Header(s), if present
-                    if (includeHeadersFooters)
+                    if(includeHeadersFooters)
                     {
                         text.Append(
                                 XSSFExcelExtractor.ExtractHeaderFooter(sheet.FirstHeader)
@@ -227,12 +227,12 @@ namespace NPOI.XSSF.Extractor
                     }
 
                     // Rows and cells
-                    foreach (object rawR in sheet)
+                    foreach(object rawR in sheet)
                     {
                         IRow row = (IRow)rawR;
                         //IEnumerator<ICell> ri = row.GetEnumerator();
                         bool firsttime = true;
-                        for (int j = 0; j < row.LastCellNum; j++)
+                        for(int j = 0; j < row.LastCellNum; j++)
                         {
                             // Add a tab delimiter for each empty cell.
                             if(AddTabEachEmptyCell)
@@ -248,13 +248,13 @@ namespace NPOI.XSSF.Extractor
                             }
 
                             ICell cell = row.GetCell(j);
-                            if (cell == null)
+                            if(cell == null)
                                 continue;
 
                             // Is it a formula one?
-                            if (cell.CellType == CellType.Formula)
+                            if(cell.CellType == CellType.Formula)
                             {
-                                if (formulasNotResults)
+                                if(formulasNotResults)
                                 {
                                     String contents = cell.CellFormula;
                                     CheckMaxTextSize(text, contents);
@@ -262,7 +262,7 @@ namespace NPOI.XSSF.Extractor
                                 }
                                 else
                                 {
-                                    if (cell.CachedFormulaResultType == CellType.String)
+                                    if(cell.CachedFormulaResultType == CellType.String)
                                     {
                                         HandleStringCell(text, cell);
                                     }
@@ -273,7 +273,7 @@ namespace NPOI.XSSF.Extractor
                                 }
 
                             }
-                            else if (cell.CellType == CellType.String)
+                            else if(cell.CellType == CellType.String)
                             {
                                 HandleStringCell(text, cell);
                             }
@@ -284,7 +284,7 @@ namespace NPOI.XSSF.Extractor
 
                             // Output the comment, if requested and exists
                             IComment comment = cell.CellComment;
-                            if (includeCellComments && comment != null)
+                            if(includeCellComments && comment != null)
                             {
                                 // Replace any newlines with spaces, otherwise it
                                 //  breaks the output
@@ -296,17 +296,17 @@ namespace NPOI.XSSF.Extractor
                         text.Append("\n");
                     }
                     // add textboxes
-                    if (includeTextBoxes)
+                    if(includeTextBoxes)
                     {
                         XSSFDrawing drawing = sheet.GetDrawingPatriarch();
-                        if (drawing != null)
+                        if(drawing != null)
                         {
-                            foreach (XSSFShape shape in drawing.GetShapes())
+                            foreach(XSSFShape shape in drawing.GetShapes())
                             {
-                                if (shape is XSSFSimpleShape simpleShape)
+                                if(shape is XSSFSimpleShape simpleShape)
                                 {
                                     String boxText = simpleShape.Text;
-                                    if (boxText.Length > 0)
+                                    if(boxText.Length > 0)
                                     {
                                         text.Append(boxText);
                                         text.Append('\n');
@@ -317,7 +317,7 @@ namespace NPOI.XSSF.Extractor
                     }
 
                     // Finally footer(s), if present
-                    if (includeHeadersFooters)
+                    if(includeHeadersFooters)
                     {
                         text.Append(
                                 XSSFExcelExtractor.ExtractHeaderFooter(sheet.FirstFooter)
@@ -345,21 +345,21 @@ namespace NPOI.XSSF.Extractor
         private void HandleNonStringCell(StringBuilder text, ICell cell, DataFormatter formatter)
         {
             CellType type = cell.CellType;
-            if (type == CellType.Formula)
+            if(type == CellType.Formula)
             {
                 type = cell.CachedFormulaResultType;
             }
 
-            if (type == CellType.Numeric)
+            if(type == CellType.Numeric)
             {
                 ICellStyle cs = cell.CellStyle;
 
-                if (cs.GetDataFormatString() != null)
+                if(cs.GetDataFormatString() != null)
                 {
                     string contents1 = formatter.FormatRawCellContents(
                           cell.NumericCellValue, cs.DataFormat, cs.GetDataFormatString()
                     );
-                    
+
                     CheckMaxTextSize(text, contents1);
                     text.Append(contents1);
                     return;

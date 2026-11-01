@@ -16,10 +16,10 @@
 ==================================================================== */
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the NoteRecord
@@ -48,7 +48,7 @@ namespace TestCases.HSSF.Record
             NoteStructureSubRecord record = new NoteStructureSubRecord(TestcaseRecordInputStream.Create(NoteStructureSubRecord.sid, data),data.Length);
 
             ClassicAssert.AreEqual(NoteStructureSubRecord.sid, record.Sid);
-            ClassicAssert.AreEqual(data.Length , record.DataSize);
+            ClassicAssert.AreEqual(data.Length, record.DataSize);
 
         }
         [Test]
@@ -56,7 +56,7 @@ namespace TestCases.HSSF.Record
         {
             NoteStructureSubRecord record = new NoteStructureSubRecord();
             ClassicAssert.AreEqual(NoteStructureSubRecord.sid, record.Sid);
-            ClassicAssert.AreEqual(data.Length , record.DataSize);
+            ClassicAssert.AreEqual(data.Length, record.DataSize);
 
             byte[] ser = record.Serialize();
             ClassicAssert.AreEqual(ser.Length - 4, data.Length);

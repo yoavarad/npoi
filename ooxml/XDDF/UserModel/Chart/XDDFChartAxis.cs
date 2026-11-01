@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,9 +16,9 @@
 ==================================================================== */
 
 
-using System;
-using NPOI.OpenXmlFormats.Dml.Chart;
 using NPOI.OpenXmlFormats.Dml;
+using NPOI.OpenXmlFormats.Dml.Chart;
+using System;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
@@ -103,7 +103,7 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return AxisPositionExtensions.ValueOf(GetCTAxPos().val);
             }
-            set 
+            set
             {
                 GetCTAxPos().val = value.ToST_AxPos();
             }
@@ -125,7 +125,7 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return GetCTNumFmt().formatCode;
             }
-            set 
+            set
             {
                 GetCTNumFmt().formatCode = value;
                 GetCTNumFmt().sourceLinked = true;
@@ -157,7 +157,7 @@ namespace NPOI.XDDF.UserModel.Chart
                 }
                 return Double.NaN;
             }
-            set 
+            set
             {
                 if(value < MIN_LOG_BASE || MAX_LOG_BASE < value)
                 {
@@ -200,7 +200,7 @@ namespace NPOI.XDDF.UserModel.Chart
                     return Double.NaN;
                 }
             }
-            set 
+            set
             {
                 CT_Scaling scaling = GetCTScaling();
                 if(Double.IsNaN(value))
@@ -249,7 +249,7 @@ namespace NPOI.XDDF.UserModel.Chart
                     return Double.NaN;
                 }
             }
-            set 
+            set
             {
                 CT_Scaling scaling = GetCTScaling();
                 if(Double.IsNaN(value))
@@ -305,7 +305,7 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return AxisCrossesExtensions.ValueOf(GetCTCrosses().val);
             }
-            set 
+            set
             {
                 GetCTCrosses().val = value.ToST_Crosses();
             }
@@ -344,7 +344,7 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return AxisTickMarkExtensions.ValueOf(GetMajorCTTickMark().val);
             }
-            set 
+            set
             {
                 GetMajorCTTickMark().val = value.ToST_TickMark();
             }
@@ -359,7 +359,7 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 return AxisTickMarkExtensions.ValueOf(GetMinorCTTickMark().val);
             }
-            set 
+            set
             {
                 GetMinorCTTickMark().val =value.ToST_TickMark();
             }
@@ -389,5 +389,3 @@ namespace NPOI.XDDF.UserModel.Chart
         public abstract XDDFShapeProperties GetOrAddShapeProperties();
     }
 }
-
-

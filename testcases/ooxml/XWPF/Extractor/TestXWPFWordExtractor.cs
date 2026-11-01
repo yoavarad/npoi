@@ -91,9 +91,9 @@ namespace TestCases.XWPF.Extractor
             // Check number of paragraphs
             int ps = 0;
             char[] t = text.ToCharArray();
-            for (int i = 0; i < t.Length; i++)
+            for(int i = 0; i < t.Length; i++)
             {
-                if (t[i] == '\n')
+                if(t[i] == '\n')
                 {
                     ps++;
                 }
@@ -346,10 +346,10 @@ namespace TestCases.XWPF.Extractor
             String s = ex.Text.ToLower();
             int hits = 0;
 
-            foreach (String targ in targs)
+            foreach(String targ in targs)
             {
                 bool hitted = false;
-                if (s.Contains(targ))
+                if(s.Contains(targ))
                 {
                     hitted = true;
                     hits++;
@@ -373,13 +373,13 @@ namespace TestCases.XWPF.Extractor
             //This ensures that there is only one copy.
             MatchCollection mc;
             int hit;
-            foreach (String targ in targs)
+            foreach(String targ in targs)
             {
                 mc = Regex.Matches(s, targ);
                 hit = 0;
-                foreach (Match m in mc)
+                foreach(Match m in mc)
                 {
-                    if (m.Success)
+                    if(m.Success)
                         hit++;
                 }
                 ClassicAssert.AreEqual(1, hit, "controlled content loading-" + targ);
@@ -388,9 +388,9 @@ namespace TestCases.XWPF.Extractor
             //This also happens when you save this document as text from MSWord.
             mc = Regex.Matches(s, "test\n");
             hit = 0;
-            foreach (Match m in mc)
+            foreach(Match m in mc)
             {
-                if (m.Success)
+                if(m.Success)
                     hit++;
             }
             ClassicAssert.AreEqual(2, hit, "test<N>");

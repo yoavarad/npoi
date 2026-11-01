@@ -19,9 +19,8 @@ namespace NPOI.HSSF.Record
 {
 
     using NPOI.Util;
-
-    using System.Text;
     using System;
+    using System.Text;
 
     /**
      * Title: NAMECMT Record (0x0894)
@@ -68,7 +67,7 @@ namespace NPOI.HSSF.Record
             //StringUtil.PutCompressedUnicode(field_7_comment_text, out1);
             bool isNameMultiByte = StringUtil.HasMultibyte(field_6_name_text);
             out1.WriteByte(isNameMultiByte ? 1 : 0);
-            if (isNameMultiByte)
+            if(isNameMultiByte)
             {
                 StringUtil.PutUnicodeLE(field_6_name_text, out1);
             }
@@ -78,7 +77,7 @@ namespace NPOI.HSSF.Record
             }
             bool isCommentMultiByte = StringUtil.HasMultibyte(field_7_comment_text);
             out1.WriteByte(isCommentMultiByte ? 1 : 0);
-            if (isCommentMultiByte)
+            if(isCommentMultiByte)
             {
                 StringUtil.PutUnicodeLE(field_7_comment_text, out1);
             }
@@ -110,7 +109,7 @@ namespace NPOI.HSSF.Record
             int field_4_name_length = in1.ReadShort();
             int field_5_comment_length = in1.ReadShort();
 
-            if (in1.ReadByte() == 0)
+            if(in1.ReadByte() == 0)
             {
                 field_6_name_text = StringUtil.ReadCompressedUnicode(in1, field_4_name_length);
             }
@@ -118,7 +117,7 @@ namespace NPOI.HSSF.Record
             {
                 field_6_name_text = StringUtil.ReadUnicodeLE(in1, field_4_name_length);
             }
-            if (in1.ReadByte() == 0)
+            if(in1.ReadByte() == 0)
             {
                 field_7_comment_text = StringUtil.ReadCompressedUnicode(in1, field_5_comment_length);
             }
@@ -167,7 +166,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_6_name_text;
             }
-            set 
+            set
             {
                 field_6_name_text = value;
             }
@@ -181,7 +180,7 @@ namespace NPOI.HSSF.Record
             {
                 return field_7_comment_text;
             }
-            set 
+            set
             {
                 field_7_comment_text = value;
             }
@@ -197,8 +196,3 @@ namespace NPOI.HSSF.Record
 
     }
 }
-
-
-
-
-

@@ -20,9 +20,9 @@ using System.Text;
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.IO;
-    using NPOI.Util;
 
     /// <summary>
     /// A complex property differs from a simple property in that the data can not fit inside a 32 bit
@@ -44,11 +44,11 @@ namespace NPOI.DDF
         public EscherComplexProperty(short id, byte[] complexData)
             : base(id)
         {
-            if (complexData == null)
+            if(complexData == null)
             {
                 throw new ArgumentNullException("complexData can't be null");
             }
-            this._complexData = (byte[])complexData.Clone();
+            this._complexData = (byte[]) complexData.Clone();
         }
 
         /// <summary>
@@ -61,11 +61,11 @@ namespace NPOI.DDF
         public EscherComplexProperty(short propertyNumber, bool isBlipId, byte[] complexData)
             : base(propertyNumber, true, isBlipId)
         {
-            if (complexData == null)
+            if(complexData == null)
             {
                 throw new ArgumentNullException("complexData can't be null");
             }
-            this._complexData = (byte[])complexData.Clone();
+            this._complexData = (byte[]) complexData.Clone();
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace NPOI.DDF
 
         protected void ResizeComplexData(int newSize, int bytesToKeep)
         {
-            if (newSize == _complexData.Length)
+            if(newSize == _complexData.Length)
             {
                 return;
             }
@@ -120,10 +120,13 @@ namespace NPOI.DDF
         /// <returns>True if the objects are equal.</returns>
         public override bool Equals(Object o)
         {
-            if (this == o) return true;
-            if (o == null || o is not EscherComplexProperty escherComplexProperty) return false;
+            if(this == o)
+                return true;
+            if(o == null || o is not EscherComplexProperty escherComplexProperty)
+                return false;
 
-            if (!Arrays.Equals(_complexData, escherComplexProperty._complexData)) return false;
+            if(!Arrays.Equals(_complexData, escherComplexProperty._complexData))
+                return false;
 
             return true;
         }
@@ -157,14 +160,14 @@ namespace NPOI.DDF
         public override String ToString()
         {
             String dataStr;
-            using (MemoryStream b = new MemoryStream())
+            using(MemoryStream b = new MemoryStream())
             {
                 try
                 {
                     HexDump.Dump(this._complexData, 0, b, 0);
                     dataStr = b.ToString();
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     dataStr = e.ToString();
                 }

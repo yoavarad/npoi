@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.Atp
 {
-    using System;
+    using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NPOI.SS.Formula;
+    using System;
 
     /**
      * Implementation of Excel 'Analysis ToolPak' function YEARFRAC()<br/>
@@ -60,7 +60,7 @@ namespace NPOI.SS.Formula.Atp
             try
             {
                 int basis = 0; // default
-                switch (args.Length)
+                switch(args.Length)
                 {
                     case 3:
                         basis = EvaluateIntArg(args[2], srcCellRow, srcCellCol);
@@ -75,7 +75,7 @@ namespace NPOI.SS.Formula.Atp
                 double endDateVal = EvaluateDateArg(args[1], srcCellRow, srcCellCol);
                 result = YearFracCalculator.Calculate(startDateVal, endDateVal, basis);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -87,11 +87,11 @@ namespace NPOI.SS.Formula.Atp
         {
             ValueEval ve = OperandResolver.GetSingleValue(arg, srcCellRow, (short)srcCellCol);
 
-            if (ve is StringEval eval)
+            if(ve is StringEval eval)
             {
                 String strVal = eval.StringValue;
                 Double dVal = OperandResolver.ParseDouble(strVal);
-                if (!double.IsNaN(dVal))
+                if(!double.IsNaN(dVal))
                 {
                     return dVal;
                 }

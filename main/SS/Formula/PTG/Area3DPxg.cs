@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * <p>Title:        XSSF Area 3D Reference (Sheet + Area)</p>
@@ -46,7 +46,7 @@ namespace NPOI.SS.Formula.PTG
         {
             this.externalWorkbookNumber = externalWorkbookNumber;
             this.firstSheetName = sheetName.SheetId.Name;
-            if (sheetName is SheetRangeIdentifier identifier)
+            if(sheetName is SheetRangeIdentifier identifier)
             {
                 this.lastSheetName = identifier.LastSheetIdentifier.Name;
             }
@@ -72,14 +72,14 @@ namespace NPOI.SS.Formula.PTG
             StringBuilder sb = new StringBuilder();
             sb.Append(this.GetType().Name);
             sb.Append(" [");
-            if (externalWorkbookNumber >= 0)
+            if(externalWorkbookNumber >= 0)
             {
                 sb.Append(" [");
                 sb.Append("workbook=").Append(ExternalWorkbookNumber);
                 sb.Append("] ");
             }
             sb.Append("sheet=").Append(SheetName);
-            if (lastSheetName != null)
+            if(lastSheetName != null)
             {
                 sb.Append(" : ");
                 sb.Append("sheet=").Append(lastSheetName);
@@ -123,14 +123,14 @@ namespace NPOI.SS.Formula.PTG
         public override String ToFormulaString()
         {
             StringBuilder sb = new StringBuilder();
-            if (externalWorkbookNumber >= 0)
+            if(externalWorkbookNumber >= 0)
             {
                 sb.Append('[');
                 sb.Append(externalWorkbookNumber);
                 sb.Append(']');
             }
             SheetNameFormatter.AppendFormat(sb, firstSheetName);
-            if (lastSheetName != null)
+            if(lastSheetName != null)
             {
                 sb.Append(':');
                 SheetNameFormatter.AppendFormat(sb, lastSheetName);
@@ -153,4 +153,3 @@ namespace NPOI.SS.Formula.PTG
         }
     }
 }
-

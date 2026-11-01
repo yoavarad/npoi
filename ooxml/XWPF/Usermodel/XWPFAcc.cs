@@ -1,5 +1,5 @@
-﻿using System;
 using NPOI.OpenXmlFormats.Shared;
+using System;
 
 namespace NPOI.XWPF.UserModel
 {
@@ -24,11 +24,11 @@ namespace NPOI.XWPF.UserModel
                 acc.e = new CT_OMathArg();
             }
             this.e = new XWPFOMathArg(acc.e, this);
-            if (acc.accPr == null)
+            if(acc.accPr == null)
             {
                 acc.accPr = new CT_AccPr();
             }
-            if (acc.accPr.chr == null)
+            if(acc.accPr.chr == null)
             {
                 acc.accPr.chr = new CT_Char();
             }
@@ -37,7 +37,8 @@ namespace NPOI.XWPF.UserModel
         /// <summary>
         /// Single char or UTF, like: &#771;
         /// </summary>
-        public string AccPr {
+        public string AccPr
+        {
             get
             {
                 return acc.accPr.chr.val;

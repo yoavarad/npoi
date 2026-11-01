@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -41,7 +41,7 @@ namespace NPOI.POIFS.FileSystem
         /// Get the name of the Entry
         /// </summary>
         /// <value>The name.</value>
-        String Name{get;}
+        String Name { get; }
 
         /// <summary>
         /// Is this a DirectoryEntry?
@@ -49,7 +49,7 @@ namespace NPOI.POIFS.FileSystem
         /// <value>
         /// 	<c>true</c> if the Entry Is a DirectoryEntry; otherwise, <c>false</c>.
         /// </value>
-        bool IsDirectoryEntry{get;}
+        bool IsDirectoryEntry { get; }
 
         /// <summary>
         /// Is this a DocumentEntry?

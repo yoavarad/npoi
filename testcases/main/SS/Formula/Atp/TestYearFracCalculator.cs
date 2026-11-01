@@ -19,11 +19,12 @@ namespace TestCases.SS.Formula.Atp
 {
 
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Atp;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Specific Test cases for YearFracCalculator
@@ -51,12 +52,12 @@ namespace TestCases.SS.Formula.Atp
             {
                 actualValue = YearFracCalculator.Calculate(startDate, endDate, basis);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw e;
             }
             double diff = actualValue - expectedValue;
-            if (Math.Abs(diff) > 0.000000001)
+            if(Math.Abs(diff) > 0.000000001)
             {
                 double hours = diff * 365 * 24;
                 Console.WriteLine(startDate + " " + endDate + " off by " + hours + " hours");

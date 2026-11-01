@@ -17,18 +17,17 @@
 
 namespace TestCases.HSSF.Record.Aggregates
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.HSSF.UserModel;
-    using NPOI.HSSF.Model;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
 
     [TestFixture]
     public class TestValueRecordsAggregate
@@ -38,7 +37,7 @@ namespace TestCases.HSSF.Record.Aggregates
         private IList<CellValueRecordInterface> GetValueRecords()
         {
             List<CellValueRecordInterface> list = new List<CellValueRecordInterface>();
-            foreach (CellValueRecordInterface rec in valueRecord)
+            foreach(CellValueRecordInterface rec in valueRecord)
             {
                 list.Add(rec);
             }
@@ -167,7 +166,7 @@ namespace TestCases.HSSF.Record.Aggregates
             int bytesWritten = valueRecord.SerializeCellRow(1, 0, actualArray);
             bytesWritten += valueRecord.SerializeCellRow(2, bytesWritten, actualArray);
             ClassicAssert.AreEqual(36, bytesWritten);
-            for (int i = 0; i < 36; i++)
+            for(int i = 0; i < 36; i++)
                 ClassicAssert.AreEqual(expectedArray[i], actualArray[i]);
         }
 
@@ -180,7 +179,7 @@ namespace TestCases.HSSF.Record.Aggregates
         {
             BlankRecord blankRecord = new BlankRecord();
             blankRecord.Row = (row);
-            blankRecord.Column = ((short)col);
+            blankRecord.Column = ((short) col);
             return blankRecord;
         }
 
@@ -221,7 +220,7 @@ namespace TestCases.HSSF.Record.Aggregates
 
             long actualCRC = GetFileCRC(HSSFTestDataSamples.OpenSampleFileStream(ABNORMAL_SHARED_FORMULA_FLAG_TEST_FILE));
             long expectedCRC = 2277445406L;
-            if (actualCRC != expectedCRC)
+            if(actualCRC != expectedCRC)
             {
                 Console.Error.WriteLine("Expected crc " + expectedCRC + " but got " + actualCRC);
                 throw failUnexpectedTestFileChange();
@@ -233,35 +232,35 @@ namespace TestCases.HSSF.Record.Aggregates
             String cellFormula;
             cellFormula = GetFormulaFromFirstCell(s, 0); // row "1"
             // the problem is1 not observable in the first row of the shared formula
-            if (!cellFormula.Equals("\"first formula\""))
+            if(!cellFormula.Equals("\"first formula\""))
             {
                 throw new Exception("Something else wrong with this Test case");
             }
 
             // but the problem is1 observable in rows 2,3,4 
             cellFormula = GetFormulaFromFirstCell(s, 1); // row "2"
-            if (cellFormula.Equals("\"second formula\""))
+            if(cellFormula.Equals("\"second formula\""))
             {
                 throw new AssertionException("found bug 44449 (Wrong SharedFormulaRecord was used).");
             }
-            if (!cellFormula.Equals("\"first formula\""))
+            if(!cellFormula.Equals("\"first formula\""))
             {
                 throw new Exception("Something else wrong with this Test case");
             }
         }
         private static String GetFormulaFromFirstCell(NPOI.SS.UserModel.ISheet s, int rowIx)
         {
-            return s.GetRow(rowIx).GetCell((short)0).CellFormula;
+            return s.GetRow(rowIx).GetCell((short) 0).CellFormula;
         }
         private void ConstructValueRecord(IList records)
         {
             RowBlocksReader rbr = new RowBlocksReader(new RecordStream(records, 0));
             SharedValueManager sfrh = rbr.SharedFormulaManager;
             RecordStream rs = rbr.PlainRecordStream;
-            while (rs.HasNext())
+            while(rs.HasNext())
             {
                 Record rec = rs.GetNext();
-                valueRecord.Construct((CellValueRecordInterface)rec, rs, sfrh);
+                valueRecord.Construct((CellValueRecordInterface) rec, rs, sfrh);
             }
         }
         /**
@@ -303,9 +302,9 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 vra.RemoveAllCellsValuesForRow(rowIndex);
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if (e.Message.Equals("Specified rowIndex 30 is outside the allowable range (0..30)"))
+                if(e.Message.Equals("Specified rowIndex 30 is outside the allowable range (0..30)"))
                 {
                     throw new AssertionException("Identified bug 46312");
                 }
@@ -374,17 +373,17 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 this.bs = bs;
             }
-            #region RecordVisitor ��Ա
+            #region RecordVisitor ³ÉÔ±
 
             public void VisitRecord(Record r)
             {
-                if (r is MulBlankRecord)
+                if(r is MulBlankRecord)
                 {
                     MulBlankRecord mbr = (MulBlankRecord)r;
                     bs.countMulBlankRecords++;
                     bs.countBlankCells += mbr.NumColumns;
                 }
-                else if (r is BlankRecord)
+                else if(r is BlankRecord)
                 {
                     bs.countSingleBlankRecords++;
                     bs.countBlankCells++;
@@ -408,9 +407,9 @@ namespace TestCases.HSSF.Record.Aggregates
             BlankStats bs = new BlankStats();
             RecordVisitor rv = new RecordVisitor1(bs);
 
-            for (int rowIx = firstRow; rowIx <= lastRow; rowIx++)
+            for(int rowIx = firstRow; rowIx <= lastRow; rowIx++)
             {
-                if (valueRecord.RowHasCells(rowIx))
+                if(valueRecord.RowHasCells(rowIx))
                 {
                     valueRecord.VisitCellsForRow(rowIx, rv);
                 }

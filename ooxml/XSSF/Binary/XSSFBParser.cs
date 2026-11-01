@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -75,8 +75,8 @@ namespace NPOI.XSSF.Binary
             if((b1 >> 7 & 1) == 1)
             {
                 sbyte b2 = (sbyte)is1.ReadByte();
-                b1 &= unchecked((sbyte)~(1<<7)); //unset highest bit
-                b2 &= unchecked((sbyte)~(1<<7)); //unset highest bit (if it exists?)
+                b1 &= unchecked((sbyte) ~(1<<7)); //unset highest bit
+                b2 &= unchecked((sbyte) ~(1<<7)); //unset highest bit (if it exists?)
                 recordId = ((int) b2 << 7)+(int) b1;
             }
             else
@@ -91,7 +91,7 @@ namespace NPOI.XSSF.Binary
             {
                 sbyte b = (sbyte)is1.ReadByte();
                 halt = (b >> 7 & 1) == 0; //if highest bit !=1 then continue
-                b &= unchecked((sbyte)~(1<<7));
+                b &= unchecked((sbyte) ~(1<<7));
                 recordLength += (int) b << (i*7); //multiply by 128^i
                 i++;
 
@@ -125,4 +125,3 @@ namespace NPOI.XSSF.Binary
 
     }
 }
-

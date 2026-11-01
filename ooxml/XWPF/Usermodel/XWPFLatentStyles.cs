@@ -16,8 +16,8 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     public class XWPFLatentStyles
     {
@@ -53,9 +53,9 @@ namespace NPOI.XWPF.UserModel
         */
         public bool IsLatentStyle(String latentStyleID)
         {
-            foreach (CT_LsdException lsd in latentStyles.lsdException)
+            foreach(CT_LsdException lsd in latentStyles.lsdException)
             {
-                if (lsd.name.Equals(latentStyleID))
+                if(lsd.name.Equals(latentStyleID))
                     return true;
             }
             return false;

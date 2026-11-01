@@ -1,3 +1,9 @@
+using NPOI;
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Presentation;
+using NPOI.XSLF.UserModel;
+using NPOI.XWPF.UserModel;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,12 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using NPOI;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXmlFormats.Presentation;
-using NPOI.XSLF.UserModel;
-using NPOI.XWPF.UserModel;
-using NUnit.Framework;
 
 namespace TestCases.XSLF.UserModel
 {
@@ -36,13 +36,13 @@ namespace TestCases.XSLF.UserModel
             var first = presentation.CreateSlide();
             var second = presentation.CreateSlide();
             Assert.That(presentation.GetSlides(), Is.EqualTo(new[] { first, second }));
-            Assert.That(((ICollection<XSLFSlide>)presentation.GetSlides()).IsReadOnly, Is.True);
+            Assert.That(((ICollection<XSLFSlide>) presentation.GetSlides()).IsReadOnly, Is.True);
             Assert.That(presentation.GetCTPresentation().sldIdLst.sldId.Select(entry => entry.id),
                 Is.EqualTo(new uint[] { 256, 257 }));
 
             using var reopened = Open(Save(presentation));
             Assert.That(reopened.GetSlides().Count, Is.EqualTo(2));
-            foreach (var slide in reopened.GetSlides())
+            foreach(var slide in reopened.GetSlides())
             {
                 var layout = RelatedPart(slide.GetPackagePart(), XSLFRelation.SLIDE_LAYOUT);
                 var master = RelatedPart(layout, XSLFRelation.SLIDE_MASTER);
@@ -142,11 +142,11 @@ namespace TestCases.XSLF.UserModel
             using var reopened = Open(Save(presentation));
             Assert.That(reopened.GetSlides().Count, Is.EqualTo(slideXml.Length));
             AssertXmlEquivalent(originalPresentation, ReadXml(reopened.GetPackagePart()).OuterXml);
-            for (var i = 0; i < slideXml.Length; i++)
+            for(var i = 0; i < slideXml.Length; i++)
             {
                 AssertXmlEquivalent(slideXml[i], ReadXml(reopened.GetSlides()[i].GetPackagePart()).OuterXml);
             }
-            foreach (var part in parts)
+            foreach(var part in parts)
             {
                 var savedPart = reopened.Package.GetPart(PackagingUriHelper.CreatePartName(part.Key));
                 Assert.That(savedPart, Is.Not.Null, part.Key);
@@ -202,7 +202,7 @@ namespace TestCases.XSLF.UserModel
             const string compatibilityNamespace = "http://schemas.openxmlformats.org/markup-compatibility/2006";
             scope.SetAttribute("xmlns:future", "urn:npoi:test");
             scope.SetAttribute("Ignorable", compatibilityNamespace, "future");
-            if (!entryScope)
+            if(!entryScope)
             {
                 var alternate = document.CreateElement("mc", "AlternateContent", compatibilityNamespace);
                 alternate.InnerXml = "<mc:Choice xmlns:mc=\"" + compatibilityNamespace +
@@ -236,8 +236,8 @@ namespace TestCases.XSLF.UserModel
                 "\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\">" +
                 "<p:sp><p:txBody><a:p><a:r><a:t>" + xmlText + "</a:t></a:r></a:p></p:txBody></p:sp></p:spTree>";
             slide.Clear();
-            using (var stream = slide.GetOutputStream())
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { NewLineHandling = NewLineHandling.Entitize }))
+            using(var stream = slide.GetOutputStream())
+            using(var writer = XmlWriter.Create(stream, new XmlWriterSettings { NewLineHandling = NewLineHandling.Entitize }))
             {
                 document.Save(writer);
             }
@@ -372,7 +372,7 @@ namespace TestCases.XSLF.UserModel
             var relationshipCount = presentation.GetPackagePart().GetRelationshipsByType(XSLFRelation.SLIDE.Relation).Size;
             var originalXml = presentation.GetCTPresentation().sldIdLst.AnyElements[0].OuterXml;
 
-            if (exhausted)
+            if(exhausted)
             {
                 Assert.Throws<InvalidOperationException>(() => presentation.CreateSlide());
             }
@@ -422,7 +422,7 @@ namespace TestCases.XSLF.UserModel
             var embedded = presentation.Package.CreatePart(
                 PackagingUriHelper.CreatePartName("/ppt/embeddings/example.bin"), "application/octet-stream");
             var payload = new byte[] { 0, 1, 127, 128, 255 };
-            using (var output = embedded.GetOutputStream())
+            using(var output = embedded.GetOutputStream())
             {
                 output.Write(payload, 0, payload.Length);
             }
@@ -458,7 +458,7 @@ namespace TestCases.XSLF.UserModel
             var id = presentation.GetRelationId(slide);
             var main = presentation.GetPackagePart();
             main.RemoveRelationship(id);
-            if (external)
+            if(external)
             {
                 main.AddExternalRelationship("https://example.com/slide.xml", XSLFRelation.SLIDE.Relation, id);
             }
@@ -588,7 +588,7 @@ namespace TestCases.XSLF.UserModel
             using var package = OPCPackage.Open(new MemoryStream(Save(presentation)));
             var main = package.GetPart(PackagingUriHelper.CreatePartName(XSLFRelation.MAIN.DefaultFileName));
             main.Clear();
-            using (var output = main.GetOutputStream())
+            using(var output = main.GetOutputStream())
             {
                 var xml = Encoding.UTF8.GetBytes(
                     "<!DOCTYPE presentation [<!ENTITY example 'example'>]>" +

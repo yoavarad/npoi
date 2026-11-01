@@ -19,9 +19,9 @@ using NPOI.SS.UserModel;
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.SS.Formula;
     using NPOI.SS.Util;
+    using System;
 
     /// <summary>
     /// HSSF wrapper for a cell under evaluation
@@ -41,7 +41,7 @@ namespace NPOI.HSSF.UserModel
         public HSSFEvaluationCell(NPOI.SS.UserModel.ICell cell)
         {
             _cell = cell;
-            _evalSheet = new HSSFEvaluationSheet((HSSFSheet)cell.Sheet);
+            _evalSheet = new HSSFEvaluationSheet((HSSFSheet) cell.Sheet);
         }
         // Note -  hashCode and equals defined according to underlying cell
         public override int GetHashCode()

@@ -38,7 +38,7 @@ namespace NPOI.HSSF.Model
             EscherDgRecord dg = new EscherDgRecord();
             dg.RecordId=(EscherDgRecord.RECORD_ID);
             short dgId = FindNewDrawingGroupId();
-            dg.Options=((short)(dgId << 4));
+            dg.Options=((short) (dgId << 4));
             dg.NumShapes=(0);
             dg.LastMSOSPID=(-1);
             dgg.AddCluster(dgId, 0);
@@ -52,7 +52,7 @@ namespace NPOI.HSSF.Model
          *
          * @return a new shape id.
          */
-        
+
         public int AllocateShapeId(short drawingGroupId)
         {
             // Get the last shape id for this drawing Group.
@@ -62,7 +62,7 @@ namespace NPOI.HSSF.Model
 
             // Have we run out of shapes for this cluster?
             int newShapeId = 0;
-            if (lastShapeId % 1024 == 1023)
+            if(lastShapeId % 1024 == 1023)
             {
                 // Yes:
                 // Find the starting shape id of the next free cluster
@@ -74,19 +74,19 @@ namespace NPOI.HSSF.Model
             {
                 // No:
                 // Find the cluster for this drawing Group with free space.
-                for (int i = 0; i < dgg.FileIdClusters.Length; i++)
+                for(int i = 0; i < dgg.FileIdClusters.Length; i++)
                 {
                     EscherDggRecord.FileIdCluster c = dgg.FileIdClusters[i];
-                    if (c.DrawingGroupId == drawingGroupId)
+                    if(c.DrawingGroupId == drawingGroupId)
                     {
-                        if (c.NumShapeIdsUsed != 1024)
+                        if(c.NumShapeIdsUsed != 1024)
                         {
                             // Increment the number of shapes used for this cluster.
                             //c.IncrementShapeId();
                         }
                     }
                     // If the last shape id = -1 then we know to Find a free block;
-                    if (dg.LastMSOSPID == -1)
+                    if(dg.LastMSOSPID == -1)
                     {
                         newShapeId = FindFreeSPIDBlock();
                     }
@@ -100,7 +100,7 @@ namespace NPOI.HSSF.Model
             // Increment the total number of shapes used in the dgg.
             dgg.NumShapesSaved=(dgg.NumShapesSaved + 1);
             // Is the new shape id >= max shape id for dgg?
-            if (newShapeId >= dgg.ShapeIdMax)
+            if(newShapeId >= dgg.ShapeIdMax)
             {
                 // Yes:
                 // Set the max shape id = new shape id + 1
@@ -115,20 +115,20 @@ namespace NPOI.HSSF.Model
             return newShapeId;
         }
 
-        
+
         public short FindNewDrawingGroupId()
         {
             short dgId = 1;
-            while (DrawingGroupExists(dgId))
+            while(DrawingGroupExists(dgId))
                 dgId++;
             return dgId;
         }
 
         public bool DrawingGroupExists(short dgId)
         {
-            for (int i = 0; i < dgg.FileIdClusters.Length; i++)
+            for(int i = 0; i < dgg.FileIdClusters.Length; i++)
             {
-                if (dgg.FileIdClusters[i].DrawingGroupId == dgId)
+                if(dgg.FileIdClusters[i].DrawingGroupId == dgId)
                     return true;
             }
             return false;

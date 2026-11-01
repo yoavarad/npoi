@@ -18,9 +18,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Label Record - Read only support for strings stored directly in the cell..  Don't
@@ -59,10 +59,10 @@ namespace NPOI.HSSF.Record
             field_2_column = in1.ReadUShort();
             field_3_xf_index = in1.ReadShort();
             field_4_string_len = in1.ReadShort();
-            if (field_4_string_len > 0)
+            if(field_4_string_len > 0)
             {
-                field_5_unicode_flag = (byte)in1.ReadByte();
-                if (IsUncompressedUnicode)
+                field_5_unicode_flag = (byte) in1.ReadByte();
+                if(IsUncompressedUnicode)
                 {
                     field_6_value = in1.ReadUnicodeLEString(field_4_string_len);
                 }
@@ -77,7 +77,7 @@ namespace NPOI.HSSF.Record
                 field_5_unicode_flag = 1;
                 field_6_value = "";
             }
-            if (in1.Remaining > 0)
+            if(in1.Remaining > 0)
             {
                 logger.Log(POILogger.INFO, "LabelRecord data remains: " +in1.Remaining +
                 " : " + HexDump.ToHex(in1.ReadRemainder()));
@@ -94,13 +94,13 @@ namespace NPOI.HSSF.Record
          */
         public int Row
         {
-            get{return field_1_row;}
+            get { return field_1_row; }
             set { throw new NotSupportedException("Use LabelSST instead"); }
         }
 
         public int Column
         {
-            get{return field_2_column;}
+            get { return field_2_column; }
             set { throw new NotSupportedException("Use LabelSST instead"); }
         }
 
@@ -146,7 +146,7 @@ namespace NPOI.HSSF.Record
          * THROWS A RUNTIME EXCEPTION..  USE LABELSSTRecords.  YOU HAVE NO REASON to use LABELRecord!!
          */
 
-        public override int Serialize(int offset, byte [] data)
+        public override int Serialize(int offset, byte[] data)
         {
             throw new RecordFormatException(
                 "Label Records are supported Read ONLY...Convert to LabelSST");

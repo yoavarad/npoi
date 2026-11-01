@@ -26,7 +26,8 @@ namespace TestCases.HSSF.UserModel
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
     using TestCases.HSSF;
@@ -217,7 +218,7 @@ namespace TestCases.HSSF.UserModel
             // Change one on each
             sheetL.PrintSetup.Landscape = (true);
             sheetPM.PrintSetup.Landscape = (false);
-            sheetPM.PrintSetup.Copies = ((short)3);
+            sheetPM.PrintSetup.Copies = ((short) 3);
 
             // Check taken
             ClassicAssert.IsTrue(sheetL.PrintSetup.Landscape);
@@ -274,11 +275,11 @@ namespace TestCases.HSSF.UserModel
             wb1.Close();
 
             s = wb2.GetSheetAt(0);
-            r1 = (HSSFRow)s.GetRow(0);
-            r2 = (HSSFRow)s.GetRow(1);
-            r3 = (HSSFRow)s.GetRow(2);
-            r4 = (HSSFRow)s.GetRow(3);
-            r5 = (HSSFRow)s.GetRow(4);
+            r1 = (HSSFRow) s.GetRow(0);
+            r2 = (HSSFRow) s.GetRow(1);
+            r3 = (HSSFRow) s.GetRow(2);
+            r4 = (HSSFRow) s.GetRow(3);
+            r5 = (HSSFRow) s.GetRow(4);
 
             ClassicAssert.AreEqual(0, r1.OutlineLevel);
             ClassicAssert.AreEqual(0, r2.OutlineLevel);
@@ -324,18 +325,18 @@ namespace TestCases.HSSF.UserModel
             {
                 wb2 = HSSFTestDataSamples.WriteOutAndReadBack(wb1);
             }
-            catch (OutOfMemoryException)
+            catch(OutOfMemoryException)
             {
                 throw new AssertionException("Identified bug 39903");
             }
 
             s = wb2.GetSheetAt(0);
-            r1 = (HSSFRow)s.GetRow(0);
-            r2 = (HSSFRow)s.GetRow(1);
-            r3 = (HSSFRow)s.GetRow(2);
-            r4 = (HSSFRow)s.GetRow(3);
-            r5 = (HSSFRow)s.GetRow(4);
-            r6 = (HSSFRow)s.GetRow(5);
+            r1 = (HSSFRow) s.GetRow(0);
+            r2 = (HSSFRow) s.GetRow(1);
+            r3 = (HSSFRow) s.GetRow(2);
+            r4 = (HSSFRow) s.GetRow(3);
+            r5 = (HSSFRow) s.GetRow(4);
+            r6 = (HSSFRow) s.GetRow(5);
 
             ClassicAssert.AreEqual(0, r1.OutlineLevel);
             ClassicAssert.AreEqual(0, r2.OutlineLevel);
@@ -364,18 +365,18 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb2c = HSSFTestDataSamples.OpenSampleWorkbook("WithTwoCharts.xls");
 
             // 1 chart sheet -> data on 1st, chart on 2nd
-            ClassicAssert.IsNotNull(((HSSFSheet)wb1c.GetSheetAt(0)).DrawingPatriarch);
-            ClassicAssert.IsNotNull(((HSSFSheet)wb1c.GetSheetAt(1)).DrawingPatriarch);
-            ClassicAssert.IsFalse((((HSSFSheet)wb1c.GetSheetAt(0)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
-            ClassicAssert.IsTrue((((HSSFSheet)wb1c.GetSheetAt(1)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
+            ClassicAssert.IsNotNull(((HSSFSheet) wb1c.GetSheetAt(0)).DrawingPatriarch);
+            ClassicAssert.IsNotNull(((HSSFSheet) wb1c.GetSheetAt(1)).DrawingPatriarch);
+            ClassicAssert.IsFalse((((HSSFSheet) wb1c.GetSheetAt(0)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
+            ClassicAssert.IsTrue((((HSSFSheet) wb1c.GetSheetAt(1)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
 
             // 2 chart sheet -> data on 1st, chart on 2nd+3rd
-            ClassicAssert.IsNotNull(((HSSFSheet)wb2c.GetSheetAt(0)).DrawingPatriarch);
-            ClassicAssert.IsNotNull(((HSSFSheet)wb2c.GetSheetAt(1)).DrawingPatriarch);
-            ClassicAssert.IsNotNull(((HSSFSheet)wb2c.GetSheetAt(2)).DrawingPatriarch);
-            ClassicAssert.IsFalse((((HSSFSheet)wb2c.GetSheetAt(0)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
-            ClassicAssert.IsTrue((((HSSFSheet)wb2c.GetSheetAt(1)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
-            ClassicAssert.IsTrue((((HSSFSheet)wb2c.GetSheetAt(2)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
+            ClassicAssert.IsNotNull(((HSSFSheet) wb2c.GetSheetAt(0)).DrawingPatriarch);
+            ClassicAssert.IsNotNull(((HSSFSheet) wb2c.GetSheetAt(1)).DrawingPatriarch);
+            ClassicAssert.IsNotNull(((HSSFSheet) wb2c.GetSheetAt(2)).DrawingPatriarch);
+            ClassicAssert.IsFalse((((HSSFSheet) wb2c.GetSheetAt(0)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
+            ClassicAssert.IsTrue((((HSSFSheet) wb2c.GetSheetAt(1)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
+            ClassicAssert.IsTrue((((HSSFSheet) wb2c.GetSheetAt(2)).DrawingPatriarch as HSSFPatriarch).ContainsChart());
 
             wb2c.Close();
             wb1c.Close();
@@ -445,7 +446,7 @@ namespace TestCases.HSSF.UserModel
             s.Sheet.VisitContainedRecords(rc, 0);
             Record[] recs = rc.Records;
             int nRecs = recs.Length;
-            if (recs[nRecs - 2] is PasswordRecord && recs[nRecs - 5] is DimensionsRecord)
+            if(recs[nRecs - 2] is PasswordRecord && recs[nRecs - 5] is DimensionsRecord)
             {
                 Assert.Fail("Identified bug 47363a - PASSWORD after DIMENSION");
             }
@@ -466,7 +467,7 @@ namespace TestCases.HSSF.UserModel
         }
         private void ConfirmRecordClass(Record[] recs, int index, Type cls)
         {
-            if (recs.Length <= index)
+            if(recs.Length <= index)
             {
                 throw new AssertionException("Expected (" + cls.Name + ") at index "
                         + index + " but array length is " + recs.Length + ".");
@@ -492,10 +493,10 @@ namespace TestCases.HSSF.UserModel
             {
                 sheet.AddValidationData(dv);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 String expMsg = "Unexpected (NPOI.HSSF.Record.PasswordRecord) while looking for DV Table insert pos";
-                if (expMsg.Equals(e.Message))
+                if(expMsg.Equals(e.Message))
                 {
                     Assert.Fail("Identified bug 47363b");
                 }
@@ -504,12 +505,12 @@ namespace TestCases.HSSF.UserModel
             }
             TestCases.HSSF.UserModel.RecordInspector.RecordCollector rc;
             rc = new RecordInspector.RecordCollector();
-            ((HSSFSheet)sheet).Sheet.VisitContainedRecords(rc, 0);
+            ((HSSFSheet) sheet).Sheet.VisitContainedRecords(rc, 0);
             int nRecsWithProtection = rc.Records.Length;
 
             sheet.ProtectSheet(null);
             rc = new RecordInspector.RecordCollector();
-            ((HSSFSheet)sheet).Sheet.VisitContainedRecords(rc, 0);
+            ((HSSFSheet) sheet).Sheet.VisitContainedRecords(rc, 0);
             int nRecsWithoutProtection = rc.Records.Length;
 
             ClassicAssert.AreEqual(4, nRecsWithProtection - nRecsWithoutProtection);
@@ -539,7 +540,7 @@ namespace TestCases.HSSF.UserModel
                 sheet.SetZoom(0);
                 Assert.Fail("Should catch Exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Numerator must be greater than 0 and less than 65536", e.Message);
             }
@@ -548,7 +549,7 @@ namespace TestCases.HSSF.UserModel
                 sheet.SetZoom(65536);
                 Assert.Fail("Should catch Exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Numerator must be greater than 0 and less than 65536", e.Message);
             }
@@ -557,7 +558,7 @@ namespace TestCases.HSSF.UserModel
                 sheet.SetZoom(2, 0);
                 Assert.Fail("Should catch Exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Denominator must be greater than 0 and less than 65536", e.Message);
             }
@@ -566,7 +567,7 @@ namespace TestCases.HSSF.UserModel
                 sheet.SetZoom(2, 65536);
                 Assert.Fail("Should catch Exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Denominator must be greater than 0 and less than 65536", e.Message);
             }
@@ -592,10 +593,10 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(1, sheet.ColumnBreaks.Length, "1 column page break");
 
             ClassicAssert.IsTrue(sheet.IsRowBroken(22), "No row page break");
-            ClassicAssert.IsTrue(sheet.IsColumnBroken((short)4), "No column page break");
+            ClassicAssert.IsTrue(sheet.IsColumnBroken((short) 4), "No column page break");
 
             sheet.SetRowBreak(10);
-            sheet.SetColumnBreak((short)13);
+            sheet.SetColumnBreak((short) 13);
 
             ClassicAssert.AreEqual(2, sheet.RowBreaks.Length, "row breaks number");
             ClassicAssert.AreEqual(2, sheet.ColumnBreaks.Length, "column breaks number");
@@ -606,7 +607,7 @@ namespace TestCases.HSSF.UserModel
             sheet = wb2.GetSheetAt(0);
 
             ClassicAssert.IsTrue(sheet.IsRowBroken(22), "No row page break");
-            ClassicAssert.IsTrue(sheet.IsColumnBroken((short)4), "No column page break");
+            ClassicAssert.IsTrue(sheet.IsColumnBroken((short) 4), "No column page break");
 
             ClassicAssert.AreEqual(2, sheet.RowBreaks.Length, "row breaks number");
             ClassicAssert.AreEqual(2, sheet.ColumnBreaks.Length, "column breaks number");
@@ -673,7 +674,7 @@ namespace TestCases.HSSF.UserModel
             //try to Add 5 empty rows to a new sheet
             HSSFWorkbook wb1 = new HSSFWorkbook();
             NPOI.SS.UserModel.ISheet sheet = wb1.CreateSheet();
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
                 sheet.CreateRow(i);
             }
@@ -685,7 +686,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb2 = HSSFTestDataSamples.OpenSampleWorkbook("Simple.xls");
 
             sheet = wb2.GetSheetAt(0);
-            for (int i = 3; i < 10; i++)
+            for(int i = 3; i < 10; i++)
                 sheet.CreateRow(i);
 
             HSSFTestDataSamples.WriteOutAndReadBack(wb2).Close();
@@ -860,7 +861,7 @@ namespace TestCases.HSSF.UserModel
             int[] ref1 = { 365, 548, 731, 914, 1097, 1280, 1462, 1645, 1828, 2011, 2194, 2377, 2560, 2742, 2925, 3108, 3291, 3474, 3657 };
 
             ISheet sh = wb1.GetSheetAt(0);
-            for (char i = 'A'; i <= 'S'; i++)
+            for(char i = 'A'; i <= 'S'; i++)
             {
                 int idx = i - 'A';
                 double w = sh.GetColumnWidth(idx);
@@ -870,7 +871,7 @@ namespace TestCases.HSSF.UserModel
             //the second sheet doesn't have overridden column widths
             sh = wb1.GetSheetAt(1);
             double def_width = sh.DefaultColumnWidth;
-            for (char i = 'A'; i <= 'S'; i++)
+            for(char i = 'A'; i <= 'S'; i++)
             {
                 int idx = i - 'A';
                 double w = sh.GetColumnWidth(idx);
@@ -888,7 +889,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(256 * 10, sh.GetColumnWidth(0));
             ClassicAssert.AreEqual(256 * 10, sh.GetColumnWidth(1));
             ClassicAssert.AreEqual(256 * 10, sh.GetColumnWidth(2));
-            for (char i = 'D'; i <= 'F'; i++)
+            for(char i = 'D'; i <= 'F'; i++)
             {
                 short w = (256 * 12);
                 sh.SetColumnWidth(i, w);
@@ -906,7 +907,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(256 * 10, sh.GetColumnWidth(1));
             ClassicAssert.AreEqual(256 * 10, sh.GetColumnWidth(2));
             //columns D-F have custom width
-            for (char i = 'D'; i <= 'F'; i++)
+            for(char i = 'D'; i <= 'F'; i++)
             {
                 short w = (256 * 12);
                 ClassicAssert.AreEqual(w, sh.GetColumnWidth(i));
@@ -933,7 +934,7 @@ namespace TestCases.HSSF.UserModel
 
             HSSFWorkbook wb2 = HSSFTestDataSamples.OpenSampleWorkbook("34775.xls");
             // second and third sheets miss DefaultColWidthRecord
-            for (int i = 1; i <= 2; i++)
+            for(int i = 1; i <= 2; i++)
             {
                 double dw = wb2.GetSheetAt(i).DefaultColumnWidth;
                 ClassicAssert.AreEqual(8, dw);
@@ -959,11 +960,11 @@ namespace TestCases.HSSF.UserModel
             IRow row = sheet.GetRow(0);
             ClassicAssert.IsNotNull(row, "Identified bug 41187 a");
 
-            ClassicAssert.AreNotEqual((short)0, row.Height, "Identified bug 41187 b");
+            ClassicAssert.AreNotEqual((short) 0, row.Height, "Identified bug 41187 b");
 
             ClassicAssert.AreEqual("Hi Excel!", row.GetCell(0).RichStringCellValue.String);
             // Check row height for 'default' flag
-            ClassicAssert.AreEqual((short)0xFF, row.Height);
+            ClassicAssert.AreEqual((short) 0xFF, row.Height);
 
             HSSFTestDataSamples.WriteOutAndReadBack(wb);
 
@@ -1027,7 +1028,7 @@ namespace TestCases.HSSF.UserModel
                 wb.CreateSheet(SAME_PREFIX + "Dyyyy"); // identical up to the 32nd char
                 Assert.Fail("Expected exception not thrown");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("sheetName 'A123456789B123456789C123456789Dyyyy' is invalid"));
             }
@@ -1132,7 +1133,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb2 = HSSFTestDataSamples.WriteOutAndReadBack(wb1);
             wb1.Close();
 
-            sh = (HSSFSheet)wb2.GetSheetAt(0);
+            sh = (HSSFSheet) wb2.GetSheetAt(0);
             ish = sh.Sheet;
             ObjRecord objRecord = (ObjRecord)ish.FindFirstRecordBySid(ObjRecord.sid);
             IList subRecords = objRecord.SubRecords;
@@ -1148,8 +1149,8 @@ namespace TestCases.HSSF.UserModel
         {
             IWorkbook workbook = new HSSFWorkbook();
             ISheet sheet = workbook.CreateSheet("Sheet 1");
-            sheet.SetColumnHidden((short)2, true);
-            ClassicAssert.IsTrue(sheet.IsColumnHidden((short)2));
+            sheet.SetColumnHidden((short) 2, true);
+            ClassicAssert.IsTrue(sheet.IsColumnHidden((short) 2));
 
             workbook.Close();
         }
@@ -1160,44 +1161,44 @@ namespace TestCases.HSSF.UserModel
             ISheet sheet = wb1.CreateSheet();
 
             //default column width measured in characters
-            sheet.DefaultColumnWidth = ((short)10);
+            sheet.DefaultColumnWidth = ((short) 10);
             ClassicAssert.AreEqual(10, sheet.DefaultColumnWidth);
             //columns A-C have default width
-            ClassicAssert.AreEqual(256 * 10, sheet.GetColumnWidth((short)0));
-            ClassicAssert.AreEqual(256 * 10, sheet.GetColumnWidth((short)1));
-            ClassicAssert.AreEqual(256 * 10, sheet.GetColumnWidth((short)2));
+            ClassicAssert.AreEqual(256 * 10, sheet.GetColumnWidth((short) 0));
+            ClassicAssert.AreEqual(256 * 10, sheet.GetColumnWidth((short) 1));
+            ClassicAssert.AreEqual(256 * 10, sheet.GetColumnWidth((short) 2));
 
             //set custom width for D-F
-            for (char i = 'D'; i <= 'F'; i++)
+            for(char i = 'D'; i <= 'F'; i++)
             {
                 //Sheet#setColumnWidth accepts the width in units of 1/256th of a character width
                 int w = 256 * 12;
-                sheet.SetColumnWidth((short)i, w);
-                ClassicAssert.AreEqual(w, sheet.GetColumnWidth((short)i));
+                sheet.SetColumnWidth((short) i, w);
+                ClassicAssert.AreEqual(w, sheet.GetColumnWidth((short) i));
             }
             //reset the default column width, columns A-C change, D-F still have custom width
-            sheet.DefaultColumnWidth = ((short)20);
+            sheet.DefaultColumnWidth = ((short) 20);
             ClassicAssert.AreEqual(20, sheet.DefaultColumnWidth);
-            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short)0));
-            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short)1));
-            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short)2));
-            for (char i = 'D'; i <= 'F'; i++)
+            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short) 0));
+            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short) 1));
+            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short) 2));
+            for(char i = 'D'; i <= 'F'; i++)
             {
                 int w = 256 * 12;
-                ClassicAssert.AreEqual(w, sheet.GetColumnWidth((short)i));
+                ClassicAssert.AreEqual(w, sheet.GetColumnWidth((short) i));
             }
 
             // check for 16-bit signed/unsigned error:
-            sheet.SetColumnWidth((short)10, 40000);
-            ClassicAssert.AreEqual(40000, sheet.GetColumnWidth((short)10));
+            sheet.SetColumnWidth((short) 10, 40000);
+            ClassicAssert.AreEqual(40000, sheet.GetColumnWidth((short) 10));
 
             //The maximum column width for an individual cell is 255 characters
             try
             {
-                sheet.SetColumnWidth((short)9, 256 * 256);
+                sheet.SetColumnWidth((short) 9, 256 * 256);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("The maximum column width for an individual cell is 255 characters.", e.Message);
             }
@@ -1208,16 +1209,16 @@ namespace TestCases.HSSF.UserModel
             sheet = wb2.GetSheetAt(0);
             ClassicAssert.AreEqual(20, sheet.DefaultColumnWidth);
             //columns A-C have default width
-            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short)0));
-            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short)1));
-            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short)2));
+            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short) 0));
+            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short) 1));
+            ClassicAssert.AreEqual(256 * 20, sheet.GetColumnWidth((short) 2));
             //columns D-F have custom width
-            for (char i = 'D'; i <= 'F'; i++)
+            for(char i = 'D'; i <= 'F'; i++)
             {
                 short w = (256 * 12);
-                ClassicAssert.AreEqual(w, sheet.GetColumnWidth((short)i));
+                ClassicAssert.AreEqual(w, sheet.GetColumnWidth((short) i));
             }
-            ClassicAssert.AreEqual(40000, sheet.GetColumnWidth((short)10));
+            ClassicAssert.AreEqual(40000, sheet.GetColumnWidth((short) 10));
 
             wb2.Close();
         }
@@ -1234,7 +1235,7 @@ namespace TestCases.HSSF.UserModel
                 sheet.ShowInPane(int.MaxValue, 3);
                 Assert.Fail("Should catch exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Maximum row number is 65535", e.Message);
             }
@@ -1312,7 +1313,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb2 = HSSFTestDataSamples.WriteOutAndReadBack(wb1);
             wb1.Close();
 
-            ClassicAssert.AreEqual(unchecked((short)0xb86b), (wb2.GetSheetAt(0) as HSSFSheet).Password);
+            ClassicAssert.AreEqual(unchecked((short) 0xb86b), (wb2.GetSheetAt(0) as HSSFSheet).Password);
             wb2.Close();
 
             HSSFWorkbook wb3 = new HSSFWorkbook();
@@ -1320,7 +1321,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb4 = HSSFTestDataSamples.WriteOutAndReadBack(wb3);
             wb3.Close();
 
-            ClassicAssert.AreEqual(unchecked((short)0xbecc), (wb4.GetSheetAt(0) as HSSFSheet).Password);
+            ClassicAssert.AreEqual(unchecked((short) 0xbecc), (wb4.GetSheetAt(0) as HSSFSheet).Password);
             wb4.Close();
         }
     }

@@ -16,20 +16,20 @@
 ==================================================================== */
 namespace NPOI.XSSF.UserModel
 {
-    using System.IO;
-    using System.Xml;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.SS;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using System;
-    using NPOI.SS;
+    using System.IO;
+    using System.Xml;
 
     public class XSSFPivotCacheDefinition : POIXMLDocumentPart
     {
 
         private CT_PivotCacheDefinition ctPivotCacheDefinition;
-        
+
         public XSSFPivotCacheDefinition()
             : base()
         {
@@ -69,7 +69,7 @@ namespace NPOI.XSSF.UserModel
                 XmlDocument xmldoc = ConvertStreamToXml(is1);
                 ctPivotCacheDefinition = CT_PivotCacheDefinition.Parse(xmldoc.DocumentElement, NamespaceManager);
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -85,9 +85,9 @@ namespace NPOI.XSSF.UserModel
 
         private void CreateDefaultValues()
         {
-            ctPivotCacheDefinition.createdVersion = (byte)XSSFPivotTable.CREATED_VERSION;
-            ctPivotCacheDefinition.minRefreshableVersion = (byte)XSSFPivotTable.MIN_REFRESHABLE_VERSION;
-            ctPivotCacheDefinition.refreshedVersion = (byte)XSSFPivotTable.UPDATED_VERSION;
+            ctPivotCacheDefinition.createdVersion = (byte) XSSFPivotTable.CREATED_VERSION;
+            ctPivotCacheDefinition.minRefreshableVersion = (byte) XSSFPivotTable.MIN_REFRESHABLE_VERSION;
+            ctPivotCacheDefinition.refreshedVersion = (byte) XSSFPivotTable.UPDATED_VERSION;
             ctPivotCacheDefinition.refreshedBy = (/*setter*/"NPOI");
             ctPivotCacheDefinition.refreshedDate = DateTime.Now.ToOADate();
             ctPivotCacheDefinition.refreshOnLoad = (/*setter*/true);
@@ -134,23 +134,25 @@ namespace NPOI.XSSF.UserModel
             String ref1 = wsSource.@ref;
             String name = wsSource.name;
 
-            if (ref1 == null && name == null)
+            if(ref1 == null && name == null)
                 throw new ArgumentException("Pivot cache must reference an area, named range, or table.");
 
             // this is the XML format, so tell the reference that.
-            if (ref1 != null) return new AreaReference(ref1, SpreadsheetVersion.EXCEL2007);
+            if(ref1 != null)
+                return new AreaReference(ref1, SpreadsheetVersion.EXCEL2007);
 
-            if (name != null)
+            if(name != null)
             {
                 // named range or table?
                 IName range = wb.GetName(name);
-                if (range != null) return new AreaReference(range.RefersToFormula, SpreadsheetVersion.EXCEL2007);
+                if(range != null)
+                    return new AreaReference(range.RefersToFormula, SpreadsheetVersion.EXCEL2007);
                 // not a named range, check for a table.
                 // do this second, as tables are sheet-specific, but named ranges are not, and may not have a sheet name given.
                 XSSFSheet sheet = (XSSFSheet)wb.GetSheet(wsSource.sheet);
-                foreach (XSSFTable table in sheet.GetTables())
+                foreach(XSSFTable table in sheet.GetTables())
                 {
-                    if (table.Name.Equals(name))
+                    if(table.Name.Equals(name))
                     { //case-sensitive?
                         return new AreaReference(table.StartCellReference, table.EndCellReference, SpreadsheetVersion.EXCEL2007);
                     }
@@ -176,7 +178,7 @@ namespace NPOI.XSSF.UserModel
             int columnEnd = lastCell.Col;
             IRow row = sheet.GetRow(firstCell.Row);
             CT_CacheFields cFields;
-            if (ctPivotCacheDefinition.cacheFields != null)
+            if(ctPivotCacheDefinition.cacheFields != null)
             {
                 cFields = ctPivotCacheDefinition.cacheFields;
             }
@@ -185,10 +187,10 @@ namespace NPOI.XSSF.UserModel
                 cFields = ctPivotCacheDefinition.AddNewCacheFields();
             }
             //For each column, create a cache field and give it en empty sharedItems
-            for (int i = columnStart; i <= columnEnd; i++)
+            for(int i = columnStart; i <= columnEnd; i++)
             {
                 CT_CacheField cf = cFields.AddNewCacheField();
-                if (i == columnEnd)
+                if(i == columnEnd)
                 {
                     cFields.count = (/*setter*/cFields.SizeOfCacheFieldArray());
                 }

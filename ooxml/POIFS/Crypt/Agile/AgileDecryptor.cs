@@ -16,18 +16,18 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Agile
 {
-    using System;
-    using System.IO;
     using NPOI.POIFS.Crypt;
-
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
     using Org.BouncyCastle.X509;
+    using System;
+    using System.IO;
 
     /**
      * Decryptor implementation for Agile Encryption
      */
-    public class AgileDecryptor : Decryptor {
+    public class AgileDecryptor : Decryptor
+    {
         private long _length = -1;
 
         protected internal static byte[] kVerifierInputBlock;
@@ -58,13 +58,14 @@ namespace NPOI.POIFS.Crypt.Agile
         protected internal AgileDecryptor(AgileEncryptionInfoBuilder builder)
             : base(builder)
         {
-            
+
         }
 
         /**
          * Set decryption password
          */
-        public override bool VerifyPassword(String password) {
+        public override bool VerifyPassword(String password)
+        {
             AgileEncryptionVerifier ver = (AgileEncryptionVerifier)builder.GetVerifier();
             AgileEncryptionHeader header = (AgileEncryptionHeader)builder.GetHeader();
             HashAlgorithm hashAlgo = header.HashAlgorithm;
@@ -156,12 +157,15 @@ namespace NPOI.POIFS.Crypt.Agile
             byte[] hmacValue = cipher.DoFinal(header.GetEncryptedHmacValue());
             hmacValue = CryptoFunctions.GetBlock0(hmacValue, hashAlgo.hashSize);
 
-            if (Arrays.Equals(verifierHashDec, verifierHash)) {
+            if(Arrays.Equals(verifierHashDec, verifierHash))
+            {
                 SetSecretKey(secretKey);
                 SetIntegrityHmacKey(hmacKey);
                 SetIntegrityHmacValue(hmacValue);
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }
@@ -177,7 +181,8 @@ namespace NPOI.POIFS.Crypt.Agile
          * @return true, when the data can be successfully decrypted with the given private key
          * @throws GeneralSecurityException
          */
-        public bool VerifyPassword(KeyPair keyPair, X509Certificate x509) {
+        public bool VerifyPassword(KeyPair keyPair, X509Certificate x509)
+        {
             AgileEncryptionVerifier ver = (AgileEncryptionVerifier)builder.GetVerifier();
             AgileEncryptionHeader header = (AgileEncryptionHeader)builder.GetHeader();
             HashAlgorithm hashAlgo = header.HashAlgorithm;
@@ -185,13 +190,16 @@ namespace NPOI.POIFS.Crypt.Agile
             int blockSize = header.BlockSize;
 
             AgileEncryptionVerifier.AgileCertificateEntry ace = null;
-            foreach (AgileEncryptionVerifier.AgileCertificateEntry aceEntry in ver.GetCertificates()) {
-                if (x509.Equals(aceEntry.x509)) {
+            foreach(AgileEncryptionVerifier.AgileCertificateEntry aceEntry in ver.GetCertificates())
+            {
+                if(x509.Equals(aceEntry.x509))
+                {
                     ace = aceEntry;
                     break;
                 }
             }
-            if (ace == null) return false;
+            if(ace == null)
+                return false;
 
             Cipher cipher = Cipher.GetInstance("RSA");
             cipher.Init(Cipher.DECRYPT_MODE, keyPair.getPrivate());
@@ -213,23 +221,29 @@ namespace NPOI.POIFS.Crypt.Agile
             hmacValue = CryptoFunctions.GetBlock0(hmacValue, hashAlgo.hashSize);
 
 
-            if (Arrays.Equals(ace.certVerifier, certVerifier)) {
+            if(Arrays.Equals(ace.certVerifier, certVerifier))
+            {
                 SetSecretKey(secretKey);
                 SetIntegrityHmacKey(hmacKey);
                 SetIntegrityHmacValue(hmacValue);
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
         }
 
-        protected internal static int GetNextBlockSize(int inputLen, int blockSize) {
+        protected internal static int GetNextBlockSize(int inputLen, int blockSize)
+        {
             int FillSize;
-            for (FillSize = blockSize; FillSize < inputLen; FillSize += blockSize) ;
+            for(FillSize = blockSize; FillSize < inputLen; FillSize += blockSize)
+                ;
             return FillSize;
         }
 
-        protected internal static byte[] hashInput(IEncryptionInfoBuilder builder, byte[] pwHash, byte[] blockKey, byte[] inputKey, int cipherMode) {
+        protected internal static byte[] hashInput(IEncryptionInfoBuilder builder, byte[] pwHash, byte[] blockKey, byte[] inputKey, int cipherMode)
+        {
             EncryptionVerifier ver = builder.GetVerifier();
             AgileDecryptor dec = (AgileDecryptor)builder.GetDecryptor();
             int keySize = dec.GetKeySizeInBytes();
@@ -243,16 +257,20 @@ namespace NPOI.POIFS.Crypt.Agile
             Cipher cipher = CryptoFunctions.GetCipher(skey, ver.CipherAlgorithm, ver.ChainingMode, iv, cipherMode);
             byte[] hashFinal;
 
-            try {
+            try
+            {
                 inputKey = CryptoFunctions.GetBlock0(inputKey, GetNextBlockSize(inputKey.Length, blockSize));
                 hashFinal = cipher.DoFinal(inputKey);
                 return hashFinal;
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 throw new EncryptedDocumentException(e);
             }
         }
 
-        public override InputStream GetDataStream(DirectoryNode dir) {
+        public override InputStream GetDataStream(DirectoryNode dir)
+        {
             DocumentInputStream dis = dir.CreateDocumentInputStream(DEFAULT_POIFS_ENTRY);
             _length = dis.ReadLong();
 
@@ -261,17 +279,20 @@ namespace NPOI.POIFS.Crypt.Agile
             return stream;
         }
 
-        public override long GetLength() {
-            if (_length == -1) throw new InvalidOperationException("EcmaDecryptor.DataStream was not called");
+        public override long GetLength()
+        {
+            if(_length == -1)
+                throw new InvalidOperationException("EcmaDecryptor.DataStream was not called");
             return _length;
         }
 
 
-        protected internal static Cipher InitCipherForBlock(Cipher existing, int block, bool lastChunk, 
+        protected internal static Cipher InitCipherForBlock(Cipher existing, int block, bool lastChunk,
             IEncryptionInfoBuilder builder, ISecretKey skey, int encryptionMode)
         {
             EncryptionHeader header = builder.GetHeader();
-            if (existing == null || lastChunk) {
+            if(existing == null || lastChunk)
+            {
                 String pAdding = (lastChunk ? "PKCS5PAdding" : "NoPAdding");
                 existing = CryptoFunctions.GetCipher(skey, header.CipherAlgorithm, header.ChainingMode, header.KeySalt, encryptionMode, pAdding);
             }
@@ -281,7 +302,7 @@ namespace NPOI.POIFS.Crypt.Agile
             byte[] iv = CryptoFunctions.GenerateIv(header.HashAlgorithm, header.KeySalt, blockKey, header.BlockSize);
 
             AlgorithmParameterSpec aps;
-            if (header.CipherAlgorithm == CipherAlgorithm.rc2)
+            if(header.CipherAlgorithm == CipherAlgorithm.rc2)
             {
                 aps = new RC2ParameterSpec(skey.GetEncoded().Length * 8, iv);
             }
@@ -309,7 +330,8 @@ namespace NPOI.POIFS.Crypt.Agile
          * that the StreamSize field of the EncryptedPackage field specifies the number of bytes of
          * unencrypted data as specified in section 2.3.4.4.
          */
-        private sealed class AgileCipherInputStream : ChunkedCipherInputStream {
+        private sealed class AgileCipherInputStream : ChunkedCipherInputStream
+        {
 
             public AgileCipherInputStream(DocumentInputStream stream, long size,
                 IEncryptionInfoBuilder builder, AgileDecryptor decryptor)

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,13 +23,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Sheets Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Sheets ctObj = new CT_Sheets();
             ctObj.sheet = new List<CT_Sheet>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "sheet")
+                if(childNode.LocalName == "sheet")
                     ctObj.sheet.Add(CT_Sheet.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -41,9 +41,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.sheet != null)
+            if(this.sheet != null)
             {
-                foreach (CT_Sheet x in this.sheet)
+                foreach(CT_Sheet x in this.sheet)
                 {
                     x.Write(sw, "sheet");
                 }
@@ -53,7 +53,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public CT_Sheet AddNewSheet()
         {
-            if (this.sheetField == null)
+            if(this.sheetField == null)
                 this.sheetField = new List<CT_Sheet>();
             CT_Sheet newsheet = new CT_Sheet();
             this.sheetField.Add(newsheet);
@@ -61,13 +61,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public void RemoveSheet(int index)
         {
-            if (sheetField == null)
+            if(sheetField == null)
                 return;
             sheetField.RemoveAt(index);
         }
         public CT_Sheet InsertNewSheet(int index)
         {
-            if (this.sheetField == null)
+            if(this.sheetField == null)
                 this.sheetField = new List<CT_Sheet>();
             CT_Sheet newsheet = new CT_Sheet();
             this.sheetField.Insert(index, newsheet);
@@ -75,7 +75,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public CT_Sheet GetSheetArray(int index)
         {
-            if (this.sheetField == null)
+            if(this.sheetField == null)
                 return null;
 
             return this.sheetField[index];

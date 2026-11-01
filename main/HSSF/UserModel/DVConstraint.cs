@@ -17,15 +17,15 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.Model;
-    using NPOI.SS.Formula.PTG;
+    using NPOI.HSSF.Record;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
-    using System.Text;
     using NPOI.SS.Util;
+    using System;
     using System.Globalization;
-using NPOI.HSSF.Record;
+    using System.Text;
 
     /**
      * 
@@ -42,8 +42,8 @@ using NPOI.HSSF.Record;
 
             public FormulaPair(Ptg[] formula1, Ptg[] formula2)
             {
-                _formula1 = (formula1 == null) ? null : (Ptg[])formula1.Clone();
-                _formula2 = (formula2 == null) ? null : (Ptg[])formula2.Clone();
+                _formula1 = (formula1 == null) ? null : (Ptg[]) formula1.Clone();
+                _formula2 = (formula2 == null) ? null : (Ptg[]) formula2.Clone();
             }
             public Ptg[] Formula1
             {
@@ -85,7 +85,7 @@ using NPOI.HSSF.Record;
             _formula2 = formulaB;
             _value1 = value1;
             _value2 = value2;
-            _explicitListValues = (excplicitListValues == null) ? null : (String[])excplicitListValues.Clone();
+            _explicitListValues = (excplicitListValues == null) ? null : (String[]) excplicitListValues.Clone();
         }
 
 
@@ -115,10 +115,10 @@ using NPOI.HSSF.Record;
         public static DVConstraint CreateNumericConstraint(int validationType, int comparisonOperator,
                 String expr1, String expr2)
         {
-            switch (validationType)
+            switch(validationType)
             {
                 case ValidationType.ANY:
-                    if (expr1 != null || expr2 != null)
+                    if(expr1 != null || expr2 != null)
                     {
                         throw new ArgumentException("expr1 and expr2 must be null for validation type 'any'");
                     }
@@ -126,7 +126,7 @@ using NPOI.HSSF.Record;
                 case ValidationType.DECIMAL:
                 case ValidationType.INTEGER:
                 case ValidationType.TEXT_LENGTH:
-                    if (expr1 == null)
+                    if(expr1 == null)
                     {
                         throw new ArgumentException("expr1 must be supplied");
                     }
@@ -168,7 +168,7 @@ using NPOI.HSSF.Record;
          */
         public static DVConstraint CreateTimeConstraint(int comparisonOperator, String expr1, String expr2)
         {
-            if (expr1 == null)
+            if(expr1 == null)
             {
                 throw new ArgumentException("expr1 must be supplied");
             }
@@ -199,7 +199,7 @@ using NPOI.HSSF.Record;
          */
         public static DVConstraint CreateDateConstraint(int comparisonOperator, String expr1, String expr2, String dateFormat)
         {
-            if (expr1 == null)
+            if(expr1 == null)
             {
                 throw new ArgumentException("expr1 must be supplied");
             }
@@ -228,15 +228,15 @@ using NPOI.HSSF.Record;
          */
         private static String GetFormulaFromTextExpression(String textExpr)
         {
-            if (textExpr == null)
+            if(textExpr == null)
             {
                 return null;
             }
-            if (textExpr.Length < 1)
+            if(textExpr.Length < 1)
             {
                 throw new ArgumentException("Empty string is not a valid formula/value expression");
             }
-            if (textExpr[0] == '=')
+            if(textExpr[0] == '=')
             {
                 return textExpr.Substring(1);
             }
@@ -249,7 +249,7 @@ using NPOI.HSSF.Record;
          */
         private static Double ConvertNumber(String numberStr)
         {
-            if (numberStr == null)
+            if(numberStr == null)
             {
                 return Double.NaN;
             }
@@ -257,7 +257,7 @@ using NPOI.HSSF.Record;
             {
                 return double.Parse(numberStr, CultureInfo.CurrentCulture);
             }
-            catch (FormatException)
+            catch(FormatException)
             {
                 throw new InvalidOperationException("The supplied text '" + numberStr
                         + "' could not be parsed as a number");
@@ -269,7 +269,7 @@ using NPOI.HSSF.Record;
          */
         private static Double ConvertTime(String timeStr)
         {
-            if (timeStr == null)
+            if(timeStr == null)
             {
                 return Double.NaN;
             }
@@ -281,12 +281,12 @@ using NPOI.HSSF.Record;
          */
         private static Double ConvertDate(String dateStr, SimpleDateFormat dateFormat)
         {
-            if (dateStr == null)
+            if(dateStr == null)
             {
                 return Double.NaN;
             }
             DateTime dateVal;
-            if (dateFormat == null)
+            if(dateFormat == null)
             {
                 dateVal = HSSFDateUtil.ParseYYYYMMDDDate(dateStr);
             }
@@ -296,7 +296,7 @@ using NPOI.HSSF.Record;
                 {
                     dateVal = DateTime.Parse(dateStr, CultureInfo.CurrentCulture);
                 }
-                catch (FormatException e)
+                catch(FormatException e)
                 {
                     throw new InvalidOperationException("Failed to parse date '" + dateStr
                             + "' using specified format '" + dateFormat + "'", e);
@@ -307,7 +307,7 @@ using NPOI.HSSF.Record;
 
         public static DVConstraint CreateCustomFormulaConstraint(String formula)
         {
-            if (formula == null)
+            if(formula == null)
             {
                 throw new ArgumentException("formula must be supplied");
             }
@@ -365,7 +365,7 @@ using NPOI.HSSF.Record;
             }
             set
             {
-                if (_validationType != ValidationType.LIST)
+                if(_validationType != ValidationType.LIST)
                 {
                     throw new InvalidOperationException("Cannot setExplicitListValues on non-list constraint");
                 }
@@ -448,7 +448,7 @@ using NPOI.HSSF.Record;
         {
             Ptg[] formula1;
             Ptg[] formula2;
-            if (IsListValidationType)
+            if(IsListValidationType)
             {
                 formula1 = CreateListFormula(sheet);
                 formula2 = Ptg.EMPTY_PTG_ARRAY;
@@ -464,19 +464,19 @@ using NPOI.HSSF.Record;
         private Ptg[] CreateListFormula(HSSFSheet sheet)
         {
 
-            if (_explicitListValues == null)
+            if(_explicitListValues == null)
             {
                 IWorkbook wb = sheet.Workbook;
                 // formula is Parsed with slightly different RVA rules: (root node type must be 'reference')
-                return HSSFFormulaParser.Parse(_formula1, (HSSFWorkbook)wb, FormulaType.DataValidationList, wb.GetSheetIndex(sheet));
+                return HSSFFormulaParser.Parse(_formula1, (HSSFWorkbook) wb, FormulaType.DataValidationList, wb.GetSheetIndex(sheet));
                 // To do: Excel places restrictions on the available operations within a list formula.
                 // Some things like union and intersection are not allowed.
             }
             // explicit list was provided
             StringBuilder sb = new StringBuilder(_explicitListValues.Length * 16);
-            for (int i = 0; i < _explicitListValues.Length; i++)
+            for(int i = 0; i < _explicitListValues.Length; i++)
             {
-                if (i > 0)
+                if(i > 0)
                 {
                     sb.Append('\0'); // list delimiter is the nul char
                 }
@@ -492,25 +492,25 @@ using NPOI.HSSF.Record;
          */
         private static Ptg[] ConvertDoubleFormula(String formula, Double value, HSSFSheet sheet)
         {
-            if (formula == null)
+            if(formula == null)
             {
-                if (double.IsNaN(value))
+                if(double.IsNaN(value))
                 {
                     return Ptg.EMPTY_PTG_ARRAY;
                 }
                 return new Ptg[] { new NumberPtg(value), };
             }
-            if (!double.IsNaN(value))
+            if(!double.IsNaN(value))
             {
                 throw new InvalidOperationException("Both formula and value cannot be present");
             }
             IWorkbook wb = sheet.Workbook;
-            return HSSFFormulaParser.Parse(formula, (HSSFWorkbook)wb, FormulaType.Cell, wb.GetSheetIndex(sheet));
+            return HSSFFormulaParser.Parse(formula, (HSSFWorkbook) wb, FormulaType.Cell, wb.GetSheetIndex(sheet));
         }
 
         internal static DVConstraint CreateDVConstraint(DVRecord dvRecord, IFormulaRenderingWorkbook book)
         {
-            switch (dvRecord.DataType)
+            switch(dvRecord.DataType)
             {
                 case ValidationType.ANY:
                     return new DVConstraint(ValidationType.ANY, dvRecord.ConditionOperator, null, null, double.NaN, double.NaN, null);
@@ -524,14 +524,14 @@ using NPOI.HSSF.Record;
                     return new DVConstraint(dvRecord.DataType, dvRecord.ConditionOperator, pair1.formula(),
                             pair2.formula(), pair1.Value, pair2.Value, null);
                 case ValidationType.LIST:
-                    if (dvRecord.ListExplicitFormula)
+                    if(dvRecord.ListExplicitFormula)
                     {
                         String values = toFormulaString(dvRecord.Formula1, book).AsString();
-                        if (values.StartsWith('"'))
+                        if(values.StartsWith('"'))
                         {
                             values = values.Substring(1);
                         }
-                        if (values.EndsWith('"'))
+                        if(values.EndsWith('"'))
                         {
                             values = values.Substring(0, values.Length - 1);
                         }
@@ -564,7 +564,7 @@ using NPOI.HSSF.Record;
             {
                 get
                 {
-                    if (_value == null)
+                    if(_value == null)
                     {
                         return double.NaN;
                     }
@@ -574,11 +574,11 @@ using NPOI.HSSF.Record;
 
             public String AsString()
             {
-                if (_formula != null)
+                if(_formula != null)
                 {
                     return _formula;
                 }
-                if (_value != null)
+                if(_value != null)
                 {
                     return _value;
                 }
@@ -589,10 +589,10 @@ using NPOI.HSSF.Record;
         private static FormulaValuePair toFormulaString(Ptg[] ptgs, IFormulaRenderingWorkbook book)
         {
             FormulaValuePair pair = new FormulaValuePair();
-            if (ptgs != null && ptgs.Length > 0)
+            if(ptgs != null && ptgs.Length > 0)
             {
                 String aString = FormulaRenderer.ToFormulaString(book, ptgs);
-                if (ptgs.Length == 1 && ptgs[0].GetType() == typeof(NumberPtg))
+                if(ptgs.Length == 1 && ptgs[0].GetType() == typeof(NumberPtg))
                 {
                     pair._value = aString;
                 }

@@ -17,9 +17,10 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Test case for TRUNC()
@@ -44,21 +45,21 @@ namespace TestCases.SS.Formula.Functions
         {
             ValueEval[] args = { new NumberEval(200), new NumberEval(2) };
             ValueEval result = NumericFunction.TRUNC.Evaluate(args, -1, (short)-1);
-            ClassicAssert.AreEqual((new NumberEval(200d)).NumberValue, ((NumberEval)result).NumberValue, "TRUNC");
+            ClassicAssert.AreEqual((new NumberEval(200d)).NumberValue, ((NumberEval) result).NumberValue, "TRUNC");
         }
         [Test]
         public void TestTRuncWithDecimalNumber()
         {
             ValueEval[] args = { new NumberEval(2.612777), new NumberEval(3) };
             ValueEval result = NumericFunction.TRUNC.Evaluate(args, -1, (short)-1);
-            ClassicAssert.AreEqual((new NumberEval(2.612d)).NumberValue, ((NumberEval)result).NumberValue, "TRUNC");
+            ClassicAssert.AreEqual((new NumberEval(2.612d)).NumberValue, ((NumberEval) result).NumberValue, "TRUNC");
         }
         [Test]
         public void TestTRuncWithDecimalNumberOneArg()
         {
             ValueEval[] args = { new NumberEval(2.612777) };
             ValueEval result = NumericFunction.TRUNC.Evaluate(args, -1, (short)-1);
-            ClassicAssert.AreEqual((new NumberEval(2d)).NumberValue, ((NumberEval)result).NumberValue, "TRUNC");
+            ClassicAssert.AreEqual((new NumberEval(2d)).NumberValue, ((NumberEval) result).NumberValue, "TRUNC");
         }
 
         [Test]

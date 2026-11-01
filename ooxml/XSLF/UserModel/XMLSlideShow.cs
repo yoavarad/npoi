@@ -1,12 +1,12 @@
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Presentation;
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXmlFormats.Presentation;
-using NPOI.Util;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -88,29 +88,29 @@ namespace NPOI.XSLF.UserModel
         public XSLFSlide CreateSlide(XSLFSlideLayout layout)
         {
             EnsureCanCreateSlide();
-            if (layout == null)
+            if(layout == null)
             {
                 throw new ArgumentNullException(nameof(layout));
             }
-            if (!ReferenceEquals(layout.GetPackagePart().Package, Package) ||
+            if(!ReferenceEquals(layout.GetPackagePart().Package, Package) ||
                 !ReferenceEquals(layout.GetSlideShow(), this))
             {
                 throw new ArgumentException("The slide layout must belong to this presentation.", nameof(layout));
             }
             var master = layout.GetSlideMaster();
-            if (!GetSlideMasters().Contains(master) || !master.GetSlideLayouts().Contains(layout))
+            if(!GetSlideMasters().Contains(master) || !master.GetSlideLayouts().Contains(layout))
             {
                 throw new ArgumentException("The layout must be listed by a referenced slide master.", nameof(layout));
             }
             var entries = presentation.sldIdLst?.sldId;
             var maxId = entries == null || entries.Count == 0 ? 255U : entries.Max(entry => entry.id);
-            foreach (var element in presentation.sldIdLst?.AnyElements ?? Array.Empty<XmlElement>())
+            foreach(var element in presentation.sldIdLst?.AnyElements ?? Array.Empty<XmlElement>())
             {
                 // Every compatibility branch must remain collision-free, not just the selected branch.
-                foreach (XmlElement reference in element.GetElementsByTagName("sldId", CT_Presentation.Namespace))
+                foreach(XmlElement reference in element.GetElementsByTagName("sldId", CT_Presentation.Namespace))
                 {
                     var value = reference.GetAttribute("id");
-                    if (!uint.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var id) ||
+                    if(!uint.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var id) ||
                         id < 256 || id > int.MaxValue)
                     {
                         throw new POIXMLException("Invalid preserved presentation slide identifier: " + value);
@@ -118,24 +118,23 @@ namespace NPOI.XSLF.UserModel
                     maxId = Math.Max(maxId, id);
                 }
             }
-            if (maxId >= int.MaxValue)
+            if(maxId >= int.MaxValue)
             {
                 throw new InvalidOperationException("No more PresentationML slide identifiers are available.");
             }
             var partNumber = GetNextPartNumber(XSLFRelation.SLIDE, 1);
-            if (partNumber < 0)
+            if(partNumber < 0)
             {
                 throw new InvalidOperationException("No free slide part name is available.");
             }
 
             var slide = (XSLFSlide)CreateRelationship(XSLFRelation.SLIDE, XSLFFactory.GetInstance(), partNumber);
             slide.AddRelation(null, XSLFRelation.SLIDE_LAYOUT, layout);
-            if (presentation.sldIdLst == null)
+            if(presentation.sldIdLst == null)
             {
                 presentation.sldIdLst = new CT_SlideIdList();
             }
-            presentation.sldIdLst.sldId.Add(new CT_SlideIdListEntry
-            {
+            presentation.sldIdLst.sldId.Add(new CT_SlideIdListEntry {
                 id = maxId + 1,
                 relationshipId = GetRelationId(slide)
             });
@@ -149,16 +148,16 @@ namespace NPOI.XSLF.UserModel
         public override List<PackagePart> GetAllEmbedds()
         {
             var embeddings = new List<PackagePart>();
-            foreach (var part in Package.GetParts().Where(part => !part.IsRelationshipPart))
+            foreach(var part in Package.GetParts().Where(part => !part.IsRelationshipPart))
             {
-                foreach (var relationshipType in new[] { OLE_OBJECT_REL_TYPE, PACK_OBJECT_REL_TYPE })
+                foreach(var relationshipType in new[] { OLE_OBJECT_REL_TYPE, PACK_OBJECT_REL_TYPE })
                 {
-                    foreach (var relationship in part.GetRelationshipsByType(relationshipType))
+                    foreach(var relationship in part.GetRelationshipsByType(relationshipType))
                     {
-                        if (relationship.TargetMode == TargetMode.Internal)
+                        if(relationship.TargetMode == TargetMode.Internal)
                         {
                             var embedded = part.GetRelatedPart(relationship);
-                            if (!embeddings.Contains(embedded))
+                            if(!embeddings.Contains(embedded))
                             {
                                 embeddings.Add(embedded);
                             }
@@ -172,11 +171,11 @@ namespace NPOI.XSLF.UserModel
         internal override void OnDocumentRead()
         {
             presentation = XSLFXmlHelper.Read<CT_Presentation>(GetPackagePart());
-            foreach (var master in GetSlideMasters())
+            foreach(var master in GetSlideMasters())
             {
-                foreach (var layout in master.GetSlideLayouts())
+                foreach(var layout in master.GetSlideLayouts())
                 {
-                    if (!ReferenceEquals(layout.GetSlideMaster(), master))
+                    if(!ReferenceEquals(layout.GetSlideMaster(), master))
                     {
                         throw new POIXMLException("Slide layout references a different master: " +
                             layout.GetPackagePart().PartName.Name);
@@ -186,21 +185,21 @@ namespace NPOI.XSLF.UserModel
             }
             var identifiers = new HashSet<uint>();
             var slideParts = new HashSet<XSLFSlide>();
-            foreach (var entry in presentation.sldIdLst?.sldId ?? new List<CT_SlideIdListEntry>())
+            foreach(var entry in presentation.sldIdLst?.sldId ?? new List<CT_SlideIdListEntry>())
             {
-                if (entry.id < 256 || entry.id > int.MaxValue || !identifiers.Add(entry.id))
+                if(entry.id < 256 || entry.id > int.MaxValue || !identifiers.Add(entry.id))
                 {
                     throw new POIXMLException("Invalid or duplicate presentation slide identifier: " + entry.id);
                 }
                 var relationship = string.IsNullOrEmpty(entry.relationshipId)
                     ? null : GetPackagePart().GetRelationship(entry.relationshipId);
-                if (relationship == null || relationship.TargetMode != TargetMode.Internal ||
+                if(relationship == null || relationship.TargetMode != TargetMode.Internal ||
                     relationship.RelationshipType != XSLFRelation.SLIDE.Relation ||
                     !(GetRelationById(entry.relationshipId) is XSLFSlide slide))
                 {
                     throw new POIXMLException("Invalid slide relationship: " + entry.relationshipId);
                 }
-                if (!slideParts.Add(slide))
+                if(!slideParts.Add(slide))
                 {
                     throw new POIXMLException("A slide is referenced more than once: " + entry.relationshipId);
                 }
@@ -226,16 +225,16 @@ namespace NPOI.XSLF.UserModel
 #if NET8_0_OR_GREATER
             ObjectDisposedException.ThrowIf(Package == null, this);
 #else
-            if (Package == null)
+            if(Package == null)
             {
                 throw new ObjectDisposedException(nameof(XMLSlideShow));
             }
 #endif
-            if (Package.GetPackageAccess() == PackageAccess.READ)
+            if(Package.GetPackageAccess() == PackageAccess.READ)
             {
                 throw new InvalidOperationException("Cannot create slides in a read-only presentation.");
             }
-            if (presentation.AnyElements?.Any(element =>
+            if(presentation.AnyElements?.Any(element =>
                 element.GetElementsByTagName("sldIdLst", CT_Presentation.Namespace).Count > 0) == true)
             {
                 throw new NotSupportedException("Creating slides with opaque wrapped slide lists is not supported.");
@@ -244,11 +243,11 @@ namespace NPOI.XSLF.UserModel
 
         private XSLFSlideLayout FindBlankLayout()
         {
-            foreach (var master in GetSlideMasters())
+            foreach(var master in GetSlideMasters())
             {
-                foreach (var layout in master.GetSlideLayouts())
+                foreach(var layout in master.GetSlideLayouts())
                 {
-                    if (layout.Type == "blank")
+                    if(layout.Type == "blank")
                     {
                         return layout;
                     }
@@ -259,17 +258,17 @@ namespace NPOI.XSLF.UserModel
 
         private static OPCPackage ValidatePackage(OPCPackage package)
         {
-            if (package == null)
+            if(package == null)
             {
                 throw new ArgumentNullException(nameof(package));
             }
             var relationships = package.GetRelationshipsByType(PackageRelationshipTypes.CORE_DOCUMENT);
-            if (relationships.Size != 1 || relationships.GetRelationship(0).TargetMode != TargetMode.Internal)
+            if(relationships.Size != 1 || relationships.GetRelationship(0).TargetMode != TargetMode.Internal)
             {
                 throw new POIXMLException("A PPTX package must have exactly one internal office document relationship.");
             }
             var part = package.GetPart(relationships.GetRelationship(0));
-            if (part == null || part.ContentType != XSLFRelation.MAIN.ContentType)
+            if(part == null || part.ContentType != XSLFRelation.MAIN.ContentType)
             {
                 throw new POIXMLException("The package is not a supported transitional PPTX presentation.");
             }
@@ -311,7 +310,7 @@ namespace NPOI.XSLF.UserModel
         {
             var part = package.CreatePart(PackagingUriHelper.CreatePartName(relation.GetFileName(1)), relation.ContentType);
             using var resource = typeof(XMLSlideShow).Assembly.GetManifestResourceStream("NPOI.XSLF.Resources." + name);
-            if (resource == null)
+            if(resource == null)
             {
                 throw new POIXMLException("Missing XSLF resource: " + name);
             }

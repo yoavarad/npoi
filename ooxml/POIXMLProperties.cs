@@ -15,12 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.IO;
 using NPOI.OpenXml4Net.Exceptions;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXml4Net.OPC.Internal;
 using NPOI.OpenXmlFormats;
+using System;
+using System.IO;
 
 namespace NPOI
 {
@@ -41,7 +41,7 @@ namespace NPOI
             {
                 return part.GetCategoryProperty();
             }
-            set 
+            set
             {
                 part.SetCategoryProperty(value);
             }
@@ -52,7 +52,7 @@ namespace NPOI
             {
                 return part.GetContentStatusProperty();
             }
-            set 
+            set
             {
                 part.SetContentStatusProperty(value);
             }
@@ -63,7 +63,7 @@ namespace NPOI
             {
                 return part.GetContentTypeProperty();
             }
-            set 
+            set
             {
                 part.SetContentTypeProperty(value);
             }
@@ -74,9 +74,9 @@ namespace NPOI
             {
                 return part.GetCreatedProperty();
             }
-            set 
+            set
             {
-                part.SetCreatedProperty(value);    
+                part.SetCreatedProperty(value);
             }
         }
         public void SetCreated(String date)
@@ -89,7 +89,7 @@ namespace NPOI
             {
                 return part.GetCreatorProperty();
             }
-            set 
+            set
             {
                 part.SetCreatorProperty(value);
             }
@@ -100,7 +100,7 @@ namespace NPOI
             {
                 return part.GetDescriptionProperty();
             }
-            set 
+            set
             {
                 part.SetDescriptionProperty(value);
             }
@@ -111,7 +111,7 @@ namespace NPOI
             {
                 return part.GetIdentifierProperty();
             }
-            set 
+            set
             {
                 part.SetIdentifierProperty(value);
             }
@@ -122,7 +122,7 @@ namespace NPOI
             {
                 return part.GetKeywordsProperty();
             }
-            set 
+            set
             {
                 part.SetKeywordsProperty(value);
             }
@@ -133,7 +133,7 @@ namespace NPOI
             {
                 return part.GetLastPrintedProperty();
             }
-            set 
+            set
             {
                 part.SetLastPrintedProperty(value);
             }
@@ -161,7 +161,7 @@ namespace NPOI
             {
                 return part.GetModifiedProperty();
             }
-            set 
+            set
             {
                 part.SetModifiedProperty(value);
             }
@@ -176,7 +176,7 @@ namespace NPOI
             {
                 return part.GetSubjectProperty();
             }
-            set 
+            set
             {
                 part.SetSubjectProperty(value);
             }
@@ -187,7 +187,7 @@ namespace NPOI
             {
                 return part.GetTitleProperty();
             }
-            set 
+            set
             {
                 part.SetTitleProperty(value);
             }
@@ -205,7 +205,7 @@ namespace NPOI
                     long.Parse(value);
                     part.SetRevisionProperty(value);
                 }
-                catch (FormatException) { }            
+                catch(FormatException) { }
             }
         }
 
@@ -263,7 +263,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetPages())
+                if(props.GetProperties().IsSetPages())
                 {
                     return props.GetProperties().Pages;
                 }
@@ -274,7 +274,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetWords())
+                if(props.GetProperties().IsSetWords())
                 {
                     return props.GetProperties().Words;
                 }
@@ -285,7 +285,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetCharacters())
+                if(props.GetProperties().IsSetCharacters())
                 {
                     return props.GetProperties().Characters;
                 }
@@ -296,7 +296,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetCharactersWithSpaces())
+                if(props.GetProperties().IsSetCharactersWithSpaces())
                 {
                     return props.GetProperties().CharactersWithSpaces;
                 }
@@ -307,7 +307,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetLines())
+                if(props.GetProperties().IsSetLines())
                 {
                     return props.GetProperties().Lines;
                 }
@@ -318,7 +318,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetParagraphs())
+                if(props.GetProperties().IsSetParagraphs())
                 {
                     return props.GetProperties().Paragraphs;
                 }
@@ -329,7 +329,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetSlides())
+                if(props.GetProperties().IsSetSlides())
                 {
                     return props.GetProperties().Slides;
                 }
@@ -340,7 +340,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetNotes())
+                if(props.GetProperties().IsSetNotes())
                 {
                     return props.GetProperties().Notes;
                 }
@@ -351,7 +351,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetTotalTime())
+                if(props.GetProperties().IsSetTotalTime())
                 {
                     return props.GetProperties().TotalTime;
                 }
@@ -362,7 +362,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetHiddenSlides())
+                if(props.GetProperties().IsSetHiddenSlides())
                 {
                     return props.GetProperties().HiddenSlides;
                 }
@@ -373,7 +373,7 @@ namespace NPOI
         {
             get
             {
-                if (props.GetProperties().IsSetMMClips())
+                if(props.GetProperties().IsSetMMClips())
                 {
                     return props.GetProperties().MMClips;
                 }
@@ -417,7 +417,7 @@ namespace NPOI
          */
         private CT_Property Add(String name)
         {
-            if (Contains(name))
+            if(Contains(name))
             {
                 throw new ArgumentException("A property with this name " +
                         "already exists in the custom properties");
@@ -487,9 +487,10 @@ namespace NPOI
         protected int NextPid()
         {
             int propid = 1;
-            foreach (CT_Property p in props.GetProperties().GetPropertyList())
+            foreach(CT_Property p in props.GetProperties().GetPropertyList())
             {
-                if (p.pid > propid) propid = p.pid;
+                if(p.pid > propid)
+                    propid = p.pid;
             }
             return propid + 1;
         }
@@ -502,9 +503,10 @@ namespace NPOI
          */
         public bool Contains(String name)
         {
-            foreach (CT_Property p in props.GetProperties().GetPropertyList())
+            foreach(CT_Property p in props.GetProperties().GetPropertyList())
             {
-                if (p.name.Equals(name)) return true;
+                if(p.name.Equals(name))
+                    return true;
             }
             return false;
         }
@@ -518,9 +520,12 @@ namespace NPOI
          *
          * @param name the name of the property to fetch
          */
-        public CT_Property GetProperty(String name) {
-            foreach(CT_Property p in props.GetProperties().GetPropertyList()){
-                if(p.name.Equals(name)) {
+        public CT_Property GetProperty(String name)
+        {
+            foreach(CT_Property p in props.GetProperties().GetPropertyList())
+            {
+                if(p.name.Equals(name))
+                {
                     return p;
                 }
             }
@@ -560,12 +565,12 @@ namespace NPOI
             this.pkg = docPackage;
 
             // Core properties
-            core = new CoreProperties((PackagePropertiesPart)pkg.GetPackageProperties());
+            core = new CoreProperties((PackagePropertiesPart) pkg.GetPackageProperties());
 
             // Extended properties
             PackageRelationshipCollection extRel =
                 pkg.GetRelationshipsByType(PackageRelationshipTypes.EXTENDED_PROPERTIES);
-            if (extRel.Size == 1)
+            if(extRel.Size == 1)
             {
                 extPart = pkg.GetPart(extRel.GetRelationship(0));
                 ExtendedPropertiesDocument props = ExtendedPropertiesDocument.Parse(
@@ -576,13 +581,13 @@ namespace NPOI
             else
             {
                 extPart = null;
-                ext = new ExtendedProperties((ExtendedPropertiesDocument)NEW_EXT_INSTANCE.Copy());
+                ext = new ExtendedProperties((ExtendedPropertiesDocument) NEW_EXT_INSTANCE.Copy());
             }
 
             // Custom properties
             PackageRelationshipCollection custRel =
                 pkg.GetRelationshipsByType(PackageRelationshipTypes.CUSTOM_PROPERTIES);
-            if (custRel.Size == 1)
+            if(custRel.Size == 1)
             {
                 custPart = pkg.GetPart(custRel.GetRelationship(0));
                 CustomPropertiesDocument props = CustomPropertiesDocument.Parse(
@@ -593,7 +598,7 @@ namespace NPOI
             else
             {
                 custPart = null;
-                cust = new CustomProperties((CustomPropertiesDocument)NEW_CUST_INSTANCE.Copy());
+                cust = new CustomProperties((CustomPropertiesDocument) NEW_CUST_INSTANCE.Copy());
             }
         }
 
@@ -642,7 +647,7 @@ namespace NPOI
             {
                 PackageRelationshipCollection rels =
                     pkg.GetRelationshipsByType(PackageRelationshipTypes.THUMBNAIL);
-                if (rels.Size == 1)
+                if(rels.Size == 1)
                 {
                     return pkg.GetPart(rels.GetRelationship(0));
                 }
@@ -661,7 +666,8 @@ namespace NPOI
             get
             {
                 PackagePart tPart = ThumbnailPart;
-                if (tPart == null) return null;
+                if(tPart == null)
+                    return null;
                 String name = tPart.PartName.Name;
                 return name.Substring(name.LastIndexOf('/') + 1);
             }
@@ -677,7 +683,8 @@ namespace NPOI
             get
             {
                 PackagePart tPart = ThumbnailPart;
-                if (tPart == null) return null;
+                if(tPart == null)
+                    return null;
                 return tPart.GetInputStream();
             }
         }
@@ -689,16 +696,19 @@ namespace NPOI
 	     * @param name The filename for the thumbnail image, eg <code>thumbnail.jpg</code>
 	     * @param imageData The inputstream to read the thumbnail image from
 	     */
-        public void SetThumbnail(String filename, Stream imageData) 
+        public void SetThumbnail(String filename, Stream imageData)
         {
             PackagePart tPart = ThumbnailPart;
-            if (tPart == null) {
+            if(tPart == null)
+            {
                 // New thumbnail
                 pkg.AddThumbnail(filename, imageData);
-            } else {
+            }
+            else
+            {
                 // Change existing
                 String newType = ContentTypes.GetContentTypeFromFileExtension(filename);
-                if (!newType.Equals(tPart.ContentType))
+                if(!newType.Equals(tPart.ContentType))
                 {
                     throw new ArgumentException("Can't set a Thumbnail of type " +
                                    newType + " when existing one is of a different type " +
@@ -714,7 +724,7 @@ namespace NPOI
         public virtual void Commit()
         {
 
-            if (extPart == null && !NEW_EXT_INSTANCE.ToString().Equals(ext.props.ToString()))
+            if(extPart == null && !NEW_EXT_INSTANCE.ToString().Equals(ext.props.ToString()))
             {
                 try
                 {
@@ -722,12 +732,12 @@ namespace NPOI
                     pkg.AddRelationship(prtname, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties");
                     extPart = pkg.CreatePart(prtname, "application/vnd.openxmlformats-officedocument.extended-properties+xml");
                 }
-                catch (InvalidFormatException e)
+                catch(InvalidFormatException e)
                 {
                     throw new POIXMLException(e);
                 }
             }
-            if (custPart == null && !NEW_CUST_INSTANCE.ToString().Equals(cust.props.ToString()))
+            if(custPart == null && !NEW_CUST_INSTANCE.ToString().Equals(cust.props.ToString()))
             {
                 try
                 {
@@ -735,21 +745,21 @@ namespace NPOI
                     pkg.AddRelationship(prtname, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties");
                     custPart = pkg.CreatePart(prtname, "application/vnd.openxmlformats-officedocument.custom-properties+xml");
                 }
-                catch (InvalidFormatException e)
+                catch(InvalidFormatException e)
                 {
                     throw new POIXMLException(e);
                 }
             }
-            if (extPart != null)
+            if(extPart != null)
             {
                 Stream out1 = extPart.GetOutputStream();
 
-                if (extPart.Size > 0)
+                if(extPart.Size > 0)
                     extPart.Clear();
                 ext.props.Save(out1);
                 out1.Close();
             }
-            if (custPart != null)
+            if(custPart != null)
             {
                 Stream out1 = custPart.GetOutputStream();
                 cust.props.Save(out1);

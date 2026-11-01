@@ -17,13 +17,12 @@
 
 namespace TestCases.HSSF.Model
 {
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using NPOI.HSSF.Record;
-    using NPOI.HSSF.Model;
 
 
     /**
@@ -72,7 +71,7 @@ namespace TestCases.HSSF.Model
                 sheet.SetColumnWidth(0, 256 * 256); //the limit
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual(e.Message, "The maximum column width for an individual cell is 255 characters.");
             }

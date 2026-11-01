@@ -20,8 +20,8 @@ using System.Text;
 
 namespace NPOI.DDF
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /// <summary>
     /// A list of the most recently used colours for the drawings contained in
@@ -50,12 +50,16 @@ namespace NPOI.DDF
             int bytesRemaining = ReadHeader(data, offset);
             int pos = offset + 8;
             int size = 0;
-            field_1_color1 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_2_color2 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_3_color3 = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_4_color4 = LittleEndian.GetInt(data, pos + size); size += 4;
+            field_1_color1 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_2_color2 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_3_color3 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_4_color4 = LittleEndian.GetInt(data, pos + size);
+            size += 4;
             bytesRemaining -= size;
-            if (bytesRemaining != 0)
+            if(bytesRemaining != 0)
                 throw new RecordFormatException("Expecting no remaining data but got " + bytesRemaining + " byte(s).");
             return 8 + size + bytesRemaining;
         }
@@ -74,16 +78,23 @@ namespace NPOI.DDF
             listener.BeforeRecordSerialize(offset, RecordId, this);
 
             int pos = offset;
-            LittleEndian.PutShort(data, pos, Options); pos += 2;
-            LittleEndian.PutShort(data, pos, RecordId); pos += 2;
+            LittleEndian.PutShort(data, pos, Options);
+            pos += 2;
+            LittleEndian.PutShort(data, pos, RecordId);
+            pos += 2;
             int remainingBytes = RecordSize - 8;
 
-            LittleEndian.PutInt(data, pos, remainingBytes); pos += 4;
-            LittleEndian.PutInt(data, pos, field_1_color1); pos += 4;
-            LittleEndian.PutInt(data, pos, field_2_color2); pos += 4;
-            LittleEndian.PutInt(data, pos, field_3_color3); pos += 4;
-            LittleEndian.PutInt(data, pos, field_4_color4); pos += 4;
-            
+            LittleEndian.PutInt(data, pos, remainingBytes);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_1_color1);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_2_color2);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_3_color3);
+            pos += 4;
+            LittleEndian.PutInt(data, pos, field_4_color4);
+            pos += 4;
+
             listener.AfterRecordSerialize(pos, RecordId, pos - offset, this);
             return RecordSize;
         }

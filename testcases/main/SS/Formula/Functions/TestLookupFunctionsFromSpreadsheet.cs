@@ -19,18 +19,19 @@ namespace TestCases.SS.Formula.Functions
 {
 
     using NPOI.HSSF;
-    using NPOI.SS.Formula.Eval;
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
+    using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.Text;
     using NPOI.SS.Util;
-    using TestCases.Exceptions;
-    using System.IO;
-    using TestCases.HSSF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Text;
+    using TestCases.Exceptions;
+    using TestCases.HSSF;
 
     /**
      * Tests lookup functions (VLOOKUP, HLOOKUP, LOOKUP, MATCH) as loaded from a Test data spreadsheet.<p/>
@@ -44,13 +45,13 @@ namespace TestCases.SS.Formula.Functions
      * @author Josh Micich
      */
     [TestFixture]
-    public class TestLookupFunctionsFromSpreadsheet:BaseTestFunctionsFromSpreadsheet
+    public class TestLookupFunctionsFromSpreadsheet : BaseTestFunctionsFromSpreadsheet
     {
         protected override string Filename
         {
             get { return "LookupFunctionsTestCaseData.xls"; }
         }
- 
+
     }
 
 }

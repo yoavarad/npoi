@@ -33,8 +33,8 @@ using NPOI.XSSF.Streaming;
 using NPOI.XSSF.UserModel;
 using NPOI.XSSF.UserModel.Extensions;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using NUnit.Framework.Constraints;
+using NUnit.Framework.Legacy;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -3486,7 +3486,7 @@ namespace TestCases.XSSF.UserModel
             // to avoid having to iterate all rows/cells in each add/remove of a row or cell
             wb.Write(new NullOutputStream());
 
-            ClassicAssert.AreEqual("B2:H5", ((XSSFSheet)sheet).GetCTWorksheet().dimension.@ref);
+            ClassicAssert.AreEqual("B2:H5", ((XSSFSheet) sheet).GetCTWorksheet().dimension.@ref);
 
             wb.Close();
         }
@@ -3692,7 +3692,7 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void Test51037()
         {
-            using (XSSFWorkbook wb = new XSSFWorkbook())
+            using(XSSFWorkbook wb = new XSSFWorkbook())
             {
                 XSSFCellStyle blueStyle = (XSSFCellStyle)wb.CreateCellStyle();
                 blueStyle.FillForegroundColor = IndexedColors.Aqua.Index;
@@ -3724,7 +3724,7 @@ namespace TestCases.XSSF.UserModel
                 ClassicAssert.AreEqual(blueStyle.Index, r3.GetCell(4).CellStyle.Index);
                 ClassicAssert.AreEqual(pinkStyle.Index, r3.GetCell(6).CellStyle.Index);
 
-                using (XSSFWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb))
+                using(XSSFWorkbook wb2 = XSSFTestDataSamples.WriteOutAndReadBack(wb))
                 {
                     XSSFSheet wb2Sheet = (XSSFSheet)wb2.GetSheetAt(0);
                     XSSFRow wb2R3 = (XSSFRow)wb2Sheet.GetRow(3);

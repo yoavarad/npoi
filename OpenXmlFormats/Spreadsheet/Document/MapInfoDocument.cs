@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -10,7 +10,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         CT_MapInfo mapInfo = null;
 
         public MapInfoDocument()
-        { 
+        {
         }
         public MapInfoDocument(CT_MapInfo map)
         {
@@ -31,7 +31,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         public string SelectionNamespaces { get; set; }
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 mapInfo.Write(sw, "MapInfo");
             }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -19,13 +19,14 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System;
     using HSSF;
-    using NPOI.SS.Formula.Eval;
     using NPOI.HSSF.UserModel;
-    using NPOI.SS.UserModel;
+    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Test for Excel function FORECAST()

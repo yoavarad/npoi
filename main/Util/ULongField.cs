@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -46,7 +46,7 @@ namespace NPOI.Util
         /// <param name="offset">The offset.</param>
         public ULongField(int offset)
         {
-            if (offset < 0)
+            if(offset < 0)
             {
                 throw new IndexOutOfRangeException("Illegal offset: " + offset);
             }
@@ -59,7 +59,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="offset">offset of the field within its byte array</param>
         /// <param name="value">the initial value</param>
-        public ULongField(int offset, ulong value):this(offset)
+        public ULongField(int offset, ulong value) : this(offset)
         {
             this.Value=value;
         }
@@ -70,7 +70,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="offset">The offset of the field within its byte array</param>
         /// <param name="data">the byte array to read the value from</param>
-        public ULongField(int offset, byte [] data)
+        public ULongField(int offset, byte[] data)
         {
             this._offset=offset;
             ReadFromBytes(data);
@@ -84,7 +84,7 @@ namespace NPOI.Util
         /// <param name="offset">offset of the field within its byte array</param>
         /// <param name="value">the initial value</param>
         /// <param name="data">the byte array to write the value to</param>
-        public ULongField(int offset, ulong value, byte [] data)
+        public ULongField(int offset, ulong value, byte[] data)
         {
             this._offset=offset;
             Set(value, data);
@@ -96,8 +96,8 @@ namespace NPOI.Util
         /// <value>The current value</value>
         public ulong Value
         {
-            get{return _value;}
-            set{_value = value;}
+            get { return _value; }
+            set { _value = value; }
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace NPOI.Util
         /// </summary>
         /// <param name="value">value to be set</param>
         /// <param name="data">the byte array to write the value to</param>
-        public void Set(ulong value, byte [] data)
+        public void Set(ulong value, byte[] data)
         {
             this._value = value;
             WriteToBytes(data);
@@ -115,7 +115,7 @@ namespace NPOI.Util
         /// set the value from its offset into an array of bytes
         /// </summary>
         /// <param name="data">the byte array from which the value is to be read</param>
-        public void ReadFromBytes(byte [] data)
+        public void ReadFromBytes(byte[] data)
         {
             _value = LittleEndian.GetULong(data, _offset);
         }
@@ -133,7 +133,7 @@ namespace NPOI.Util
         /// write the value out to an array of bytes at the appropriate offset
         /// </summary>
         /// <param name="data">the array of bytes to which the value is to be written</param>
-        public void WriteToBytes(byte [] data)
+        public void WriteToBytes(byte[] data)
         {
             LittleEndian.PutULong(data, _offset, _value);
         }

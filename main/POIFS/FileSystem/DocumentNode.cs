@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,12 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Collections.Generic;
-
+using NPOI.POIFS.Dev;
 using NPOI.POIFS.FileSystem;
 using NPOI.POIFS.Properties;
-using NPOI.POIFS.Dev;
+using System;
+using System.Collections.Generic;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -41,7 +40,7 @@ namespace NPOI.POIFS.FileSystem
          * @param parent the parent of this entry
          */
 
-        public DocumentNode(DocumentProperty property, DirectoryNode parent):base(property, parent)
+        public DocumentNode(DocumentProperty property, DirectoryNode parent) : base(property, parent)
         {
             _document = property.Document;
         }
@@ -78,7 +77,7 @@ namespace NPOI.POIFS.FileSystem
 
         public override bool IsDocumentEntry
         {
-            get{return true;}
+            get { return true; }
         }
 
 
@@ -123,7 +122,7 @@ namespace NPOI.POIFS.FileSystem
                 List<Object> components = new List<Object>();
 
                 components.Add(Property);
-                if (_document != null)
+                if(_document != null)
                 {
                     components.Add(_document);
                 }
@@ -153,7 +152,7 @@ namespace NPOI.POIFS.FileSystem
 
         public String ShortDescription
         {
-            get{return Name;}
+            get { return Name; }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -41,7 +41,7 @@ namespace NPOI.POIFS.FileSystem
         }
         public int Read()
         {
-            return (int)_is.ReadByte();
+            return (int) _is.ReadByte();
         }
         public override int Read(byte[] b, int off, int len)
         {
@@ -91,7 +91,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                return (long)this._is.Length;
+                return (long) this._is.Length;
             }
         }
 
@@ -99,7 +99,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                return (long)this._is.Position;
+                return (long) this._is.Position;
             }
             set
             {

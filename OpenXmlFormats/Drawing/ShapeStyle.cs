@@ -1,4 +1,4 @@
-﻿
+
 using NPOI.OpenXml4Net.Util;
 using System;
 using System.IO;
@@ -34,23 +34,23 @@ namespace NPOI.OpenXmlFormats.Dml
         private uint idxField;
         public static CT_StyleMatrixReference Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_StyleMatrixReference ctObj = new CT_StyleMatrixReference();
             ctObj.idx = XmlHelper.ReadUInt(node.Attributes["idx"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "scrgbClr")
+                if(childNode.LocalName == "scrgbClr")
                     ctObj.scrgbClr = CT_ScRgbColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "srgbClr")
+                else if(childNode.LocalName == "srgbClr")
                     ctObj.srgbClr = CT_SRgbColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hslClr")
+                else if(childNode.LocalName == "hslClr")
                     ctObj.hslClr = CT_HslColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sysClr")
+                else if(childNode.LocalName == "sysClr")
                     ctObj.sysClr = CT_SystemColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "schemeClr")
+                else if(childNode.LocalName == "schemeClr")
                     ctObj.schemeClr = CT_SchemeColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "prstClr")
+                else if(childNode.LocalName == "prstClr")
                     ctObj.prstClr = CT_PresetColor.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -63,17 +63,17 @@ namespace NPOI.OpenXmlFormats.Dml
             sw.WriteStart("a", nodeName);
             XmlHelper.WriteAttribute(sw, "idx", this.idx, true);
             sw.Write('>');
-            if (this.scrgbClr != null)
+            if(this.scrgbClr != null)
                 this.scrgbClr.Write(sw, "scrgbClr");
-            if (this.srgbClr != null)
+            if(this.srgbClr != null)
                 this.srgbClr.Write(sw, "srgbClr");
-            if (this.hslClr != null)
+            if(this.hslClr != null)
                 this.hslClr.Write(sw, "hslClr");
-            if (this.sysClr != null)
+            if(this.sysClr != null)
                 this.sysClr.Write(sw, "sysClr");
-            if (this.schemeClr != null)
+            if(this.schemeClr != null)
                 this.schemeClr.Write(sw, "schemeClr");
-            if (this.prstClr != null)
+            if(this.prstClr != null)
                 this.prstClr.Write(sw, "prstClr");
             sw.WriteEndElement("a", nodeName);
         }
@@ -201,24 +201,24 @@ namespace NPOI.OpenXmlFormats.Dml
         private ST_FontCollectionIndex idxField;
         public static CT_FontReference Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FontReference ctObj = new CT_FontReference();
-            if (node.Attributes["idx"] != null)
-                ctObj.idx = (ST_FontCollectionIndex)Enum.Parse(typeof(ST_FontCollectionIndex), node.Attributes["idx"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["idx"] != null)
+                ctObj.idx = (ST_FontCollectionIndex) Enum.Parse(typeof(ST_FontCollectionIndex), node.Attributes["idx"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "scrgbClr")
+                if(childNode.LocalName == "scrgbClr")
                     ctObj.scrgbClr = CT_ScRgbColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "srgbClr")
+                else if(childNode.LocalName == "srgbClr")
                     ctObj.srgbClr = CT_SRgbColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hslClr")
+                else if(childNode.LocalName == "hslClr")
                     ctObj.hslClr = CT_HslColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sysClr")
+                else if(childNode.LocalName == "sysClr")
                     ctObj.sysClr = CT_SystemColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "schemeClr")
+                else if(childNode.LocalName == "schemeClr")
                     ctObj.schemeClr = CT_SchemeColor.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "prstClr")
+                else if(childNode.LocalName == "prstClr")
                     ctObj.prstClr = CT_PresetColor.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -231,17 +231,17 @@ namespace NPOI.OpenXmlFormats.Dml
             sw.WriteStart("a", nodeName);
             XmlHelper.WriteAttribute(sw, "idx", this.idx.ToString());
             sw.Write('>');
-            if (this.scrgbClr != null)
+            if(this.scrgbClr != null)
                 this.scrgbClr.Write(sw, "scrgbClr");
-            if (this.srgbClr != null)
+            if(this.srgbClr != null)
                 this.srgbClr.Write(sw, "srgbClr");
-            if (this.hslClr != null)
+            if(this.hslClr != null)
                 this.hslClr.Write(sw, "hslClr");
-            if (this.sysClr != null)
+            if(this.sysClr != null)
                 this.sysClr.Write(sw, "sysClr");
-            if (this.schemeClr != null)
+            if(this.schemeClr != null)
                 this.schemeClr.Write(sw, "schemeClr");
-            if (this.prstClr != null)
+            if(this.prstClr != null)
                 this.prstClr.Write(sw, "prstClr");
             sw.WriteEndElement("a", nodeName);
         }
@@ -362,18 +362,18 @@ namespace NPOI.OpenXmlFormats.Dml
         private CT_FontReference fontRefField;
         public static CT_ShapeStyle Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ShapeStyle ctObj = new CT_ShapeStyle();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "lnRef")
+                if(childNode.LocalName == "lnRef")
                     ctObj.lnRef = CT_StyleMatrixReference.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fillRef")
+                else if(childNode.LocalName == "fillRef")
                     ctObj.fillRef = CT_StyleMatrixReference.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "effectRef")
+                else if(childNode.LocalName == "effectRef")
                     ctObj.effectRef = CT_StyleMatrixReference.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fontRef")
+                else if(childNode.LocalName == "fontRef")
                     ctObj.fontRef = CT_FontReference.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -385,13 +385,13 @@ namespace NPOI.OpenXmlFormats.Dml
         {
             sw.WriteStart("a", nodeName);
             sw.Write('>');
-            if (this.lnRef != null)
+            if(this.lnRef != null)
                 this.lnRef.Write(sw, "lnRef");
-            if (this.fillRef != null)
+            if(this.fillRef != null)
                 this.fillRef.Write(sw, "fillRef");
-            if (this.effectRef != null)
+            if(this.effectRef != null)
                 this.effectRef.Write(sw, "effectRef");
-            if (this.fontRef != null)
+            if(this.fontRef != null)
                 this.fontRef.Write(sw, "fontRef");
             sw.WriteEndElement("a", nodeName);
         }

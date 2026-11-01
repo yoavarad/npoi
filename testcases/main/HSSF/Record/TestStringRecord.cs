@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.Text;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Text;
 
     /**
      * Tests the serialization and deserialization of the StringRecord
@@ -55,7 +56,7 @@ namespace TestCases.HSSF.Record
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
             {
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
             }
@@ -68,7 +69,7 @@ namespace TestCases.HSSF.Record
             int TEXT_LEN = MAX_BIFF_DATA + 1000; // deliberately over-size
             String textChunk = "ABCDEGGHIJKLMNOP"; // 16 chars
             StringBuilder sb = new StringBuilder(16384);
-            while (sb.Length < TEXT_LEN)
+            while(sb.Length < TEXT_LEN)
             {
                 sb.Append(textChunk);
             }
@@ -78,7 +79,7 @@ namespace TestCases.HSSF.Record
             sr.String = (/*setter*/sb.ToString());
             byte[] ser = sr.Serialize();
             ClassicAssert.AreEqual(StringRecord.sid, LittleEndian.GetUShort(ser, 0));
-            if (LittleEndian.GetUShort(ser, 2) > MAX_BIFF_DATA)
+            if(LittleEndian.GetUShort(ser, 2) > MAX_BIFF_DATA)
             {
                 Assert.Fail("StringRecord should have been split with a continue record");
             }

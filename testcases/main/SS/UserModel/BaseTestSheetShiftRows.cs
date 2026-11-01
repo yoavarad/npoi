@@ -20,7 +20,8 @@ namespace TestCases.SS.UserModel
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using TestCases.SS;
@@ -138,13 +139,15 @@ namespace TestCases.SS.UserModel
         private string GetRowValue(ISheet s, int rowIx)
         {
             IRow row = s.GetRow(rowIx);
-            if (row == null) { return "null"; }
+            if(row == null)
+            { return "null"; }
             return row.PhysicalNumberOfCells.ToString();
         }
         private string GetRowNum(ISheet s, int rowIx)
         {
             IRow row = s.GetRow(rowIx);
-            if (row == null) { return "null"; }
+            if(row == null)
+            { return "null"; }
             return row.RowNum.ToString();
         }
         private void ConfirmEmptyRow(ISheet s, int rowIx)
@@ -176,7 +179,7 @@ namespace TestCases.SS.UserModel
         {
             IWorkbook wb = _testDataProvider.CreateWorkbook();
             ISheet s = wb.CreateSheet();
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
                 s.CreateRow(i).CreateCell(0).SetCellValue(i);
             }
@@ -274,7 +277,7 @@ namespace TestCases.SS.UserModel
 
             // TODO: it seems HSSFSheet does not correctly remove comments from rows that are overwritten
             // by Shifting rows...
-            if (!(wb2 is HSSFWorkbook))
+            if(!(wb2 is HSSFWorkbook))
             {
                 ClassicAssert.AreEqual(2, sheet.LastRowNum);
 
@@ -360,11 +363,11 @@ namespace TestCases.SS.UserModel
             IWorkbook wb = _testDataProvider.CreateWorkbook();
             ISheet sheet = wb.CreateSheet();
             // populate sheet cells
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 IRow row = sheet.CreateRow(i);
 
-                for (int j = 0; j < 10; j++)
+                for(int j = 0; j < 10; j++)
                 {
                     ICell cell = row.CreateCell(j, CellType.String);
                     cell.SetCellValue(i + "x" + j);
@@ -397,7 +400,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.AreEqual(expectedMergedRegions, sheet.MergedRegions);
                 POITestCase.TestPassesNow(56454);
             }
-            catch (AssertionException e)
+            catch(AssertionException e)
             {
                 POITestCase.SkipTest(e);
             }
@@ -496,9 +499,9 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(sheet.GetRow(14).GetCell(8).CellFormula, "SUMIF($B$19:$B$82,$B15,I$19:I$82)");
 
             // now the whole block G4L:15
-            for (int i = 3; i <= 14; i++)
+            for(int i = 3; i <= 14; i++)
             {
-                for (int j = 6; j <= 8; j++)
+                for(int j = 6; j <= 8; j++)
                 {
                     String col = CellReference.ConvertNumToColString(j);
                     String expectedFormula = "SUMIF($B$19:$B$82,$B" + (i + 1) + "," + col + "$19:" + col + "$82)";
@@ -521,9 +524,9 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(sheet.GetRow(14).GetCell(8).CellFormula, "SUMIF($B$19:$B$86,$B15,I$19:I$86)");
 
             // now the whole block G4L:15
-            for (int i = 3; i <= 14; i++)
+            for(int i = 3; i <= 14; i++)
             {
-                for (int j = 6; j <= 8; j++)
+                for(int j = 6; j <= 8; j++)
                 {
                     String col = CellReference.ConvertNumToColString(j);
                     String expectedFormula = "SUMIF($B$19:$B$86,$B" + (i + 1) + "," + col + "$19:" + col + "$86)";
@@ -551,7 +554,7 @@ namespace TestCases.SS.UserModel
             try
             {
                 ISheet s = w.CreateSheet();
-                for (int row = 0; row < 5000; ++row)
+                for(int row = 0; row < 5000; ++row)
                     s.AddMergedRegion(new CellRangeAddress(row, row, 0, 3));
 
                 s.ShiftRows(0, 4999, 1);        // takes a long time...
@@ -654,10 +657,12 @@ namespace TestCases.SS.UserModel
             //System.out.println(sh.getHyperlinkList());
             ClassicAssert.AreEqual(3, sh.GetHyperlinkList().Count);
             CellAddress unexpectedLinkAddress = new CellAddress("C4");
-            foreach (IHyperlink link in sh.GetHyperlinkList()) {
+            foreach(IHyperlink link in sh.GetHyperlinkList())
+            {
                 CellAddress linkAddress = new CellAddress(link.FirstRow, link.FirstColumn);
                 //System.out.println(linkAddress.formatAsString());
-                if (linkAddress.Equals(unexpectedLinkAddress)) {
+                if(linkAddress.Equals(unexpectedLinkAddress))
+                {
                     Assert.Fail("Row 4, including the hyperlink at C4, should have " +
                          "been deleted when Row 1 was shifted on top of it.");
                 }
@@ -684,10 +689,10 @@ namespace TestCases.SS.UserModel
             ISheet sheet = wb.CreateSheet("test");
 
             // populate sheet cells
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 IRow row = sheet.CreateRow(i);
-                for (int j = 0; j < 12; j++)
+                for(int j = 0; j < 12; j++)
                 {
                     ICell cell = row.CreateCell(j);
                     cell.SetCellValue(i + "x" + j);
@@ -700,7 +705,7 @@ namespace TestCases.SS.UserModel
             // A4:B7 will elongate vertically
             // C5:D7 will be shifted down with same size
             sheet.ShiftRows(4, sheet.LastRowNum, 1);
-            
+
             // This test is written as expected-to-fail and should be rewritten
             // as expected-to-pass when the bug is fixed.
             // FIXME: remove try, catch, and testPassesNow, skipTest when test passes
@@ -711,7 +716,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.AreEqual(CellRangeAddress.ValueOf("C5:D8"), sheet.GetMergedRegion(1));
                 POITestCase.TestPassesNow(56454);
             }
-            catch (AssertionException e)
+            catch(AssertionException e)
             {
                 POITestCase.SkipTest(e);
             }
@@ -788,10 +793,10 @@ namespace TestCases.SS.UserModel
         private void PopulateSheetCells(ISheet sheet, int rowCount)
         {
             // populate sheet cells
-            for (int i = 0; i < rowCount; i++)
+            for(int i = 0; i < rowCount; i++)
             {
                 IRow row = sheet.CreateRow(i);
-                for (int j = 0; j < 5; j++)
+                for(int j = 0; j < 5; j++)
                 {
                     ICell cell = row.CreateCell(j);
                     cell.SetCellValue(i + "x" + j);

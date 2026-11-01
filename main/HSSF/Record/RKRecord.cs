@@ -19,10 +19,10 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.HSSF.Util;
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
-    using NPOI.HSSF.Util;
 
 
     /**
@@ -88,7 +88,7 @@ namespace NPOI.HSSF.Record
 
         public short RKType
         {
-            get { return (short)(field_4_rk_number & 3); }
+            get { return (short) (field_4_rk_number & 3); }
         }
 
         /**

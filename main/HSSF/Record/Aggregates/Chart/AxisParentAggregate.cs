@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
-using System.Collections.Generic;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record.Chart;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
@@ -25,7 +25,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
     /// <summary>
     /// AXISPARENT = AxisParent Begin Pos [AXES] 1*4CRT End
     /// </summary>
-    public class AxisParentAggregate: ChartRecordAggregate
+    public class AxisParentAggregate : ChartRecordAggregate
     {
         private AxisParentRecord axisPraent = null;
         private PosRecord pos = null;
@@ -40,10 +40,10 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public AxisParentAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_AXISPARENT, container)
         {
-            axisPraent = (AxisParentRecord)rs.GetNext();
+            axisPraent = (AxisParentRecord) rs.GetNext();
             rs.GetNext();
-            pos = (PosRecord)rs.GetNext();
-            if (ChartFormatRecord.sid != rs.PeekNextChartSid())
+            pos = (PosRecord) rs.GetNext();
+            if(ChartFormatRecord.sid != rs.PeekNextChartSid())
             {
                 try
                 {
@@ -56,7 +56,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
                 }
             }
             Debug.Assert(ChartFormatRecord.sid == rs.PeekNextChartSid());
-            while (ChartFormatRecord.sid == rs.PeekNextChartSid())
+            while(ChartFormatRecord.sid == rs.PeekNextChartSid())
             {
                 crtList.Add(new CRTAggregate(rs, this));
             }
@@ -69,9 +69,9 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(axisPraent);
             rv.VisitRecord(BeginRecord.instance);
             rv.VisitRecord(pos);
-            if (axes != null)
+            if(axes != null)
                 axes.VisitContainedRecords(rv);
-            foreach (CRTAggregate crt in crtList)
+            foreach(CRTAggregate crt in crtList)
                 crt.VisitContainedRecords(rv);
 
             WriteEndBlock(rv);

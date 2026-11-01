@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -88,5 +88,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-

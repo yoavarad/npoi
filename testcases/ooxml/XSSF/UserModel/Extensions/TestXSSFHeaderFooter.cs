@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,11 +24,11 @@ using System.Text;
 
 namespace TestCases.XSSF.UserModel.Extensions
 {
-    using NPOI.XSSF.UserModel;
     using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.XSSF.UserModel;
+    using NPOI.XSSF.UserModel.Extensions;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
-    using NPOI.XSSF.UserModel.Extensions;
     [TestFixture]
     public class TestXSSFHeaderFooter
     {

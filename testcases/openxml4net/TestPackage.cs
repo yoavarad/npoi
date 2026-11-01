@@ -75,12 +75,12 @@ namespace TestCases.OpenXml4Net.OPC
             FileInfo targetFile = OpenXml4NetTestDataSamples.GetOutputFile("TestCreatePackageTMP.docx");
 
             // Zap the target file, in case of an earlier run
-            if (File.Exists(targetFile.FullName))
+            if(File.Exists(targetFile.FullName))
             {
                 File.Delete(targetFile.FullName);
                 ClassicAssert.IsFalse(File.Exists(targetFile.FullName));
             }
-                
+
 
             OPCPackage pkg = OPCPackage.Create(targetFile.FullName);
 
@@ -116,7 +116,7 @@ namespace TestCases.OpenXml4Net.OPC
             FileInfo expectedFile = OpenXml4NetTestDataSamples.GetSampleFile("TestCreatePackageOUTPUT.docx");
 
             // Zap the target file, in case of an earlier run
-            if (targetFile.Exists)
+            if(targetFile.Exists)
             {
                 targetFile.Delete();
                 targetFile.Refresh();
@@ -220,7 +220,7 @@ namespace TestCases.OpenXml4Net.OPC
             try
             {
                 buffer = baos.ToArray();
-                fout.Write(buffer, 0 , buffer.Length);
+                fout.Write(buffer, 0, buffer.Length);
             }
             finally
             {
@@ -267,7 +267,7 @@ namespace TestCases.OpenXml4Net.OPC
             XmlElement root = xmlRelationshipsDoc.DocumentElement;
             XmlNodeList nodeList = root.GetElementsByTagName(PackageRelationship.RELATIONSHIP_TAG_NAME);
             int nodeCount = nodeList.Count;
-            for (int i = 0; i < nodeCount; i++)
+            for(int i = 0; i < nodeCount; i++)
             {
                 XmlElement element = (XmlElement)nodeList.Item(i);
                 String value = element.GetAttribute(PackageRelationship.TARGET_ATTRIBUTE_NAME);
@@ -301,7 +301,7 @@ namespace TestCases.OpenXml4Net.OPC
             PackagePart corePart = pkg.GetPart(corePartName);
 
             // Delete some part to have a valid document
-            foreach (PackageRelationship rel in corePart.Relationships)
+            foreach(PackageRelationship rel in corePart.Relationships)
             {
                 corePart.RemoveRelationship(rel.Id);
                 pkg.RemovePart(PackagingUriHelper.CreatePartName(PackagingUriHelper
@@ -333,7 +333,7 @@ namespace TestCases.OpenXml4Net.OPC
             {
                 pkg.Close();
             }
-            catch (IOException)
+            catch(IOException)
             {
                 Assert.Fail();
             }
@@ -367,7 +367,7 @@ namespace TestCases.OpenXml4Net.OPC
                 {
                     fs.Close();
                 }
-                
+
                 // Compare the original and newly saved document
                 ClassicAssert.IsTrue(File.Exists(targetFile.FullName));
                 ZipFileAssert.AssertEqual(new FileInfo(originalFile), targetFile);
@@ -467,14 +467,14 @@ namespace TestCases.OpenXml4Net.OPC
             // Remove the core part
             p.DeletePart(PackagingUriHelper.CreatePartName("/word/document.xml"));
 
-            foreach (PackagePart part in p.GetParts())
+            foreach(PackagePart part in p.GetParts())
             {
                 values.Add(part.PartName, part.ContentType);
                 logger.Log(POILogger.DEBUG, part.PartName);
             }
 
             // Compare expected values with values return by the namespace
-            foreach (PackagePartName partName in expectedValues.Keys)
+            foreach(PackagePartName partName in expectedValues.Keys)
             {
                 ClassicAssert.IsNotNull(values[partName]);
                 ClassicAssert.AreEqual(expectedValues[partName], values[partName]);
@@ -508,14 +508,14 @@ namespace TestCases.OpenXml4Net.OPC
             // Remove the core part
             p.DeletePartRecursive(PackagingUriHelper.CreatePartName("/word/document.xml"));
 
-            foreach (PackagePart part in p.GetParts())
+            foreach(PackagePart part in p.GetParts())
             {
                 values.Add(part.PartName, part.ContentType);
                 logger.Log(POILogger.DEBUG, part.PartName);
             }
 
             // Compare expected values with values return by the namespace
-            foreach (PackagePartName partName in expectedValues.Keys)
+            foreach(PackagePartName partName in expectedValues.Keys)
             {
                 ClassicAssert.IsNotNull(values[partName]);
                 ClassicAssert.AreEqual(expectedValues[partName], values[partName]);
@@ -552,7 +552,7 @@ namespace TestCases.OpenXml4Net.OPC
                 p.Save(tempFile);
                 Assert.Fail("You shouldn't be able to call save(File) to overwrite the current file");
             }
-            catch (IOException) { }
+            catch(IOException) { }
 
             p.Close();
             // Delete it
@@ -598,7 +598,7 @@ namespace TestCases.OpenXml4Net.OPC
         {
             FieldInfo f = typeof(OPCPackage).GetField("contentTypeManager", BindingFlags.NonPublic | BindingFlags.Instance);
             //f.SetAccessible(true);
-            return (ContentTypeManager)f.GetValue(pkg);
+            return (ContentTypeManager) f.GetValue(pkg);
         }
         [Test]
         public void TestGetPartsByName()
@@ -611,7 +611,7 @@ namespace TestCases.OpenXml4Net.OPC
                 List<PackagePart> rs = pkg.GetPartsByName(new Regex("^/word/.*?\\.xml$"));
                 Dictionary<String, PackagePart> selected = new Dictionary<String, PackagePart>();
 
-                foreach (PackagePart p in rs)
+                foreach(PackagePart p in rs)
                     selected.Add(p.PartName.Name, p);
 
                 ClassicAssert.AreEqual(6, selected.Count);
@@ -636,16 +636,16 @@ namespace TestCases.OpenXml4Net.OPC
             try
             {
                 int checked1 = 0;
-                foreach (PackagePart part in pkg.GetParts())
+                foreach(PackagePart part in pkg.GetParts())
                 {
                     // Can get the size of zip parts
-                    if (part.PartName.Name.Equals("/word/document.xml"))
+                    if(part.PartName.Name.Equals("/word/document.xml"))
                     {
                         checked1++;
                         ClassicAssert.AreEqual(typeof(ZipPackagePart), part.GetType());
                         ClassicAssert.AreEqual(6031L, part.Size);
                     }
-                    if (part.PartName.Name.Equals("/word/fontTable.xml"))
+                    if(part.PartName.Name.Equals("/word/fontTable.xml"))
                     {
                         checked1++;
                         ClassicAssert.AreEqual(typeof(ZipPackagePart), part.GetType());
@@ -653,7 +653,7 @@ namespace TestCases.OpenXml4Net.OPC
                     }
 
                     // But not from the others
-                    if (part.PartName.Name.Equals("/docProps/core.xml"))
+                    if(part.PartName.Name.Equals("/docProps/core.xml"))
                     {
                         checked1++;
                         ClassicAssert.AreEqual(typeof(PackagePropertiesPart), part.GetType());
@@ -693,7 +693,7 @@ namespace TestCases.OpenXml4Net.OPC
          * Verify we give helpful exceptions (or as best we can) when
          *  supplied with non-OOXML file types (eg OLE2, ODF)
          */
-         [Ignore("not found in poi test cases")]
+        [Ignore("not found in poi test cases")]
         [Test]
         public void NonOOXMLFileTypes()
         {
@@ -714,7 +714,7 @@ namespace TestCases.OpenXml4Net.OPC
                 }
                 Assert.Fail("Shouldn't be able to open OLE2");
             }
-            catch (OLE2NotOfficeXmlFileException e)
+            catch(OLE2NotOfficeXmlFileException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("The supplied data appears to be in the OLE2 Format"));
                 ClassicAssert.IsTrue(e.Message.Contains("You are calling the part of POI that deals with OOXML"));
@@ -725,7 +725,7 @@ namespace TestCases.OpenXml4Net.OPC
                 OPCPackage.Open(files.GetFile("SampleSS.xls"));
                 Assert.Fail("Shouldn't be able to open OLE2");
             }
-            catch (OLE2NotOfficeXmlFileException e)
+            catch(OLE2NotOfficeXmlFileException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("The supplied data appears to be in the OLE2 Format"));
                 ClassicAssert.IsTrue(e.Message.Contains("You are calling the part of POI that deals with OOXML"));
@@ -745,7 +745,7 @@ namespace TestCases.OpenXml4Net.OPC
                 }
                 Assert.Fail("Shouldn't be able to open XML");
             }
-            catch (NotOfficeXmlFileException e)
+            catch(NotOfficeXmlFileException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("The supplied data appears to be a raw XML file"));
                 ClassicAssert.IsTrue(e.Message.Contains("Formats such as Office 2003 XML"));
@@ -756,7 +756,7 @@ namespace TestCases.OpenXml4Net.OPC
                 OPCPackage.Open(files.GetFile("SampleSS.xml"));
                 Assert.Fail("Shouldn't be able to open XML");
             }
-            catch (NotOfficeXmlFileException e)
+            catch(NotOfficeXmlFileException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("The supplied data appears to be a raw XML file"));
                 ClassicAssert.IsTrue(e.Message.Contains("Formats such as Office 2003 XML"));
@@ -776,7 +776,7 @@ namespace TestCases.OpenXml4Net.OPC
                 }
                 Assert.Fail("Shouldn't be able to open ODS");
             }
-            catch (ODFNotOfficeXmlFileException e)
+            catch(ODFNotOfficeXmlFileException e)
             {
                 ClassicAssert.IsTrue(e.ToString().Contains("The supplied data appears to be in ODF"));
                 ClassicAssert.IsTrue(e.ToString().Contains("Formats like these (eg ODS"));
@@ -787,7 +787,7 @@ namespace TestCases.OpenXml4Net.OPC
                 OPCPackage.Open(files.GetFile("SampleSS.ods"));
                 Assert.Fail("Shouldn't be able to open ODS");
             }
-            catch (ODFNotOfficeXmlFileException e)
+            catch(ODFNotOfficeXmlFileException e)
             {
                 ClassicAssert.IsTrue(e.ToString().Contains("The supplied data appears to be in ODF"));
                 ClassicAssert.IsTrue(e.ToString().Contains("Formats like these (eg ODS"));
@@ -807,7 +807,7 @@ namespace TestCases.OpenXml4Net.OPC
                 }
                 Assert.Fail("Shouldn't be able to open Plain Text");
             }
-            catch (NotOfficeXmlFileException e)
+            catch(NotOfficeXmlFileException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("No valid entries or contents found"));
                 ClassicAssert.IsTrue(e.Message.Contains("not a valid OOXML"));
@@ -818,7 +818,7 @@ namespace TestCases.OpenXml4Net.OPC
                 OPCPackage.Open(files.GetFile("SampleSS.txt"));
                 Assert.Fail("Shouldn't be able to open Plain Text");
             }
-            catch (UnsupportedFileFormatException)
+            catch(UnsupportedFileFormatException)
             {
                 // Unhelpful low-level error, sorry
             }
@@ -889,7 +889,8 @@ namespace TestCases.OpenXml4Net.OPC
         //}
 
         [Test, Ignore("need ExtractorFactory class")]
-        public void ZipBombSampleFiles() {
+        public void ZipBombSampleFiles()
+        {
 
             openZipBombFile("poc-shared-strings.xlsx");
             openZipBombFile("poc-xmlbomb.xlsx");
@@ -916,14 +917,14 @@ namespace TestCases.OpenXml4Net.OPC
 
                 Assert.Fail("Should catch an exception because of a ZipBomb");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (!e.Message.Contains("The text would exceed the max allowed overall size of extracted text."))
+                if(!e.Message.Contains("The text would exceed the max allowed overall size of extracted text."))
                 {
                     throw e;
                 }
             }
-            catch (POIXMLException e)
+            catch(POIXMLException e)
             {
                 checkForZipBombException(e);
             }
@@ -1010,7 +1011,7 @@ namespace TestCases.OpenXml4Net.OPC
             //}
 
             String msg = e.Message;
-            if (msg != null && (msg.StartsWith("Zip bomb detected!") ||
+            if(msg != null && (msg.StartsWith("Zip bomb detected!") ||
                     msg.Contains("The parser has encountered more than \"4,096\" entity expansions in this document;") ||
                     msg.Contains("The parser has encountered more than \"4096\" entity expansions in this document;")))
             {
@@ -1018,7 +1019,7 @@ namespace TestCases.OpenXml4Net.OPC
             }
 
             // recursively check the causes for the message as it can be nested further down in the exception-tree
-            if (e.InnerException != null && e.InnerException != e)
+            if(e.InnerException != null && e.InnerException != e)
             {
                 checkForZipBombException(e.InnerException);
                 return;
@@ -1063,7 +1064,8 @@ namespace TestCases.OpenXml4Net.OPC
         [Test]
         public void TestCorruptFile()
         {
-            ClassicAssert.Throws<NotOfficeXmlFileException>(()=>{
+            ClassicAssert.Throws<NotOfficeXmlFileException>(() =>
+            {
                 FileInfo file = OpenXml4NetTestDataSamples.GetSampleFile("invalid.xlsx");
                 OPCPackage.Open(file, PackageAccess.READ);
             });
@@ -1074,15 +1076,16 @@ namespace TestCases.OpenXml4Net.OPC
         {
             Stream xssf;
             Stream hssf;
-        
+
             //InputStream[] isList = {
             //    new PushbackInputStream(new FileInputStream(xssf), 2),
             //    new BufferedInputStream(new FileInputStream(xssf), 2),
             //    new PushbackInputStream(new FileInputStream(hssf), 2),
             //    new BufferedInputStream(new FileInputStream(hssf), 2),
             //};
-        
-            try {
+
+            try
+            {
                 xssf = OpenXml4NetTestDataSamples.OpenSampleStream("sample.xlsx");
                 WorkbookFactory.Create(new PushbackInputStream(new FileInputStream(xssf), 2));
                 xssf = OpenXml4NetTestDataSamples.OpenSampleStream("sample.xlsx");
@@ -1096,7 +1099,9 @@ namespace TestCases.OpenXml4Net.OPC
                 //{
                 //    WorkbookFactory.Create(is1);
                 //}
-            } finally {
+            }
+            finally
+            {
                 //foreach(InputStream is1 in isList)
                 //{
                 //    IOUtils.CloseQuietly(is1);
@@ -1105,9 +1110,3 @@ namespace TestCases.OpenXml4Net.OPC
         }
     }
 }
-
-
-
-
-
-

@@ -17,10 +17,10 @@
 
 namespace NPOI.POIFS.Crypt.CryptoAPI
 {
-    using System;
-    using System.Diagnostics;
     using NPOI.POIFS.Crypt;
     using NPOI.Util;
+    using System;
+    using System.Diagnostics;
 
     public class CryptoAPIEncryptionInfoBuilder : IEncryptionInfoBuilder
     {
@@ -55,9 +55,12 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
                 int keyBits, int blockSize, ChainingMode chainingMode)
         {
             this.info = info;
-            if (cipherAlgorithm == null) cipherAlgorithm = CipherAlgorithm.rc4;
-            if (hashAlgorithm == null) hashAlgorithm = HashAlgorithm.sha1;
-            if (keyBits == -1) keyBits = 0x28;
+            if(cipherAlgorithm == null)
+                cipherAlgorithm = CipherAlgorithm.rc4;
+            if(hashAlgorithm == null)
+                hashAlgorithm = HashAlgorithm.sha1;
+            if(keyBits == -1)
+                keyBits = 0x28;
             Debug.Assert(cipherAlgorithm == CipherAlgorithm.rc4 && hashAlgorithm == HashAlgorithm.sha1);
 
             header = new CryptoAPIEncryptionHeader(cipherAlgorithm, hashAlgorithm, keyBits, blockSize, chainingMode);

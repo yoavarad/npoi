@@ -16,15 +16,15 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXml4Net.Exceptions;
     using NPOI.OpenXml4Net.OPC;
-    using System.Collections.Generic;
     using NPOI.OpenXmlFormats.Wordprocessing;
-    using System.IO;
-    using System.Xml.Serialization;
-    using System.Xml;
     using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Serialization;
 
 
     /**
@@ -78,23 +78,23 @@ namespace NPOI.XWPF.UserModel
                 numberingDoc = NumberingDocument.Parse(doc, NamespaceManager);
                 ctNumbering = numberingDoc.Numbering;
                 //get any Nums
-                foreach (CT_Num ctNum in ctNumbering.GetNumList())
+                foreach(CT_Num ctNum in ctNumbering.GetNumList())
                 {
                     nums.Add(new XWPFNum(ctNum, this));
                 }
-                foreach (CT_AbstractNum ctAbstractNum in ctNumbering.GetAbstractNumList())
+                foreach(CT_AbstractNum ctAbstractNum in ctNumbering.GetAbstractNumList())
                 {
                     abstractNums.Add(new XWPFAbstractNum(ctAbstractNum, this));
                 }
                 isNew = false;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 throw new POIXMLException(e);
             }
             finally
             {
-                if (is1 != null)
+                if(is1 != null)
                     is1.Close();
             }
         }
@@ -153,9 +153,9 @@ namespace NPOI.XWPF.UserModel
          */
         public bool NumExist(string numID)
         {
-            foreach (XWPFNum num in nums)
+            foreach(XWPFNum num in nums)
             {
-                if (num.GetCTNum().numId.Equals(numID))
+                if(num.GetCTNum().numId.Equals(numID))
                     return true;
             }
             return false;
@@ -165,7 +165,8 @@ namespace NPOI.XWPF.UserModel
          * add a new number to the numbering document
          * @param num
          */
-        public string AddNum(XWPFNum num){
+        public string AddNum(XWPFNum num)
+        {
             ctNumbering.AddNewNum();
             int pos = (ctNumbering.GetNumList().Count) - 1;
             ctNumbering.SetNumArray(pos, num.GetCTNum());
@@ -209,8 +210,10 @@ namespace NPOI.XWPF.UserModel
          * @return abstractNum with NumId if no Num exists with that NumID 
          * 			null will be returned
          */
-        public XWPFNum GetNum(string numID){
-            foreach(XWPFNum num in nums){
+        public XWPFNum GetNum(string numID)
+        {
+            foreach(XWPFNum num in nums)
+            {
                 if(num.GetCTNum().numId.Equals(numID))
                     return num;
             }
@@ -222,9 +225,12 @@ namespace NPOI.XWPF.UserModel
          * @return  abstractNum with abstractNumId if no abstractNum exists with that abstractNumID 
          * 			null will be returned
          */
-        public XWPFAbstractNum GetAbstractNum(string abstractNumID){
-            foreach(XWPFAbstractNum abstractNum in abstractNums){
-                if(abstractNum.GetAbstractNum().abstractNumId.Equals(abstractNumID)){
+        public XWPFAbstractNum GetAbstractNum(string abstractNumID)
+        {
+            foreach(XWPFAbstractNum abstractNum in abstractNums)
+            {
+                if(abstractNum.GetAbstractNum().abstractNumId.Equals(abstractNumID))
+                {
                     return abstractNum;
                 }
             }
@@ -233,7 +239,7 @@ namespace NPOI.XWPF.UserModel
         public List<XWPFAbstractNum> GetAbstractNums()
         {
             return abstractNums;
-        }   
+        }
         public List<XWPFNum> GetNums()
         {
             return nums;
@@ -252,11 +258,11 @@ namespace NPOI.XWPF.UserModel
             CT_AbstractNum copy = (CT_AbstractNum)abstractNum.GetCTAbstractNum().Copy();
             XWPFAbstractNum newAbstractNum = new XWPFAbstractNum(copy, this);
             int i;
-            for (i = 0; i < abstractNums.Count; i++)
+            for(i = 0; i < abstractNums.Count; i++)
             {
                 newAbstractNum.GetCTAbstractNum().abstractNumId = i.ToString();
                 newAbstractNum.SetNumbering(this);
-                if (newAbstractNum.GetCTAbstractNum().ValueEquals(abstractNums[i].GetCTAbstractNum()))
+                if(newAbstractNum.GetCTAbstractNum().ValueEquals(abstractNums[i].GetCTAbstractNum()))
                 {
                     return newAbstractNum.GetCTAbstractNum().abstractNumId;
                 }
@@ -272,7 +278,7 @@ namespace NPOI.XWPF.UserModel
         public string AddAbstractNum(XWPFAbstractNum abstractNum)
         {
             int pos = abstractNums.Count;
-            if (abstractNum.GetAbstractNum() != null)
+            if(abstractNum.GetAbstractNum() != null)
             {
                 var ctAbstractNum = abstractNum.GetAbstractNum();
                 ctAbstractNum.abstractNumId = pos.ToString();
@@ -320,7 +326,7 @@ namespace NPOI.XWPF.UserModel
          */
         public bool RemoveAbstractNum(string abstractNumID)
         {
-            foreach (XWPFAbstractNum abstractNum in abstractNums)
+            foreach(XWPFAbstractNum abstractNum in abstractNums)
             {
                 string foundNumId = abstractNum.GetAbstractNum().abstractNumId;
                 if(abstractNumID.Equals(foundNumId))
@@ -351,11 +357,11 @@ namespace NPOI.XWPF.UserModel
         public string GetAbstractNumID(string numID)
         {
             XWPFNum num = GetNum(numID);
-            if (num == null)
+            if(num == null)
                 return null;
-            if (num.GetCTNum() == null)
+            if(num.GetCTNum() == null)
                 return null;
-            if (num.GetCTNum().abstractNumId == null)
+            if(num.GetCTNum().abstractNumId == null)
                 return null;
             return num.GetCTNum().abstractNumId.val;
         }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -82,7 +82,7 @@ namespace TestCases.XSSF.UserModel
         {
             ClassicAssert.IsTrue(hfProp.ScaleWithDoc);
             hfProp.ScaleWithDoc = false;
-            ClassicAssert.IsFalse(hfProp.ScaleWithDoc);            
+            ClassicAssert.IsFalse(hfProp.ScaleWithDoc);
         }
 
         [Test]

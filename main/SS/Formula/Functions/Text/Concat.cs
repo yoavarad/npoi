@@ -1,8 +1,8 @@
 namespace NPOI.SS.Formula.Functions
 {
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.SS.Formula.Eval;
+    using System.Text;
 
     public class Concat : FreeRefFunction
     {
@@ -29,8 +29,9 @@ using Cysharp.Text;
                     {
                         sb.Append(TextFunction.EvaluateStringArg(arg, ec.RowIndex, ec.ColumnIndex));
                     }
-                } 
-                catch (EvaluationException e) {
+                }
+                catch(EvaluationException e)
+                {
                     return e.GetErrorEval();
                 }
             }

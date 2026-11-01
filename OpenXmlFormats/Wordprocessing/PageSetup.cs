@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.IO;
 using System.Xml;
@@ -29,13 +29,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string codeField;
         public static CT_PageSz Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PageSz ctObj = new CT_PageSz();
             ctObj.w = XmlHelper.ReadULong(node.Attributes["w:w"]);
             ctObj.h = XmlHelper.ReadULong(node.Attributes["w:h"]);
-            if (node.Attributes["w:orient"] != null)
-                ctObj.orient = (ST_PageOrientation)Enum.Parse(typeof(ST_PageOrientation), node.Attributes["w:orient"].Value);
+            if(node.Attributes["w:orient"] != null)
+                ctObj.orient = (ST_PageOrientation) Enum.Parse(typeof(ST_PageOrientation), node.Attributes["w:orient"].Value);
             ctObj.code = XmlHelper.ReadString(node.Attributes["w:code"]);
             return ctObj;
         }
@@ -47,7 +47,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:w", this.w);
             XmlHelper.WriteAttribute(sw, "w:h", this.h);
-            if( this.orientField!= ST_PageOrientation.portrait)
+            if(this.orientField!= ST_PageOrientation.portrait)
                 XmlHelper.WriteAttribute(sw, "w:orient", this.orient.ToString());
             XmlHelper.WriteAttribute(sw, "w:code", this.code);
             sw.Write("/>");
@@ -151,10 +151,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_PageOrientation
     {
 
-    
+
         portrait,
 
-    
+
         landscape,
     }
 
@@ -182,7 +182,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_PageMar Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PageMar ctObj = new CT_PageMar();
             ctObj.top = XmlHelper.ReadULong(node.Attributes["w:top"]);
@@ -314,7 +314,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string otherField;
         public static CT_PaperSource Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PaperSource ctObj = new CT_PaperSource();
             ctObj.first = XmlHelper.ReadString(node.Attributes["w:first"]);
@@ -397,24 +397,24 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_PageBorders Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PageBorders ctObj = new CT_PageBorders();
-            if (node.Attributes["w:zOrder"] != null)
-                ctObj.zOrder = (ST_PageBorderZOrder)Enum.Parse(typeof(ST_PageBorderZOrder), node.Attributes["w:zOrder"].Value);
-            if (node.Attributes["w:display"] != null)
-                ctObj.display = (ST_PageBorderDisplay)Enum.Parse(typeof(ST_PageBorderDisplay), node.Attributes["w:display"].Value);
-            if (node.Attributes["w:offsetFrom"] != null)
-                ctObj.offsetFrom = (ST_PageBorderOffset)Enum.Parse(typeof(ST_PageBorderOffset), node.Attributes["w:offsetFrom"].Value);
-            foreach (XmlNode childNode in node.ChildNodes)
+            if(node.Attributes["w:zOrder"] != null)
+                ctObj.zOrder = (ST_PageBorderZOrder) Enum.Parse(typeof(ST_PageBorderZOrder), node.Attributes["w:zOrder"].Value);
+            if(node.Attributes["w:display"] != null)
+                ctObj.display = (ST_PageBorderDisplay) Enum.Parse(typeof(ST_PageBorderDisplay), node.Attributes["w:display"].Value);
+            if(node.Attributes["w:offsetFrom"] != null)
+                ctObj.offsetFrom = (ST_PageBorderOffset) Enum.Parse(typeof(ST_PageBorderOffset), node.Attributes["w:offsetFrom"].Value);
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "top")
+                if(childNode.LocalName == "top")
                     ctObj.top = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "left")
+                else if(childNode.LocalName == "left")
                     ctObj.left = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bottom")
+                else if(childNode.LocalName == "bottom")
                     ctObj.bottom = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "right")
+                else if(childNode.LocalName == "right")
                     ctObj.right = CT_Border.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -429,13 +429,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:display", this.display.ToString());
             XmlHelper.WriteAttribute(sw, "w:offsetFrom", this.offsetFrom.ToString());
             sw.Write('>');
-            if (this.top != null)
+            if(this.top != null)
                 this.top.Write(sw, "top");
-            if (this.left != null)
+            if(this.left != null)
                 this.left.Write(sw, "left");
-            if (this.bottom != null)
+            if(this.bottom != null)
                 this.bottom.Write(sw, "bottom");
-            if (this.right != null)
+            if(this.right != null)
                 this.right.Write(sw, "right");
             sw.WriteEndW(nodeName);
         }
@@ -578,10 +578,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_PageBorderZOrder
     {
 
-    
+
         front,
 
-    
+
         back,
     }
 
@@ -591,13 +591,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_PageBorderDisplay
     {
 
-    
+
         allPages,
 
-    
+
         firstPage,
 
-    
+
         notFirstPage,
     }
 
@@ -607,10 +607,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_PageBorderOffset
     {
 
-    
+
         page,
 
-    
+
         text,
     }
 
@@ -635,15 +635,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool chapSepFieldSpecified;
         public static CT_PageNumber Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PageNumber ctObj = new CT_PageNumber();
-            if (node.Attributes["w:fmt"] != null)
-                ctObj.fmt = (ST_NumberFormat)Enum.Parse(typeof(ST_NumberFormat), node.Attributes["w:fmt"].Value);
+            if(node.Attributes["w:fmt"] != null)
+                ctObj.fmt = (ST_NumberFormat) Enum.Parse(typeof(ST_NumberFormat), node.Attributes["w:fmt"].Value);
             ctObj.start = XmlHelper.ReadString(node.Attributes["w:start"]);
             ctObj.chapStyle = XmlHelper.ReadString(node.Attributes["w:chapStyle"]);
-            if (node.Attributes["w:chapSep"] != null)
-                ctObj.chapSep = (ST_ChapterSep)Enum.Parse(typeof(ST_ChapterSep), node.Attributes["w:chapSep"].Value);
+            if(node.Attributes["w:chapSep"] != null)
+                ctObj.chapSep = (ST_ChapterSep) Enum.Parse(typeof(ST_ChapterSep), node.Attributes["w:chapSep"].Value);
             return ctObj;
         }
 
@@ -750,11 +750,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool valFieldSpecified;
         public static CT_SectType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SectType ctObj = new CT_SectType();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_SectionMark)Enum.Parse(typeof(ST_SectionMark), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_SectionMark) Enum.Parse(typeof(ST_SectionMark), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -801,19 +801,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_SectionMark
     {
 
-    
+
         nextPage,
 
-    
+
         nextColumn,
 
-    
+
         continuous,
 
-    
+
         evenPage,
 
-    
+
         oddPage,
     }
     [Serializable]
@@ -836,14 +836,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool restartFieldSpecified;
         public static CT_LineNumber Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LineNumber ctObj = new CT_LineNumber();
             ctObj.countBy = XmlHelper.ReadString(node.Attributes["w:countBy"]);
             ctObj.start = XmlHelper.ReadString(node.Attributes["w:start"]);
             ctObj.distance = XmlHelper.ReadULong(node.Attributes["w:distance"]);
-            if (node.Attributes["w:restart"] != null)
-                ctObj.restart = (ST_LineNumberRestart)Enum.Parse(typeof(ST_LineNumberRestart), node.Attributes["w:restart"].Value);
+            if(node.Attributes["w:restart"] != null)
+                ctObj.restart = (ST_LineNumberRestart) Enum.Parse(typeof(ST_LineNumberRestart), node.Attributes["w:restart"].Value);
             return ctObj;
         }
 
@@ -945,13 +945,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_LineNumberRestart
     {
 
-    
+
         newPage,
 
-    
+
         newSection,
 
-    
+
         continuous,
     }
 }

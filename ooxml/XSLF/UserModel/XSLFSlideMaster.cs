@@ -1,8 +1,8 @@
+using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXmlFormats.Presentation;
 using System;
 using System.IO;
 using System.Linq;
-using NPOI.OpenXml4Net.OPC;
-using NPOI.OpenXmlFormats.Presentation;
 
 namespace NPOI.XSLF.UserModel
 {
@@ -17,7 +17,7 @@ namespace NPOI.XSLF.UserModel
             : base(parent, part)
         {
             master = XSLFXmlHelper.Read<CT_SlideMaster>(part);
-            if (master.cSld == null || master.clrMap == null)
+            if(master.cSld == null || master.clrMap == null)
             {
                 throw new POIXMLException("Slide master is missing common slide data or its color map: " +
                     part.PartName.Name);
@@ -55,7 +55,7 @@ namespace NPOI.XSLF.UserModel
         /// </summary>
         public XSLFSlideLayout GetLayout(string name)
         {
-            if (name == null)
+            if(name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
@@ -72,7 +72,7 @@ namespace NPOI.XSLF.UserModel
         /// <inheritdoc/>
         public override XSLFTheme GetTheme()
         {
-            if (GetPackagePart().GetRelationshipsByType(XSLFRelation.THEME.Relation).Size == 0)
+            if(GetPackagePart().GetRelationshipsByType(XSLFRelation.THEME.Relation).Size == 0)
             {
                 return null;
             }

@@ -1,4 +1,4 @@
-﻿using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace NPOI.POIFS.Crypt
             {
                 digestImpl = DigestUtilities.GetDigest(jceId)
             };
-            
+
             return md;
         }
 
@@ -42,19 +42,19 @@ namespace NPOI.POIFS.Crypt
 
         internal int Digest(byte[] buf, int offset, int len)
         {
-            if (buf == null)
+            if(buf == null)
             {
                 throw new ArgumentNullException("No output buffer given");
             }
-            if (buf.Length - offset < len)
+            if(buf.Length - offset < len)
             {
                 throw new ArgumentOutOfRangeException
                     ("Output buffer too small for specified offset and length");
             }
             byte[] digest = Digest();
-            if (len < digest.Length)
+            if(len < digest.Length)
                 throw new Exception("partial digests not returned");
-            if (buf.Length - offset < digest.Length)
+            if(buf.Length - offset < digest.Length)
                 throw new Exception("insufficient space in the output "
                                           + "buffer to store the digest");
             Array.Copy(digest, 0, buf, offset, digest.Length);

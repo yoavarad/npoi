@@ -18,16 +18,17 @@
 namespace TestCases.SS.Formula.Functions
 {
 
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
-    using NPOI.HSSF.UserModel;
-    using System.Text;
     using NPOI.SS.Util;
-    using System.IO;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Text;
+    using TestCases.HSSF;
 
     /**
      * Tests INDEX() as loaded from a Test data spreadsheet.<p/>
@@ -76,30 +77,30 @@ namespace TestCases.SS.Formula.Functions
 
         private static void ConfirmExpectedResult(String msg, ICell expected, CellValue actual)
         {
-            if (expected == null)
+            if(expected == null)
             {
                 throw new AssertionException(msg + " - Bad Setup data expected value is null");
             }
-            if (actual == null)
+            if(actual == null)
             {
                 throw new AssertionException(msg + " - actual value was null");
             }
-            if (expected.CellType == CellType.Error)
+            if(expected.CellType == CellType.Error)
             {
                 ConfirmErrorResult(msg, expected.ErrorCellValue, actual);
                 return;
             }
-            if (actual.CellType == CellType.Error)
+            if(actual.CellType == CellType.Error)
             {
                 throw unexpectedError(msg, expected, actual.ErrorValue);
             }
-            if (actual.CellType != expected.CellType)
+            if(actual.CellType != expected.CellType)
             {
                 throw wrongTypeError(msg, expected, actual);
             }
 
 
-            switch (expected.CellType)
+            switch(expected.CellType)
             {
                 case CellType.Boolean:
                     ClassicAssert.AreEqual(expected.BooleanCellValue, actual.BooleanValue, msg);
@@ -136,13 +137,13 @@ namespace TestCases.SS.Formula.Functions
 
         private static void ConfirmErrorResult(String msgPrefix, int expectedErrorCode, CellValue actual)
         {
-            if (actual.CellType != CellType.Error)
+            if(actual.CellType != CellType.Error)
             {
                 throw new AssertionException(msgPrefix + " Expected cell error ("
                         + ErrorEval.GetText(expectedErrorCode) + ") but actual value was "
                         + actual.FormatAsString());
             }
-            if (expectedErrorCode != actual.ErrorValue)
+            if(expectedErrorCode != actual.ErrorValue)
             {
                 throw new AssertionException(msgPrefix + " Expected cell error code ("
                         + ErrorEval.GetText(expectedErrorCode)
@@ -155,12 +156,16 @@ namespace TestCases.SS.Formula.Functions
 
         private static String formatValue(ICell expecedCell)
         {
-            switch (expecedCell.CellType)
+            switch(expecedCell.CellType)
             {
-                case CellType.Blank: return "<blank>";
-                case CellType.Boolean: return expecedCell.BooleanCellValue.ToString();
-                case CellType.Numeric: return expecedCell.NumericCellValue.ToString();
-                case CellType.String: return expecedCell.RichStringCellValue.String;
+                case CellType.Blank:
+                    return "<blank>";
+                case CellType.Boolean:
+                    return expecedCell.BooleanCellValue.ToString();
+                case CellType.Numeric:
+                    return expecedCell.NumericCellValue.ToString();
+                case CellType.String:
+                    return expecedCell.RichStringCellValue.String;
             }
             throw new Exception("Unexpected cell type of expected value (" + expecedCell.CellType + ")");
         }
@@ -179,13 +184,17 @@ namespace TestCases.SS.Formula.Functions
             HSSFWorkbook workbook = HSSFTestDataSamples.OpenSampleWorkbook(this.Filename);
             confirmReadMeSheet(workbook);
             int nSheets = workbook.NumberOfSheets;
-            for (int i = 1; i < nSheets; i++)
+            for(int i = 1; i < nSheets; i++)
             {
                 int sheetResult = ProcessTestSheet(workbook, i, workbook.GetSheetName(i));
-                switch (sheetResult)
+                switch(sheetResult)
                 {
-                    case Result.ALL_EVALUATIONS_SUCCEEDED: _sheetSuccessCount++; break;
-                    case Result.SOME_EVALUATIONS_FAILED: _sheetFailureCount++; break;
+                    case Result.ALL_EVALUATIONS_SUCCEEDED:
+                        _sheetSuccessCount++;
+                        break;
+                    case Result.SOME_EVALUATIONS_FAILED:
+                        _sheetFailureCount++;
+                        break;
                 }
             }
 
@@ -193,14 +202,14 @@ namespace TestCases.SS.Formula.Functions
             String successMsg = "There were "
                     + _sheetSuccessCount + " successful sheets(s) and "
                     + _evaluationSuccessCount + " function(s) without error";
-            if (_sheetFailureCount > 0)
+            if(_sheetFailureCount > 0)
             {
                 String msg = _sheetFailureCount + " sheets(s) failed with "
                         + _evaluationFailureCount + " evaluation(s).  " + successMsg;
                 throw new AssertionException(msg);
             }
 #if !HIDE_UNREACHABLE_CODE
-            if (false)
+            if(false)
             { // normally no output for successful Tests
                 Console.WriteLine(this.GetType().Name + ": " + successMsg);
             }
@@ -215,30 +224,30 @@ namespace TestCases.SS.Formula.Functions
             int result = Result.NO_EVALUATIONS_FOUND; // so far
 
             String currentGroupComment = null;
-            for (int rowIndex = SS.START_TEST_CASES_ROW_INDEX; rowIndex < maxRows; rowIndex++)
+            for(int rowIndex = SS.START_TEST_CASES_ROW_INDEX; rowIndex < maxRows; rowIndex++)
             {
                 IRow r = sheet.GetRow(rowIndex);
                 String newMarkerValue = GetMarkerColumnValue(r);
-                if (r == null)
+                if(r == null)
                 {
                     continue;
                 }
-                if (SS.TEST_CASES_END_MARKER.Equals(newMarkerValue, StringComparison.InvariantCultureIgnoreCase))
+                if(SS.TEST_CASES_END_MARKER.Equals(newMarkerValue, StringComparison.InvariantCultureIgnoreCase))
                 {
                     // normal exit point
                     return result;
                 }
-                if (SS.SKIP_CURRENT_TEST_CASE_MARKER.Equals(newMarkerValue, StringComparison.InvariantCultureIgnoreCase))
+                if(SS.SKIP_CURRENT_TEST_CASE_MARKER.Equals(newMarkerValue, StringComparison.InvariantCultureIgnoreCase))
                 {
                     // currently disabled test case row
                     continue;
                 }
-                if (newMarkerValue != null)
+                if(newMarkerValue != null)
                 {
                     currentGroupComment = newMarkerValue;
                 }
                 ICell c = r.GetCell(SS.COLUMN_INDEX_EVALUATION);
-                if (c == null || c.CellType != CellType.Formula)
+                if(c == null || c.CellType != CellType.Formula)
                 {
                     continue;
                 }
@@ -251,18 +260,18 @@ namespace TestCases.SS.Formula.Functions
                     CellValue actualValue = Evaluator.Evaluate(c);
                     ConfirmExpectedResult(msgPrefix, expectedValueCell, actualValue);
                     _evaluationSuccessCount++;
-                    if (result != Result.SOME_EVALUATIONS_FAILED)
+                    if(result != Result.SOME_EVALUATIONS_FAILED)
                     {
                         result = Result.ALL_EVALUATIONS_SUCCEEDED;
                     }
                 }
-                catch (RuntimeException e)
+                catch(RuntimeException e)
                 {
                     _evaluationFailureCount++;
                     printshortStackTrace(System.Console.Error, e);
                     result = Result.SOME_EVALUATIONS_FAILED;
                 }
-                catch (AssertionException e)
+                catch(AssertionException e)
                 {
                     _evaluationFailureCount++;
                     printshortStackTrace(System.Console.Error, e);
@@ -288,11 +297,11 @@ namespace TestCases.SS.Formula.Functions
             sb.Append(cr.FormatAsString());
             sb.Append(" {=").Append(c.CellFormula).Append("}");
 
-            if (currentGroupComment != null)
+            if(currentGroupComment != null)
             {
                 sb.Append(" '");
                 sb.Append(currentGroupComment);
-                if (rowComment != null)
+                if(rowComment != null)
                 {
                     sb.Append(" - ");
                     sb.Append(rowComment);
@@ -301,7 +310,7 @@ namespace TestCases.SS.Formula.Functions
             }
             else
             {
-                if (rowComment != null)
+                if(rowComment != null)
                 {
                     sb.Append(" '");
                     sb.Append(rowComment);
@@ -319,7 +328,7 @@ namespace TestCases.SS.Formula.Functions
         private void confirmReadMeSheet(HSSFWorkbook workbook)
         {
             String firstSheetName = workbook.GetSheetName(0);
-            if (!firstSheetName.Equals(SS.README_SHEET_NAME, StringComparison.InvariantCultureIgnoreCase))
+            if(!firstSheetName.Equals(SS.README_SHEET_NAME, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new Exception("First sheet's name was '" + firstSheetName + "' but expected '" + SS.README_SHEET_NAME + "'");
             }
@@ -380,20 +389,20 @@ namespace TestCases.SS.Formula.Functions
          */
         private static String GetCellTextValue(IRow r, int colIndex, String columnName)
         {
-            if (r == null)
+            if(r == null)
             {
                 return null;
             }
             ICell cell = r.GetCell(colIndex);
-            if (cell == null)
+            if(cell == null)
             {
                 return null;
             }
-            if (cell.CellType == CellType.Blank)
+            if(cell.CellType == CellType.Blank)
             {
                 return null;
             }
-            if (cell.CellType == CellType.String)
+            if(cell.CellType == CellType.String)
             {
                 return cell.RichStringCellValue.String;
             }

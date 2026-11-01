@@ -16,9 +16,8 @@
 ==================================================================== */
 namespace NPOI.SS.UserModel
 {
-    using System;
-
     using NPOI.SS.Util;
+    using System;
 
     /**
      * @author <a href="rjankiraman@emptoris.com">Radhakrishnan J</a>

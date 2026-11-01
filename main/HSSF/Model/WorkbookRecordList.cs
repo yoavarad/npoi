@@ -17,8 +17,8 @@
 
 namespace NPOI.HSSF.Model
 {
-    using System.Collections;
     using NPOI.HSSF.Record;
+    using System.Collections;
     using System.Collections.Generic;
 
 
@@ -66,7 +66,7 @@ namespace NPOI.HSSF.Model
         /// <value></value>
         public Record this[int index]
         {
-            get { return (Record)records[index]; }
+            get { return (Record) records[index]; }
 
         }
 
@@ -78,16 +78,26 @@ namespace NPOI.HSSF.Model
         public void Add(int pos, Record r)
         {
             records.Insert(pos, r);
-            if (Protpos >= pos) Protpos=(protpos + 1);
-            if (Bspos >= pos) Bspos=(bspos + 1);
-            if (Tabpos >= pos) Tabpos=(tabpos + 1);
-            if (Fontpos >= pos) Fontpos=(fontpos + 1);
-            if (Xfpos >= pos) Xfpos=(xfpos + 1);
-            if (Backuppos >= pos) Backuppos=(backuppos + 1);
-            if (Namepos>= pos) Namepos=(namepos + 1);
-            if (Supbookpos >= pos) Supbookpos=(supbookpos + 1);
-            if ((Palettepos!= -1) && (Palettepos>= pos)) Palettepos=(palettepos + 1);
-            if (ExternsheetPos >= pos) ExternsheetPos=ExternsheetPos + 1;
+            if(Protpos >= pos)
+                Protpos=(protpos + 1);
+            if(Bspos >= pos)
+                Bspos=(bspos + 1);
+            if(Tabpos >= pos)
+                Tabpos=(tabpos + 1);
+            if(Fontpos >= pos)
+                Fontpos=(fontpos + 1);
+            if(Xfpos >= pos)
+                Xfpos=(xfpos + 1);
+            if(Backuppos >= pos)
+                Backuppos=(backuppos + 1);
+            if(Namepos>= pos)
+                Namepos=(namepos + 1);
+            if(Supbookpos >= pos)
+                Supbookpos=(supbookpos + 1);
+            if((Palettepos!= -1) && (Palettepos>= pos))
+                Palettepos=(palettepos + 1);
+            if(ExternsheetPos >= pos)
+                ExternsheetPos=ExternsheetPos + 1;
         }
         public IEnumerator<Record> GetEnumerator()
         {
@@ -111,16 +121,26 @@ namespace NPOI.HSSF.Model
         public void Remove(int pos)
         {
             records.RemoveAt(pos);
-            if (Protpos >= pos) Protpos=protpos - 1;
-            if (Bspos >= pos) Bspos=bspos - 1;
-            if (Tabpos >= pos) Tabpos=tabpos - 1;
-            if (Fontpos >= pos) Fontpos=fontpos - 1;
-            if (Xfpos >= pos) Xfpos=xfpos - 1;
-            if (Backuppos >= pos) Backuppos=backuppos - 1;
-            if (Namepos >= pos) Namepos=Namepos - 1;
-            if (Supbookpos >= pos) Supbookpos=Supbookpos - 1;
-            if ((Palettepos != -1) && (Palettepos >= pos)) Palettepos=palettepos - 1;
-            if (ExternsheetPos >= pos) ExternsheetPos=ExternsheetPos- 1;
+            if(Protpos >= pos)
+                Protpos=protpos - 1;
+            if(Bspos >= pos)
+                Bspos=bspos - 1;
+            if(Tabpos >= pos)
+                Tabpos=tabpos - 1;
+            if(Fontpos >= pos)
+                Fontpos=fontpos - 1;
+            if(Xfpos >= pos)
+                Xfpos=xfpos - 1;
+            if(Backuppos >= pos)
+                Backuppos=backuppos - 1;
+            if(Namepos >= pos)
+                Namepos=Namepos - 1;
+            if(Supbookpos >= pos)
+                Supbookpos=Supbookpos - 1;
+            if((Palettepos != -1) && (Palettepos >= pos))
+                Palettepos=palettepos - 1;
+            if(ExternsheetPos >= pos)
+                ExternsheetPos=ExternsheetPos- 1;
         }
 
         /// <summary>
@@ -139,7 +159,7 @@ namespace NPOI.HSSF.Model
         /// <value>The bspos.</value>
         public int Bspos
         {
-            get{return bspos;}
+            get { return bspos; }
             set { this.bspos = value; }
         }
 
@@ -178,7 +198,7 @@ namespace NPOI.HSSF.Model
         /// <value>The backuppos.</value>
         public int Backuppos
         {
-            get{return backuppos;}
+            get { return backuppos; }
             set { this.backuppos = value; }
         }
 
@@ -188,7 +208,7 @@ namespace NPOI.HSSF.Model
         /// <value>The palettepos.</value>
         public int Palettepos
         {
-            get{return palettepos;}
+            get { return palettepos; }
             set { this.palettepos = value; }
         }
 
@@ -209,7 +229,7 @@ namespace NPOI.HSSF.Model
         /// <value>The supbookpos.</value>
         public int Supbookpos
         {
-            get{return supbookpos;}
+            get { return supbookpos; }
             set { this.supbookpos = value; }
         }
 

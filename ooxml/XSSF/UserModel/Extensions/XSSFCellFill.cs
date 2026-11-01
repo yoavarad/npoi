@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.OpenXmlFormats;
 using NPOI.OOXML.XSSF.UserModel;
+using NPOI.OpenXmlFormats;
+using NPOI.OpenXmlFormats.Spreadsheet;
 namespace NPOI.XSSF.UserModel.Extensions
 {
 
@@ -56,7 +56,8 @@ namespace NPOI.XSSF.UserModel.Extensions
         public XSSFColor GetFillBackgroundColor()
         {
             CT_PatternFill ptrn = _fill.GetPatternFill();
-            if (ptrn == null) return null;
+            if(ptrn == null)
+                return null;
 
             CT_Color CT_Color = ptrn.bgColor;
             return XSSFColor.From(CT_Color, _indexedColorMap);
@@ -71,7 +72,7 @@ namespace NPOI.XSSF.UserModel.Extensions
         {
             CT_PatternFill ptrn = EnsureCTPatternFill();
             CT_Color ctColor = ptrn.IsSetBgColor() ? ptrn.bgColor : ptrn.AddNewBgColor();
-            ctColor.indexed = (uint)index;
+            ctColor.indexed = (uint) index;
             ctColor.indexedSpecified = true;
 
         }
@@ -84,7 +85,7 @@ namespace NPOI.XSSF.UserModel.Extensions
         public void SetFillBackgroundColor(XSSFColor color)
         {
             CT_PatternFill ptrn = EnsureCTPatternFill();
-            
+
             if(color == null)
             {
                 ptrn.UnsetBgColor();
@@ -103,7 +104,8 @@ namespace NPOI.XSSF.UserModel.Extensions
         public XSSFColor GetFillForegroundColor()
         {
             CT_PatternFill ptrn = _fill.GetPatternFill();
-            if (ptrn == null) return null;
+            if(ptrn == null)
+                return null;
 
             CT_Color ctColor = ptrn.fgColor;
             return XSSFColor.From(ctColor, _indexedColorMap);
@@ -118,7 +120,7 @@ namespace NPOI.XSSF.UserModel.Extensions
         {
             CT_PatternFill ptrn = EnsureCTPatternFill();
             CT_Color CT_Color = ptrn.IsSetFgColor() ? ptrn.fgColor : ptrn.AddNewFgColor();
-            CT_Color.indexed = (uint)index;
+            CT_Color.indexed = (uint) index;
         }
 
         /**
@@ -129,7 +131,7 @@ namespace NPOI.XSSF.UserModel.Extensions
         public void SetFillForegroundColor(XSSFColor color)
         {
             CT_PatternFill ptrn = EnsureCTPatternFill();
-            
+
             if(color == null)
             {
                 ptrn.UnsetFgColor();
@@ -148,7 +150,7 @@ namespace NPOI.XSSF.UserModel.Extensions
         public ST_PatternType GetPatternType()
         {
             CT_PatternFill ptrn = _fill.GetPatternFill();
-            return ptrn == null ? ST_PatternType.none : (ST_PatternType)ptrn.patternType;
+            return ptrn == null ? ST_PatternType.none : (ST_PatternType) ptrn.patternType;
         }
 
         /**
@@ -165,7 +167,7 @@ namespace NPOI.XSSF.UserModel.Extensions
         private CT_PatternFill EnsureCTPatternFill()
         {
             CT_PatternFill patternFill = _fill.GetPatternFill();
-            if (patternFill == null)
+            if(patternFill == null)
             {
                 patternFill = _fill.AddNewPatternFill();
             }
@@ -191,7 +193,8 @@ namespace NPOI.XSSF.UserModel.Extensions
 
         public override bool Equals(object o)
         {
-            if (o is not XSSFCellFill cf) return false;
+            if(o is not XSSFCellFill cf)
+                return false;
 
             return _fill.ToString().Equals(cf.GetCTFill().ToString());
         }

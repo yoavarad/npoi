@@ -19,7 +19,8 @@ namespace TestCases.XWPF.Model
 {
     using NPOI.XWPF.Model;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Tests for XWPF Header Footer Stuff

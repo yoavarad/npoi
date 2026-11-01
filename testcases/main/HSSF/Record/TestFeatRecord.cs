@@ -18,13 +18,14 @@
 namespace TestCases.HSSF.Record
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Common;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.HSSF;
-    using NPOI.HSSF.Record;
     using TestCases.HSSF.UserModel;
     /**
      * Tests for <tt>FeatRecord</tt>
@@ -46,21 +47,21 @@ namespace TestCases.HSSF.Record
             int countFRH = 0;
 
             // Check on the workbook, but shouldn't be there!
-            foreach (Record r in wb.Records)
+            foreach(Record r in wb.Records)
             {
-                if (r is FeatRecord)
+                if(r is FeatRecord)
                 {
                     countFR++;
                 }
-                else if (r.Sid == FeatRecord.sid)
+                else if(r.Sid == FeatRecord.sid)
                 {
                     countFR++;
                 }
-                if (r is FeatHdrRecord)
+                if(r is FeatHdrRecord)
                 {
                     countFRH++;
                 }
-                else if (r.Sid == FeatHdrRecord.sid)
+                else if(r.Sid == FeatHdrRecord.sid)
                 {
                     countFRH++;
                 }
@@ -73,24 +74,24 @@ namespace TestCases.HSSF.Record
             HSSFSheet s = (HSSFSheet)hssf.GetSheetAt(0);
             InternalSheet sheet = HSSFTestHelper.GetSheetForTest(s);
 
-            foreach (RecordBase rb in sheet.Records)
+            foreach(RecordBase rb in sheet.Records)
             {
-                if (rb is Record)
+                if(rb is Record)
                 {
                     Record r = (Record)rb;
-                    if (r is FeatRecord)
+                    if(r is FeatRecord)
                     {
                         countFR++;
                     }
-                    else if (r.Sid == FeatRecord.sid)
+                    else if(r.Sid == FeatRecord.sid)
                     {
                         countFR++;
                     }
-                    if (r is FeatHdrRecord)
+                    if(r is FeatHdrRecord)
                     {
                         countFRH++;
                     }
-                    else if (r.Sid == FeatHdrRecord.sid)
+                    else if(r.Sid == FeatHdrRecord.sid)
                     {
                         countFRH++;
                     }
@@ -115,22 +116,22 @@ namespace TestCases.HSSF.Record
             // First check it isn't on the Workbook
             int countFR = 0;
             int countFRH = 0;
-            foreach (Record r in wb.Records)
+            foreach(Record r in wb.Records)
             {
-                if (r is FeatRecord)
+                if(r is FeatRecord)
                 {
-                    fr = (FeatRecord)r;
+                    fr = (FeatRecord) r;
                     countFR++;
                 }
-                else if (r.Sid == FeatRecord.sid)
+                else if(r.Sid == FeatRecord.sid)
                 {
                     Assert.Fail("FeatRecord SID found but not Created correctly!");
                 }
-                if (r is FeatHdrRecord)
+                if(r is FeatHdrRecord)
                 {
                     countFRH++;
                 }
-                else if (r.Sid == FeatHdrRecord.sid)
+                else if(r.Sid == FeatHdrRecord.sid)
                 {
                     Assert.Fail("FeatHdrRecord SID found but not Created correctly!");
                 }
@@ -143,26 +144,26 @@ namespace TestCases.HSSF.Record
             HSSFSheet s = (HSSFSheet)hssf.GetSheetAt(0);
             InternalSheet sheet = HSSFTestHelper.GetSheetForTest(s);
 
-            foreach (RecordBase rb in sheet.Records)
+            foreach(RecordBase rb in sheet.Records)
             {
-                if (rb is Record)
+                if(rb is Record)
                 {
                     Record r = (Record)rb;
-                    if (r is FeatRecord)
+                    if(r is FeatRecord)
                     {
-                        fr = (FeatRecord)r;
+                        fr = (FeatRecord) r;
                         countFR++;
                     }
-                    else if (r.Sid == FeatRecord.sid)
+                    else if(r.Sid == FeatRecord.sid)
                     {
                         countFR++;
                     }
-                    if (r is FeatHdrRecord)
+                    if(r is FeatHdrRecord)
                     {
-                        fhr = (FeatHdrRecord)r;
+                        fhr = (FeatHdrRecord) r;
                         countFRH++;
                     }
-                    else if (r.Sid == FeatHdrRecord.sid)
+                    else if(r.Sid == FeatHdrRecord.sid)
                     {
                         countFRH++;
                     }

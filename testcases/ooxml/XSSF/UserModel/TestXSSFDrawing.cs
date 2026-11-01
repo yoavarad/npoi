@@ -14,20 +14,21 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System.Collections.Generic;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System;
-using System.IO;
+using NPOI;
 using NPOI.OpenXml4Net.OPC;
-using NPOI.SS.UserModel;
 using NPOI.OpenXmlFormats.Dml;
-using NPOI.Util;
 using NPOI.OpenXmlFormats.Dml.Spreadsheet;
-using System.Text;
+using NPOI.SS.UserModel;
+using NPOI.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.UserModel;
-using NPOI;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using SkiaSharp;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -68,7 +69,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsTrue(shapes[(4)] is XSSFSimpleShape);
             ClassicAssert.IsTrue(shapes[(5)] is XSSFPicture);
 
-            foreach (XSSFShape sh in shapes)
+            foreach(XSSFShape sh in shapes)
                 ClassicAssert.IsNotNull(sh.GetAnchor());
 
             checkRewrite(wb);
@@ -160,7 +161,7 @@ namespace TestCases.XSSF.UserModel
         public void TestMultipleDrawings()
         {
             XSSFWorkbook wb = new XSSFWorkbook();
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 XSSFSheet sheet = (XSSFSheet)wb.CreateSheet();
                 XSSFDrawing drawing = (XSSFDrawing)sheet.CreateDrawingPatriarch();
@@ -174,7 +175,7 @@ namespace TestCases.XSSF.UserModel
             }
             finally
             {
-                
+
             }
             wb.Close();
         }
@@ -203,7 +204,7 @@ namespace TestCases.XSSF.UserModel
             List<XSSFShape> shapes2 = drawing2.GetShapes();
             ClassicAssert.AreEqual(shapes1.Count, shapes2.Count);
 
-            for (int i = 0; i < shapes1.Count; i++)
+            for(int i = 0; i < shapes1.Count; i++)
             {
                 XSSFShape sh1 = (XSSFShape)shapes1[(i)];
                 XSSFShape sh2 = (XSSFShape)shapes2[i];
@@ -249,7 +250,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(true, rPr.i);
             ClassicAssert.AreEqual(ST_TextUnderlineType.sng, rPr.u);
             ClassicAssert.IsTrue(Arrays.Equals(
-                    new byte[] { 0, (byte)128, (byte)128 },
+                    new byte[] { 0, (byte) 128, (byte) 128 },
                     rPr.solidFill.srgbClr.val));
 
             checkRewrite(wb);
@@ -272,14 +273,14 @@ namespace TestCases.XSSF.UserModel
             string tmpFile = Path.GetTempFileName();
             try
             {
-                using (FileStream fs = new FileStream(tmpFile, FileMode.Create, FileAccess.Write))
+                using(FileStream fs = new FileStream(tmpFile, FileMode.Create, FileAccess.Write))
                     wb.Write(fs);
-                using (OPCPackage pkg = OPCPackage.Open(tmpFile))
+                using(OPCPackage pkg = OPCPackage.Open(tmpFile))
                 {
-                    foreach (var part in pkg.GetPartsByContentType(XSSFRelation.DRAWINGS.ContentType))
+                    foreach(var part in pkg.GetPartsByContentType(XSSFRelation.DRAWINGS.ContentType))
                     {
-                        using (Stream s = part.GetInputStream())
-                        using (StreamReader reader = new StreamReader(s, Encoding.UTF8))
+                        using(Stream s = part.GetInputStream())
+                        using(StreamReader reader = new StreamReader(s, Encoding.UTF8))
                         {
                             string xml = reader.ReadToEnd();
                             ClassicAssert.IsTrue(xml.Contains("<xdr:txBody>"), "expected <xdr:txBody> in drawing.xml but got: " + xml);
@@ -362,7 +363,7 @@ namespace TestCases.XSSF.UserModel
             CT_TextCharacterProperties rPr = pr.GetRArray(0).rPr;
             ClassicAssert.AreEqual("Arial", rPr.latin.typeface);
             ClassicAssert.IsTrue(Arrays.Equals(
-                    new byte[] { 0, (byte)128, (byte)128 },
+                    new byte[] { 0, (byte) 128, (byte) 128 },
                     rPr.solidFill.srgbClr.val));
 
             checkRewrite(wb);
@@ -514,7 +515,8 @@ namespace TestCases.XSSF.UserModel
         {
             XSSFWorkbook wb = new XSSFWorkbook();
             XSSFSheet sheet = wb.CreateSheet() as XSSFSheet;
-            XSSFDrawing Drawing = sheet.CreateDrawingPatriarch() as XSSFDrawing; ;
+            XSSFDrawing Drawing = sheet.CreateDrawingPatriarch() as XSSFDrawing;
+            ;
 
             XSSFTextBox shape = Drawing.CreateTextbox(new XSSFClientAnchor(0, 0, 0, 0, 2, 2, 3, 4));
 
@@ -543,7 +545,8 @@ namespace TestCases.XSSF.UserModel
         {
             XSSFWorkbook wb = new XSSFWorkbook();
             XSSFSheet sheet = wb.CreateSheet() as XSSFSheet;
-            XSSFDrawing Drawing = sheet.CreateDrawingPatriarch() as XSSFDrawing; ;
+            XSSFDrawing Drawing = sheet.CreateDrawingPatriarch() as XSSFDrawing;
+            ;
 
             XSSFTextBox shape = Drawing.CreateTextbox(new XSSFClientAnchor(0, 0, 0, 0, 2, 2, 3, 4));
 
@@ -842,7 +845,7 @@ namespace TestCases.XSSF.UserModel
                     Drawing.CreateCellComment(anchor);
                     Assert.Fail("Should fail if we try to add the same comment for the same cell");
                 }
-                catch (ArgumentException )
+                catch(ArgumentException)
                 {
                     // expected
                 }
@@ -862,7 +865,7 @@ namespace TestCases.XSSF.UserModel
             XSSFDrawing drawing = sheet.CreateDrawingPatriarch() as XSSFDrawing;
 
             XSSFSimpleShape s0 = drawing.CreateSimpleShape((XSSFClientAnchor)drawing.CreateAnchor(0, 0, Units.PixelToEMU(30), Units.PixelToEMU(30), 1, 1, 10, 10));
-            s0.ShapeType = (int)ShapeTypes.Rectangle;
+            s0.ShapeType = (int) ShapeTypes.Rectangle;
             s0.SetLineStyleColor(100, 0, 0);
 
             XSSFShapeGroup g1 = drawing.CreateGroup((XSSFClientAnchor)drawing.CreateAnchor(0, 0, 300, 300, 1, 1, 10, 10));
@@ -921,4 +924,3 @@ namespace TestCases.XSSF.UserModel
         }
     }
 }
-

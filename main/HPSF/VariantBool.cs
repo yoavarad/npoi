@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -22,11 +22,11 @@ namespace NPOI.HPSF
     {
         public const int SIZE = 2;
         private bool _value;
-        internal VariantBool() {}
-        internal void Read( LittleEndianByteArrayInputStream lei )
+        internal VariantBool() { }
+        internal void Read(LittleEndianByteArrayInputStream lei)
         {
             short value = lei.ReadShort();
-            switch (value)
+            switch(value)
             {
                 case 0:
                     _value = false;
@@ -42,11 +42,11 @@ namespace NPOI.HPSF
         }
         public bool Value
         {
-            get 
+            get
             {
                 return _value;
             }
-            set 
+            set
             {
                 _value = value;
             }

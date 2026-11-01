@@ -58,11 +58,11 @@ namespace NPOI.SS.Formula.Eval
         public static ValueEval GetSingleValue(ValueEval arg, int srcCellRow, int srcCellCol)
         {
             ValueEval result;
-            if (arg is RefEval eval)
+            if(arg is RefEval eval)
             {
                 result = ChooseSingleElementFromRef(eval);
             }
-            else if (arg is AreaEval areaEval)
+            else if(arg is AreaEval areaEval)
             {
                 result = ChooseSingleElementFromArea(areaEval, srcCellRow, srcCellCol);
             }
@@ -70,7 +70,7 @@ namespace NPOI.SS.Formula.Eval
             {
                 result = arg;
             }
-            if (result is ErrorEval errorEval)
+            if(result is ErrorEval errorEval)
             {
                 throw new EvaluationException(errorEval);
             }
@@ -125,8 +125,8 @@ namespace NPOI.SS.Formula.Eval
                 int srcCellRow, int srcCellCol)
         {
             ValueEval result = ChooseSingleElementFromAreaInternal(ae, srcCellRow, srcCellCol);
-            
-            if (result is ErrorEval eval)
+
+            if(result is ErrorEval eval)
             {
                 throw new EvaluationException(eval);
 
@@ -166,28 +166,28 @@ namespace NPOI.SS.Formula.Eval
             //     */
             //}
 
-            if (ae.IsColumn)
+            if(ae.IsColumn)
             {
-                if (ae.IsRow)
+                if(ae.IsRow)
                 {
                     return ae.GetRelativeValue(0, 0);
                 }
-                if (!ae.ContainsRow(srcCellRow))
+                if(!ae.ContainsRow(srcCellRow))
                 {
                     throw EvaluationException.InvalidValue();
                 }
                 return ae.GetAbsoluteValue(srcCellRow, ae.FirstColumn);
             }
-            if (!ae.IsRow)
+            if(!ae.IsRow)
             {
                 // multi-column, multi-row area
-                if (ae.ContainsRow(srcCellRow) && ae.ContainsColumn(srcCellCol))
+                if(ae.ContainsRow(srcCellRow) && ae.ContainsColumn(srcCellCol))
                 {
                     return ae.GetAbsoluteValue(srcCellRow, srcCellCol);
                 }
                 throw EvaluationException.InvalidValue();
             }
-            if (!ae.ContainsColumn(srcCellCol))
+            if(!ae.ContainsColumn(srcCellCol))
             {
                 throw EvaluationException.InvalidValue();
             }
@@ -210,14 +210,14 @@ namespace NPOI.SS.Formula.Eval
          */
         public static int CoerceValueToInt(ValueEval ev)
         {
-            if (ev == BlankEval.instance)
+            if(ev == BlankEval.instance)
             {
                 return 0;
             }
             double d = CoerceValueToDouble(ev);
             // Note - the standard java type conversion from double to int truncates toward zero.
             // but Math.floor() truncates toward negative infinity
-            return (int)Math.Floor(d);
+            return (int) Math.Floor(d);
         }
 
         /**
@@ -232,19 +232,19 @@ namespace NPOI.SS.Formula.Eval
          */
         public static double CoerceValueToDouble(ValueEval ev)
         {
-            if (ev == BlankEval.instance)
+            if(ev == BlankEval.instance)
             {
                 return 0.0;
             }
-            if (ev is NumericValueEval eval)
+            if(ev is NumericValueEval eval)
             {
                 // this also handles bools
                 return eval.NumberValue;
             }
-            if (ev is StringEval stringEval)
+            if(ev is StringEval stringEval)
             {
                 double dd = ParseDouble(stringEval.StringValue);
-                if (double.IsNaN(dd))
+                if(double.IsNaN(dd))
                 {
                     throw EvaluationException.InvalidValue();
                 }
@@ -272,17 +272,17 @@ namespace NPOI.SS.Formula.Eval
         public static double ParseDouble(String pText)
         {
             //if (Regex.Match(fpRegex, pText).Success)
-                try
-                {
-                    double ret = double.Parse(pText, CultureInfo.CurrentCulture);
-                    if (double.IsInfinity(ret))
-                        return double.NaN;
-                    return ret;
-                }
-                catch
-                {
-                    return Double.NaN;
-                }
+            try
+            {
+                double ret = double.Parse(pText, CultureInfo.CurrentCulture);
+                if(double.IsInfinity(ret))
+                    return double.NaN;
+                return ret;
+            }
+            catch
+            {
+                return Double.NaN;
+            }
             //else
             {
                 //return Double.NaN;
@@ -324,12 +324,12 @@ namespace NPOI.SS.Formula.Eval
          */
         public static String CoerceValueToString(ValueEval ve)
         {
-            if (ve is StringValueEval sve)
+            if(ve is StringValueEval sve)
             {
                 return sve.StringValue;
             }
 
-            if (ve is BlankEval)
+            if(ve is BlankEval)
             {
                 return "";
             }
@@ -342,28 +342,28 @@ namespace NPOI.SS.Formula.Eval
         public static Boolean? CoerceValueToBoolean(ValueEval ve, bool stringsAreBlanks)
         {
 
-            if (ve == null || ve == BlankEval.instance)
+            if(ve == null || ve == BlankEval.instance)
             {
                 // TODO - remove 've == null' condition once AreaEval is fixed
                 return null;
             }
-            if (ve is BoolEval eval)
+            if(ve is BoolEval eval)
             {
                 return eval.BooleanValue;
             }
 
-            if (ve is StringEval stringEval)
+            if(ve is StringEval stringEval)
             {
-                if (stringsAreBlanks)
+                if(stringsAreBlanks)
                 {
                     return null;
                 }
                 String str = stringEval.StringValue;
-                if (str.Equals("true", StringComparison.OrdinalIgnoreCase))
+                if(str.Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
-                if (str.Equals("false", StringComparison.OrdinalIgnoreCase))
+                if(str.Equals("false", StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
                 }
@@ -371,16 +371,16 @@ namespace NPOI.SS.Formula.Eval
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
 
-            if (ve is NumericValueEval ne)
+            if(ve is NumericValueEval ne)
             {
                 double d = ne.NumberValue;
-                if (Double.IsNaN(d))
+                if(Double.IsNaN(d))
                 {
                     throw new EvaluationException(ErrorEval.VALUE_INVALID);
                 }
                 return d != 0;
             }
-            if (ve is ErrorEval errorEval)
+            if(ve is ErrorEval errorEval)
             {
                 throw new EvaluationException(errorEval);
             }
@@ -401,22 +401,22 @@ namespace NPOI.SS.Formula.Eval
             int relativeRowIndex = cell.RowIndex - range.FirstRow;
             int relativeColIndex = cell.ColumnIndex - range.FirstColumn;
 
-            if (ae.IsColumn)
+            if(ae.IsColumn)
             {
-                if (ae.IsRow)
+                if(ae.IsRow)
                 {
                     return ae.GetRelativeValue(0, 0);
                 }
-                else if (relativeRowIndex < ae.Height)
+                else if(relativeRowIndex < ae.Height)
                 {
                     return ae.GetRelativeValue(relativeRowIndex, 0);
                 }
             }
-            else if (!ae.IsRow && relativeRowIndex < ae.Height && relativeColIndex < ae.Width)
+            else if(!ae.IsRow && relativeRowIndex < ae.Height && relativeColIndex < ae.Width)
             {
                 return ae.GetRelativeValue(relativeRowIndex, relativeColIndex);
             }
-            else if (ae.IsRow && relativeColIndex < ae.Width)
+            else if(ae.IsRow && relativeColIndex < ae.Width)
             {
                 return ae.GetRelativeValue(0, relativeColIndex);
             }

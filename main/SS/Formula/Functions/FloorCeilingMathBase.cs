@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the collaborators of the NPOI project under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -33,8 +33,7 @@ namespace NPOI.SS.Formula.Functions
         private const int SignificantDigitsForHighPrecision = SignificantDigits + 2;
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
-            => args.Length switch
-            {
+            => args.Length switch {
                 1 => Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], null, null),
                 2 => Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], null),
                 3 => Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1], args[2]),
@@ -49,7 +48,7 @@ namespace NPOI.SS.Formula.Functions
 
                 bool? method = null;
 
-                if (arg2 is not null)
+                if(arg2 is not null)
                 {
                     ValueEval ve = OperandResolver.GetSingleValue(arg2, srcRowIndex, srcColumnIndex);
                     method = OperandResolver.CoerceValueToBoolean(ve, false);
@@ -58,7 +57,7 @@ namespace NPOI.SS.Formula.Functions
                 var result = Evaluate(number, significance, method ?? false);
                 return result == 0.0 ? NumberEval.ZERO : new NumberEval(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -66,14 +65,14 @@ namespace NPOI.SS.Formula.Functions
 
         public double Evaluate(double number, double significance, bool mode)
         {
-            if (significance == 0.0 || number == 0.0)
+            if(significance == 0.0 || number == 0.0)
             {
                 // FLOOR|CEILING.MATH 's behavior is different from FLOOR|CEILING
                 // when significance is zero & number isn't 0, the MATH one returns 0 instead of #DIV/0.
                 return 0.0;
             }
 
-            if (number > 0 && significance < 0 || number < 0 && significance > 0)
+            if(number > 0 && significance < 0 || number < 0 && significance > 0)
             {
                 // This is how Excel behaves
                 significance = -significance;
@@ -81,7 +80,7 @@ namespace NPOI.SS.Formula.Functions
 
             double numberToTest = number / significance;
 
-            if (UseHighPrecisionCalculation)
+            if(UseHighPrecisionCalculation)
             {
                 BigDecimal.Precision = SignificantDigitsForHighPrecision;
 
@@ -90,7 +89,7 @@ namespace NPOI.SS.Formula.Functions
 
                 BigDecimal bigNumberToTest = bigNumber / bigSignificance;
 
-                if (bigNumberToTest.IsIntegerWithDigitsDropped(SignificantDigits))
+                if(bigNumberToTest.IsIntegerWithDigitsDropped(SignificantDigits))
                     return number;
 
                 // High-precision number is only for integer determination. We don't need it later.
@@ -98,18 +97,18 @@ namespace NPOI.SS.Formula.Functions
             else
             {
                 // Workaround without BigDecimal
-                if (numberToTest.IsIntegerWithDigitsDropped(SignificantDigits))
+                if(numberToTest.IsIntegerWithDigitsDropped(SignificantDigits))
                     return number;
             }
 
-            if (number > 0)
+            if(number > 0)
             {
                 // mode is meaningless when number is positive
                 return EvaluateMajorDirection(numberToTest) * significance;
             }
             else
             {
-                if (mode)
+                if(mode)
                 {
                     // Towards zero for FLOOR && Away from zero for CEILING
                     return EvaluateAlternativeDirection(-numberToTest) * -significance;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,7 +9,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 {
     public class CommentsDocument
     {
-        
+
         CT_Comments comments = null;
         public CommentsDocument()
         {
@@ -34,7 +34,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_Comments AddNewComments()
         {
-            if (comments == null)
+            if(comments == null)
             {
                 comments = new CT_Comments();
             }
@@ -43,7 +43,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 comments.Write(sw);
             }

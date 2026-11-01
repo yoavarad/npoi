@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using System;
 
     public class HSSFCreationHelper : ICreationHelper
     {
@@ -79,11 +79,10 @@ namespace NPOI.HSSF.UserModel
         {
             return new AreaReference(reference, workbook.SpreadsheetVersion);
         }
-        
+
         public AreaReference CreateAreaReference(CellReference topLeft, CellReference bottomRight)
         {
             return new AreaReference(topLeft, bottomRight, workbook.SpreadsheetVersion);
         }
     }
 }
-

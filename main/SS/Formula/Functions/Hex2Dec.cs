@@ -17,10 +17,9 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * Implementation for Excel HEX2DEC() function.<p/>
@@ -48,7 +47,7 @@ namespace NPOI.SS.Formula.Functions
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval numberVE)
         {
             String hex;
-            if (numberVE is RefEval re)
+            if(numberVE is RefEval re)
             {
                 hex = OperandResolver.CoerceValueToString(re.GetInnerValueEval(re.FirstSheetIndex));
             }
@@ -56,12 +55,12 @@ namespace NPOI.SS.Formula.Functions
             {
                 hex = OperandResolver.CoerceValueToString(numberVE);
             }
-            
+
             try
             {
                 return new NumberEval(BaseNumberUtils.ConvertToDecimal(hex, HEXADECIMAL_BASE, MAX_NUMBER_OF_PLACES));
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -69,7 +68,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }

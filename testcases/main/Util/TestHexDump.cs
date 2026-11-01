@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -26,14 +26,14 @@
  * ==============================================================*/
 
 
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.IO;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using NPOI.Util;
 using System.Reflection;
+using System.Text;
 
 namespace TestCases.Util
 {
@@ -58,9 +58,9 @@ namespace TestCases.Util
         {
             char rval = '.';
 
-            if ((c >= 32) && (c <= 126))
+            if((c >= 32) && (c <= 126))
             {
-                rval = (char)c;
+                rval = (char) c;
             }
             return rval;
         }
@@ -70,37 +70,37 @@ namespace TestCases.Util
         {
             byte[] testArray = new byte[256];
 
-            for (int j = 0; j < 256; j++)
+            for(int j = 0; j < 256; j++)
             {
-                testArray[j] = (byte)j;
+                testArray[j] = (byte) j;
             }
             MemoryStream stream = new MemoryStream();
 
             HexDump.Dump(testArray, 0, stream, 0);
             byte[] outputArray = new byte[16 * (73 + HexDump.EOL.Length)];
 
-            for (int j = 0; j < 16; j++)
+            for(int j = 0; j < 16; j++)
             {
                 int offset = (73 + HexDump.EOL.Length) * j;
 
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)ToHex(j);
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)' ';
-                for (int k = 0; k < 16; k++)
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) ToHex(j);
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) ' ';
+                for(int k = 0; k < 16; k++)
                 {
-                    outputArray[offset++] = (byte)ToHex(j);
-                    outputArray[offset++] = (byte)ToHex(k);
-                    outputArray[offset++] = (byte)' ';
+                    outputArray[offset++] = (byte) ToHex(j);
+                    outputArray[offset++] = (byte) ToHex(k);
+                    outputArray[offset++] = (byte) ' ';
                 }
-                for (int k = 0; k < 16; k++)
+                for(int k = 0; k < 16; k++)
                 {
-                    outputArray[offset++] = (byte)toAscii((j * 16) + k);
+                    outputArray[offset++] = (byte) toAscii((j * 16) + k);
                 }
                 System.Array.Copy(Encoding.UTF8.GetBytes(HexDump.EOL), 0, outputArray, offset,
                                  Encoding.UTF8.GetBytes(HexDump.EOL).Length);
@@ -110,7 +110,7 @@ namespace TestCases.Util
             ClassicAssert.AreEqual(outputArray.Length,
                          actualOutput.Length, "array size mismatch");
 
-            for (int j = 0; j < outputArray.Length; j++)
+            for(int j = 0; j < outputArray.Length; j++)
             {
                 ClassicAssert.AreEqual(outputArray[j],
                              actualOutput[j], "array[ " + j + "] mismatch");
@@ -120,28 +120,28 @@ namespace TestCases.Util
             stream = new MemoryStream();
             HexDump.Dump(testArray, 0x10000000, stream, 0);
             outputArray = new byte[16 * (73 + HexDump.EOL.Length)];
-            for (int j = 0; j < 16; j++)
+            for(int j = 0; j < 16; j++)
             {
                 int offset = (73 + HexDump.EOL.Length) * j;
 
-                outputArray[offset++] = (byte)'1';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)ToHex(j);
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)' ';
-                for (int k = 0; k < 16; k++)
+                outputArray[offset++] = (byte) '1';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) ToHex(j);
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) ' ';
+                for(int k = 0; k < 16; k++)
                 {
-                    outputArray[offset++] = (byte)ToHex(j);
-                    outputArray[offset++] = (byte)ToHex(k);
-                    outputArray[offset++] = (byte)' ';
+                    outputArray[offset++] = (byte) ToHex(j);
+                    outputArray[offset++] = (byte) ToHex(k);
+                    outputArray[offset++] = (byte) ' ';
                 }
-                for (int k = 0; k < 16; k++)
+                for(int k = 0; k < 16; k++)
                 {
-                    outputArray[offset++] = (byte)toAscii((j * 16) + k);
+                    outputArray[offset++] = (byte) toAscii((j * 16) + k);
                 }
                 System.Array.Copy(Encoding.UTF8.GetBytes(HexDump.EOL), 0, outputArray, offset,
                                  Encoding.UTF8.GetBytes(HexDump.EOL).Length);
@@ -149,7 +149,7 @@ namespace TestCases.Util
             actualOutput = stream.ToArray();
             ClassicAssert.AreEqual(outputArray.Length,
                          actualOutput.Length, "array size mismatch");
-            for (int j = 0; j < outputArray.Length; j++)
+            for(int j = 0; j < outputArray.Length; j++)
             {
                 ClassicAssert.AreEqual(outputArray[j], actualOutput[j], "array[ " + j + "] mismatch");
             }
@@ -158,35 +158,35 @@ namespace TestCases.Util
             stream = new MemoryStream();
             HexDump.Dump(testArray, 0xFF000000, stream, 0);
             outputArray = new byte[16 * (73 + HexDump.EOL.Length)];
-            for (int j = 0; j < 16; j++)
+            for(int j = 0; j < 16; j++)
             {
                 int offset = (73 + HexDump.EOL.Length) * j;
 
-                outputArray[offset++] = (byte)'F';
-                outputArray[offset++] = (byte)'F';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)ToHex(j);
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)' ';
-                for (int k = 0; k < 16; k++)
+                outputArray[offset++] = (byte) 'F';
+                outputArray[offset++] = (byte) 'F';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) ToHex(j);
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) ' ';
+                for(int k = 0; k < 16; k++)
                 {
-                    outputArray[offset++] = (byte)ToHex(j);
-                    outputArray[offset++] = (byte)ToHex(k);
-                    outputArray[offset++] = (byte)' ';
+                    outputArray[offset++] = (byte) ToHex(j);
+                    outputArray[offset++] = (byte) ToHex(k);
+                    outputArray[offset++] = (byte) ' ';
                 }
-                for (int k = 0; k < 16; k++)
+                for(int k = 0; k < 16; k++)
                 {
-                    outputArray[offset++] = (byte)toAscii((j * 16) + k);
+                    outputArray[offset++] = (byte) toAscii((j * 16) + k);
                 }
                 System.Array.Copy(Encoding.UTF8.GetBytes(HexDump.EOL), 0, outputArray, offset,
                                  Encoding.UTF8.GetBytes(HexDump.EOL).Length);
             }
             actualOutput = stream.ToArray();
             ClassicAssert.AreEqual(outputArray.Length, actualOutput.Length, "array size mismatch");
-            for (int j = 0; j < outputArray.Length; j++)
+            for(int j = 0; j < outputArray.Length; j++)
             {
                 ClassicAssert.AreEqual(outputArray[j],
                              actualOutput[j], "array[ " + j + "] mismatch");
@@ -196,42 +196,42 @@ namespace TestCases.Util
             stream = new MemoryStream();
             HexDump.Dump(testArray, 0x10000000, stream, 0x81);
             outputArray = new byte[(8 * (73 + HexDump.EOL.Length)) - 1];
-            for (int j = 0; j < 8; j++)
+            for(int j = 0; j < 8; j++)
             {
                 int offset = (73 + HexDump.EOL.Length) * j;
 
-                outputArray[offset++] = (byte)'1';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)'0';
-                outputArray[offset++] = (byte)ToHex(j + 8);
-                outputArray[offset++] = (byte)'1';
-                outputArray[offset++] = (byte)' ';
-                for (int k = 0; k < 16; k++)
+                outputArray[offset++] = (byte) '1';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) '0';
+                outputArray[offset++] = (byte) ToHex(j + 8);
+                outputArray[offset++] = (byte) '1';
+                outputArray[offset++] = (byte) ' ';
+                for(int k = 0; k < 16; k++)
                 {
                     int index = 0x81 + (j * 16) + k;
 
-                    if (index < 0x100)
+                    if(index < 0x100)
                     {
-                        outputArray[offset++] = (byte)ToHex(index / 16);
-                        outputArray[offset++] = (byte)ToHex(index);
+                        outputArray[offset++] = (byte) ToHex(index / 16);
+                        outputArray[offset++] = (byte) ToHex(index);
                     }
                     else
                     {
-                        outputArray[offset++] = (byte)' ';
-                        outputArray[offset++] = (byte)' ';
+                        outputArray[offset++] = (byte) ' ';
+                        outputArray[offset++] = (byte) ' ';
                     }
-                    outputArray[offset++] = (byte)' ';
+                    outputArray[offset++] = (byte) ' ';
                 }
-                for (int k = 0; k < 16; k++)
+                for(int k = 0; k < 16; k++)
                 {
                     int index = 0x81 + (j * 16) + k;
 
-                    if (index < 0x100)
+                    if(index < 0x100)
                     {
-                        outputArray[offset++] = (byte)toAscii(index);
+                        outputArray[offset++] = (byte) toAscii(index);
                     }
                 }
                 System.Array.Copy(Encoding.UTF8.GetBytes(HexDump.EOL), 0, outputArray, offset,
@@ -240,7 +240,7 @@ namespace TestCases.Util
             actualOutput = stream.ToArray();
             ClassicAssert.AreEqual(outputArray.Length,
                          actualOutput.Length, "array size mismatch");
-            for (int j = 0; j < outputArray.Length; j++)
+            for(int j = 0; j < outputArray.Length; j++)
             {
                 ClassicAssert.AreEqual(outputArray[j],
                              actualOutput[j], "array[ " + j + "] mismatch");
@@ -253,7 +253,7 @@ namespace TestCases.Util
                              -1);
                 Assert.Fail("should have caught ArrayIndexOutOfBoundsException on negative index");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
@@ -266,7 +266,7 @@ namespace TestCases.Util
                              testArray.Length);
                 Assert.Fail("should have caught ArrayIndexOutOfBoundsException on large index");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
 
                 // as expected
@@ -282,13 +282,13 @@ namespace TestCases.Util
         [Test]
         public void TestToHex()
         {
-            ClassicAssert.AreEqual("000A", HexDump.ToHex((short)0xA));
+            ClassicAssert.AreEqual("000A", HexDump.ToHex((short) 0xA));
 
             ClassicAssert.AreEqual("[]", HexDump.ToHex(new short[] { }));
             ClassicAssert.AreEqual("[000A]", HexDump.ToHex(new short[] { 0xA }));
             ClassicAssert.AreEqual(HexDump.ToHex(new short[] { 0xA, 0xB }), "[000A, 000B]");
 
-            ClassicAssert.AreEqual("0A", HexDump.ToHex((byte)0xA));
+            ClassicAssert.AreEqual("0A", HexDump.ToHex((byte) 0xA));
             ClassicAssert.AreEqual("0000000A", HexDump.ToHex(0xA));
 
             ClassicAssert.AreEqual("[]", HexDump.ToHex(new byte[] { }));
@@ -301,7 +301,7 @@ namespace TestCases.Util
             ClassicAssert.AreEqual(HexDump.ToHex(new byte[] { 0xA, 0xB, 0xC, 0xD }, 2), "0: 0A, 0B\n2: 0C, 0D");
             ClassicAssert.AreEqual(HexDump.ToHex(new byte[] { 0xA, 0xB, 0xC, 0xD, 0xE, 0xF }, 2), "0: 0A, 0B\n2: 0C, 0D\n4: 0E, 0F");
 
-            ClassicAssert.AreEqual("FFFF", HexDump.ToHex(unchecked((short)0xFFFF)));
+            ClassicAssert.AreEqual("FFFF", HexDump.ToHex(unchecked((short) 0xFFFF)));
 
             ClassicAssert.AreEqual("00000000000004D2", HexDump.ToHex(1234L));
 
@@ -323,9 +323,9 @@ namespace TestCases.Util
         {
             byte[] testArray = new byte[256];
 
-            for (int j = 0; j < 256; j++)
+            for(int j = 0; j < 256; j++)
             {
-                testArray[j] = (byte)j;
+                testArray[j] = (byte) j;
             }
             String dump = HexDump.Dump(testArray, 0, 0);
             //System.out.Println("Hex: \n" + dump);
@@ -346,7 +346,7 @@ namespace TestCases.Util
                 HexDump.Dump(testArray, 0, -1);
                 Assert.Fail("Should throw an exception with invalid input");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 // expected
             }
@@ -356,7 +356,7 @@ namespace TestCases.Util
                 HexDump.Dump(testArray, 0, 2);
                 Assert.Fail("Should throw an exception with invalid input");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 // expected
             }
@@ -366,7 +366,7 @@ namespace TestCases.Util
                 HexDump.Dump(testArray, 0, 1);
                 Assert.Fail("Should throw an exception with invalid input");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 // expected
             }
@@ -377,9 +377,9 @@ namespace TestCases.Util
         {
             byte[] testArray = new byte[256];
 
-            for (int j = 0; j < 256; j++)
+            for(int j = 0; j < 256; j++)
             {
-                testArray[j] = (byte)j;
+                testArray[j] = (byte) j;
             }
 
             MemoryStream in1 = new MemoryStream(testArray);
@@ -397,7 +397,7 @@ namespace TestCases.Util
                 }
 
                 String str = Encoding.UTF8.GetString(byteOut.ToArray());
-                ClassicAssert.IsTrue(str.Contains("0123456789:;<=>?"),"Had: \n" + str);
+                ClassicAssert.IsTrue(str.Contains("0123456789:;<=>?"), "Had: \n" + str);
             }
             finally
             {
@@ -465,7 +465,7 @@ namespace TestCases.Util
                 }
 
                 String str = Encoding.UTF8.GetString(byteOut.ToArray());
-                ClassicAssert.IsTrue(str.Contains("123456789:;<=>?@"), 
+                ClassicAssert.IsTrue(str.Contains("123456789:;<=>?@"),
                     "Line contents should be Moved by one now, but Had: \n" + str);
             }
             finally

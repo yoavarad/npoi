@@ -20,8 +20,8 @@
  */
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * @author Amol S. Deshmukh &lt; amolweb at ya hoo dot com &gt;
@@ -33,7 +33,7 @@ namespace NPOI.SS.Formula.Functions
 
         public override ValueEval EvaluateFunc(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,12 +16,12 @@
 ==================================================================== */
 
 using NPOI.SS.Formula.Eval;
-using System;
-using NPOI.SS.Util;
 using NPOI.SS.UserModel;
-using System.Globalization;
+using NPOI.SS.Util;
 using NPOI.Util;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 namespace NPOI.SS.Formula.Functions
 {
 
@@ -58,12 +58,12 @@ namespace NPOI.SS.Formula.Functions
             {
                 number = OperandResolver.CoerceValueToInt(numberVE);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
-            if (number < 0)
+            if(number < 0)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -73,12 +73,12 @@ namespace NPOI.SS.Formula.Functions
 
         public static BigInteger factorial(int n)
         {
-            if (n == 0 || n < 0)
+            if(n == 0 || n < 0)
             {
                 return BigInteger.One;
             }
 
-            if (cache.TryGetValue(n, out BigInteger factorial1))
+            if(cache.TryGetValue(n, out BigInteger factorial1))
             {
                 return factorial1;
             }
@@ -90,7 +90,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }

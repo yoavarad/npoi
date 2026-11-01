@@ -17,15 +17,15 @@
  * ====================================================================
  */
 
+using NPOI.SS.UserModel;
+using NPOI.XDDF.UserModel.Chart;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Threading;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using NPOI.XDDF.UserModel.Chart;
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using System.Xml;
 
 namespace TestCases.XDDF.UserModel.Chart
@@ -44,12 +44,12 @@ namespace TestCases.XDDF.UserModel.Chart
 
                 XSSFWorkbook wb = new XSSFWorkbook();
                 XSSFSheet sheet = (XSSFSheet)wb.CreateSheet("Sheet1");
-                
+
                 // Create some data
                 IRow row = sheet.CreateRow(0);
                 row.CreateCell(0).SetCellValue("Category");
                 row.CreateCell(1).SetCellValue("Value");
-                
+
                 row = sheet.CreateRow(1);
                 row.CreateCell(0).SetCellValue(1200.5); // Numeric category
                 row.CreateCell(1).SetCellValue(2400.1); // Numeric value
@@ -62,23 +62,23 @@ namespace TestCases.XDDF.UserModel.Chart
                 XDDFValueAxis leftAxis = chart.CreateValueAxis(AxisPosition.Left);
 
                 XDDFChartData<double, double> data = chart.CreateData<double, double>(ChartTypes.BAR, bottomAxis, leftAxis);
-                
+
                 var cat = XDDFDataSourcesFactory.FromNumericCellRange(sheet, new NPOI.SS.Util.CellRangeAddress(1, 1, 0, 0));
                 var val = XDDFDataSourcesFactory.FromNumericCellRange(sheet, new NPOI.SS.Util.CellRangeAddress(1, 1, 1, 1));
-                
+
                 data.AddSeries(cat, val);
                 chart.Plot(data);
 
                 // Export to XML and check values
-                using (MemoryStream ms = new MemoryStream())
+                using(MemoryStream ms = new MemoryStream())
                 {
                     wb.Write(ms);
-                    
+
                     // We need to look into the chart XML. 
                     // Instead of full unzip, we can inspect the XDDFChart's internal CT_ChartSpace
                     var chartSpace = chart.GetCTChartSpace();
                     string xml;
-                    using (var xmlStream = new MemoryStream())
+                    using(var xmlStream = new MemoryStream())
                     {
                         chartSpace.Save(xmlStream);
                         xml = System.Text.Encoding.UTF8.GetString(xmlStream.ToArray());
@@ -97,12 +97,16 @@ namespace TestCases.XDDF.UserModel.Chart
                     bool foundCorrectVal = false;
                     bool foundIncorrectVal = false;
 
-                    foreach (XmlNode v in vElements)
+                    foreach(XmlNode v in vElements)
                     {
-                        if (v.InnerText == "1200.5") foundCorrectCat = true;
-                        if (v.InnerText == "1200,5") foundIncorrectCat = true;
-                        if (v.InnerText == "2400.1") foundCorrectVal = true;
-                        if (v.InnerText == "2400,1") foundIncorrectVal = true;
+                        if(v.InnerText == "1200.5")
+                            foundCorrectCat = true;
+                        if(v.InnerText == "1200,5")
+                            foundIncorrectCat = true;
+                        if(v.InnerText == "2400.1")
+                            foundCorrectVal = true;
+                        if(v.InnerText == "2400,1")
+                            foundIncorrectVal = true;
                     }
 
                     ClassicAssert.IsTrue(foundCorrectCat, "Category '1200.5' should be present in XML with a dot separator.");
@@ -139,11 +143,11 @@ namespace TestCases.XDDF.UserModel.Chart
 
                 XSSFWorkbook wb = new XSSFWorkbook();
                 XSSFSheet sheet = (XSSFSheet)wb.CreateSheet("Sheet1");
-                
+
                 IRow row = sheet.CreateRow(0);
                 row.CreateCell(0).SetCellValue("Date");
                 row.CreateCell(1).SetCellValue("Value");
-                
+
                 row = sheet.CreateRow(1);
                 row.CreateCell(0).SetCellValue(testDate);
                 row.CreateCell(1).SetCellValue(1200.5);
@@ -156,21 +160,21 @@ namespace TestCases.XDDF.UserModel.Chart
                 XDDFValueAxis leftAxis = chart.CreateValueAxis(AxisPosition.Left);
 
                 XDDFChartData<string, double> data = chart.CreateData<string, double>(ChartTypes.BAR, bottomAxis, leftAxis);
-                
+
                 // Use a manual data source to ensure we pass a string that should be preserved
                 var cat = XDDFDataSourcesFactory.FromArray(new string[] { expectedDateString }, null);
                 var val = XDDFDataSourcesFactory.FromNumericCellRange(sheet, new NPOI.SS.Util.CellRangeAddress(1, 1, 1, 1));
-                
+
                 data.AddSeries(cat, val);
                 chart.Plot(data);
 
-                using (MemoryStream ms = new MemoryStream())
+                using(MemoryStream ms = new MemoryStream())
                 {
                     wb.Write(ms);
-                    
+
                     var chartSpace = chart.GetCTChartSpace();
                     string xml;
-                    using (var xmlStream = new MemoryStream())
+                    using(var xmlStream = new MemoryStream())
                     {
                         chartSpace.Save(xmlStream);
                         xml = System.Text.Encoding.UTF8.GetString(xmlStream.ToArray());
@@ -186,10 +190,12 @@ namespace TestCases.XDDF.UserModel.Chart
                     bool foundDate = false;
                     bool foundValue = false;
 
-                    foreach (XmlNode v in vElements)
+                    foreach(XmlNode v in vElements)
                     {
-                        if (v.InnerText == expectedDateString) foundDate = true;
-                        if (v.InnerText == "1200.5") foundValue = true;
+                        if(v.InnerText == expectedDateString)
+                            foundDate = true;
+                        if(v.InnerText == "1200.5")
+                            foundValue = true;
                     }
 
                     ClassicAssert.IsTrue(foundDate, "DateTime label should use culture-sensitive formatting: " + expectedDateString);

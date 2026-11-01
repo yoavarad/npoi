@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * The series record describes the overall data for a series.
@@ -164,7 +164,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_categoryDataType;
             }
-            set 
+            set
             {
                 this.field_1_categoryDataType = value;
             }
@@ -184,7 +184,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_valuesDataType;
             }
-            set 
+            set
             {
                 this.field_2_valuesDataType = value;
             }
@@ -200,7 +200,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_3_numCategories;
             }
-            set 
+            set
             {
                 this.field_3_numCategories = value;
             }
@@ -215,7 +215,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_4_numValues;
             }
-            set 
+            set
             {
                 this.field_4_numValues = value;
             }
@@ -236,7 +236,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_5_bubbleSeriesType;
             }
-            set 
+            set
             {
                 this.field_5_bubbleSeriesType = value;
             }
@@ -250,7 +250,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_6_numBubbleValues;
             }
-            set 
+            set
             {
                 this.field_6_numBubbleValues =value;
             }

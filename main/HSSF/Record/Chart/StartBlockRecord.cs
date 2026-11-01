@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * STARTBLOCK - Chart Future Record Type Start Block (0x0852)<br/>
@@ -58,7 +58,7 @@ namespace NPOI.HSSF.Record.Chart
             rt = sid;
             grbitFrt = 0;
         }
-        
+
         public StartBlockRecord(RecordInputStream in1)
         {
             rt = in1.ReadShort();
@@ -122,7 +122,7 @@ namespace NPOI.HSSF.Record.Chart
             record.ObjectInstance2 = ObjectInstance2;
             return record;
         }
-        
+
         public static StartBlockRecord CreateStartBlock(ObjectKind objectKind)
         {
             return CreateStartBlock(objectKind, 0, 0, 0);

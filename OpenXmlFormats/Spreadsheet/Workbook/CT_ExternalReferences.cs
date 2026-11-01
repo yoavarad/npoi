@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.OPC;
 using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private string idField;
         public static CT_ExternalReference Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ExternalReference ctObj = new CT_ExternalReference();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id", PackageNamespaces.SCHEMA_RELATIONSHIPS]);
@@ -57,13 +57,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private List<CT_ExternalReference> externalReferenceField;
         public static CT_ExternalReferences Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ExternalReferences ctObj = new CT_ExternalReferences();
             ctObj.externalReference = new List<CT_ExternalReference>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "externalReference")
+                if(childNode.LocalName == "externalReference")
                     ctObj.externalReference.Add(CT_ExternalReference.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -75,9 +75,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.externalReference != null)
+            if(this.externalReference != null)
             {
-                foreach (CT_ExternalReference x in this.externalReference)
+                foreach(CT_ExternalReference x in this.externalReference)
                 {
                     x.Write(sw, "externalReference");
                 }

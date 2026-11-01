@@ -17,12 +17,11 @@
 
 namespace NPOI.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
-    using NPOI.SS.Util;
     using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using System;
 
 
     /// <summary>
@@ -120,7 +119,7 @@ namespace NPOI.HSSF.UserModel
         }
         public IConditionalFormattingRule CreateConditionalFormattingRule(ExtendedColor color)
         {
-            return CreateConditionalFormattingRule((HSSFExtendedColor)color);
+            return CreateConditionalFormattingRule((HSSFExtendedColor) color);
         }
 
         /**
@@ -159,7 +158,7 @@ namespace NPOI.HSSF.UserModel
         }
         public int AddConditionalFormatting(IConditionalFormatting cf)
         {
-            return AddConditionalFormatting((HSSFConditionalFormatting)cf);
+            return AddConditionalFormatting((HSSFConditionalFormatting) cf);
         }
 
         /// <summary>
@@ -170,27 +169,27 @@ namespace NPOI.HSSF.UserModel
         /// <returns>index of the newly Created Conditional Formatting object</returns>
         public int AddConditionalFormatting(CellRangeAddress[] regions, IConditionalFormattingRule[] cfRules)
         {
-            if (regions == null)
+            if(regions == null)
             {
                 throw new ArgumentException("regions must not be null");
             }
-            if (cfRules == null)
+            if(cfRules == null)
             {
                 throw new ArgumentException("cfRules must not be null");
             }
-            if (cfRules.Length == 0)
+            if(cfRules.Length == 0)
             {
                 throw new ArgumentException("cfRules must not be empty");
             }
-            if (cfRules.Length > 3)
+            if(cfRules.Length > 3)
             {
                 throw new ArgumentException("Number of rules must not exceed 3");
             }
 
             CFRuleBase[] rules = new CFRuleBase[cfRules.Length];
-            for (int i = 0; i != cfRules.Length; i++)
+            for(int i = 0; i != cfRules.Length; i++)
             {
-                rules[i] = ((HSSFConditionalFormattingRule)cfRules[i]).CfRuleRecord;
+                rules[i] = ((HSSFConditionalFormattingRule) cfRules[i]).CfRuleRecord;
             }
             CFRecordsAggregate cfra = new CFRecordsAggregate(regions, rules);
             return _conditionalFormattingTable.Add(cfra);
@@ -200,9 +199,9 @@ namespace NPOI.HSSF.UserModel
         {
             return AddConditionalFormatting(regions,
                     rule1 == null ? null : new HSSFConditionalFormattingRule[]
-				{
-					rule1
-				});
+                {
+                    rule1
+                });
         }
 
         /// <summary>
@@ -214,7 +213,7 @@ namespace NPOI.HSSF.UserModel
         public int AddConditionalFormatting(CellRangeAddress[] regions,
                 IConditionalFormattingRule rule1)
         {
-            return AddConditionalFormatting(regions, (HSSFConditionalFormattingRule)rule1);
+            return AddConditionalFormatting(regions, (HSSFConditionalFormattingRule) rule1);
         }
 
         /// <summary>
@@ -230,9 +229,9 @@ namespace NPOI.HSSF.UserModel
         {
             return AddConditionalFormatting(regions,
                     new HSSFConditionalFormattingRule[]
-				{
-						(HSSFConditionalFormattingRule)rule1, (HSSFConditionalFormattingRule)rule2
-				});
+                {
+                        (HSSFConditionalFormattingRule)rule1, (HSSFConditionalFormattingRule)rule2
+                });
         }
 
         /// <summary>
@@ -245,7 +244,7 @@ namespace NPOI.HSSF.UserModel
         public IConditionalFormatting GetConditionalFormattingAt(int index)
         {
             CFRecordsAggregate cf = _conditionalFormattingTable.Get(index);
-            if (cf == null)
+            if(cf == null)
             {
                 return null;
             }

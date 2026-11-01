@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,34 +16,34 @@
 ==================================================================== */
 
 
-using System.Collections.Generic;
 using NPOI.Util;
+using System.Collections.Generic;
 
 namespace NPOI.XDDF.UserModel
 {
-     using NPOI.OpenXmlFormats.Dml;
-     using System.Linq;
+    using NPOI.OpenXmlFormats.Dml;
+    using System.Linq;
 
-     public class XDDFLineProperties
-     {
-         private CT_LineProperties props;
+    public class XDDFLineProperties
+    {
+        private CT_LineProperties props;
 
-         public XDDFLineProperties()
-             : this(new CT_LineProperties())
-         {
+        public XDDFLineProperties()
+            : this(new CT_LineProperties())
+        {
 
-         }
+        }
 
-         public XDDFLineProperties(IXDDFFillProperties fill)
-             : this()
-         {
-             SetFillProperties(fill);
-         }
+        public XDDFLineProperties(IXDDFFillProperties fill)
+            : this()
+        {
+            SetFillProperties(fill);
+        }
 
-         public XDDFLineProperties(CT_LineProperties properties)
-         {
-             this.props = properties;
-         }
+        public XDDFLineProperties(CT_LineProperties properties)
+        {
+            this.props = properties;
+        }
         public CT_LineProperties GetXmlObject()
         {
             return props;
@@ -444,5 +444,3 @@ namespace NPOI.XDDF.UserModel
         }
     }
 }
-
-

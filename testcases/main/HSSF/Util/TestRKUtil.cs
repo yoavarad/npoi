@@ -17,11 +17,11 @@
 
 namespace TestCases.HSSF.Util
 {
-    using System;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util;
     using NPOI.HSSF.Util;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the {@link RKUtil} class.
@@ -37,20 +37,20 @@ namespace TestCases.HSSF.Util
         public void TestDecode()
         {
 
-            int[] values = { 1074266112, 1081384961, 1081397249, 
-				0x3FF00000, 0x405EC001, 0x02F1853A, 0x02F1853B, unchecked((int)0xFCDD699A),
-		};
+            int[] values = { 1074266112, 1081384961, 1081397249,
+                0x3FF00000, 0x405EC001, 0x02F1853A, 0x02F1853B, unchecked((int)0xFCDD699A),
+        };
             double[] rvalues = { 3.0, 3.3, 3.33,
-				1, 1.23, 12345678, 123456.78, -13149594, 
-		};
+                1, 1.23, 12345678, 123456.78, -13149594,
+        };
 
-            for (int j = 0; j < values.Length; j++)
+            for(int j = 0; j < values.Length; j++)
             {
 
                 int intBits = values[j];
                 double expectedValue = rvalues[j];
                 double actualValue = RKUtil.DecodeNumber(intBits);
-                if (expectedValue != actualValue)
+                if(expectedValue != actualValue)
                 {
                     throw new AssertionException("0x" + StringUtil.ToHexString(intBits)
                             + " should decode to " + expectedValue + " but got " + actualValue);

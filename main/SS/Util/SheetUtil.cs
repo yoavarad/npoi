@@ -96,40 +96,40 @@ namespace NPOI.SS.Util
             IRow sourceRow = sourceSheet.GetRow(sourceRowIndex);
 
             // If the row exist in destination, push down all rows by 1 else create a new row
-            if (newRow != null)
+            if(newRow != null)
             {
                 targetSheet.RemoveRow(newRow);
             }
             newRow = targetSheet.CreateRow(targetRowIndex);
-            if (sourceRow == null)
+            if(sourceRow == null)
                 throw new ArgumentNullException("source row doesn't exist");
             // Loop through source columns to add to new row
-            for (int i = sourceRow.FirstCellNum; i < sourceRow.LastCellNum; i++)
+            for(int i = sourceRow.FirstCellNum; i < sourceRow.LastCellNum; i++)
             {
                 // Grab a copy of the old/new cell
                 ICell oldCell = sourceRow.GetCell(i);
 
                 // If the old cell is null jump to next cell
-                if (oldCell == null)
+                if(oldCell == null)
                 {
                     continue;
                 }
                 ICell newCell = newRow.CreateCell(i);
 
-                if (oldCell.CellStyle != null)
+                if(oldCell.CellStyle != null)
                 {
                     // apply style from old cell to new cell 
                     newCell.CellStyle = oldCell.CellStyle;
                 }
 
                 // If there is a cell comment, copy
-                if (oldCell.CellComment != null)
+                if(oldCell.CellComment != null)
                 {
                     sourceSheet.CopyComment(oldCell, newCell);
                 }
 
                 // If there is a cell hyperlink, copy
-                if (oldCell.Hyperlink != null)
+                if(oldCell.Hyperlink != null)
                 {
                     newCell.Hyperlink = oldCell.Hyperlink;
                 }
@@ -138,7 +138,7 @@ namespace NPOI.SS.Util
                 newCell.SetCellType(oldCell.CellType);
 
                 // Set the cell data value
-                switch (oldCell.CellType)
+                switch(oldCell.CellType)
                 {
                     case CellType.Blank:
                         newCell.SetCellValue(oldCell.StringCellValue);
@@ -162,11 +162,11 @@ namespace NPOI.SS.Util
             }
 
             // If there are are any merged regions in the source row, copy to new row
-            for (int i = 0; i < sourceSheet.NumMergedRegions; i++)
+            for(int i = 0; i < sourceSheet.NumMergedRegions; i++)
             {
                 CellRangeAddress cellRangeAddress = sourceSheet.GetMergedRegion(i);
 
-                if (cellRangeAddress != null && cellRangeAddress.FirstRow == sourceRow.RowNum)
+                if(cellRangeAddress != null && cellRangeAddress.FirstRow == sourceRow.RowNum)
                 {
                     CellRangeAddress newCellRangeAddress = new CellRangeAddress(newRow.RowNum,
                             (newRow.RowNum +
@@ -182,50 +182,50 @@ namespace NPOI.SS.Util
 
         public static IRow CopyRow(ISheet sheet, int sourceRowIndex, int targetRowIndex)
         {
-            if (sourceRowIndex == targetRowIndex)
+            if(sourceRowIndex == targetRowIndex)
                 throw new ArgumentException("sourceIndex and targetIndex cannot be same");
             // Get the source / new row
             IRow newRow = sheet.GetRow(targetRowIndex);
             IRow sourceRow = sheet.GetRow(sourceRowIndex);
 
             // If the row exist in destination, push down all rows by 1 else create a new row
-            if (newRow != null)
+            if(newRow != null)
             {
                 sheet.ShiftRows(targetRowIndex, sheet.LastRowNum, 1);
             }
 
-            if (sourceRow != null)
+            if(sourceRow != null)
             {
                 newRow = sheet.CreateRow(targetRowIndex);
                 newRow.Height = sourceRow.Height;   //copy row height
 
                 // Loop through source columns to add to new row
-                for (int i = sourceRow.FirstCellNum; i < sourceRow.LastCellNum; i++)
+                for(int i = sourceRow.FirstCellNum; i < sourceRow.LastCellNum; i++)
                 {
                     // Grab a copy of the old/new cell
                     ICell oldCell = sourceRow.GetCell(i);
 
                     // If the old cell is null jump to next cell
-                    if (oldCell == null)
+                    if(oldCell == null)
                     {
                         continue;
                     }
                     ICell newCell = newRow.CreateCell(i);
 
-                    if (oldCell.CellStyle != null)
+                    if(oldCell.CellStyle != null)
                     {
                         // apply style from old cell to new cell 
                         newCell.CellStyle = oldCell.CellStyle;
                     }
 
                     // If there is a cell comment, copy
-                    if (oldCell.CellComment != null)
+                    if(oldCell.CellComment != null)
                     {
                         sheet.CopyComment(oldCell, newCell);
                     }
 
                     // If there is a cell hyperlink, copy
-                    if (oldCell.Hyperlink != null)
+                    if(oldCell.Hyperlink != null)
                     {
                         newCell.Hyperlink = oldCell.Hyperlink;
                     }
@@ -234,7 +234,7 @@ namespace NPOI.SS.Util
                     newCell.SetCellType(oldCell.CellType);
 
                     // Set the cell data value
-                    switch (oldCell.CellType)
+                    switch(oldCell.CellType)
                     {
                         case CellType.Blank:
                             newCell.SetCellValue(oldCell.StringCellValue);
@@ -258,10 +258,10 @@ namespace NPOI.SS.Util
                 }
 
                 // If there are are any merged regions in the source row, copy to new row
-                for (int i = 0; i < sheet.NumMergedRegions; i++)
+                for(int i = 0; i < sheet.NumMergedRegions; i++)
                 {
                     CellRangeAddress cellRangeAddress = sheet.GetMergedRegion(i);
-                    if (cellRangeAddress != null && cellRangeAddress.FirstRow == sourceRow.RowNum)
+                    if(cellRangeAddress != null && cellRangeAddress.FirstRow == sourceRow.RowNum)
                     {
                         CellRangeAddress newCellRangeAddress = new CellRangeAddress(newRow.RowNum,
                                 (newRow.RowNum +
@@ -281,10 +281,10 @@ namespace NPOI.SS.Util
         {
             double height = -1;
 
-            for (int cellIdx = firstColumnIdx; cellIdx <= lastColumnIdx; ++cellIdx)
+            for(int cellIdx = firstColumnIdx; cellIdx <= lastColumnIdx; ++cellIdx)
             {
                 ICell cell = row.GetCell(cellIdx);
-                if (row != null && cell != null)
+                if(row != null && cell != null)
                 {
                     double cellHeight = GetCellHeight(cell, useMergedCells);
                     height = Math.Max(height, cellHeight);
@@ -302,14 +302,14 @@ namespace NPOI.SS.Util
 
         public static double GetRowHeight(IRow row, bool useMergedCells)
         {
-            if (row == null)
+            if(row == null)
             {
                 return -1;
             }
 
             double rowHeight = -1;
 
-            foreach (var cell in row.Cells)
+            foreach(var cell in row.Cells)
             {
                 double cellHeight = GetCellHeight(cell, useMergedCells);
                 rowHeight = Math.Max(rowHeight, cellHeight);
@@ -337,9 +337,9 @@ namespace NPOI.SS.Util
 
         private static ICell GetFirstCellFromMergedRegion(ICell cell)
         {
-            foreach (var region in cell.Sheet.MergedRegions)
+            foreach(var region in cell.Sheet.MergedRegions)
             {
-                if (region.IsInRange(cell.RowIndex, cell.ColumnIndex))
+                if(region.IsInRange(cell.RowIndex, cell.ColumnIndex))
                 {
                     return cell.Sheet.GetRow(region.FirstRow).GetCell(region.FirstColumn);
                 }
@@ -353,24 +353,24 @@ namespace NPOI.SS.Util
             string stringValue = GetCellStringValue(cell);
             using SKFont windowsFont = GetWindowsFont(cell);
 
-            if (cell.CellStyle.Rotation != 0)
+            if(cell.CellStyle.Rotation != 0)
             {
                 return GetRotatedContentHeight(cell, stringValue, windowsFont);
             }
 
             double height = GetContentHeight(stringValue, windowsFont);
 
-            if (cell.CellStyle.WrapText && height > 0)
+            if(cell.CellStyle.WrapText && height > 0)
             {
                 int column = cell.ColumnIndex;
                 ISheet sheet = cell.Sheet;
                 double columnWidth = GetColumnWidth(sheet, column, false);
-                if (columnWidth > 0)
+                if(columnWidth > 0)
                 {
                     int defaultCharWidth = GetDefaultCharWidth(sheet.Workbook);
                     double cellWidthPx = (columnWidth / 256.0) * defaultCharWidth;
                     double textWidth = GetTextWidth(stringValue, windowsFont);
-                    if (textWidth > cellWidthPx)
+                    if(textWidth > cellWidthPx)
                     {
                         double wrappedLines = Math.Ceiling(textWidth / cellWidthPx);
                         height *= wrappedLines;
@@ -383,7 +383,7 @@ namespace NPOI.SS.Util
 
         private static double GetTextWidth(string stringValue, SKFont windowsFont)
         {
-            if (string.IsNullOrEmpty(stringValue))
+            if(string.IsNullOrEmpty(stringValue))
                 return 0;
 
             try
@@ -398,9 +398,9 @@ namespace NPOI.SS.Util
 
         private static int GetNumberOfRowsInMergedRegion(ICell cell)
         {
-            foreach (var region in cell.Sheet.MergedRegions)
+            foreach(var region in cell.Sheet.MergedRegions)
             {
-                if (region.IsInRange(cell.RowIndex, cell.ColumnIndex))
+                if(region.IsInRange(cell.RowIndex, cell.ColumnIndex))
                 {
                     return 1 + region.LastRow - region.FirstRow;
                 }
@@ -418,17 +418,17 @@ namespace NPOI.SS.Util
         {
             CellType cellType = cell.CellType == CellType.Formula ? cell.CachedFormulaResultType : cell.CellType;
 
-            if (cellType == CellType.String)
+            if(cellType == CellType.String)
             {
                 return cell.RichStringCellValue.String;
             }
 
-            if (cellType == CellType.Boolean)
+            if(cellType == CellType.Boolean)
             {
                 return cell.BooleanCellValue.ToString().ToUpper() + defaultChar;
             }
 
-            if (cellType == CellType.Numeric)
+            if(cellType == CellType.Numeric)
             {
                 string stringValue;
 
@@ -459,7 +459,7 @@ namespace NPOI.SS.Util
 
         private static double GetRotatedContentHeight(ICell cell, string stringValue, SKFont windowsFont)
         {
-            if (string.IsNullOrEmpty(stringValue))
+            if(string.IsNullOrEmpty(stringValue))
                 return 0;
 
             var angle = cell.CellStyle.Rotation * 2.0 * Math.PI / 360.0;
@@ -475,7 +475,7 @@ namespace NPOI.SS.Util
 
                 return Math.Round(x1 + x2, 0, MidpointRounding.ToEven);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 // Fallback: use font size (in pixels at the configured DPI)
                 return Math.Round(windowsFont.Size, 0, MidpointRounding.ToEven);
@@ -484,7 +484,7 @@ namespace NPOI.SS.Util
 
         private static double GetContentHeight(string stringValue, SKFont windowsFont)
         {
-            if (string.IsNullOrEmpty(stringValue))
+            if(string.IsNullOrEmpty(stringValue))
                 return 0;
 
             // The height corresponds to the font's em-square (i.e. the configured point size
@@ -510,12 +510,12 @@ namespace NPOI.SS.Util
             int column = cell.ColumnIndex;
 
             int colspan = 1;
-            for (int i = 0; i < sheet.NumMergedRegions; i++)
+            for(int i = 0; i < sheet.NumMergedRegions; i++)
             {
                 CellRangeAddress region = sheet.GetMergedRegion(i);
-                if (ContainsCell(region, row.RowNum, column))
+                if(ContainsCell(region, row.RowNum, column))
                 {
-                    if (!useMergedCells)
+                    if(!useMergedCells)
                     {
                         // If we're not using merged cells, skip this one and move on to the next.
                         return -1;
@@ -541,7 +541,7 @@ namespace NPOI.SS.Util
                 windowsFont.GetFontMetrics(out SKFontMetrics metrics);
                 float textHeight = metrics.Descent - metrics.Ascent;
 
-                if (style.Rotation != 0)
+                if(style.Rotation != 0)
                 {
                     double angle = style.Rotation * 2.0 * Math.PI / 360.0;
                     double x1 = Math.Abs(textHeight * Math.Sin(angle));
@@ -551,7 +551,7 @@ namespace NPOI.SS.Util
                 else
                     actualWidth = Math.Round(textWidth, 0, MidpointRounding.ToEven);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 // Fallback for environments without complete font support (e.g., missing font tables).
                 // Estimate dimensions proportionally: characters are approximately half as wide as the
@@ -562,7 +562,7 @@ namespace NPOI.SS.Util
                 double estimatedCharWidthPx = fontHeightPx * 0.5;
                 double estimatedTextWidthPx = str.Length * estimatedCharWidthPx;
 
-                if (style.Rotation != 0)
+                if(style.Rotation != 0)
                 {
                     double angle = style.Rotation * 2.0 * Math.PI / 360.0;
                     double x1 = Math.Abs(fontHeightPx * Math.Sin(angle));
@@ -592,22 +592,22 @@ namespace NPOI.SS.Util
             CellType cellType = cell.CellType;
 
             // for formula cells we compute the cell width for the cached formula result
-            if (cellType == CellType.Formula)
+            if(cellType == CellType.Formula)
                 cellType = cell.CachedFormulaResultType;
 
             double width = -1;
 
-            if (cellType == CellType.String)
+            if(cellType == CellType.String)
             {
                 IRichTextString rt = cell.RichStringCellValue;
                 String[] lines = rt.String.Split("\n".ToCharArray());
-                for (int i = 0; i < lines.Length; i++)
+                for(int i = 0; i < lines.Length; i++)
                 {
                     String txt = lines[i];
 
                     //AttributedString str = new AttributedString(txt);
                     //copyAttributes(font, str, 0, txt.length());
-                    if (rt.NumFormattingRuns > 0)
+                    if(rt.NumFormattingRuns > 0)
                     {
                         // TODO: support rich text fragments
                     }
@@ -618,7 +618,7 @@ namespace NPOI.SS.Util
             else
             {
                 String sval = null;
-                if (cellType == CellType.Numeric)
+                if(cellType == CellType.Numeric)
                 {
                     // Try to get it formatted to look the same as excel
                     try
@@ -630,11 +630,11 @@ namespace NPOI.SS.Util
                         sval = cell.NumericCellValue.ToString();
                     }
                 }
-                else if (cellType == CellType.Boolean)
+                else if(cellType == CellType.Boolean)
                 {
                     sval = cell.BooleanCellValue.ToString().ToUpper();
                 }
-                if (sval != null)
+                if(sval != null)
                 {
                     String txt = sval;
                     //str = new AttributedString(txt);
@@ -681,19 +681,20 @@ namespace NPOI.SS.Util
             int defaultCharWidth = GetDefaultCharWidth(sheet.Workbook);
 
             // No need to explore the whole sheet: explore only the first maxRows lines
-            if (maxRows > 0 && lastRow - firstRow > maxRows) lastRow = firstRow + maxRows;
+            if(maxRows > 0 && lastRow - firstRow > maxRows)
+                lastRow = firstRow + maxRows;
 
             // Build a spatial index: row → CellRangeAddress for merged regions that
             // overlap this column. Turns O(mergedRegions) per cell into O(1) lookup.
             Dictionary<int, CellRangeAddress> mergedRegionIndex = null;
-            if (sheet.NumMergedRegions > 0)
+            if(sheet.NumMergedRegions > 0)
             {
                 mergedRegionIndex = new Dictionary<int, CellRangeAddress>();
-                foreach (CellRangeAddress region in sheet.MergedRegions)
+                foreach(CellRangeAddress region in sheet.MergedRegions)
                 {
-                    if (region.FirstColumn <= column && column <= region.LastColumn)
+                    if(region.FirstColumn <= column && column <= region.LastColumn)
                     {
-                        for (int r = region.FirstRow; r <= region.LastRow; r++)
+                        for(int r = region.FirstRow; r <= region.LastRow; r++)
                         {
                             mergedRegionIndex[r] = region;
                         }
@@ -706,10 +707,10 @@ namespace NPOI.SS.Util
             try
             {
                 double width = -1;
-                for (int rowIdx = firstRow; rowIdx <= lastRow; ++rowIdx)
+                for(int rowIdx = firstRow; rowIdx <= lastRow; ++rowIdx)
                 {
                     IRow row = sheet.GetRow(rowIdx);
-                    if (row != null)
+                    if(row != null)
                     {
                         double cellWidth = GetColumnWidthForRow(
                             row, column, defaultCharWidth, formatter, useMergedCells, mergedRegionIndex, fontCache);
@@ -720,7 +721,7 @@ namespace NPOI.SS.Util
             }
             finally
             {
-                foreach (SKFont cached in fontCache.Values)
+                foreach(SKFont cached in fontCache.Values)
                     cached.Dispose();
             }
         }
@@ -738,9 +739,9 @@ namespace NPOI.SS.Util
 
             try
             {
-                return (int)Math.Ceiling(font.MeasureText(new string(defaultChar, 1)));
+                return (int) Math.Ceiling(font.MeasureText(new string(defaultChar, 1)));
             }
-            catch (Exception)
+            catch(Exception)
             {
                 // Fallback for environments without complete font support (e.g., missing font tables).
                 // Returns 7, which is the approximate pixel width of character '0' for Calibri 11pt
@@ -763,14 +764,14 @@ namespace NPOI.SS.Util
         private static double GetColumnWidthForRow(
                 IRow row, int column, int defaultCharWidth, DataFormatter formatter, bool useMergedCells)
         {
-            if (row == null)
+            if(row == null)
             {
                 return -1;
             }
 
             ICell cell = row.GetCell(column);
 
-            if (cell == null)
+            if(cell == null)
             {
                 return -1;
             }
@@ -786,14 +787,14 @@ namespace NPOI.SS.Util
                 IRow row, int column, int defaultCharWidth, DataFormatter formatter, bool useMergedCells,
                 Dictionary<int, CellRangeAddress> mergedRegionIndex, Dictionary<int, SKFont> fontCache)
         {
-            if (row == null)
+            if(row == null)
             {
                 return -1;
             }
 
             ICell cell = row.GetCell(column);
 
-            if (cell == null)
+            if(cell == null)
             {
                 return -1;
             }
@@ -812,9 +813,9 @@ namespace NPOI.SS.Util
             IRow row = cell.Row;
 
             int colspan = 1;
-            if (mergedRegionIndex != null && mergedRegionIndex.TryGetValue(row.RowNum, out CellRangeAddress region))
+            if(mergedRegionIndex != null && mergedRegionIndex.TryGetValue(row.RowNum, out CellRangeAddress region))
             {
-                if (!useMergedCells)
+                if(!useMergedCells)
                 {
                     // If we're not using merged cells, skip this one and move on to the next.
                     return -1;
@@ -824,7 +825,7 @@ namespace NPOI.SS.Util
             }
 
             IFont font = wb.GetFontAt(cell.CellStyle.FontIndex);
-            if (!fontCache.TryGetValue(cell.CellStyle.FontIndex, out SKFont windowsFont))
+            if(!fontCache.TryGetValue(cell.CellStyle.FontIndex, out SKFont windowsFont))
             {
                 windowsFont = IFont2Font(font);
                 fontCache[cell.CellStyle.FontIndex] = windowsFont;
@@ -986,14 +987,14 @@ namespace NPOI.SS.Util
          */
         public static String GetUniqueSheetName(IWorkbook wb, String srcName)
         {
-            if (wb.GetSheetIndex(srcName) == -1)
+            if(wb.GetSheetIndex(srcName) == -1)
             {
                 return srcName;
             }
             int uniqueIndex = 2;
             String baseName = srcName;
             int bracketPos = srcName.LastIndexOf('(');
-            if (bracketPos > 0 && srcName.EndsWith(')'))
+            if(bracketPos > 0 && srcName.EndsWith(')'))
             {
                 String suffix = srcName.Substring(bracketPos + 1, srcName.Length - bracketPos - 2);
                 try
@@ -1002,17 +1003,17 @@ namespace NPOI.SS.Util
                     uniqueIndex++;
                     baseName = srcName.Substring(0, bracketPos).Trim();
                 }
-                catch (FormatException)
+                catch(FormatException)
                 {
                     // contents of brackets not numeric
                 }
             }
-            while (true)
+            while(true)
             {
                 // Try and find the next sheet name that is unique
                 String index = (uniqueIndex++).ToString();
                 String name;
-                if (baseName.Length + index.Length + 2 < 31)
+                if(baseName.Length + index.Length + 2 < 31)
                 {
                     name = baseName + " (" + index + ")";
                 }
@@ -1022,7 +1023,7 @@ namespace NPOI.SS.Util
                 }
 
                 //If the sheet name is unique, then Set it otherwise Move on to the next number.
-                if (wb.GetSheetIndex(name) == -1)
+                if(wb.GetSheetIndex(name) == -1)
                 {
                     return name;
                 }
@@ -1043,25 +1044,25 @@ namespace NPOI.SS.Util
         public static ICell GetCellWithMerges(ISheet sheet, int rowIx, int colIx)
         {
             IRow r = sheet.GetRow(rowIx);
-            if (r != null)
+            if(r != null)
             {
                 ICell c = r.GetCell(colIx);
-                if (c != null)
+                if(c != null)
                 {
                     // Normal, non-merged cell
                     return c;
                 }
             }
 
-            for (int mr = 0; mr < sheet.NumMergedRegions; mr++)
+            for(int mr = 0; mr < sheet.NumMergedRegions; mr++)
             {
                 CellRangeAddress mergedRegion = sheet.GetMergedRegion(mr);
-                if (mergedRegion.IsInRange(rowIx, colIx))
+                if(mergedRegion.IsInRange(rowIx, colIx))
                 {
                     // The cell wanted is in this merged range
                     // Return the primary (top-left) cell for the range
                     r = sheet.GetRow(mergedRegion.FirstRow);
-                    if (r != null)
+                    if(r != null)
                     {
                         return r.GetCell(mergedRegion.FirstColumn);
                     }

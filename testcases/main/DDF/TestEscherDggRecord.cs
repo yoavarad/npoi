@@ -19,14 +19,14 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     [TestFixture]
     public class TestEscherDggRecord
@@ -94,7 +94,7 @@ namespace TestCases.DDF
         private EscherDggRecord CreateRecord()
         {
             EscherDggRecord r = new EscherDggRecord();
-            r.Options=(short)0x0000;
+            r.Options=(short) 0x0000;
             r.RecordId=EscherDggRecord.RECORD_ID;
             r.ShapeIdMax=0x402;
             r.NumShapesSaved=0x02;

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,13 +25,12 @@
  * 
  * ==============================================================*/
 
-using System.IO;
-using System.Collections;
-
 using NPOI.POIFS.Common;
-using NPOI.POIFS.Properties;
 using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Properties;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace NPOI.POIFS.Storage
 {
@@ -53,7 +52,7 @@ namespace NPOI.POIFS.Storage
         /// <param name="bigBlockSize">the poifs bigBlockSize</param>
         /// <param name="documents">a IList of POIFSDocument instances</param>
         /// <param name="root">the Filesystem's root property</param>
-        public SmallBlockTableWriter(POIFSBigBlockSize bigBlockSize, 
+        public SmallBlockTableWriter(POIFSBigBlockSize bigBlockSize,
                                     IList<OPOIFSDocument> documents,
                                     RootProperty root)
         {
@@ -62,20 +61,22 @@ namespace NPOI.POIFS.Storage
             _root         = root;
             IEnumerator iter = documents.GetEnumerator();
 
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 OPOIFSDocument   doc    = ( OPOIFSDocument ) iter.Current;
                 SmallDocumentBlock[] blocks = doc.SmallBlocks;
 
-                if (blocks.Length != 0)
+                if(blocks.Length != 0)
                 {
                     doc.StartBlock=_sbat.AllocateSpace(blocks.Length);
-                    for (int j = 0; j < blocks.Length; j++)
+                    for(int j = 0; j < blocks.Length; j++)
                     {
-                        _small_blocks.Add(blocks[ j ]);
+                        _small_blocks.Add(blocks[j]);
                     }
-                } else {
-            	    doc.StartBlock=POIFSConstants.END_OF_CHAIN;
+                }
+                else
+                {
+                    doc.StartBlock=POIFSConstants.END_OF_CHAIN;
                 }
             }
             _sbat.SimpleCreateBlocks();
@@ -107,7 +108,7 @@ namespace NPOI.POIFS.Storage
         /// <value>count of BigBlock instances</value>
         public int CountBlocks
         {
-            get{return _big_block_count;}
+            get { return _big_block_count; }
         }
 
         /// <summary>

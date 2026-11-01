@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace NPOI.SS.Formula.PTG
@@ -11,11 +11,11 @@ namespace NPOI.SS.Formula.PTG
         {
             ExternalSheet externalSheet = book.GetExternalSheet(field_1_index_extern_sheet);
             StringBuilder sb;
-            if (externalSheet != null)
+            if(externalSheet != null)
             {
                 String wbName = externalSheet.WorkbookName;
                 String sheetName = externalSheet.SheetName;
-                if (wbName != null)
+                if(wbName != null)
                 {
                     sb = new StringBuilder(wbName.Length + sheetName.Length + cellRefText.Length + 4);
                     SheetNameFormatter.AppendFormat(sb, wbName, sheetName);
@@ -25,9 +25,9 @@ namespace NPOI.SS.Formula.PTG
                     sb = new StringBuilder(sheetName.Length + cellRefText.Length + 4);
                     SheetNameFormatter.AppendFormat(sb, sheetName);
                 }
-                if (externalSheet is ExternalSheetRange range)
+                if(externalSheet is ExternalSheetRange range)
                 {
-                    if (!range.FirstSheetName.Equals(range.LastSheetName))
+                    if(!range.FirstSheetName.Equals(range.LastSheetName))
                     {
                         sb.Append(':');
                         SheetNameFormatter.AppendFormat(sb, range.LastSheetName);
@@ -39,7 +39,7 @@ namespace NPOI.SS.Formula.PTG
                 String firstSheetName = book.GetSheetFirstNameByExternSheet(field_1_index_extern_sheet);
                 String lastSheetName = book.GetSheetLastNameByExternSheet(field_1_index_extern_sheet);
                 sb = new StringBuilder(firstSheetName.Length + cellRefText.Length + 4);
-                if (firstSheetName.Length < 1)
+                if(firstSheetName.Length < 1)
                 {
                     // What excel does if sheet has been deleted
                     sb.Append("#REF"); // note - '!' Added just once below
@@ -47,7 +47,7 @@ namespace NPOI.SS.Formula.PTG
                 else
                 {
                     SheetNameFormatter.AppendFormat(sb, firstSheetName);
-                    if (!firstSheetName.Equals(lastSheetName))
+                    if(!firstSheetName.Equals(lastSheetName))
                     {
                         sb.Append(':');
                         sb.Append(lastSheetName);

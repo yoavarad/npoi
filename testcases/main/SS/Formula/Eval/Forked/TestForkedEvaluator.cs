@@ -22,7 +22,8 @@ namespace TestCases.SS.Formula.Eval.Forked
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Eval.Forked;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
 
     /**
@@ -84,10 +85,10 @@ namespace TestCases.SS.Formula.Eval.Forked
             fe2.UpdateCell("Inputs", 0, 0, new NumberEval(1.2));
             fe2.UpdateCell("Inputs", 0, 1, new NumberEval(2.0));
 
-            ClassicAssert.AreEqual(18.9, ((NumberEval)fe1.Evaluate("Calculations", 0, 0)).NumberValue, 0.0);
-            ClassicAssert.AreEqual(4.0, ((NumberEval)fe2.Evaluate("Calculations", 0, 0)).NumberValue, 0.0);
+            ClassicAssert.AreEqual(18.9, ((NumberEval) fe1.Evaluate("Calculations", 0, 0)).NumberValue, 0.0);
+            ClassicAssert.AreEqual(4.0, ((NumberEval) fe2.Evaluate("Calculations", 0, 0)).NumberValue, 0.0);
             fe1.UpdateCell("Inputs", 0, 0, new NumberEval(3.0));
-            ClassicAssert.AreEqual(13.9, ((NumberEval)fe1.Evaluate("Calculations", 0, 0)).NumberValue, 0.0);
+            ClassicAssert.AreEqual(13.9, ((NumberEval) fe1.Evaluate("Calculations", 0, 0)).NumberValue, 0.0);
 
             wb.Close();
         }
@@ -114,17 +115,17 @@ namespace TestCases.SS.Formula.Eval.Forked
                 throw new AssertionException(
                         "Expected exception to be thrown due to missing input cell");
             }
-            catch (NullReferenceException e)
+            catch(NullReferenceException e)
             {
-                if (e.TargetSite.Equals("IdentityKey"))
+                if(e.TargetSite.Equals("IdentityKey"))
                 {
                     throw new AssertionException("Identified bug with update of missing input cell");
                 }
                 throw e;
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.Equals(
+                if(e.Message.Equals(
                         "Underlying cell 'A2' is missing in master sheet."))
                 {
                     // expected during successful Test

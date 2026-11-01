@@ -29,7 +29,7 @@ namespace NPOI.SS.Formula.PTG
         }
         public override byte DefaultOperandClass
         {
-            get{return Ptg.CLASS_VALUE;}
+            get { return Ptg.CLASS_VALUE; }
         }
     }
 }

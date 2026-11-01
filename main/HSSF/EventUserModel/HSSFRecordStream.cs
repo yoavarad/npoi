@@ -16,9 +16,9 @@
 ==================================================================== */
 namespace NPOI.HSSF.EventUserModel
 {
-    using System.Collections;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System.Collections;
 
 
     /// <summary>
@@ -79,14 +79,14 @@ namespace NPOI.HSSF.EventUserModel
             Record r = null;
 
             // Loop Until we Get something
-            while (r == null && !complete)
+            while(r == null && !complete)
             {
                 // Are there any bonus records that we need to
                 //  return?
                 r = GetBonusRecord();
 
                 // If not, ask for the next real record
-                if (r == null)
+                if(r == null)
                 {
                     r = GetNextRecord();
                 }
@@ -105,12 +105,12 @@ namespace NPOI.HSSF.EventUserModel
         /// <returns></returns>
         private Record GetBonusRecord()
         {
-            if (bonusRecords != null)
+            if(bonusRecords != null)
             {
                 Record r = (Record)bonusRecords[0];
                 bonusRecords.RemoveAt(0);
 
-                if (bonusRecords.Count == 0)
+                if(bonusRecords.Count == 0)
                 {
                     bonusRecords = null;
                 }
@@ -129,7 +129,7 @@ namespace NPOI.HSSF.EventUserModel
         {
             Record toReturn = null;
 
-            if (in1.HasNextRecord)
+            if(in1.HasNextRecord)
             {
                 // Grab our next record
                 in1.NextRecord();
@@ -148,14 +148,14 @@ namespace NPOI.HSSF.EventUserModel
                 // The zero sid shows us that rest of the stream data Is a fake to make workbook 
                 // certain size
                 //
-                if (sid == 0)
+                if(sid == 0)
                     return null;
 
 
                 // If we had a last record, and this one
                 //  Isn't a continue record, then pass
                 //  it on to the listener
-                if ((rec != null) && (sid != ContinueRecord.sid))
+                if((rec != null) && (sid != ContinueRecord.sid))
                 {
                     // This last record ought to be returned
                     toReturn = rec;
@@ -163,7 +163,7 @@ namespace NPOI.HSSF.EventUserModel
 
                 // If this record Isn't a continue record,
                 //  then build it up
-                if (sid != ContinueRecord.sid)
+                if(sid != ContinueRecord.sid)
                 {
                     //Console.WriteLine("creating "+sid);
                     Record[] recs = RecordFactory.CreateRecord(in1);
@@ -171,10 +171,10 @@ namespace NPOI.HSSF.EventUserModel
                     // We know that the multiple record situations
                     //  don't contain continue records, so just
                     //  pass those on to the listener now
-                    if (recs.Length > 1)
+                    if(recs.Length > 1)
                     {
                         bonusRecords = new ArrayList(recs.Length - 1);
-                        for (int k = 0; k < (recs.Length - 1); k++)
+                        for(int k = 0; k < (recs.Length - 1); k++)
                         {
                             bonusRecords.Add(recs[k]);
                         }
@@ -195,7 +195,7 @@ namespace NPOI.HSSF.EventUserModel
                     // This logic Is much like in RecordFactory.CreateRecords()
                     Record[] recs = RecordFactory.CreateRecord(in1);
                     ContinueRecord crec = (ContinueRecord)recs[0];
-                    if ((lastRec is ObjRecord) || (lastRec is TextObjectRecord))
+                    if((lastRec is ObjRecord) || (lastRec is TextObjectRecord))
                     {
                         // You can have Obj records between a DrawingRecord
                         //  and its continue!
@@ -203,7 +203,7 @@ namespace NPOI.HSSF.EventUserModel
                         // Trigger them on the drawing record, now it's complete
                         rec = lastDrawingRecord;
                     }
-                    else if ((lastRec is DrawingGroupRecord record))
+                    else if((lastRec is DrawingGroupRecord record))
                     {
                         record.ProcessContinueRecord(crec.Data);
                         // Trigger them on the drawing record, now it's complete
@@ -211,7 +211,7 @@ namespace NPOI.HSSF.EventUserModel
                     }
                     else
                     {
-                        if (rec is UnknownRecord)
+                        if(rec is UnknownRecord)
                         {
                             ;//silently skip records we don't know about
                         }
@@ -224,7 +224,7 @@ namespace NPOI.HSSF.EventUserModel
 
                 // Update our tracking of the last record
                 lastRec = rec;
-                if (rec is DrawingRecord drawingRecord)
+                if(rec is DrawingRecord drawingRecord)
                 {
                     lastDrawingRecord = drawingRecord;
                 }
@@ -237,13 +237,13 @@ namespace NPOI.HSSF.EventUserModel
 
             // If we've hit the end-of-stream, then
             //  finish off the last record and be done
-            if (hitEOS)
+            if(hitEOS)
             {
                 complete = true;
 
                 // Return the last record if there was
                 //  one, otherwise null
-                if (rec != null)
+                if(rec != null)
                 {
                     toReturn = rec;
                     rec = null;

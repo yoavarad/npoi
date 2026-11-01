@@ -18,8 +18,8 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
     using NPOI.SS.Formula.PTG;
+    using System;
     /**
      * Abstracts a name record for formula evaluation.<br/>
      * 
@@ -30,16 +30,15 @@ namespace NPOI.SS.Formula
     public interface IEvaluationName
     {
 
-        String NameText{ get; }
+        String NameText { get; }
 
-        bool IsFunctionName{ get; }
+        bool IsFunctionName { get; }
 
         bool HasFormula { get; }
 
         Ptg[] NameDefinition { get; }
 
-        bool IsRange{ get; }
+        bool IsRange { get; }
         NamePtg CreatePtg();
     }
 }
-

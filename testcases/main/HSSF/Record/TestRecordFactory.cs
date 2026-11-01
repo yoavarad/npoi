@@ -17,14 +17,15 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.IO;
-    using System.Collections;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.Util;
     using NPOI.POIFS.FileSystem;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
 
     /**
      * Tests the record factory
@@ -143,7 +144,7 @@ namespace TestCases.HSSF.Record
             ClassicAssert.AreEqual(
                          typeof(UnknownRecord).Name,
                          records[0].GetType().Name, "1st record's type");
-            ClassicAssert.AreEqual((short)-256, records[0].Sid, "1st record's sid");
+            ClassicAssert.AreEqual((short) -256, records[0].Sid, "1st record's sid");
             ClassicAssert.AreEqual(typeof(ContinueRecord).Name,
                          records[1].GetType().Name, "2nd record's type");
             ContinueRecord record = (ContinueRecord)records[1];
@@ -154,7 +155,7 @@ namespace TestCases.HSSF.Record
             ClassicAssert.AreEqual(
                          typeof(ContinueRecord).Name,
                          records[2].GetType().Name, "3rd record's type");
-            record = (ContinueRecord)records[2];
+            record = (ContinueRecord) records[2];
             ClassicAssert.AreEqual(0x3C, record.Sid, "3nd record's sid");
             ClassicAssert.AreEqual(4, record.Data[0], "4th data byte");
         }
@@ -211,7 +212,7 @@ namespace TestCases.HSSF.Record
 
             //Serialize and verify that the Serialized data is1 the same as the original
             MemoryStream out1 = new MemoryStream();
-            foreach (Record rec in records)
+            foreach(Record rec in records)
             {
                 byte[] serialdata = rec.Serialize();
                 out1.Write(serialdata, 0, serialdata.Length);
@@ -232,7 +233,7 @@ namespace TestCases.HSSF.Record
                 EOFRecord.instance,
             };
             MemoryStream baos = new MemoryStream();
-            for (int i = 0; i < recs.Length; i++)
+            for(int i = 0; i < recs.Length; i++)
             {
                 byte[] data = recs[i].Serialize();
                 baos.Write(data, 0, data.Length);
@@ -242,7 +243,7 @@ namespace TestCases.HSSF.Record
             baos.WriteByte(0x11);
             baos.WriteByte(0x00);
             baos.WriteByte(0x02);
-            for (int i = 0; i < 192; i++)
+            for(int i = 0; i < 192; i++)
             {
                 baos.WriteByte(0x00);
             }

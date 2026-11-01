@@ -16,9 +16,9 @@
 ==================================================================== */
 namespace NPOI.HSSF.EventUserModel
 {
-    using NPOI.HSSF.Record;
     using NPOI.HSSF.EventUserModel;
     using NPOI.HSSF.EventUserModel.DummyRecord;
+    using NPOI.HSSF.Record;
 
     /// <summary>
     /// A HSSFListener which tracks rows and columns, and will
@@ -63,14 +63,14 @@ namespace NPOI.HSSF.EventUserModel
             int thisColumn;
             CellValueRecordInterface[] expandedRecords = null;
 
-            if (record is CellValueRecordInterface valueRec)
+            if(record is CellValueRecordInterface valueRec)
             {
                 thisRow = valueRec.Row;
                 thisColumn = valueRec.Column;
             }
             else
             {
-                if (record is StringRecord)
+                if(record is StringRecord)
                 {
                     //it contains only cashed result of the previous FormulaRecord evaluation
                     childListener.ProcessRecord(record);
@@ -79,12 +79,12 @@ namespace NPOI.HSSF.EventUserModel
                 thisRow = -1;
                 thisColumn = -1;
 
-                switch (record.Sid)
+                switch(record.Sid)
                 {
                     // the BOFRecord can represent either the beginning of a sheet or the workbook
                     case BOFRecord.sid:
                         BOFRecord bof = (BOFRecord)record;
-                        if (bof.Type == BOFRecordType.Workbook || bof.Type == BOFRecordType.Worksheet)
+                        if(bof.Type == BOFRecordType.Workbook || bof.Type == BOFRecordType.Worksheet)
                         {
                             // Reset the row and column counts - new workbook / worksheet
                             ResetCounts();
@@ -96,9 +96,9 @@ namespace NPOI.HSSF.EventUserModel
                         //        + rowrec.GetFirstCol() + " last column at " + rowrec.GetLastCol());
 
                         // If there's a jump in rows, fire off missing row records
-                        if (lastRowRow + 1 < rowrec.RowNumber)
+                        if(lastRowRow + 1 < rowrec.RowNumber)
                         {
-                            for (int i = (lastRowRow + 1); i < rowrec.RowNumber; i++)
+                            for(int i = (lastRowRow + 1); i < rowrec.RowNumber; i++)
                             {
                                 MissingRowDummyRecord dr = new MissingRowDummyRecord(i);
                                 childListener.ProcessRecord(dr);
@@ -139,7 +139,7 @@ namespace NPOI.HSSF.EventUserModel
             }
 
             // First part of expanded record handling
-            if (expandedRecords != null && expandedRecords.Length > 0)
+            if(expandedRecords != null && expandedRecords.Length > 0)
             {
                 thisRow = expandedRecords[0].Row;
                 thisColumn = expandedRecords[0].Column;
@@ -148,12 +148,12 @@ namespace NPOI.HSSF.EventUserModel
             // If we're on cells, and this cell isn't in the same
             //  row as the last one, then fire the 
             //  dummy end-of-row records
-            if (thisRow != lastCellRow && lastCellRow > -1)
+            if(thisRow != lastCellRow && lastCellRow > -1)
             {
-                for (int i = lastCellRow; i < thisRow; i++)
+                for(int i = lastCellRow; i < thisRow; i++)
                 {
                     int cols = -1;
-                    if (i == lastCellRow)
+                    if(i == lastCellRow)
                     {
                         cols = lastCellColumn;
                     }
@@ -163,7 +163,7 @@ namespace NPOI.HSSF.EventUserModel
 
             // If we've just finished with the cells, then fire the
             // final dummy end-of-row record
-            if (lastCellRow != -1 && lastCellColumn != -1 && thisRow == -1)
+            if(lastCellRow != -1 && lastCellColumn != -1 && thisRow == -1)
             {
                 childListener.ProcessRecord(new LastCellOfRowDummyRecord(lastCellRow, lastCellColumn));
 
@@ -173,41 +173,41 @@ namespace NPOI.HSSF.EventUserModel
 
             // If we've moved onto a new row, the ensure we re-set
             //  the column counter
-            if (thisRow != lastCellRow)
+            if(thisRow != lastCellRow)
             {
                 lastCellColumn = -1;
             }
 
             // If there's a gap in the cells, then fire
             //  the dummy cell records
-            if (lastCellColumn != thisColumn - 1)
+            if(lastCellColumn != thisColumn - 1)
             {
-                for (int i = lastCellColumn + 1; i < thisColumn; i++)
+                for(int i = lastCellColumn + 1; i < thisColumn; i++)
                 {
                     childListener.ProcessRecord(new MissingCellDummyRecord(thisRow, i));
                 }
             }
 
             // Next part of expanded record handling
-            if (expandedRecords != null && expandedRecords.Length > 0)
+            if(expandedRecords != null && expandedRecords.Length > 0)
             {
                 thisColumn = expandedRecords[expandedRecords.Length - 1].Column;
             }
 
 
             // Update cell and row counts as needed
-            if (thisColumn != -1)
+            if(thisColumn != -1)
             {
                 lastCellColumn = thisColumn;
                 lastCellRow = thisRow;
             }
 
             // Pass along the record(s)
-            if (expandedRecords != null && expandedRecords.Length > 0)
+            if(expandedRecords != null && expandedRecords.Length > 0)
             {
-                foreach (CellValueRecordInterface r in expandedRecords)
+                foreach(CellValueRecordInterface r in expandedRecords)
                 {
-                    childListener.ProcessRecord((Record)r);
+                    childListener.ProcessRecord((Record) r);
                 }
             }
             else

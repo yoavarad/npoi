@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,9 +25,8 @@
  * 
  * ==============================================================*/
 
-using System;
-
 using NPOI.POIFS.Properties;
+using System;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -167,7 +166,7 @@ namespace NPOI.POIFS.FileSystem
         {
             bool rval = false;
 
-            if ((!IsRoot) && IsDeleteOK)
+            if((!IsRoot) && IsDeleteOK)
             {
                 rval = _parent.DeleteEntry(this);
             }
@@ -189,7 +188,7 @@ namespace NPOI.POIFS.FileSystem
         {
             bool rval = false;
 
-            if (!IsRoot)
+            if(!IsRoot)
             {
                 rval = _parent.ChangeName(Name, newName);
             }

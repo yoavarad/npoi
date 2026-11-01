@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -16,14 +16,15 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace TestCases.POIFS.FileSystem
 {
@@ -92,7 +93,7 @@ namespace TestCases.POIFS.FileSystem
                 d.GetEntry(eRoot.Name);
                 Assert.Fail("Should be filtered");
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
 
             IEnumerator<Entry> i = d.Entries;
             i.MoveNext();
@@ -117,14 +118,14 @@ namespace TestCases.POIFS.FileSystem
                 d.GetEntry(dirA.Name);
                 Assert.Fail("Should be filtered");
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
             ClassicAssert.AreEqual(dirB, d.GetEntry(dirB.Name));
             try
             {
                 d.GetEntry(eRoot.Name);
                 Assert.Fail("Should be filtered");
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
 
             i = d.Entries;
             i.MoveNext();
@@ -147,19 +148,19 @@ namespace TestCases.POIFS.FileSystem
                 d.GetEntry(dirA.Name);
                 Assert.Fail("Should be filtered");
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
             try
             {
                 d.GetEntry(dirB.Name);
                 Assert.Fail("Should be filtered");
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
             try
             {
                 d.GetEntry(eRoot.Name);
                 Assert.Fail("Should be filtered");
             }
-            catch (FileNotFoundException) { }
+            catch(FileNotFoundException) { }
 
             i = d.Entries;
             i.MoveNext();

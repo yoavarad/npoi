@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.Util;
     using NPOI.SS.Formula;
+    using NPOI.Util;
+    using System;
 
 
     /**
@@ -61,9 +61,9 @@ namespace NPOI.SS.Formula.PTG
 
         public override void Write(ILittleEndianOutput out1)
         {
-		    out1.WriteByte(sid + PtgClass);
-		    out1.WriteShort(field_1_label_index);
-		    out1.WriteShort(field_2_zero);
+            out1.WriteByte(sid + PtgClass);
+            out1.WriteShort(field_1_label_index);
+            out1.WriteShort(field_2_zero);
         }
 
 
@@ -80,7 +80,7 @@ namespace NPOI.SS.Formula.PTG
         {
             throw new NotImplementedException("3D references need a workbook to determine formula text");
         }
-    
+
 
         public override byte DefaultOperandClass
         {

@@ -19,14 +19,14 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     [TestFixture]
     public class TestUnknownEscherRecord
     {
@@ -43,7 +43,7 @@ namespace TestCases.DDF
             r.FillFields(HexRead.ReadFromString(TestData), factory);
 
             ClassicAssert.AreEqual(0x020F, r.Options);
-            ClassicAssert.AreEqual(unchecked((short)0xF111), r.RecordId);
+            ClassicAssert.AreEqual(unchecked((short) 0xF111), r.RecordId);
             ClassicAssert.IsTrue(r.IsContainerRecord);
             ClassicAssert.AreEqual(8, r.RecordSize);
             ClassicAssert.AreEqual(0, r.ChildRecords.Count);
@@ -59,7 +59,7 @@ namespace TestCases.DDF
             r.FillFields(HexRead.ReadFromString(TestData), factory);
 
             ClassicAssert.AreEqual(0x0200, r.Options);
-            ClassicAssert.AreEqual(unchecked((short)0xF111), r.RecordId);
+            ClassicAssert.AreEqual(unchecked((short) 0xF111), r.RecordId);
             ClassicAssert.AreEqual(12, r.RecordSize);
             ClassicAssert.IsFalse(r.IsContainerRecord);
             ClassicAssert.AreEqual(0, r.ChildRecords.Count);
@@ -81,29 +81,29 @@ namespace TestCases.DDF
             r.FillFields(HexRead.ReadFromString(TestData), factory);
 
             ClassicAssert.AreEqual(0x020F, r.Options);
-            ClassicAssert.AreEqual(unchecked((short)0xF111), r.RecordId);
+            ClassicAssert.AreEqual(unchecked((short) 0xF111), r.RecordId);
             ClassicAssert.AreEqual(8, r.RecordSize);
             ClassicAssert.IsTrue(r.IsContainerRecord);
             ClassicAssert.AreEqual(1, r.ChildRecords.Count);
-            ClassicAssert.AreEqual(unchecked((short)0xFFFF), r.GetChild(0).RecordId);
+            ClassicAssert.AreEqual(unchecked((short) 0xFFFF), r.GetChild(0).RecordId);
 
         }
         [Test]
         public void TestSerialize()
         {
             UnknownEscherRecord r = new UnknownEscherRecord();
-            r.Options=(short)0x1234;
-            r.RecordId=unchecked((short)0xF112);
+            r.Options=(short) 0x1234;
+            r.RecordId=unchecked((short) 0xF112);
             byte[] data = new byte[8];
             r.Serialize(0, data);
 
             ClassicAssert.AreEqual("[34, 12, 12, F1, 00, 00, 00, 00]", HexDump.ToHex(data));
 
             EscherRecord childRecord = new UnknownEscherRecord();
-            childRecord.Options=unchecked((short)0x9999);
-            childRecord.RecordId=unchecked((short)0xFF01);
+            childRecord.Options=unchecked((short) 0x9999);
+            childRecord.RecordId=unchecked((short) 0xFF01);
             r.AddChildRecord(childRecord);
-            r.Options=(short)0x123F;
+            r.Options=(short) 0x123F;
             data = new byte[16];
             r.Serialize(0, data);
 
@@ -113,8 +113,8 @@ namespace TestCases.DDF
         public void TestToString()
         {
             UnknownEscherRecord r = new UnknownEscherRecord();
-            r.Options=(short)0x1234;
-            r.RecordId=unchecked((short)0xF112);
+            r.Options=(short) 0x1234;
+            r.RecordId=unchecked((short) 0xF112);
             byte[] data = new byte[8];
             r.Serialize(0, data);
 

@@ -17,15 +17,15 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.Record.CF;
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
-    using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.SS.Util;
     using NPOI.SS.UserModel;
-    using NPOI.HSSF.Record.CF;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.SS.UserModel;
 
     /**
@@ -39,12 +39,15 @@ namespace TestCases.HSSF.UserModel
         {
             ClassicAssert.IsNotNull(actual, "Colour must be given");
 
-            if (actual is HSSFColor) {
+            if(actual is HSSFColor)
+            {
                 HSSFColor colour = (HSSFColor)actual;
                 ClassicAssert.AreEqual(hexExpected, colour.GetHexString());
-            } else {
+            }
+            else
+            {
                 HSSFExtendedColor colour = (HSSFExtendedColor)actual;
-                if (hexExpected.Length == 8)
+                if(hexExpected.Length == 8)
                 {
                     ClassicAssert.AreEqual(hexExpected, colour.ARGBHex);
                 }
@@ -94,7 +97,7 @@ namespace TestCases.HSSF.UserModel
             // cloning the conditional formatting manually Makes it bad again
             cf = sheet.SheetConditionalFormatting;
             ISheetConditionalFormatting scf = wb.GetSheetAt(0).SheetConditionalFormatting;
-            for (int j = 0; j < scf.NumConditionalFormattings; j++)
+            for(int j = 0; j < scf.NumConditionalFormattings; j++)
             {
                 cf.AddConditionalFormatting(scf.GetConditionalFormattingAt(j));
             }
@@ -111,7 +114,7 @@ namespace TestCases.HSSF.UserModel
         private void RemoveConditionalFormatting(ISheet sheet)
         {
             ISheetConditionalFormatting cf = sheet.SheetConditionalFormatting;
-            for (int j = 0; j < cf.NumConditionalFormattings; j++)
+            for(int j = 0; j < cf.NumConditionalFormattings; j++)
             {
                 cf.RemoveConditionalFormatting(j);
             }

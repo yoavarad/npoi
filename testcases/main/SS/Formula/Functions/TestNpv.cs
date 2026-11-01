@@ -17,11 +17,12 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-    using System.Text;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Text;
     using TestCases.HSSF;
 
     /**
@@ -81,7 +82,7 @@ namespace TestCases.SS.Formula.Functions
             int failureCount = 0;
             // TODO YK: Formulas in rows 16 and 17 operate with ArrayPtg which isn't yet supported
             // FormulaEvaluator as of r1041407 throws "Unexpected ptg class (NPOI.SS.Formula.PTG.ArrayPtg)"
-            for (int rownum = 9; rownum <= 15; rownum++)
+            for(int rownum = 9; rownum <= 15; rownum++)
             {
                 IRow row = sheet.GetRow(rownum);
                 ICell cellB = row.GetCell(1);
@@ -90,16 +91,17 @@ namespace TestCases.SS.Formula.Functions
                     CellValue cv = fe.Evaluate(cellB);
                     assertFormulaResult(cv, cellB);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
-                    if (failures.Length > 0) failures.Append('\n');
+                    if(failures.Length > 0)
+                        failures.Append('\n');
                     failures.Append("Row[" + (cellB.RowIndex + 1) + "]: " + cellB.CellFormula + " ");
                     failures.Append(e.Message);
                     failureCount++;
                 }
             }
 
-            if (failures.Length > 0)
+            if(failures.Length > 0)
             {
                 throw new AssertionException(failureCount + " IRR Evaluations failed:\n" + failures.ToString());
             }

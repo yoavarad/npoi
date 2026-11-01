@@ -17,10 +17,10 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * The default data label text properties record identifies the text characteristics of the preceding text record.<p/>
@@ -110,7 +110,7 @@ namespace NPOI.HSSF.Record.Chart
             set
             {
                 this.field_1_categoryDataType = value;
-            }   
+            }
         }
     }
 }

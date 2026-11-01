@@ -23,7 +23,8 @@ using NPOI.XSSF;
 using NPOI.XSSF.Model;
 using NPOI.XSSF.UserModel;
 using NPOI.XSSF.UserModel.Extensions;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using SkiaSharp;
 
 namespace TestCases.XSSF.UserModel
@@ -107,19 +108,19 @@ namespace TestCases.XSSF.UserModel
 
             num = stylesTable.GetBorders().Count;
             //setting the same border multiple times should not change borderId
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 cellStyle.BorderBottom = (BorderStyle.Medium);
                 ClassicAssert.AreEqual(BorderStyle.Medium, cellStyle.BorderBottom);
             }
-            ClassicAssert.AreEqual((uint)borderId, cellStyle.GetCoreXf().borderId);
+            ClassicAssert.AreEqual((uint) borderId, cellStyle.GetCoreXf().borderId);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
             ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt(borderId).GetCTBorder());
 
             //setting border to none Removes the <bottom> element
             cellStyle.BorderBottom = (BorderStyle.None);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
-            borderId = (int)cellStyle.GetCoreXf().borderId;
+            borderId = (int) cellStyle.GetCoreXf().borderId;
             ctBorder = stylesTable.GetBorderAt(borderId).GetCTBorder();
             ClassicAssert.IsFalse(ctBorder.IsSetBottom());
         }
@@ -168,19 +169,19 @@ namespace TestCases.XSSF.UserModel
 
             num = stylesTable.GetBorders().Count;
             //setting the same border multiple times should not change borderId
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 cellStyle.BorderDiagonal = BorderDiagonal.Backward;
                 ClassicAssert.AreEqual(BorderDiagonal.Backward, cellStyle.BorderDiagonal);
             }
             ClassicAssert.AreEqual(borderId, cellStyle.GetCoreXf().borderId);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
-            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int)borderId).GetCTBorder());
+            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int) borderId).GetCTBorder());
 
             cellStyle.BorderDiagonal = (BorderDiagonal.None);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
             borderId = cellStyle.GetCoreXf().borderId;
-            ctBorder = stylesTable.GetBorderAt((int)borderId).GetCTBorder();
+            ctBorder = stylesTable.GetBorderAt((int) borderId).GetCTBorder();
             ClassicAssert.IsFalse(ctBorder.IsSetDiagonal());
         }
         [Test]
@@ -204,20 +205,20 @@ namespace TestCases.XSSF.UserModel
 
             num = stylesTable.GetBorders().Count;
             //setting the same border multiple times should not change borderId
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 cellStyle.BorderRight = (BorderStyle.Medium);
                 ClassicAssert.AreEqual(BorderStyle.Medium, cellStyle.BorderRight);
             }
             ClassicAssert.AreEqual(borderId, cellStyle.GetCoreXf().borderId);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
-            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int)borderId).GetCTBorder());
+            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int) borderId).GetCTBorder());
 
             //setting border to none Removes the <right> element
             cellStyle.BorderRight = (BorderStyle.None);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
             borderId = cellStyle.GetCoreXf().borderId;
-            ctBorder = stylesTable.GetBorderAt((int)borderId).GetCTBorder();
+            ctBorder = stylesTable.GetBorderAt((int) borderId).GetCTBorder();
             ClassicAssert.IsFalse(ctBorder.IsSetRight());
         }
         [Test]
@@ -241,20 +242,20 @@ namespace TestCases.XSSF.UserModel
 
             num = stylesTable.GetBorders().Count;
             //setting the same border multiple times should not change borderId
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 cellStyle.BorderLeft = (BorderStyle.Medium);
                 ClassicAssert.AreEqual(BorderStyle.Medium, cellStyle.BorderLeft);
             }
             ClassicAssert.AreEqual(borderId, cellStyle.GetCoreXf().borderId);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
-            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int)borderId).GetCTBorder());
+            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int) borderId).GetCTBorder());
 
             //setting border to none Removes the <left> element
             cellStyle.BorderLeft = (BorderStyle.None);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
             borderId = cellStyle.GetCoreXf().borderId;
-            ctBorder = stylesTable.GetBorderAt((int)borderId).GetCTBorder();
+            ctBorder = stylesTable.GetBorderAt((int) borderId).GetCTBorder();
             ClassicAssert.IsFalse(ctBorder.IsSetLeft());
         }
         [Test]
@@ -278,20 +279,20 @@ namespace TestCases.XSSF.UserModel
 
             num = stylesTable.GetBorders().Count;
             //setting the same border multiple times should not change borderId
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 cellStyle.BorderTop = BorderStyle.Medium;
                 ClassicAssert.AreEqual(BorderStyle.Medium, cellStyle.BorderTop);
             }
-            ClassicAssert.AreEqual((uint)borderId, cellStyle.GetCoreXf().borderId);
+            ClassicAssert.AreEqual((uint) borderId, cellStyle.GetCoreXf().borderId);
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
-            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int)borderId).GetCTBorder());
+            ClassicAssert.AreSame(ctBorder, stylesTable.GetBorderAt((int) borderId).GetCTBorder());
 
             //setting border to none Removes the <top> element
             cellStyle.BorderTop = BorderStyle.None;
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
             borderId = cellStyle.GetCoreXf().borderId;
-            ctBorder = stylesTable.GetBorderAt((int)borderId).GetCTBorder();
+            ctBorder = stylesTable.GetBorderAt((int) borderId).GetCTBorder();
             ClassicAssert.IsFalse(ctBorder.IsSetTop());
         }
 
@@ -307,7 +308,8 @@ namespace TestCases.XSSF.UserModel
         }
         // Border Styles, in BorderStyle/ST_BorderStyle enum order
         [Test]
-        public void TestGetSetBorderNone() {
+        public void TestGetSetBorderNone()
+        {
             cellStyle.BorderTop = BorderStyle.None;
             ClassicAssert.AreEqual(BorderStyle.None, cellStyle.BorderTop);
             int borderId = (int)cellStyle.GetCoreXf().borderId;
@@ -374,19 +376,19 @@ namespace TestCases.XSSF.UserModel
         {
             TestGetSetBorderXMLBean(BorderStyle.DashDotDot, ST_BorderStyle.dashDotDot);
         }
-        
+
         [Test]
         public void TestGetSetBorderMediumDashDotDot()
         {
             TestGetSetBorderXMLBean(BorderStyle.MediumDashDotDot, ST_BorderStyle.mediumDashDotDot);
         }
-        
+
         [Test]
         public void TestGetSetBorderSlantDashDot()
         {
             TestGetSetBorderXMLBean(BorderStyle.SlantedDashDot, ST_BorderStyle.slantDashDot);
         }
-        
+
 
         [Test]
         public void TestGetSetBottomBorderColor()
@@ -413,7 +415,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsTrue(borderId > 0);
             //check Changes in the underlying xml bean
             CT_Border ctBorder = stylesTable.GetBorderAt((int)borderId).GetCTBorder();
-            ClassicAssert.AreEqual((uint)IndexedColors.BlueGrey.Index, ctBorder.bottom.color.indexed);
+            ClassicAssert.AreEqual((uint) IndexedColors.BlueGrey.Index, ctBorder.bottom.color.indexed);
 
             //setting XSSFColor
             num = stylesTable.GetBorders().Count;
@@ -421,7 +423,7 @@ namespace TestCases.XSSF.UserModel
             cellStyle.SetBottomBorderColor(clr);
             ClassicAssert.AreEqual(clr.GetCTColor().ToString(), cellStyle.BottomBorderXSSFColor.GetCTColor().ToString());
             byte[] rgb = cellStyle.BottomBorderXSSFColor.RGB;
-            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte)(rgb[0] & 0xFF), (byte)(rgb[1] & 0xFF), (byte)(rgb[2] & 0xFF)));
+            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte) (rgb[0] & 0xFF), (byte) (rgb[1] & 0xFF), (byte) (rgb[2] & 0xFF)));
             //another border was Added to the styles table
             ClassicAssert.AreEqual(num+1, stylesTable.GetBorders().Count);
 
@@ -455,7 +457,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsTrue(borderId > 0);
             //check Changes in the underlying xml bean
             CT_Border ctBorder = stylesTable.GetBorderAt(borderId).GetCTBorder();
-            ClassicAssert.AreEqual((uint)IndexedColors.BlueGrey.Index, ctBorder.top.color.indexed);
+            ClassicAssert.AreEqual((uint) IndexedColors.BlueGrey.Index, ctBorder.top.color.indexed);
 
             //setting XSSFColor
             num = stylesTable.GetBorders().Count;
@@ -497,7 +499,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsTrue(borderId > 0);
             //check Changes in the underlying xml bean
             CT_Border ctBorder = stylesTable.GetBorderAt(borderId).GetCTBorder();
-            ClassicAssert.AreEqual((uint)IndexedColors.BlueGrey.Index, ctBorder.left.color.indexed);
+            ClassicAssert.AreEqual((uint) IndexedColors.BlueGrey.Index, ctBorder.left.color.indexed);
 
             //setting XSSFColor
             num = stylesTable.GetBorders().Count;
@@ -505,7 +507,7 @@ namespace TestCases.XSSF.UserModel
             cellStyle.SetLeftBorderColor(clr);
             ClassicAssert.AreEqual(clr.GetCTColor().ToString(), cellStyle.LeftBorderXSSFColor.GetCTColor().ToString());
             byte[] rgb = cellStyle.LeftBorderXSSFColor.RGB;
-            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte)(rgb[0] & 0xFF), (byte)(rgb[1] & 0xFF), (byte)(rgb[2] & 0xFF)));
+            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte) (rgb[0] & 0xFF), (byte) (rgb[1] & 0xFF), (byte) (rgb[2] & 0xFF)));
             //another border was Added to the styles table
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
 
@@ -539,7 +541,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsTrue(borderId > 0);
             //check Changes in the underlying xml bean
             CT_Border ctBorder = stylesTable.GetBorderAt(borderId).GetCTBorder();
-            ClassicAssert.AreEqual((uint)IndexedColors.BlueGrey.Index, ctBorder.right.color.indexed);
+            ClassicAssert.AreEqual((uint) IndexedColors.BlueGrey.Index, ctBorder.right.color.indexed);
 
             //setting XSSFColor
             num = stylesTable.GetBorders().Count;
@@ -547,7 +549,7 @@ namespace TestCases.XSSF.UserModel
             cellStyle.SetRightBorderColor(clr);
             ClassicAssert.AreEqual(clr.GetCTColor().ToString(), cellStyle.RightBorderXSSFColor.GetCTColor().ToString());
             byte[] rgb = cellStyle.RightBorderXSSFColor.RGB;
-            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte)(rgb[0] & 0xFF), (byte)(rgb[1] & 0xFF), (byte)(rgb[2] & 0xFF)));
+            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte) (rgb[0] & 0xFF), (byte) (rgb[1] & 0xFF), (byte) (rgb[2] & 0xFF)));
             //another border was Added to the styles table
             ClassicAssert.AreEqual(num, stylesTable.GetBorders().Count);
 
@@ -570,7 +572,7 @@ namespace TestCases.XSSF.UserModel
             //setting indexed color
             cellStyle.FillBackgroundColor = (IndexedColors.Red.Index);
             ClassicAssert.AreEqual(IndexedColors.Red.Index, cellStyle.FillBackgroundColor);
-            clr = (XSSFColor)cellStyle.FillBackgroundColorColor;
+            clr = (XSSFColor) cellStyle.FillBackgroundColorColor;
             ClassicAssert.IsTrue(clr.GetCTColor().IsSetIndexed());
             ClassicAssert.AreEqual(IndexedColors.Red.Index, clr.Indexed);
             //a new fill was Added to the styles table
@@ -581,15 +583,15 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsTrue(FillId > 0);
             //check changes in the underlying xml bean
             CT_Fill ctFill = stylesTable.GetFillAt(FillId).GetCTFill();
-            ClassicAssert.AreEqual((uint)IndexedColors.Red.Index, ctFill.GetPatternFill().bgColor.indexed);
+            ClassicAssert.AreEqual((uint) IndexedColors.Red.Index, ctFill.GetPatternFill().bgColor.indexed);
 
             //setting XSSFColor
             num = stylesTable.GetFills().Count;
             clr = new XSSFColor(SKColors.Cyan, stylesTable.IndexedColors);
             cellStyle.SetFillBackgroundColor(clr); // TODO this testcase assumes that cellStyle creates a new CT_Fill, but the implementation changes the existing style. - do not know whats right 8-(
-            ClassicAssert.AreEqual(clr.GetCTColor().ToString(), ((XSSFColor)cellStyle.FillBackgroundColorColor).GetCTColor().ToString());
+            ClassicAssert.AreEqual(clr.GetCTColor().ToString(), ((XSSFColor) cellStyle.FillBackgroundColorColor).GetCTColor().ToString());
             byte[] rgb = ((XSSFColor)cellStyle.FillBackgroundColorColor).RGB;
-            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte)(rgb[0] & 0xFF), (byte)(rgb[1] & 0xFF), (byte)(rgb[2] & 0xFF)));
+            ClassicAssert.AreEqual(SKColors.Cyan, new SKColor((byte) (rgb[0] & 0xFF), (byte) (rgb[1] & 0xFF), (byte) (rgb[2] & 0xFF)));
             //another border was added to the styles table
             ClassicAssert.AreEqual(num + 1, stylesTable.GetFills().Count);
 
@@ -654,7 +656,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(IndexedColors.BrightGreen.Index, customStyle.FillForegroundColor);
             ClassicAssert.AreEqual(4, styles.GetFills().Count);
 
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 XSSFCellStyle style = (XSSFCellStyle)wb.CreateCellStyle();
 
@@ -675,7 +677,7 @@ namespace TestCases.XSSF.UserModel
             //???
             //ClassicAssert.AreEqual(STPatternType.INT_DARK_GRAY-1, cellStyle.getFillPattern());
 
-            ClassicAssert.AreEqual((int)ST_PatternType.darkGray, (int)cellStyle.FillPattern);
+            ClassicAssert.AreEqual((int) ST_PatternType.darkGray, (int) cellStyle.FillPattern);
 
             int num = stylesTable.GetFills().Count;
             cellStyle.FillPattern = (FillPattern.SolidForeground);
@@ -688,7 +690,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(ST_PatternType.solid, ctFill.GetPatternFill().patternType);
 
             //setting the same fill multiple time does not update the styles table
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
             {
                 cellStyle.FillPattern = (FillPattern.SolidForeground);
             }
@@ -696,7 +698,7 @@ namespace TestCases.XSSF.UserModel
 
             cellStyle.FillPattern = (FillPattern.NoFill);
             ClassicAssert.AreEqual(FillPattern.NoFill, cellStyle.FillPattern);
-            FillId = (int)cellStyle.GetCoreXf().fillId;
+            FillId = (int) cellStyle.GetCoreXf().fillId;
             ctFill = stylesTable.GetFillAt(FillId).GetCTFill();
             ClassicAssert.IsFalse(ctFill.GetPatternFill().IsSetPatternType());
 
@@ -741,12 +743,12 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestGetSetIndent()
         {
-            
-            ClassicAssert.AreEqual((short)0, cellStyle.Indention);
-            cellStyle.Indention = ((short)3);
-            ClassicAssert.AreEqual((short)3, cellStyle.Indention);
-            cellStyle.Indention = ((short)13);
-            ClassicAssert.AreEqual((short)13, cellStyle.Indention);
+
+            ClassicAssert.AreEqual((short) 0, cellStyle.Indention);
+            cellStyle.Indention = ((short) 3);
+            ClassicAssert.AreEqual((short) 3, cellStyle.Indention);
+            cellStyle.Indention = ((short) 13);
+            ClassicAssert.AreEqual((short) 13, cellStyle.Indention);
         }
         [Test]
         public void TestGetSetAlignement()
@@ -770,7 +772,7 @@ namespace TestCases.XSSF.UserModel
         public void TestGetSetReadingOrder()
         {
             ClassicAssert.AreEqual(ReadingOrder.CONTEXT, cellStyle.ReadingOrder);
-            ClassicAssert.AreEqual((long)ReadingOrder.CONTEXT, cellStyle.GetCellAlignment().GetCTCellAlignment().readingOrder);
+            ClassicAssert.AreEqual((long) ReadingOrder.CONTEXT, cellStyle.GetCellAlignment().GetCTCellAlignment().readingOrder);
 
             cellStyle.ReadingOrder = ReadingOrder.LEFT_TO_RIGHT;
             ClassicAssert.AreEqual(ReadingOrder.LEFT_TO_RIGHT, cellStyle.ReadingOrder);
@@ -832,7 +834,7 @@ namespace TestCases.XSSF.UserModel
             XSSFCellStyle orig = (XSSFCellStyle)wb.CreateCellStyle();
             orig.Alignment = (HorizontalAlignment.Right);
             orig.SetFont(fnt);
-            orig.DataFormat = (short)18;
+            orig.DataFormat = (short) 18;
 
             ClassicAssert.AreEqual(HorizontalAlignment.Right, orig.Alignment);
             ClassicAssert.AreEqual(fnt, orig.GetFont());
@@ -1052,7 +1054,7 @@ namespace TestCases.XSSF.UserModel
         {
             int numberOfStyles = reference.NumCellStyles;
             // don't copy default style (style index 0)
-            for (int i = 1; i < numberOfStyles; i++)
+            for(int i = 1; i < numberOfStyles; i++)
             {
                 ICellStyle referenceStyle = reference.GetCellStyleAt(i);
                 ICellStyle targetStyle = target.CreateCellStyle();
@@ -1072,7 +1074,7 @@ namespace TestCases.XSSF.UserModel
             ISheet sheet = target.CreateSheet();
             IRow row = sheet.CreateRow(0);
             int col = 0;
-            for (short i = 1; i < target.NumCellStyles; i++)
+            for(short i = 1; i < target.NumCellStyles; i++)
             {
                 ICell cell = row.CreateCell(col++);
                 cell.SetCellValue("Coucou" + i);
@@ -1096,26 +1098,26 @@ namespace TestCases.XSSF.UserModel
         public void Test58043()
         {
             ClassicAssert.AreEqual(0, cellStyle.Rotation);
-            cellStyle.Rotation = ((short)89);
+            cellStyle.Rotation = ((short) 89);
             ClassicAssert.AreEqual(89, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)90);
+            cellStyle.Rotation = ((short) 90);
             ClassicAssert.AreEqual(90, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)179);
+            cellStyle.Rotation = ((short) 179);
             ClassicAssert.AreEqual(179, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)180);
+            cellStyle.Rotation = ((short) 180);
             ClassicAssert.AreEqual(180, cellStyle.Rotation);
 
             // negative values are mapped to the correct values for compatibility between HSSF and XSSF
-            cellStyle.Rotation = ((short)-1);
+            cellStyle.Rotation = ((short) -1);
             ClassicAssert.AreEqual(91, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)-89);
+            cellStyle.Rotation = ((short) -89);
             ClassicAssert.AreEqual(179, cellStyle.Rotation);
 
-            cellStyle.Rotation = ((short)-90);
+            cellStyle.Rotation = ((short) -90);
             ClassicAssert.AreEqual(180, cellStyle.Rotation);
         }
 
@@ -1128,7 +1130,8 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.IsNull(cellStyle.FillForegroundColorColor);
             cellStyle.FillBackgroundColorColor = (null);
             ClassicAssert.IsNull(cellStyle.FillBackgroundColorColor);
-            cellStyle.FillPattern = FillPattern.NoFill;;
+            cellStyle.FillPattern = FillPattern.NoFill;
+            ;
             ClassicAssert.AreEqual(FillPattern.NoFill, cellStyle.FillPattern);
             cellStyle.SetBottomBorderColor(null);
             ClassicAssert.IsNull(cellStyle.BottomBorderXSSFColor);

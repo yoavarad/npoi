@@ -18,8 +18,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
     using System.Text;
 
     /**
@@ -77,7 +77,7 @@ namespace NPOI.SS.Formula.Functions
 
             public LinearOffsetRange(int offset, int length)
             {
-                if (length == 0)
+                if(length == 0)
                 {
                     // handled that condition much earlier
                     throw new ArgumentException("Length may not be zero");
@@ -90,14 +90,14 @@ namespace NPOI.SS.Formula.Functions
             {
                 get
                 {
-                    return (short)_offset;
+                    return (short) _offset;
                 }
             }
             public short LastIndex
             {
                 get
                 {
-                    return (short)(_offset + _Length - 1);
+                    return (short) (_offset + _Length - 1);
                 }
             }
             /**
@@ -114,9 +114,9 @@ namespace NPOI.SS.Formula.Functions
              */
             public LinearOffsetRange NormaliseAndTranslate(int translationAmount)
             {
-                if (_Length > 0)
+                if(_Length > 0)
                 {
-                    if (translationAmount == 0)
+                    if(translationAmount == 0)
                     {
                         return this;
                     }
@@ -127,11 +127,11 @@ namespace NPOI.SS.Formula.Functions
 
             public bool IsOutOfBounds(int lowValidIx, int highValidIx)
             {
-                if (_offset < lowValidIx)
+                if(_offset < lowValidIx)
                 {
                     return true;
                 }
-                if (LastIndex > highValidIx)
+                if(LastIndex > highValidIx)
                 {
                     return true;
                 }
@@ -159,7 +159,7 @@ namespace NPOI.SS.Formula.Functions
             private readonly int _width;
             private readonly int _height;
             private readonly RefEval _refEval;
-		    private readonly AreaEval _areaEval;
+            private readonly AreaEval _areaEval;
 
             public BaseRef(RefEval re)
             {
@@ -212,9 +212,9 @@ namespace NPOI.SS.Formula.Functions
                     return _firstColumnIndex;
                 }
             }
-            public AreaEval Offset(int relFirstRowIx, int relLastRowIx,int relFirstColIx, int relLastColIx)
+            public AreaEval Offset(int relFirstRowIx, int relLastRowIx, int relFirstColIx, int relLastColIx)
             {
-                if (_refEval == null)
+                if(_refEval == null)
                 {
                     return _areaEval.Offset(relFirstRowIx, relLastRowIx, relFirstColIx, relLastColIx);
                 }
@@ -225,7 +225,7 @@ namespace NPOI.SS.Formula.Functions
         public ValueEval Evaluate(ValueEval[] args, int srcCellRow, int srcCellCol)
         {
 
-            if (args.Length < 1 || args.Length > 5)
+            if(args.Length < 1 || args.Length > 5)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -241,20 +241,22 @@ namespace NPOI.SS.Formula.Functions
                 int width = baseRef.Width;
                 // optional arguments
                 // If height or width are omitted, it is assumed to be the same height or width as reference.
-                switch (args.Length)
+                switch(args.Length)
                 {
                     case 5:
-                        if (args[4] is not MissingArgEval) {
+                        if(args[4] is not MissingArgEval)
+                        {
                             width = EvaluateIntArg(args[4], srcCellRow, srcCellCol);
                         }
                         // fall-through to pick up height 
-                        if (args[3] is not MissingArgEval)
+                        if(args[3] is not MissingArgEval)
                         {
                             height = EvaluateIntArg(args[3], srcCellRow, srcCellCol);
                         }
                         break;
                     case 4:
-                        if (args[3] is not MissingArgEval) {
+                        if(args[3] is not MissingArgEval)
+                        {
                             height = EvaluateIntArg(args[3], srcCellRow, srcCellCol);
                         }
                         break;
@@ -262,7 +264,7 @@ namespace NPOI.SS.Formula.Functions
                         break;
                 }
                 // Zero height or width raises #REF! error
-                if (height == 0 || width == 0)
+                if(height == 0 || width == 0)
                 {
                     return ErrorEval.REF_INVALID;
                 }
@@ -270,7 +272,7 @@ namespace NPOI.SS.Formula.Functions
                 LinearOffsetRange colOffsetRange = new LinearOffsetRange(columnOffset, width);
                 return CreateOffset(baseRef, rowOffsetRange, colOffsetRange);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -285,11 +287,11 @@ namespace NPOI.SS.Formula.Functions
             LinearOffsetRange absRows = orRow.NormaliseAndTranslate(baseRef.FirstRowIndex);
             LinearOffsetRange absCols = orCol.NormaliseAndTranslate(baseRef.FirstColumnIndex);
 
-            if (absRows.IsOutOfBounds(0, LAST_VALID_ROW_INDEX))
+            if(absRows.IsOutOfBounds(0, LAST_VALID_ROW_INDEX))
             {
                 throw new EvaluationException(ErrorEval.REF_INVALID);
             }
-            if (absCols.IsOutOfBounds(0, LAST_VALID_COLUMN_INDEX))
+            if(absCols.IsOutOfBounds(0, LAST_VALID_COLUMN_INDEX))
             {
                 throw new EvaluationException(ErrorEval.REF_INVALID);
             }
@@ -300,15 +302,15 @@ namespace NPOI.SS.Formula.Functions
         private static BaseRef EvaluateBaseRef(ValueEval eval)
         {
 
-            if (eval is RefEval refEval)
+            if(eval is RefEval refEval)
             {
                 return new BaseRef(refEval);
             }
-            if (eval is AreaEval areaEval)
+            if(eval is AreaEval areaEval)
             {
                 return new BaseRef(areaEval);
             }
-            if (eval is ErrorEval errorEval)
+            if(eval is ErrorEval errorEval)
             {
                 throw new EvalEx(errorEval);
             }
@@ -335,7 +337,7 @@ namespace NPOI.SS.Formula.Functions
         {
             // Note - the standard java type conversion from double to int truncates toward zero.
             // but Math.floor() truncates toward negative infinity
-            return (int)Math.Floor(d);
+            return (int) Math.Floor(d);
         }
 
 
@@ -343,23 +345,23 @@ namespace NPOI.SS.Formula.Functions
         {
             ValueEval ve = OperandResolver.GetSingleValue(eval, srcCellRow, srcCellCol);
 
-            if (ve is NumericValueEval valueEval)
+            if(ve is NumericValueEval valueEval)
             {
                 return valueEval.NumberValue;
             }
-            if (ve is StringEval se)
+            if(ve is StringEval se)
             {
                 double d = OperandResolver.ParseDouble(se.StringValue);
-                if (double.IsNaN(d))
+                if(double.IsNaN(d))
                 {
                     throw new EvalEx(ErrorEval.VALUE_INVALID);
                 }
                 return d;
             }
-            if (ve is BoolEval boolEval)
+            if(ve is BoolEval boolEval)
             {
                 // in the context of OFFSet, bools resolve to 0 and 1.
-                if (boolEval.BooleanValue)
+                if(boolEval.BooleanValue)
                 {
                     return 1;
                 }

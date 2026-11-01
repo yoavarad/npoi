@@ -121,5 +121,3 @@ namespace NPOI.HSSF.Record
         }
     }
 }
-
-

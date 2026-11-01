@@ -17,14 +17,14 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-
     using NPOI.HSSF;
     using NPOI.SS.Formula;
-    using TestCases.SS.Formula;
-    using TestCases.HSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF;
+    using TestCases.SS.Formula;
 
     /**
      * Tests Setting and Evaluating user-defined functions in HSSF
@@ -35,7 +35,7 @@ namespace TestCases.HSSF.UserModel
         //public TestHSSFExternalFunctions()
         //    : base(HSSFITestDataProvider.Instance, "atp.xls")
         //{
-            
+
         //}
         /* This test is a copy of BaseTestExternalFunctions.BaseTestInvokeATP(String testFile)
          * If we made this test class derived from BaseTestExternalFunctions, 

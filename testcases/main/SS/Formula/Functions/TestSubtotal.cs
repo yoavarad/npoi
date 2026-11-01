@@ -17,14 +17,15 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
-    using NPOI.SS.Formula;
 
 
 
@@ -479,7 +480,7 @@ namespace TestCases.SS.Formula.Functions
             IFormulaEvaluator fe = wb.GetCreationHelper().CreateFormulaEvaluator();
             ISheet sh = wb.CreateSheet();
             ICell a3 = sh.CreateRow(3).CreateCell(1);
-            
+
             a3.CellFormula = ("SUBTOTAL(0,B2:B3)");
             fe.EvaluateAll();
             ClassicAssert.AreEqual(FormulaError.VALUE.Code, a3.ErrorCellValue);

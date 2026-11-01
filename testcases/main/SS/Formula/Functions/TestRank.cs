@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -19,7 +19,8 @@
 
 using NPOI.HSSF.UserModel;
 using NPOI.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using TestCases.HSSF;
 
 namespace TestCases.SS.Formula.Functions
@@ -44,7 +45,7 @@ namespace TestCases.SS.Formula.Functions
             ClassicAssert.AreEqual(5.0, fe.Evaluate(ex1cell2).NumberValue);
 
             HSSFSheet example2 = (HSSFSheet)wb.GetSheet("Example 2");
-            for (int rownum = 1; rownum <= 10; rownum++)
+            for(int rownum = 1; rownum <= 10; rownum++)
             {
                 HSSFCell cell = (HSSFCell)example2.GetRow(rownum).GetCell(2);
                 double cachedResult = cell.NumericCellValue; //cached formula result
@@ -52,7 +53,7 @@ namespace TestCases.SS.Formula.Functions
             }
 
             HSSFSheet example3 = (HSSFSheet)wb.GetSheet("Example 3");
-            for (int rownum = 1; rownum <= 10; rownum++)
+            for(int rownum = 1; rownum <= 10; rownum++)
             {
                 HSSFCell cellD = (HSSFCell)example3.GetRow(rownum).GetCell(3);
                 double cachedResultD = cellD.NumericCellValue; //cached formula result

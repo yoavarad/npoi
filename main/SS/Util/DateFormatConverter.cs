@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using NPOI.Util;
 
 namespace NPOI.SS.Util
 {
@@ -56,20 +56,20 @@ namespace NPOI.SS.Util
 
             public string GetNextToken()
             {
-                if (pos >= format.Length)
+                if(pos >= format.Length)
                 {
                     return null;
                 }
                 int subStart = pos;
                 char curChar = format[pos];
                 ++pos;
-                if (curChar == '\'')
+                if(curChar == '\'')
                 {
-                    while ((pos < format.Length) && ((curChar = format[pos]) != '\''))
+                    while((pos < format.Length) && ((curChar = format[pos]) != '\''))
                     {
                         ++pos;
                     }
-                    if (pos < format.Length)
+                    if(pos < format.Length)
                     {
                         ++pos;
                     }
@@ -77,7 +77,7 @@ namespace NPOI.SS.Util
                 else
                 {
                     char activeChar = curChar;
-                    while ((pos < format.Length) && ((curChar = format[pos])) == activeChar)
+                    while((pos < format.Length) && ((curChar = format[pos])) == activeChar)
                     {
                         ++pos;
                     }
@@ -91,7 +91,7 @@ namespace NPOI.SS.Util
 
                 DateFormatTokenizer tokenizer = new DateFormatTokenizer(format);
                 string token;
-                while ((token = tokenizer.GetNextToken()) != null)
+                while((token = tokenizer.GetNextToken()) != null)
                 {
                     result.Add(token);
                 }
@@ -105,9 +105,9 @@ namespace NPOI.SS.Util
 
                 DateFormatTokenizer tokenizer = new DateFormatTokenizer(format);
                 string token;
-                while ((token = tokenizer.GetNextToken()) != null)
+                while((token = tokenizer.GetNextToken()) != null)
                 {
-                    if (result.Length > 0)
+                    if(result.Length > 0)
                     {
                         result.Append(", ");
                     }
@@ -340,13 +340,13 @@ namespace NPOI.SS.Util
         {
             string localeString = locale.ToString().ToLower();
             string result = null;
-            if (!localePrefixes.TryGetValue(localeString, out string prefix))
+            if(!localePrefixes.TryGetValue(localeString, out string prefix))
             {
                 string name = localeString.IndexOf('-') > 0
                     ? localeString.Substring(0, localeString.IndexOf('-'))
                     : localeString;
 
-                if (!localePrefixes.TryGetValue(name, out string localePrefix))
+                if(!localePrefixes.TryGetValue(name, out string localePrefix))
                 {
                     CultureInfo parentLocale = CultureInfo.GetCultureInfo(name);
                     logger.Log(POILogger.ERROR, "Unable to find prefix for " + locale + "(" + locale.DisplayName + ") or "
@@ -379,23 +379,24 @@ namespace NPOI.SS.Util
             result.Append(GetPrefixForLocale(locale));
             DateFormatTokenizer tokenizer = new DateFormatTokenizer(format);
             string token;
-            while ((token = tokenizer.GetNextToken()) != null)
+            while((token = tokenizer.GetNextToken()) != null)
             {
-                if (token.StartsWith('\''))
+                if(token.StartsWith('\''))
                 {
                     result.Append(token.Replace("'", "\""));
                 }
-                else if (!char.IsLetter(token[0]))
+                else if(!char.IsLetter(token[0]))
                 {
                     result.Append(token);
                 }
                 else
                 {
                     // It's a code, translate it if necessary
-                    if (!tokenConversions.TryGetValue(token, out string mappedToken))
+                    if(!tokenConversions.TryGetValue(token, out string mappedToken))
                     {
                         result.Append(token);
-                    } else
+                    }
+                    else
                     {
                         result.Append(mappedToken);
                     }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -45,10 +45,10 @@ namespace NPOI.POIFS.FileSystem
             // Process the excludes
             this.excludes = new List<String>();
             this.childExcludes = new Dictionary<String, List<String>>();
-            foreach (String excl in excludes)
+            foreach(String excl in excludes)
             {
                 int splitAt = excl.IndexOf('/');
-                if (splitAt == -1)
+                if(splitAt == -1)
                 {
                     // Applies to us
                     this.excludes.Add(excl);
@@ -58,7 +58,7 @@ namespace NPOI.POIFS.FileSystem
                     // Applies to a child
                     String child = excl.Substring(0, splitAt);
                     String childExcl = excl.Substring(splitAt + 1);
-                    if (!this.childExcludes.TryGetValue(child, out List<String> value))
+                    if(!this.childExcludes.TryGetValue(child, out List<String> value))
                     {
                         value = new List<String>();
                         this.childExcludes.Add(child, value);
@@ -80,9 +80,9 @@ namespace NPOI.POIFS.FileSystem
             get
             {
                 List<String> names = new List<String>();
-                foreach (String name in directory.EntryNames)
+                foreach(String name in directory.EntryNames)
                 {
-                    if (!excludes.Contains(name))
+                    if(!excludes.Contains(name))
                     {
                         names.Add(name);
                     }
@@ -97,7 +97,7 @@ namespace NPOI.POIFS.FileSystem
         }
         public bool HasEntry(String name)
         {
-            if (excludes.Contains(name))
+            if(excludes.Contains(name))
             {
                 return false;
             }
@@ -108,9 +108,9 @@ namespace NPOI.POIFS.FileSystem
             get
             {
                 int size = directory.EntryCount;
-                foreach (String excl in excludes)
+                foreach(String excl in excludes)
                 {
-                    if (directory.HasEntry(excl))
+                    if(directory.HasEntry(excl))
                     {
                         size--;
                     }
@@ -121,11 +121,12 @@ namespace NPOI.POIFS.FileSystem
 
         public IEnumerator<Entry> GetEntries()
         {
-            return new FilteringIterator(this); ;
+            return new FilteringIterator(this);
+            ;
         }
         public Entry GetEntry(String name)
         {
-            if (excludes.Contains(name))
+            if(excludes.Contains(name))
             {
                 throw new FileNotFoundException(name);
             }
@@ -136,7 +137,7 @@ namespace NPOI.POIFS.FileSystem
         private Entry WrapEntry(Entry entry)
         {
             String name = entry.Name;
-            if (childExcludes.TryGetValue(name, out List<string> value) && entry is DirectoryEntry directoryEntry)
+            if(childExcludes.TryGetValue(name, out List<string> value) && entry is DirectoryEntry directoryEntry)
             {
                 return new FilteringDirectoryNode(directoryEntry, value);
             }
@@ -218,7 +219,7 @@ namespace NPOI.POIFS.FileSystem
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new FilteringIterator(this); 
+            return new FilteringIterator(this);
         }
 
         #endregion
@@ -289,10 +290,10 @@ namespace NPOI.POIFS.FileSystem
             {
                 next = null;
                 Entry e;
-                while (parent.MoveNext())
+                while(parent.MoveNext())
                 {
                     e = parent.Current;
-                    if (!filtering.excludes.Contains(e.Name))
+                    if(!filtering.excludes.Contains(e.Name))
                     {
                         next = filtering.WrapEntry(e);
                         break;
@@ -310,6 +311,6 @@ namespace NPOI.POIFS.FileSystem
             #endregion
         }
 
-        
+
     }
 }

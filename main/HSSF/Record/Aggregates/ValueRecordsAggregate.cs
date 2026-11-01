@@ -20,12 +20,12 @@
 namespace NPOI.HSSF.Record.Aggregates
 {
 
-    using System;
-    using System.Collections;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.SS.Formula;
-    using NPOI.HSSF.Model;
     using NPOI.SS.Formula.PTG;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     /**
@@ -65,30 +65,33 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             int column = cell.Column;
             int row = cell.Row;
-            if (row >= records.Length)
+            if(row >= records.Length)
             {
                 CellValueRecordInterface[][] oldRecords = records;
                 int newSize = oldRecords.Length * 2;
-                if (newSize < row + 1) newSize = row + 1;
+                if(newSize < row + 1)
+                    newSize = row + 1;
                 records = new CellValueRecordInterface[newSize][];
                 Array.Copy(oldRecords, 0, records, 0, oldRecords.Length);
             }
 
             object objRowCells = records[row];
-            if (objRowCells == null)
+            if(objRowCells == null)
             {
                 int newSize = column + 1;
-                if (newSize < 10) newSize = 10;
+                if(newSize < 10)
+                    newSize = 10;
                 objRowCells = new CellValueRecordInterface[newSize];
                 records[row] = (CellValueRecordInterface[]) objRowCells;
             }
 
             CellValueRecordInterface[] rowCells = (CellValueRecordInterface[]) objRowCells;
-            if (column >= rowCells.Length)
+            if(column >= rowCells.Length)
             {
                 CellValueRecordInterface[] oldRowCells = rowCells;
                 int newSize = oldRowCells.Length * 2;
-                if (newSize < column + 1) newSize = column + 1;
+                if(newSize < column + 1)
+                    newSize = column + 1;
                 // if(newSize>257) newSize=257; // activate?
                 rowCells = new CellValueRecordInterface[newSize];
                 Array.Copy(oldRowCells, 0, rowCells, 0, oldRowCells.Length);
@@ -97,12 +100,12 @@ namespace NPOI.HSSF.Record.Aggregates
 
             rowCells[column] = cell;
 
-            if ((column < firstcell) || (firstcell == -1))
+            if((column < firstcell) || (firstcell == -1))
             {
                 firstcell = column;
             }
 
-            if ((column > lastcell) || (lastcell == -1))
+            if((column > lastcell) || (lastcell == -1))
             {
                 lastcell = column;
             }
@@ -110,25 +113,25 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public void RemoveCell(CellValueRecordInterface cell)
         {
-            if (cell == null)
+            if(cell == null)
             {
                 throw new ArgumentException("cell must not be null");
             }
 
             int row = cell.Row;
-            if (row >= records.Length)
+            if(row >= records.Length)
             {
                 throw new Exception("cell row is out of range");
             }
 
             CellValueRecordInterface[] rowCells = records[row];
-            if (rowCells == null)
+            if(rowCells == null)
             {
                 throw new Exception("cell row is already empty");
             }
 
             int column = cell.Column;
-            if (column >= rowCells.Length)
+            if(column >= rowCells.Length)
             {
                 throw new Exception("cell column is out of range");
             }
@@ -139,14 +142,14 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public void RemoveAllCellsValuesForRow(int rowIndex)
         {
-            if (rowIndex < 0 || rowIndex > MAX_ROW_INDEX)
+            if(rowIndex < 0 || rowIndex > MAX_ROW_INDEX)
             {
                 throw new ArgumentException("Specified rowIndex " + rowIndex
                                                                   + " is outside the allowable range (0.." +
                                                                   MAX_ROW_INDEX + ")");
             }
 
-            if (rowIndex >= records.Length)
+            if(rowIndex >= records.Length)
             {
                 // this can happen when the client code has created a row,
                 // and then removes/replaces it before adding any cells. (see bug 46312)
@@ -161,13 +164,14 @@ namespace NPOI.HSSF.Record.Aggregates
             get
             {
                 int count = 0;
-                for (int r = 0; r < records.Length; r++)
+                for(int r = 0; r < records.Length; r++)
                 {
                     CellValueRecordInterface[] rowCells = records[r];
-                    if (rowCells != null)
-                        for (short c = 0; c < rowCells.Length; c++)
+                    if(rowCells != null)
+                        for(short c = 0; c < rowCells.Length; c++)
                         {
-                            if (rowCells[c] != null) count++;
+                            if(rowCells[c] != null)
+                                count++;
                         }
                 }
 
@@ -187,7 +191,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public void AddMultipleBlanks(MulBlankRecord mbr)
         {
-            for (int j = 0; j < mbr.NumColumns; j++)
+            for(int j = 0; j < mbr.NumColumns; j++)
             {
                 BlankRecord br = new BlankRecord();
 
@@ -202,7 +206,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
 
             short[] xfs = new short[nBlank];
-            for (int i = 0; i < xfs.Length; i++)
+            for(int i = 0; i < xfs.Length; i++)
             {
                 xfs[i] = ((BlankRecord) cellValues[startIx + i]).XFIndex;
             }
@@ -213,12 +217,12 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public void Construct(CellValueRecordInterface rec, RecordStream rs, SharedValueManager sfh)
         {
-            if (rec is FormulaRecord formulaRec)
+            if(rec is FormulaRecord formulaRec)
             {
                 // read optional cached text value
                 StringRecord cachedText = null;
                 Type nextClass = rs.PeekNextClass();
-                if (nextClass == typeof(StringRecord))
+                if(nextClass == typeof(StringRecord))
                 {
                     cachedText = (StringRecord) rs.GetNext();
                 }
@@ -262,13 +266,13 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             ValueEnumerator itr = new ValueEnumerator(ref records, startRow, endRow);
             int size = 0;
-            while (itr.MoveNext())
+            while(itr.MoveNext())
             {
                 CellValueRecordInterface cell = (CellValueRecordInterface) itr.Current;
                 int row = cell.Row;
-                if (row > endRow)
+                if(row > endRow)
                     break;
-                if ((row >= startRow) && (row <= endRow))
+                if((row >= startRow) && (row <= endRow))
                     size += ((RecordBase) cell).RecordSize;
             }
 
@@ -278,13 +282,15 @@ namespace NPOI.HSSF.Record.Aggregates
         /** Returns true if the row has cells attached to it */
         public bool RowHasCells(int row)
         {
-            if (row > records.Length - 1) //previously this said row > records.Length which means if 
+            if(row > records.Length - 1) //previously this said row > records.Length which means if 
                 return false; // if records.Length == 60 and I pass "60" here I Get array out of bounds
             CellValueRecordInterface[] rowCells = records[row]; //because a 60 Length array has the last index = 59
-            if (rowCells == null) return false;
-            for (int col = 0; col < rowCells.Length; col++)
+            if(rowCells == null)
+                return false;
+            for(int col = 0; col < rowCells.Length; col++)
             {
-                if (rowCells[col] != null) return true;
+                if(rowCells[col] != null)
+                    return true;
             }
 
             return false;
@@ -292,24 +298,24 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public void UpdateFormulasAfterRowShift(FormulaShifter shifter, int currentExternSheetIndex)
         {
-            for (int i = 0; i < records.Length; i++)
+            for(int i = 0; i < records.Length; i++)
             {
                 CellValueRecordInterface[] rowCells = records[i];
-                if (rowCells == null)
+                if(rowCells == null)
                 {
                     continue;
                 }
 
-                for (int j = 0; j < rowCells.Length; j++)
+                for(int j = 0; j < rowCells.Length; j++)
                 {
                     CellValueRecordInterface cell = rowCells[j];
-                    if (cell is FormulaRecordAggregate fra)
+                    if(cell is FormulaRecordAggregate fra)
                     {
                         Ptg[] ptgs = fra.FormulaTokens; // needs clone() inside this getter?
                         Ptg[] ptgs2 = fra.FormulaRecord
                             .ParsedExpression; // needs clone() inside this getter?
 
-                        if (shifter.AdjustFormula(ptgs, currentExternSheetIndex))
+                        if(shifter.AdjustFormula(ptgs, currentExternSheetIndex))
                         {
                             fra.SetParsedExpression(ptgs);
                         }
@@ -322,26 +328,26 @@ namespace NPOI.HSSF.Record.Aggregates
         {
 
             CellValueRecordInterface[] rowCells = records[rowIndex];
-            if (rowCells == null)
+            if(rowCells == null)
             {
                 throw new ArgumentException("Row [" + rowIndex + "] is empty");
             }
 
-            for (int i = 0; i < rowCells.Length; i++)
+            for(int i = 0; i < rowCells.Length; i++)
             {
                 RecordBase cvr = (RecordBase) rowCells[i];
-                if (cvr == null)
+                if(cvr == null)
                 {
                     continue;
                 }
 
                 int nBlank = CountBlanks(rowCells, i);
-                if (nBlank > 1)
+                if(nBlank > 1)
                 {
                     rv.VisitRecord(CreateMBR(rowCells, i, nBlank));
                     i += nBlank - 1;
                 }
-                else if (cvr is RecordAggregate agg)
+                else if(cvr is RecordAggregate agg)
                 {
                     agg.VisitContainedRecords(rv);
                 }
@@ -355,10 +361,10 @@ namespace NPOI.HSSF.Record.Aggregates
         static int CountBlanks(CellValueRecordInterface[] rowCellValues, int startIx)
         {
             int i = startIx;
-            while (i < rowCellValues.Length)
+            while(i < rowCellValues.Length)
             {
                 CellValueRecordInterface cvr = rowCellValues[i];
-                if (cvr is not BlankRecord)
+                if(cvr is not BlankRecord)
                 {
                     break;
                 }
@@ -375,10 +381,10 @@ namespace NPOI.HSSF.Record.Aggregates
             ValueEnumerator itr = new ValueEnumerator(ref records, row, row);
             int pos = offset;
 
-            while (itr.MoveNext())
+            while(itr.MoveNext())
             {
                 CellValueRecordInterface cell = (CellValueRecordInterface) itr.Current;
-                if (cell.Row != row)
+                if(cell.Row != row)
                     break;
                 pos += ((RecordBase) cell).Serialize(pos, data);
             }
@@ -445,20 +451,21 @@ namespace NPOI.HSSF.Record.Aggregates
             private void FindNext()
             {
                 nextColumn++;
-                for (; nextRow <= lastRow; nextRow++)
+                for(; nextRow <= lastRow; nextRow++)
                 {
                     //previously this threw array out of bounds...
                     CellValueRecordInterface[] rowCells = (nextRow < records.Length) ? records[nextRow] : null;
-                    if (rowCells == null)
+                    if(rowCells == null)
                     {
                         // This row is empty
                         nextColumn = 0;
                         continue;
                     }
 
-                    for (; nextColumn < rowCells.Length; nextColumn++)
+                    for(; nextColumn < rowCells.Length; nextColumn++)
                     {
-                        if (rowCells[nextColumn] != null) return;
+                        if(rowCells[nextColumn] != null)
+                            return;
                     }
 
                     nextColumn = 0;

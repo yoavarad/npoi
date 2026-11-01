@@ -1,11 +1,11 @@
-﻿
+
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using NPOI.OpenXml4Net.Util;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -53,32 +53,32 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Stylesheet Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Stylesheet ctObj = new CT_Stylesheet();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "numFmts")
+                if(childNode.LocalName == "numFmts")
                     ctObj.numFmts = CT_NumFmts.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fonts")
+                else if(childNode.LocalName == "fonts")
                     ctObj.fonts = CT_Fonts.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fills")
+                else if(childNode.LocalName == "fills")
                     ctObj.fills = CT_Fills.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "borders")
+                else if(childNode.LocalName == "borders")
                     ctObj.borders = CT_Borders.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellStyleXfs")
+                else if(childNode.LocalName == "cellStyleXfs")
                     ctObj.cellStyleXfs = CT_CellStyleXfs.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellXfs")
+                else if(childNode.LocalName == "cellXfs")
                     ctObj.cellXfs = CT_CellXfs.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cellStyles")
+                else if(childNode.LocalName == "cellStyles")
                     ctObj.cellStyles = CT_CellStyles.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dxfs")
+                else if(childNode.LocalName == "dxfs")
                     ctObj.dxfs = CT_Dxfs.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tableStyles")
+                else if(childNode.LocalName == "tableStyles")
                     ctObj.tableStyles = CT_TableStyles.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "colors")
+                else if(childNode.LocalName == "colors")
                     ctObj.colors = CT_Colors.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -92,27 +92,27 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.Write("<styleSheet xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"");
             sw.Write(" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" mc:Ignorable=\"x14ac x16r2 xr\" xmlns:x14ac=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac\" xmlns:x16r2=\"http://schemas.microsoft.com/office/spreadsheetml/2015/02/main\" xmlns:xr=\"http://schemas.microsoft.com/office/spreadsheetml/2014/revision\"");
             sw.Write('>');
-            if (this.numFmts != null)
+            if(this.numFmts != null)
                 this.numFmts.Write(sw, "numFmts");
-            if (this.fonts != null)
+            if(this.fonts != null)
                 this.fonts.Write(sw, "fonts");
-            if (this.fills != null)
+            if(this.fills != null)
                 this.fills.Write(sw, "fills");
-            if (this.borders != null)
+            if(this.borders != null)
                 this.borders.Write(sw, "borders");
-            if (this.cellStyleXfs != null)
+            if(this.cellStyleXfs != null)
                 this.cellStyleXfs.Write(sw, "cellStyleXfs");
-            if (this.cellXfs != null)
+            if(this.cellXfs != null)
                 this.cellXfs.Write(sw, "cellXfs");
-            if (this.cellStyles != null)
+            if(this.cellStyles != null)
                 this.cellStyles.Write(sw, "cellStyles");
-            if (this.dxfs != null)
+            if(this.dxfs != null)
                 this.dxfs.Write(sw, "dxfs");
-            if (this.tableStyles != null)
+            if(this.tableStyles != null)
                 this.tableStyles.Write(sw, "tableStyles");
-            if (this.colors != null)
+            if(this.colors != null)
                 this.colors.Write(sw, "colors");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.Write("</styleSheet>");
         }
@@ -281,7 +281,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     {
         private ST_FontScheme valField;
 
-    
+
         [XmlAttribute]
         public ST_FontScheme val
         {
@@ -297,11 +297,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_FontScheme Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FontScheme ctObj = new CT_FontScheme();
-            if (node.Attributes["val"] != null)
-                ctObj.val = (ST_FontScheme)Enum.Parse(typeof(ST_FontScheme), node.Attributes["val"].Value);
+            if(node.Attributes["val"] != null)
+                ctObj.val = (ST_FontScheme) Enum.Parse(typeof(ST_FontScheme), node.Attributes["val"].Value);
             return ctObj;
         }
 
@@ -328,7 +328,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_FontName Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FontName ctObj = new CT_FontName();
             ctObj.val = XmlHelper.ReadString(node.Attributes["val"]);
@@ -366,7 +366,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private double valField;
         public static CT_FontSize Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_FontSize ctObj = new CT_FontSize();
             ctObj.val = XmlHelper.ReadDouble(node.Attributes["val"]);
@@ -403,13 +403,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     public enum ST_FontScheme
     {
-    
+
         none = 1,
 
-    
+
         major = 2,
 
-    
+
         minor = 3,
     }
 
@@ -428,11 +428,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_UnderlineProperty Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_UnderlineProperty ctObj = new CT_UnderlineProperty();
-            if (node.Attributes["val"] != null)
-                ctObj.val = (ST_UnderlineValues)Enum.Parse(typeof(ST_UnderlineValues), node.Attributes["val"].Value);
+            if(node.Attributes["val"] != null)
+                ctObj.val = (ST_UnderlineValues) Enum.Parse(typeof(ST_UnderlineValues), node.Attributes["val"].Value);
             return ctObj;
         }
 
@@ -454,7 +454,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             get
             {
-                return  (null == valField) ? ST_UnderlineValues.single : (ST_UnderlineValues)this.valField;
+                return (null == valField) ? ST_UnderlineValues.single : (ST_UnderlineValues) this.valField;
             }
             set
             {
@@ -472,20 +472,20 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     public enum ST_UnderlineValues
     {
-    
+
         none,
 
-    
+
         single,
 
-    
+
         [XmlEnum("double")]
         @double,
 
-    
+
         singleAccounting,
 
-    
+
         doubleAccounting,
 
     }
@@ -510,11 +510,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_VerticalAlignFontProperty Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_VerticalAlignFontProperty ctObj = new CT_VerticalAlignFontProperty();
-            if (node.Attributes["val"] != null)
-                ctObj.val = (ST_VerticalAlignRun)Enum.Parse(typeof(ST_VerticalAlignRun), node.Attributes["val"].Value);
+            if(node.Attributes["val"] != null)
+                ctObj.val = (ST_VerticalAlignRun) Enum.Parse(typeof(ST_VerticalAlignRun), node.Attributes["val"].Value);
             return ctObj;
         }
 
@@ -534,13 +534,13 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     [XmlType(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
     public enum ST_VerticalAlignRun
     {
-    
+
         baseline,
 
-    
+
         superscript,
 
-    
+
         subscript,
     }
 
@@ -556,10 +556,10 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_BooleanProperty Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_BooleanProperty ctObj = new CT_BooleanProperty();
-            if (node.Attributes["val"]!=null)
+            if(node.Attributes["val"]!=null)
                 ctObj.val = XmlHelper.ReadBool(node.Attributes["val"]);
             return ctObj;
         }
@@ -612,7 +612,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_IntProperty Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_IntProperty ctObj = new CT_IntProperty();
             ctObj.val = XmlHelper.ReadInt(node.Attributes["val"]);

@@ -16,15 +16,14 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
-    using System;
-
-    using System.Collections.Generic;
+    using Cysharp.Text;
     using NPOI.OpenXml4Net.OPC;
-    using System.IO;
-    using NPOI.Util;
-    using System.Text; 
-using Cysharp.Text;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     /**
      * Parent of XWPF headers and footers
@@ -41,7 +40,7 @@ using Cysharp.Text;
 
         public XWPFHeaderFooter(XWPFDocument doc, CT_HdrFtr hdrFtr)
         {
-            if (doc == null)
+            if(doc == null)
             {
                 throw new NullReferenceException();
             }
@@ -58,13 +57,13 @@ using Cysharp.Text;
             ReadHdrFtr();
         }
 
-        public XWPFHeaderFooter(POIXMLDocumentPart parent, PackagePart part) 
+        public XWPFHeaderFooter(POIXMLDocumentPart parent, PackagePart part)
             : base(parent, part)
         {
             ;
-            this.document = (XWPFDocument)GetParent();
+            this.document = (XWPFDocument) GetParent();
 
-            if (this.document == null)
+            if(this.document == null)
             {
                 throw new NullReferenceException();
             }
@@ -78,9 +77,9 @@ using Cysharp.Text;
         }
         internal override void OnDocumentRead()
         {
-            foreach (POIXMLDocumentPart poixmlDocumentPart in GetRelations())
+            foreach(POIXMLDocumentPart poixmlDocumentPart in GetRelations())
             {
-                if (poixmlDocumentPart is XWPFPictureData xwpfPicData)
+                if(poixmlDocumentPart is XWPFPictureData xwpfPicData)
                 {
                     pictures.Add(xwpfPicData);
                     document.RegisterPackagePictureData(xwpfPicData);
@@ -146,12 +145,12 @@ using Cysharp.Text;
             {
                 using var t = ZString.CreateStringBuilder();
 
-                for (int i = 0; i < paragraphs.Count; i++)
+                for(int i = 0; i < paragraphs.Count; i++)
                 {
-                    if (!paragraphs[(i)].IsEmpty)
+                    if(!paragraphs[(i)].IsEmpty)
                     {
                         String text = paragraphs[i].Text;
-                        if (text != null && text.Length > 0)
+                        if(text != null && text.Length > 0)
                         {
                             t.Append(text);
                             t.Append('\n');
@@ -160,18 +159,18 @@ using Cysharp.Text;
                 }
 
                 IList<XWPFTable> tables = this.Tables;
-                for (int i = 0; i < tables.Count; i++)
+                for(int i = 0; i < tables.Count; i++)
                 {
                     String text = tables[(i)].Text;
-                    if (text != null && text.Length > 0)
+                    if(text != null && text.Length > 0)
                     {
                         t.Append(text);
                         t.Append('\n');
                     }
                 }
-                foreach (IBodyElement bodyElement in BodyElements)
+                foreach(IBodyElement bodyElement in BodyElements)
                 {
-                    if (bodyElement is XWPFSDT xwpfsdt)
+                    if(bodyElement is XWPFSDT xwpfsdt)
                     {
                         t.Append(xwpfsdt.Content.Text + '\n');
                     }
@@ -197,11 +196,11 @@ using Cysharp.Text;
          */
         public XWPFTable GetTable(CT_Tbl ctTable)
         {
-            foreach (XWPFTable table in tables)
+            foreach(XWPFTable table in tables)
             {
-                if (table == null)
+                if(table == null)
                     return null;
-                if (table.GetCTTbl().Equals(ctTable))
+                if(table.GetCTTbl().Equals(ctTable))
                     return table;
             }
             return null;
@@ -217,9 +216,9 @@ using Cysharp.Text;
          */
         public XWPFParagraph GetParagraph(CT_P p)
         {
-            foreach (XWPFParagraph paragraph in paragraphs)
+            foreach(XWPFParagraph paragraph in paragraphs)
             {
-                if (paragraph.GetCTP().Equals(p))
+                if(paragraph.GetCTP().Equals(p))
                     return paragraph;
             }
             return null;
@@ -231,7 +230,7 @@ using Cysharp.Text;
          */
         public XWPFParagraph GetParagraphArray(int pos)
         {
-            if (pos >= 0 && pos < paragraphs.Count)
+            if(pos >= 0 && pos < paragraphs.Count)
             {
                 return paragraphs[(pos)];
             }
@@ -281,11 +280,11 @@ using Cysharp.Text;
             XWPFPictureData xwpfPicData = document.FindPackagePictureData(pictureData, format);
             POIXMLRelation relDesc = XWPFPictureData.RELATIONS[format];
 
-            if (xwpfPicData == null)
+            if(xwpfPicData == null)
             {
                 /* Part doesn't exist, create a new one */
                 int idx = document.GetNextPicNameNumber(format);
-                xwpfPicData = (XWPFPictureData)CreateRelationship(relDesc, XWPFFactory.GetInstance(), idx);
+                xwpfPicData = (XWPFPictureData) CreateRelationship(relDesc, XWPFFactory.GetInstance(), idx);
                 /* write bytes to new part */
                 PackagePart picDataPart = xwpfPicData.GetPackagePart();
                 Stream out1 = null;
@@ -294,7 +293,7 @@ using Cysharp.Text;
                     out1 = picDataPart.GetOutputStream();
                     out1.Write(pictureData, 0, pictureData.Length);
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new POIXMLException(e);
                 }
@@ -302,10 +301,10 @@ using Cysharp.Text;
                 {
                     try
                     {
-                        if (out1 != null)
+                        if(out1 != null)
                             out1.Close();
                     }
-                    catch (IOException)
+                    catch(IOException)
                     {
                         // ignore
                     }
@@ -315,7 +314,7 @@ using Cysharp.Text;
                 pictures.Add(xwpfPicData);
                 return GetRelationId(xwpfPicData);
             }
-            else if (!GetRelations().Contains(xwpfPicData))
+            else if(!GetRelations().Contains(xwpfPicData))
             {
                 /*
                  * Part already existed, but was not related so far. Create
@@ -360,7 +359,7 @@ using Cysharp.Text;
         public XWPFPictureData GetPictureDataByID(String blipID)
         {
             POIXMLDocumentPart relatedPart = GetRelationById(blipID);
-            if (relatedPart != null && relatedPart is XWPFPictureData data)
+            if(relatedPart != null && relatedPart is XWPFPictureData data)
             {
                 return data;
             }
@@ -569,7 +568,7 @@ using Cysharp.Text;
          */
         public XWPFTable GetTableArray(int pos)
         {
-            if (pos >= 0 && pos < tables.Count)
+            if(pos >= 0 && pos < tables.Count)
             {
                 return tables[(pos)];
             }
@@ -585,10 +584,10 @@ using Cysharp.Text;
         {
             bodyElements.Insert(pos, table);
             int i;
-            for (i = 0; i < headerFooter.GetTblList().Count; i++)
+            for(i = 0; i < headerFooter.GetTblList().Count; i++)
             {
                 CT_Tbl tbl = headerFooter.GetTblArray(i);
-                if (tbl == table.GetCTTbl())
+                if(tbl == table.GetCTTbl())
                 {
                     break;
                 }
@@ -603,15 +602,15 @@ using Cysharp.Text;
             tables = new List<XWPFTable>();
             // parse the document with cursor and add
             // the XmlObject to its lists
-            foreach (object o in headerFooter.Items)
+            foreach(object o in headerFooter.Items)
             {
-                if (o is CT_P ctP)
+                if(o is CT_P ctP)
                 {
                     XWPFParagraph p = new XWPFParagraph(ctP, this);
                     paragraphs.Add(p);
                     bodyElements.Add(p);
                 }
-                if (o is CT_Tbl tbl)
+                if(o is CT_Tbl tbl)
                 {
                     XWPFTable t = new XWPFTable(tbl, this);
                     tables.Add(t);
@@ -677,13 +676,13 @@ using Cysharp.Text;
         }
         public XWPFDocument GetXWPFDocument()
         {
-            if (document != null)
+            if(document != null)
             {
                 return document;
             }
             else
             {
-                return (XWPFDocument)GetParent();
+                return (XWPFDocument) GetParent();
             }
         }
 
@@ -724,19 +723,19 @@ using Cysharp.Text;
         protected internal override void PrepareForCommit()
         {
             // must contain at least an empty paragraph
-            if (bodyElements.Count == 0)
+            if(bodyElements.Count == 0)
             {
                 CreateParagraph();
             }
 
             // Cells must contain at least an empty paragraph
-            foreach (XWPFTable tbl in tables)
+            foreach(XWPFTable tbl in tables)
             {
-                foreach (XWPFTableRow row in tbl.tableRows)
+                foreach(XWPFTableRow row in tbl.tableRows)
                 {
-                    foreach (XWPFTableCell cell in row.GetTableCells())
+                    foreach(XWPFTableCell cell in row.GetTableCells())
                     {
-                        if (cell.BodyElements.Count == 0)
+                        if(cell.BodyElements.Count == 0)
                         {
                             cell.AddParagraph();
                         }

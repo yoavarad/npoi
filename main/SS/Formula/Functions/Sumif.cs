@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -41,14 +41,14 @@ namespace NPOI.SS.Formula.Functions
             {
                 aeRange = ConvertRangeArg(arg0);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
             return Eval(srcRowIndex, srcColumnIndex, arg1, aeRange, aeRange);
         }
 
-        public override  ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1,
+        public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1,
                 ValueEval arg2)
         {
             AreaEval aeRange;
@@ -58,7 +58,7 @@ namespace NPOI.SS.Formula.Functions
                 aeRange = ConvertRangeArg(arg0);
                 aeSum = CreateSumRange(arg2, aeRange);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -73,7 +73,7 @@ namespace NPOI.SS.Formula.Functions
             IMatchPredicate mp = Countif.CreateCriteriaPredicate(arg1, srcRowIndex, srcColumnIndex);
 
             // handle empty cells
-            if (mp == null)
+            if(mp == null)
             {
                 return NumberEval.ZERO;
             }
@@ -82,7 +82,7 @@ namespace NPOI.SS.Formula.Functions
                 double result = SumMatchingCells(aeRange, mp, aeSum);
                 return new NumberEval(result);
             }
-            catch (EvaluationException var)
+            catch(EvaluationException var)
             {
                 return var.GetErrorEval();
             }
@@ -96,9 +96,9 @@ namespace NPOI.SS.Formula.Functions
 
             double result = 0.0D;
 
-            for (int r = 0; r < height; r++)
+            for(int r = 0; r < height; r++)
             {
-                for (int c = 0; c < width; c++)
+                for(int c = 0; c < width; c++)
                 {
                     result += Accumulate(aeRange, mp, aeSum, r, c);
                 }
@@ -111,17 +111,17 @@ namespace NPOI.SS.Formula.Functions
         private static double Accumulate(AreaEval aeRange, IMatchPredicate mp, AreaEval aeSum, int relRowIndex,
                 int relColIndex)
         {
-            if (!mp.Matches(aeRange.GetRelativeValue(relRowIndex, relColIndex)))
+            if(!mp.Matches(aeRange.GetRelativeValue(relRowIndex, relColIndex)))
             {
                 return 0.0D;
             }
 
             ValueEval addend = aeSum.GetRelativeValue(relRowIndex, relColIndex);
-            if (addend is NumberEval eval)
+            if(addend is NumberEval eval)
             {
                 return eval.NumberValue;
             }
-            else if (addend is ErrorEval errorEval)
+            else if(addend is ErrorEval errorEval)
             {
                 throw new EvaluationException(errorEval);
             }
@@ -141,11 +141,11 @@ namespace NPOI.SS.Formula.Functions
 
         private static AreaEval CreateSumRange(ValueEval eval, AreaEval aeRange)
         {
-            if (eval is AreaEval areaEval)
+            if(eval is AreaEval areaEval)
             {
                 return areaEval.Offset(0, aeRange.Height - 1, 0, aeRange.Width - 1);
             }
-            if (eval is RefEval refEval)
+            if(eval is RefEval refEval)
             {
                 return refEval.Offset(0, aeRange.Height - 1, 0, aeRange.Width - 1);
             }
@@ -157,12 +157,12 @@ namespace NPOI.SS.Formula.Functions
 
         private static AreaEval ConvertRangeArg(ValueEval eval)
         {
-            if (eval is AreaEval areaEval)
+            if(eval is AreaEval areaEval)
             {
                 return areaEval;
             }
 
-            if (eval is RefEval refEval)
+            if(eval is RefEval refEval)
             {
                 return refEval.Offset(0, 0, 0, 0);
             }

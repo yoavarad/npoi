@@ -16,16 +16,16 @@
 ==================================================================== */
 namespace NPOI
 {
-    using System;
-    using NPOI.POIFS.Common;
-    using NPOI.Util;
-    using NPOI.OpenXml4Net.Exceptions;
-    using System.IO;
-    using NPOI.OpenXml4Net.OPC;
-    using System.Collections.Generic;
     using NPOI.OpenXml4Net;
-    using System.Reflection;
+    using NPOI.OpenXml4Net.Exceptions;
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.POIFS.Common;
     using NPOI.POIFS.FileSystem;
+    using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
 
     public abstract class POIXMLDocument : POIXMLDocumentPart, ICloseable
     {
@@ -72,9 +72,9 @@ namespace NPOI
         {
             try
             {
-                return OPCPackage.Open(path, readOnly ? PackageAccess.READ: PackageAccess.READ_WRITE);
+                return OPCPackage.Open(path, readOnly ? PackageAccess.READ : PackageAccess.READ_WRITE);
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 throw new IOException(e.ToString());
             }
@@ -108,7 +108,7 @@ namespace NPOI
 
             PackagePart[] parts = new PackagePart[partsC.Size];
             int count = 0;
-            foreach (PackageRelationship rel in partsC)
+            foreach(PackageRelationship rel in partsC)
             {
                 parts[count] = GetPackagePart().GetRelatedPart(rel);
                 count++;
@@ -122,13 +122,13 @@ namespace NPOI
          */
         public POIXMLProperties GetProperties()
         {
-            if (properties == null)
+            if(properties == null)
             {
                 try
                 {
                     properties = new POIXMLProperties(pkg);
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     throw new POIXMLException(e);
                 }
@@ -148,7 +148,7 @@ namespace NPOI
             {
                 Read(factory, context);
             }
-            catch (OpenXml4NetException e)
+            catch(OpenXml4NetException e)
             {
                 throw new POIXMLException(e);
             }
@@ -161,9 +161,9 @@ namespace NPOI
          */
         public void Close()
         {
-            if (pkg != null)
+            if(pkg != null)
             {
-                if (pkg.GetPackageAccess() == PackageAccess.READ)
+                if(pkg.GetPackageAccess() == PackageAccess.READ)
                 {
                     pkg.Revert();
                 }
@@ -193,13 +193,13 @@ namespace NPOI
         public void Write(Stream stream)
         {
             OPCPackage pkg = Package;
-            if (pkg == null)
+            if(pkg == null)
             {
                 throw new IOException("Cannot write data, document seems to have been closed already");
             }
-            if (!this.GetProperties().CustomProperties.Contains("Generator"))
+            if(!this.GetProperties().CustomProperties.Contains("Generator"))
                 this.GetProperties().CustomProperties.AddProperty("Generator", "NPOI");
-            if (!this.GetProperties().CustomProperties.Contains("Generator Version"))
+            if(!this.GetProperties().CustomProperties.Contains("Generator Version"))
                 this.GetProperties().CustomProperties.AddProperty("Generator Version", Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
             //force all children to commit their Changes into the underlying OOXML Package
             List<PackagePart> context = new List<PackagePart>();
@@ -213,8 +213,3 @@ namespace NPOI
         }
     }
 }
-
-
-
-
-

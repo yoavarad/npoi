@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -85,8 +85,10 @@ namespace NPOI.XSSF.Binary
 
         public override bool Equals(object o)
         {
-            if(this == o) return true;
-            if(o == null || GetType() != o.GetType()) return false;
+            if(this == o)
+                return true;
+            if(o == null || GetType() != o.GetType())
+                return false;
 
             XSSFHyperlinkRecord that = (XSSFHyperlinkRecord) o;
 
@@ -94,9 +96,12 @@ namespace NPOI.XSSF.Binary
                    ? !cellRangeAddress.Equals(that.cellRangeAddress)
                    : that.cellRangeAddress != null)
                 return false;
-            if(relId != null ? !relId.Equals(that.relId) : that.relId != null) return false;
-            if(location != null ? !location.Equals(that.location) : that.location != null) return false;
-            if(toolTip != null ? !toolTip.Equals(that.toolTip) : that.toolTip != null) return false;
+            if(relId != null ? !relId.Equals(that.relId) : that.relId != null)
+                return false;
+            if(location != null ? !location.Equals(that.location) : that.location != null)
+                return false;
+            if(toolTip != null ? !toolTip.Equals(that.toolTip) : that.toolTip != null)
+                return false;
             return display != null ? display.Equals(that.display) : that.display == null;
         }
 
@@ -122,4 +127,3 @@ namespace NPOI.XSSF.Binary
         }
     }
 }
-

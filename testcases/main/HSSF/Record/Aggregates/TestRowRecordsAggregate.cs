@@ -17,17 +17,18 @@
 
 namespace TestCases.HSSF.Record.Aggregates
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.HSSF.UserModel;
-    using TestCases.HSSF.UserModel;
-    using NPOI.Util;
-    using System.IO;
     using NPOI.SS.Util;
-    using NPOI.HSSF.Model;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using System.Text;
+    using TestCases.HSSF.UserModel;
 
     /**
      * 
@@ -91,20 +92,20 @@ namespace TestCases.HSSF.Record.Aggregates
         {
 
             int result = 0;
-            for (int i = 0; i < recs.Length; i++)
+            for(int i = 0; i < recs.Length; i++)
             {
                 Record rec = recs[i];
-                if (rec.GetType() == shfClass)
+                if(rec.GetType() == shfClass)
                 {
                     result++;
                     Record prevRec = recs[i - 1];
-                    if (!(prevRec is FormulaRecord))
+                    if(!(prevRec is FormulaRecord))
                     {
                         Assert.Fail("Bad record order at index "
                                 + i + ": Formula record expected but got ("
                                 + prevRec.GetType().Name + ")");
                     }
-                    verifySharedFormula((FormulaRecord)prevRec, rec);
+                    verifySharedFormula((FormulaRecord) prevRec, rec);
                 }
             }
             return result;
@@ -133,8 +134,8 @@ namespace TestCases.HSSF.Record.Aggregates
             byte[] dummtydata = Encoding.GetEncoding(1252).GetBytes("dummydata");
             byte[] moredummydata = Encoding.GetEncoding(1252).GetBytes("moredummydata");
             Record[] inRecs = {
-			new RowRecord(0),
-			new NumberRecord(),
+            new RowRecord(0),
+            new NumberRecord(),
             new UnknownRecord(0x5555,dummtydata),
             new ContinueRecord(moredummydata)
 			//new UnknownRecord(0x5555, "dummydata".getBytes()),
@@ -146,9 +147,9 @@ namespace TestCases.HSSF.Record.Aggregates
             {
                 rra = new RowRecordsAggregate(rs, SharedValueManager.CreateEmpty());
             }
-            catch (RuntimeException e)
+            catch(RuntimeException e)
             {
-                if (e.Message.StartsWith("Unexpected record type"))
+                if(e.Message.StartsWith("Unexpected record type"))
                 {
                     Assert.Fail("Identified bug 46280a");
                 }

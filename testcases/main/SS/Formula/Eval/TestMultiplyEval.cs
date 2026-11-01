@@ -18,8 +18,9 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.Formula.Functions;
 
     /**
@@ -34,8 +35,8 @@ namespace TestCases.SS.Formula.Eval
         private static void Confirm(ValueEval arg0, ValueEval arg1, double expectedResult)
         {
             ValueEval[] args = {
-			    arg0, arg1,
-		    };
+                arg0, arg1,
+            };
 
             double result = NumericFunctionInvoker.Invoke(EvalInstances.Multiply, args, 0, 0);
 

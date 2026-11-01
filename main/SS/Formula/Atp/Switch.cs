@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,8 @@ namespace NPOI.SS.Formula.Atp
         }
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length < 3) return ErrorEval.NA;
+            if(args.Length < 3)
+                return ErrorEval.NA;
 
             ValueEval expression;
             try
@@ -28,7 +29,7 @@ namespace NPOI.SS.Formula.Atp
                 return ErrorEval.NA;
             }
 
-            for (int i = 1; i < args.Length; i = i + 2)
+            for(int i = 1; i < args.Length; i = i + 2)
             {
 
                 try
@@ -39,10 +40,10 @@ namespace NPOI.SS.Formula.Atp
 
 
                     ValueEval evaluate = (new EqualEval()).Evaluate(new ValueEval[] { expression, value }, ec.RowIndex, ec.ColumnIndex);
-                    if (evaluate is BoolEval boolEval)
+                    if(evaluate is BoolEval boolEval)
                     {
                         bool booleanValue = boolEval.BooleanValue;
-                        if (booleanValue)
+                        if(booleanValue)
                         {
                             return result;
                         }
@@ -50,12 +51,12 @@ namespace NPOI.SS.Formula.Atp
                     }
 
                 }
-                catch (EvaluationException)
+                catch(EvaluationException)
                 {
                     return ErrorEval.NA;
                 }
 
-                if (i + 2 == args.Length - 1)
+                if(i + 2 == args.Length - 1)
                 {
                     //last value in args is the default one
                     return args[args.Length - 1];

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -67,7 +67,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(number, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -75,30 +75,30 @@ namespace NPOI.SS.Formula.Functions
             Double number1 = OperandResolver.ParseDouble(strText1);
 
             //If this number argument is non numeric, this function returns the #VALUE! error value.
-            if (double.IsNaN(number1))
+            if(double.IsNaN(number1))
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
             //If number < -549,755,813,888 or if number > 549,755,813,887, this function returns the #NUM! error value.
-            if (number1 < MinValue || number1 > MaxValue)
+            if(number1 < MinValue || number1 > MaxValue)
             {
                 return ErrorEval.NUM_ERROR;
             }
 
             int placesNumber = 0;
-            if (number1 < 0)
+            if(number1 < 0)
             {
                 placesNumber = DEFAULT_PLACES_VALUE;
             }
-            else if (places != null)
+            else if(places != null)
             {
                 ValueEval placesValueEval;
                 try
                 {
                     placesValueEval = OperandResolver.GetSingleValue(places, srcRowIndex, srcColumnIndex);
                 }
-                catch (EvaluationException e)
+                catch(EvaluationException e)
                 {
                     return e.GetErrorEval();
                 }
@@ -106,30 +106,30 @@ namespace NPOI.SS.Formula.Functions
                 Double placesNumberDouble = OperandResolver.ParseDouble(placesStr);
 
                 //non numeric value
-                if (double.IsNaN(placesNumberDouble))
+                if(double.IsNaN(placesNumberDouble))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
 
                 //If this argument Contains a decimal value, this function ignores the numbers to the right side of the decimal point.
-                placesNumber = (int)placesNumberDouble;
+                placesNumber = (int) placesNumberDouble;
 
-                if (placesNumber < 0)
+                if(placesNumber < 0)
                 {
                     return ErrorEval.NUM_ERROR;
                 }
             }
 
             String hex = "";
-            if (placesNumber != 0)
+            if(placesNumber != 0)
             {
-                hex = String.Format("{0:X" + placesNumber + "}", (int)number1);
+                hex = String.Format("{0:X" + placesNumber + "}", (int) number1);
             }
             else
             {
-                hex = String.Format("{0:X}", (long)number1);
+                hex = String.Format("{0:X}", (long) number1);
             }
-            if (number1 < 0)
+            if(number1 < 0)
             {
                 hex = "FF" + hex.Substring(2);
             }
@@ -144,11 +144,11 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 1)
+            if(args.Length == 1)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0]);
             }
-            if (args.Length == 2)
+            if(args.Length == 2)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1]);
             }

@@ -19,30 +19,29 @@ using NPOI;
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Collections;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using TestCases.HSSF;
-
-    using NPOI.HSSF.UserModel;
+    using NPOI.HPSF;
+    using NPOI.HSSF;
+    using NPOI.HSSF.Extractor;
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
+    using NPOI.HSSF.Record.Crypto;
+    using NPOI.HSSF.UserModel;
+    using NPOI.POIFS.FileSystem;
+    using NPOI.SS.Formula.PTG;
+    using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NPOI.SS.UserModel;
-    using NPOI.HSSF.Model;
-    using System.Collections.Generic;
-    using NPOI.SS.Formula.PTG;
-    using NPOI.POIFS.FileSystem;
-    using NPOI.HSSF.Extractor;
-    using NPOI.HSSF.Record.Crypto;
-    using NPOI.HSSF;
-    using System.Net;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using SkiaSharp;
-    using NPOI.HPSF;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Text;
+    using TestCases.HSSF;
 
     /**
      * Testcases for bugs entered in bugzilla
@@ -79,7 +78,7 @@ namespace TestCases.HSSF.UserModel
 
         private static void WriteTestOutputFileForViewing(HSSFWorkbook wb, String simpleFileName)
         {
-            if (true)
+            if(true)
             { // set to false to output Test files
                 return;
             }
@@ -89,7 +88,7 @@ namespace TestCases.HSSF.UserModel
             wb.Write(out1);
             out1.Close();
 
-            if (!File.Exists(file))
+            if(!File.Exists(file))
             {
                 throw new Exception("File was not written");
             }
@@ -165,7 +164,7 @@ namespace TestCases.HSSF.UserModel
 
             IRow row = sheet.GetRow(5);
             ICell cell = row.GetCell(3);
-            if (cell == null)
+            if(cell == null)
                 cell = row.CreateCell(3);
 
             // Write Test
@@ -195,7 +194,7 @@ namespace TestCases.HSSF.UserModel
             String tmp2 = null;
             String tmp3 = null;
 
-            for (int i = 0; i < 6000; i++)
+            for(int i = 0; i < 6000; i++)
             {
                 tmp1 = "Test1" + i;
                 tmp2 = "Test2" + i;
@@ -232,16 +231,16 @@ namespace TestCases.HSSF.UserModel
             IRow rw;
             rw = sheet.CreateRow(0);
             //Header row
-            for (int j = 0; j < col_cnt; j++)
+            for(int j = 0; j < col_cnt; j++)
             {
                 ICell cell = rw.CreateCell(j);
                 setCellText(cell, "Col " + (j + 1));
             }
 
-            for (int i = 1; i < rw_cnt; i++)
+            for(int i = 1; i < rw_cnt; i++)
             {
                 rw = sheet.CreateRow(i);
-                for (int j = 0; j < col_cnt; j++)
+                for(int j = 0; j < col_cnt; j++)
                 {
                     ICell cell = rw.CreateCell(j);
                     setCellText(cell, "Row:" + (i + 1) + ",Column:" + (j + 1));
@@ -316,17 +315,17 @@ namespace TestCases.HSSF.UserModel
         {
             HSSFWorkbook wb = OpenSample("24215.xls");
 
-            for (int sheetIndex = 0; sheetIndex < wb.NumberOfSheets; sheetIndex++)
+            for(int sheetIndex = 0; sheetIndex < wb.NumberOfSheets; sheetIndex++)
             {
                 ISheet sheet = wb.GetSheetAt(sheetIndex);
                 int rows = sheet.LastRowNum;
 
-                for (int rowIndex = 0; rowIndex < rows; rowIndex++)
+                for(int rowIndex = 0; rowIndex < rows; rowIndex++)
                 {
                     IRow row = sheet.GetRow(rowIndex);
                     int cells = row.LastCellNum;
 
-                    for (int cellIndex = 0; cellIndex < cells; cellIndex++)
+                    for(int cellIndex = 0; cellIndex < cells; cellIndex++)
                     {
                         row.GetCell(cellIndex);
                     }
@@ -369,14 +368,14 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(2, originalMerged, "2 merged regions");
 
             //        Remove merged regions from clone
-            for (int i = template.NumMergedRegions - 1; i >= 0; i--)
+            for(int i = template.NumMergedRegions - 1; i >= 0; i--)
             {
                 clone.RemoveMergedRegion(i);
             }
 
             ClassicAssert.AreEqual(originalMerged, template.NumMergedRegions, "Original Sheet's Merged Regions were Removed");
             //        Check if template's merged regions are OK
-            if (template.NumMergedRegions > 0)
+            if(template.NumMergedRegions > 0)
             {
                 // fetch the first merged region...EXCEPTION OCCURS HERE
                 template.GetMergedRegion(0);
@@ -404,7 +403,7 @@ namespace TestCases.HSSF.UserModel
             ICell d1 = w.GetSheetAt(0).GetRow(3).GetCell(0);
             ICell d2 = w.GetSheetAt(0).GetRow(3).GetCell(1);
 
-            if (false)
+            if(false)
             {
 #if !HIDE_UNREACHABLE_CODE
                 // THAI code page
@@ -457,7 +456,7 @@ namespace TestCases.HSSF.UserModel
             String ss = cell.RichStringCellValue.String;
             char[] s = ss.ToCharArray();
             StringBuilder sb = new StringBuilder();
-            for (int x = 0; x < s.Length; x++)
+            for(int x = 0; x < s.Length; x++)
             {
                 sb.Append("\\u").Append(StringUtil.ToHexString(s[x]));
             }
@@ -483,11 +482,11 @@ namespace TestCases.HSSF.UserModel
         {
             HSSFWorkbook wb = OpenSample("27852.xls");
 
-            for (int i = 0; i < wb.NumberOfNames; i++)
+            for(int i = 0; i < wb.NumberOfNames; i++)
             {
                 NPOI.SS.UserModel.IName name = wb.GetNameAt(i);
                 //name.NameName();
-                if (name.IsFunctionName)
+                if(name.IsFunctionName)
                 {
                     continue;
                 }
@@ -523,7 +522,7 @@ namespace TestCases.HSSF.UserModel
             {
                 OpenSample("34775.xls");
             }
-            catch (NullReferenceException)
+            catch(NullReferenceException)
             {
                 throw new AssertionException("identified bug 34775");
             }
@@ -577,10 +576,10 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb = new HSSFWorkbook();
             ISheet sheet = wb.CreateSheet();
 
-            for (int i = 1; i < 400; i++)
+            for(int i = 1; i < 400; i++)
             {
                 IRow row = sheet.GetRow(i);
-                if (row != null)
+                if(row != null)
                 {
                     row.GetCell(0);
                 }
@@ -589,10 +588,10 @@ namespace TestCases.HSSF.UserModel
             //now Check on an existing xls file
             wb = OpenSample("Simple.xls");
 
-            for (int i = 1; i < 400; i++)
+            for(int i = 1; i < 400; i++)
             {
                 IRow row = sheet.GetRow(i);
-                if (row != null)
+                if(row != null)
                 {
                     row.GetCell(0);
                 }
@@ -619,10 +618,10 @@ namespace TestCases.HSSF.UserModel
 
             ISheet sheet = wb.GetSheetAt(0);
             int count = 0;
-            for (int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
+            for(int i = sheet.FirstRowNum; i <= sheet.LastRowNum; i++)
             {
                 IRow row = sheet.GetRow(i);
-                if (row != null)
+                if(row != null)
                 {
                     ICell cell = row.GetCell(0);
                     ClassicAssert.AreEqual(CellType.String, cell.CellType);
@@ -726,12 +725,12 @@ namespace TestCases.HSSF.UserModel
 
             ISheet sheet = wb.GetSheetAt(0);
             int rownum = 0;
-            for (IEnumerator it = sheet.GetRowEnumerator(); it.MoveNext(); rownum++)
+            for(IEnumerator it = sheet.GetRowEnumerator(); it.MoveNext(); rownum++)
             {
                 IRow row = (IRow)it.Current;
                 ClassicAssert.AreEqual(rownum, row.RowNum);
                 int cellNum = 0;
-                for (IEnumerator it2 = row.GetEnumerator(); it2.MoveNext(); cellNum++)
+                for(IEnumerator it2 = row.GetEnumerator(); it2.MoveNext(); cellNum++)
                 {
                     ICell cell = (ICell)it2.Current;
                     ClassicAssert.AreEqual(cellNum, cell.ColumnIndex);
@@ -776,7 +775,7 @@ namespace TestCases.HSSF.UserModel
         public void Test38266()
         {
             String[] files = { "Simple.xls", "SimpleMultiCell.xls", "duprich1.xls" };
-            for (int i = 0; i < files.Length; i++)
+            for(int i = 0; i < files.Length; i++)
             {
                 HSSFWorkbook wb = OpenSample(files[i]);
 
@@ -785,7 +784,7 @@ namespace TestCases.HSSF.UserModel
                 ClassicAssert.AreEqual(0, breaks.Length);
 
                 //Add 3 row breaks
-                for (int j = 1; j <= 3; j++)
+                for(int j = 1; j <= 3; j++)
                 {
                     sheet.SetRowBreak(j * 20);
                 }
@@ -900,15 +899,15 @@ namespace TestCases.HSSF.UserModel
             // Formula Value
             IRow r2 = s.GetRow(1);
             ICell c2 = r2.GetCell(1);
-            ClassicAssert.AreEqual(25, (int)c2.NumericCellValue);
+            ClassicAssert.AreEqual(25, (int) c2.NumericCellValue);
 
             try
             {
                 ClassicAssert.AreEqual("CHOOSE(2,A2,A3,A4)", c2.CellFormula);
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
-                if (e.Message.StartsWith("Too few arguments")
+                if(e.Message.StartsWith("Too few arguments")
                         && e.Message.IndexOf("ConcatPtg") > 0)
                 {
                     throw new AssertionException("identified bug 44306");
@@ -930,7 +929,7 @@ namespace TestCases.HSSF.UserModel
             {
                 wb = OpenSample("43251.xls");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new AssertionException("identified bug 43251");
             }
@@ -953,7 +952,7 @@ namespace TestCases.HSSF.UserModel
             {
                 wb = OpenSample("OddStyleRecord.xls");
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 throw new AssertionException("Identified bug 44471");
             }
@@ -999,7 +998,7 @@ namespace TestCases.HSSF.UserModel
             {
                 wb = OpenSample("44593.xls");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new AssertionException("Identified bug 44593");
             }
@@ -1021,7 +1020,7 @@ namespace TestCases.HSSF.UserModel
             {
                 wb = OpenSample("44643.xls");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new AssertionException("identified bug 44643");
             }
@@ -1047,7 +1046,7 @@ namespace TestCases.HSSF.UserModel
 
             // Now Check the iterator
             int rowsSeen = 0;
-            for (IEnumerator i = s.GetRowEnumerator(); i.MoveNext();)
+            for(IEnumerator i = s.GetRowEnumerator(); i.MoveNext();)
             {
                 IRow r = (IRow)i.Current;
                 ClassicAssert.IsNotNull(r);
@@ -1151,7 +1150,7 @@ namespace TestCases.HSSF.UserModel
                 var _ = obj.Directory;
                 Assert.Fail();
             }
-            catch (FileNotFoundException)
+            catch(FileNotFoundException)
             {
                 // expected during successful Test
             }
@@ -1172,7 +1171,7 @@ namespace TestCases.HSSF.UserModel
             // Check all names fit within range, and use
             //  DeletedArea3DPtg
             InternalWorkbook w = wb.Workbook;
-            for (int i = 0; i < w.NumNames; i++)
+            for(int i = 0; i < w.NumNames; i++)
             {
                 NameRecord r = w.GetNameRecord(i);
                 ClassicAssert.IsTrue(r.SheetNumber <= wb.NumberOfSheets);
@@ -1191,7 +1190,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(1, wb.NumberOfNames);
             ClassicAssert.AreEqual(2, wb.NumberOfSheets);
 
-            for (int i = 0; i < w.NumNames; i++)
+            for(int i = 0; i < w.NumNames; i++)
             {
                 NameRecord r = w.GetNameRecord(i);
                 ClassicAssert.IsTrue(r.SheetNumber <= wb.NumberOfSheets);
@@ -1209,7 +1208,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(1, wb.NumberOfNames);
             ClassicAssert.AreEqual(2, wb.NumberOfSheets);
 
-            for (int i = 0; i < w.NumNames; i++)
+            for(int i = 0; i < w.NumNames; i++)
             {
                 NameRecord r = w.GetNameRecord(i);
                 ClassicAssert.IsTrue(r.SheetNumber <= wb.NumberOfSheets);
@@ -1243,26 +1242,26 @@ namespace TestCases.HSSF.UserModel
             // Check that asking for the same font
             //  multiple times gives you the same thing.
             // Otherwise, our Tests wouldn't work!
-            ClassicAssert.AreSame(wb.GetFontAt((short)0), wb.GetFontAt((short)0));
+            ClassicAssert.AreSame(wb.GetFontAt((short) 0), wb.GetFontAt((short) 0));
             ClassicAssert.AreEqual(
-                    wb.GetFontAt((short)0),
-                    wb.GetFontAt((short)0)
+                    wb.GetFontAt((short) 0),
+                    wb.GetFontAt((short) 0)
             );
             ClassicAssert.AreEqual(
-                    wb.GetFontAt((short)2),
-                    wb.GetFontAt((short)2)
+                    wb.GetFontAt((short) 2),
+                    wb.GetFontAt((short) 2)
             );
             ClassicAssert.IsTrue(
-                    wb.GetFontAt((short)0)
+                    wb.GetFontAt((short) 0)
                     !=
-                    wb.GetFontAt((short)2)
+                    wb.GetFontAt((short) 2)
             );
 
             // Look for a new font we have
             //  yet to Add
             ClassicAssert.IsNull(
                 wb.FindFont(
-                    false, (short)123, (short)22,
+                    false, (short) 123, (short) 22,
                     "Thingy", false, true, FontSuperScript.Sub, FontUnderlineType.Double
                 )
             );
@@ -1271,11 +1270,11 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(5, wb.NumberOfFonts);
 
             ClassicAssert.AreEqual(5, nf.Index);
-            ClassicAssert.AreEqual(nf, wb.GetFontAt((short)5));
+            ClassicAssert.AreEqual(nf, wb.GetFontAt((short) 5));
 
             nf.IsBold = false;
-            nf.Color = ((short)123);
-            nf.FontHeight = ((short)22);
+            nf.Color = ((short) 123);
+            nf.FontHeight = ((short) 22);
             nf.FontName = ("Thingy");
             nf.IsItalic = (false);
             nf.IsStrikeout = (true);
@@ -1283,25 +1282,25 @@ namespace TestCases.HSSF.UserModel
             nf.Underline = FontUnderlineType.Double;
 
             ClassicAssert.AreEqual(5, wb.NumberOfFonts);
-            ClassicAssert.AreEqual(nf, wb.GetFontAt((short)5));
+            ClassicAssert.AreEqual(nf, wb.GetFontAt((short) 5));
 
             // Find it now
             ClassicAssert.IsNotNull(
                 wb.FindFont(
-                    false, (short)123, (short)22,
+                    false, (short) 123, (short) 22,
                     "Thingy", false, true, FontSuperScript.Sub, FontUnderlineType.Double
                 )
             );
             ClassicAssert.AreEqual(
                 5,
                 wb.FindFont(
-                       false, (short)123, (short)22,
+                       false, (short) 123, (short) 22,
                        "Thingy", false, true, FontSuperScript.Sub, FontUnderlineType.Double
                    ).Index
             );
             ClassicAssert.AreEqual(nf,
                    wb.FindFont(
-                       false, (short)123, (short)22,
+                       false, (short) 123, (short) 22,
                        "Thingy", false, true, FontSuperScript.Sub, FontUnderlineType.Double
                    )
             );
@@ -1346,7 +1345,7 @@ namespace TestCases.HSSF.UserModel
                 double a = c3.NumericCellValue;
                 throw new AssertionException("exception should have been thrown");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 ClassicAssert.AreEqual("Cannot get a numeric value from a text formula cell", e.Message);
             }
@@ -1378,19 +1377,19 @@ namespace TestCases.HSSF.UserModel
             ConfirmCachedValue("90210", nc3);
 
             int i = 0;
-            for (IEnumerator<CellValueRecordInterface> it = ns.Sheet.GetCellValueIterator(); it.MoveNext(); i++)
+            for(IEnumerator<CellValueRecordInterface> it = ns.Sheet.GetCellValueIterator(); it.MoveNext(); i++)
             {
                 CellValueRecordInterface cvr = it.Current;
-                if (cvr is FormulaRecordAggregate)
+                if(cvr is FormulaRecordAggregate)
                 {
                     FormulaRecordAggregate fr = (FormulaRecordAggregate)cvr;
 
-                    if (i == 0)
+                    if(i == 0)
                     {
                         ClassicAssert.AreEqual(70164.0, fr.FormulaRecord.Value, 0.0001);
                         ClassicAssert.IsNull(fr.StringRecord);
                     }
-                    else if (i == 1)
+                    else if(i == 1)
                     {
                         ClassicAssert.AreEqual(0.0, fr.FormulaRecord.Value, 0.0001);
                         ClassicAssert.IsNotNull(fr.StringRecord);
@@ -1556,7 +1555,7 @@ namespace TestCases.HSSF.UserModel
         {
             HSSFWorkbook wb = OpenSample("44958.xls");
             ISheet sh = wb.GetSheetAt(0);
-            for (short i = 0; i < 30; i++)
+            for(short i = 0; i < 30; i++)
                 sh.AutoSizeColumn(i);
         }
 
@@ -1758,11 +1757,11 @@ namespace TestCases.HSSF.UserModel
 
             // Ensure the tab index
             TabIdRecord tr = null;
-            foreach (Record r in wb2.Workbook.Records)
+            foreach(Record r in wb2.Workbook.Records)
             {
-                if (r is TabIdRecord)
+                if(r is TabIdRecord)
                 {
-                    tr = (TabIdRecord)r;
+                    tr = (TabIdRecord) r;
                 }
             }
             ClassicAssert.IsNotNull(tr);
@@ -1781,7 +1780,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(1, nr.NameDefinition.Length);
             ClassicAssert.AreEqual(
                   "new_sheet!$A$1:$C$1",
-                  ((Area3DPtg)nr.NameDefinition[0]).ToFormulaString(HSSFEvaluationWorkbook.Create(wb2))
+                  ((Area3DPtg) nr.NameDefinition[0]).ToFormulaString(HSSFEvaluationWorkbook.Create(wb2))
             );
 
             ClassicAssert.AreEqual('R', nr.NameDefinition[0].RVAType);
@@ -1917,7 +1916,7 @@ namespace TestCases.HSSF.UserModel
                 new HSSFWorkbook(fs.Root, false).Close();
                 Assert.Fail();
             }
-            catch (OldExcelFormatException e)
+            catch(OldExcelFormatException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith(
                         "The supplied spreadsheet seems to be Excel"
@@ -1938,7 +1937,7 @@ namespace TestCases.HSSF.UserModel
                     fs.Close();
                 }
             }
-            catch (OldExcelFormatException e)
+            catch(OldExcelFormatException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith(
                         "The supplied spreadsheet seems to be Excel"
@@ -2036,9 +2035,9 @@ namespace TestCases.HSSF.UserModel
             {
                 OpenSample("npoiBug5010.xls");
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.Contains("Unable to construct record instance"))
+                if(e.Message.Contains("Unable to construct record instance"))
                 {
                     throw new AssertionException("identified NPOI bug 5010");
                 }
@@ -2054,9 +2053,9 @@ namespace TestCases.HSSF.UserModel
             {
                 OpenSample("NpoiBug5139.xls");
             }
-            catch (LeftoverDataException e)
+            catch(LeftoverDataException e)
             {
-                if (e.Message.StartsWith("Initialisation of record 0x862"))
+                if(e.Message.StartsWith("Initialisation of record 0x862"))
                 {
                     throw new AssertionException("identified NPOI bug 5139");
                 }
@@ -2080,7 +2079,7 @@ namespace TestCases.HSSF.UserModel
 
             // Add a new style, also rotated
             ICellStyle cs = wb.CreateCellStyle();
-            cs.Rotation = ((short)0xff);
+            cs.Rotation = ((short) 0xff);
             ICell nc = r.CreateCell(2);
             nc.SetCellValue("New Rotated Text");
             nc.CellStyle = (cs);
@@ -2201,18 +2200,18 @@ namespace TestCases.HSSF.UserModel
 
             // Try on headers
             s.Header.Center = (s248);
-            ClassicAssert.AreEqual(254, ((HSSFHeader)s.Header).RawText.Length);
+            ClassicAssert.AreEqual(254, ((HSSFHeader) s.Header).RawText.Length);
             WriteOutAndReadBack(wb);
 
             s.Header.Center = (s251);
-            ClassicAssert.AreEqual(257, ((HSSFHeader)s.Header).RawText.Length);
+            ClassicAssert.AreEqual(257, ((HSSFHeader) s.Header).RawText.Length);
             WriteOutAndReadBack(wb);
 
             try
             {
                 s.Header.Center = (s250); // 256 bytes required
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new AssertionException("Identified bug 47244b - header can be more than 256 bytes");
             }
@@ -2221,25 +2220,25 @@ namespace TestCases.HSSF.UserModel
             {
                 s.Header.Center = (s251); // 257 bytes required
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new AssertionException("Identified bug 47244b - header can be more than 256 bytes");
             }
 
             // Now try on footers
             s.Footer.Center = (s248);
-            ClassicAssert.AreEqual(254, ((HSSFFooter)s.Footer).RawText.Length);
+            ClassicAssert.AreEqual(254, ((HSSFFooter) s.Footer).RawText.Length);
             WriteOutAndReadBack(wb);
 
             s.Footer.Center = (s251);
-            ClassicAssert.AreEqual(257, ((HSSFFooter)s.Footer).RawText.Length);
+            ClassicAssert.AreEqual(257, ((HSSFFooter) s.Footer).RawText.Length);
             WriteOutAndReadBack(wb);
 
             try
             {
                 s.Footer.Center = (s250); // 256 bytes required
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new AssertionException("Identified bug 47244b - footer can be more than 256 bytes");
             }
@@ -2248,7 +2247,7 @@ namespace TestCases.HSSF.UserModel
             {
                 s.Footer.Center = (s251); // 257 bytes required
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 throw new AssertionException("Identified bug 47244b - footer can be more than 256 bytes");
             }
@@ -2348,7 +2347,8 @@ namespace TestCases.HSSF.UserModel
             wb2.Close();
         }
         [Test]
-        public void Test47251()        {
+        public void Test47251()
+        {
             // Firstly, try with one that triggers on InterfaceHdrRecord
             OpenSample("47251.xls");
 
@@ -2500,9 +2500,9 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb2 = WriteOutAndReadBack(wb1);
 
             // Re-check
-            ClassicAssert.AreEqual("Testing", ((HSSFCellStyle)wb2.GetCellStyleAt((short)21)).UserStyleName);
-            ClassicAssert.AreEqual("Testing 2", ((HSSFCellStyle)wb2.GetCellStyleAt((short)22)).UserStyleName);
-            ClassicAssert.AreEqual("Testing 3", ((HSSFCellStyle)wb2.GetCellStyleAt((short)23)).UserStyleName);
+            ClassicAssert.AreEqual("Testing", ((HSSFCellStyle) wb2.GetCellStyleAt((short) 21)).UserStyleName);
+            ClassicAssert.AreEqual("Testing 2", ((HSSFCellStyle) wb2.GetCellStyleAt((short) 22)).UserStyleName);
+            ClassicAssert.AreEqual("Testing 3", ((HSSFCellStyle) wb2.GetCellStyleAt((short) 23)).UserStyleName);
 
             wb2.Close();
         }
@@ -2523,11 +2523,11 @@ namespace TestCases.HSSF.UserModel
             IList<string> namedStylesList = Arrays.AsList(namedStyles);
 
             List<String> collecteddStyles = new List<String>();
-            for (int i = 0; i < numCellStyles; i++)
+            for(int i = 0; i < numCellStyles; i++)
             {
                 HSSFCellStyle cellStyle = (HSSFCellStyle)wb.GetCellStyleAt(i);
                 String styleName = cellStyle.UserStyleName;
-                if (styleName != null)
+                if(styleName != null)
                 {
                     collecteddStyles.Add(styleName);
                     ClassicAssert.IsTrue(namedStylesList.Contains(styleName));
@@ -2710,7 +2710,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wbNPOIFS = new HSSFWorkbook(new NPOIFSFileSystem(
                   new MemoryStream(data)).Root, false);
 
-            foreach (HSSFWorkbook wb in new HSSFWorkbook[] { wbPOIFS, wbNPOIFS })
+            foreach(HSSFWorkbook wb in new HSSFWorkbook[] { wbPOIFS, wbNPOIFS })
             {
                 ClassicAssert.AreEqual(3, wb.NumberOfSheets);
 
@@ -2768,7 +2768,7 @@ namespace TestCases.HSSF.UserModel
                 OpenSample("51832.xls");
                 Assert.Fail("Encrypted file");
             }
-            catch (EncryptedDocumentException)
+            catch(EncryptedDocumentException)
             {
                 // Good
             }
@@ -2904,9 +2904,9 @@ namespace TestCases.HSSF.UserModel
             HSSFTextbox tb = (HSSFTextbox)patriarch.Children[2];
 
             tb.String = (new HSSFRichTextString("POI test"));
-            tb.Anchor = (new HSSFClientAnchor(0, 0, 0, 0, (short)0, 0, (short)10, 10));
+            tb.Anchor = (new HSSFClientAnchor(0, 0, 0, 0, (short) 0, 0, (short) 10, 10));
 
-            wb = WriteOutAndReadBack((HSSFWorkbook)wb);
+            wb = WriteOutAndReadBack((HSSFWorkbook) wb);
         }
 
         [Test]
@@ -2916,7 +2916,7 @@ namespace TestCases.HSSF.UserModel
             ISheet sheet = wb.GetSheet("test-sheet");
             int rowCount = sheet.LastRowNum + 1;
             int newRows = 5;
-            for (int r = rowCount; r < rowCount + newRows; r++)
+            for(int r = rowCount; r < rowCount + newRows; r++)
             {
                 IRow row = sheet.CreateRow(r);
                 row.CreateCell(0).SetCellValue(1.03 * (r + 7));
@@ -2928,7 +2928,7 @@ namespace TestCases.HSSF.UserModel
                 row.CreateCell(6).SetCellValue("added cells.");
             }
 
-            wb = WriteOutAndReadBack((HSSFWorkbook)wb);
+            wb = WriteOutAndReadBack((HSSFWorkbook) wb);
         }
 
         [Test]
@@ -2970,7 +2970,7 @@ namespace TestCases.HSSF.UserModel
                 OpenSample("35897-type4.xls");
                 Assert.Fail("POI doesn't currently support the RC4 CryptoAPI encryption header structure");
             }
-            catch (EncryptedDocumentException) { }
+            catch(EncryptedDocumentException) { }
         }
 
         [Test]
@@ -2979,11 +2979,11 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb = OpenSample("56450.xls");
             HSSFSheet sheet = wb.GetSheetAt(0) as HSSFSheet;
             int comments = 0;
-            foreach (IRow r in sheet)
+            foreach(IRow r in sheet)
             {
-                foreach (ICell c in r)
+                foreach(ICell c in r)
                 {
-                    if (c.CellComment != null)
+                    if(c.CellComment != null)
                     {
                         ClassicAssert.IsNotNull(c.CellComment.String.String);
                         comments++;
@@ -3104,7 +3104,7 @@ namespace TestCases.HSSF.UserModel
             // Try to Evaluate them
             IFormulaEvaluator eval = wb.GetCreationHelper().CreateFormulaEvaluator();
             ClassicAssert.AreEqual("Test A1", eval.Evaluate(cRefSName).StringValue);
-            ClassicAssert.AreEqual(142, (int)eval.Evaluate(cRefWName).NumberValue);
+            ClassicAssert.AreEqual(142, (int) eval.Evaluate(cRefWName).NumberValue);
 
             // Try to Evaluate everything
             eval.EvaluateAll();
@@ -3151,7 +3151,7 @@ namespace TestCases.HSSF.UserModel
         private void assertFormula(IWorkbook wb, ICell intF, String expectedFormula, String expectedResultOrNull)
         {
             ClassicAssert.AreEqual(CellType.Formula, intF.CellType);
-            if (null == expectedResultOrNull)
+            if(null == expectedResultOrNull)
             {
                 ClassicAssert.AreEqual(CellType.Error, intF.CachedFormulaResultType);
                 expectedResultOrNull = "#VALUE!";
@@ -3172,7 +3172,7 @@ namespace TestCases.HSSF.UserModel
         {
             IWorkbook wb = OpenSample("42016.xls");
             ISheet s = wb.GetSheetAt(0);
-            for (int row = 0; row < 7; row++)
+            for(int row = 0; row < 7; row++)
             {
                 ClassicAssert.AreEqual("A$1+B$1", s.GetRow(row).GetCell(2).CellFormula);
             }
@@ -3246,7 +3246,7 @@ namespace TestCases.HSSF.UserModel
         {
             IWorkbook wb = OpenSample("57163.xls");
 
-            while (wb.NumberOfSheets > 1)
+            while(wb.NumberOfSheets > 1)
             {
                 wb.RemoveSheetAt(1);
             }
@@ -3316,12 +3316,12 @@ namespace TestCases.HSSF.UserModel
 
             wb.GetCreationHelper().CreateFormulaEvaluator().EvaluateAll();
 
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 ISheet sheet = wb.GetSheetAt(i);
-                foreach (IRow row in sheet)
+                foreach(IRow row in sheet)
                 {
-                    foreach (ICell cell in row)
+                    foreach(ICell cell in row)
                     {
                         new DataFormatter().FormatCellValue(cell);
                     }
@@ -3347,7 +3347,7 @@ namespace TestCases.HSSF.UserModel
                 bimage = SKBitmap.Decode(ms);
                 ms.Close();
             }
-            catch (WebException)
+            catch(WebException)
             {
                 //Assume.assumeNoException("Downloading a jpg from poi.apache.org should work", e);
                 return;
@@ -3417,15 +3417,15 @@ namespace TestCases.HSSF.UserModel
 
             shape = new HSSFTextbox(null, anchor);
             shape.ShapeId = 1025;
-            cmo = (CommonObjectDataSubRecord)shape.GetObjRecord().SubRecords[0];
+            cmo = (CommonObjectDataSubRecord) shape.GetObjRecord().SubRecords[0];
             ClassicAssert.AreEqual(1, cmo.ObjectId);
             shape = new HSSFPicture(null, anchor);
             shape.ShapeId = 1026;
-            cmo = (CommonObjectDataSubRecord)shape.GetObjRecord().SubRecords[0];
+            cmo = (CommonObjectDataSubRecord) shape.GetObjRecord().SubRecords[0];
             ClassicAssert.AreEqual(2, cmo.ObjectId);
             shape = new HSSFComment(null, anchor);
             shape.ShapeId = 1027;
-            cmo = (CommonObjectDataSubRecord)shape.GetObjRecord().SubRecords[0];
+            cmo = (CommonObjectDataSubRecord) shape.GetObjRecord().SubRecords[0];
             ClassicAssert.AreEqual(1027, cmo.ObjectId);
         }
 
@@ -3502,7 +3502,8 @@ namespace TestCases.HSSF.UserModel
         [Test]
         public void Test61300()
         {
-            ClassicAssert.Throws<RuntimeException>(()=>{
+            ClassicAssert.Throws<RuntimeException>(() =>
+            {
                 NPOIFSFileSystem npoifs = new NPOIFSFileSystem(HSSFTestDataSamples.OpenSampleFileStream("61300.xls"));
 
                 DocumentEntry entry =
@@ -3513,7 +3514,7 @@ namespace TestCases.HSSF.UserModel
         }
 
         [Test]
-        public void Test51262() 
+        public void Test51262()
         {
             HSSFWorkbook wb = HSSFTestDataSamples.OpenSampleWorkbook("51262.xls");
             ISheet sheet = wb.GetSheetAt(0);

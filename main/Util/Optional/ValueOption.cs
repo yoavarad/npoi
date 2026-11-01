@@ -18,10 +18,11 @@ namespace NPOI.Util.Optional
             _content.HasValue ? map(_content.Value) : Option<TResult>.None();
         public ValueOption<TResult> MapOptionalValue<TResult>(Func<T, ValueOption<TResult>> map) where TResult : struct =>
             _content.HasValue ? map(_content.Value) : ValueOption<TResult>.None();
-        
+
         public ValueOption<T> IfPresent(Action<T> action)
         {
-            if(_content.HasValue) action(_content.Value);
+            if(_content.HasValue)
+                action(_content.Value);
             return this;
         }
 
@@ -37,9 +38,9 @@ namespace NPOI.Util.Optional
             _content.HasValue && !predicate(_content.Value) ? this : ValueOption<T>.None();
 
         public override int GetHashCode() => _content?.GetHashCode() ?? 0;
-        #nullable enable
+#nullable enable
         public override bool Equals(object? other) => other is ValueOption<T> option && Equals(option);
-        #nullable disable
+#nullable disable
         public bool Equals(ValueOption<T> other) =>
             _content.HasValue ? other._content.HasValue && _content.Value.Equals(other._content.Value)
             : !other._content.HasValue;

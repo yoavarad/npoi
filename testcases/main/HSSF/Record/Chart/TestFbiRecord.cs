@@ -18,10 +18,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the FontBasisRecord
@@ -65,15 +66,15 @@ namespace TestCases.HSSF.Record.Chart
         public void TestStore()
         {
             FbiRecord record = new FbiRecord();
-            record.XBasis = ((short)0x1a28);
-            record.YBasis = ((short)0x0f9c);
-            record.HeightBasis = ((short)0xc8);
-            record.Scale = ((short)0x00);
-            record.IndexToFontTable = ((short)0x05);
+            record.XBasis = ((short) 0x1a28);
+            record.YBasis = ((short) 0x0f9c);
+            record.HeightBasis = ((short) 0xc8);
+            record.Scale = ((short) 0x00);
+            record.IndexToFontTable = ((short) 0x05);
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

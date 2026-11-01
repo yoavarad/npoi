@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -26,37 +26,39 @@
  * 
  * ==============================================================*/
 
+using NPOI.Util;
 using System;
 using System.Collections;
-using NPOI.Util;
 
 namespace TestCases.Util
 {
     /// <summary>
     /// Summary description for DummyPOILogger
     /// </summary>
-    public class DummyPOILogger:POILogger {
-	    public ArrayList logged = new ArrayList(); 
+    public class DummyPOILogger : POILogger
+    {
+        public ArrayList logged = new ArrayList();
 
-	    public void Reset() {
-		    logged.Clear(); // = new ArrayList();
-	    }
+        public void Reset()
+        {
+            logged.Clear(); // = new ArrayList();
+        }
 
         public override bool Check(int level)
         {
-		    return true;
-	    }
+            return true;
+        }
 
-	    public override void Initialize(String cat) {}
+        public override void Initialize(String cat) { }
 
         public override void Log(int level, Object obj1)
         {
-		    logged.Add(level + " - " + obj1);
-	    }
+            logged.Add(level + " - " + obj1);
+        }
 
         public override void Log(int level, Object obj1, Exception exception)
         {
-		    logged.Add(level + " - " + obj1 + " - " + exception);
-	    }
+            logged.Add(level + " - " + obj1 + " - " + exception);
+        }
     }
 }

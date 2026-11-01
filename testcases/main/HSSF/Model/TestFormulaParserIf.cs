@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.Model
 {
-    using System;
     using NPOI.HSSF.Model;
-    using NPOI.SS.Formula;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests <c>FormulaParser</c> specifically with respect to IF() functions
@@ -43,7 +44,7 @@ namespace TestCases.HSSF.Model
         private static void ConfirmAttrData(Ptg[] ptgs, int i, int expectedData)
         {
             Ptg ptg = ptgs[i];
-            if (!(ptg is AttrPtg))
+            if(!(ptg is AttrPtg))
             {
                 throw new AssertionException("Token[" + i + "] was not AttrPtg as expected");
             }
@@ -57,14 +58,14 @@ namespace TestCases.HSSF.Model
             Type[] expClss;
 
             expClss = new Type[] {
-				typeof(RefPtg),
-				typeof(AttrPtg), // tAttrIf
+                typeof(RefPtg),
+                typeof(AttrPtg), // tAttrIf
 				typeof(IntPtg),
-				typeof(AttrPtg), // tAttrSkip
+                typeof(AttrPtg), // tAttrSkip
 				typeof(IntPtg),
-				typeof(AttrPtg), // tAttrSkip
+                typeof(AttrPtg), // tAttrSkip
 				typeof(FuncVarPtg),
-		};
+        };
 
             Ptg[] ptgs = ConfirmTokenClasses("if(A1,1,2)", expClss);
 
@@ -79,12 +80,12 @@ namespace TestCases.HSSF.Model
             Type[] expClss;
 
             expClss = new Type[] {
+                typeof(RefPtg),
+                typeof(AttrPtg), // tAttrIf
 				typeof(RefPtg),
-				typeof(AttrPtg), // tAttrIf
-				typeof(RefPtg),
-				typeof(AttrPtg), // tAttrSkip
+                typeof(AttrPtg), // tAttrSkip
 				typeof(FuncVarPtg),
-		};
+        };
 
             Ptg[] ptgs = ConfirmTokenClasses("if(A1,B1)", expClss);
 
@@ -98,25 +99,25 @@ namespace TestCases.HSSF.Model
             Type[] expClss;
 
             expClss = new Type[] {
-				typeof(RefPtg),
-				typeof(AttrPtg), // tAttrIf
+                typeof(RefPtg),
+                typeof(AttrPtg), // tAttrIf
 
 				typeof(RefPtg),
-				typeof(IntPtg),
-				typeof(MultiplyPtg),
-				typeof(RefPtg),
-				typeof(IntPtg),
-				typeof(AddPtg),
-				typeof(FuncPtg),
-				typeof(AttrPtg), // tAttrSkip
+                typeof(IntPtg),
+                typeof(MultiplyPtg),
+                typeof(RefPtg),
+                typeof(IntPtg),
+                typeof(AddPtg),
+                typeof(FuncPtg),
+                typeof(AttrPtg), // tAttrSkip
 				
 				typeof(RefPtg),
-				typeof(RefPtg),
-				typeof(FuncPtg),
-				
-				typeof(AttrPtg), // tAttrSkip
+                typeof(RefPtg),
+                typeof(FuncPtg),
+
+                typeof(AttrPtg), // tAttrSkip
 				typeof(FuncVarPtg),
-		};
+        };
 
             Ptg[] ptgs = ConfirmTokenClasses("if(A1,round(B1*100,C1+2),round(B1,C1))", expClss);
 
@@ -132,26 +133,26 @@ namespace TestCases.HSSF.Model
 
             expClss = new Type[] {
 
+                typeof(RefPtg),
+                typeof(AttrPtg),	  // A tAttrIf
 				typeof(RefPtg),
-				typeof(AttrPtg),	  // A tAttrIf
+                typeof(AttrPtg),    //   B tAttrIf
+				typeof(IntPtg),
+                typeof(AttrPtg),    //   B tAttrSkip
+				typeof(IntPtg),
+                typeof(AttrPtg),    //   B tAttrSkip
+				typeof(FuncVarPtg),
+                typeof(AttrPtg),    // A tAttrSkip
 				typeof(RefPtg),
-				typeof(AttrPtg),    //   B tAttrIf
+                typeof(AttrPtg),    //   C tAttrIf
 				typeof(IntPtg),
-				typeof(AttrPtg),    //   B tAttrSkip
+                typeof(AttrPtg),    //   C tAttrSkip
 				typeof(IntPtg),
-				typeof(AttrPtg),    //   B tAttrSkip
+                typeof(AttrPtg),    //   C tAttrSkip
 				typeof(FuncVarPtg),
-				typeof(AttrPtg),    // A tAttrSkip
-				typeof(RefPtg),
-				typeof(AttrPtg),    //   C tAttrIf
-				typeof(IntPtg),
-				typeof(AttrPtg),    //   C tAttrSkip
-				typeof(IntPtg),
-				typeof(AttrPtg),    //   C tAttrSkip
+                typeof(AttrPtg),    // A tAttrSkip
 				typeof(FuncVarPtg),
-				typeof(AttrPtg),    // A tAttrSkip
-				typeof(FuncVarPtg),
-		};
+        };
 
             Ptg[] ptgs = ConfirmTokenClasses("if(A1,if(B1,1,2),if(C1,3,4))", expClss);
             ConfirmAttrData(ptgs, 1, 31);
@@ -237,7 +238,7 @@ namespace TestCases.HSSF.Model
 
             ClassicAssert.IsTrue((ptgs[4] is IntPtg), "Single Value is1 not an IntPtg");
             IntPtg intPtg = (IntPtg)ptgs[4];
-            ClassicAssert.AreEqual((short)10, intPtg.Value, "Result");
+            ClassicAssert.AreEqual((short) 10, intPtg.Value, "Result");
 
             ClassicAssert.IsTrue((ptgs[6] is FuncVarPtg), "Ptg is1 not a Variable Function");
             FuncVarPtg funcPtg = (FuncVarPtg)ptgs[6];

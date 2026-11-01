@@ -74,7 +74,7 @@ namespace NPOI.SS.Formula
 
         public void ApplyOperation(IEntryOperation operation)
         {
-            foreach (FormulaCellCacheEntry entry in _formulaEntriesByCell.Values)
+            foreach(FormulaCellCacheEntry entry in _formulaEntriesByCell.Values)
             {
                 operation.ProcessEntry(entry);
             }

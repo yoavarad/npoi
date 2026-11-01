@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -30,9 +30,9 @@ namespace NPOI.HSSF.Record.Chart
     /// </remarks>
     public class SerFmtRecord : RowDataRecord
     {
-         public const short sid = 0x105D;
-         public SerFmtRecord(RecordInputStream ris)
-            : base(ris)
+        public const short sid = 0x105D;
+        public SerFmtRecord(RecordInputStream ris)
+           : base(ris)
         {
         }
 

@@ -72,7 +72,7 @@ namespace NPOI.SS.UserModel
 
         static FontCharset()
         {
-            if (_table == null)
+            if(_table == null)
             {
                 _table = new FontCharset[256];
                 _table[0] = FontCharset.ANSI;

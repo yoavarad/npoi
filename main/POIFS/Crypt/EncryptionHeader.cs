@@ -19,10 +19,10 @@ namespace NPOI.POIFS.Crypt
     using System;
 
 
-/**
- * Reads and Processes OOXML Encryption Headers
- * The constants are largely based on ZIP constants.
- */
+    /**
+     * Reads and Processes OOXML Encryption Headers
+     * The constants are largely based on ZIP constants.
+     */
 
     public abstract class EncryptionHeader
     {

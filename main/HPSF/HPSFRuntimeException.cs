@@ -72,10 +72,10 @@ namespace NPOI.HPSF
         /// <param name="reason">The reason, i.e. a throwable that indirectly
         /// caused this exception.</param>
         public HPSFRuntimeException(Exception reason)
-            : base(reason.Message,reason)
+            : base(reason.Message, reason)
         {
 
-             
+
         }
 
 
@@ -87,7 +87,7 @@ namespace NPOI.HPSF
         /// <param name="reason">The reason, i.e. a throwable that indirectly
         /// caused this exception.</param>
         public HPSFRuntimeException(String msg, Exception reason)
-            : base(msg,reason)
+            : base(msg, reason)
         {
 
         }

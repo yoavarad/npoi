@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using NPOI.OpenXmlFormats.Shared;
 using System;
 using System.Collections.Generic;
@@ -18,212 +18,212 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_Settings Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Settings ctObj = new CT_Settings();
             ctObj.activeWritingStyle = new List<CT_WritingStyle>();
             ctObj.attachedSchema = new List<CT_String>();
             ctObj.smartTagType = new List<CT_SmartTagType>();
             ctObj.schemaLibrary = new List<CT_Schema>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "writeProtection")
+                if(childNode.LocalName == "writeProtection")
                     ctObj.writeProtection = CT_WriteProtection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "view")
+                else if(childNode.LocalName == "view")
                     ctObj.view = CT_View.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "zoom")
+                else if(childNode.LocalName == "zoom")
                     ctObj.zoom = CT_Zoom.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "removePersonalInformation")
+                else if(childNode.LocalName == "removePersonalInformation")
                     ctObj.removePersonalInformation = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "removeDateAndTime")
+                else if(childNode.LocalName == "removeDateAndTime")
                     ctObj.removeDateAndTime = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotDisplayPageBoundaries")
+                else if(childNode.LocalName == "doNotDisplayPageBoundaries")
                     ctObj.doNotDisplayPageBoundaries = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "displayBackgroundShape")
+                else if(childNode.LocalName == "displayBackgroundShape")
                     ctObj.displayBackgroundShape = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "printPostScriptOverText")
+                else if(childNode.LocalName == "printPostScriptOverText")
                     ctObj.printPostScriptOverText = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "printFractionalCharacterWidth")
+                else if(childNode.LocalName == "printFractionalCharacterWidth")
                     ctObj.printFractionalCharacterWidth = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "printFormsData")
+                else if(childNode.LocalName == "printFormsData")
                     ctObj.printFormsData = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "embedTrueTypeFonts")
+                else if(childNode.LocalName == "embedTrueTypeFonts")
                     ctObj.embedTrueTypeFonts = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "embedSystemFonts")
+                else if(childNode.LocalName == "embedSystemFonts")
                     ctObj.embedSystemFonts = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "saveSubsetFonts")
+                else if(childNode.LocalName == "saveSubsetFonts")
                     ctObj.saveSubsetFonts = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "saveFormsData")
+                else if(childNode.LocalName == "saveFormsData")
                     ctObj.saveFormsData = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mirrorMargins")
+                else if(childNode.LocalName == "mirrorMargins")
                     ctObj.mirrorMargins = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "alignBordersAndEdges")
+                else if(childNode.LocalName == "alignBordersAndEdges")
                     ctObj.alignBordersAndEdges = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bordersDoNotSurroundHeader")
+                else if(childNode.LocalName == "bordersDoNotSurroundHeader")
                     ctObj.bordersDoNotSurroundHeader = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bordersDoNotSurroundFooter")
+                else if(childNode.LocalName == "bordersDoNotSurroundFooter")
                     ctObj.bordersDoNotSurroundFooter = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "gutterAtTop")
+                else if(childNode.LocalName == "gutterAtTop")
                     ctObj.gutterAtTop = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hideSpellingErrors")
+                else if(childNode.LocalName == "hideSpellingErrors")
                     ctObj.hideSpellingErrors = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hideGrammaticalErrors")
+                else if(childNode.LocalName == "hideGrammaticalErrors")
                     ctObj.hideGrammaticalErrors = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "proofState")
+                else if(childNode.LocalName == "proofState")
                     ctObj.proofState = CT_Proof.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "formsDesign")
+                else if(childNode.LocalName == "formsDesign")
                     ctObj.formsDesign = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "attachedTemplate")
+                else if(childNode.LocalName == "attachedTemplate")
                     ctObj.attachedTemplate = CT_Rel.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "linkStyles")
+                else if(childNode.LocalName == "linkStyles")
                     ctObj.linkStyles = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "stylePaneFormatFilter")
+                else if(childNode.LocalName == "stylePaneFormatFilter")
                     ctObj.stylePaneFormatFilter = CT_ShortHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "stylePaneSortMethod")
+                else if(childNode.LocalName == "stylePaneSortMethod")
                     ctObj.stylePaneSortMethod = CT_ShortHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "documentType")
+                else if(childNode.LocalName == "documentType")
                     ctObj.documentType = CT_DocType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mailMerge")
+                else if(childNode.LocalName == "mailMerge")
                     ctObj.mailMerge = CT_MailMerge.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "revisionView")
+                else if(childNode.LocalName == "revisionView")
                     ctObj.revisionView = CT_TrackChangesView.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "trackRevisions")
+                else if(childNode.LocalName == "trackRevisions")
                     ctObj.trackRevisions = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotTrackMoves")
+                else if(childNode.LocalName == "doNotTrackMoves")
                     ctObj.doNotTrackMoves = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotTrackFormatting")
+                else if(childNode.LocalName == "doNotTrackFormatting")
                     ctObj.doNotTrackFormatting = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "documentProtection")
+                else if(childNode.LocalName == "documentProtection")
                     ctObj.documentProtection = CT_DocProtect.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "autoFormatOverride")
+                else if(childNode.LocalName == "autoFormatOverride")
                     ctObj.autoFormatOverride = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "styleLockTheme")
+                else if(childNode.LocalName == "styleLockTheme")
                     ctObj.styleLockTheme = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "styleLockQFSet")
+                else if(childNode.LocalName == "styleLockQFSet")
                     ctObj.styleLockQFSet = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "defaultTabStop")
+                else if(childNode.LocalName == "defaultTabStop")
                     ctObj.defaultTabStop = CT_TwipsMeasure.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "autoHyphenation")
+                else if(childNode.LocalName == "autoHyphenation")
                     ctObj.autoHyphenation = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "consecutiveHyphenLimit")
+                else if(childNode.LocalName == "consecutiveHyphenLimit")
                     ctObj.consecutiveHyphenLimit = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "hyphenationZone")
+                else if(childNode.LocalName == "hyphenationZone")
                     ctObj.hyphenationZone = CT_TwipsMeasure.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotHyphenateCaps")
+                else if(childNode.LocalName == "doNotHyphenateCaps")
                     ctObj.doNotHyphenateCaps = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "showEnvelope")
+                else if(childNode.LocalName == "showEnvelope")
                     ctObj.showEnvelope = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "summaryLength")
+                else if(childNode.LocalName == "summaryLength")
                     ctObj.summaryLength = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "clickAndTypeStyle")
+                else if(childNode.LocalName == "clickAndTypeStyle")
                     ctObj.clickAndTypeStyle = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "defaultTableStyle")
+                else if(childNode.LocalName == "defaultTableStyle")
                     ctObj.defaultTableStyle = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "evenAndOddHeaders")
+                else if(childNode.LocalName == "evenAndOddHeaders")
                     ctObj.evenAndOddHeaders = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bookFoldRevPrinting")
+                else if(childNode.LocalName == "bookFoldRevPrinting")
                     ctObj.bookFoldRevPrinting = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bookFoldPrinting")
+                else if(childNode.LocalName == "bookFoldPrinting")
                     ctObj.bookFoldPrinting = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bookFoldPrintingSheets")
+                else if(childNode.LocalName == "bookFoldPrintingSheets")
                     ctObj.bookFoldPrintingSheets = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "drawingGridHorizontalSpacing")
+                else if(childNode.LocalName == "drawingGridHorizontalSpacing")
                     ctObj.drawingGridHorizontalSpacing = CT_TwipsMeasure.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "drawingGridVerticalSpacing")
+                else if(childNode.LocalName == "drawingGridVerticalSpacing")
                     ctObj.drawingGridVerticalSpacing = CT_TwipsMeasure.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "displayHorizontalDrawingGridEvery")
+                else if(childNode.LocalName == "displayHorizontalDrawingGridEvery")
                     ctObj.displayHorizontalDrawingGridEvery = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "displayVerticalDrawingGridEvery")
+                else if(childNode.LocalName == "displayVerticalDrawingGridEvery")
                     ctObj.displayVerticalDrawingGridEvery = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotUseMarginsForDrawingGridOrigin")
+                else if(childNode.LocalName == "doNotUseMarginsForDrawingGridOrigin")
                     ctObj.doNotUseMarginsForDrawingGridOrigin = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "drawingGridHorizontalOrigin")
+                else if(childNode.LocalName == "drawingGridHorizontalOrigin")
                     ctObj.drawingGridHorizontalOrigin = CT_TwipsMeasure.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "drawingGridVerticalOrigin")
+                else if(childNode.LocalName == "drawingGridVerticalOrigin")
                     ctObj.drawingGridVerticalOrigin = CT_TwipsMeasure.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotShadeFormData")
+                else if(childNode.LocalName == "doNotShadeFormData")
                     ctObj.doNotShadeFormData = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noPunctuationKerning")
+                else if(childNode.LocalName == "noPunctuationKerning")
                     ctObj.noPunctuationKerning = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "characterSpacingControl")
+                else if(childNode.LocalName == "characterSpacingControl")
                     ctObj.characterSpacingControl = CT_CharacterSpacing.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "printTwoOnOne")
+                else if(childNode.LocalName == "printTwoOnOne")
                     ctObj.printTwoOnOne = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "strictFirstAndLastChars")
+                else if(childNode.LocalName == "strictFirstAndLastChars")
                     ctObj.strictFirstAndLastChars = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noLineBreaksAfter")
+                else if(childNode.LocalName == "noLineBreaksAfter")
                     ctObj.noLineBreaksAfter = CT_Kinsoku.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noLineBreaksBefore")
+                else if(childNode.LocalName == "noLineBreaksBefore")
                     ctObj.noLineBreaksBefore = CT_Kinsoku.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "savePreviewPicture")
+                else if(childNode.LocalName == "savePreviewPicture")
                     ctObj.savePreviewPicture = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotValidateAgainstSchema")
+                else if(childNode.LocalName == "doNotValidateAgainstSchema")
                     ctObj.doNotValidateAgainstSchema = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "saveInvalidXml")
+                else if(childNode.LocalName == "saveInvalidXml")
                     ctObj.saveInvalidXml = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ignoreMixedContent")
+                else if(childNode.LocalName == "ignoreMixedContent")
                     ctObj.ignoreMixedContent = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "alwaysShowPlaceholderText")
+                else if(childNode.LocalName == "alwaysShowPlaceholderText")
                     ctObj.alwaysShowPlaceholderText = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotDemarcateInvalidXml")
+                else if(childNode.LocalName == "doNotDemarcateInvalidXml")
                     ctObj.doNotDemarcateInvalidXml = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "saveXmlDataOnly")
+                else if(childNode.LocalName == "saveXmlDataOnly")
                     ctObj.saveXmlDataOnly = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "useXSLTWhenSaving")
+                else if(childNode.LocalName == "useXSLTWhenSaving")
                     ctObj.useXSLTWhenSaving = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "saveThroughXslt")
+                else if(childNode.LocalName == "saveThroughXslt")
                     ctObj.saveThroughXslt = CT_SaveThroughXslt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "showXMLTags")
+                else if(childNode.LocalName == "showXMLTags")
                     ctObj.showXMLTags = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "alwaysMergeEmptyNamespace")
+                else if(childNode.LocalName == "alwaysMergeEmptyNamespace")
                     ctObj.alwaysMergeEmptyNamespace = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "updateFields")
+                else if(childNode.LocalName == "updateFields")
                     ctObj.updateFields = CT_OnOff.Parse(childNode, namespaceManager);
                 //else if(childNode.LocalName == "hdrShapeDefaults")
                 //    ctObj.hdrShapeDefaults = XmlElement[].Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "footnotePr")
+                else if(childNode.LocalName == "footnotePr")
                     ctObj.footnotePr = CT_FtnDocProps.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "endnotePr")
+                else if(childNode.LocalName == "endnotePr")
                     ctObj.endnotePr = CT_EdnDocProps.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "compat")
+                else if(childNode.LocalName == "compat")
                     ctObj.compat = CT_Compat.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "rsids")
+                else if(childNode.LocalName == "rsids")
                     ctObj.rsids = CT_DocRsids.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mathPr")
+                else if(childNode.LocalName == "mathPr")
                     ctObj.mathPr = CT_MathPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "uiCompat97To2003")
+                else if(childNode.LocalName == "uiCompat97To2003")
                     ctObj.uiCompat97To2003 = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "themeFontLang")
+                else if(childNode.LocalName == "themeFontLang")
                     ctObj.themeFontLang = CT_Language.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "clrSchemeMapping")
+                else if(childNode.LocalName == "clrSchemeMapping")
                     ctObj.clrSchemeMapping = CT_ColorSchemeMapping.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotIncludeSubdocsInStats")
+                else if(childNode.LocalName == "doNotIncludeSubdocsInStats")
                     ctObj.doNotIncludeSubdocsInStats = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotAutoCompressPictures")
+                else if(childNode.LocalName == "doNotAutoCompressPictures")
                     ctObj.doNotAutoCompressPictures = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "forceUpgrade")
+                else if(childNode.LocalName == "forceUpgrade")
                     ctObj.forceUpgrade = new CT_Empty();
-                else if (childNode.LocalName == "captions")
+                else if(childNode.LocalName == "captions")
                     ctObj.captions = CT_Captions.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "readModeInkLockDown")
+                else if(childNode.LocalName == "readModeInkLockDown")
                     ctObj.readModeInkLockDown = CT_ReadingModeInkLockDown.Parse(childNode, namespaceManager);
                 //else if(childNode.LocalName == "shapeDefaults")
                 //    ctObj.shapeDefaults = XmlElement[].Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotEmbedSmartTags")
+                else if(childNode.LocalName == "doNotEmbedSmartTags")
                     ctObj.doNotEmbedSmartTags = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "decimalSymbol")
+                else if(childNode.LocalName == "decimalSymbol")
                     ctObj.decimalSymbol = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "listSeparator")
+                else if(childNode.LocalName == "listSeparator")
                     ctObj.listSeparator = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "activeWritingStyle")
+                else if(childNode.LocalName == "activeWritingStyle")
                     ctObj.activeWritingStyle.Add(CT_WritingStyle.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "docVars")
+                else if(childNode.LocalName == "docVars")
                     ctObj.docVars = CT_DocVars.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "attachedSchema")
+                else if(childNode.LocalName == "attachedSchema")
                     ctObj.attachedSchema.Add(CT_String.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "smartTagType")
+                else if(childNode.LocalName == "smartTagType")
                     ctObj.smartTagType.Add(CT_SmartTagType.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "schemaLibrary")
+                else if(childNode.LocalName == "schemaLibrary")
                     ctObj.schemaLibrary.Add(CT_Schema.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -237,221 +237,221 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.Write("<w:settings mc:Ignorable=\"w14 w15\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" ");
             sw.Write("xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\" ");
             sw.Write("xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\">");
-            
-            if (this.writeProtection != null)
+
+            if(this.writeProtection != null)
                 this.writeProtection.Write(sw, "writeProtection");
-            if (this.view != null)
+            if(this.view != null)
                 this.view.Write(sw, "view");
-            if (this.zoom != null)
+            if(this.zoom != null)
                 this.zoom.Write(sw, "zoom");
-            if (this.removePersonalInformation != null)
+            if(this.removePersonalInformation != null)
                 this.removePersonalInformation.Write(sw, "removePersonalInformation");
-            if (this.removeDateAndTime != null)
+            if(this.removeDateAndTime != null)
                 this.removeDateAndTime.Write(sw, "removeDateAndTime");
-            if (this.doNotDisplayPageBoundaries != null)
+            if(this.doNotDisplayPageBoundaries != null)
                 this.doNotDisplayPageBoundaries.Write(sw, "doNotDisplayPageBoundaries");
-            if (this.displayBackgroundShape != null)
+            if(this.displayBackgroundShape != null)
                 this.displayBackgroundShape.Write(sw, "displayBackgroundShape");
-            if (this.printPostScriptOverText != null)
+            if(this.printPostScriptOverText != null)
                 this.printPostScriptOverText.Write(sw, "printPostScriptOverText");
-            if (this.printFractionalCharacterWidth != null)
+            if(this.printFractionalCharacterWidth != null)
                 this.printFractionalCharacterWidth.Write(sw, "printFractionalCharacterWidth");
-            if (this.printFormsData != null)
+            if(this.printFormsData != null)
                 this.printFormsData.Write(sw, "printFormsData");
-            if (this.embedTrueTypeFonts != null)
+            if(this.embedTrueTypeFonts != null)
                 this.embedTrueTypeFonts.Write(sw, "embedTrueTypeFonts");
-            if (this.embedSystemFonts != null)
+            if(this.embedSystemFonts != null)
                 this.embedSystemFonts.Write(sw, "embedSystemFonts");
-            if (this.saveSubsetFonts != null)
+            if(this.saveSubsetFonts != null)
                 this.saveSubsetFonts.Write(sw, "saveSubsetFonts");
-            if (this.saveFormsData != null)
+            if(this.saveFormsData != null)
                 this.saveFormsData.Write(sw, "saveFormsData");
-            if (this.mirrorMargins != null)
+            if(this.mirrorMargins != null)
                 this.mirrorMargins.Write(sw, "mirrorMargins");
-            if (this.alignBordersAndEdges != null)
+            if(this.alignBordersAndEdges != null)
                 this.alignBordersAndEdges.Write(sw, "alignBordersAndEdges");
-            if (this.bordersDoNotSurroundHeader != null)
+            if(this.bordersDoNotSurroundHeader != null)
                 this.bordersDoNotSurroundHeader.Write(sw, "bordersDoNotSurroundHeader");
-            if (this.bordersDoNotSurroundFooter != null)
+            if(this.bordersDoNotSurroundFooter != null)
                 this.bordersDoNotSurroundFooter.Write(sw, "bordersDoNotSurroundFooter");
-            if (this.gutterAtTop != null)
+            if(this.gutterAtTop != null)
                 this.gutterAtTop.Write(sw, "gutterAtTop");
-            if (this.hideSpellingErrors != null)
+            if(this.hideSpellingErrors != null)
                 this.hideSpellingErrors.Write(sw, "hideSpellingErrors");
-            if (this.hideGrammaticalErrors != null)
+            if(this.hideGrammaticalErrors != null)
                 this.hideGrammaticalErrors.Write(sw, "hideGrammaticalErrors");
-            if (this.proofState != null)
+            if(this.proofState != null)
                 this.proofState.Write(sw, "proofState");
-            if (this.formsDesign != null)
+            if(this.formsDesign != null)
                 this.formsDesign.Write(sw, "formsDesign");
-            if (this.attachedTemplate != null)
+            if(this.attachedTemplate != null)
                 this.attachedTemplate.Write(sw, "attachedTemplate");
-            if (this.linkStyles != null)
+            if(this.linkStyles != null)
                 this.linkStyles.Write(sw, "linkStyles");
-            if (this.stylePaneFormatFilter != null)
+            if(this.stylePaneFormatFilter != null)
                 this.stylePaneFormatFilter.Write(sw, "stylePaneFormatFilter");
-            if (this.stylePaneSortMethod != null)
+            if(this.stylePaneSortMethod != null)
                 this.stylePaneSortMethod.Write(sw, "stylePaneSortMethod");
-            if (this.documentType != null)
+            if(this.documentType != null)
                 this.documentType.Write(sw, "documentType");
-            if (this.mailMerge != null)
+            if(this.mailMerge != null)
                 this.mailMerge.Write(sw, "mailMerge");
-            if (this.revisionView != null)
+            if(this.revisionView != null)
                 this.revisionView.Write(sw, "revisionView");
-            if (this.trackRevisions != null)
+            if(this.trackRevisions != null)
                 this.trackRevisions.Write(sw, "trackRevisions");
-            if (this.doNotTrackMoves != null)
+            if(this.doNotTrackMoves != null)
                 this.doNotTrackMoves.Write(sw, "doNotTrackMoves");
-            if (this.doNotTrackFormatting != null)
+            if(this.doNotTrackFormatting != null)
                 this.doNotTrackFormatting.Write(sw, "doNotTrackFormatting");
-            if (this.documentProtection != null)
+            if(this.documentProtection != null)
                 this.documentProtection.Write(sw, "documentProtection");
-            if (this.autoFormatOverride != null)
+            if(this.autoFormatOverride != null)
                 this.autoFormatOverride.Write(sw, "autoFormatOverride");
-            if (this.styleLockTheme != null)
+            if(this.styleLockTheme != null)
                 this.styleLockTheme.Write(sw, "styleLockTheme");
-            if (this.styleLockQFSet != null)
+            if(this.styleLockQFSet != null)
                 this.styleLockQFSet.Write(sw, "styleLockQFSet");
-            if (this.defaultTabStop != null)
+            if(this.defaultTabStop != null)
                 this.defaultTabStop.Write(sw, "defaultTabStop");
-            if (this.autoHyphenation != null)
+            if(this.autoHyphenation != null)
                 this.autoHyphenation.Write(sw, "autoHyphenation");
-            if (this.consecutiveHyphenLimit != null)
+            if(this.consecutiveHyphenLimit != null)
                 this.consecutiveHyphenLimit.Write(sw, "consecutiveHyphenLimit");
-            if (this.hyphenationZone != null)
+            if(this.hyphenationZone != null)
                 this.hyphenationZone.Write(sw, "hyphenationZone");
-            if (this.doNotHyphenateCaps != null)
+            if(this.doNotHyphenateCaps != null)
                 this.doNotHyphenateCaps.Write(sw, "doNotHyphenateCaps");
-            if (this.showEnvelope != null)
+            if(this.showEnvelope != null)
                 this.showEnvelope.Write(sw, "showEnvelope");
-            if (this.summaryLength != null)
+            if(this.summaryLength != null)
                 this.summaryLength.Write(sw, "summaryLength");
-            if (this.clickAndTypeStyle != null)
+            if(this.clickAndTypeStyle != null)
                 this.clickAndTypeStyle.Write(sw, "clickAndTypeStyle");
-            if (this.defaultTableStyle != null)
+            if(this.defaultTableStyle != null)
                 this.defaultTableStyle.Write(sw, "defaultTableStyle");
-            if (this.evenAndOddHeaders != null)
+            if(this.evenAndOddHeaders != null)
                 this.evenAndOddHeaders.Write(sw, "evenAndOddHeaders");
-            if (this.bookFoldRevPrinting != null)
+            if(this.bookFoldRevPrinting != null)
                 this.bookFoldRevPrinting.Write(sw, "bookFoldRevPrinting");
-            if (this.bookFoldPrinting != null)
+            if(this.bookFoldPrinting != null)
                 this.bookFoldPrinting.Write(sw, "bookFoldPrinting");
-            if (this.bookFoldPrintingSheets != null)
+            if(this.bookFoldPrintingSheets != null)
                 this.bookFoldPrintingSheets.Write(sw, "bookFoldPrintingSheets");
-            if (this.drawingGridHorizontalSpacing != null)
+            if(this.drawingGridHorizontalSpacing != null)
                 this.drawingGridHorizontalSpacing.Write(sw, "drawingGridHorizontalSpacing");
-            if (this.drawingGridVerticalSpacing != null)
+            if(this.drawingGridVerticalSpacing != null)
                 this.drawingGridVerticalSpacing.Write(sw, "drawingGridVerticalSpacing");
-            if (this.displayHorizontalDrawingGridEvery != null)
+            if(this.displayHorizontalDrawingGridEvery != null)
                 this.displayHorizontalDrawingGridEvery.Write(sw, "displayHorizontalDrawingGridEvery");
-            if (this.displayVerticalDrawingGridEvery != null)
+            if(this.displayVerticalDrawingGridEvery != null)
                 this.displayVerticalDrawingGridEvery.Write(sw, "displayVerticalDrawingGridEvery");
-            if (this.doNotUseMarginsForDrawingGridOrigin != null)
+            if(this.doNotUseMarginsForDrawingGridOrigin != null)
                 this.doNotUseMarginsForDrawingGridOrigin.Write(sw, "doNotUseMarginsForDrawingGridOrigin");
-            if (this.drawingGridHorizontalOrigin != null)
+            if(this.drawingGridHorizontalOrigin != null)
                 this.drawingGridHorizontalOrigin.Write(sw, "drawingGridHorizontalOrigin");
-            if (this.drawingGridVerticalOrigin != null)
+            if(this.drawingGridVerticalOrigin != null)
                 this.drawingGridVerticalOrigin.Write(sw, "drawingGridVerticalOrigin");
-            if (this.doNotShadeFormData != null)
+            if(this.doNotShadeFormData != null)
                 this.doNotShadeFormData.Write(sw, "doNotShadeFormData");
-            if (this.noPunctuationKerning != null)
+            if(this.noPunctuationKerning != null)
                 this.noPunctuationKerning.Write(sw, "noPunctuationKerning");
-            if (this.characterSpacingControl != null)
+            if(this.characterSpacingControl != null)
                 this.characterSpacingControl.Write(sw, "characterSpacingControl");
-            if (this.printTwoOnOne != null)
+            if(this.printTwoOnOne != null)
                 this.printTwoOnOne.Write(sw, "printTwoOnOne");
-            if (this.strictFirstAndLastChars != null)
+            if(this.strictFirstAndLastChars != null)
                 this.strictFirstAndLastChars.Write(sw, "strictFirstAndLastChars");
-            if (this.noLineBreaksAfter != null)
+            if(this.noLineBreaksAfter != null)
                 this.noLineBreaksAfter.Write(sw, "noLineBreaksAfter");
-            if (this.noLineBreaksBefore != null)
+            if(this.noLineBreaksBefore != null)
                 this.noLineBreaksBefore.Write(sw, "noLineBreaksBefore");
-            if (this.savePreviewPicture != null)
+            if(this.savePreviewPicture != null)
                 this.savePreviewPicture.Write(sw, "savePreviewPicture");
-            if (this.doNotValidateAgainstSchema != null)
+            if(this.doNotValidateAgainstSchema != null)
                 this.doNotValidateAgainstSchema.Write(sw, "doNotValidateAgainstSchema");
-            if (this.saveInvalidXml != null)
+            if(this.saveInvalidXml != null)
                 this.saveInvalidXml.Write(sw, "saveInvalidXml");
-            if (this.ignoreMixedContent != null)
+            if(this.ignoreMixedContent != null)
                 this.ignoreMixedContent.Write(sw, "ignoreMixedContent");
-            if (this.alwaysShowPlaceholderText != null)
+            if(this.alwaysShowPlaceholderText != null)
                 this.alwaysShowPlaceholderText.Write(sw, "alwaysShowPlaceholderText");
-            if (this.doNotDemarcateInvalidXml != null)
+            if(this.doNotDemarcateInvalidXml != null)
                 this.doNotDemarcateInvalidXml.Write(sw, "doNotDemarcateInvalidXml");
-            if (this.saveXmlDataOnly != null)
+            if(this.saveXmlDataOnly != null)
                 this.saveXmlDataOnly.Write(sw, "saveXmlDataOnly");
-            if (this.useXSLTWhenSaving != null)
+            if(this.useXSLTWhenSaving != null)
                 this.useXSLTWhenSaving.Write(sw, "useXSLTWhenSaving");
-            if (this.saveThroughXslt != null)
+            if(this.saveThroughXslt != null)
                 this.saveThroughXslt.Write(sw, "saveThroughXslt");
-            if (this.showXMLTags != null)
+            if(this.showXMLTags != null)
                 this.showXMLTags.Write(sw, "showXMLTags");
-            if (this.alwaysMergeEmptyNamespace != null)
+            if(this.alwaysMergeEmptyNamespace != null)
                 this.alwaysMergeEmptyNamespace.Write(sw, "alwaysMergeEmptyNamespace");
-            if (this.updateFields != null)
+            if(this.updateFields != null)
                 this.updateFields.Write(sw, "updateFields");
             //if (this.hdrShapeDefaults != null)
             //    this.hdrShapeDefaults.Write(sw, "hdrShapeDefaults");
-            if (this.footnotePr != null)
+            if(this.footnotePr != null)
                 this.footnotePr.Write(sw, "footnotePr");
-            if (this.endnotePr != null)
+            if(this.endnotePr != null)
                 this.endnotePr.Write(sw, "endnotePr");
-            if (this.compat != null)
+            if(this.compat != null)
                 this.compat.Write(sw, "compat");
-            if (this.rsids != null)
+            if(this.rsids != null)
                 this.rsids.Write(sw, "rsids");
-            if (this.mathPr != null)
+            if(this.mathPr != null)
                 this.mathPr.Write(sw, "mathPr");
-            if (this.uiCompat97To2003 != null)
+            if(this.uiCompat97To2003 != null)
                 this.uiCompat97To2003.Write(sw, "uiCompat97To2003");
-            if (this.themeFontLang != null)
+            if(this.themeFontLang != null)
                 this.themeFontLang.Write(sw, "themeFontLang");
-            if (this.clrSchemeMapping != null)
+            if(this.clrSchemeMapping != null)
                 this.clrSchemeMapping.Write(sw, "clrSchemeMapping");
-            if (this.doNotIncludeSubdocsInStats != null)
+            if(this.doNotIncludeSubdocsInStats != null)
                 this.doNotIncludeSubdocsInStats.Write(sw, "doNotIncludeSubdocsInStats");
-            if (this.doNotAutoCompressPictures != null)
+            if(this.doNotAutoCompressPictures != null)
                 this.doNotAutoCompressPictures.Write(sw, "doNotAutoCompressPictures");
-            if (this.forceUpgrade != null)
+            if(this.forceUpgrade != null)
                 sw.Write("<w:forceUpgrade/>");
-            if (this.captions != null)
+            if(this.captions != null)
                 this.captions.Write(sw, "captions");
-            if (this.readModeInkLockDown != null)
+            if(this.readModeInkLockDown != null)
                 this.readModeInkLockDown.Write(sw, "readModeInkLockDown");
             //if (this.shapeDefaults != null)
             //    this.shapeDefaults.Write(sw, "shapeDefaults");
-            if (this.doNotEmbedSmartTags != null)
+            if(this.doNotEmbedSmartTags != null)
                 this.doNotEmbedSmartTags.Write(sw, "doNotEmbedSmartTags");
-            if (this.decimalSymbol != null)
+            if(this.decimalSymbol != null)
                 this.decimalSymbol.Write(sw, "decimalSymbol");
-            if (this.listSeparator != null)
+            if(this.listSeparator != null)
                 this.listSeparator.Write(sw, "listSeparator");
-            if (this.activeWritingStyle != null)
+            if(this.activeWritingStyle != null)
             {
-                foreach (CT_WritingStyle x in this.activeWritingStyle)
+                foreach(CT_WritingStyle x in this.activeWritingStyle)
                 {
                     x.Write(sw, "activeWritingStyle");
                 }
             }
-            if (this.docVars != null)
+            if(this.docVars != null)
                 this.docVars.Write(sw, "docVars");
-            if (this.attachedSchema != null)
+            if(this.attachedSchema != null)
             {
-                foreach (CT_String x in this.attachedSchema)
+                foreach(CT_String x in this.attachedSchema)
                 {
                     x.Write(sw, "attachedSchema");
                 }
             }
-            if (this.smartTagType != null)
+            if(this.smartTagType != null)
             {
-                foreach (CT_SmartTagType x in this.smartTagType)
+                foreach(CT_SmartTagType x in this.smartTagType)
                 {
                     x.Write(sw, "smartTagType");
                 }
             }
-            if (this.schemaLibrary != null)
+            if(this.schemaLibrary != null)
             {
-                foreach (CT_Schema x in this.schemaLibrary)
+                foreach(CT_Schema x in this.schemaLibrary)
                 {
                     x.Write(sw, "schemaLibrary");
                 }
@@ -661,7 +661,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             this.listSeparatorField = new CT_String();
             this.listSeparator.val = ",";
-            
+
             this.decimalSymbolField = new CT_String();
             this.decimalSymbol.val = ".";
             //this.doNotEmbedSmartTagsField = new CT_OnOff();
@@ -2149,17 +2149,17 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private byte[] saltField;
         public static CT_WriteProtection Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_WriteProtection ctObj = new CT_WriteProtection();
-            if (node.Attributes["w:recommended"] != null)
-                ctObj.recommended = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:recommended"].Value,true);
-            if (node.Attributes["w:cryptProviderType"] != null)
-                ctObj.cryptProviderType = (ST_CryptProv)Enum.Parse(typeof(ST_CryptProv), node.Attributes["w:cryptProviderType"].Value);
-            if (node.Attributes["w:cryptAlgorithmClass"] != null)
-                ctObj.cryptAlgorithmClass = (ST_AlgClass)Enum.Parse(typeof(ST_AlgClass), node.Attributes["w:cryptAlgorithmClass"].Value);
-            if (node.Attributes["w:cryptAlgorithmType"] != null)
-                ctObj.cryptAlgorithmType = (ST_AlgType)Enum.Parse(typeof(ST_AlgType), node.Attributes["w:cryptAlgorithmType"].Value);
+            if(node.Attributes["w:recommended"] != null)
+                ctObj.recommended = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:recommended"].Value, true);
+            if(node.Attributes["w:cryptProviderType"] != null)
+                ctObj.cryptProviderType = (ST_CryptProv) Enum.Parse(typeof(ST_CryptProv), node.Attributes["w:cryptProviderType"].Value);
+            if(node.Attributes["w:cryptAlgorithmClass"] != null)
+                ctObj.cryptAlgorithmClass = (ST_AlgClass) Enum.Parse(typeof(ST_AlgClass), node.Attributes["w:cryptAlgorithmClass"].Value);
+            if(node.Attributes["w:cryptAlgorithmType"] != null)
+                ctObj.cryptAlgorithmType = (ST_AlgType) Enum.Parse(typeof(ST_AlgType), node.Attributes["w:cryptAlgorithmType"].Value);
             ctObj.cryptAlgorithmSid = XmlHelper.ReadString(node.Attributes["w:cryptAlgorithmSid"]);
             ctObj.cryptSpinCount = XmlHelper.ReadString(node.Attributes["w:cryptSpinCount"]);
             ctObj.cryptProvider = XmlHelper.ReadString(node.Attributes["w:cryptProvider"]);
@@ -2422,10 +2422,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_CryptProv
     {
 
-    
+
         rsaAES,
 
-    
+
         rsaFull,
     }
 
@@ -2435,7 +2435,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_AlgClass
     {
 
-    
+
         hash,
     }
 
@@ -2445,7 +2445,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_AlgType
     {
 
-    
+
         typeAny,
     }
 
@@ -2460,11 +2460,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_View valField;
         public static CT_View Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_View ctObj = new CT_View();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_View)Enum.Parse(typeof(ST_View), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_View) Enum.Parse(typeof(ST_View), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -2498,22 +2498,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_View
     {
 
-    
+
         none,
 
-    
+
         print,
 
-    
+
         outline,
 
-    
+
         masterPages,
 
-    
+
         normal,
 
-    
+
         web,
     }
 
@@ -2531,11 +2531,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Zoom Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Zoom ctObj = new CT_Zoom();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_Zoom)Enum.Parse(typeof(ST_Zoom), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_Zoom) Enum.Parse(typeof(ST_Zoom), node.Attributes["w:val"].Value);
             ctObj.percent = XmlHelper.ReadString(node.Attributes["w:percent"]);
             return ctObj;
         }
@@ -2545,7 +2545,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStartW(nodeName);
-            if (this.val!= ST_Zoom.none)
+            if(this.val!= ST_Zoom.none)
                 XmlHelper.WriteAttribute(sw, "w:val", this.val.ToString());
             XmlHelper.WriteAttribute(sw, "w:percent", this.percent);
             sw.Write("/>");
@@ -2603,16 +2603,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Zoom
     {
 
-    
+
         none,
 
-    
+
         fullPage,
 
-    
+
         bestFit,
 
-    
+
         textFit,
     }
 
@@ -2639,16 +2639,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string appNameField;
         public static CT_WritingStyle Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_WritingStyle ctObj = new CT_WritingStyle();
             ctObj.lang = XmlHelper.ReadString(node.Attributes["w:lang"]);
             ctObj.vendorID = XmlHelper.ReadString(node.Attributes["w:vendorID"]);
             ctObj.dllVersion = XmlHelper.ReadString(node.Attributes["w:dllVersion"]);
-            if (node.Attributes["w:nlCheck"] != null)
-                ctObj.nlCheck = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:nlCheck"].Value,true);
-            if (node.Attributes["w:checkStyle"] != null)
-                ctObj.checkStyle = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:checkStyle"].Value,true);
+            if(node.Attributes["w:nlCheck"] != null)
+                ctObj.nlCheck = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:nlCheck"].Value, true);
+            if(node.Attributes["w:checkStyle"] != null)
+                ctObj.checkStyle = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:checkStyle"].Value, true);
             ctObj.appName = XmlHelper.ReadString(node.Attributes["w:appName"]);
             return ctObj;
         }
@@ -2777,13 +2777,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool grammarFieldSpecified;
         public static CT_Proof Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Proof ctObj = new CT_Proof();
-            if (node.Attributes["w:spelling"] != null)
-                ctObj.spelling = (ST_Proof)Enum.Parse(typeof(ST_Proof), node.Attributes["w:spelling"].Value);
-            if (node.Attributes["w:grammar"] != null)
-                ctObj.grammar = (ST_Proof)Enum.Parse(typeof(ST_Proof), node.Attributes["w:grammar"].Value);
+            if(node.Attributes["w:spelling"] != null)
+                ctObj.spelling = (ST_Proof) Enum.Parse(typeof(ST_Proof), node.Attributes["w:spelling"].Value);
+            if(node.Attributes["w:grammar"] != null)
+                ctObj.grammar = (ST_Proof) Enum.Parse(typeof(ST_Proof), node.Attributes["w:grammar"].Value);
             return ctObj;
         }
 
@@ -2856,10 +2856,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Proof
     {
 
-    
+
         clean,
 
-    
+
         dirty,
     }
 
@@ -2874,11 +2874,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_DocType valField;
         public static CT_DocType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DocType ctObj = new CT_DocType();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_DocType)Enum.Parse(typeof(ST_DocType), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_DocType) Enum.Parse(typeof(ST_DocType), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -2912,13 +2912,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_DocType
     {
 
-    
+
         notSpecified,
 
-    
+
         letter,
 
-    
+
         eMail,
     }
 
@@ -2963,42 +2963,42 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_Odso odsoField;
         public static CT_MailMerge Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MailMerge ctObj = new CT_MailMerge();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "mainDocumentType")
+                if(childNode.LocalName == "mainDocumentType")
                     ctObj.mainDocumentType = CT_MailMergeDocType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "linkToQuery")
+                else if(childNode.LocalName == "linkToQuery")
                     ctObj.linkToQuery = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dataType")
+                else if(childNode.LocalName == "dataType")
                     ctObj.dataType = CT_MailMergeDataType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "connectString")
+                else if(childNode.LocalName == "connectString")
                     ctObj.connectString = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "query")
+                else if(childNode.LocalName == "query")
                     ctObj.query = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dataSource")
+                else if(childNode.LocalName == "dataSource")
                     ctObj.dataSource = CT_Rel.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "headerSource")
+                else if(childNode.LocalName == "headerSource")
                     ctObj.headerSource = CT_Rel.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotSuppressBlankLines")
+                else if(childNode.LocalName == "doNotSuppressBlankLines")
                     ctObj.doNotSuppressBlankLines = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "destination")
+                else if(childNode.LocalName == "destination")
                     ctObj.destination = CT_MailMergeDest.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "addressFieldName")
+                else if(childNode.LocalName == "addressFieldName")
                     ctObj.addressFieldName = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mailSubject")
+                else if(childNode.LocalName == "mailSubject")
                     ctObj.mailSubject = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mailAsAttachment")
+                else if(childNode.LocalName == "mailAsAttachment")
                     ctObj.mailAsAttachment = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "viewMergedData")
+                else if(childNode.LocalName == "viewMergedData")
                     ctObj.viewMergedData = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "activeRecord")
+                else if(childNode.LocalName == "activeRecord")
                     ctObj.activeRecord = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "checkErrors")
+                else if(childNode.LocalName == "checkErrors")
                     ctObj.checkErrors = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "odso")
+                else if(childNode.LocalName == "odso")
                     ctObj.odso = CT_Odso.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -3010,37 +3010,37 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.mainDocumentType != null)
+            if(this.mainDocumentType != null)
                 this.mainDocumentType.Write(sw, "mainDocumentType");
-            if (this.linkToQuery != null)
+            if(this.linkToQuery != null)
                 this.linkToQuery.Write(sw, "linkToQuery");
-            if (this.dataType != null)
+            if(this.dataType != null)
                 this.dataType.Write(sw, "dataType");
-            if (this.connectString != null)
+            if(this.connectString != null)
                 this.connectString.Write(sw, "connectString");
-            if (this.query != null)
+            if(this.query != null)
                 this.query.Write(sw, "query");
-            if (this.dataSource != null)
+            if(this.dataSource != null)
                 this.dataSource.Write(sw, "dataSource");
-            if (this.headerSource != null)
+            if(this.headerSource != null)
                 this.headerSource.Write(sw, "headerSource");
-            if (this.doNotSuppressBlankLines != null)
+            if(this.doNotSuppressBlankLines != null)
                 this.doNotSuppressBlankLines.Write(sw, "doNotSuppressBlankLines");
-            if (this.destination != null)
+            if(this.destination != null)
                 this.destination.Write(sw, "destination");
-            if (this.addressFieldName != null)
+            if(this.addressFieldName != null)
                 this.addressFieldName.Write(sw, "addressFieldName");
-            if (this.mailSubject != null)
+            if(this.mailSubject != null)
                 this.mailSubject.Write(sw, "mailSubject");
-            if (this.mailAsAttachment != null)
+            if(this.mailAsAttachment != null)
                 this.mailAsAttachment.Write(sw, "mailAsAttachment");
-            if (this.viewMergedData != null)
+            if(this.viewMergedData != null)
                 this.viewMergedData.Write(sw, "viewMergedData");
-            if (this.activeRecord != null)
+            if(this.activeRecord != null)
                 this.activeRecord.Write(sw, "activeRecord");
-            if (this.checkErrors != null)
+            if(this.checkErrors != null)
                 this.checkErrors.Write(sw, "checkErrors");
-            if (this.odso != null)
+            if(this.odso != null)
                 this.odso.Write(sw, "odso");
             sw.WriteEndW(nodeName);
         }
@@ -3285,11 +3285,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_MailMergeDocType valField;
         public static CT_MailMergeDocType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MailMergeDocType ctObj = new CT_MailMergeDocType();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_MailMergeDocType)Enum.Parse(typeof(ST_MailMergeDocType), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_MailMergeDocType) Enum.Parse(typeof(ST_MailMergeDocType), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -3323,22 +3323,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_MailMergeDocType
     {
 
-    
+
         catalog,
 
-    
+
         envelopes,
 
-    
+
         mailingLabels,
 
-    
+
         formLetters,
 
-    
+
         email,
 
-    
+
         fax,
     }
 
@@ -3353,11 +3353,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_MailMergeDataType valField;
         public static CT_MailMergeDataType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MailMergeDataType ctObj = new CT_MailMergeDataType();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_MailMergeDataType)Enum.Parse(typeof(ST_MailMergeDataType), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_MailMergeDataType) Enum.Parse(typeof(ST_MailMergeDataType), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -3391,22 +3391,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_MailMergeDataType
     {
 
-    
+
         textFile,
 
-    
+
         database,
 
-    
+
         spreadsheet,
 
-    
+
         query,
 
-    
+
         odbc,
 
-    
+
         native,
     }
 
@@ -3421,11 +3421,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_MailMergeDest valField;
         public static CT_MailMergeDest Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MailMergeDest ctObj = new CT_MailMergeDest();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_MailMergeDest)Enum.Parse(typeof(ST_MailMergeDest), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_MailMergeDest) Enum.Parse(typeof(ST_MailMergeDest), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -3459,16 +3459,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_MailMergeDest
     {
 
-    
+
         newDocument,
 
-    
+
         printer,
 
-    
+
         email,
 
-    
+
         fax,
     }
 
@@ -3509,28 +3509,28 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Odso Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Odso ctObj = new CT_Odso();
             ctObj.fieldMapData = new List<CT_OdsoFieldMapData>();
             ctObj.recipientData = new List<CT_Rel>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "udl")
+                if(childNode.LocalName == "udl")
                     ctObj.udl = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "table")
+                else if(childNode.LocalName == "table")
                     ctObj.table = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "src")
+                else if(childNode.LocalName == "src")
                     ctObj.src = CT_Rel.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "colDelim")
+                else if(childNode.LocalName == "colDelim")
                     ctObj.colDelim = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "type")
+                else if(childNode.LocalName == "type")
                     ctObj.type = CT_MailMergeSourceType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fHdr")
+                else if(childNode.LocalName == "fHdr")
                     ctObj.fHdr = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fieldMapData")
+                else if(childNode.LocalName == "fieldMapData")
                     ctObj.fieldMapData.Add(CT_OdsoFieldMapData.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "recipientData")
+                else if(childNode.LocalName == "recipientData")
                     ctObj.recipientData.Add(CT_Rel.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -3542,28 +3542,28 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.udl != null)
+            if(this.udl != null)
                 this.udl.Write(sw, "udl");
-            if (this.table != null)
+            if(this.table != null)
                 this.table.Write(sw, "table");
-            if (this.src != null)
+            if(this.src != null)
                 this.src.Write(sw, "src");
-            if (this.colDelim != null)
+            if(this.colDelim != null)
                 this.colDelim.Write(sw, "colDelim");
-            if (this.type != null)
+            if(this.type != null)
                 this.type.Write(sw, "type");
-            if (this.fHdr != null)
+            if(this.fHdr != null)
                 this.fHdr.Write(sw, "fHdr");
-            if (this.fieldMapData != null)
+            if(this.fieldMapData != null)
             {
-                foreach (CT_OdsoFieldMapData x in this.fieldMapData)
+                foreach(CT_OdsoFieldMapData x in this.fieldMapData)
                 {
                     x.Write(sw, "fieldMapData");
                 }
             }
-            if (this.recipientData != null)
+            if(this.recipientData != null)
             {
-                foreach (CT_Rel x in this.recipientData)
+                foreach(CT_Rel x in this.recipientData)
                 {
                     x.Write(sw, "recipientData");
                 }
@@ -3688,11 +3688,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_MailMergeSourceType valField;
         public static CT_MailMergeSourceType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MailMergeSourceType ctObj = new CT_MailMergeSourceType();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_MailMergeSourceType)Enum.Parse(typeof(ST_MailMergeSourceType), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_MailMergeSourceType) Enum.Parse(typeof(ST_MailMergeSourceType), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -3726,31 +3726,31 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_MailMergeSourceType
     {
 
-    
+
         database,
 
-    
+
         addressBook,
 
-    
+
         document1,
 
-    
+
         document2,
 
-    
+
         text,
 
-    
+
         email,
 
-    
+
         native,
 
-    
+
         legacy,
 
-    
+
         master,
     }
 
@@ -3775,22 +3775,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_OnOff dynamicAddressField;
         public static CT_OdsoFieldMapData Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_OdsoFieldMapData ctObj = new CT_OdsoFieldMapData();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "type")
+                if(childNode.LocalName == "type")
                     ctObj.type = CT_MailMergeOdsoFMDFieldType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "name")
+                else if(childNode.LocalName == "name")
                     ctObj.name = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mappedName")
+                else if(childNode.LocalName == "mappedName")
                     ctObj.mappedName = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "column")
+                else if(childNode.LocalName == "column")
                     ctObj.column = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lid")
+                else if(childNode.LocalName == "lid")
                     ctObj.lid = CT_Lang.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "dynamicAddress")
+                else if(childNode.LocalName == "dynamicAddress")
                     ctObj.dynamicAddress = CT_OnOff.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -3802,17 +3802,17 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.type != null)
+            if(this.type != null)
                 this.type.Write(sw, "type");
-            if (this.name != null)
+            if(this.name != null)
                 this.name.Write(sw, "name");
-            if (this.mappedName != null)
+            if(this.mappedName != null)
                 this.mappedName.Write(sw, "mappedName");
-            if (this.column != null)
+            if(this.column != null)
                 this.column.Write(sw, "column");
-            if (this.lid != null)
+            if(this.lid != null)
                 this.lid.Write(sw, "lid");
-            if (this.dynamicAddress != null)
+            if(this.dynamicAddress != null)
                 this.dynamicAddress.Write(sw, "dynamicAddress");
             sw.WriteEndW(nodeName);
         }
@@ -3917,11 +3917,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_MailMergeOdsoFMDFieldType valField;
         public static CT_MailMergeOdsoFMDFieldType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MailMergeOdsoFMDFieldType ctObj = new CT_MailMergeOdsoFMDFieldType();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_MailMergeOdsoFMDFieldType)Enum.Parse(typeof(ST_MailMergeOdsoFMDFieldType), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_MailMergeOdsoFMDFieldType) Enum.Parse(typeof(ST_MailMergeOdsoFMDFieldType), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -3955,10 +3955,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_MailMergeOdsoFMDFieldType
     {
 
-    
+
         @null,
 
-    
+
         dbColumn,
     }
 
@@ -3994,19 +3994,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool inkAnnotationsFieldSpecified;
         public static CT_TrackChangesView Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TrackChangesView ctObj = new CT_TrackChangesView();
-            if (node.Attributes["w:markup"] != null)
-                ctObj.markup = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:markup"].Value,true);
-            if (node.Attributes["w:comments"] != null)
-                ctObj.comments = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:comments"].Value,true);
-            if (node.Attributes["w:insDel"] != null)
-                ctObj.insDel = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:insDel"].Value,true);
-            if (node.Attributes["w:formatting"] != null)
-                ctObj.formatting = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:formatting"].Value,true);
-            if (node.Attributes["w:inkAnnotations"] != null)
-                ctObj.inkAnnotations = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:inkAnnotations"].Value,true);
+            if(node.Attributes["w:markup"] != null)
+                ctObj.markup = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:markup"].Value, true);
+            if(node.Attributes["w:comments"] != null)
+                ctObj.comments = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:comments"].Value, true);
+            if(node.Attributes["w:insDel"] != null)
+                ctObj.insDel = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:insDel"].Value, true);
+            if(node.Attributes["w:formatting"] != null)
+                ctObj.formatting = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:formatting"].Value, true);
+            if(node.Attributes["w:inkAnnotations"] != null)
+                ctObj.inkAnnotations = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:inkAnnotations"].Value, true);
             return ctObj;
         }
 
@@ -4206,21 +4206,21 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string saltField;
         public static CT_DocProtect Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DocProtect ctObj = new CT_DocProtect();
-            if (node.Attributes["w:edit"] != null)
-                ctObj.edit = (ST_DocProtect)Enum.Parse(typeof(ST_DocProtect), node.Attributes["w:edit"].Value);
-            if (node.Attributes["w:formatting"] != null)
-                ctObj.formatting = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:formatting"].Value,true);
-            if (node.Attributes["w:enforcement"] != null)
-                ctObj.enforcement = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:enforcement"].Value,true);
-            if (node.Attributes["w:cryptProviderType"] != null)
-                ctObj.cryptProviderType = (ST_CryptProv)Enum.Parse(typeof(ST_CryptProv), node.Attributes["w:cryptProviderType"].Value);
-            if (node.Attributes["w:cryptAlgorithmClass"] != null)
-                ctObj.cryptAlgorithmClass = (ST_AlgClass)Enum.Parse(typeof(ST_AlgClass), node.Attributes["w:cryptAlgorithmClass"].Value);
-            if (node.Attributes["w:cryptAlgorithmType"] != null)
-                ctObj.cryptAlgorithmType = (ST_AlgType)Enum.Parse(typeof(ST_AlgType), node.Attributes["w:cryptAlgorithmType"].Value);
+            if(node.Attributes["w:edit"] != null)
+                ctObj.edit = (ST_DocProtect) Enum.Parse(typeof(ST_DocProtect), node.Attributes["w:edit"].Value);
+            if(node.Attributes["w:formatting"] != null)
+                ctObj.formatting = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:formatting"].Value, true);
+            if(node.Attributes["w:enforcement"] != null)
+                ctObj.enforcement = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:enforcement"].Value, true);
+            if(node.Attributes["w:cryptProviderType"] != null)
+                ctObj.cryptProviderType = (ST_CryptProv) Enum.Parse(typeof(ST_CryptProv), node.Attributes["w:cryptProviderType"].Value);
+            if(node.Attributes["w:cryptAlgorithmClass"] != null)
+                ctObj.cryptAlgorithmClass = (ST_AlgClass) Enum.Parse(typeof(ST_AlgClass), node.Attributes["w:cryptAlgorithmClass"].Value);
+            if(node.Attributes["w:cryptAlgorithmType"] != null)
+                ctObj.cryptAlgorithmType = (ST_AlgType) Enum.Parse(typeof(ST_AlgType), node.Attributes["w:cryptAlgorithmType"].Value);
             ctObj.cryptAlgorithmSid = XmlHelper.ReadString(node.Attributes["w:cryptAlgorithmSid"]);
             ctObj.cryptSpinCount = XmlHelper.ReadString(node.Attributes["w:cryptSpinCount"]);
             ctObj.cryptProvider = XmlHelper.ReadString(node.Attributes["w:cryptProvider"]);
@@ -4241,11 +4241,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:edit", this.edit.ToString());
             XmlHelper.WriteAttribute(sw, "w:formatting", this.formatting.ToString());
             XmlHelper.WriteAttribute(sw, "w:enforcement", this.enforcement.ToString());
-            if (this.cryptProviderType != null)
+            if(this.cryptProviderType != null)
                 XmlHelper.WriteAttribute(sw, "w:cryptProviderType", this.cryptProviderType.ToString());
-            if (this.cryptAlgorithmClass != null)
+            if(this.cryptAlgorithmClass != null)
                 XmlHelper.WriteAttribute(sw, "w:cryptAlgorithmClass", this.cryptAlgorithmClass.ToString());
-            if (this.cryptAlgorithmType != null)
+            if(this.cryptAlgorithmType != null)
                 XmlHelper.WriteAttribute(sw, "w:cryptAlgorithmType", this.cryptAlgorithmType.ToString());
             XmlHelper.WriteAttribute(sw, "w:cryptAlgorithmSid", this.cryptAlgorithmSid);
             XmlHelper.WriteAttribute(sw, "w:cryptSpinCount", this.cryptSpinCount);
@@ -4557,19 +4557,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_DocProtect
     {
 
-    
+
         none,
 
-    
+
         readOnly,
 
-    
+
         comments,
 
-    
+
         trackedChanges,
 
-    
+
         forms,
     }
 
@@ -4586,11 +4586,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_CharacterSpacing valField;
         public static CT_CharacterSpacing Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_CharacterSpacing ctObj = new CT_CharacterSpacing();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_CharacterSpacing)Enum.Parse(typeof(ST_CharacterSpacing), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_CharacterSpacing) Enum.Parse(typeof(ST_CharacterSpacing), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -4623,13 +4623,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_CharacterSpacing
     {
 
-    
+
         doNotCompress,
 
-    
+
         compressPunctuation,
 
-    
+
         compressPunctuationAndJapaneseKana,
     }
 
@@ -4646,7 +4646,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string valField;
         public static CT_Kinsoku Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Kinsoku ctObj = new CT_Kinsoku();
             ctObj.lang = XmlHelper.ReadString(node.Attributes["w:lang"]);
@@ -4705,7 +4705,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string solutionIDField;
         public static CT_SaveThroughXslt Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SaveThroughXslt ctObj = new CT_SaveThroughXslt();
             ctObj.id = XmlHelper.ReadString(node.Attributes["r:id"]);
@@ -4890,140 +4890,140 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_OnOff cachedColBalanceField;
         public static CT_Compat Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Compat ctObj = new CT_Compat();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "useSingleBorderforContiguousCells")
+                if(childNode.LocalName == "useSingleBorderforContiguousCells")
                     ctObj.useSingleBorderforContiguousCells = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "wpJustification")
+                else if(childNode.LocalName == "wpJustification")
                     ctObj.wpJustification = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noTabHangInd")
+                else if(childNode.LocalName == "noTabHangInd")
                     ctObj.noTabHangInd = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noLeading")
+                else if(childNode.LocalName == "noLeading")
                     ctObj.noLeading = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spaceForUL")
+                else if(childNode.LocalName == "spaceForUL")
                     ctObj.spaceForUL = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noColumnBalance")
+                else if(childNode.LocalName == "noColumnBalance")
                     ctObj.noColumnBalance = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "balanceSingleByteDoubleByteWidth")
+                else if(childNode.LocalName == "balanceSingleByteDoubleByteWidth")
                     ctObj.balanceSingleByteDoubleByteWidth = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noExtraLineSpacing")
+                else if(childNode.LocalName == "noExtraLineSpacing")
                     ctObj.noExtraLineSpacing = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotLeaveBackslashAlone")
+                else if(childNode.LocalName == "doNotLeaveBackslashAlone")
                     ctObj.doNotLeaveBackslashAlone = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ulTrailSpace")
+                else if(childNode.LocalName == "ulTrailSpace")
                     ctObj.ulTrailSpace = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotExpandShiftReturn")
+                else if(childNode.LocalName == "doNotExpandShiftReturn")
                     ctObj.doNotExpandShiftReturn = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "spacingInWholePoints")
+                else if(childNode.LocalName == "spacingInWholePoints")
                     ctObj.spacingInWholePoints = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lineWrapLikeWord6")
+                else if(childNode.LocalName == "lineWrapLikeWord6")
                     ctObj.lineWrapLikeWord6 = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "printBodyTextBeforeHeader")
+                else if(childNode.LocalName == "printBodyTextBeforeHeader")
                     ctObj.printBodyTextBeforeHeader = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "printColBlack")
+                else if(childNode.LocalName == "printColBlack")
                     ctObj.printColBlack = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "wpSpaceWidth")
+                else if(childNode.LocalName == "wpSpaceWidth")
                     ctObj.wpSpaceWidth = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "showBreaksInFrames")
+                else if(childNode.LocalName == "showBreaksInFrames")
                     ctObj.showBreaksInFrames = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "subFontBySize")
+                else if(childNode.LocalName == "subFontBySize")
                     ctObj.subFontBySize = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "suppressBottomSpacing")
+                else if(childNode.LocalName == "suppressBottomSpacing")
                     ctObj.suppressBottomSpacing = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "suppressTopSpacing")
+                else if(childNode.LocalName == "suppressTopSpacing")
                     ctObj.suppressTopSpacing = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "suppressSpacingAtTopOfPage")
+                else if(childNode.LocalName == "suppressSpacingAtTopOfPage")
                     ctObj.suppressSpacingAtTopOfPage = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "suppressTopSpacingWP")
+                else if(childNode.LocalName == "suppressTopSpacingWP")
                     ctObj.suppressTopSpacingWP = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "suppressSpBfAfterPgBrk")
+                else if(childNode.LocalName == "suppressSpBfAfterPgBrk")
                     ctObj.suppressSpBfAfterPgBrk = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "swapBordersFacingPages")
+                else if(childNode.LocalName == "swapBordersFacingPages")
                     ctObj.swapBordersFacingPages = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "convMailMergeEsc")
+                else if(childNode.LocalName == "convMailMergeEsc")
                     ctObj.convMailMergeEsc = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "truncateFontHeightsLikeWP6")
+                else if(childNode.LocalName == "truncateFontHeightsLikeWP6")
                     ctObj.truncateFontHeightsLikeWP6 = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "mwSmallCaps")
+                else if(childNode.LocalName == "mwSmallCaps")
                     ctObj.mwSmallCaps = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "usePrinterMetrics")
+                else if(childNode.LocalName == "usePrinterMetrics")
                     ctObj.usePrinterMetrics = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotSuppressParagraphBorders")
+                else if(childNode.LocalName == "doNotSuppressParagraphBorders")
                     ctObj.doNotSuppressParagraphBorders = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "wrapTrailSpaces")
+                else if(childNode.LocalName == "wrapTrailSpaces")
                     ctObj.wrapTrailSpaces = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "footnoteLayoutLikeWW8")
+                else if(childNode.LocalName == "footnoteLayoutLikeWW8")
                     ctObj.footnoteLayoutLikeWW8 = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shapeLayoutLikeWW8")
+                else if(childNode.LocalName == "shapeLayoutLikeWW8")
                     ctObj.shapeLayoutLikeWW8 = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "alignTablesRowByRow")
+                else if(childNode.LocalName == "alignTablesRowByRow")
                     ctObj.alignTablesRowByRow = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "forgetLastTabAlignment")
+                else if(childNode.LocalName == "forgetLastTabAlignment")
                     ctObj.forgetLastTabAlignment = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "adjustLineHeightInTable")
+                else if(childNode.LocalName == "adjustLineHeightInTable")
                     ctObj.adjustLineHeightInTable = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "autoSpaceLikeWord95")
+                else if(childNode.LocalName == "autoSpaceLikeWord95")
                     ctObj.autoSpaceLikeWord95 = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "noSpaceRaiseLower")
+                else if(childNode.LocalName == "noSpaceRaiseLower")
                     ctObj.noSpaceRaiseLower = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotUseHTMLParagraphAutoSpacing")
+                else if(childNode.LocalName == "doNotUseHTMLParagraphAutoSpacing")
                     ctObj.doNotUseHTMLParagraphAutoSpacing = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "layoutRawTableWidth")
+                else if(childNode.LocalName == "layoutRawTableWidth")
                     ctObj.layoutRawTableWidth = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "layoutTableRowsApart")
+                else if(childNode.LocalName == "layoutTableRowsApart")
                     ctObj.layoutTableRowsApart = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "useWord97LineBreakRules")
+                else if(childNode.LocalName == "useWord97LineBreakRules")
                     ctObj.useWord97LineBreakRules = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotBreakWrappedTables")
+                else if(childNode.LocalName == "doNotBreakWrappedTables")
                     ctObj.doNotBreakWrappedTables = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotSnapToGridInCell")
+                else if(childNode.LocalName == "doNotSnapToGridInCell")
                     ctObj.doNotSnapToGridInCell = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "selectFldWithFirstOrLastChar")
+                else if(childNode.LocalName == "selectFldWithFirstOrLastChar")
                     ctObj.selectFldWithFirstOrLastChar = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "applyBreakingRules")
+                else if(childNode.LocalName == "applyBreakingRules")
                     ctObj.applyBreakingRules = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotWrapTextWithPunct")
+                else if(childNode.LocalName == "doNotWrapTextWithPunct")
                     ctObj.doNotWrapTextWithPunct = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotUseEastAsianBreakRules")
+                else if(childNode.LocalName == "doNotUseEastAsianBreakRules")
                     ctObj.doNotUseEastAsianBreakRules = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "useWord2002TableStyleRules")
+                else if(childNode.LocalName == "useWord2002TableStyleRules")
                     ctObj.useWord2002TableStyleRules = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "growAutofit")
+                else if(childNode.LocalName == "growAutofit")
                     ctObj.growAutofit = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "useFELayout")
+                else if(childNode.LocalName == "useFELayout")
                     ctObj.useFELayout = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "useNormalStyleForList")
+                else if(childNode.LocalName == "useNormalStyleForList")
                     ctObj.useNormalStyleForList = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotUseIndentAsNumberingTabStop")
+                else if(childNode.LocalName == "doNotUseIndentAsNumberingTabStop")
                     ctObj.doNotUseIndentAsNumberingTabStop = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "useAltKinsokuLineBreakRules")
+                else if(childNode.LocalName == "useAltKinsokuLineBreakRules")
                     ctObj.useAltKinsokuLineBreakRules = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "allowSpaceOfSameStyleInTable")
+                else if(childNode.LocalName == "allowSpaceOfSameStyleInTable")
                     ctObj.allowSpaceOfSameStyleInTable = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotSuppressIndentation")
+                else if(childNode.LocalName == "doNotSuppressIndentation")
                     ctObj.doNotSuppressIndentation = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotAutofitConstrainedTables")
+                else if(childNode.LocalName == "doNotAutofitConstrainedTables")
                     ctObj.doNotAutofitConstrainedTables = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "autofitToFirstFixedWidthCell")
+                else if(childNode.LocalName == "autofitToFirstFixedWidthCell")
                     ctObj.autofitToFirstFixedWidthCell = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "underlineTabInNumList")
+                else if(childNode.LocalName == "underlineTabInNumList")
                     ctObj.underlineTabInNumList = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "displayHangulFixedWidth")
+                else if(childNode.LocalName == "displayHangulFixedWidth")
                     ctObj.displayHangulFixedWidth = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "splitPgBreakAndParaMark")
+                else if(childNode.LocalName == "splitPgBreakAndParaMark")
                     ctObj.splitPgBreakAndParaMark = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotVertAlignCellWithSp")
+                else if(childNode.LocalName == "doNotVertAlignCellWithSp")
                     ctObj.doNotVertAlignCellWithSp = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotBreakConstrainedForcedTable")
+                else if(childNode.LocalName == "doNotBreakConstrainedForcedTable")
                     ctObj.doNotBreakConstrainedForcedTable = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "doNotVertAlignInTxbx")
+                else if(childNode.LocalName == "doNotVertAlignInTxbx")
                     ctObj.doNotVertAlignInTxbx = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "useAnsiKerningPairs")
+                else if(childNode.LocalName == "useAnsiKerningPairs")
                     ctObj.useAnsiKerningPairs = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "cachedColBalance")
+                else if(childNode.LocalName == "cachedColBalance")
                     ctObj.cachedColBalance = CT_OnOff.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -5035,135 +5035,135 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.useSingleBorderforContiguousCells != null)
+            if(this.useSingleBorderforContiguousCells != null)
                 this.useSingleBorderforContiguousCells.Write(sw, "useSingleBorderforContiguousCells");
-            if (this.wpJustification != null)
+            if(this.wpJustification != null)
                 this.wpJustification.Write(sw, "wpJustification");
-            if (this.noTabHangInd != null)
+            if(this.noTabHangInd != null)
                 this.noTabHangInd.Write(sw, "noTabHangInd");
-            if (this.noLeading != null)
+            if(this.noLeading != null)
                 this.noLeading.Write(sw, "noLeading");
-            if (this.spaceForUL != null)
+            if(this.spaceForUL != null)
                 this.spaceForUL.Write(sw, "spaceForUL");
-            if (this.noColumnBalance != null)
+            if(this.noColumnBalance != null)
                 this.noColumnBalance.Write(sw, "noColumnBalance");
-            if (this.balanceSingleByteDoubleByteWidth != null)
+            if(this.balanceSingleByteDoubleByteWidth != null)
                 this.balanceSingleByteDoubleByteWidth.Write(sw, "balanceSingleByteDoubleByteWidth");
-            if (this.noExtraLineSpacing != null)
+            if(this.noExtraLineSpacing != null)
                 this.noExtraLineSpacing.Write(sw, "noExtraLineSpacing");
-            if (this.doNotLeaveBackslashAlone != null)
+            if(this.doNotLeaveBackslashAlone != null)
                 this.doNotLeaveBackslashAlone.Write(sw, "doNotLeaveBackslashAlone");
-            if (this.ulTrailSpace != null)
+            if(this.ulTrailSpace != null)
                 this.ulTrailSpace.Write(sw, "ulTrailSpace");
-            if (this.doNotExpandShiftReturn != null)
+            if(this.doNotExpandShiftReturn != null)
                 this.doNotExpandShiftReturn.Write(sw, "doNotExpandShiftReturn");
-            if (this.spacingInWholePoints != null)
+            if(this.spacingInWholePoints != null)
                 this.spacingInWholePoints.Write(sw, "spacingInWholePoints");
-            if (this.lineWrapLikeWord6 != null)
+            if(this.lineWrapLikeWord6 != null)
                 this.lineWrapLikeWord6.Write(sw, "lineWrapLikeWord6");
-            if (this.printBodyTextBeforeHeader != null)
+            if(this.printBodyTextBeforeHeader != null)
                 this.printBodyTextBeforeHeader.Write(sw, "printBodyTextBeforeHeader");
-            if (this.printColBlack != null)
+            if(this.printColBlack != null)
                 this.printColBlack.Write(sw, "printColBlack");
-            if (this.wpSpaceWidth != null)
+            if(this.wpSpaceWidth != null)
                 this.wpSpaceWidth.Write(sw, "wpSpaceWidth");
-            if (this.showBreaksInFrames != null)
+            if(this.showBreaksInFrames != null)
                 this.showBreaksInFrames.Write(sw, "showBreaksInFrames");
-            if (this.subFontBySize != null)
+            if(this.subFontBySize != null)
                 this.subFontBySize.Write(sw, "subFontBySize");
-            if (this.suppressBottomSpacing != null)
+            if(this.suppressBottomSpacing != null)
                 this.suppressBottomSpacing.Write(sw, "suppressBottomSpacing");
-            if (this.suppressTopSpacing != null)
+            if(this.suppressTopSpacing != null)
                 this.suppressTopSpacing.Write(sw, "suppressTopSpacing");
-            if (this.suppressSpacingAtTopOfPage != null)
+            if(this.suppressSpacingAtTopOfPage != null)
                 this.suppressSpacingAtTopOfPage.Write(sw, "suppressSpacingAtTopOfPage");
-            if (this.suppressTopSpacingWP != null)
+            if(this.suppressTopSpacingWP != null)
                 this.suppressTopSpacingWP.Write(sw, "suppressTopSpacingWP");
-            if (this.suppressSpBfAfterPgBrk != null)
+            if(this.suppressSpBfAfterPgBrk != null)
                 this.suppressSpBfAfterPgBrk.Write(sw, "suppressSpBfAfterPgBrk");
-            if (this.swapBordersFacingPages != null)
+            if(this.swapBordersFacingPages != null)
                 this.swapBordersFacingPages.Write(sw, "swapBordersFacingPages");
-            if (this.convMailMergeEsc != null)
+            if(this.convMailMergeEsc != null)
                 this.convMailMergeEsc.Write(sw, "convMailMergeEsc");
-            if (this.truncateFontHeightsLikeWP6 != null)
+            if(this.truncateFontHeightsLikeWP6 != null)
                 this.truncateFontHeightsLikeWP6.Write(sw, "truncateFontHeightsLikeWP6");
-            if (this.mwSmallCaps != null)
+            if(this.mwSmallCaps != null)
                 this.mwSmallCaps.Write(sw, "mwSmallCaps");
-            if (this.usePrinterMetrics != null)
+            if(this.usePrinterMetrics != null)
                 this.usePrinterMetrics.Write(sw, "usePrinterMetrics");
-            if (this.doNotSuppressParagraphBorders != null)
+            if(this.doNotSuppressParagraphBorders != null)
                 this.doNotSuppressParagraphBorders.Write(sw, "doNotSuppressParagraphBorders");
-            if (this.wrapTrailSpaces != null)
+            if(this.wrapTrailSpaces != null)
                 this.wrapTrailSpaces.Write(sw, "wrapTrailSpaces");
-            if (this.footnoteLayoutLikeWW8 != null)
+            if(this.footnoteLayoutLikeWW8 != null)
                 this.footnoteLayoutLikeWW8.Write(sw, "footnoteLayoutLikeWW8");
-            if (this.shapeLayoutLikeWW8 != null)
+            if(this.shapeLayoutLikeWW8 != null)
                 this.shapeLayoutLikeWW8.Write(sw, "shapeLayoutLikeWW8");
-            if (this.alignTablesRowByRow != null)
+            if(this.alignTablesRowByRow != null)
                 this.alignTablesRowByRow.Write(sw, "alignTablesRowByRow");
-            if (this.forgetLastTabAlignment != null)
+            if(this.forgetLastTabAlignment != null)
                 this.forgetLastTabAlignment.Write(sw, "forgetLastTabAlignment");
-            if (this.adjustLineHeightInTable != null)
+            if(this.adjustLineHeightInTable != null)
                 this.adjustLineHeightInTable.Write(sw, "adjustLineHeightInTable");
-            if (this.autoSpaceLikeWord95 != null)
+            if(this.autoSpaceLikeWord95 != null)
                 this.autoSpaceLikeWord95.Write(sw, "autoSpaceLikeWord95");
-            if (this.noSpaceRaiseLower != null)
+            if(this.noSpaceRaiseLower != null)
                 this.noSpaceRaiseLower.Write(sw, "noSpaceRaiseLower");
-            if (this.doNotUseHTMLParagraphAutoSpacing != null)
+            if(this.doNotUseHTMLParagraphAutoSpacing != null)
                 this.doNotUseHTMLParagraphAutoSpacing.Write(sw, "doNotUseHTMLParagraphAutoSpacing");
-            if (this.layoutRawTableWidth != null)
+            if(this.layoutRawTableWidth != null)
                 this.layoutRawTableWidth.Write(sw, "layoutRawTableWidth");
-            if (this.layoutTableRowsApart != null)
+            if(this.layoutTableRowsApart != null)
                 this.layoutTableRowsApart.Write(sw, "layoutTableRowsApart");
-            if (this.useWord97LineBreakRules != null)
+            if(this.useWord97LineBreakRules != null)
                 this.useWord97LineBreakRules.Write(sw, "useWord97LineBreakRules");
-            if (this.doNotBreakWrappedTables != null)
+            if(this.doNotBreakWrappedTables != null)
                 this.doNotBreakWrappedTables.Write(sw, "doNotBreakWrappedTables");
-            if (this.doNotSnapToGridInCell != null)
+            if(this.doNotSnapToGridInCell != null)
                 this.doNotSnapToGridInCell.Write(sw, "doNotSnapToGridInCell");
-            if (this.selectFldWithFirstOrLastChar != null)
+            if(this.selectFldWithFirstOrLastChar != null)
                 this.selectFldWithFirstOrLastChar.Write(sw, "selectFldWithFirstOrLastChar");
-            if (this.applyBreakingRules != null)
+            if(this.applyBreakingRules != null)
                 this.applyBreakingRules.Write(sw, "applyBreakingRules");
-            if (this.doNotWrapTextWithPunct != null)
+            if(this.doNotWrapTextWithPunct != null)
                 this.doNotWrapTextWithPunct.Write(sw, "doNotWrapTextWithPunct");
-            if (this.doNotUseEastAsianBreakRules != null)
+            if(this.doNotUseEastAsianBreakRules != null)
                 this.doNotUseEastAsianBreakRules.Write(sw, "doNotUseEastAsianBreakRules");
-            if (this.useWord2002TableStyleRules != null)
+            if(this.useWord2002TableStyleRules != null)
                 this.useWord2002TableStyleRules.Write(sw, "useWord2002TableStyleRules");
-            if (this.growAutofit != null)
+            if(this.growAutofit != null)
                 this.growAutofit.Write(sw, "growAutofit");
-            if (this.useFELayout != null)
+            if(this.useFELayout != null)
                 this.useFELayout.Write(sw, "useFELayout");
-            if (this.useNormalStyleForList != null)
+            if(this.useNormalStyleForList != null)
                 this.useNormalStyleForList.Write(sw, "useNormalStyleForList");
-            if (this.doNotUseIndentAsNumberingTabStop != null)
+            if(this.doNotUseIndentAsNumberingTabStop != null)
                 this.doNotUseIndentAsNumberingTabStop.Write(sw, "doNotUseIndentAsNumberingTabStop");
-            if (this.useAltKinsokuLineBreakRules != null)
+            if(this.useAltKinsokuLineBreakRules != null)
                 this.useAltKinsokuLineBreakRules.Write(sw, "useAltKinsokuLineBreakRules");
-            if (this.allowSpaceOfSameStyleInTable != null)
+            if(this.allowSpaceOfSameStyleInTable != null)
                 this.allowSpaceOfSameStyleInTable.Write(sw, "allowSpaceOfSameStyleInTable");
-            if (this.doNotSuppressIndentation != null)
+            if(this.doNotSuppressIndentation != null)
                 this.doNotSuppressIndentation.Write(sw, "doNotSuppressIndentation");
-            if (this.doNotAutofitConstrainedTables != null)
+            if(this.doNotAutofitConstrainedTables != null)
                 this.doNotAutofitConstrainedTables.Write(sw, "doNotAutofitConstrainedTables");
-            if (this.autofitToFirstFixedWidthCell != null)
+            if(this.autofitToFirstFixedWidthCell != null)
                 this.autofitToFirstFixedWidthCell.Write(sw, "autofitToFirstFixedWidthCell");
-            if (this.underlineTabInNumList != null)
+            if(this.underlineTabInNumList != null)
                 this.underlineTabInNumList.Write(sw, "underlineTabInNumList");
-            if (this.displayHangulFixedWidth != null)
+            if(this.displayHangulFixedWidth != null)
                 this.displayHangulFixedWidth.Write(sw, "displayHangulFixedWidth");
-            if (this.splitPgBreakAndParaMark != null)
+            if(this.splitPgBreakAndParaMark != null)
                 this.splitPgBreakAndParaMark.Write(sw, "splitPgBreakAndParaMark");
-            if (this.doNotVertAlignCellWithSp != null)
+            if(this.doNotVertAlignCellWithSp != null)
                 this.doNotVertAlignCellWithSp.Write(sw, "doNotVertAlignCellWithSp");
-            if (this.doNotBreakConstrainedForcedTable != null)
+            if(this.doNotBreakConstrainedForcedTable != null)
                 this.doNotBreakConstrainedForcedTable.Write(sw, "doNotBreakConstrainedForcedTable");
-            if (this.doNotVertAlignInTxbx != null)
+            if(this.doNotVertAlignInTxbx != null)
                 this.doNotVertAlignInTxbx.Write(sw, "doNotVertAlignInTxbx");
-            if (this.useAnsiKerningPairs != null)
+            if(this.useAnsiKerningPairs != null)
                 this.useAnsiKerningPairs.Write(sw, "useAnsiKerningPairs");
-            if (this.cachedColBalance != null)
+            if(this.cachedColBalance != null)
                 this.cachedColBalance.Write(sw, "cachedColBalance");
             sw.WriteEndW(nodeName);
         }
@@ -6096,7 +6096,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string valField;
         public static CT_DocVar Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DocVar ctObj = new CT_DocVar();
 
@@ -6163,15 +6163,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_DocRsids Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_DocRsids ctObj = new CT_DocRsids();
             ctObj.rsid = new List<CT_LongHexNumber>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "rsidRoot")
+                if(childNode.LocalName == "rsidRoot")
                     ctObj.rsidRoot = CT_LongHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "rsid")
+                else if(childNode.LocalName == "rsid")
                     ctObj.rsid.Add(CT_LongHexNumber.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -6183,11 +6183,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.rsidRoot != null)
+            if(this.rsidRoot != null)
                 this.rsidRoot.Write(sw, "rsidRoot");
-            if (this.rsid != null)
+            if(this.rsid != null)
             {
-                foreach (CT_LongHexNumber x in this.rsid)
+                foreach(CT_LongHexNumber x in this.rsid)
                 {
                     x.Write(sw, "rsid");
                 }
@@ -6282,33 +6282,33 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool followedHyperlinkFieldSpecified;
         public static CT_ColorSchemeMapping Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ColorSchemeMapping ctObj = new CT_ColorSchemeMapping();
-            if (node.Attributes["w:bg1"] != null)
-                ctObj.bg1 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:bg1"].Value);
-            if (node.Attributes["w:t1"] != null)
-                ctObj.t1 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:t1"].Value);
-            if (node.Attributes["w:bg2"] != null)
-                ctObj.bg2 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:bg2"].Value);
-            if (node.Attributes["w:t2"] != null)
-                ctObj.t2 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:t2"].Value);
-            if (node.Attributes["w:accent1"] != null)
-                ctObj.accent1 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent1"].Value);
-            if (node.Attributes["w:accent2"] != null)
-                ctObj.accent2 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent2"].Value);
-            if (node.Attributes["w:accent3"] != null)
-                ctObj.accent3 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent3"].Value);
-            if (node.Attributes["w:accent4"] != null)
-                ctObj.accent4 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent4"].Value);
-            if (node.Attributes["w:accent5"] != null)
-                ctObj.accent5 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent5"].Value);
-            if (node.Attributes["w:accent6"] != null)
-                ctObj.accent6 = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent6"].Value);
-            if (node.Attributes["w:hyperlink"] != null)
-                ctObj.hyperlink = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:hyperlink"].Value);
-            if (node.Attributes["w:followedHyperlink"] != null)
-                ctObj.followedHyperlink = (ST_ColorSchemeIndex)Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:followedHyperlink"].Value);
+            if(node.Attributes["w:bg1"] != null)
+                ctObj.bg1 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:bg1"].Value);
+            if(node.Attributes["w:t1"] != null)
+                ctObj.t1 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:t1"].Value);
+            if(node.Attributes["w:bg2"] != null)
+                ctObj.bg2 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:bg2"].Value);
+            if(node.Attributes["w:t2"] != null)
+                ctObj.t2 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:t2"].Value);
+            if(node.Attributes["w:accent1"] != null)
+                ctObj.accent1 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent1"].Value);
+            if(node.Attributes["w:accent2"] != null)
+                ctObj.accent2 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent2"].Value);
+            if(node.Attributes["w:accent3"] != null)
+                ctObj.accent3 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent3"].Value);
+            if(node.Attributes["w:accent4"] != null)
+                ctObj.accent4 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent4"].Value);
+            if(node.Attributes["w:accent5"] != null)
+                ctObj.accent5 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent5"].Value);
+            if(node.Attributes["w:accent6"] != null)
+                ctObj.accent6 = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:accent6"].Value);
+            if(node.Attributes["w:hyperlink"] != null)
+                ctObj.hyperlink = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:hyperlink"].Value);
+            if(node.Attributes["w:followedHyperlink"] != null)
+                ctObj.followedHyperlink = (ST_ColorSchemeIndex) Enum.Parse(typeof(ST_ColorSchemeIndex), node.Attributes["w:followedHyperlink"].Value);
             return ctObj;
         }
 
@@ -6651,40 +6651,40 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_ColorSchemeIndex
     {
 
-    
+
         dark1,
 
-    
+
         light1,
 
-    
+
         dark2,
 
-    
+
         light2,
 
-    
+
         accent1,
 
-    
+
         accent2,
 
-    
+
         accent3,
 
-    
+
         accent4,
 
-    
+
         accent5,
 
-    
+
         accent6,
 
-    
+
         hyperlink,
 
-    
+
         followedHyperlink,
     }
 
@@ -6709,16 +6709,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Captions Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Captions ctObj = new CT_Captions();
             ctObj.caption = new List<CT_Caption>();
             ctObj.autoCaptions = new List<CT_AutoCaption>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "caption")
+                if(childNode.LocalName == "caption")
                     ctObj.caption.Add(CT_Caption.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "autoCaptions")
+                else if(childNode.LocalName == "autoCaptions")
                     ctObj.autoCaptions.Add(CT_AutoCaption.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -6730,16 +6730,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.caption != null)
+            if(this.caption != null)
             {
-                foreach (CT_Caption x in this.caption)
+                foreach(CT_Caption x in this.caption)
                 {
                     x.Write(sw, "caption");
                 }
             }
-            if (this.autoCaptions != null)
+            if(this.autoCaptions != null)
             {
-                foreach (CT_AutoCaption x in this.autoCaptions)
+                foreach(CT_AutoCaption x in this.autoCaptions)
                 {
                     x.Write(sw, "autoCaptions");
                 }
@@ -6808,21 +6808,21 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private bool sepFieldSpecified;
         public static CT_Caption Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Caption ctObj = new CT_Caption();
             ctObj.name = XmlHelper.ReadString(node.Attributes["w:name"]);
-            if (node.Attributes["w:pos"] != null)
-                ctObj.pos = (ST_CaptionPos)Enum.Parse(typeof(ST_CaptionPos), node.Attributes["w:pos"].Value);
-            if (node.Attributes["w:chapNum"] != null)
-                ctObj.chapNum = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:chapNum"].Value,true);
+            if(node.Attributes["w:pos"] != null)
+                ctObj.pos = (ST_CaptionPos) Enum.Parse(typeof(ST_CaptionPos), node.Attributes["w:pos"].Value);
+            if(node.Attributes["w:chapNum"] != null)
+                ctObj.chapNum = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:chapNum"].Value, true);
             ctObj.heading = XmlHelper.ReadString(node.Attributes["w:heading"]);
-            if (node.Attributes["w:noLabel"] != null)
-                ctObj.noLabel = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:noLabel"].Value,true);
-            if (node.Attributes["w:numFmt"] != null)
-                ctObj.numFmt = (ST_NumberFormat)Enum.Parse(typeof(ST_NumberFormat), node.Attributes["w:numFmt"].Value);
-            if (node.Attributes["w:sep"] != null)
-                ctObj.sep = (ST_ChapterSep)Enum.Parse(typeof(ST_ChapterSep), node.Attributes["w:sep"].Value);
+            if(node.Attributes["w:noLabel"] != null)
+                ctObj.noLabel = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:noLabel"].Value, true);
+            if(node.Attributes["w:numFmt"] != null)
+                ctObj.numFmt = (ST_NumberFormat) Enum.Parse(typeof(ST_NumberFormat), node.Attributes["w:numFmt"].Value);
+            if(node.Attributes["w:sep"] != null)
+                ctObj.sep = (ST_ChapterSep) Enum.Parse(typeof(ST_ChapterSep), node.Attributes["w:sep"].Value);
             return ctObj;
         }
 
@@ -7005,16 +7005,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_CaptionPos
     {
 
-    
+
         above,
 
-    
+
         below,
 
-    
+
         left,
 
-    
+
         right,
     }
 
@@ -7031,7 +7031,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string captionField;
         public static CT_AutoCaption Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_AutoCaption ctObj = new CT_AutoCaption();
             ctObj.name = XmlHelper.ReadString(node.Attributes["w:name"]);
@@ -7094,11 +7094,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string fontSzField;
         public static CT_ReadingModeInkLockDown Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ReadingModeInkLockDown ctObj = new CT_ReadingModeInkLockDown();
-            if (node.Attributes["w:actualPg"] != null)
-                ctObj.actualPg = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:actualPg"].Value,true);
+            if(node.Attributes["w:actualPg"] != null)
+                ctObj.actualPg = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:actualPg"].Value, true);
             ctObj.w = XmlHelper.ReadULong(node.Attributes["w:w"]);
             ctObj.h = XmlHelper.ReadULong(node.Attributes["w:h"]);
             ctObj.fontSz = XmlHelper.ReadString(node.Attributes["w:fontSz"]);
@@ -7186,7 +7186,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string urlField;
         public static CT_SmartTagType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SmartTagType ctObj = new CT_SmartTagType();
             ctObj.namespaceuri = XmlHelper.ReadString(node.Attributes["w:namespaceuri"]);

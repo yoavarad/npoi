@@ -15,10 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
+using NPOI.DDF;
 using System;
 using System.Collections.Generic;
-
-using NPOI.DDF;
 
 namespace NPOI.HSSF.Model
 {
@@ -52,7 +51,7 @@ namespace NPOI.HSSF.Model
             EscherDgRecord dg = new EscherDgRecord();
             dg.RecordId = EscherDgRecord.RECORD_ID;
             short dgId = FindNewDrawingGroupId();
-            dg.Options=(short)(dgId << 4);
+            dg.Options=(short) (dgId << 4);
             dg.NumShapes=0;
             dg.LastMSOSPID=(-1);
             drawingGroups.Add(dg);
@@ -68,9 +67,9 @@ namespace NPOI.HSSF.Model
         [Obsolete("deprecated in POI 3.17-beta2, use AllocateShapeId(EscherDgRecord) ")]
         public virtual int AllocateShapeId(short drawingGroupId)
         {
-            foreach (EscherDgRecord dg in drawingGroups)
+            foreach(EscherDgRecord dg in drawingGroups)
             {
-                if (dg.DrawingGroupId == drawingGroupId) 
+                if(dg.DrawingGroupId == drawingGroupId)
                 {
                     return AllocateShapeId(dg);
                 }
@@ -94,7 +93,8 @@ namespace NPOI.HSSF.Model
         /// </summary>
         /// <param name="dg">the EscherDgRecord which receives the new shape</param>
         /// <returns>a new shape id.</returns>
-        public int AllocateShapeId(EscherDgRecord dg) {
+        public int AllocateShapeId(EscherDgRecord dg)
+        {
             return dgg.AllocateShapeId(dg, true);
         }
         /// <summary>

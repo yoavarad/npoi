@@ -20,10 +20,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the AxisUsedRecord
@@ -39,7 +40,7 @@ namespace TestCases.HSSF.Record.Chart
         byte[] data = new byte[] {
         (byte)0x01,(byte)0x00,
     };
-        
+
         public TestAxesUsedRecord()
         {
 
@@ -55,12 +56,12 @@ namespace TestCases.HSSF.Record.Chart
         public void TestStore()
         {
             AxesUsedRecord record = new AxesUsedRecord();
-            record.NumAxis = ((short)1);
+            record.NumAxis = ((short) 1);
 
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

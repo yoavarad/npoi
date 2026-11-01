@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Util;
+using NPOI.SS.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NPOI.SS.UserModel
 {
-    public class NCellRange: IEnumerable<ICell>
+    public class NCellRange : IEnumerable<ICell>
     {
         private ISheet _sheet;
         private CellRangeAddressList _ranges;
@@ -90,7 +90,8 @@ namespace NPOI.SS.UserModel
             return this;
         }
 
-        public void SetCellComment(IComment comment) {
+        public void SetCellComment(IComment comment)
+        {
             if(comment==null)
             {
                 RemoveCellComment();
@@ -107,7 +108,7 @@ namespace NPOI.SS.UserModel
                 }
             }
         }
-        public NCellRange SetHyperlink(IHyperlink hyperlink, bool createMissingRowAndCol=true)
+        public NCellRange SetHyperlink(IHyperlink hyperlink, bool createMissingRowAndCol = true)
         {
             ForEachCell(createMissingRowAndCol, MissingCellPolicy.RETURN_NULL_AND_BLANK, cell => cell.Hyperlink = hyperlink);
             return this;
@@ -180,17 +181,18 @@ namespace NPOI.SS.UserModel
 
         public List<ICell> Cells
         {
-            get {
+            get
+            {
                 List<ICell> cells = new List<ICell>();
                 var seen = new HashSet<(int row, int column)>();
                 foreach(var address in _ranges.CellRangeAddresses)
                 {
-                    for(int i = address.FirstRow; i<=((address.LastRow<_sheet.LastRowNum)?address.LastRow: _sheet.LastRowNum); i++)
+                    for(int i = address.FirstRow; i<=((address.LastRow<_sheet.LastRowNum) ? address.LastRow : _sheet.LastRowNum); i++)
                     {
                         var row = _sheet.GetRow(i);
                         if(row==null)
                             continue;
-                        for(int j = address.FirstColumn; j<=((address.LastColumn<row.LastCellNum)?address.LastColumn:row.LastCellNum); j++)
+                        for(int j = address.FirstColumn; j<=((address.LastColumn<row.LastCellNum) ? address.LastColumn : row.LastCellNum); j++)
                         {
                             if(!seen.Add((i, j)))
                                 continue;
@@ -209,7 +211,7 @@ namespace NPOI.SS.UserModel
             return Cells.GetEnumerator();
         }
 
-        public NCellRange SetCellType(CellType cellType, bool createMissingRowAndCol= true)
+        public NCellRange SetCellType(CellType cellType, bool createMissingRowAndCol = true)
         {
             ForEachCell(createMissingRowAndCol, MissingCellPolicy.RETURN_NULL_AND_BLANK, cell => cell.SetCellType(cellType));
             return this;
@@ -296,8 +298,10 @@ namespace NPOI.SS.UserModel
             }
         }
 
-        public object Value { 
-            set {
+        public object Value
+        {
+            set
+            {
                 if(value is double || value is Double)
                 {
                     SetCellValue((double) value);
@@ -324,15 +328,15 @@ namespace NPOI.SS.UserModel
                     return;
                 }
                 throw new InvalidOperationException("invalid value type for cell value");
-            } 
+            }
         }
 
         public double Sum()
         {
             double sum = 0;
-            foreach (var cell in Cells)
+            foreach(var cell in Cells)
             {
-                if (cell.CellType == CellType.Numeric)
+                if(cell.CellType == CellType.Numeric)
                     sum += cell.NumericCellValue;
             }
             return sum;
@@ -341,12 +345,12 @@ namespace NPOI.SS.UserModel
         public double Min()
         {
             double? min = null;
-            foreach (var cell in Cells)
+            foreach(var cell in Cells)
             {
-                if (cell.CellType == CellType.Numeric)
+                if(cell.CellType == CellType.Numeric)
                 {
                     double val = cell.NumericCellValue;
-                    if (!min.HasValue || val < min.Value)
+                    if(!min.HasValue || val < min.Value)
                         min = val;
                 }
             }
@@ -356,12 +360,12 @@ namespace NPOI.SS.UserModel
         public double Max()
         {
             double? max = null;
-            foreach (var cell in Cells)
+            foreach(var cell in Cells)
             {
-                if (cell.CellType == CellType.Numeric)
+                if(cell.CellType == CellType.Numeric)
                 {
                     double val = cell.NumericCellValue;
-                    if (!max.HasValue || val > max.Value)
+                    if(!max.HasValue || val > max.Value)
                         max = val;
                 }
             }
@@ -372,9 +376,9 @@ namespace NPOI.SS.UserModel
         {
             double sum = 0;
             int count = 0;
-            foreach (var cell in Cells)
+            foreach(var cell in Cells)
             {
-                if (cell.CellType == CellType.Numeric)
+                if(cell.CellType == CellType.Numeric)
                 {
                     sum += cell.NumericCellValue;
                     count++;
@@ -412,13 +416,15 @@ namespace NPOI.SS.UserModel
             return GetEnumerator();
         }
 
-        public NCellRange this[string address] { 
-            get {
+        public NCellRange this[string address]
+        {
+            get
+            {
                 _ranges = CellRangeAddressList.Parse(address);
                 if(_ranges.CountRanges()==0)
                     throw new ArgumentException($"cell range '{address}' is invalid");
                 return this;
-            } 
+            }
         }
 
         public NCellRange this[int row, int col]

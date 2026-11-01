@@ -22,8 +22,8 @@ namespace NPOI.HSSF.Record
 
     using NPOI.Util;
     using System;
-    using System.Text;
     using System.Collections.Generic;
+    using System.Text;
 
     /**
      * PaletteRecord - Supports custom palettes.
@@ -41,14 +41,14 @@ namespace NPOI.HSSF.Record
         /** The byte index of the first color */
         public const short FIRST_COLOR_INDEX = (short)0x8;
 
-        
+
         private List<PColor> field_2_colors;
 
         public PaletteRecord()
         {
             PColor[] defaultPalette = CreateDefaultPalette();
             field_2_colors = new List<PColor>(defaultPalette.Length);
-            for (int i = 0; i < defaultPalette.Length; i++)
+            for(int i = 0; i < defaultPalette.Length; i++)
             {
                 field_2_colors.Add(defaultPalette[i]);
             }
@@ -63,15 +63,15 @@ namespace NPOI.HSSF.Record
         {
             short field_1_numcolors = in1.ReadShort();
             field_2_colors = new List<PColor>(field_1_numcolors);
-            for (int k = 0; k < field_1_numcolors; k++)
+            for(int k = 0; k < field_1_numcolors; k++)
             {
                 field_2_colors.Add(new PColor(in1));
             }
         }
-        
+
         public short NumColors
         {
-            get { return (short)field_2_colors.Count; }
+            get { return (short) field_2_colors.Count; }
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace NPOI.HSSF.Record
             buffer.Append("[PALETTE]\n");
             buffer.Append("  numcolors     = ").Append(field_2_colors.Count)
                   .Append('\n');
-            for (int k = 0; k < field_2_colors.Count; k++)
+            for(int k = 0; k < field_2_colors.Count; k++)
             {
                 PColor c = (PColor)field_2_colors[k];
                 buffer.Append("* colornum      = ").Append(k)
@@ -105,7 +105,7 @@ namespace NPOI.HSSF.Record
         public override void Serialize(ILittleEndianOutput out1)
         {
             out1.WriteShort(field_2_colors.Count);
-            for (int i = 0; i < field_2_colors.Count; i++)
+            for(int i = 0; i < field_2_colors.Count; i++)
             {
                 field_2_colors[i].Serialize(out1);
             }
@@ -133,7 +133,7 @@ namespace NPOI.HSSF.Record
         public byte[] GetColor(short byteIndex)
         {
             int i = byteIndex - FIRST_COLOR_INDEX;
-            if (i < 0 || i >= field_2_colors.Count)
+            if(i < 0 || i >= field_2_colors.Count)
             {
                 return null;
             }
@@ -153,13 +153,13 @@ namespace NPOI.HSSF.Record
         public void SetColor(short byteIndex, byte red, byte green, byte blue)
         {
             int i = byteIndex - FIRST_COLOR_INDEX;
-            if (i < 0 || i >= STANDARD_PALETTE_SIZE)
+            if(i < 0 || i >= STANDARD_PALETTE_SIZE)
             {
                 return;
             }
-            while (field_2_colors.Count <= i)
+            while(field_2_colors.Count <= i)
             {
-                field_2_colors.Add(new PColor((byte)0, (byte)0, (byte)0));
+                field_2_colors.Add(new PColor((byte) 0, (byte) 0, (byte) 0));
             }
             PColor custColor = new PColor(red, green, blue);
             field_2_colors[i] = custColor;
@@ -249,19 +249,21 @@ namespace NPOI.HSSF.Record
         public byte _blue;
         public PColor(int red, int green, int blue)
         {
-            this._red = (byte)red;
-            this._green = (byte)green;
-            this._blue = (byte)blue;
+            this._red = (byte) red;
+            this._green = (byte) green;
+            this._blue = (byte) blue;
         }
 
-          public PColor(RecordInputStream in1) {
-            _red = (byte)in1.ReadByte();
-            _green = (byte)in1.ReadByte();
-            _blue = (byte)in1.ReadByte();
+        public PColor(RecordInputStream in1)
+        {
+            _red = (byte) in1.ReadByte();
+            _green = (byte) in1.ReadByte();
+            _blue = (byte) in1.ReadByte();
             in1.ReadByte(); // unused
-          }
+        }
 
-        public void Serialize(ILittleEndianOutput out1) {
+        public void Serialize(ILittleEndianOutput out1)
+        {
             out1.WriteByte(_red);
             out1.WriteByte(_green);
             out1.WriteByte(_blue);

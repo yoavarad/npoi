@@ -25,18 +25,18 @@ namespace NPOI.XSSF.Extractor
 {
 
     using NPOI;
+    using NPOI.OpenXml4Net;
     using NPOI.OpenXml4Net.Exceptions;
     using NPOI.OpenXml4Net.OPC;
-    using NPOI.SS.UserModel;
     using NPOI.SS.Extractor;
+    using NPOI.SS.UserModel;
     using NPOI.Util;
     using NPOI.XSSF.EventUserModel;
     using NPOI.XSSF.Model;
     using NPOI.XSSF.UserModel;
     using System.Globalization;
-    using static NPOI.XSSF.EventUserModel.XSSFSheetXMLHandler;
-    using NPOI.OpenXml4Net;
     using System.Xml;
+    using static NPOI.XSSF.EventUserModel.XSSFSheetXMLHandler;
 
     /// <summary>
     /// Implementation of a text extractor from OOXML Excel
@@ -306,7 +306,7 @@ namespace NPOI.XSSF.Extractor
                     return null;
                 }
             }
-            
+
         }
 
         public static void ProcessShapes(List<XSSFShape> shapes, StringBuilder text)
@@ -486,4 +486,3 @@ namespace NPOI.XSSF.Extractor
         }
     }
 }
-

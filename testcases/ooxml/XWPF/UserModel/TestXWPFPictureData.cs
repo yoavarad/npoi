@@ -17,15 +17,16 @@
 
 namespace TestCases.XWPF.UserModel
 {
-    using System;
-    using System.Collections.Generic;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.Util;
     using NPOI.XSSF.UserModel;
     using NPOI.XWPF;
     using NPOI.XWPF.Model;
     using NPOI.XWPF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
 
     [TestFixture]
     public class TestXWPFPictureData
@@ -38,7 +39,7 @@ namespace TestCases.XWPF.UserModel
 
             ClassicAssert.AreEqual(5, pictures.Count);
             String[] ext = { "wmf", "png", "emf", "emf", "jpeg" };
-            for (int i = 0; i < pictures.Count; i++)
+            for(int i = 0; i < pictures.Count; i++)
             {
                 ClassicAssert.AreEqual(ext[i], pictures[(i)].SuggestFileExtension());
             }
@@ -84,7 +85,7 @@ namespace TestCases.XWPF.UserModel
             // Add a picture to  the first paragraph
             header.Paragraphs[0].Runs[0].AddPicture(
                     new ByteArrayInputStream(new byte[] { 1, 2, 3, 4 }),
-                    (int)PictureType.JPEG, "test.jpg", 2, 2);
+                    (int) PictureType.JPEG, "test.jpg", 2, 2);
 
             // Check
             verifyOneHeaderPicture(doc);
@@ -119,9 +120,9 @@ namespace TestCases.XWPF.UserModel
 
             // Document shouldn't have any image relationships
             ClassicAssert.AreEqual(13, doc.GetPackagePart().Relationships.Size);
-            foreach (PackageRelationship rel in doc.GetPackagePart().Relationships)
+            foreach(PackageRelationship rel in doc.GetPackagePart().Relationships)
             {
-                if (rel.RelationshipType.Equals(XSSFRelation.IMAGE_JPEG.Relation))
+                if(rel.RelationshipType.Equals(XSSFRelation.IMAGE_JPEG.Relation))
                 {
                     Assert.Fail("Shouldn't have JPEG yet");
                 }
@@ -137,11 +138,11 @@ namespace TestCases.XWPF.UserModel
             // Ensure it now has one
             ClassicAssert.AreEqual(14, doc.GetPackagePart().Relationships.Size);
             PackageRelationship jpegRel = null;
-            foreach (PackageRelationship rel in doc.GetPackagePart().Relationships)
+            foreach(PackageRelationship rel in doc.GetPackagePart().Relationships)
             {
-                if (rel.RelationshipType.Equals(XWPFRelation.IMAGE_JPEG.Relation))
+                if(rel.RelationshipType.Equals(XWPFRelation.IMAGE_JPEG.Relation))
                 {
-                    if (jpegRel != null)
+                    if(jpegRel != null)
                         Assert.Fail("Found 2 jpegs!");
                     jpegRel = rel;
                 }
@@ -172,16 +173,16 @@ namespace TestCases.XWPF.UserModel
             XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("Bug51170.docx");
             XWPFHeaderFooterPolicy policy = doc.GetHeaderFooterPolicy();
             XWPFHeader header = policy.GetDefaultHeader();
-            foreach (XWPFParagraph paragraph in header.Paragraphs)
+            foreach(XWPFParagraph paragraph in header.Paragraphs)
             {
-                foreach (XWPFRun run in paragraph.Runs)
+                foreach(XWPFRun run in paragraph.Runs)
                 {
-                    foreach (XWPFPicture picture in run.GetEmbeddedPictures())
+                    foreach(XWPFPicture picture in run.GetEmbeddedPictures())
                     {
-                        if (paragraph.Document != null)
+                        if(paragraph.Document != null)
                         {
                             XWPFPictureData data = picture.GetPictureData();
-                            if (data != null) 
+                            if(data != null)
                                 Assert.Fail("Should have returned null: "+ data.FileName);
                         }
                     }

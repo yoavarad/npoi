@@ -1,7 +1,7 @@
-﻿using System;
-using System.Text;
+using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Text;
 
 namespace NPOI.Util
 {
@@ -68,8 +68,8 @@ namespace NPOI.Util
         // * @deprecated Deprecated since logical value is offset from stored
         // * value and correction factor is applied in accessor method.
         // */
-       // [Obsolete]
-       // never used private int lowestSetBit;
+        // [Obsolete]
+        // never used private int lowestSetBit;
 
         /**
          * Two plus the index of the lowest-order int in the magnitude of this
@@ -101,9 +101,9 @@ namespace NPOI.Util
         }
         static void Init()
         {
-            if (zeros[63] == null)
+            if(zeros[63] == null)
             {
-                for (int i = 1; i <= Max_CONSTANT; i++)
+                for(int i = 1; i <= Max_CONSTANT; i++)
                 {
                     int[] magnitude = new int[1];
                     magnitude[0] = i;
@@ -112,7 +112,7 @@ namespace NPOI.Util
                 }
 
                 zeros[63] = "000000000000000000000000000000000000000000000000000000000000000";
-                for (int i = 0; i < 63; i++)
+                for(int i = 0; i < 63; i++)
                     zeros[i] = zeros[63].Substring(0, i);
             }
         }
@@ -138,10 +138,10 @@ namespace NPOI.Util
          */
         public BigInteger(byte[] val)
         {
-            if (val.Length == 0)
+            if(val.Length == 0)
                 throw new ArgumentException("Zero length BigInteger");
 
-            if ((sbyte)val[0] < 0)
+            if((sbyte) val[0] < 0)
             {
                 mag = makePositive(val);
                 _signum = -1;
@@ -160,10 +160,10 @@ namespace NPOI.Util
          */
         public BigInteger(int[] val)
         {
-            if (val.Length == 0)
+            if(val.Length == 0)
                 throw new ArgumentException("Zero length BigInteger");
 
-            if (val[0] < 0)
+            if(val[0] < 0)
             {
                 mag = makePositive(val);
                 _signum = -1;
@@ -179,7 +179,7 @@ namespace NPOI.Util
          */
         public BigInteger(long val)
         {
-            if (val < 0)
+            if(val < 0)
             {
                 val = -val;
                 _signum = -1;
@@ -190,16 +190,16 @@ namespace NPOI.Util
             }
 
             int highWord = (int)Operator.UnsignedRightShift(val, 32);
-            if (highWord == 0)
+            if(highWord == 0)
             {
                 mag = new int[1];
-                mag[0] = (int)val;
+                mag[0] = (int) val;
             }
             else
             {
                 mag = new int[2];
                 mag[0] = highWord;
-                mag[1] = (int)val;
+                mag[1] = (int) val;
             }
         }
 
@@ -214,36 +214,36 @@ namespace NPOI.Util
             int cursor = 0, numDigits;
             int len = val.Length;
 
-            if (radix < Min_RADIX || radix > Max_RADIX)
+            if(radix < Min_RADIX || radix > Max_RADIX)
                 throw new FormatException("Radix out of range");
-            if (len == 0)
+            if(len == 0)
                 throw new FormatException("Zero length BigInteger");
 
             // Check for at most one leading sign
             int sign = 1;
             int index1 = val.LastIndexOf('-');
             int index2 = val.LastIndexOf('+');
-            if ((index1 + index2) <= -1)
+            if((index1 + index2) <= -1)
             {
                 // No leading sign character or at most one leading sign character
-                if (index1 == 0 || index2 == 0)
+                if(index1 == 0 || index2 == 0)
                 {
                     cursor = 1;
-                    if (len == 1)
+                    if(len == 1)
                         throw new FormatException("Zero length BigInteger");
                 }
-                if (index1 == 0)
+                if(index1 == 0)
                     sign = -1;
             }
             else
                 throw new FormatException("Illegal embedded sign character");
 
             // Skip leading zeros and compute number of digits in magnitude
-            while (cursor < len &&
+            while(cursor < len &&
                 val[cursor] == '0')    //now it can only process 10 radix
                 //Character.digit(val.charAt(cursor), radix) == 0) //
                 cursor++;
-            if (cursor == len)
+            if(cursor == len)
             {
                 _signum = 0;
                 mag = ZERO.mag;
@@ -261,23 +261,23 @@ namespace NPOI.Util
 
             // Process first (potentially short) digit group
             int firstGroupLen = numDigits % digitsPerInt[radix];
-            if (firstGroupLen == 0)
+            if(firstGroupLen == 0)
                 firstGroupLen = digitsPerInt[radix];
             String group = val.Substring(cursor, cursor += firstGroupLen);
             //magnitude[numWords - 1] = Integer.parseInt(group, radix);
             magnitude[numWords - 1] = int.Parse(group, CultureInfo.InvariantCulture);
-            if (magnitude[numWords - 1] < 0)
+            if(magnitude[numWords - 1] < 0)
                 throw new FormatException("Illegal digit");
 
             // Process remaining digit groups
             int superRadix = intRadix[radix];
             int groupVal = 0;
-            while (cursor < len)
+            while(cursor < len)
             {
                 group = val.Substring(cursor, cursor += digitsPerInt[radix]);
                 //groupVal = Integer.parseInt(group, radix);
                 groupVal = int.Parse(group, CultureInfo.InvariantCulture);
-                if (groupVal < 0)
+                if(groupVal < 0)
                     throw new FormatException("Illegal digit");
                 DestructiveMulAdd(magnitude, superRadix, groupVal);
             }
@@ -294,7 +294,7 @@ namespace NPOI.Util
             int keep;
 
             // Find first nonzero byte
-            for (keep = 0; keep < vlen && val[keep] == 0; keep++)
+            for(keep = 0; keep < vlen && val[keep] == 0; keep++)
                 ;
             return keep == 0 ? val : Arrays.CopyOfRange(val, keep, vlen);
         }
@@ -309,21 +309,21 @@ namespace NPOI.Util
 
             long product = 0;
             long carry = 0;
-            for (int i = len - 1; i >= 0; i--)
+            for(int i = len - 1; i >= 0; i--)
             {
                 product = ylong * (x[i] & LONG_MASK) + carry;
-                x[i] = (int)product;
+                x[i] = (int) product;
                 carry = Operator.UnsignedRightShift(product, 32);
             }
 
             // Perform the addition
             long sum = (x[len - 1] & LONG_MASK) + zlong;
-            x[len - 1] = (int)sum;
+            x[len - 1] = (int) sum;
             carry = Operator.UnsignedRightShift(sum, 32);
-            for (int i = len - 2; i >= 0; i--)
+            for(int i = len - 2; i >= 0; i--)
             {
                 sum = (x[i] & LONG_MASK) + carry;
-                x[i] = (int)sum;
+                x[i] = (int) sum;
                 carry = Operator.UnsignedRightShift(sum, 32);
             }
         }
@@ -346,13 +346,13 @@ namespace NPOI.Util
          */
         public String ToString(int radix)
         {
-            if (_signum == 0)
+            if(_signum == 0)
                 return "0";
-            if (radix < Min_RADIX || radix > Max_RADIX)
+            if(radix < Min_RADIX || radix > Max_RADIX)
                 radix = 10;
 
             //now this method only support 10 radix rendering
-            if (radix != 10)
+            if(radix != 10)
                 throw new ArgumentException("Only support 10 radix rendering");
 
             // Compute upper bound on number of digit groups and allocate space
@@ -362,7 +362,7 @@ namespace NPOI.Util
             // Translate number to string, a digit group at a time
             BigInteger tmp = this.Abs();
             int numGroups = 0;
-            while (tmp._signum != 0)
+            while(tmp._signum != 0)
             {
                 BigInteger d = longRadix[radix];
 
@@ -380,16 +380,16 @@ namespace NPOI.Util
 
             // Put sign (if any) and first digit group into result buffer
             StringBuilder buf = new StringBuilder(numGroups * digitsPerLong[radix] + 1);
-            if (_signum < 0)
+            if(_signum < 0)
                 buf.Append('-');
             buf.Append(digitGroup[numGroups - 1]);
 
             // Append remaining digit groups padded with leading zeros
-            for (int i = numGroups - 2; i >= 0; i--)
+            for(int i = numGroups - 2; i >= 0; i--)
             {
                 // Prepend (any) leading zeros for this digit group
                 int numLeadingZeros = digitsPerLong[radix] - digitGroup[i].Length;
-                if (numLeadingZeros != 0)
+                if(numLeadingZeros != 0)
                     buf.Append(zeros[numLeadingZeros]);
                 buf.Append(digitGroup[i]);
             }
@@ -433,13 +433,13 @@ namespace NPOI.Util
         public static BigInteger ValueOf(long val)
         {
             Init();
-           // If -Max_CONSTANT < val < Max_CONSTANT, return stashed constant
-            if (val == 0)
+            // If -Max_CONSTANT < val < Max_CONSTANT, return stashed constant
+            if(val == 0)
                 return ZERO;
-            if (val > 0 && val <= Max_CONSTANT)
-                return posConst[(int)val];
-            else if (val < 0 && val >= -Max_CONSTANT)
-                return negConst[(int)-val];
+            if(val > 0 && val <= Max_CONSTANT)
+                return posConst[(int) val];
+            else if(val < 0 && val >= -Max_CONSTANT)
+                return negConst[(int) -val];
 
             return new BigInteger(val);
         }
@@ -476,11 +476,11 @@ namespace NPOI.Util
         public int BitLength()
         {
             int n = bitLength - 1;
-            if (n == -1)
+            if(n == -1)
             { // bitLength not initialized yet
                 int[] m = mag;
                 int len = m.Length;
-                if (len == 0)
+                if(len == 0)
                 {
                     n = 0; // offset by one to initialize
                 }
@@ -488,11 +488,11 @@ namespace NPOI.Util
                 {
                     // Calculate the bit length of the magnitude
                     int magBitLength = ((len - 1) << 5) + BitLengthForInt(mag[0]);
-                    if (_signum < 0)
+                    if(_signum < 0)
                     {
                         // Check if magnitude is a power of two
                         bool pow2 = (BitCountForInt(mag[0]) == 1);
-                        for (int i = 1; i < len && pow2; i++)
+                        for(int i = 1; i < len && pow2; i++)
                             pow2 = (mag[i] == 0);
 
                         n = (pow2 ? magBitLength - 1 : magBitLength);
@@ -518,17 +518,17 @@ namespace NPOI.Util
         {
             //@SuppressWarnings("deprecation") 
             int bc = bitCount - 1;
-            if (bc == -1)
+            if(bc == -1)
             {  // bitCount not initialized yet
                 bc = 0;      // offset by one to initialize
                 // Count the bits in the magnitude
-                for (int i = 0; i < mag.Length; i++)
+                for(int i = 0; i < mag.Length; i++)
                     bc += BitCountForInt(mag[i]);
-                if (_signum < 0)
+                if(_signum < 0)
                 {
                     // Count the trailing zeros in the magnitude
                     int magTrailingZeroCount = 0, j;
-                    for (j = mag.Length - 1; mag[j] == 0; j--)
+                    for(j = mag.Length - 1; mag[j] == 0; j--)
                         magTrailingZeroCount += 32;
                     magTrailingZeroCount += NumberOfTrailingZeros(mag[j]);
                     bc += magTrailingZeroCount - 1;
@@ -569,9 +569,9 @@ namespace NPOI.Util
          */
         public BigInteger Pow(int exponent)
         {
-            if (exponent < 0)
+            if(exponent < 0)
                 throw new ArithmeticException("Negative exponent");
-            if (_signum == 0)
+            if(_signum == 0)
                 return (exponent == 0 ? One : this);
 
             // Perform exponentiation using repeated squaring trick
@@ -579,16 +579,16 @@ namespace NPOI.Util
             int[] baseToPow2 = this.mag;
             int[] result = { 1 };
 
-            while (exponent != 0)
+            while(exponent != 0)
             {
-                if ((exponent & 1) == 1)
+                if((exponent & 1) == 1)
                 {
                     result = MultiplyToLen(result, result.Length,
                                            baseToPow2, baseToPow2.Length, null);
                     result = TrustedStripLeadingZeroInts(result);
                 }
                 exponent = Operator.UnsignedRightShift(exponent, 1);
-                if (exponent != 0)
+                if(exponent != 0)
                 {
                     baseToPow2 = squareToLen(baseToPow2, baseToPow2.Length, null);
                     baseToPow2 = TrustedStripLeadingZeroInts(baseToPow2);
@@ -605,31 +605,31 @@ namespace NPOI.Util
             int xstart = xlen - 1;
             int ystart = ylen - 1;
 
-            if (z == null || z.Length < (xlen + ylen))
+            if(z == null || z.Length < (xlen + ylen))
                 z = new int[xlen + ylen];
 
             long carry = 0;
-            for (int j = ystart, k = ystart + 1 + xstart; j >= 0; j--, k--)
+            for(int j = ystart, k = ystart + 1 + xstart; j >= 0; j--, k--)
             {
                 long product = (y[j] & LONG_MASK) *
                                (x[xstart] & LONG_MASK) + carry;
-                z[k] = (int)product;
+                z[k] = (int) product;
                 carry = Operator.UnsignedRightShift(product, 32);
             }
-            z[xstart] = (int)carry;
+            z[xstart] = (int) carry;
 
-            for (int i = xstart - 1; i >= 0; i--)
+            for(int i = xstart - 1; i >= 0; i--)
             {
                 carry = 0;
-                for (int j = ystart, k = ystart + 1 + i; j >= 0; j--, k--)
+                for(int j = ystart, k = ystart + 1 + i; j >= 0; j--, k--)
                 {
                     long product = (y[j] & LONG_MASK) *
                                    (x[i] & LONG_MASK) +
                                    (z[k] & LONG_MASK) + carry;
-                    z[k] = (int)product;
+                    z[k] = (int) product;
                     carry = Operator.UnsignedRightShift(product, 32);
                 }
-                z[i] = (int)carry;
+                z[i] = (int) carry;
             }
             return z;
         }
@@ -642,14 +642,14 @@ namespace NPOI.Util
             long carry = 0;
 
             offset = output.Length - offset - 1;
-            for (int j = len - 1; j >= 0; j--)
+            for(int j = len - 1; j >= 0; j--)
             {
                 long product = (input[j] & LONG_MASK) * kLong +
                                (output[offset] & LONG_MASK) + carry;
-                output[offset--] = (int)product;
+                output[offset--] = (int) product;
                 carry = Operator.UnsignedRightShift(product, 32);
             }
-            return (int)carry;
+            return (int) carry;
         }
         /**
          * Squares the contents of the int array x. The result is placed into the
@@ -692,22 +692,22 @@ namespace NPOI.Util
              * input, so it doesn't need special care.
              */
             int zlen = len << 1;
-            if (z == null || z.Length < zlen)
+            if(z == null || z.Length < zlen)
                 z = new int[zlen];
 
             // Store the squares, right shifted one bit (i.e., divided by 2)
             int lastProductLowWord = 0;
-            for (int j = 0, i = 0; j < len; j++)
+            for(int j = 0, i = 0; j < len; j++)
             {
                 long piece = (x[j] & LONG_MASK);
                 long product = piece * piece;
-                z[i++] = (lastProductLowWord << 31) | (int)Operator.UnsignedRightShift(product, 33);
-                z[i++] = (int)Operator.UnsignedRightShift(product, 1);
-                lastProductLowWord = (int)product;
+                z[i++] = (lastProductLowWord << 31) | (int) Operator.UnsignedRightShift(product, 33);
+                z[i++] = (int) Operator.UnsignedRightShift(product, 1);
+                lastProductLowWord = (int) product;
             }
 
             // Add in off-diagonal sums
-            for (int i = len, offset = 1; i > 0; i--, offset += 2)
+            for(int i = len, offset = 1; i > 0; i--, offset += 2)
             {
                 int t = x[i - 1];
                 t = mulAdd(z, x, offset, i - 1, t);
@@ -723,11 +723,11 @@ namespace NPOI.Util
         // shifts a up to len left n bits assumes no leading zeros, 0<=n<32
         public static void PrimitiveLeftShift(int[] a, int len, int n)
         {
-            if (len == 0 || n == 0)
+            if(len == 0 || n == 0)
                 return;
 
             int n2 = 32 - n;
-            for (int i = 0, c = a[i], m = i + len - 1; i < m; i++)
+            for(int i = 0, c = a[i], m = i + len - 1; i < m; i++)
             {
                 int b = c;
                 c = a[i + 1];
@@ -744,19 +744,19 @@ namespace NPOI.Util
             offset = a.Length - 1 - mlen - offset;
             long t = (a[offset] & LONG_MASK) + (carry & LONG_MASK);
 
-            a[offset] = (int)t;
-            if ((t >> 32) == 0)
+            a[offset] = (int) t;
+            if((t >> 32) == 0)
                 return 0;
-            while (--mlen >= 0)
+            while(--mlen >= 0)
             {
-                if (--offset < 0)
+                if(--offset < 0)
                 { // Carry out of number
                     return 1;
                 }
                 else
                 {
                     a[offset]++;
-                    if (a[offset] != 0)
+                    if(a[offset] != 0)
                         return 0;
                 }
             }
@@ -791,9 +791,9 @@ namespace NPOI.Util
             int byteLen = (BitLength() / 8 + 1);
             byte[] byteArray = new byte[byteLen];
 
-            for (int i = byteLen - 1, bytesCopied = 4, nextInt = 0, intIndex = 0; i >= 0; i--)
+            for(int i = byteLen - 1, bytesCopied = 4, nextInt = 0, intIndex = 0; i >= 0; i--)
             {
-                if (bytesCopied == 4)
+                if(bytesCopied == 4)
                 {
                     nextInt = GetInt(intIndex++);
                     bytesCopied = 1;
@@ -803,7 +803,7 @@ namespace NPOI.Util
                     nextInt = Operator.UnsignedRightShift(nextInt, 8);
                     bytesCopied++;
                 }
-                byteArray[i] = (byte)nextInt;
+                byteArray[i] = (byte) nextInt;
             }
             return byteArray;
         }
@@ -835,9 +835,9 @@ namespace NPOI.Util
          */
         private int GetInt(int n)
         {
-            if (n < 0)
+            if(n < 0)
                 return 0;
-            if (n >= mag.Length)
+            if(n >= mag.Length)
                 return signInt();
 
             int magInt = mag[mag.Length - n - 1];
@@ -853,14 +853,14 @@ namespace NPOI.Util
         private int FirstNonzeroIntNum()
         {
             int fn = firstNonzeroIntNum - 2;
-            if (fn == -2)
+            if(fn == -2)
             { // firstNonzeroIntNum not initialized yet
                 fn = 0;
 
                 // Search for the first nonzero int
                 int i;
                 int mlen = mag.Length;
-                for (i = mlen - 1; i >= 0 && mag[i] == 0; i--)
+                for(i = mlen - 1; i >= 0 && mag[i] == 0; i--)
                     ;
                 fn = mlen - i - 1;
                 firstNonzeroIntNum = fn + 2; // offset by two to initialize
@@ -876,19 +876,19 @@ namespace NPOI.Util
             int keep;
 
             // Find first nonzero byte
-            for (keep = 0; keep < byteLength && a[keep] == 0; keep++)
+            for(keep = 0; keep < byteLength && a[keep] == 0; keep++)
                 ;
 
             // Allocate new array and copy relevant part of input array
             int intLength = Operator.UnsignedRightShift((byteLength - keep) + 3, 2);
             int[] result = new int[intLength];
             int b = byteLength - 1;
-            for (int i = intLength - 1; i >= 0; i--)
+            for(int i = intLength - 1; i >= 0; i--)
             {
                 result[i] = a[b--] & 0xff;
                 int bytesRemaining = b - keep + 1;
                 int bytesToTransfer = Math.Min(3, bytesRemaining);
-                for (int j = 8; j <= (bytesToTransfer << 3); j += 8)
+                for(int j = 8; j <= (bytesToTransfer << 3); j += 8)
                     result[i] |= ((a[b--] & 0xff) << j);
             }
             return result;
@@ -903,13 +903,13 @@ namespace NPOI.Util
             int byteLength = a.Length;
 
             // Find first non-sign (0xff) byte of input
-            for (keep = 0; (keep < byteLength) && ((sbyte)a[keep] == (sbyte)-1); keep++)
+            for(keep = 0; (keep < byteLength) && ((sbyte) a[keep] == (sbyte) -1); keep++)
                 ;
 
 
             /* Allocate output array.  If all non-sign bytes are 0x00, we must
              * allocate space for one extra output byte. */
-            for (k = keep; k < byteLength && a[k] == 0; k++)
+            for(k = keep; k < byteLength && a[k] == 0; k++)
                 ;
 
             int extraByte = (k == byteLength) ? 1 : 0;
@@ -919,13 +919,13 @@ namespace NPOI.Util
             /* Copy one's complement of input into output, leaving extra
              * byte (if it exists) == 0x00 */
             int b = byteLength - 1;
-            for (int i = intLength - 1; i >= 0; i--)
+            for(int i = intLength - 1; i >= 0; i--)
             {
                 result[i] = a[b--] & 0xff;
                 int numBytesToTransfer = Math.Min(3, b - keep + 1);
-                if (numBytesToTransfer < 0)
+                if(numBytesToTransfer < 0)
                     numBytesToTransfer = 0;
-                for (int j = 8; j <= 8 * numBytesToTransfer; j += 8)
+                for(int j = 8; j <= 8 * numBytesToTransfer; j += 8)
                     result[i] |= ((a[b--] & 0xff) << j);
 
                 // Mask indicates which bits must be complemented
@@ -934,10 +934,10 @@ namespace NPOI.Util
             }
 
             // Add one to one's complement to generate two's complement
-            for (int i = result.Length - 1; i >= 0; i--)
+            for(int i = result.Length - 1; i >= 0; i--)
             {
-                result[i] = (int)((result[i] & LONG_MASK) + 1);
-                if (result[i] != 0)
+                result[i] = (int) ((result[i] & LONG_MASK) + 1);
+                if(result[i] != 0)
                     break;
             }
 
@@ -1010,23 +1010,23 @@ namespace NPOI.Util
             int keep, j;
 
             // Find first non-sign (0xffffffff) int of input
-            for (keep = 0; keep < a.Length && a[keep] == -1; keep++)
+            for(keep = 0; keep < a.Length && a[keep] == -1; keep++)
                 ;
 
             /* Allocate output array.  If all non-sign ints are 0x00, we must
              * allocate space for one extra output int. */
-            for (j = keep; j < a.Length && a[j] == 0; j++)
+            for(j = keep; j < a.Length && a[j] == 0; j++)
                 ;
             int extraInt = (j == a.Length ? 1 : 0);
             int[] result = new int[a.Length - keep + extraInt];
 
             /* Copy one's complement of input into output, leaving extra
              * int (if it exists) == 0x00 */
-            for (int i = keep; i < a.Length; i++)
+            for(int i = keep; i < a.Length; i++)
                 result[i - keep + extraInt] = ~a[i];
 
             // Add one to one's complement to generate two's complement
-            for (int i = result.Length - 1; ++result[i] == 0; i--)
+            for(int i = result.Length - 1; ++result[i] == 0; i--)
                 ;
 
             return result;
@@ -1055,13 +1055,17 @@ namespace NPOI.Util
         public static int NumberOfLeadingZeros(int i)
         {
             // HD, Figure 5-6
-            if (i == 0)
+            if(i == 0)
                 return 32;
             int n = 1;
-            if (Operator.UnsignedRightShift(i, 16) == 0) { n += 16; i <<= 16; }
-            if (Operator.UnsignedRightShift(i, 24) == 0) { n += 8; i <<= 8; }
-            if (Operator.UnsignedRightShift(i, 28) == 0) { n += 4; i <<= 4; }
-            if (Operator.UnsignedRightShift(i, 30) == 0) { n += 2; i <<= 2; }
+            if(Operator.UnsignedRightShift(i, 16) == 0)
+            { n += 16; i <<= 16; }
+            if(Operator.UnsignedRightShift(i, 24) == 0)
+            { n += 8; i <<= 8; }
+            if(Operator.UnsignedRightShift(i, 28) == 0)
+            { n += 4; i <<= 4; }
+            if(Operator.UnsignedRightShift(i, 30) == 0)
+            { n += 2; i <<= 2; }
             n -= Operator.UnsignedRightShift(i, 31);
             return n;
         }
@@ -1082,12 +1086,21 @@ namespace NPOI.Util
         {
             // HD, Figure 5-14
             int y;
-            if (i == 0) return 32;
+            if(i == 0)
+                return 32;
             int n = 31;
-            y = i << 16; if (y != 0) { n = n - 16; i = y; }
-            y = i << 8; if (y != 0) { n = n - 8; i = y; }
-            y = i << 4; if (y != 0) { n = n - 4; i = y; }
-            y = i << 2; if (y != 0) { n = n - 2; i = y; }
+            y = i << 16;
+            if(y != 0)
+            { n = n - 16; i = y; }
+            y = i << 8;
+            if(y != 0)
+            { n = n - 8; i = y; }
+            y = i << 4;
+            if(y != 0)
+            { n = n - 4; i = y; }
+            y = i << 2;
+            if(y != 0)
+            { n = n - 2; i = y; }
             return n - Operator.UnsignedRightShift((i << 1), 31);
         }
         /**
@@ -1108,16 +1121,16 @@ namespace NPOI.Util
             x = (x + (x >> 4)) & 0x0f0f0f0f;
             x = x + (x >> 8);
             x = x + (x >> 16);
-            return (int)(x & 0x3f);
+            return (int) (x & 0x3f);
         }
         #endregion
         #region IComparable<BigInteger> 成员
 
         public int CompareTo(BigInteger val)
         {
-            if (_signum == val._signum)
+            if(_signum == val._signum)
             {
-                switch (_signum)
+                switch(_signum)
                 {
                     case 1:
                         return compareMagnitude(val);
@@ -1143,15 +1156,15 @@ namespace NPOI.Util
             int len1 = m1.Length;
             int[] m2 = val.mag;
             int len2 = m2.Length;
-            if (len1 < len2)
+            if(len1 < len2)
                 return -1;
-            if (len1 > len2)
+            if(len1 > len2)
                 return 1;
-            for (int i = 0; i < len1; i++)
+            for(int i = 0; i < len1; i++)
             {
                 int a = m1[i];
                 int b = m2[i];
-                if (a != b)
+                if(a != b)
                     return ((a & LONG_MASK) < (b & LONG_MASK)) ? -1 : 1;
             }
             return 0;
@@ -1169,23 +1182,23 @@ namespace NPOI.Util
         {
             // This test is just an optimization, which may or may not help
             //if (x == this) - avoid CS0252 by making the reference comparison explicit:
-            if (Object.ReferenceEquals(x, this))
+            if(Object.ReferenceEquals(x, this))
                 return true;
 
-            if (x is not BigInteger xInt || (null == x))
+            if(x is not BigInteger xInt || (null == x))
                 return false;
 
-            if (xInt._signum != _signum)
+            if(xInt._signum != _signum)
                 return false;
 
             int[] m = mag;
             int len = m.Length;
             int[] xm = xInt.mag;
-            if (len != xm.Length)
+            if(len != xm.Length)
                 return false;
 
-            for (int i = 0; i < len; i++)
-                if (xm[i] != m[i])
+            for(int i = 0; i < len; i++)
+                if(xm[i] != m[i])
                     return false;
 
             return true;
@@ -1226,8 +1239,8 @@ namespace NPOI.Util
         {
             int hashCode = 0;
 
-            for (int i = 0; i < mag.Length; i++)
-                hashCode = (int)(31 * hashCode + (mag[i] & LONG_MASK));
+            for(int i = 0; i < mag.Length; i++)
+                hashCode = (int) (31 * hashCode + (mag[i] & LONG_MASK));
 
             return hashCode * _signum;
         }
@@ -1253,13 +1266,13 @@ namespace NPOI.Util
         }
         public BigInteger ShiftLeft(int n)
         {
-            if (_signum == 0)
+            if(_signum == 0)
                 return ZERO;
-            if (n == 0)
+            if(n == 0)
                 return this;
-            if (n < 0)
+            if(n < 0)
             {
-                if (n == int.MinValue)
+                if(n == int.MinValue)
                 {
                     throw new ArithmeticException("Shift distance of Integer.Min_VALUE not supported.");
                 }
@@ -1274,10 +1287,10 @@ namespace NPOI.Util
             int magLen = mag.Length;
             int[] newMag = null;
 
-            if (nBits == 0)
+            if(nBits == 0)
             {
                 newMag = new int[magLen + nInts];
-                for (int i = 0; i < magLen; i++)
+                for(int i = 0; i < magLen; i++)
                     newMag[i] = mag[i];
             }
             else
@@ -1285,7 +1298,7 @@ namespace NPOI.Util
                 int i = 0;
                 int nBits2 = 32 - nBits;
                 int highBits = Operator.UnsignedRightShift(mag[0], nBits2);
-                if (highBits != 0)
+                if(highBits != 0)
                 {
                     newMag = new int[magLen + nInts + 1];
                     newMag[i++] = highBits;
@@ -1295,7 +1308,7 @@ namespace NPOI.Util
                     newMag = new int[magLen + nInts];
                 }
                 int j = 0;
-                while (j < magLen - 1)
+                while(j < magLen - 1)
                     newMag[i++] = mag[j++] << nBits | Operator.UnsignedRightShift(mag[j], nBits2);
                 newMag[i] = mag[j] << nBits;
             }
@@ -1320,7 +1333,7 @@ namespace NPOI.Util
         {
             long result = 0;
 
-            for (int i = 1; i >= 0; i--)
+            for(int i = 1; i >= 0; i--)
                 result = (result << 32) + (GetInt(i) & LONG_MASK);
             return result;
         }
@@ -1338,11 +1351,11 @@ namespace NPOI.Util
          */
         public BigInteger ShiftRight(int n)
         {
-            if (n == 0)
+            if(n == 0)
                 return this;
-            if (n < 0)
+            if(n < 0)
             {
-                if (n == int.MinValue)
+                if(n == int.MinValue)
                 {
                     throw new ArithmeticException("Shift distance of Integer.Min_VALUE not supported.");
                 }
@@ -1358,21 +1371,21 @@ namespace NPOI.Util
             int[] newMag = null;
 
             // Special case: entire contents shifted off the end
-            if (nInts >= magLen)
+            if(nInts >= magLen)
                 return (_signum >= 0 ? ZERO : negConst[1]);
 
-            if (nBits == 0)
+            if(nBits == 0)
             {
                 int newMagLen = magLen - nInts;
                 newMag = new int[newMagLen];
-                for (int i = 0; i < newMagLen; i++)
+                for(int i = 0; i < newMagLen; i++)
                     newMag[i] = mag[i];
             }
             else
             {
                 int i = 0;
                 int highBits = Operator.UnsignedRightShift(mag[0], nBits);
-                if (highBits != 0)
+                if(highBits != 0)
                 {
                     newMag = new int[magLen - nInts];
                     newMag[i++] = highBits;
@@ -1384,20 +1397,20 @@ namespace NPOI.Util
 
                 int nBits2 = 32 - nBits;
                 int j = 0;
-                while (j < magLen - nInts - 1)
+                while(j < magLen - nInts - 1)
                     newMag[i++] = (mag[j++] << nBits2) | Operator.UnsignedRightShift(mag[j], nBits);
             }
 
-            if (_signum < 0)
+            if(_signum < 0)
             {
                 // Find out whether any one-bits were shifted off the end.
                 bool onesLost = false;
-                for (int i = magLen - 1, j = magLen - nInts; i >= j && !onesLost; i--)
+                for(int i = magLen - 1, j = magLen - nInts; i >= j && !onesLost; i--)
                     onesLost = (mag[i] != 0);
-                if (!onesLost && nBits != 0)
+                if(!onesLost && nBits != 0)
                     onesLost = (mag[magLen - nInts - 1] << (32 - nBits) != 0);
 
-                if (onesLost)
+                if(onesLost)
                     newMag = Increment(newMag);
             }
 
@@ -1407,9 +1420,9 @@ namespace NPOI.Util
         private static int[] Increment(int[] val)
         {
             int lastSum = 0;
-            for (int i = val.Length - 1; i >= 0 && lastSum == 0; i--)
+            for(int i = val.Length - 1; i >= 0 && lastSum == 0; i--)
                 lastSum = (val[i] += 1);
-            if (lastSum == 0)
+            if(lastSum == 0)
             {
                 val = new int[val.Length + 1];
                 val[0] = 1;
@@ -1420,7 +1433,7 @@ namespace NPOI.Util
         public BigInteger and(BigInteger val)
         {
             int[] result = new int[Math.Max(intLength(), val.intLength())];
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
                 result[i] = (GetInt(result.Length - i - 1)
                              & val.GetInt(result.Length - i - 1));
 
@@ -1437,7 +1450,7 @@ namespace NPOI.Util
         public BigInteger Not()
         {
             int[] result = new int[intLength()];
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
                 result[i] = ~GetInt(result.Length - i - 1);
 
             return ValueOf(result);
@@ -1454,7 +1467,7 @@ namespace NPOI.Util
         public BigInteger Or(BigInteger val)
         {
             int[] result = new int[Math.Max(intLength(), val.intLength())];
-            for (int i = 0; i < result.Length; i++)
+            for(int i = 0; i < result.Length; i++)
                 result[i] = (GetInt(result.Length - i - 1)
                              | val.GetInt(result.Length - i - 1));
 
@@ -1466,12 +1479,12 @@ namespace NPOI.Util
          */
         BigInteger Multiply(long v)
         {
-            if (v == 0 || _signum == 0)
+            if(v == 0 || _signum == 0)
                 return ZERO;
-            if (v == INFLATED)
+            if(v == INFLATED)
                 return Multiply(BigInteger.ValueOf(v));
             int rsign = (v > 0 ? _signum : -_signum);
-            if (v < 0)
+            if(v < 0)
                 v = -v;
             long dh = Operator.UnsignedRightShift(v, 32);      // higher order bits
             long dl = v & LONG_MASK; // lower order bits
@@ -1481,27 +1494,27 @@ namespace NPOI.Util
             int[] rmag = (dh == 0L) ? (new int[xlen + 1]) : (new int[xlen + 2]);
             long carry = 0;
             int rstart = rmag.Length - 1;
-            for (int i = xlen - 1; i >= 0; i--)
+            for(int i = xlen - 1; i >= 0; i--)
             {
                 long product = (value[i] & LONG_MASK) * dl + carry;
-                rmag[rstart--] = (int)product;
+                rmag[rstart--] = (int) product;
                 carry = Operator.UnsignedRightShift(product, 32);
             }
-            rmag[rstart] = (int)carry;
-            if (dh != 0L)
+            rmag[rstart] = (int) carry;
+            if(dh != 0L)
             {
                 carry = 0;
                 rstart = rmag.Length - 2;
-                for (int i = xlen - 1; i >= 0; i--)
+                for(int i = xlen - 1; i >= 0; i--)
                 {
                     long product = (value[i] & LONG_MASK) * dh +
                         (rmag[rstart] & LONG_MASK) + carry;
-                    rmag[rstart--] = (int)product;
+                    rmag[rstart--] = (int) product;
                     carry = Operator.UnsignedRightShift(product, 32);
                 }
-                rmag[0] = (int)carry;
+                rmag[0] = (int) carry;
             }
-            if (carry == 0L)
+            if(carry == 0L)
                 rmag = Arrays.CopyOfRange(rmag, 1, rmag.Length);
             return new BigInteger(rmag, rsign);
         }
@@ -1513,7 +1526,7 @@ namespace NPOI.Util
          */
         public BigInteger Multiply(BigInteger val)
         {
-            if (val._signum == 0 || _signum == 0)
+            if(val._signum == 0 || _signum == 0)
                 return ZERO;
 
             int[] result = MultiplyToLen(mag, mag.Length,
@@ -1529,15 +1542,15 @@ namespace NPOI.Util
          */
         public BigInteger Add(BigInteger val)
         {
-            if (val._signum == 0)
+            if(val._signum == 0)
                 return this;
-            if (_signum == 0)
+            if(_signum == 0)
                 return val;
-            if (val._signum == _signum)
+            if(val._signum == _signum)
                 return new BigInteger(add(mag, val.mag), _signum);
 
             int cmp = compareMagnitude(val);
-            if (cmp == 0)
+            if(cmp == 0)
                 return ZERO;
             int[] resultMag = (cmp > 0 ? Subtract(mag, val.mag)
                                : Subtract(val.mag, mag));
@@ -1553,7 +1566,7 @@ namespace NPOI.Util
         private static int[] add(int[] x, int[] y)
         {
             // If x is shorter, swap the two arrays
-            if (x.Length < y.Length)
+            if(x.Length < y.Length)
             {
                 int[] tmp = x;
                 x = y;
@@ -1566,24 +1579,24 @@ namespace NPOI.Util
             long sum = 0;
 
             // Add common parts of both numbers
-            while (yIndex > 0)
+            while(yIndex > 0)
             {
                 sum = (x[--xIndex] & LONG_MASK) +
                       (y[--yIndex] & LONG_MASK) + Operator.UnsignedRightShift(sum, 32);
-                result[xIndex] = (int)sum;
+                result[xIndex] = (int) sum;
             }
 
             // Copy remainder of longer number while carry propagation is required
             bool carry = Operator.UnsignedRightShift(sum, 32) != 0;
-            while (xIndex > 0 && carry)
+            while(xIndex > 0 && carry)
                 carry = ((result[--xIndex] = x[xIndex] + 1) == 0);
 
             // Copy remainder of longer number
-            while (xIndex > 0)
+            while(xIndex > 0)
                 result[--xIndex] = x[xIndex];
 
             // Grow result if necessary
-            if (carry)
+            if(carry)
             {
                 int[] bigger = new int[result.Length + 1];
                 Array.Copy(result, 0, bigger, 1, result.Length);
@@ -1600,15 +1613,15 @@ namespace NPOI.Util
          */
         public BigInteger Subtract(BigInteger val)
         {
-            if (val._signum == 0)
+            if(val._signum == 0)
                 return this;
-            if (_signum == 0)
+            if(_signum == 0)
                 return val.Negate();
-            if (val._signum != _signum)
+            if(val._signum != _signum)
                 return new BigInteger(add(mag, val.mag), _signum);
 
             int cmp = compareMagnitude(val);
-            if (cmp == 0)
+            if(cmp == 0)
                 return ZERO;
             int[] resultMag = (cmp > 0 ? Subtract(mag, val.mag)
                                : Subtract(val.mag, mag));
@@ -1631,21 +1644,21 @@ namespace NPOI.Util
             long difference = 0;
 
             // Subtract common parts of both numbers
-            while (littleIndex > 0)
+            while(littleIndex > 0)
             {
                 difference = (big[--bigIndex] & LONG_MASK) -
                              (little[--littleIndex] & LONG_MASK) +
                              (difference >> 32);
-                result[bigIndex] = (int)difference;
+                result[bigIndex] = (int) difference;
             }
 
             // Subtract remainder of longer number while borrow propagates
             bool borrow = (difference >> 32 != 0);
-            while (bigIndex > 0 && borrow)
+            while(bigIndex > 0 && borrow)
                 borrow = ((result[--bigIndex] = big[bigIndex] - 1) == -1);
 
             // Copy remainder of longer number
-            while (bigIndex > 0)
+            while(bigIndex > 0)
                 result[--bigIndex] = big[bigIndex];
 
             return result;
@@ -1821,7 +1834,7 @@ namespace NPOI.Util
         public static int[] ArraysCopyOfRange(int[] original, int from, int to)
         {
             int newLength = to - from;
-            if (newLength < 0)
+            if(newLength < 0)
                 throw new ArgumentException(from + " > " + to);
             int[] copy = new int[newLength];
             Array.Copy(original, from, copy, 0,
@@ -1831,7 +1844,7 @@ namespace NPOI.Util
         public static long[] ArraysCopyOfRange(long[] original, int from, int to)
         {
             int newLength = to - from;
-            if (newLength < 0)
+            if(newLength < 0)
                 throw new ArgumentException(from + " > " + to);
             long[] copy = new long[newLength];
             Array.Copy(original, from, copy, 0,
@@ -1864,7 +1877,7 @@ namespace NPOI.Util
          */
         private int[] getMagnitudeArray()
         {
-            if (offset > 0 || _value.Length != intLen)
+            if(offset > 0 || _value.Length != intLen)
                 return ArraysCopyOfRange(_value, offset, offset + intLen);
             return _value;
         }
@@ -1876,7 +1889,7 @@ namespace NPOI.Util
         private long toLong()
         {
             Debug.Assert(intLen <= 2, "this MutableBigInteger exceeds the range of long");
-            if (intLen == 0)
+            if(intLen == 0)
                 return 0;
             long d = _value[offset] & LONG_MASK;
             return (intLen == 2) ? d << 32 | (_value[offset + 1] & LONG_MASK) : d;
@@ -1887,7 +1900,7 @@ namespace NPOI.Util
          */
         public BigInteger toBigInteger(int sign)
         {
-            if (intLen == 0 || sign == 0)
+            if(intLen == 0 || sign == 0)
                 return BigInteger.ZERO;
             return new BigInteger(getMagnitudeArray(), sign);
         }
@@ -1918,7 +1931,7 @@ namespace NPOI.Util
         void clear()
         {
             offset = intLen = 0;
-            for (int index = 0, n = _value.Length; index < n; index++)
+            for(int index = 0, n = _value.Length; index < n; index++)
                 _value[index] = 0;
         }
 
@@ -1938,21 +1951,21 @@ namespace NPOI.Util
         int compare(MutableBigInteger b)
         {
             int blen = b.intLen;
-            if (intLen < blen)
+            if(intLen < blen)
                 return -1;
-            if (intLen > blen)
+            if(intLen > blen)
                 return 1;
 
             // Add Integer.Min_VALUE to make the comparison act as unsigned integer
             // comparison.
             int[] bval = b._value;
-            for (int i = offset, j = b.offset; i < intLen + offset; i++, j++)
+            for(int i = offset, j = b.offset; i < intLen + offset; i++, j++)
             {
                 int b1 = unchecked((int)(_value[i] + 0x80000000));
                 int b2 = unchecked((int)(bval[j] + 0x80000000));
-                if (b1 < b2)
+                if(b1 < b2)
                     return -1;
-                if (b1 > b2)
+                if(b1 > b2)
                     return 1;
             }
             return 0;
@@ -1968,22 +1981,22 @@ namespace NPOI.Util
         {
             int blen = b.intLen;
             int len = intLen;
-            if (len <= 0)
+            if(len <= 0)
                 return blen <= 0 ? 0 : -1;
-            if (len > blen)
+            if(len > blen)
                 return 1;
-            if (len < blen - 1)
+            if(len < blen - 1)
                 return -1;
             int[] bval = b._value;
             int bstart = 0;
             int carry = 0;
             // Only 2 cases left:len == blen or len == blen - 1
-            if (len != blen)
+            if(len != blen)
             { // len == blen - 1
-                if (bval[bstart] == 1)
+                if(bval[bstart] == 1)
                 {
                     ++bstart;
-                    carry = unchecked((int)0x80000000);
+                    carry = unchecked((int) 0x80000000);
                 }
                 else
                     return -1;
@@ -1991,12 +2004,12 @@ namespace NPOI.Util
             // compare values with right-shifted values of b,
             // carrying shifted-out bits across words
             int[] val = _value;
-            for (int i = offset, j = bstart; i < len + offset; )
+            for(int i = offset, j = bstart; i < len + offset;)
             {
                 int bv = bval[j++];
                 long hb = (Operator.UnsignedRightShift(bv, 1) + carry) & LONG_MASK;
                 long v = val[i++] & LONG_MASK;
-                if (v != hb)
+                if(v != hb)
                     return v < hb ? -1 : 1;
                 carry = (bv & 1) << 31; // carray will be either 0x80000000 or 0
             }
@@ -2009,13 +2022,13 @@ namespace NPOI.Util
          */
         private int getLowestSetBit()
         {
-            if (intLen == 0)
+            if(intLen == 0)
                 return -1;
             int j, b;
-            for (j = intLen - 1; (j > 0) && (_value[j + offset] == 0); j--)
+            for(j = intLen - 1; (j > 0) && (_value[j + offset] == 0); j--)
                 ;
             b = _value[j + offset];
-            if (b == 0)
+            if(b == 0)
                 return -1;
             return ((intLen - 1 - j) << 5) + BigInteger.NumberOfTrailingZeros(b);
         }
@@ -2047,21 +2060,21 @@ namespace NPOI.Util
          */
         void normalize()
         {
-            if (intLen == 0)
+            if(intLen == 0)
             {
                 offset = 0;
                 return;
             }
 
             int index = offset;
-            if (_value[index] != 0)
+            if(_value[index] != 0)
                 return;
 
             int indexBound = index + intLen;
             do
             {
                 index++;
-            } while (index < indexBound && _value[index] == 0);
+            } while(index < indexBound && _value[index] == 0);
 
             int numZeros = index - offset;
             intLen -= numZeros;
@@ -2074,7 +2087,7 @@ namespace NPOI.Util
          */
         private void ensureCapacity(int len)
         {
-            if (_value.Length < len)
+            if(_value.Length < len)
             {
                 _value = new int[len];
                 offset = 0;
@@ -2089,7 +2102,7 @@ namespace NPOI.Util
         int[] toIntArray()
         {
             int[] result = new int[intLen];
-            for (int i = 0; i < intLen; i++)
+            for(int i = 0; i < intLen; i++)
                 result[i] = _value[offset + i];
             return result;
         }
@@ -2122,7 +2135,7 @@ namespace NPOI.Util
         void copyValue(MutableBigInteger src)
         {
             int len = src.intLen;
-            if (_value.Length < len)
+            if(_value.Length < len)
                 _value = new int[len];
             Array.Copy(src._value, src.offset, _value, 0, len);
             intLen = len;
@@ -2136,7 +2149,7 @@ namespace NPOI.Util
         void copyValue(int[] val)
         {
             int len = val.Length;
-            if (_value.Length < len)
+            if(_value.Length < len)
                 _value = new int[len];
             Array.Copy(val, 0, _value, 0, len);
             intLen = len;
@@ -2182,9 +2195,9 @@ namespace NPOI.Util
          */
         bool isNormal()
         {
-            if (intLen + offset > _value.Length)
+            if(intLen + offset > _value.Length)
                 return false;
-            if (intLen == 0)
+            if(intLen == 0)
                 return true;
             return (_value[offset] != 0);
         }
@@ -2204,15 +2217,15 @@ namespace NPOI.Util
          */
         void rightShift(int n)
         {
-            if (intLen == 0)
+            if(intLen == 0)
                 return;
             int nInts = Operator.UnsignedRightShift(n, 5);
             int nBits = n & 0x1F;
             this.intLen -= nInts;
-            if (nBits == 0)
+            if(nBits == 0)
                 return;
             int bitsInHighWord = BigInteger.BitLengthForInt(_value[offset]);
-            if (nBits >= bitsInHighWord)
+            if(nBits >= bitsInHighWord)
             {
                 this.primitiveLeftShift(32 - nBits);
                 this.intLen--;
@@ -2234,49 +2247,49 @@ namespace NPOI.Util
              * ints in the value array is faster to utilize, so the extra space
              * will be taken from the right if possible.
              */
-            if (intLen == 0)
+            if(intLen == 0)
                 return;
             int nInts = Operator.UnsignedRightShift(n, 5);
             int nBits = n & 0x1F;
             int bitsInHighWord = BigInteger.BitLengthForInt(_value[offset]);
 
             // If shift can be done without moving words, do so
-            if (n <= (32 - bitsInHighWord))
+            if(n <= (32 - bitsInHighWord))
             {
                 primitiveLeftShift(nBits);
                 return;
             }
 
             int newLen = intLen + nInts + 1;
-            if (nBits <= (32 - bitsInHighWord))
+            if(nBits <= (32 - bitsInHighWord))
                 newLen--;
-            if (_value.Length < newLen)
+            if(_value.Length < newLen)
             {
                 // The array must grow
                 int[] result = new int[newLen];
-                for (int i = 0; i < intLen; i++)
+                for(int i = 0; i < intLen; i++)
                     result[i] = _value[offset + i];
                 setValue(result, newLen);
             }
-            else if (_value.Length - offset >= newLen)
+            else if(_value.Length - offset >= newLen)
             {
                 // Use space on right
-                for (int i = 0; i < newLen - intLen; i++)
+                for(int i = 0; i < newLen - intLen; i++)
                     _value[offset + intLen + i] = 0;
             }
             else
             {
                 // Must use space on left
-                for (int i = 0; i < intLen; i++)
+                for(int i = 0; i < intLen; i++)
                     _value[i] = _value[offset + i];
-                for (int i = intLen; i < newLen; i++)
+                for(int i = intLen; i < newLen; i++)
                     _value[i] = 0;
                 offset = 0;
             }
             intLen = newLen;
-            if (nBits == 0)
+            if(nBits == 0)
                 return;
-            if (nBits <= (32 - bitsInHighWord))
+            if(nBits <= (32 - bitsInHighWord))
                 primitiveLeftShift(nBits);
             else
                 primitiveRightShift(32 - nBits);
@@ -2291,14 +2304,14 @@ namespace NPOI.Util
         {
             long carry = 0;
 
-            for (int j = a.Length - 1; j >= 0; j--)
+            for(int j = a.Length - 1; j >= 0; j--)
             {
                 long sum = (a[j] & LONG_MASK) +
                            (result[j + offset] & LONG_MASK) + carry;
-                result[j + offset] = (int)sum;
+                result[j + offset] = (int) sum;
                 carry = Operator.UnsignedRightShift(sum, 32);
             }
-            return (int)carry;
+            return (int) carry;
         }
 
         /**
@@ -2312,16 +2325,16 @@ namespace NPOI.Util
             long carry = 0;
             offset += len;
 
-            for (int j = len - 1; j >= 0; j--)
+            for(int j = len - 1; j >= 0; j--)
             {
                 long product = (a[j] & LONG_MASK) * xLong + carry;
                 long difference = q[offset] - product;
-                q[offset--] = (int)difference;
+                q[offset--] = (int) difference;
                 carry = Operator.UnsignedRightShift(product, 32)
                          + (((difference & LONG_MASK) >
-                             (((~(int)product) & LONG_MASK))) ? 1 : 0);
+                             (((~(int) product) & LONG_MASK))) ? 1 : 0);
             }
-            return (int)carry;
+            return (int) carry;
         }
 
         /**
@@ -2333,7 +2346,7 @@ namespace NPOI.Util
         {
             int[] val = _value;
             int n2 = 32 - n;
-            for (int i = offset + intLen - 1, c = val[i]; i > offset; i--)
+            for(int i = offset + intLen - 1, c = val[i]; i > offset; i--)
             {
                 int b = c;
                 c = val[i - 1];
@@ -2351,7 +2364,7 @@ namespace NPOI.Util
         {
             int[] val = _value;
             int n2 = 32 - n;
-            for (int i = offset, c = val[i], m = i + intLen - 1; i < m; i++)
+            for(int i = offset, c = val[i], m = i + intLen - 1; i < m; i++)
             {
                 int b = c;
                 c = val[i + 1];
@@ -2377,37 +2390,38 @@ namespace NPOI.Util
             long carry = 0;
 
             // Add common parts of both numbers
-            while (x > 0 && y > 0)
+            while(x > 0 && y > 0)
             {
-                x--; y--;
+                x--;
+                y--;
                 sum = (_value[x + offset] & LONG_MASK) +
                     (addend._value[y + addend.offset] & LONG_MASK) + carry;
-                result[rstart--] = (int)sum;
+                result[rstart--] = (int) sum;
                 carry = Operator.UnsignedRightShift(sum, 32);
             }
 
             // Add remainder of the longer number
-            while (x > 0)
+            while(x > 0)
             {
                 x--;
-                if (carry == 0 && result == _value && rstart == (x + offset))
+                if(carry == 0 && result == _value && rstart == (x + offset))
                     return;
                 sum = (_value[x + offset] & LONG_MASK) + carry;
-                result[rstart--] = (int)sum;
+                result[rstart--] = (int) sum;
                 carry = Operator.UnsignedRightShift(sum, 32);
             }
-            while (y > 0)
+            while(y > 0)
             {
                 y--;
                 sum = (addend._value[y + addend.offset] & LONG_MASK) + carry;
-                result[rstart--] = (int)sum;
+                result[rstart--] = (int) sum;
                 carry = Operator.UnsignedRightShift(sum, 32);
             }
 
-            if (carry > 0)
+            if(carry > 0)
             { // Result must grow in length
                 resultLen++;
-                if (result.Length < resultLen)
+                if(result.Length < resultLen)
                 {
                     int[] temp = new int[resultLen];
                     // Result one word longer from carry-out; copy low-order
@@ -2439,12 +2453,12 @@ namespace NPOI.Util
             int[] result = _value;
             int sign = a.compare(b);
 
-            if (sign == 0)
+            if(sign == 0)
             {
                 reset();
                 return 0;
             }
-            if (sign < 0)
+            if(sign < 0)
             {
                 MutableBigInteger tmp = a;
                 a = b;
@@ -2452,7 +2466,7 @@ namespace NPOI.Util
             }
 
             int resultLen = a.intLen;
-            if (result.Length < resultLen)
+            if(result.Length < resultLen)
                 result = new int[resultLen];
 
             long diff = 0;
@@ -2461,20 +2475,21 @@ namespace NPOI.Util
             int rstart = result.Length - 1;
 
             // Subtract common parts of both numbers
-            while (y > 0)
-            {
-                x--; y--;
-
-                diff = (a._value[x + a.offset] & LONG_MASK) -
-                       (b._value[y + b.offset] & LONG_MASK) - ((int)-(diff >> 32));
-                result[rstart--] = (int)diff;
-            }
-            // Subtract remainder of longer number
-            while (x > 0)
+            while(y > 0)
             {
                 x--;
-                diff = (a._value[x + a.offset] & LONG_MASK) - ((int)-(diff >> 32));
-                result[rstart--] = (int)diff;
+                y--;
+
+                diff = (a._value[x + a.offset] & LONG_MASK) -
+                       (b._value[y + b.offset] & LONG_MASK) - ((int) -(diff >> 32));
+                result[rstart--] = (int) diff;
+            }
+            // Subtract remainder of longer number
+            while(x > 0)
+            {
+                x--;
+                diff = (a._value[x + a.offset] & LONG_MASK) - ((int) -(diff >> 32));
+                result[rstart--] = (int) diff;
             }
 
             _value = result;
@@ -2493,9 +2508,9 @@ namespace NPOI.Util
         {
             MutableBigInteger a = this;
             int sign = a.compare(b);
-            if (sign == 0)
+            if(sign == 0)
                 return 0;
-            if (sign < 0)
+            if(sign < 0)
             {
                 MutableBigInteger tmp = a;
                 a = b;
@@ -2507,19 +2522,20 @@ namespace NPOI.Util
             int y = b.intLen;
 
             // Subtract common parts of both numbers
-            while (y > 0)
-            {
-                x--; y--;
-                diff = (a._value[a.offset + x] & LONG_MASK) -
-                    (b._value[b.offset + y] & LONG_MASK) - ((int)-(diff >> 32));
-                a._value[a.offset + x] = (int)diff;
-            }
-            // Subtract remainder of longer number
-            while (x > 0)
+            while(y > 0)
             {
                 x--;
-                diff = (a._value[a.offset + x] & LONG_MASK) - ((int)-(diff >> 32));
-                a._value[a.offset + x] = (int)diff;
+                y--;
+                diff = (a._value[a.offset + x] & LONG_MASK) -
+                    (b._value[b.offset + y] & LONG_MASK) - ((int) -(diff >> 32));
+                a._value[a.offset + x] = (int) diff;
+            }
+            // Subtract remainder of longer number
+            while(x > 0)
+            {
+                x--;
+                diff = (a._value[a.offset + x] & LONG_MASK) - ((int) -(diff >> 32));
+                a._value[a.offset + x] = (int) diff;
             }
 
             a.normalize();
@@ -2537,35 +2553,35 @@ namespace NPOI.Util
             int newLen = xLen + yLen;
 
             // Put z into an appropriate state to receive product
-            if (z._value.Length < newLen)
+            if(z._value.Length < newLen)
                 z._value = new int[newLen];
             z.offset = 0;
             z.intLen = newLen;
 
             // The first iteration is hoisted out of the loop to avoid extra add
             long carry = 0;
-            for (int j = yLen - 1, k = yLen + xLen - 1; j >= 0; j--, k--)
+            for(int j = yLen - 1, k = yLen + xLen - 1; j >= 0; j--, k--)
             {
                 long product = (y._value[j + y.offset] & LONG_MASK) *
                                (_value[xLen - 1 + offset] & LONG_MASK) + carry;
-                z._value[k] = (int)product;
+                z._value[k] = (int) product;
                 carry = Operator.UnsignedRightShift(product, 32);
             }
-            z._value[xLen - 1] = (int)carry;
+            z._value[xLen - 1] = (int) carry;
 
             // Perform the multiplication word by word
-            for (int i = xLen - 2; i >= 0; i--)
+            for(int i = xLen - 2; i >= 0; i--)
             {
                 carry = 0;
-                for (int j = yLen - 1, k = yLen + i; j >= 0; j--, k--)
+                for(int j = yLen - 1, k = yLen + i; j >= 0; j--, k--)
                 {
                     long product = (y._value[j + y.offset] & LONG_MASK) *
                                    (_value[i + offset] & LONG_MASK) +
                                    (z._value[k] & LONG_MASK) + carry;
-                    z._value[k] = (int)product;
+                    z._value[k] = (int) product;
                     carry = Operator.UnsignedRightShift(product, 32);
                 }
-                z._value[i] = (int)carry;
+                z._value[i] = (int) carry;
             }
 
             // Remove leading zeros from product
@@ -2578,13 +2594,13 @@ namespace NPOI.Util
          */
         public void mul(int y, MutableBigInteger z)
         {
-            if (y == 1)
+            if(y == 1)
             {
                 z.copyValue(this);
                 return;
             }
 
-            if (y == 0)
+            if(y == 0)
             {
                 z.clear();
                 return;
@@ -2595,14 +2611,14 @@ namespace NPOI.Util
             int[] zval = (z._value.Length < intLen + 1 ? new int[intLen + 1]
                                                   : z._value);
             long carry = 0;
-            for (int i = intLen - 1; i >= 0; i--)
+            for(int i = intLen - 1; i >= 0; i--)
             {
                 long product = ylong * (_value[i + offset] & LONG_MASK) + carry;
-                zval[i + 1] = (int)product;
+                zval[i + 1] = (int) product;
                 carry = Operator.UnsignedRightShift(product, 32);
             }
 
-            if (carry == 0)
+            if(carry == 0)
             {
                 z.offset = 1;
                 z.intLen = intLen;
@@ -2611,7 +2627,7 @@ namespace NPOI.Util
             {
                 z.offset = 0;
                 z.intLen = intLen + 1;
-                zval[0] = (int)carry;
+                zval[0] = (int) carry;
             }
             z._value = zval;
         }
@@ -2629,7 +2645,7 @@ namespace NPOI.Util
             long divisorLong = divisor & LONG_MASK;
 
             // Special case of one word dividend
-            if (intLen == 1)
+            if(intLen == 1)
             {
                 long dividendValue = _value[offset] & LONG_MASK;
                 int q = (int)(dividendValue / divisorLong);
@@ -2640,7 +2656,7 @@ namespace NPOI.Util
                 return r;
             }
 
-            if (quotient._value.Length < intLen)
+            if(quotient._value.Length < intLen)
                 quotient._value = new int[intLen];
             quotient.offset = 0;
             quotient.intLen = intLen;
@@ -2650,27 +2666,27 @@ namespace NPOI.Util
 
             int rem = _value[offset];
             long remLong = rem & LONG_MASK;
-            if (remLong < divisorLong)
+            if(remLong < divisorLong)
             {
                 quotient._value[0] = 0;
             }
             else
             {
-                quotient._value[0] = (int)(remLong / divisorLong);
-                rem = (int)(remLong - (quotient._value[0] * divisorLong));
+                quotient._value[0] = (int) (remLong / divisorLong);
+                rem = (int) (remLong - (quotient._value[0] * divisorLong));
                 remLong = rem & LONG_MASK;
             }
 
             int xlen = intLen;
             int[] qWord = new int[2];
-            while (--xlen > 0)
+            while(--xlen > 0)
             {
                 long dividendEstimate = (remLong << 32) |
                     (_value[offset + intLen - xlen] & LONG_MASK);
-                if (dividendEstimate >= 0)
+                if(dividendEstimate >= 0)
                 {
-                    qWord[0] = (int)(dividendEstimate / divisorLong);
-                    qWord[1] = (int)(dividendEstimate - qWord[0] * divisorLong);
+                    qWord[0] = (int) (dividendEstimate / divisorLong);
+                    qWord[1] = (int) (dividendEstimate - qWord[0] * divisorLong);
                 }
                 else
                 {
@@ -2683,7 +2699,7 @@ namespace NPOI.Util
 
             quotient.normalize();
             // Unnormalize
-            if (shift > 0)
+            if(shift > 0)
                 return rem % divisor;
             else
                 return rem;
@@ -2702,11 +2718,11 @@ namespace NPOI.Util
          */
         public MutableBigInteger divide(MutableBigInteger b, MutableBigInteger quotient)
         {
-            if (b.intLen == 0)
+            if(b.intLen == 0)
                 throw new ArithmeticException("BigInteger divide by zero");
 
             // Dividend is zero
-            if (intLen == 0)
+            if(intLen == 0)
             {
                 quotient.intLen = quotient.offset;
                 return new MutableBigInteger();
@@ -2714,13 +2730,13 @@ namespace NPOI.Util
 
             int cmp = compare(b);
             // Dividend less than divisor
-            if (cmp < 0)
+            if(cmp < 0)
             {
                 quotient.intLen = quotient.offset = 0;
                 return new MutableBigInteger(this);
             }
             // Dividend equal to divisor
-            if (cmp == 0)
+            if(cmp == 0)
             {
                 quotient._value[0] = quotient.intLen = 1;
                 quotient.offset = 0;
@@ -2729,10 +2745,10 @@ namespace NPOI.Util
 
             quotient.clear();
             // Special case one word divisor
-            if (b.intLen == 1)
+            if(b.intLen == 1)
             {
                 int r = divideOneWord(b._value[b.offset], quotient);
-                if (r == 0)
+                if(r == 0)
                     return new MutableBigInteger();
                 return new MutableBigInteger(r);
             }
@@ -2751,23 +2767,23 @@ namespace NPOI.Util
          */
         public long divide(long v, MutableBigInteger quotient)
         {
-            if (v == 0)
+            if(v == 0)
                 throw new ArithmeticException("BigInteger divide by zero");
 
             // Dividend is zero
-            if (intLen == 0)
+            if(intLen == 0)
             {
                 quotient.intLen = quotient.offset = 0;
                 return 0;
             }
-            if (v < 0)
+            if(v < 0)
                 v = -v;
 
             int d = (int)Operator.UnsignedRightShift(v, 32);
             quotient.clear();
             // Special case on word divisor
-            if (d == 0)
-                return divideOneWord((int)v, quotient) & LONG_MASK;
+            if(d == 0)
+                return divideOneWord((int) v, quotient) & LONG_MASK;
             else
             {
                 int[] div = new int[] { d, (int)(v & LONG_MASK) };
@@ -2795,7 +2811,7 @@ namespace NPOI.Util
             // Set the quotient size
             int dlen = divisor.Length;
             int limit = nlen - dlen + 1;
-            if (quotient._value.Length < limit)
+            if(quotient._value.Length < limit)
             {
                 quotient._value = new int[limit];
                 quotient.offset = 0;
@@ -2805,7 +2821,7 @@ namespace NPOI.Util
 
             // D1 normalize the divisor
             int shift = BigInteger.NumberOfLeadingZeros(divisor[0]);
-            if (shift > 0)
+            if(shift > 0)
             {
                 // First shift will not grow array
                 BigInteger.PrimitiveLeftShift(divisor, dlen, shift);
@@ -2814,7 +2830,7 @@ namespace NPOI.Util
             }
 
             // Must insert leading 0 in rem if its length did not change
-            if (rem.intLen == nlen)
+            if(rem.intLen == nlen)
             {
                 rem.offset = 0;
                 rem._value[0] = 0;
@@ -2827,7 +2843,7 @@ namespace NPOI.Util
             int[] qWord = new int[2];
 
             // D2 Initialize j
-            for (int j = 0; j < limit; j++)
+            for(int j = 0; j < limit; j++)
             {
                 // D3 Calculate qhat
                 // estimate qhat
@@ -2838,7 +2854,7 @@ namespace NPOI.Util
                 int nh2 = unchecked((int)(nh + 0x80000000));
                 int nm = rem._value[j + 1 + rem.offset];
 
-                if (nh == dh)
+                if(nh == dh)
                 {
                     qhat = ~0;
                     qrem = nh + nm;
@@ -2847,10 +2863,10 @@ namespace NPOI.Util
                 else
                 {
                     long nChunk = (((long)nh) << 32) | (nm & LONG_MASK);
-                    if (nChunk >= 0)
+                    if(nChunk >= 0)
                     {
-                        qhat = (int)(nChunk / dhLong);
-                        qrem = (int)(nChunk - (qhat * dhLong));
+                        qhat = (int) (nChunk / dhLong);
+                        qrem = (int) (nChunk - (qhat * dhLong));
                     }
                     else
                     {
@@ -2860,24 +2876,24 @@ namespace NPOI.Util
                     }
                 }
 
-                if (qhat == 0)
+                if(qhat == 0)
                     continue;
 
-                if (!skipCorrection)
+                if(!skipCorrection)
                 { // Correct qhat
                     long nl = rem._value[j + 2 + rem.offset] & LONG_MASK;
                     long rs = ((qrem & LONG_MASK) << 32) | nl;
                     long estProduct = (dl & LONG_MASK) * (qhat & LONG_MASK);
 
-                    if (unsignedLongCompare(estProduct, rs))
+                    if(unsignedLongCompare(estProduct, rs))
                     {
                         qhat--;
-                        qrem = (int)((qrem & LONG_MASK) + dhLong);
-                        if ((qrem & LONG_MASK) >= dhLong)
+                        qrem = (int) ((qrem & LONG_MASK) + dhLong);
+                        if((qrem & LONG_MASK) >= dhLong)
                         {
                             estProduct -= (dl & LONG_MASK);
                             rs = ((qrem & LONG_MASK) << 32) | nl;
-                            if (unsignedLongCompare(estProduct, rs))
+                            if(unsignedLongCompare(estProduct, rs))
                                 qhat--;
                         }
                     }
@@ -2888,7 +2904,7 @@ namespace NPOI.Util
                 int borrow = mulsub(rem._value, divisor, qhat, dlen, j + rem.offset);
 
                 // D5 Test remainder
-                if ((int)(borrow + 0x80000000) > nh2)
+                if((int) (borrow + 0x80000000) > nh2)
                 {
                     // D6 Add back
                     divadd(divisor, rem._value, j + 1 + rem.offset);
@@ -2900,7 +2916,7 @@ namespace NPOI.Util
             } // D7 loop on j
 
             // D8 Unnormalize
-            if (shift > 0)
+            if(shift > 0)
                 rem.rightShift(shift);
 
             quotient.normalize();
@@ -2926,9 +2942,9 @@ namespace NPOI.Util
         {
             long dLong = d & LONG_MASK;
 
-            if (dLong == 1)
+            if(dLong == 1)
             {
-                result[0] = (int)n;
+                result[0] = (int) n;
                 result[1] = 0;
                 return;
             }
@@ -2938,20 +2954,20 @@ namespace NPOI.Util
             long r = n - q * dLong;
 
             // Correct the approximation
-            while (r < 0)
+            while(r < 0)
             {
                 r += dLong;
                 q--;
             }
-            while (r >= dLong)
+            while(r >= dLong)
             {
                 r -= dLong;
                 q++;
             }
 
             // n - q*dlong == r && 0 <= r <dLong, hence we're done.
-            result[0] = (int)q;
-            result[1] = (int)r;
+            result[0] = (int) q;
+            result[1] = (int) r;
         }
 
         /**
@@ -2964,9 +2980,9 @@ namespace NPOI.Util
             MutableBigInteger a = this;
             MutableBigInteger q = new MutableBigInteger();
 
-            while (b.intLen != 0)
+            while(b.intLen != 0)
             {
-                if (Math.Abs(a.intLen - b.intLen) < 2)
+                if(Math.Abs(a.intLen - b.intLen) < 2)
                     return a.binaryGCD(b);
 
                 MutableBigInteger r = a.divide(b, q);
@@ -2990,7 +3006,7 @@ namespace NPOI.Util
             int s1 = u.getLowestSetBit();
             int s2 = v.getLowestSetBit();
             int k = (s1 < s2) ? s1 : s2;
-            if (k != 0)
+            if(k != 0)
             {
                 u.rightShift(k);
                 v.rightShift(k);
@@ -3002,18 +3018,18 @@ namespace NPOI.Util
             int tsign = uOdd ? -1 : 1;
 
             int lb;
-            while ((lb = t.getLowestSetBit()) >= 0)
+            while((lb = t.getLowestSetBit()) >= 0)
             {
                 // steps B3 and B4
                 t.rightShift(lb);
                 // step B5
-                if (tsign > 0)
+                if(tsign > 0)
                     u = t;
                 else
                     v = t;
 
                 // Special case one word numbers
-                if (u.intLen < 2 && v.intLen < 2)
+                if(u.intLen < 2 && v.intLen < 2)
                 {
                     int x = u._value[u.offset];
                     int y = v._value[v.offset];
@@ -3021,18 +3037,18 @@ namespace NPOI.Util
                     r._value[0] = x;
                     r.intLen = 1;
                     r.offset = 0;
-                    if (k > 0)
+                    if(k > 0)
                         r.leftShift(k);
                     return r;
                 }
 
                 // step B6
-                if ((tsign = u.difference(v)) == 0)
+                if((tsign = u.difference(v)) == 0)
                     break;
                 t = (tsign >= 0) ? u : v;
             }
 
-            if (k > 0)
+            if(k > 0)
                 u.leftShift(k);
             return u;
         }
@@ -3042,9 +3058,9 @@ namespace NPOI.Util
          */
         static int binaryGcd(int a, int b)
         {
-            if (b == 0)
+            if(b == 0)
                 return a;
-            if (a == 0)
+            if(a == 0)
                 return b;
 
             // Right shift a & b till their last bits equal to 1.
@@ -3055,9 +3071,9 @@ namespace NPOI.Util
 
             int t = (aZeros < bZeros ? aZeros : bZeros);
 
-            while (a != b)
+            while(a != b)
             {
-                if ((a + 0x80000000) > (b + 0x80000000))
+                if((a + 0x80000000) > (b + 0x80000000))
                 {  // a > b as unsigned
                     a -= b;
                     a = Operator.UnsignedRightShift(a, BigInteger.NumberOfTrailingZeros(a));
@@ -3078,11 +3094,11 @@ namespace NPOI.Util
         MutableBigInteger mutableModInverse(MutableBigInteger p)
         {
             // Modulus is odd, use Schroeppel's algorithm
-            if (p.isOdd())
+            if(p.isOdd())
                 return modInverse(p);
 
             // Base and modulus are even, throw exception
-            if (isEven())
+            if(isEven())
                 throw new ArithmeticException("BigInteger not invertible.");
 
             // Get even part of modulus expressed as a power of 2
@@ -3092,7 +3108,7 @@ namespace NPOI.Util
             MutableBigInteger oddMod = new MutableBigInteger(p);
             oddMod.rightShift(powersOf2);
 
-            if (oddMod.isOne())
+            if(oddMod.isOne())
                 return modInverseMP2(powersOf2);
 
             // Calculate 1/a mod oddMod
@@ -3124,30 +3140,30 @@ namespace NPOI.Util
          */
         MutableBigInteger modInverseMP2(int k)
         {
-            if (isEven())
+            if(isEven())
                 throw new ArithmeticException("Non-invertible. (GCD != 1)");
 
-            if (k > 64)
+            if(k > 64)
                 return euclidModInverse(k);
 
             int t = inverseMod32(_value[offset + intLen - 1]);
 
-            if (k < 33)
+            if(k < 33)
             {
                 t = (k == 32 ? t : t & ((1 << k) - 1));
                 return new MutableBigInteger(t);
             }
 
             long pLong = (_value[offset + intLen - 1] & LONG_MASK);
-            if (intLen > 1)
-                pLong |= ((long)_value[offset + intLen - 2] << 32);
+            if(intLen > 1)
+                pLong |= ((long) _value[offset + intLen - 2] << 32);
             long tLong = t & LONG_MASK;
             tLong = tLong * (2 - pLong * tLong);  // 1 more Newton iter step
             tLong = (k == 64 ? tLong : tLong & ((1L << k) - 1));
 
             MutableBigInteger result = new MutableBigInteger(new int[2]);
-            result._value[0] = (int)Operator.UnsignedRightShift(tLong, 32);
-            result._value[1] = (int)tLong;
+            result._value[0] = (int) Operator.UnsignedRightShift(tLong, 32);
+            result._value[1] = (int) tLong;
             result.intLen = 2;
             result.normalize();
             return result;
@@ -3253,7 +3269,7 @@ namespace NPOI.Util
             // Set r to the multiplicative inverse of p mod 2^32
             int r = -inverseMod32(p._value[p.offset + p.intLen - 1]);
 
-            for (int i = 0, numWords = k >> 5; i < numWords; i++)
+            for(int i = 0, numWords = k >> 5; i < numWords; i++)
             {
                 // V = R * c (mod 2^j)
                 int v = r * c._value[c.offset + c.intLen - 1];
@@ -3264,7 +3280,7 @@ namespace NPOI.Util
                 c.intLen--;
             }
             int numBits = k & 0x1f;
-            if (numBits != 0)
+            if(numBits != 0)
             {
                 // V = R * c (mod 2^j)
                 int v = r * c._value[c.offset + c.intLen - 1];
@@ -3277,7 +3293,7 @@ namespace NPOI.Util
             }
 
             // In theory, c may be greater than p at this point (Very rare!)
-            while (c.compare(p) >= 0)
+            while(c.compare(p) >= 0)
                 c.subtract(p);
 
             return c;
@@ -3306,17 +3322,17 @@ namespace NPOI.Util
             MutableBigInteger t0 = new MutableBigInteger(1);
             MutableBigInteger temp = new MutableBigInteger();
 
-            while (!b.isOne())
+            while(!b.isOne())
             {
                 r = a.divide(b, q);
 
-                if (r.intLen == 0)
+                if(r.intLen == 0)
                     throw new ArithmeticException("BigInteger not invertible.");
 
                 swapper = r;
                 a = swapper;
 
-                if (q.intLen == 1)
+                if(q.intLen == 1)
                     t1.mul(q._value[q.offset], temp);
                 else
                     q.multiply(t1, temp);
@@ -3325,22 +3341,24 @@ namespace NPOI.Util
                 temp = swapper;
                 t0.add(q);
 
-                if (a.isOne())
+                if(a.isOne())
                     return t0;
 
                 r = b.divide(a, q);
 
-                if (r.intLen == 0)
+                if(r.intLen == 0)
                     throw new ArithmeticException("BigInteger not invertible.");
 
                 swapper = b;
                 b = r;
 
-                if (q.intLen == 1)
+                if(q.intLen == 1)
                     t0.mul(q._value[q.offset], temp);
                 else
                     q.multiply(t0, temp);
-                swapper = q; q = temp; temp = swapper;
+                swapper = q;
+                q = temp;
+                temp = swapper;
 
                 t1.add(q);
             }

@@ -17,16 +17,16 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-    using NPOI.SS.Formula;
-    using System.IO;
-    using System.Collections;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.SS.Formula.PTG;
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
+    using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
 
     /**
      * Tests the serialization and deserialization of the FormulaRecord
@@ -41,15 +41,15 @@ namespace TestCases.HSSF.Record
         public void TestCreateFormulaRecord()
         {
             FormulaRecord record = new FormulaRecord();
-            record.Column=((short)0);
+            record.Column=((short) 0);
             //record.SetRow((short)1);
             record.Row=(1);
-            record.XFIndex=((short)4);
+            record.XFIndex=((short) 4);
 
-            ClassicAssert.AreEqual(record.Column, (short)0);
+            ClassicAssert.AreEqual(record.Column, (short) 0);
             //ClassicAssert.AreEqual(record.Row,(short)1);
-            ClassicAssert.AreEqual((short)record.Row, (short)1);
-            ClassicAssert.AreEqual(record.XFIndex, (short)4);
+            ClassicAssert.AreEqual((short) record.Row, (short) 1);
+            ClassicAssert.AreEqual(record.XFIndex, (short) 4);
         }
 
         /**
@@ -91,12 +91,12 @@ namespace TestCases.HSSF.Record
             FormulaRecord record = new FormulaRecord(TestcaseRecordInputStream.Create(FormulaRecord.sid,  formulaByte));
             ClassicAssert.AreEqual(0, record.Row, "Row");
             ClassicAssert.AreEqual(0, record.Column, "Column");
-            ClassicAssert.AreEqual(record.CachedResultType,NPOI.SS.UserModel.CellType.Error);
+            ClassicAssert.AreEqual(record.CachedResultType, NPOI.SS.UserModel.CellType.Error);
 
             byte[] output = record.Serialize();
             ClassicAssert.AreEqual(33, output.Length, "Output size"); //includes sid+recordlength
 
-            for (int i = 5; i < 13; i++)
+            for(int i = 5; i < 13; i++)
             {
                 ClassicAssert.AreEqual(formulaByte[i], output[i + 4], "FormulaByte NaN doesn't match");
             }
@@ -111,12 +111,12 @@ namespace TestCases.HSSF.Record
         {
             byte[] formulaByte = new byte[27];
 
-            formulaByte[4] = (byte)0x0F;
-            formulaByte[14] = (byte)0x08;
-            formulaByte[18] = (byte)0xE0;
-            formulaByte[19] = (byte)0xFD;
-            formulaByte[20] = (byte)0x05;
-            formulaByte[22] = (byte)0x01;
+            formulaByte[4] = (byte) 0x0F;
+            formulaByte[14] = (byte) 0x08;
+            formulaByte[18] = (byte) 0xE0;
+            formulaByte[19] = (byte) 0xFD;
+            formulaByte[20] = (byte) 0x05;
+            formulaByte[22] = (byte) 0x01;
             FormulaRecord record = new FormulaRecord(TestcaseRecordInputStream.Create(FormulaRecord.sid, formulaByte));
             ClassicAssert.AreEqual(0, record.Row, "Row");
             ClassicAssert.AreEqual(0, record.Column, "Column");
@@ -129,17 +129,17 @@ namespace TestCases.HSSF.Record
         {
             // =CHOOSE(2,A2,A3,A4)
             byte[] data = {
-				6, 0, 68, 0,
-				1, 0, 1, 0, 15, 0, 0, 0, 0, 0, 0, 0, 57,
-				64, 0, 0, 12, 0, 12, unchecked((byte)-4), 46, 0, 
-				30, 2, 0,	// Int - 2
+                6, 0, 68, 0,
+                1, 0, 1, 0, 15, 0, 0, 0, 0, 0, 0, 0, 57,
+                64, 0, 0, 12, 0, 12, unchecked((byte)-4), 46, 0,
+                30, 2, 0,	// Int - 2
 				25, 4, 3, 0, // Attr
 					8, 0, 17, 0, 26, 0, // jumpTable
 					35, 0, // chooseOffSet
 				36, 1, 0, 0, unchecked((byte)-64), // Ref - A2
 				25, 8, 21, 0, // Attr
 				36, 2, 0, 0, unchecked((byte)-64), // Ref - A3
-				25,	8, 12, 0, // Attr
+				25, 8, 12, 0, // Attr
 				36, 3, 0, 0, unchecked((byte)-64), // Ref - A4
 				25, 8, 3, 0,  // Attr 
 				66, 4, 100, 0 // CHOOSE
@@ -169,7 +169,7 @@ namespace TestCases.HSSF.Record
         {
             FormulaRecord formulaRecord = new FormulaRecord();
             formulaRecord.Row = (/*setter*/1);
-            formulaRecord.Column = (/*setter*/(short)1);
+            formulaRecord.Column = (/*setter*/(short) 1);
             formulaRecord.ParsedExpression = (/*setter*/new Ptg[] { new RefPtg("B$5"), });
             formulaRecord.Value = (/*setter*/3.3);
             byte[] ser = formulaRecord.Serialize();
@@ -196,12 +196,12 @@ namespace TestCases.HSSF.Record
             // Test some other cached value types 
             fr0.Value = (/*setter*/3.5);
             ClassicAssert.AreEqual(3.5, fr0.Value, 0.0);
-            fr0.SetCachedResultErrorCode (FormulaError.REF.Code);
+            fr0.SetCachedResultErrorCode(FormulaError.REF.Code);
             ClassicAssert.AreEqual(FormulaError.REF.Code, fr0.CachedErrorValue);
 
             fr0.SetCachedResultBoolean(false);
             fr1.SetCachedResultBoolean(true);
-            if (fr0.CachedBooleanValue == true && fr1.CachedBooleanValue == false)
+            if(fr0.CachedBooleanValue == true && fr1.CachedBooleanValue == false)
             {
                 throw new AssertionException("Identified bug 46479c");
             }

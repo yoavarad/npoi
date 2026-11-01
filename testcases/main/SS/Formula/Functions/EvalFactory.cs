@@ -18,9 +18,9 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using NPOI.SS.Formula.PTG;
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
+    using NPOI.SS.Formula.PTG;
     using System;
 
     /**
@@ -55,13 +55,13 @@ namespace TestCases.SS.Formula.Functions
             int nCols = areaPtg.LastColumn - areaPtg.FirstColumn + 1;
             int nRows = areaPtg.LastRow - areaPtg.FirstRow + 1;
             int nExpected = nRows * nCols;
-            if (values.Length != nExpected)
+            if(values.Length != nExpected)
             {
                 throw new SystemException("Expected " + nExpected + " values but got " + values.Length);
             }
-            for (int i = 0; i < nExpected; i++)
+            for(int i = 0; i < nExpected; i++)
             {
-                if (values[i] == null)
+                if(values[i] == null)
                 {
                     values[i] = NumberEval.ZERO;
                 }
@@ -100,12 +100,12 @@ namespace TestCases.SS.Formula.Functions
             }
             public override ValueEval GetRelativeValue(int sheetIndex, int relativeRowIndex, int relativeColumnIndex)
             {
-                if (relativeRowIndex < 0 || relativeRowIndex >= Height)
+                if(relativeRowIndex < 0 || relativeRowIndex >= Height)
                 {
                     throw new ArgumentException("row index out of range");
                 }
                 int width = Width;
-                if (relativeColumnIndex < 0 || relativeColumnIndex >= width)
+                if(relativeColumnIndex < 0 || relativeColumnIndex >= width)
                 {
                     throw new ArgumentException("column index out of range");
                 }
@@ -114,13 +114,13 @@ namespace TestCases.SS.Formula.Functions
             }
             public override AreaEval Offset(int relFirstRowIx, int relLastRowIx, int relFirstColIx, int relLastColIx)
             {
-                if (relFirstRowIx < 0 || relFirstColIx < 0
+                if(relFirstRowIx < 0 || relFirstColIx < 0
                         || relLastRowIx >= Height || relLastColIx >= Width)
                 {
                     throw new SystemException("Operation not implemented on this mock object");
                 }
 
-                if (relFirstRowIx == 0 && relFirstColIx == 0
+                if(relFirstRowIx == 0 && relFirstColIx == 0
                         && relLastRowIx == Height - 1 && relLastColIx == Width - 1)
                 {
                     return this;
@@ -136,10 +136,10 @@ namespace TestCases.SS.Formula.Functions
                 int height = relLastRowIx - relFirstRowIx + 1;
                 int width = relLastColIx - relFirstColIx + 1;
                 ValueEval[] result = new ValueEval[height * width];
-                for (int r = 0; r < height; r++)
+                for(int r = 0; r < height; r++)
                 {
                     int srcRowIx = r + relFirstRowIx;
-                    for (int c = 0; c < width; c++)
+                    for(int c = 0; c < width; c++)
                     {
                         int srcColIx = c + relFirstColIx;
                         int destIx = r * width + c;
@@ -151,13 +151,13 @@ namespace TestCases.SS.Formula.Functions
             }
             public override TwoDEval GetRow(int rowIndex)
             {
-                if (rowIndex >= Height)
+                if(rowIndex >= Height)
                 {
                     throw new ArgumentException("Invalid rowIndex " + rowIndex
                             + ".  Allowable range is (0.." + Height + ").");
                 }
                 ValueEval[] values = new ValueEval[Width];
-                for (int i = 0; i < values.Length; i++)
+                for(int i = 0; i < values.Length; i++)
                 {
                     values[i] = GetRelativeValue(rowIndex, i);
                 }
@@ -165,13 +165,13 @@ namespace TestCases.SS.Formula.Functions
             }
             public override TwoDEval GetColumn(int columnIndex)
             {
-                if (columnIndex >= Width)
+                if(columnIndex >= Width)
                 {
                     throw new ArgumentException("Invalid columnIndex " + columnIndex
                             + ".  Allowable range is (0.." + Width + ").");
                 }
                 ValueEval[] values = new ValueEval[Height];
-                for (int i = 0; i < values.Length; i++)
+                for(int i = 0; i < values.Length; i++)
                 {
                     values[i] = GetRelativeValue(i, columnIndex);
                 }

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,13 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Text;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System.Collections.Generic;
 using NPOI.Util;
-using System.Reflection;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
+using System.Text;
 
 namespace TestCases
 {

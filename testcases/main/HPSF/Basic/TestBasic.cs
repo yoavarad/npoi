@@ -62,7 +62,7 @@ namespace TestCases.HPSF.Basic
 
 
 
-        
+
         /// <summary>
         /// Read a the test file from the "data" directory.
         /// </summary>
@@ -84,7 +84,7 @@ namespace TestCases.HPSF.Basic
         public void TestReadFiles()
         {
             String[] expected = POI_FILES;
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
                 ClassicAssert.AreEqual(poiFiles[i].GetName(), expected[i]);
         }
 
@@ -115,7 +115,7 @@ namespace TestCases.HPSF.Basic
                 typeof(NoPropertySetStreamException),
                 typeof(NoPropertySetStreamException)
             };
-            for (int i = 0; i < expected.Length; i++)
+            for(int i = 0; i < expected.Length; i++)
             {
                 InputStream in1 = new ByteArrayInputStream(poiFiles[i].GetBytes());
                 Object o;
@@ -123,11 +123,11 @@ namespace TestCases.HPSF.Basic
                 {
                     o = PropertySetFactory.Create(in1);
                 }
-                catch (NoPropertySetStreamException ex)
+                catch(NoPropertySetStreamException ex)
                 {
                     o = ex;
                 }
-                catch (MarkUnsupportedException ex)
+                catch(MarkUnsupportedException ex)
                 {
                     o = ex;
                 }
@@ -150,7 +150,7 @@ namespace TestCases.HPSF.Basic
         public void TestPropertySetMethods()
         {
             /* Loop over the two property Sets. */
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 2; i++)
             {
                 byte[] b = poiFiles[i].GetBytes();
                 PropertySet ps = PropertySetFactory.Create(new ByteArrayInputStream(b));
@@ -181,7 +181,7 @@ namespace TestCases.HPSF.Basic
             SummaryInformation si = (SummaryInformation)PropertySetFactory.Create(is1);
             IList sections = si.Sections;
             Section s = (Section)sections[0];
-            
+
             ClassicAssert.AreEqual(s.FormatID, SectionIDMap.SUMMARY_INFORMATION_ID);
             ClassicAssert.IsNotNull(s.Properties);
             ClassicAssert.AreEqual(17, s.PropertyCount);

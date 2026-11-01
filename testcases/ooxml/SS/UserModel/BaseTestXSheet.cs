@@ -31,7 +31,7 @@ namespace TestCases.SS.UserModel
         protected BaseTestXSheet(ITestDataProvider testDataProvider)
             : base(testDataProvider)
         {
-            
+
         }
     }
 

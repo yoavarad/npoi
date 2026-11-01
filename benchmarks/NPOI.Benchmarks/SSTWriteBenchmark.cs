@@ -29,7 +29,7 @@ public class SSTWriteBenchmark
         SharedStringsTable.UseDirectWrite = true;
         using var workbook = new XSSFWorkbook();
         var sheet = workbook.CreateSheet();
-        for (int i = 0; i < WriteRowCount; i++)
+        for(int i = 0; i < WriteRowCount; i++)
             sheet.CreateRow(i).CreateCell(0).SetCellValue("UniqueString_" + i);
         using var ms = new MemoryStream();
         workbook.Write(ms, leaveOpen: true);
@@ -45,7 +45,7 @@ public class SSTWriteBenchmark
         SharedStringsTable.UseDirectWrite = false;
         using var workbook = new XSSFWorkbook();
         var sheet = workbook.CreateSheet();
-        for (int i = 0; i < WriteRowCount; i++)
+        for(int i = 0; i < WriteRowCount; i++)
             sheet.CreateRow(i).CreateCell(0).SetCellValue("UniqueString_" + i);
         using var ms = new MemoryStream();
         workbook.Write(ms, leaveOpen: true);

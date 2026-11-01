@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -36,7 +36,7 @@ namespace NPOI.POIFS.FileSystem
     /// @author Marc Johnson (mjohnson at apache dot org)
     /// </summary>
     [Obsolete]
-    public class POIFSDocumentReader:Stream
+    public class POIFSDocumentReader : Stream
     {
         private bool _closed;
         private int _current_offset;
@@ -55,7 +55,7 @@ namespace NPOI.POIFS.FileSystem
             this._document_size = document.Size;
             this._closed = false;
             this._tiny_buffer = null;
-            if (document is not DocumentNode node)
+            if(document is not DocumentNode node)
             {
                 throw new IOException("Cannot open internal document storage");
             }
@@ -95,10 +95,11 @@ namespace NPOI.POIFS.FileSystem
         /// stream without blocking.</value>
         public int Available
         {
-            get {
-                if (_closed)
+            get
+            {
+                if(_closed)
                     throw new IOException("This stream is closed");
-                return (int)(this.Length - this.Position); 
+                return (int) (this.Length - this.Position);
             }
         }
 
@@ -112,7 +113,7 @@ namespace NPOI.POIFS.FileSystem
 
         private void DieIfClosed()
         {
-            if (this._closed)
+            if(this._closed)
             {
                 throw new IOException("cannot perform requested operation on a closed stream");
             }
@@ -188,24 +189,24 @@ namespace NPOI.POIFS.FileSystem
         public override int Read(byte[] b, int off, int len)
         {
             this.DieIfClosed();
-            if (b == null)
+            if(b == null)
             {
                 throw new NullReferenceException("buffer is null");
             }
-            if (((off < 0) || (len < 0)) || (b.Length < (off + len)))
+            if(((off < 0) || (len < 0)) || (b.Length < (off + len)))
             {
                 throw new IndexOutOfRangeException("can't read past buffer boundaries");
             }
-            if (len == 0)
+            if(len == 0)
             {
                 return 0;
             }
-            if (this.EOD)
+            if(this.EOD)
             {
                 return -1;
             }
             int length = Math.Min(this.Available, len);
-            if ((off == 0) && (length == b.Length))
+            if((off == 0) && (length == b.Length))
             {
                 this._document.Read(b, this._current_offset);
             }
@@ -231,11 +232,11 @@ namespace NPOI.POIFS.FileSystem
         public override int ReadByte()
         {
             this.DieIfClosed();
-            if (this.EOD)
+            if(this.EOD)
             {
                 return -1;
             }
-            if (this._tiny_buffer == null)
+            if(this._tiny_buffer == null)
             {
                 this._tiny_buffer = new byte[1];
             }
@@ -262,17 +263,17 @@ namespace NPOI.POIFS.FileSystem
         /// </exception>
         public override long Seek(long offset, SeekOrigin origin)
         {
-            if (!this.CanSeek)
+            if(!this.CanSeek)
                 throw new NotSupportedException();
 
-            switch (origin)
+            switch(origin)
             {
                 case SeekOrigin.Begin:
-                    if (0L > offset)
+                    if(0L > offset)
                     {
-                        throw new ArgumentOutOfRangeException("offset","offset must be positive");
+                        throw new ArgumentOutOfRangeException("offset", "offset must be positive");
                     }
-                    this.Position = offset<this.Length?offset:this.Length;
+                    this.Position = offset<this.Length ? offset : this.Length;
                     break;
 
                 case SeekOrigin.Current:
@@ -284,7 +285,7 @@ namespace NPOI.POIFS.FileSystem
                     break;
 
                 default:
-                    throw new ArgumentException("incorrect SeekOrigin","origin");
+                    throw new ArgumentException("incorrect SeekOrigin", "origin");
             }
             return Position;
 
@@ -302,16 +303,16 @@ namespace NPOI.POIFS.FileSystem
         public long Skip(long n)
         {
             this.DieIfClosed();
-            if (n < 0L)
+            if(n < 0L)
             {
                 return 0L;
             }
             int num = this._current_offset + ((int)n);
-            if (num < this._current_offset)
+            if(num < this._current_offset)
             {
                 num = this._document_size;
             }
-            else if (num > this._document_size)
+            else if(num > this._document_size)
             {
                 num = this._document_size;
             }
@@ -409,7 +410,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                return (long)this._document_size;
+                return (long) this._document_size;
             }
         }
 
@@ -433,7 +434,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                return (long)this._current_offset;
+                return (long) this._current_offset;
             }
             set
             {

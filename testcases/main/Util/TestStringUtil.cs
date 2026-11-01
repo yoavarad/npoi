@@ -18,11 +18,12 @@
 
 namespace TestCases.Util
 {
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Text;
     using System.Threading;
-    using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     /**
      * Unit Test for StringUtil
      *
@@ -52,10 +53,10 @@ namespace TestCases.Util
             byte[] Test_data = new byte[32];
             int index = 0;
 
-            for (int k = 0; k < 16; k++)
+            for(int k = 0; k < 16; k++)
             {
-                Test_data[index++] = (byte)0;
-                Test_data[index++] = (byte)('a' + k);
+                Test_data[index++] = (byte) 0;
+                Test_data[index++] = (byte) ('a' + k);
             }
 
             ClassicAssert.AreEqual("abcdefghijklmnop",
@@ -113,10 +114,10 @@ namespace TestCases.Util
         {
             byte[] Test_data = new byte[32];
             int index = 0;
-            for (int k = 0; k < 16; k++)
+            for(int k = 0; k < 16; k++)
             {
-                Test_data[index++] = (byte)0;
-                Test_data[index++] = (byte)('a' + k);
+                Test_data[index++] = (byte) 0;
+                Test_data[index++] = (byte) ('a' + k);
             }
             ClassicAssert.AreEqual("abcdefghijklmno",
                     StringUtil.GetFromUnicodeBE(Test_data, 0, 15));
@@ -127,7 +128,7 @@ namespace TestCases.Util
                 StringUtil.GetFromUnicodeBE(Test_data, -1, 16);
                 Assert.Fail("Should have caught IndexOutOfRangeException");
             }
-            catch (IndexOutOfRangeException)// ignored
+            catch(IndexOutOfRangeException)// ignored
             {
                 // as expected
             }
@@ -137,7 +138,7 @@ namespace TestCases.Util
                 StringUtil.GetFromUnicodeBE(Test_data, 32, 16);
                 Assert.Fail("Should have caught IndexOutOfRangeException");
             }
-            catch (IndexOutOfRangeException)// ignored
+            catch(IndexOutOfRangeException)// ignored
             {
                 // as expected
             }
@@ -147,7 +148,7 @@ namespace TestCases.Util
                 StringUtil.GetFromUnicodeBE(Test_data, 1, 16);
                 Assert.Fail("Should have caught ArgumentException");
             }
-            catch (ArgumentException)// ignored
+            catch(ArgumentException)// ignored
             {
                 // as expected
             }
@@ -157,7 +158,7 @@ namespace TestCases.Util
                 StringUtil.GetFromUnicodeBE(Test_data, 1, -1);
                 Assert.Fail("Should have caught ArgumentException");
             }
-            catch (ArgumentException)// ignored
+            catch(ArgumentException)// ignored
             {
                 // as expected
             }
@@ -179,14 +180,14 @@ namespace TestCases.Util
             String inPut = Encoding.GetEncoding( StringUtil.GetPreferredEncoding()).GetString(expected_outPut);
 
             StringUtil.PutCompressedUnicode(inPut, outPut, 0);
-            for (int j = 0; j < expected_outPut.Length; j++)
+            for(int j = 0; j < expected_outPut.Length; j++)
             {
                 ClassicAssert.AreEqual(expected_outPut[j],
                         outPut[j], "Testing offset " + j);
             }
             StringUtil.PutCompressedUnicode(inPut, outPut,
                     100 - expected_outPut.Length);
-            for (int j = 0; j < expected_outPut.Length; j++)
+            for(int j = 0; j < expected_outPut.Length; j++)
             {
                 ClassicAssert.AreEqual(expected_outPut[j],
                         outPut[100 + j - expected_outPut.Length], "Testing offset " + j);
@@ -197,7 +198,7 @@ namespace TestCases.Util
                         101 - expected_outPut.Length);
                 Assert.Fail("Should have caught ArgumentException");
             }
-            catch (ArgumentException)// ignored
+            catch(ArgumentException)// ignored
             {
                 // as expected
             }
@@ -221,14 +222,14 @@ namespace TestCases.Util
                 };
 
             StringUtil.PutUnicodeLE(inPut, outPut, 0);
-            for (int j = 0; j < expected_outPut.Length; j++)
+            for(int j = 0; j < expected_outPut.Length; j++)
             {
                 ClassicAssert.AreEqual(expected_outPut[j],
                         outPut[j], "Testing offset " + j);
             }
             StringUtil.PutUnicodeLE(inPut, outPut,
                     100 - expected_outPut.Length);
-            for (int j = 0; j < expected_outPut.Length; j++)
+            for(int j = 0; j < expected_outPut.Length; j++)
             {
                 ClassicAssert.AreEqual(expected_outPut[j],
                         outPut[100 + j - expected_outPut.Length], "Testing offset " + j);
@@ -239,7 +240,7 @@ namespace TestCases.Util
                         101 - expected_outPut.Length);
                 Assert.Fail("Should have caught ArgumentException");
             }
-            catch (ArgumentException)// ignored
+            catch(ArgumentException)// ignored
             {
                 // as expected
             }
@@ -276,4 +277,3 @@ namespace TestCases.Util
         }
     }
 }
-

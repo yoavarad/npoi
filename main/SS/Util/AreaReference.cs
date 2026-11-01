@@ -18,12 +18,12 @@
 namespace NPOI.SS.Util
 {
 
-    using System;
-    using System.Text;
-    using System.Collections;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections;
+    using System.Text;
 
     public class AreaReference
     {
@@ -117,7 +117,7 @@ namespace NPOI.SS.Util
             // (e.g., "Table1[#Headers]", "Table1[[#Data],[Column1]]") that would otherwise
             // fail in the A1-style parser below. Anything the detector rejects falls through to
             // that parser, so non-structured input behaves exactly as it did before.
-            if (workbook != null && IsStructuredReference(reference))
+            if(workbook != null && IsStructuredReference(reference))
             {
                 Area3DPxg area = FormulaParser.ParseStructuredReference(reference, workbook, rowIndex);
                 // CellReference takes isAbsolute flags; AreaPtgBase stores isRelative — invert.
@@ -137,7 +137,7 @@ namespace NPOI.SS.Util
                 return;
             }
 
-            if (!IsContiguous(reference))
+            if(!IsContiguous(reference))
             {
                 throw new ArgumentException(
                         "References passed to the AreaReference must be contiguous, " +
@@ -147,7 +147,7 @@ namespace NPOI.SS.Util
             String[] parts = SeparateAreaRefs(reference);
 
             String part0 = parts[0];
-            if (parts.Length == 1)
+            if(parts.Length == 1)
             {
                 // TODO - probably shouldn't initialize area ref when text is really a cell ref
                 // Need to fix some named range stuff to get rid of this
@@ -157,14 +157,14 @@ namespace NPOI.SS.Util
                 _isSingleCell = true;
                 return;
             }
-            if (parts.Length != 2)
+            if(parts.Length != 2)
             {
                 throw new ArgumentException("Bad area ref '" + reference + "'");
             }
             String part1 = parts[1];
-            if (IsPlainColumn(part0))
+            if(IsPlainColumn(part0))
             {
-                if (!IsPlainColumn(part1))
+                if(!IsPlainColumn(part1))
                 {
                     throw new Exception("Bad area ref '" + reference + "'");
                 }
@@ -195,7 +195,7 @@ namespace NPOI.SS.Util
             _version = (null != version) ? version : DEFAULT_SPREADSHEET_VERSION;
             bool swapRows = topLeft.Row > botRight.Row;
             bool swapCols = topLeft.Col > botRight.Col;
-            if (swapRows || swapCols)
+            if(swapRows || swapCols)
             {
                 int firstRow;
                 int lastRow;
@@ -205,7 +205,7 @@ namespace NPOI.SS.Util
                 bool lastRowAbs;
                 bool firstColAbs;
                 bool lastColAbs;
-                if (swapRows)
+                if(swapRows)
                 {
                     firstRow = botRight.Row;
                     firstRowAbs = botRight.IsRowAbsolute;
@@ -219,7 +219,7 @@ namespace NPOI.SS.Util
                     lastRow = botRight.Row;
                     lastRowAbs = botRight.IsRowAbsolute;
                 }
-                if (swapCols)
+                if(swapCols)
                 {
                     firstColumn = botRight.Col;
                     firstColAbs = botRight.IsColAbsolute;
@@ -245,14 +245,14 @@ namespace NPOI.SS.Util
         }
         private static bool IsPlainColumn(String refPart)
         {
-            for (int i = refPart.Length - 1; i >= 0; i--)
+            for(int i = refPart.Length - 1; i >= 0; i--)
             {
                 int ch = refPart[i];
-                if (ch == '$' && i == 0)
+                if(ch == '$' && i == 0)
                 {
                     continue;
                 }
-                if (ch < 'A' || ch > 'Z')
+                if(ch < 'A' || ch > 'Z')
                 {
                     return false;
                 }
@@ -261,7 +261,7 @@ namespace NPOI.SS.Util
         }
         public static AreaReference GetWholeRow(SpreadsheetVersion version, String start, String end)
         {
-            if (null == version)
+            if(null == version)
             {
                 version = DEFAULT_SPREADSHEET_VERSION;
             }
@@ -270,7 +270,7 @@ namespace NPOI.SS.Util
 
         public static AreaReference GetWholeColumn(SpreadsheetVersion version, String start, String end)
         {
-            if (null == version)
+            if(null == version)
             {
                 version = DEFAULT_SPREADSHEET_VERSION;
             }
@@ -287,7 +287,7 @@ namespace NPOI.SS.Util
 
             bool swapRows = topLeft.Row > botRight.Row;
             bool swapCols = topLeft.Col > botRight.Col;
-            if (swapRows || swapCols)
+            if(swapRows || swapCols)
             {
                 int firstRow;
                 int lastRow;
@@ -297,7 +297,7 @@ namespace NPOI.SS.Util
                 bool lastRowAbs;
                 bool firstColAbs;
                 bool lastColAbs;
-                if (swapRows)
+                if(swapRows)
                 {
                     firstRow = botRight.Row;
                     firstRowAbs = botRight.IsRowAbsolute;
@@ -311,7 +311,7 @@ namespace NPOI.SS.Util
                     lastRow = botRight.Row;
                     lastRowAbs = botRight.IsRowAbsolute;
                 }
-                if (swapCols)
+                if(swapCols)
                 {
                     firstColumn = botRight.Col;
                     firstColAbs = botRight.IsColAbsolute;
@@ -374,15 +374,15 @@ namespace NPOI.SS.Util
         public static AreaReference FromStructuredReference(String reference,
             IFormulaParsingWorkbook workbook, int rowIndex = ROW_INDEX_NOT_SPECIFIED)
         {
-            if (reference == null)
+            if(reference == null)
             {
                 throw new ArgumentNullException(nameof(reference));
             }
-            if (workbook == null)
+            if(workbook == null)
             {
                 throw new ArgumentNullException(nameof(workbook));
             }
-            if (!IsStructuredReference(reference))
+            if(!IsStructuredReference(reference))
             {
                 throw new ArgumentException(
                     "'" + reference + "' is not a structured table reference. Use the AreaReference " +
@@ -400,7 +400,7 @@ namespace NPOI.SS.Util
         /// <returns><c>true</c> if the reference is a structured table reference; otherwise <c>false</c>.</returns>
         public static bool IsStructuredReference(String reference)
         {
-            if (reference == null)
+            if(reference == null)
             {
                 return false;
             }
@@ -423,13 +423,13 @@ namespace NPOI.SS.Util
         {
             // If there's a sheet name, strip it off
             int sheetRefEnd = reference.IndexOf('!');
-            if (sheetRefEnd != -1)
+            if(sheetRefEnd != -1)
             {
                 reference = reference.Substring(sheetRefEnd);
             }
 
             // Check for the , as a sign of non-coniguous
-            if (!reference.Contains(','))
+            if(!reference.Contains(','))
             {
                 return true;
             }
@@ -442,14 +442,14 @@ namespace NPOI.SS.Util
          */
         public static bool IsWholeColumnReference(SpreadsheetVersion version, CellReference topLeft, CellReference botRight)
         {
-            if (null == version)
+            if(null == version)
             {
                 version = SpreadsheetVersion.EXCEL97; // how the code used to behave.
             }
             // These are represented as something like
             //   C$1:C$65535 or D$1:F$0
             // i.e. absolute from 1st row to 0th one
-            if (topLeft.Row == 0 && topLeft.IsRowAbsolute &&
+            if(topLeft.Row == 0 && topLeft.IsRowAbsolute &&
                 (botRight.Row == version.LastRowIndex) && botRight.IsRowAbsolute)
             {
                 return true;
@@ -471,13 +471,13 @@ namespace NPOI.SS.Util
             ArrayList refs = new ArrayList();
             String st = reference;
             string[] token = st.Split(',');
-            foreach (string t in token)
+            foreach(string t in token)
             {
                 refs.Add(
                         new AreaReference(t, version)
                 );
             }
-            return (AreaReference[])refs.ToArray(typeof(AreaReference));
+            return (AreaReference[]) refs.ToArray(typeof(AreaReference));
         }
 
         /**
@@ -506,7 +506,7 @@ namespace NPOI.SS.Util
          */
         public CellReference LastCell
         {
-            get{return _lastCell;}
+            get { return _lastCell; }
         }
         /**
          * Returns a reference to every cell covered by this area
@@ -514,7 +514,7 @@ namespace NPOI.SS.Util
         public CellReference[] GetAllReferencedCells()
         {
             // Special case for single cell reference
-            if (_isSingleCell)
+            if(_isSingleCell)
             {
                 return new CellReference[] { _firstCell, };
             }
@@ -527,15 +527,15 @@ namespace NPOI.SS.Util
             String sheetName = _firstCell.SheetName;
 
             ArrayList refs = new ArrayList();
-            for (int row = minRow; row <= maxRow; row++)
+            for(int row = minRow; row <= maxRow; row++)
             {
-                for (int col = minCol; col <= maxCol; col++)
+                for(int col = minCol; col <= maxCol; col++)
                 {
                     CellReference ref1 = new CellReference(sheetName, row, col, _firstCell.IsRowAbsolute, _firstCell.IsColAbsolute);
                     refs.Add(ref1);
                 }
             }
-            return (CellReference[])refs.ToArray(typeof(CellReference));
+            return (CellReference[]) refs.ToArray(typeof(CellReference));
         }
 
         /**
@@ -551,31 +551,31 @@ namespace NPOI.SS.Util
          */
         public String FormatAsString()
         {
-                // Special handling for whole-column references
-                if (IsWholeColumnReference())
-                {
-                    return
-                        CellReference.ConvertNumToColString(_firstCell.Col)
-                        + ":" +
-                        CellReference.ConvertNumToColString(_lastCell.Col);
-                }
+            // Special handling for whole-column references
+            if(IsWholeColumnReference())
+            {
+                return
+                    CellReference.ConvertNumToColString(_firstCell.Col)
+                    + ":" +
+                    CellReference.ConvertNumToColString(_lastCell.Col);
+            }
 
-                StringBuilder sb = new StringBuilder(32);
-                sb.Append(_firstCell.FormatAsString());
-                if (!_isSingleCell)
+            StringBuilder sb = new StringBuilder(32);
+            sb.Append(_firstCell.FormatAsString());
+            if(!_isSingleCell)
+            {
+                sb.Append(CELL_DELIMITER);
+                if(_lastCell.SheetName == null)
                 {
-                    sb.Append(CELL_DELIMITER);
-                    if (_lastCell.SheetName == null)
-                    {
-                        sb.Append(_lastCell.FormatAsString());
-                    }
-                    else
-                    {
-                        // don't want to include the sheet name twice
-                        _lastCell.AppendCellReference(sb);
-                    }
+                    sb.Append(_lastCell.FormatAsString());
                 }
-                return sb.ToString();
+                else
+                {
+                    // don't want to include the sheet name twice
+                    _lastCell.AppendCellReference(sb);
+                }
+            }
+            return sb.ToString();
         }
         public override String ToString()
         {
@@ -605,14 +605,14 @@ namespace NPOI.SS.Util
             int len = reference.Length;
             int delimiterPos = -1;
             bool insideDelimitedName = false;
-            for (int i = 0; i < len; i++)
+            for(int i = 0; i < len; i++)
             {
-                switch (reference[i])
+                switch(reference[i])
                 {
                     case CELL_DELIMITER:
-                        if (!insideDelimitedName)
+                        if(!insideDelimitedName)
                         {
-                            if (delimiterPos >= 0)
+                            if(delimiterPos >= 0)
                             {
                                 throw new ArgumentException("More than one cell delimiter '"
                                         + CELL_DELIMITER + "' appears in area reference '" + reference + "'");
@@ -625,20 +625,20 @@ namespace NPOI.SS.Util
                     default:
                         continue;
                 }
-                if (!insideDelimitedName)
+                if(!insideDelimitedName)
                 {
                     insideDelimitedName = true;
                     continue;
                 }
 
-                if (i >= len - 1)
+                if(i >= len - 1)
                 {
                     // reference ends with the delimited name. 
                     // Assume names like: "Sheet1!'A1'" are never legal.
                     throw new ArgumentException("Area reference '" + reference
                             + "' ends with special name delimiter '" + SPECIAL_NAME_DELIMITER + "'");
                 }
-                if (reference[i + 1] == SPECIAL_NAME_DELIMITER)
+                if(reference[i + 1] == SPECIAL_NAME_DELIMITER)
                 {
                     // two consecutive quotes is the escape sequence for a single one
                     i++; // skip this and keep parsing the special name
@@ -649,14 +649,14 @@ namespace NPOI.SS.Util
                     insideDelimitedName = false;
                 }
             }
-            if (delimiterPos < 0)
+            if(delimiterPos < 0)
             {
                 return new String[] { reference, };
             }
 
             String partA = reference.Substring(0, delimiterPos);
             String partB = reference.Substring(delimiterPos + 1);
-            if (partB.Contains(SHEET_NAME_DELIMITER))
+            if(partB.Contains(SHEET_NAME_DELIMITER))
             {
                 // TODO - are references like "Sheet1!A1:Sheet1:B2" ever valid?  
                 // FormulaParser has code to handle that.
@@ -666,7 +666,7 @@ namespace NPOI.SS.Util
             }
 
             int plingPos = partA.LastIndexOf(SHEET_NAME_DELIMITER);
-            if (plingPos < 0)
+            if(plingPos < 0)
             {
                 return new String[] { partA, partB, };
             }

@@ -41,7 +41,7 @@ namespace NPOI.SS.UserModel
     {
         static FormulaError()
         {
-            _values = new FormulaError[] { 
+            _values = new FormulaError[] {
                 FormulaError.NULL,
                 FormulaError.DIV0,
                 FormulaError.VALUE,
@@ -53,7 +53,7 @@ namespace NPOI.SS.UserModel
                 FormulaError.FUNCTION_NOT_IMPLEMENTED
             };
 
-            foreach (FormulaError error in _values)
+            foreach(FormulaError error in _values)
             {
                 bmap.Add(error.Code, error);
                 imap.Add(error.LongCode, error);
@@ -137,7 +137,7 @@ namespace NPOI.SS.UserModel
         // It is desirable to make these (arbitrary) strings look clearly different from any other
         // value expression that might appear in a formula.  In addition these error strings should
         // look unlike the standard Excel errors.  Hence tilde ('~') was used.
-    
+
         /**
          * POI specific code to indicate that there is a circular reference
          *  in the formula
@@ -155,7 +155,7 @@ namespace NPOI.SS.UserModel
 
         private FormulaError(int type, String repr, string name)
         {
-            this.type = (byte)type;
+            this.type = (byte) type;
             this.longType = type;
             this.repr = repr;
             this.Name = name;
@@ -211,39 +211,40 @@ namespace NPOI.SS.UserModel
         private static readonly Dictionary<int, FormulaError> imap = new Dictionary<int, FormulaError>();
         public static bool IsValidCode(int errorCode)
         {
-            foreach (FormulaError error in _values)
+            foreach(FormulaError error in _values)
             {
-                if (error.Code == errorCode) return true;
-                if (error.LongCode == errorCode) return true;
+                if(error.Code == errorCode)
+                    return true;
+                if(error.LongCode == errorCode)
+                    return true;
             }
             return false;
         }
         public static FormulaError ForInt(byte type)
         {
-            if (bmap.TryGetValue(type, out FormulaError i))
+            if(bmap.TryGetValue(type, out FormulaError i))
                 return i;
             throw new ArgumentException("Unknown error type: " + type);
         }
         public static FormulaError ForInt(int type)
         {
-            if (imap.TryGetValue(type, out FormulaError i))
+            if(imap.TryGetValue(type, out FormulaError i))
                 return i;
 
-            if (bmap.ContainsKey((byte)type))
-                return bmap[(byte)type];
+            if(bmap.ContainsKey((byte) type))
+                return bmap[(byte) type];
 
             throw new ArgumentException("Unknown error type: " + type);
         }
 
         public static FormulaError ForString(String code)
         {
-            if (smap.TryGetValue(code, out FormulaError s))
+            if(smap.TryGetValue(code, out FormulaError s))
                 return s;
-            
+
             throw new ArgumentException("Unknown error code: " + code);
         }
 
     }
 
 }
-

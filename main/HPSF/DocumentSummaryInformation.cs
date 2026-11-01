@@ -643,7 +643,7 @@ namespace NPOI.HPSF
                         long id = p.ID;
                         if(id == PropertyIDMap.PID_CODEPAGE)
                         {
-                            cps.SetCodepage((int)p.Value);
+                            cps.SetCodepage((int) p.Value);
                         }
                         else if(id > PropertyIDMap.PID_CODEPAGE)
                         {
@@ -738,4 +738,3 @@ namespace NPOI.HPSF
         }
     }
 }
-

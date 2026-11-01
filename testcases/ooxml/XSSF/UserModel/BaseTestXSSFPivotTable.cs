@@ -16,15 +16,16 @@
 ==================================================================== */
 namespace TestCases.XSSF.UserModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
     using NPOI.OpenXmlFormats.Spreadsheet;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
 
 
     public abstract class BaseTestXSSFPivotTable
@@ -39,7 +40,7 @@ namespace TestCases.XSSF.UserModel
         [TearDown]
         public void TearDown()
         {
-            if (wb != null)
+            if(wb != null)
             {
                 XSSFWorkbook wb2 = _testDataProvider.WriteOutAndReadBack(wb) as XSSFWorkbook;
                 wb.Close();
@@ -69,8 +70,8 @@ namespace TestCases.XSSF.UserModel
             pivotTable.AddRowLabel(columnIndex);
             ClassicAssert.AreEqual(2, pivotTable.GetRowLabelColumns().Count);
 
-            ClassicAssert.AreEqual(0, (int)pivotTable.GetRowLabelColumns()[(0)]);
-            ClassicAssert.AreEqual(1, (int)pivotTable.GetRowLabelColumns()[(1)]);
+            ClassicAssert.AreEqual(0, (int) pivotTable.GetRowLabelColumns()[(0)]);
+            ClassicAssert.AreEqual(1, (int) pivotTable.GetRowLabelColumns()[(1)]);
         }
         /**
          * Verify that it's not possible to create a row label outside of the referenced area.
@@ -78,7 +79,8 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestAddRowLabelOutOfRangeThrowsException()
         {
-            ClassicAssert.Throws<IndexOutOfRangeException>(()=>{
+            ClassicAssert.Throws<IndexOutOfRangeException>(() =>
+            {
                 pivotTable.AddRowLabel(5);
             });
         }
@@ -164,7 +166,7 @@ namespace TestCases.XSSF.UserModel
 
             ClassicAssert.AreEqual(defintion.dataFields.dataField[(0)].fld, columnIndex);
             ClassicAssert.AreEqual(defintion.dataFields.dataField[(0)].subtotal,
-                    (ST_DataConsolidateFunction)(DataConsolidateFunction.SUM.Value));
+                    (ST_DataConsolidateFunction) (DataConsolidateFunction.SUM.Value));
         }
 
         /**
@@ -194,7 +196,7 @@ namespace TestCases.XSSF.UserModel
             int columnIndex = 0;
 
             string format = "#,##0.0";
-        
+
             pivotTable.AddColumnLabel(DataConsolidateFunction.SUM, columnIndex, null, format);
 
             CT_PivotTableDefinition defintion = pivotTable.GetCTPivotTableDefinition();
@@ -209,7 +211,8 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestAddColumnLabelOutOfRangeThrowsException()
         {
-            ClassicAssert.Throws<IndexOutOfRangeException>(()=>{
+            ClassicAssert.Throws<IndexOutOfRangeException>(() =>
+            {
                 pivotTable.AddColumnLabel(DataConsolidateFunction.SUM, 5);
             });
         }
@@ -235,7 +238,8 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestAddDataColumnOutOfRangeThrowsException()
         {
-            ClassicAssert.Throws<IndexOutOfRangeException>(()=>{
+            ClassicAssert.Throws<IndexOutOfRangeException>(() =>
+            {
                 pivotTable.AddDataColumn(5, true);
             });
         }
@@ -262,7 +266,8 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestAddReportFilterOutOfRangeThrowsException()
         {
-            ClassicAssert.Throws<IndexOutOfRangeException>(()=>{
+            ClassicAssert.Throws<IndexOutOfRangeException>(() =>
+            {
                 pivotTable.AddReportFilter(5);
             });
         }
@@ -325,20 +330,20 @@ namespace TestCases.XSSF.UserModel
             int columnIndex = 0;
 
             ClassicAssert.AreEqual(0, pivotTable.GetColLabelColumns().Count);
-        
+
             pivotTable.AddColLabel(columnIndex);
             CT_PivotTableDefinition defintion = pivotTable.GetCTPivotTableDefinition();
 
             ClassicAssert.AreEqual(defintion.colFields.field[0].x, columnIndex);
             ClassicAssert.AreEqual(defintion.colFields.count, 1);
             ClassicAssert.AreEqual(1, pivotTable.GetColLabelColumns().Count);
-        
+
             columnIndex = 1;
             pivotTable.AddColLabel(columnIndex);
             ClassicAssert.AreEqual(2, pivotTable.GetColLabelColumns().Count);
-        
-            ClassicAssert.AreEqual(0, (int)pivotTable.GetColLabelColumns()[0]);
-            ClassicAssert.AreEqual(1, (int)pivotTable.GetColLabelColumns()[1]);
+
+            ClassicAssert.AreEqual(0, (int) pivotTable.GetColLabelColumns()[0]);
+            ClassicAssert.AreEqual(1, (int) pivotTable.GetColLabelColumns()[1]);
         }
 
         /// <summary>
@@ -347,7 +352,7 @@ namespace TestCases.XSSF.UserModel
         [Test]
         public void TestAddColLabelOutOfRangeThrowsException()
         {
-            ClassicAssert.Throws<IndexOutOfRangeException>(() => 
+            ClassicAssert.Throws<IndexOutOfRangeException>(() =>
                 pivotTable.AddColLabel(5));
         }
     }

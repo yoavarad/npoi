@@ -19,15 +19,15 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     /**
      * @author Glen Stampoultzis  (glens @ superlinksoftware.com)
@@ -51,10 +51,10 @@ namespace TestCases.DDF
             EscherPropertyFactory f = new EscherPropertyFactory();
             IList<EscherProperty> props = f.CreateProperties(data, 0, (short)3);
             EscherComplexProperty p1 = (EscherComplexProperty)props[0];
-            ClassicAssert.AreEqual(unchecked((short)0xC141), p1.Id);
+            ClassicAssert.AreEqual(unchecked((short) 0xC141), p1.Id);
             ClassicAssert.AreEqual("[01, 02, 03]", HexDump.ToHex(p1.ComplexData));
             EscherComplexProperty p3 = (EscherComplexProperty)props[2];
-            ClassicAssert.AreEqual(unchecked((short)0xC141), p3.Id);
+            ClassicAssert.AreEqual(unchecked((short) 0xC141), p3.Id);
             ClassicAssert.AreEqual("[01, 02, 03]", HexDump.ToHex(p3.ComplexData));
 
 

@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
+    using NPOI.HSSF.Record;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestDrawingGroupRecord
@@ -37,12 +38,12 @@ namespace TestCases.HSSF.Record
 
             EscherSpRecord sp = new EscherSpRecord();
             sp.RecordId = (EscherSpRecord.RECORD_ID);
-            sp.Options = ((short)0x1111);
+            sp.Options = ((short) 0x1111);
             sp.Flags = (-1);
             sp.ShapeId = (-1);
             EscherContainerRecord dggContainer = new EscherContainerRecord();
-            dggContainer.Options = ((short)0x000F);
-            dggContainer.RecordId = unchecked((short)0xF000);
+            dggContainer.Options = ((short) 0x000F);
+            dggContainer.RecordId = unchecked((short) 0xF000);
             dggContainer.AddChildRecord(sp);
 
             r.AddEscherRecord(dggContainer);
@@ -73,7 +74,7 @@ namespace TestCases.HSSF.Record
             DrawingGroupRecord r = new DrawingGroupRecord();
             byte[] rawData = new byte[100];
             rawData[0] = 100;
-            rawData[99] = (byte)200;
+            rawData[99] = (byte) 200;
             r.RawData = (rawData);
             byte[] buffer = new byte[r.RecordSize];
             int size = r.Serialize(0, buffer);
@@ -89,7 +90,7 @@ namespace TestCases.HSSF.Record
 
             // check over max record size
             rawData = new byte[MAX_DATA_SIZE + 1];
-            rawData[rawData.Length - 1] = (byte)255;
+            rawData[rawData.Length - 1] = (byte) 255;
             r.RawData = (rawData);
             buffer = new byte[r.RecordSize];
             size = r.Serialize(0, buffer);
@@ -99,7 +100,7 @@ namespace TestCases.HSSF.Record
 
             // check continue record
             rawData = new byte[MAX_DATA_SIZE * 2 + 1];
-            rawData[rawData.Length - 1] = (byte)255;
+            rawData[rawData.Length - 1] = (byte) 255;
             r.RawData = (rawData);
             buffer = new byte[r.RecordSize];
             size = r.Serialize(0, buffer);
@@ -128,7 +129,7 @@ namespace TestCases.HSSF.Record
         [Test]
         public void TestGrossSizeFromDataSize()
         {
-            for (int i = 0; i < MAX_RECORD_SIZE * 4; i += 11)
+            for(int i = 0; i < MAX_RECORD_SIZE * 4; i += 11)
             {
                 //System.out.print( "data size = " + i + ", gross size = " + DrawingGroupRecord.GrossSizeFromDataSize( i ) );
                 //System.out.println( "  Diff: " + (DrawingGroupRecord.GrossSizeFromDataSize( i ) - i) );

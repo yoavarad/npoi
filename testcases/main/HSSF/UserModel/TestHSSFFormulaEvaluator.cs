@@ -22,7 +22,8 @@ namespace TestCases.HSSF.UserModel
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.HSSF;
     using TestCases.SS.Formula;
@@ -94,7 +95,7 @@ namespace TestCases.HSSF.UserModel
 
             // Set the complex flag - POI doesn't usually manipulate this flag
             NameRecord nameRec = TestHSSFName.GetNameRecord(definedName);
-            nameRec.OptionFlag = (short)0x10; // 0x10 -> complex
+            nameRec.OptionFlag = (short) 0x10; // 0x10 -> complex
 
             HSSFFormulaEvaluator hsf = new HSSFFormulaEvaluator(wb);
             CellValue value;
@@ -104,9 +105,9 @@ namespace TestCases.HSSF.UserModel
                 ClassicAssert.AreEqual(CellType.Numeric, value.CellType);
                 ClassicAssert.AreEqual(5.33, value.NumberValue, 0.0);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.Equals("Don't now how to evalate name 'Is_Multicar_Vehicle'"))
+                if(e.Message.Equals("Don't now how to evalate name 'Is_Multicar_Vehicle'"))
                 {
                     Assert.Fail("Identified bug 47048a");
                 }
@@ -152,7 +153,7 @@ namespace TestCases.HSSF.UserModel
             cellA1.CellFormula = "if(B1,C1,D1+E1+F1)";
             // populate cells B1..F1 with simple formulas instead of plain values so we can use
             // EvaluationListener to check which parts of the first formula get evaluated
-            for (int i = 1; i < 6; i++)
+            for(int i = 1; i < 6; i++)
             {
                 // formulas are just literal constants "1".."5"
                 row.CreateCell(i).CellFormula = i.ToString();
@@ -162,13 +163,13 @@ namespace TestCases.HSSF.UserModel
             WorkbookEvaluator evaluator = WorkbookEvaluatorTestHelper.CreateEvaluator(wb, evalListener);
             ValueEval ve = evaluator.Evaluate(HSSFEvaluationTestHelper.WrapCell(cellA1));
             int evalCount = evalListener.EvalCount;
-            if (evalCount == 6)
+            if(evalCount == 6)
             {
                 // Without short-circuit-if evaluation, evaluating cell 'A1' takes 3 extra evaluations (for D1,E1,F1)
                 Assert.Fail("Identifed bug 48195 - Formula evaluator should short-circuit IF() calculations.");
             }
             ClassicAssert.AreEqual(3, evalCount);
-            ClassicAssert.AreEqual(2.0, ((NumberEval)ve).NumberValue, 0D);
+            ClassicAssert.AreEqual(2.0, ((NumberEval) ve).NumberValue, 0D);
 
             wb.Close();
         }
@@ -253,7 +254,7 @@ namespace TestCases.HSSF.UserModel
                 cell.CellFormula = (/*setter*/"[alt.xls]Sheet0!$A$1");
                 Assert.Fail("New workbook not linked, shouldn't be able to Add");
             }
-            catch (Exception) { }
+            catch(Exception) { }
 
             // Link our new workbook
             HSSFWorkbook wb3 = new HSSFWorkbook();
@@ -270,7 +271,7 @@ namespace TestCases.HSSF.UserModel
                 eval.Evaluate(cell);
                 Assert.Fail("No cached value and no link to workbook, shouldn't Evaluate");
             }
-            catch (Exception) { }
+            catch(Exception) { }
 
             // Add a link, check it does
             HSSFFormulaEvaluator.SetupEnvironment(

@@ -17,18 +17,18 @@
 
 namespace TestCases.HSSF.UserModel
 {
+    using NPOI.HSSF.UserModel;
+    using NPOI.POIFS.FileSystem;
+    using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using TestCases.HSSF;
     using System.Collections.Generic;
-    using NPOI.SS.UserModel;
-    using NPOI.POIFS.FileSystem;
     using System.IO;
     using System.Text;
-    using NPOI.Util;
+    using TestCases.HSSF;
 
     /**
      * 
@@ -89,25 +89,25 @@ namespace TestCases.HSSF.UserModel
 
             ICreationHelper ch = wb1.GetCreationHelper();
             HSSFClientAnchor anchor = (HSSFClientAnchor)ch.CreateClientAnchor();
-            anchor.SetAnchor((short)(2 + coloffset), 1 + rowoffset, 0, 0, (short)(3 + coloffset), 5 + rowoffset, 0, 0);
+            anchor.SetAnchor((short) (2 + coloffset), 1 + rowoffset, 0, 0, (short) (3 + coloffset), 5 + rowoffset, 0, 0);
             anchor.AnchorType = (/*setter*/AnchorType.DontMoveAndResize);
 
             patriarch.CreateObjectData(anchor, pptIdx, imgPPT);
 
-            anchor = (HSSFClientAnchor)ch.CreateClientAnchor();
-            anchor.SetAnchor((short)(5 + coloffset), 1 + rowoffset, 0, 0, (short)(6 + coloffset), 5 + rowoffset, 0, 0);
+            anchor = (HSSFClientAnchor) ch.CreateClientAnchor();
+            anchor.SetAnchor((short) (5 + coloffset), 1 + rowoffset, 0, 0, (short) (6 + coloffset), 5 + rowoffset, 0, 0);
             anchor.AnchorType = (/*setter*/AnchorType.DontMoveAndResize);
 
             patriarch.CreateObjectData(anchor, xlsIdx, imgIdx);
 
-            anchor = (HSSFClientAnchor)ch.CreateClientAnchor();
-            anchor.SetAnchor((short)(3 + coloffset), 10 + rowoffset, 0, 0, (short)(5 + coloffset), 11 + rowoffset, 0, 0);
+            anchor = (HSSFClientAnchor) ch.CreateClientAnchor();
+            anchor.SetAnchor((short) (3 + coloffset), 10 + rowoffset, 0, 0, (short) (5 + coloffset), 11 + rowoffset, 0, 0);
             anchor.AnchorType = (/*setter*/AnchorType.DontMoveAndResize);
 
             patriarch.CreateObjectData(anchor, txtIdx, imgIdx);
 
-            anchor = (HSSFClientAnchor)ch.CreateClientAnchor();
-            anchor.SetAnchor((short)(1 + coloffset), -2 + rowoffset, 0, 0, (short)(7 + coloffset), 14 + rowoffset, 0, 0);
+            anchor = (HSSFClientAnchor) ch.CreateClientAnchor();
+            anchor.SetAnchor((short) (1 + coloffset), -2 + rowoffset, 0, 0, (short) (7 + coloffset), 14 + rowoffset, 0, 0);
             anchor.AnchorType = (/*setter*/AnchorType.DontMoveAndResize);
 
             HSSFSimpleShape circle = patriarch.CreateSimpleShape(anchor);
@@ -132,13 +132,13 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(Arrays.Equals(ole10.DataBuffer, bos.ToArray()));
 
             od = wb2.GetAllEmbeddedObjects()[1];
-            ole10 = Ole10Native.CreateFromEmbeddedOleObject((DirectoryNode)od.Directory);
+            ole10 = Ole10Native.CreateFromEmbeddedOleObject((DirectoryNode) od.Directory);
             bos = new MemoryStream();
             xlsPoifs.WriteFileSystem(bos);
             ClassicAssert.IsTrue(Arrays.Equals(ole10.DataBuffer, bos.ToArray()));
 
             od = wb2.GetAllEmbeddedObjects()[2];
-            ole10 = Ole10Native.CreateFromEmbeddedOleObject((DirectoryNode)od.Directory);
+            ole10 = Ole10Native.CreateFromEmbeddedOleObject((DirectoryNode) od.Directory);
             ClassicAssert.IsTrue(Arrays.Equals(ole10.DataBuffer, GetSampleTXT()));
 
             xlsPoifs.Close();
@@ -152,7 +152,7 @@ namespace TestCases.HSSF.UserModel
             Stream is1 = POIDataSamples.GetSlideShowInstance().OpenResourceAsStream("with_textbox.ppt");
             POIFSFileSystem poifs = new POIFSFileSystem(is1);
             is1.Close();
-            
+
             return poifs;
         }
 
@@ -166,7 +166,7 @@ namespace TestCases.HSSF.UserModel
             wb.Write(bos, false);
             wb.Close();
             POIFSFileSystem poifs = new POIFSFileSystem(new MemoryStream(bos.ToArray()));
-            
+
             return poifs;
         }
 
@@ -176,4 +176,3 @@ namespace TestCases.HSSF.UserModel
         }
     }
 }
-

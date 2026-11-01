@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -47,15 +47,15 @@ namespace NPOI.POIFS.FileSystem
         /// <param name="name">the Document name</param>
         public DocumentDescriptor(POIFSDocumentPath path, String name)
         {
-            if (path == null)
+            if(path == null)
             {
                 throw new NullReferenceException("path must not be null");
             }
-            if (name == null)
+            if(name == null)
             {
                 throw new NullReferenceException("name must not be null");
             }
-            if (name.Length== 0)
+            if(name.Length== 0)
             {
                 throw new ArgumentException("name cannot be empty");
             }
@@ -90,9 +90,9 @@ namespace NPOI.POIFS.FileSystem
         {
             bool rval = false;
 
-            if ((o != null) && (o.GetType()== this.GetType()))
+            if((o != null) && (o.GetType()== this.GetType()))
             {
-                if (this == o)
+                if(this == o)
                 {
                     rval = true;
                 }
@@ -115,7 +115,7 @@ namespace NPOI.POIFS.FileSystem
         /// </returns>
         public override int GetHashCode()
         {
-            if (hashcode == 0)
+            if(hashcode == 0)
             {
                 hashcode = path.GetHashCode() ^ name.GetHashCode();
             }
@@ -132,7 +132,7 @@ namespace NPOI.POIFS.FileSystem
         {
             StringBuilder buffer = new StringBuilder(40 * (path.Length + 1));
 
-            for (int j = 0; j < path.Length; j++)
+            for(int j = 0; j < path.Length; j++)
             {
                 buffer.Append(path.GetComponent(j)).Append("/");
             }

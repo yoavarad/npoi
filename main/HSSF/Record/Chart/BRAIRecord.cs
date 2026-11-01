@@ -19,11 +19,11 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /*
@@ -76,8 +76,8 @@ namespace NPOI.HSSF.Record.Chart
 
         public BRAIRecord(RecordInputStream in1)
         {
-            field_1_linkType = (byte)in1.ReadByte();
-            field_2_referenceType = (byte)in1.ReadByte();
+            field_1_linkType = (byte) in1.ReadByte();
+            field_2_referenceType = (byte) in1.ReadByte();
             field_3_options = in1.ReadShort();
             field_4_indexNumberFmtRecord = in1.ReadShort();
             int encodedTokenLen = in1.ReadUShort();
@@ -90,7 +90,7 @@ namespace NPOI.HSSF.Record.Chart
 
             buffer.Append("[AI]\n");
             buffer.Append("    .linkType             = ")
-                .Append(HexDump.ByteToHex(LinkType)).Append('\n');                
+                .Append(HexDump.ByteToHex(LinkType)).Append('\n');
             buffer.Append(Environment.NewLine);
             buffer.Append("    .referenceType        = ").Append(HexDump.ByteToHex(ReferenceType)).Append('\n');
             buffer.Append(Environment.NewLine);
@@ -102,7 +102,7 @@ namespace NPOI.HSSF.Record.Chart
             buffer.Append(Environment.NewLine);
             buffer.Append("    .formulaOfLink        = ");
             Ptg[] ptgs = field_5_formulaOfLink.Tokens;
-            for (int i = 0; i < ptgs.Length; i++)
+            for(int i = 0; i < ptgs.Length; i++)
             {
                 Ptg ptg = ptgs[i];
                 buffer.Append(ptg.ToString()).Append(ptg.RVAType).Append('\n');

@@ -17,9 +17,9 @@
 
 using NPOI.POIFS.Properties;
 using NPOI.Util;
-using System.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -59,7 +59,7 @@ namespace NPOI.POIFS.FileSystem
         /// <exception cref="System.IO.IOException">IOException if the DocumentEntry cannot be opened (like, maybe it has been deleted?)</exception>
         public NDocumentInputStream(DocumentEntry document)
         {
-            if (document is not DocumentNode doc)
+            if(document is not DocumentNode doc)
             {
                 throw new IOException("Cannot open internal document storage, " + document + " not a Document Node");
             }
@@ -69,7 +69,7 @@ namespace NPOI.POIFS.FileSystem
             _marked_offset_count = 0;
             _document_size = document.Size;
             _closed = false;
-            if (_document_size < 0)
+            if(_document_size < 0)
             {
                 // throw new RecordFormatException("document_size cannot be < 0");
             }
@@ -77,7 +77,7 @@ namespace NPOI.POIFS.FileSystem
             DocumentProperty property = (DocumentProperty)doc.Property;
             _document = new NPOIFSDocument(
                   property,
-                      ((DirectoryNode)doc.Parent).NFileSystem
+                      ((DirectoryNode) doc.Parent).NFileSystem
             );
             _data = _document.GetBlockIterator();
         }
@@ -110,7 +110,7 @@ namespace NPOI.POIFS.FileSystem
          */
         private int RemainingBytes()
         {
-            if (_closed)
+            if(_closed)
             {
                 throw new InvalidOperationException("cannot perform requested operation on a closed stream");
             }
@@ -134,15 +134,15 @@ namespace NPOI.POIFS.FileSystem
         public override int Read()
         {
             DieIfClosed();
-            if (atEOD())
+            if(atEOD())
             {
                 return -1;
             }
             byte[] b = new byte[1];
             int result = Read(b, 0, 1);
-            if (result >= 0)
+            if(result >= 0)
             {
-                if (b[0] < 0)
+                if(b[0] < 0)
                 {
                     return b[0] + 256;
                 }
@@ -155,19 +155,19 @@ namespace NPOI.POIFS.FileSystem
         public override int Read(byte[] b, int off, int len)
         {
             DieIfClosed();
-            if (b == null)
+            if(b == null)
             {
                 throw new ArgumentException("buffer must not be null");
             }
-            if (off < 0 || len < 0 || b.Length < off + len)
+            if(off < 0 || len < 0 || b.Length < off + len)
             {
                 throw new IndexOutOfRangeException("can't read past buffer boundaries");
             }
-            if (len == 0)
+            if(len == 0)
             {
                 return 0;
             }
-            if (atEOD())
+            if(atEOD())
             {
                 return EOF;
             }
@@ -184,7 +184,7 @@ namespace NPOI.POIFS.FileSystem
         public override void Reset()
         {
             // Special case for Reset to the start
-            if (_marked_offset == 0 && _marked_offset_count == 0)
+            if(_marked_offset == 0 && _marked_offset_count == 0)
             {
                 _current_block_count = _marked_offset_count;
                 _current_offset = _marked_offset;
@@ -197,7 +197,7 @@ namespace NPOI.POIFS.FileSystem
             _data = _document.GetBlockIterator();
             _current_offset = 0;
 
-            for (int i = 0; i < _marked_offset_count; i++)
+            for(int i = 0; i < _marked_offset_count; i++)
             {
                 _data.MoveNext();
                 _buffer = _data.Current;
@@ -207,7 +207,7 @@ namespace NPOI.POIFS.FileSystem
             _current_block_count = _marked_offset_count;
 
             // Do we need to position within it?
-            if (_current_offset != _marked_offset)
+            if(_current_offset != _marked_offset)
             {
                 // Grab the right block
                 _data.MoveNext();
@@ -229,18 +229,18 @@ namespace NPOI.POIFS.FileSystem
         public override long Skip(long n)
         {
             DieIfClosed();
-            if (n < 0)
+            if(n < 0)
             {
                 return 0;
             }
             int new_offset = _current_offset + (int)n;
 
-            if (new_offset < _current_offset)
+            if(new_offset < _current_offset)
             {
                 // wrap around in Converting a VERY large long to an int
                 new_offset = _document_size;
             }
-            else if (new_offset > _document_size)
+            else if(new_offset > _document_size)
             {
                 new_offset = _document_size;
             }
@@ -255,7 +255,7 @@ namespace NPOI.POIFS.FileSystem
 
         private void DieIfClosed()
         {
-            if (_closed)
+            if(_closed)
             {
                 throw new IOException("cannot perform requested operation on a closed stream");
             }
@@ -268,11 +268,11 @@ namespace NPOI.POIFS.FileSystem
 
         private void CheckAvaliable(int requestedSize)
         {
-            if (_closed)
+            if(_closed)
             {
                 throw new InvalidOperationException("cannot perform requested operation on a closed stream");
             }
-            if (requestedSize > _document_size - _current_offset)
+            if(requestedSize > _document_size - _current_offset)
             {
                 throw new Exception("Buffer underrun - requested " + requestedSize
                     + " bytes but " + (_document_size - _current_offset) + " was available");
@@ -281,17 +281,17 @@ namespace NPOI.POIFS.FileSystem
 
         public override void ReadFully(byte[] buf, int off, int len)
         {
-            if (len < 0)
+            if(len < 0)
             {
-               throw new RuntimeException("Can't read negative number of bytes");
+                throw new RuntimeException("Can't read negative number of bytes");
             }
             CheckAvaliable(len);
 
             int read = 0;
-            while (read < len)
+            while(read < len)
             {
                 // if (_buffer == null || _buffer.remaining() == 0)
-                if (_buffer == null || _buffer.Remain == 0)
+                if(_buffer == null || _buffer.Remain == 0)
                 {
                     _current_block_count++;
                     //_buffer = _data.next();
@@ -309,7 +309,7 @@ namespace NPOI.POIFS.FileSystem
 
         public override int ReadByte()
         {
-            if (atEOD())
+            if(atEOD())
             {
                 return -1;
             }
@@ -364,7 +364,7 @@ namespace NPOI.POIFS.FileSystem
             CheckAvaliable(1);
             byte[] data = new byte[1];
             ReadFully(data, 0, 1);
-            if (data[0] >= 0)
+            if(data[0] >= 0)
                 return data[0];
             return data[0] + 256;
         }
@@ -373,7 +373,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                if (_closed)
+                if(_closed)
                 {
                     throw new InvalidOperationException("cannot perform requested operation on a closed stream");
                 }
@@ -385,7 +385,7 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                if (_closed)
+                if(_closed)
                 {
                     throw new InvalidOperationException("cannot perform requested operation on a closed stream");
                 }
@@ -393,19 +393,19 @@ namespace NPOI.POIFS.FileSystem
             }
             set
             {
-                _current_offset = (int)value;
+                _current_offset = (int) value;
             }
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            if (offset == 0)
+            if(offset == 0)
             {
                 Reset();
             }
             else
             {
-                Mark((int)offset);
+                Mark((int) offset);
             }
 
             return 0;

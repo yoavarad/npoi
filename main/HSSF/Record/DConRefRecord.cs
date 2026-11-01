@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
+using NPOI.Util;
 using System;
 using System.Text;
-using NPOI.Util;
 
 namespace NPOI.HSSF.Record
 {
@@ -135,7 +135,7 @@ namespace NPOI.HSSF.Record
         public DConRefRecord(byte[] data)
         {
             int offset = 0;
-            if (!(LittleEndian.GetShort(data, offset) == DConRefRecord.sid))
+            if(!(LittleEndian.GetShort(data, offset) == DConRefRecord.sid))
                 throw new RecordFormatException("incompatible sid.");
             offset += LittleEndian.SHORT_SIZE;
 
@@ -152,7 +152,7 @@ namespace NPOI.HSSF.Record
             offset += LittleEndian.BYTE_SIZE;
             charCount = LittleEndian.GetUShort(data, offset);
             offset += LittleEndian.SHORT_SIZE;
-            if (charCount < 2)
+            if(charCount < 2)
                 throw new RecordFormatException("Character count must be >= 2");
 
             charType = LittleEndian.GetUByte(data, offset);
@@ -172,7 +172,7 @@ namespace NPOI.HSSF.Record
              * If it's a self reference, the last one or two bytes (depending on char type) are the
              * unused field. Not sure If i need to bother with this...
              */
-            if (path[0] == 0x02)
+            if(path[0] == 0x02)
                 _unused = LittleEndian.GetByteArray(data, offset, (charType + 1), MAX_RECORD_LENGTH);
 
         }
@@ -184,7 +184,7 @@ namespace NPOI.HSSF.Record
          */
         public DConRefRecord(RecordInputStream inStream)
         {
-            if (inStream.Sid != sid)
+            if(inStream.Sid != sid)
                 throw new RecordFormatException("Wrong sid: " + inStream.Sid);
 
             firstRow = inStream.ReadUShort();
@@ -201,7 +201,7 @@ namespace NPOI.HSSF.Record
             path = IOUtils.SafelyAllocate(byteLength, MAX_RECORD_LENGTH);
             inStream.ReadFully(path);
 
-            if (path[0] == 0x02)
+            if(path[0] == 0x02)
                 _unused = inStream.ReadRemainder();
 
         }
@@ -215,7 +215,7 @@ namespace NPOI.HSSF.Record
             get
             {
                 int sz = 9 + path.Length;
-                if (path[0] == 0x02)
+                if(path[0] == 0x02)
                     sz += _unused.Length;
                 return sz;
             }
@@ -230,7 +230,7 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(charCount);
             out1.WriteByte(charType);
             out1.Write(path);
-            if (path[0] == 0x02)
+            if(path[0] == 0x02)
                 out1.Write(_unused);
         }
 
@@ -306,12 +306,12 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (path != null)
+                if(path != null)
                 {
                     //all of the path strings start with either 0x02 or 0x01 followed by zero or
                     //more of 0x01..0x08
                     int offset = 1;
-                    while (path[offset] < 0x20 && offset < path.Length)
+                    while(path[offset] < 0x20 && offset < path.Length)
                     {
                         offset++;
                     }
@@ -334,7 +334,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                if (path[0] == 0x01)
+                if(path[0] == 0x01)
                     return true;
                 return false;
             }

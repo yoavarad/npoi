@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -33,7 +33,7 @@ namespace NPOI.POIFS.Properties
     /// Behavior for parent (directory) properties
     /// @author Marc Johnson27591@hotmail.com
     /// </summary>
-    public interface Parent:Child
+    public interface Parent : Child
     {
         /// <summary>
         /// Get an iterator over the children of this Parent

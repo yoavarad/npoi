@@ -39,18 +39,18 @@ namespace NPOI.HSSF.UserModel
         {
             // read internal and external coordinates from spgrContainer
             EscherContainerRecord spContainer = spgrContainer.ChildContainers[0];
-            _spgrRecord = (EscherSpgrRecord)spContainer.GetChild(0);
-            foreach (EscherRecord ch in spContainer.ChildRecords)
+            _spgrRecord = (EscherSpgrRecord) spContainer.GetChild(0);
+            foreach(EscherRecord ch in spContainer.ChildRecords)
             {
-                switch (ch.RecordId)
+                switch(ch.RecordId)
                 {
                     case EscherSpgrRecord.RECORD_ID:
                         break;
                     case EscherClientAnchorRecord.RECORD_ID:
-                        anchor = new HSSFClientAnchor((EscherClientAnchorRecord)ch);
+                        anchor = new HSSFClientAnchor((EscherClientAnchorRecord) ch);
                         break;
                     case EscherChildAnchorRecord.RECORD_ID:
-                        anchor = new HSSFChildAnchor((EscherChildAnchorRecord)ch);
+                        anchor = new HSSFChildAnchor((EscherChildAnchorRecord) ch);
                         break;
                     default:
                         break;
@@ -61,7 +61,7 @@ namespace NPOI.HSSF.UserModel
         public HSSFShapeGroup(HSSFShape parent, HSSFAnchor anchor)
             : base(parent, anchor)
         {
-            _spgrRecord = (EscherSpgrRecord)((EscherContainerRecord)GetEscherContainer().GetChild(0)).GetChildById(EscherSpgrRecord.RECORD_ID);
+            _spgrRecord = (EscherSpgrRecord) ((EscherContainerRecord) GetEscherContainer().GetChild(0)).GetChildById(EscherSpgrRecord.RECORD_ID);
         }
 
         protected override EscherContainerRecord CreateSpContainer()
@@ -75,18 +75,18 @@ namespace NPOI.HSSF.UserModel
             EscherClientDataRecord clientData = new EscherClientDataRecord();
 
             spgrContainer.RecordId = (EscherContainerRecord.SPGR_CONTAINER);
-            spgrContainer.Options = ((short)0x000F);
+            spgrContainer.Options = ((short) 0x000F);
             spContainer.RecordId = (EscherContainerRecord.SP_CONTAINER);
-            spContainer.Options = (short)0x000F;
+            spContainer.Options = (short) 0x000F;
             spgr.RecordId = (EscherSpgrRecord.RECORD_ID);
-            spgr.Options = (short)0x0001;
+            spgr.Options = (short) 0x0001;
             spgr.RectX1 = (0);
             spgr.RectY1 = (0);
             spgr.RectX2 = (1023);
             spgr.RectY2 = (255);
             sp.RecordId = (EscherSpRecord.RECORD_ID);
-            sp.Options = (short)0x0002;
-            if (this.Anchor is HSSFClientAnchor)
+            sp.Options = (short) 0x0002;
+            if(this.Anchor is HSSFClientAnchor)
             {
                 sp.Flags = (EscherSpRecord.FLAG_GROUP | EscherSpRecord.FLAG_HAVEANCHOR);
             }
@@ -95,13 +95,13 @@ namespace NPOI.HSSF.UserModel
                 sp.Flags = (EscherSpRecord.FLAG_GROUP | EscherSpRecord.FLAG_HAVEANCHOR | EscherSpRecord.FLAG_CHILD);
             }
             opt.RecordId = (EscherOptRecord.RECORD_ID);
-            opt.Options = ((short)0x0023);
+            opt.Options = ((short) 0x0023);
             opt.AddEscherProperty(new EscherBoolProperty(EscherProperties.PROTECTION__LOCKAGAINSTGROUPING, 0x00040004));
             opt.AddEscherProperty(new EscherBoolProperty(EscherProperties.GROUPSHAPE__PRINT, 0x00080000));
 
             anchor = this.anchor.GetEscherAnchor();
             clientData.RecordId = (EscherClientDataRecord.RECORD_ID);
-            clientData.Options = ((short)0x0000);
+            clientData.Options = ((short) 0x0000);
 
             spgrContainer.AddChildRecord(spContainer);
             spContainer.AddChildRecord(spgr);
@@ -135,7 +135,7 @@ namespace NPOI.HSSF.UserModel
         {
             patriarch.GetBoundAggregate().RemoveShapeToObjRecord(GetEscherContainer().ChildContainers[0]
                     .GetChildById(EscherClientDataRecord.RECORD_ID));
-            for (int i = 0; i < shapes.Count; i++)
+            for(int i = 0; i < shapes.Count; i++)
             {
                 HSSFShape shape = (HSSFShape)shapes[i];
                 RemoveShape(shape);
@@ -145,7 +145,7 @@ namespace NPOI.HSSF.UserModel
         }
         private void OnCreate(HSSFShape shape)
         {
-            if (this.Patriarch != null)
+            if(this.Patriarch != null)
             {
                 EscherContainerRecord spContainer = shape.GetEscherContainer();
                 int shapeId = this.Patriarch.NewShapeId();
@@ -153,13 +153,13 @@ namespace NPOI.HSSF.UserModel
                 GetEscherContainer().AddChildRecord(spContainer);
                 shape.AfterInsert(Patriarch);
                 EscherSpRecord sp;
-                if (shape is HSSFShapeGroup)
+                if(shape is HSSFShapeGroup)
                 {
-                    sp = (EscherSpRecord)shape.GetEscherContainer().ChildContainers[0].GetChildById(EscherSpRecord.RECORD_ID);
+                    sp = (EscherSpRecord) shape.GetEscherContainer().ChildContainers[0].GetChildById(EscherSpRecord.RECORD_ID);
                 }
                 else
                 {
-                    sp = (EscherSpRecord)shape.GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID);
+                    sp = (EscherSpRecord) shape.GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID);
                 }
                 sp.Flags = sp.Flags | EscherSpRecord.FLAG_CHILD;
             }
@@ -197,11 +197,11 @@ namespace NPOI.HSSF.UserModel
             shapes.Add(shape);
             OnCreate(shape);
             EscherSpRecord sp = (EscherSpRecord)shape.GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID);
-            if ((shape.Anchor as HSSFAnchor).IsHorizontallyFlipped)
+            if((shape.Anchor as HSSFAnchor).IsHorizontallyFlipped)
             {
                 sp.Flags = (sp.Flags | EscherSpRecord.FLAG_FLIPHORIZ);
             }
-            if ((shape.Anchor as HSSFAnchor).IsVerticallyFlipped)
+            if((shape.Anchor as HSSFAnchor).IsVerticallyFlipped)
             {
                 sp.Flags = (sp.Flags | EscherSpRecord.FLAG_FLIPVERT);
             }
@@ -255,11 +255,11 @@ namespace NPOI.HSSF.UserModel
             shapes.Add(shape);
             OnCreate(shape);
             EscherSpRecord sp = (EscherSpRecord)shape.GetEscherContainer().GetChildById(EscherSpRecord.RECORD_ID);
-            if ((shape.Anchor as HSSFAnchor).IsHorizontallyFlipped)
+            if((shape.Anchor as HSSFAnchor).IsHorizontallyFlipped)
             {
                 sp.Flags = (sp.Flags | EscherSpRecord.FLAG_FLIPHORIZ);
             }
-            if ((shape.Anchor as HSSFAnchor).IsVerticallyFlipped)
+            if((shape.Anchor as HSSFAnchor).IsVerticallyFlipped)
             {
                 sp.Flags = (sp.Flags | EscherSpRecord.FLAG_FLIPVERT);
             }
@@ -293,7 +293,7 @@ namespace NPOI.HSSF.UserModel
         public void Clear()
         {
             List<HSSFShape> copy = new List<HSSFShape>(shapes);
-            foreach (HSSFShape shape in copy)
+            foreach(HSSFShape shape in copy)
             {
                 RemoveShape(shape);
             }
@@ -352,7 +352,7 @@ namespace NPOI.HSSF.UserModel
             get
             {
                 int count = shapes.Count;
-                for (IEnumerator iterator = shapes.GetEnumerator(); iterator.MoveNext(); )
+                for(IEnumerator iterator = shapes.GetEnumerator(); iterator.MoveNext();)
                 {
                     HSSFShape shape = (HSSFShape)iterator.Current;
                     count += shape.CountOfAllChildren;
@@ -371,7 +371,7 @@ namespace NPOI.HSSF.UserModel
             get
             {
                 EscherContainerRecord containerRecord = (EscherContainerRecord)GetEscherContainer().GetChildById(EscherContainerRecord.SP_CONTAINER);
-                return ((EscherSpRecord)containerRecord.GetChildById(EscherSpRecord.RECORD_ID)).ShapeId;
+                return ((EscherSpRecord) containerRecord.GetChildById(EscherSpRecord.RECORD_ID)).ShapeId;
             }
             set
             {
@@ -379,7 +379,7 @@ namespace NPOI.HSSF.UserModel
                 EscherSpRecord spRecord = (EscherSpRecord)containerRecord.GetChildById(EscherSpRecord.RECORD_ID);
                 spRecord.ShapeId = value;
                 CommonObjectDataSubRecord cod = (CommonObjectDataSubRecord)GetObjRecord().SubRecords[0];
-                cod.ObjectId = (short)(value % 1024);
+                cod.ObjectId = (short) (value % 1024);
             }
         }
         internal override HSSFShape CloneShape()
@@ -391,7 +391,7 @@ namespace NPOI.HSSF.UserModel
         {
             EscherContainerRecord spgrContainer = new EscherContainerRecord();
             spgrContainer.RecordId = (EscherContainerRecord.SPGR_CONTAINER);
-            spgrContainer.Options = ((short)0x000F);
+            spgrContainer.Options = ((short) 0x000F);
             EscherContainerRecord spContainer = new EscherContainerRecord();
             EscherContainerRecord cont = (EscherContainerRecord)GetEscherContainer().GetChildById(EscherContainerRecord.SP_CONTAINER);
             byte[] inSp = cont.Serialize();
@@ -399,18 +399,18 @@ namespace NPOI.HSSF.UserModel
 
             spgrContainer.AddChildRecord(spContainer);
             ObjRecord obj = null;
-            if (null != this.GetObjRecord())
+            if(null != this.GetObjRecord())
             {
-                obj = (ObjRecord)this.GetObjRecord().CloneViaReserialise();
+                obj = (ObjRecord) this.GetObjRecord().CloneViaReserialise();
             }
 
             HSSFShapeGroup group = new HSSFShapeGroup(spgrContainer, obj);
             group.Patriarch = patriarch;
 
-            foreach (HSSFShape shape in Children)
+            foreach(HSSFShape shape in Children)
             {
                 HSSFShape newShape;
-                if (shape is HSSFShapeGroup shapeGroup)
+                if(shape is HSSFShapeGroup shapeGroup)
                 {
                     newShape = shapeGroup.CloneShape(patriarch);
                 }
@@ -423,12 +423,12 @@ namespace NPOI.HSSF.UserModel
             }
             return group;
         }
-       
-        
+
+
         public bool RemoveShape(HSSFShape shape)
         {
             bool isRemoved = GetEscherContainer().RemoveChildRecord(shape.GetEscherContainer());
-            if (isRemoved)
+            if(isRemoved)
             {
                 shape.AfterRemove(this.Patriarch);
                 shapes.Remove(shape);

@@ -15,12 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
+using NPOI.SS.UserModel;
+using NPOI.XDDF.UserModel.Chart;
+using NPOI.XSSF.UserModel;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using NPOI.XDDF.UserModel.Chart;
+using System;
 
 namespace TestCases.XSSF.UserModel.Charts
 {
@@ -48,7 +48,7 @@ namespace TestCases.XSSF.UserModel.Charts
             {
                 axis.LogBase= 0.0;
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 iae = e;
             }
@@ -59,7 +59,7 @@ namespace TestCases.XSSF.UserModel.Charts
             {
                 axis.LogBase=30000.0;
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 iae = e;
             }

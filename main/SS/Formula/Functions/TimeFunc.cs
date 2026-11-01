@@ -44,7 +44,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 result = TimeFunc.Evaluate(EvalArg(arg0, srcRowIndex, srcColumnIndex), EvalArg(arg1, srcRowIndex, srcColumnIndex), EvalArg(arg2, srcRowIndex, srcColumnIndex));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -53,7 +53,7 @@ namespace NPOI.SS.Formula.Functions
 
         private static int EvalArg(ValueEval arg, int srcRowIndex, int srcColumnIndex)
         {
-            if (arg == MissingArgEval.instance)
+            if(arg == MissingArgEval.instance)
             {
                 return 0;
             }
@@ -80,17 +80,17 @@ namespace NPOI.SS.Formula.Functions
         private static double Evaluate(int hours, int minutes, int seconds)
         {
 
-            if (hours > 32767 || minutes > 32767 || seconds > 32767)
+            if(hours > 32767 || minutes > 32767 || seconds > 32767)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
             int totalSeconds = hours * SECONDS_PER_HOUR + minutes * SECONDS_PER_MINUTE + seconds;
 
-            if (totalSeconds < 0)
+            if(totalSeconds < 0)
             {
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
             }
-            return (totalSeconds % SECONDS_PER_DAY) / (double)SECONDS_PER_DAY;
+            return (totalSeconds % SECONDS_PER_DAY) / (double) SECONDS_PER_DAY;
         }
     }
 

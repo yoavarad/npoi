@@ -18,11 +18,12 @@
 namespace TestCases.SS.Formula.Functions
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Eval;
-    using TestCases.SS.Formula.Functions;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.SS.Formula.Functions;
 
     /**
      * Test cases for MATCH()
@@ -43,17 +44,17 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invokeMatch(ValueEval Lookup_value, ValueEval Lookup_array, ValueEval match_type)
         {
             ValueEval[] args = { Lookup_value, Lookup_array, match_type, };
-            return new Match().Evaluate(args, -1, (short)-1);
+            return new Match().Evaluate(args, -1, (short) -1);
         }
 
         private static ValueEval invokeMatch(ValueEval lookup_value, ValueEval lookup_array)
         {
             ValueEval[] args = { lookup_value, lookup_array, };
-            return new Match().Evaluate(args, -1, (short)-1);
+            return new Match().Evaluate(args, -1, (short) -1);
         }
         private static void ConfirmInt(int expected, ValueEval actualEval)
         {
-            if (!(actualEval is NumericValueEval))
+            if(!(actualEval is NumericValueEval))
             {
                 Assert.Fail("Expected numeric result but had " + actualEval);
             }
@@ -257,9 +258,9 @@ namespace TestCases.SS.Formula.Functions
             {
                 ConfirmInt(4, invokeMatch(new NumberEval(10), ae, matchAE));
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (e.Message.StartsWith("Unexpected match_type type"))
+                if(e.Message.StartsWith("Unexpected match_type type"))
                 {
                     // identified bug 44421
                     Assert.Fail(e.Message);

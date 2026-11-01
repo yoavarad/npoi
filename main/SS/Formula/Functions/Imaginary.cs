@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
     using System.Text.RegularExpressions;
     /**
      * Implementation for Excel IMAGINARY() function.<p/>
@@ -63,7 +63,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(inumberVE, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -75,27 +75,27 @@ namespace NPOI.SS.Formula.Functions
             bool result = m.Success && m.Groups[0].Length>0;
 
             String imaginary = "";
-            if (result == true)
+            if(result == true)
             {
                 String imaginaryGroup = m.Groups[5].Value;
                 bool hasImaginaryPart = imaginaryGroup.Equals("i") || imaginaryGroup.Equals("j");
 
-                if (imaginaryGroup.Length == 0)
+                if(imaginaryGroup.Length == 0)
                 {
                     return new StringEval(Convert.ToString(0));
                 }
 
-                if (hasImaginaryPart)
+                if(hasImaginaryPart)
                 {
                     String sign = "";
                     String imaginarySign = m.Groups[(GROUP3_IMAGINARY_SIGN)].Value;
-                    if (imaginarySign.Length != 0 && !(imaginarySign.Equals("+")))
+                    if(imaginarySign.Length != 0 && !(imaginarySign.Equals("+")))
                     {
                         sign = imaginarySign;
                     }
 
                     String groupImaginaryNumber = m.Groups[(GROUP4_IMAGINARY_INTEGER_OR_DOUBLE)].Value;
-                    if (groupImaginaryNumber.Length != 0)
+                    if(groupImaginaryNumber.Length != 0)
                     {
                         imaginary = sign + groupImaginaryNumber;
                     }
@@ -115,7 +115,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }

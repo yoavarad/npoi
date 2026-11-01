@@ -20,7 +20,8 @@ namespace TestCases.SS.Formula.Functions
 
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     /**
      * Tests for Excel function TRIM()
@@ -35,21 +36,21 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invokeTrim(ValueEval text)
         {
             ValueEval[] args = new ValueEval[] { text, };
-            return TextFunction.TRIM.Evaluate(args, -1, (short)-1);
+            return TextFunction.TRIM.Evaluate(args, -1, (short) -1);
         }
 
         private void ConfirmTrim(ValueEval text, String expected)
         {
             ValueEval result = invokeTrim(text);
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual(expected, ((StringEval) result).StringValue);
         }
 
         private void ConfirmTrim(ValueEval text, ErrorEval expectedError)
         {
             ValueEval result = invokeTrim(text);
             ClassicAssert.AreEqual(typeof(ErrorEval), result.GetType());
-            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval) result).ErrorCode);
         }
         [Test]
         public void TestBasic()

@@ -19,13 +19,14 @@
 namespace TestCases.HSSF.Record
 {
 
-    using System;
-    using NPOI.HSSF.Record;
-    using NPOI.SS.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.Record.Aggregates;
-    using System.Collections;
     using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.Record.Aggregates;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
 
     /**
      * Make sure the merge cells record behaves
@@ -70,8 +71,8 @@ namespace TestCases.HSSF.Record
             MergedCellsTable mct = new MergedCellsTable();
             ArrayList recList = new ArrayList();
             CellRangeAddress[] cras = new CellRangeAddress[] {
-				new CellRangeAddress(0, 0, 0, 3), 
-		};
+                new CellRangeAddress(0, 0, 0, 3),
+        };
             recList.Add(new MergeCellsRecord(cras, 0, 1));
             RecordStream rs = new RecordStream(recList, 0);
             mct.Read(rs);
@@ -79,7 +80,7 @@ namespace TestCases.HSSF.Record
             {
                 mct.VisitContainedRecords(dummyRecordVisitor);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 throw new AssertionException("Identified bug 46009");
             }

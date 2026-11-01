@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,13 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Reflection;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.HSSF.Record;
 using NPOI.HSSF.Record.Aggregates;
 using NPOI.HSSF.UserModel;
 using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Reflection;
 using TestCases.HSSF.UserModel;
 namespace TestCases.HSSF.Record.Aggregates
 {
@@ -75,19 +76,19 @@ namespace TestCases.HSSF.Record.Aggregates
                 HSSFSheet sheet = (HSSFSheet)wb.GetSheetAt(0);
                 RecordInspector.GetRecords(sheet, 0);
                 ClassicAssert.AreEqual("1+1", sheet.GetRow(2).GetCell(0).CellFormula);
-                if ("1+1".Equals(sheet.GetRow(3).GetCell(0).CellFormula))
+                if("1+1".Equals(sheet.GetRow(3).GetCell(0).CellFormula))
                 {
                     throw new AssertionException("Identified bug - wrong shared formula record chosen"
                             + " (attempt " + attempt + ")");
                 }
                 ClassicAssert.AreEqual("2+2", sheet.GetRow(3).GetCell(0).CellFormula);
                 records = RecordInspector.GetRecords(sheet, 0);
-            } while (attempt++ < MAX_ATTEMPTS);
+            } while(attempt++ < MAX_ATTEMPTS);
 
             int count = 0;
-            for (int i = 0; i < records.Length; i++)
+            for(int i = 0; i < records.Length; i++)
             {
-                if (records[i] is SharedFormulaRecord)
+                if(records[i] is SharedFormulaRecord)
                 {
                     count++;
                 }
@@ -114,18 +115,18 @@ namespace TestCases.HSSF.Record.Aggregates
                 {
                     records = RecordInspector.GetRecords(sheet, 0);
                 }
-                catch (NullReferenceException)
+                catch(NullReferenceException)
                 {
                     throw new AssertionException("Identified bug " +
                             "- cannot reserialize completely overlapped shared formula"
                             + " (attempt " + attempt + ")");
                 }
-            } while (attempt++ < MAX_ATTEMPTS);
+            } while(attempt++ < MAX_ATTEMPTS);
 
             int count = 0;
-            for (int i = 0; i < records.Length; i++)
+            for(int i = 0; i < records.Length; i++)
             {
-                if (records[i] is SharedFormulaRecord)
+                if(records[i] is SharedFormulaRecord)
                 {
                     count++;
                 }
@@ -174,11 +175,11 @@ namespace TestCases.HSSF.Record.Aggregates
                 // succeeds if the formula record has been associated
                 // with the second shared formula group
             }
-            catch (RuntimeException e)
+            catch(RuntimeException e)
             {
                 // bug occurs if the formula record has been associated
                 // with the first shared formula group
-                if ("Shared Formula Conversion: Coding Error".Equals(e.Message))
+                if("Shared Formula Conversion: Coding Error".Equals(e.Message))
                 {
                     throw new AssertionException("Identified bug 47747");
                 }
@@ -199,7 +200,7 @@ namespace TestCases.HSSF.Record.Aggregates
                 f = typeof(RowRecordsAggregate).GetField("_sharedValueManager", BindingFlags.NonPublic | BindingFlags.Instance);
                 //typeof(RowRecordsAggregate).("_sharedValueManager");
             }
-            catch (NotSupportedException e)
+            catch(NotSupportedException e)
             {
                 throw new RuntimeException(e);
             }
@@ -207,13 +208,13 @@ namespace TestCases.HSSF.Record.Aggregates
             //f.setAccessible(true);
             try
             {
-                return (SharedValueManager)f.GetValue(rra);
+                return (SharedValueManager) f.GetValue(rra);
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 throw new RuntimeException(e);
             }
-            catch (FieldAccessException e)
+            catch(FieldAccessException e)
             {
                 throw new RuntimeException(e);
             }

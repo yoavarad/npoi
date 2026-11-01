@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +19,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private uint countField;
 
         private bool countFieldSpecified;
-        private uint knownFontsField; 
+        private uint knownFontsField;
 
         public CT_Fonts()
         {
@@ -27,15 +27,15 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Fonts Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Fonts ctObj = new CT_Fonts();
             ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.knownFontsField = XmlHelper.ReadUInt(node.Attributes["x14ac:knownFonts"]);
             ctObj.font = new List<CT_Font>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "font")
+                if(childNode.LocalName == "font")
                     ctObj.font.Add(CT_Font.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -47,9 +47,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             XmlHelper.WriteAttribute(sw, "count", this.count);
             XmlHelper.WriteAttribute(sw, "x14ac:knownFonts", this.knownFontsField, false);
             sw.Write('>');
-            if (this.font != null)
+            if(this.font != null)
             {
-                foreach (CT_Font x in this.font)
+                foreach(CT_Font x in this.font)
                 {
                     x.Write(sw, "font");
                 }
@@ -59,7 +59,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public void SetFontArray(List<CT_Font> array)
         {
-             fontField = array;
+            fontField = array;
         }
         [XmlElement]
         public List<CT_Font> font

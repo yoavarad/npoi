@@ -17,11 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Formula;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * <p>Title:        Area 3D Ptg - 3D reference (Sheet + Area)</p>
@@ -43,13 +43,13 @@ namespace NPOI.SS.Formula.PTG
         private BitField colRelative = BitFieldFactory.GetInstance(0x4000);
 
 
-        public Area3DPtg(String arearef, int externIdx):base(new AreaReference(arearef, SpreadsheetVersion.EXCEL97))
+        public Area3DPtg(String arearef, int externIdx) : base(new AreaReference(arearef, SpreadsheetVersion.EXCEL97))
         {
             ExternSheetIndex=externIdx;
 
         }
 
-        public Area3DPtg(AreaReference arearef, int externIdx):base(arearef)
+        public Area3DPtg(AreaReference arearef, int externIdx) : base(arearef)
         {
             ExternSheetIndex=(externIdx);
         }
@@ -92,7 +92,7 @@ namespace NPOI.SS.Formula.PTG
 
         public int ExternSheetIndex
         {
-            get{return field_1_index_extern_sheet;}
+            get { return field_1_index_extern_sheet; }
             set { field_1_index_extern_sheet = value; }
         }
 
@@ -114,9 +114,9 @@ namespace NPOI.SS.Formula.PTG
             CellReference frstCell = ar.FirstCell;
             CellReference lastCell = ar.LastCell;
 
-            FirstRow=(short)frstCell.Row;
+            FirstRow=(short) frstCell.Row;
             FirstColumn=frstCell.Col;
-            LastRow=(short)lastCell.Row;
+            LastRow=(short) lastCell.Row;
             LastColumn=lastCell.Col;
             IsFirstColRelative=!frstCell.IsColAbsolute;
             IsLastColRelative=!lastCell.IsColAbsolute;

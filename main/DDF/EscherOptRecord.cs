@@ -18,9 +18,9 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /// <summary>
@@ -38,7 +38,7 @@ namespace NPOI.DDF
         {
             get
             {
-                Instance = ((short)EscherProperties.Count);
+                Instance = ((short) EscherProperties.Count);
                 return base.Instance;
             }
         }
@@ -78,7 +78,7 @@ namespace NPOI.DDF
             }
             set
             {
-                if (value != 0x3)
+                if(value != 0x3)
                     throw new ArgumentException(RECORD_DESCRIPTION
                             + " can have only '0x3' version");
 
@@ -91,7 +91,7 @@ namespace NPOI.DDF
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(tab).Append(FormatXmlRecordHeader(GetType().Name, HexDump.ToHex(RecordId), HexDump.ToHex(Version), HexDump.ToHex(Instance)));
-            foreach (EscherProperty property in EscherProperties)
+            foreach(EscherProperty property in EscherProperties)
             {
                 builder.Append(property.ToXml(tab + "\t"));
             }

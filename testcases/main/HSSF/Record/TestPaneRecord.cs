@@ -20,10 +20,10 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the PaneRecord
@@ -53,10 +53,10 @@ namespace TestCases.HSSF.Record
             PaneRecord record = new PaneRecord(TestcaseRecordInputStream.Create((short)0x41, data));
 
 
-            ClassicAssert.AreEqual((short)1, record.X);
-            ClassicAssert.AreEqual((short)2, record.Y);
-            ClassicAssert.AreEqual((short)3, record.TopRow);
-            ClassicAssert.AreEqual((short)4, record.LeftColumn);
+            ClassicAssert.AreEqual((short) 1, record.X);
+            ClassicAssert.AreEqual((short) 2, record.Y);
+            ClassicAssert.AreEqual((short) 3, record.TopRow);
+            ClassicAssert.AreEqual((short) 4, record.LeftColumn);
             ClassicAssert.AreEqual(PaneRecord.ACTIVE_PANE_LOWER_LEFT, record.ActivePane);
 
             ClassicAssert.AreEqual(14, record.RecordSize);
@@ -66,15 +66,15 @@ namespace TestCases.HSSF.Record
         {
             PaneRecord record = new PaneRecord();
 
-            record.X=((short)1);
-            record.Y=((short)2);
-            record.TopRow=((short)3);
-            record.LeftColumn=((short)4);
+            record.X=((short) 1);
+            record.Y=((short) 2);
+            record.TopRow=((short) 3);
+            record.LeftColumn=((short) 4);
             record.ActivePane=(PaneRecord.ACTIVE_PANE_LOWER_LEFT);
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

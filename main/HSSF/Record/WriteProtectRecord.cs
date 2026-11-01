@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Write Protect Record
@@ -46,7 +46,7 @@ namespace NPOI.HSSF.Record
 
         public WriteProtectRecord(RecordInputStream in1)
         {
-            if (in1.Remaining == 2)
+            if(in1.Remaining == 2)
             {
                 in1.ReadShort();
             }
@@ -65,13 +65,13 @@ namespace NPOI.HSSF.Record
         {
         }
 
-       protected override int DataSize
-       {
-           get
-           {
-               return 0;
-           }
-       }
+        protected override int DataSize
+        {
+            get
+            {
+                return 0;
+            }
+        }
 
         public override short Sid
         {

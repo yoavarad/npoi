@@ -1,8 +1,8 @@
-﻿using System.Net;
 using BenchmarkDotNet.Attributes;
 using NPOI.OpenXml4Net.OPC;
 using NPOI.XSSF.EventUserModel;
 using NPOI.XSSF.UserModel;
+using System.Net;
 
 namespace NPOI.Benchmarks;
 
@@ -19,7 +19,7 @@ public class LargeExcelFileBenchmark
     [GlobalSetup]
     public void GlobalSetup()
     {
-        _filePath = Path.Combine("data","test-performance.xlsx");
+        _filePath = Path.Combine("data", "test-performance.xlsx");
 
         // a 17MB Excel file is large so download it only when needed
         /*if (!File.Exists(_filePath))
@@ -32,7 +32,7 @@ public class LargeExcelFileBenchmark
         }*/
 
         var copyPath = Path.Combine(Path.GetTempPath(), "test-performance-copy.xlsx");
-        if (!File.Exists(copyPath))
+        if(!File.Exists(copyPath))
         {
             File.Copy(_filePath, copyPath);
         }

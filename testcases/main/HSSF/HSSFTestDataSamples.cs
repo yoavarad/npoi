@@ -17,10 +17,10 @@
 
 namespace TestCases.HSSF
 {
+    using NPOI.HSSF.UserModel;
     using System;
     using System.IO;
     using System.Text;
-    using NPOI.HSSF.UserModel;
 
     /**
      * Centralises logic for finding/opening sample files in the src/testcases/org/apache/poi/hssf/hssf/data folder. 
@@ -46,7 +46,7 @@ namespace TestCases.HSSF
         }
         public static HSSFWorkbook OpenSampleWorkbook(String sampleFileName)
         {
-            using (var sampleStream = _inst.OpenResourceAsStream(sampleFileName))
+            using(var sampleStream = _inst.OpenResourceAsStream(sampleFileName))
             {
                 return new HSSFWorkbook(sampleStream);
             }
@@ -58,7 +58,7 @@ namespace TestCases.HSSF
          */
         public static HSSFWorkbook WriteOutAndReadBack(HSSFWorkbook original)
         {
-            using (MemoryStream baos = new MemoryStream(4096))
+            using(MemoryStream baos = new MemoryStream(4096))
             {
                 original.Write(baos);
                 MemoryStream bais = new MemoryStream(baos.ToArray());

@@ -19,10 +19,9 @@ using System.IO;
 
 namespace NPOI.POIFS.Crypt
 {
-    using System;
-
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using System;
 
     public abstract class Decryptor
     {
@@ -101,7 +100,7 @@ namespace NPOI.POIFS.Crypt
         public static Decryptor GetInstance(EncryptionInfo info)
         {
             Decryptor d = info.Decryptor;
-            if (d == null)
+            if(d == null)
             {
                 throw new EncryptedDocumentException("Unsupported version");
             }

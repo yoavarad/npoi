@@ -16,21 +16,22 @@
 ==================================================================== */
 namespace TestCases.POIFS.Crypt
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
-    using System.Reflection.Emit;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.Agile;
     using NPOI.POIFS.Crypt.BinaryRC4;
     using NPOI.POIFS.Crypt.CryptoAPI;
-    using NPOI.POIFS.FileSystem;
     using NPOI.POIFS.Crypt.Standard;
+    using NPOI.POIFS.FileSystem;
     using NPOI.Util;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+    using System.Reflection.Emit;
     using TestCases;
 
     [TestFixture]
@@ -171,7 +172,7 @@ namespace TestCases.POIFS.Crypt
             is1.Close();
 
             long decPackLenActual = decActual.GetLength();
-            entry = (DocumentEntry)nfs.Root.GetEntryCaseInsensitive(Decryptor.DEFAULT_POIFS_ENTRY);
+            entry = (DocumentEntry) nfs.Root.GetEntryCaseInsensitive(Decryptor.DEFAULT_POIFS_ENTRY);
             is1 = nfs.Root.CreateDocumentInputStream(entry);
             // ignore pAdding block
             byte[] encPackActual = IOUtils.ToByteArray(is1, entry.Size - 16);
@@ -378,16 +379,16 @@ namespace TestCases.POIFS.Crypt
             Console.WriteLine(ext + ": " + path + " (" + dn.StorageClsid + ")");
 
             IEnumerator<Entry> iter = dn.Entries;
-            while (iter.MoveNext())
+            while(iter.MoveNext())
             {
                 Entry ent = iter.Current;
-                if (ent is DirectoryNode)
+                if(ent is DirectoryNode)
                 {
-                    ListDir((DirectoryNode)ent, ext, path);
+                    ListDir((DirectoryNode) ent, ext, path);
                 }
                 else
                 {
-                    ListEntry((DocumentNode)ent, ext, path);
+                    ListEntry((DocumentNode) ent, ext, path);
                 }
             }
         }
@@ -422,7 +423,7 @@ namespace TestCases.POIFS.Crypt
                 return SingleByteOpCodes[opCodeValue];
             }
 
-            return MultiByteOpCodes[(short)(0xfe00 | il[position++])];
+            return MultiByteOpCodes[(short) (0xfe00 | il[position++])];
         }
 
         private static int GetOperandSize(OperandType operandType, byte[] il, int position)
@@ -466,7 +467,7 @@ namespace TestCases.POIFS.Crypt
                     continue;
                 }
 
-                if((short)(opCode.Value & unchecked((short)0xff00)) == prefix)
+                if((short) (opCode.Value & unchecked((short) 0xff00)) == prefix)
                 {
                     opCodes[opCode.Value] = opCode;
                 }

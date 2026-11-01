@@ -18,10 +18,8 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.Collections.Generic;
     using NPOI.HSSF.UserModel;
+    using NPOI.HSSF.Util;
     using NPOI.SS;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
@@ -29,7 +27,10 @@ namespace TestCases.SS.Formula.Eval
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NPOI.HSSF.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * Test for unary plus operator Evaluator.
@@ -62,7 +63,7 @@ namespace TestCases.SS.Formula.Eval
                 CreateRefEval(refB),
             };
             List<SpreadsheetVersion> versions = Arrays.AsList(new SpreadsheetVersion[] { SpreadsheetVersion.EXCEL97, SpreadsheetVersion.EXCEL2007 });
-            foreach (SpreadsheetVersion version in versions)
+            foreach(SpreadsheetVersion version in versions)
             {
                 AreaReference ar = new AreaReference(expectedAreaRef, version);
                 ValueEval result = EvalInstances.Range.Evaluate(args, 0, (short)0);
@@ -136,7 +137,7 @@ namespace TestCases.SS.Formula.Eval
             }
             public override TwoDEval GetRow(int rowIndex)
             {
-                if (rowIndex >= Height)
+                if(rowIndex >= Height)
                 {
                     throw new ArgumentException("Invalid rowIndex " + rowIndex
                             + ".  Allowable range is (0.." + Height + ").");
@@ -145,7 +146,7 @@ namespace TestCases.SS.Formula.Eval
             }
             public override TwoDEval GetColumn(int columnIndex)
             {
-                if (columnIndex >= Width)
+                if(columnIndex >= Width)
                 {
                     throw new ArgumentException("Invalid columnIndex " + columnIndex
                             + ".  Allowable range is (0.." + Width + ").");
@@ -175,9 +176,9 @@ namespace TestCases.SS.Formula.Eval
             {
                 cv = fe.Evaluate(cellA1);
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if (e.Message.Equals("Unexpected ref arg class (NPOI.SS.Formula.LazyAreaEval)"))
+                if(e.Message.Equals("Unexpected ref arg class (NPOI.SS.Formula.LazyAreaEval)"))
                 {
                     throw new AssertionException("Identified bug 46948");
                 }

@@ -15,14 +15,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-        
-using System;
-using System.Collections;
-using System.IO;
-
 
 using NPOI.POIFS.EventFileSystem;
 using NPOI.POIFS.FileSystem;
+using System;
+using System.Collections;
+using System.IO;
 
 /**
  * Test (Proof of concept) program that employs the
@@ -76,7 +74,7 @@ namespace TestCases.POIFS.FileSystem
                 dataMap[descriptor] = data;
                 DirectoryEntry entry = root;
 
-                for (int k = 0; k < path.Length; k++)
+                for(int k = 0; k < path.Length; k++)
                 {
                     String componentName = path.GetComponent(k);
                     Entry nextEntry = null;
@@ -85,24 +83,24 @@ namespace TestCases.POIFS.FileSystem
                     {
                         nextEntry = entry.GetEntry(componentName);
                     }
-                    catch (FileNotFoundException)
+                    catch(FileNotFoundException)
                     {
                         try
                         {
                             nextEntry = entry.CreateDirectory(componentName);
                         }
-                        catch (IOException)
+                        catch(IOException)
                         {
                             Console.WriteLine("Unable to Create directory");
                             //e.printStackTrace();
                             throw;
                         }
                     }
-                    entry = (DirectoryEntry)nextEntry;
+                    entry = (DirectoryEntry) nextEntry;
                 }
                 entry.CreateDocument(name, size, this);
             }
-            catch (IOException)
+            catch(IOException)
             {
             }
         }
@@ -126,9 +124,9 @@ namespace TestCases.POIFS.FileSystem
 
                 Console.WriteLine("looking up document: " + descriptor + " ("
                                    + evt.Limit + " bytes)");
-                evt.Stream.Write((byte[])dataMap[descriptor]);
+                evt.Stream.Write((byte[]) dataMap[descriptor]);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 Console.WriteLine("Unable to Write document");
                 //e.printStackTrace();

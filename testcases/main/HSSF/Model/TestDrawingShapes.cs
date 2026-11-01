@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -19,7 +19,8 @@ using NPOI.HSSF.Record;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using TestCases.HSSF.UserModel;
@@ -60,7 +61,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(3, group.Children.Count);
             HSSFShapeGroup group1 = (HSSFShapeGroup)group.Children[0];
             ClassicAssert.AreEqual(2, group1.Children.Count);
-            group1 = (HSSFShapeGroup)group.Children[2];
+            group1 = (HSSFShapeGroup) group.Children[2];
             ClassicAssert.AreEqual(2, group1.Children.Count);
 
             wb.Close();
@@ -78,9 +79,9 @@ namespace TestCases.HSSF.Model
 
             EscherOptRecord opt = shape.GetOptRecord();
             ClassicAssert.AreEqual(7, opt.EscherProperties.Count);
-            ClassicAssert.IsTrue(((EscherBoolProperty)opt.Lookup(EscherProperties.GROUPSHAPE__PRINT)).IsTrue);
-            ClassicAssert.IsTrue(((EscherBoolProperty)opt.Lookup(EscherProperties.LINESTYLE__NOLINEDRAWDASH)).IsTrue);
-            ClassicAssert.AreEqual(0x00000004, ((EscherSimpleProperty)opt.Lookup(EscherProperties.GEOMETRY__SHAPEPATH)).PropertyValue);
+            ClassicAssert.IsTrue(((EscherBoolProperty) opt.Lookup(EscherProperties.GROUPSHAPE__PRINT)).IsTrue);
+            ClassicAssert.IsTrue(((EscherBoolProperty) opt.Lookup(EscherProperties.LINESTYLE__NOLINEDRAWDASH)).IsTrue);
+            ClassicAssert.AreEqual(0x00000004, ((EscherSimpleProperty) opt.Lookup(EscherProperties.GEOMETRY__SHAPEPATH)).PropertyValue);
             ClassicAssert.IsNull(opt.Lookup(EscherProperties.TEXT__SIZE_TEXT_TO_FIT_SHAPE));
         }
 
@@ -142,7 +143,7 @@ namespace TestCases.HSSF.Model
             rectangle.FillColor=(777);
             ClassicAssert.AreEqual(rectangle.FillColor, 777);
             ClassicAssert.AreEqual(10000, rectangle.LineWidth);
-            rectangle.LineStyle= (LineStyle)(10);
+            rectangle.LineStyle= (LineStyle) (10);
             ClassicAssert.AreEqual(10, rectangle.LineStyle);
             ClassicAssert.AreEqual(rectangle.WrapText, HSSFSimpleShape.WRAP_SQUARE);
             rectangle.LineStyleColor=(1111);
@@ -158,7 +159,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.IsNotNull(childById);
             EscherProperty lookup = ((EscherOptRecord)childById).Lookup(EscherProperties.TEXT__TEXTID);
             ClassicAssert.IsNotNull(lookup);
-            ClassicAssert.AreEqual("teeeest".GetHashCode(), ((EscherSimpleProperty)lookup).PropertyValue);
+            ClassicAssert.AreEqual("teeeest".GetHashCode(), ((EscherSimpleProperty) lookup).PropertyValue);
 
             ClassicAssert.AreEqual(rectangle.IsNoFill, true);
             ClassicAssert.AreEqual(rectangle.WrapText, HSSFSimpleShape.WRAP_NONE);
@@ -175,7 +176,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(HSSFSimpleShape.OBJECT_TYPE_RECTANGLE,
                     rectangle2.ShapeType);
             ClassicAssert.AreEqual(10000, rectangle2.LineWidth);
-            ClassicAssert.AreEqual(10, (int)rectangle2.LineStyle);
+            ClassicAssert.AreEqual(10, (int) rectangle2.LineStyle);
             ClassicAssert.AreEqual(anchor, rectangle2.Anchor);
             ClassicAssert.AreEqual(rectangle2.LineStyleColor, 1111);
             ClassicAssert.AreEqual(rectangle2.FillColor, 777);
@@ -184,7 +185,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(rectangle.WrapText, HSSFSimpleShape.WRAP_NONE);
 
             rectangle2.FillColor=(3333);
-            rectangle2.LineStyle = (LineStyle)(9);
+            rectangle2.LineStyle = (LineStyle) (9);
             rectangle2.LineStyleColor=(4444);
             rectangle2.IsNoFill=(false);
             rectangle2.LineWidth=(77);
@@ -200,7 +201,7 @@ namespace TestCases.HSSF.Model
             sheet = wb3.GetSheetAt(0) as HSSFSheet;
             drawing = sheet.DrawingPatriarch as HSSFPatriarch;
             ClassicAssert.AreEqual(1, drawing.Children.Count);
-            rectangle2 = (HSSFSimpleShape)drawing.Children[0];
+            rectangle2 = (HSSFSimpleShape) drawing.Children[0];
             ClassicAssert.AreEqual(HSSFSimpleShape.OBJECT_TYPE_RECTANGLE, rectangle2.ShapeType);
             ClassicAssert.AreEqual(rectangle.WrapText, HSSFSimpleShape.WRAP_BY_POINTS);
             ClassicAssert.AreEqual(77, rectangle2.LineWidth);
@@ -257,7 +258,7 @@ namespace TestCases.HSSF.Model
 
             HSSFSimpleShape shape = (HSSFSimpleShape)Drawing.Children[0];
             ClassicAssert.AreEqual(shape.IsNoFill, false);
-            ClassicAssert.AreEqual((int)shape.LineStyle, HSSFShape.LINESTYLE_DASHDOTGEL);
+            ClassicAssert.AreEqual((int) shape.LineStyle, HSSFShape.LINESTYLE_DASHDOTGEL);
             ClassicAssert.AreEqual(shape.LineStyleColor, 0x616161);
             ClassicAssert.AreEqual(shape.FillColor, 0x2CE03D, HexDump.ToHex(shape.FillColor));
             ClassicAssert.AreEqual(shape.LineWidth, HSSFShape.LINEWIDTH_ONE_PT * 2);
@@ -271,7 +272,7 @@ namespace TestCases.HSSF.Model
             HSSFWorkbook wb1 = new HSSFWorkbook();
             HSSFSheet sheet1 = wb1.CreateSheet() as HSSFSheet;
             HSSFPatriarch patriarch1 = sheet1.CreateDrawingPatriarch() as HSSFPatriarch;
-            for (int i = 0; i < 2; i++)
+            for(int i = 0; i < 2; i++)
             {
                 patriarch1.CreateSimpleShape(new HSSFClientAnchor());
             }
@@ -348,7 +349,8 @@ namespace TestCases.HSSF.Model
             wb.Close();
         }
         [Test]
-        public void TestOpt() {
+        public void TestOpt()
+        {
             HSSFWorkbook wb = new HSSFWorkbook();
 
             // create a sheet with a text box
@@ -417,7 +419,7 @@ namespace TestCases.HSSF.Model
             sheet = wb2.GetSheetAt(0) as HSSFSheet;
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
 
-            shape = (HSSFSimpleShape)patriarch.Children[0];
+            shape = (HSSFSimpleShape) patriarch.Children[0];
 
             agg = HSSFTestHelper.GetEscherAggregate(patriarch);
             ClassicAssert.AreEqual(agg.GetShapeToObjMapping().Count, 2);
@@ -437,7 +439,7 @@ namespace TestCases.HSSF.Model
             sheet = wb4.GetSheetAt(0) as HSSFSheet;
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
 
-            shape = (HSSFSimpleShape)patriarch.Children[0];
+            shape = (HSSFSimpleShape) patriarch.Children[0];
 
             ClassicAssert.IsNotNull(HSSFTestHelper.GetTextObjRecord(shape));
             ClassicAssert.AreEqual(shape.String.String, "string1");
@@ -486,7 +488,7 @@ namespace TestCases.HSSF.Model
 
             ClassicAssert.AreEqual(patriarch.Children.Count, 6);
 
-            group = (HSSFShapeGroup)patriarch.Children[5];
+            group = (HSSFShapeGroup) patriarch.Children[5];
             group.RemoveShape(group.Children[0]);
 
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).GetShapeToObjMapping().Count, 10);
@@ -500,7 +502,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).GetShapeToObjMapping().Count, 10);
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).TailRecords.Count, 1);
 
-            group = (HSSFShapeGroup)patriarch.Children[(5)];
+            group = (HSSFShapeGroup) patriarch.Children[(5)];
             patriarch.RemoveShape(group);
 
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).GetShapeToObjMapping().Count, 8);
@@ -563,7 +565,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).TailRecords.Count, 0);
             ClassicAssert.AreEqual(patriarch.Children.Count, 2);
 
-            polygon = (HSSFPolygon)patriarch.Children[0];
+            polygon = (HSSFPolygon) patriarch.Children[0];
             patriarch.RemoveShape(polygon);
 
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).GetShapeToObjMapping().Count, 2);
@@ -594,7 +596,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).GetShapeToObjMapping().Count, 0);
             ClassicAssert.AreEqual(HSSFTestHelper.GetEscherAggregate(patriarch).TailRecords.Count, 0);
             ClassicAssert.AreEqual(patriarch.Children.Count, 0);
-            
+
             wb9.Close();
         }
         [Test]
@@ -620,7 +622,7 @@ namespace TestCases.HSSF.Model
             sheet = wb2.GetSheetAt(0) as HSSFSheet;
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
 
-            rectangle = (HSSFSimpleShape)patriarch.Children[0];
+            rectangle = (HSSFSimpleShape) patriarch.Children[0];
 
             ClassicAssert.AreEqual(rectangle.IsFlipHorizontal, true);
             rectangle.IsFlipHorizontal = false;
@@ -635,7 +637,7 @@ namespace TestCases.HSSF.Model
             sheet = wb3.GetSheetAt(0) as HSSFSheet;
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
 
-            rectangle = (HSSFSimpleShape)patriarch.Children[0];
+            rectangle = (HSSFSimpleShape) patriarch.Children[0];
 
             ClassicAssert.AreEqual(rectangle.IsFlipVertical, false);
             ClassicAssert.AreEqual(rectangle.IsFlipHorizontal, false);
@@ -653,7 +655,7 @@ namespace TestCases.HSSF.Model
             rectangle.ShapeType = HSSFSimpleShape.OBJECT_TYPE_RECTANGLE;
 
             ClassicAssert.AreEqual(rectangle.RotationDegree, 0);
-            rectangle.RotationDegree = (short)45;
+            rectangle.RotationDegree = (short) 45;
             ClassicAssert.AreEqual(rectangle.RotationDegree, 45);
             rectangle.IsFlipHorizontal = true;
 
@@ -662,9 +664,9 @@ namespace TestCases.HSSF.Model
 
             sheet = wb2.GetSheetAt(0) as HSSFSheet;
             patriarch = sheet.DrawingPatriarch as HSSFPatriarch;
-            rectangle = (HSSFSimpleShape)patriarch.Children[0];
+            rectangle = (HSSFSimpleShape) patriarch.Children[0];
             ClassicAssert.AreEqual(rectangle.RotationDegree, 45);
-            rectangle.RotationDegree = (short)30;
+            rectangle.RotationDegree = (short) 30;
             ClassicAssert.AreEqual(rectangle.RotationDegree, 30);
 
             patriarch.SetCoordinates(0, 0, 10, 10);
@@ -672,7 +674,8 @@ namespace TestCases.HSSF.Model
             wb2.Close();
         }
         [Test]
-        public void TestShapeContainerImplementsIterable(){
+        public void TestShapeContainerImplementsIterable()
+        {
             HSSFWorkbook wb = new HSSFWorkbook();
 
             HSSFSheet sheet = wb.CreateSheet() as HSSFSheet;
@@ -683,7 +686,7 @@ namespace TestCases.HSSF.Model
 
             int i = 2;
 
-            foreach (HSSFShape shape in patriarch)
+            foreach(HSSFShape shape in patriarch)
             {
                 i--;
             }
@@ -735,7 +738,7 @@ namespace TestCases.HSSF.Model
 
                 {
                     HSSFClientAnchor a1 = new HSSFClientAnchor();
-                    a1.SetAnchor((short)1, 1, 0, 0, (short)1, 1, 512, 100);
+                    a1.SetAnchor((short) 1, 1, 0, 0, (short) 1, 1, 512, 100);
                     HSSFSimpleShape shape1 = patriarch.CreateSimpleShape(a1);
                     shape1.ShapeType = (/*setter*/HSSFSimpleShape.OBJECT_TYPE_LINE);
                 }
@@ -743,7 +746,7 @@ namespace TestCases.HSSF.Model
                 {
                     HSSFClientAnchor a1 = new HSSFClientAnchor();
                     //setAnchor method is wrong??
-                    a1.SetAnchor((short)1, 1, 512, 0, (short)1, 1, 1023, 100);
+                    a1.SetAnchor((short) 1, 1, 512, 0, (short) 1, 1, 1023, 100);
                     HSSFSimpleShape shape1 = patriarch.CreateSimpleShape(a1);
                     shape1.FlipVertical=(true);
                     shape1.ShapeType = (/*setter*/HSSFSimpleShape.OBJECT_TYPE_LINE);
@@ -751,13 +754,13 @@ namespace TestCases.HSSF.Model
 
                 {
                     HSSFClientAnchor a1 = new HSSFClientAnchor();
-                    a1.SetAnchor((short)2, 2, 0, 0, (short)2, 2, 512, 100);
+                    a1.SetAnchor((short) 2, 2, 0, 0, (short) 2, 2, 512, 100);
                     HSSFSimpleShape shape1 = patriarch.CreateSimpleShape(a1);
                     shape1.ShapeType = (/*setter*/HSSFSimpleShape.OBJECT_TYPE_LINE);
                 }
                 {
                     HSSFClientAnchor a1 = new HSSFClientAnchor();
-                    a1.SetAnchor((short)2, 2, 0, 100, (short)2, 2, 512, 200);
+                    a1.SetAnchor((short) 2, 2, 0, 100, (short) 2, 2, 512, 200);
                     HSSFSimpleShape shape1 = patriarch.CreateSimpleShape(a1);
                     shape1.FlipHorizontal = (/*setter*/true);
                     shape1.ShapeType = (/*setter*/HSSFSimpleShape.OBJECT_TYPE_LINE);
@@ -813,7 +816,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(1023, anchor.Dx2);
             ClassicAssert.AreEqual(0, anchor.Dy1);
             ClassicAssert.AreEqual(100, anchor.Dy2);
-            cAnchor = (HSSFClientAnchor)anchor;
+            cAnchor = (HSSFClientAnchor) anchor;
             ClassicAssert.AreEqual(1, cAnchor.Col1);
             ClassicAssert.AreEqual(1, cAnchor.Col2);
             ClassicAssert.AreEqual(1, cAnchor.Row1);
@@ -827,7 +830,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(512, anchor.Dx2);
             ClassicAssert.AreEqual(0, anchor.Dy1);
             ClassicAssert.AreEqual(100, anchor.Dy2);
-            cAnchor = (HSSFClientAnchor)anchor;
+            cAnchor = (HSSFClientAnchor) anchor;
             ClassicAssert.AreEqual(2, cAnchor.Col1);
             ClassicAssert.AreEqual(2, cAnchor.Col2);
             ClassicAssert.AreEqual(2, cAnchor.Row1);
@@ -841,7 +844,7 @@ namespace TestCases.HSSF.Model
             ClassicAssert.AreEqual(512, anchor.Dx2);
             ClassicAssert.AreEqual(100, anchor.Dy1);
             ClassicAssert.AreEqual(200, anchor.Dy2);
-            cAnchor = (HSSFClientAnchor)anchor;
+            cAnchor = (HSSFClientAnchor) anchor;
             ClassicAssert.AreEqual(2, cAnchor.Col1);
             ClassicAssert.AreEqual(2, cAnchor.Col2);
             ClassicAssert.AreEqual(2, cAnchor.Row1);

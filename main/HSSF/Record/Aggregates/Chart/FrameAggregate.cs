@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations Under the License.
 ==================================================================== */
 
-using NPOI.HSSF.Record.Chart;
 using NPOI.HSSF.Model;
+using NPOI.HSSF.Record.Chart;
 using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
@@ -34,20 +34,20 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public FrameAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_FRAME, container)
         {
-            frame = (FrameRecord)rs.GetNext();
+            frame = (FrameRecord) rs.GetNext();
             rs.GetNext();//BeginRecord
-            lineFormat = (LineFormatRecord)rs.GetNext();
-            areaFormat = (AreaFormatRecord)rs.GetNext();
-            if (rs.PeekNextChartSid() == GelFrameRecord.sid)
+            lineFormat = (LineFormatRecord) rs.GetNext();
+            areaFormat = (AreaFormatRecord) rs.GetNext();
+            if(rs.PeekNextChartSid() == GelFrameRecord.sid)
             {
                 gelFrame = new GelFrameAggregate(rs, this);
             }
-            
-            if (rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
+
+            if(rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
             {
                 shapeProps = new ShapePropsAggregate(rs, this);
             }
-            
+
             Record r = rs.GetNext();//EndRecord
             Debug.Assert(r.GetType() == typeof(EndRecord));
         }
@@ -58,12 +58,12 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(BeginRecord.instance);
             rv.VisitRecord(lineFormat);
             rv.VisitRecord(areaFormat);
-            if (gelFrame != null)
+            if(gelFrame != null)
                 gelFrame.VisitContainedRecords(rv);
 
             //TODO: write StartBlockRecord
 
-            if (shapeProps != null)
+            if(shapeProps != null)
             {
                 //WriteStartBlock(rv);
                 shapeProps.VisitContainedRecords(rv);
@@ -74,7 +74,7 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
 
         protected override bool ShoudWriteStartBlock()
         {
-            if (IsInStartObject)
+            if(IsInStartObject)
                 return false;
             return false;
         }

@@ -59,7 +59,7 @@ namespace NPOI.SS.Util
         public ExpandedDouble(long rawBits)
         {
             int biasedExp = (int)(rawBits >> 52);
-            if (biasedExp == 0)
+            if(biasedExp == 0)
             {
                 // sub-normal numbers
                 BigInteger frac = new BigInteger(rawBits)&BI_FRAC_MASK;
@@ -77,7 +77,7 @@ namespace NPOI.SS.Util
 
         public ExpandedDouble(BigInteger frac, int binaryExp)
         {
-            if (frac.BitLength() != 64)
+            if(frac.BitLength() != 64)
             {
                 throw new ArgumentException("bad bit length");
             }
@@ -109,4 +109,3 @@ namespace NPOI.SS.Util
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,10 +14,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System.IO;
 using ICSharpCode.SharpZipLib.GZip;
 using NPOI.Util;
 using NPOI.XSSF.Model;
+using System.IO;
 
 namespace NPOI.XSSF.Streaming
 {
@@ -43,7 +43,7 @@ namespace NPOI.XSSF.Streaming
         {
             return TempFile.CreateTempFile("poi-sxssf-sheet-xml", ".gz");
         }
-        
+
         protected override Stream DecorateInputStream(Stream fis)
         {
             return new GZipInputStream(fis);

@@ -17,12 +17,13 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
     using TestCases.SS.UserModel;
     /**
      * Tests HSSFHyperlink.
@@ -35,7 +36,7 @@ namespace TestCases.HSSF.UserModel
         public TestHSSFHyperlink()
             : base(HSSFITestDataProvider.Instance)
         {
-            
+
         }
         /**
          * Test that we can read hyperlinks.
@@ -159,10 +160,10 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual("'Hyperlinks'!A1", link.TextMark);
             ClassicAssert.AreEqual("'Hyperlinks'!A1", link.Address);
         }
-                /**
-         * Test that NPOI.SS.UserModel.Sheet#shiftRows moves hyperlinks,
-         * see bugs #46445 and #29957
-         */
+        /**
+ * Test that NPOI.SS.UserModel.Sheet#shiftRows moves hyperlinks,
+ * see bugs #46445 and #29957
+ */
         [Test]
         public void TestShiftRows()
         {

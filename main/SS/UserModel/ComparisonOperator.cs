@@ -28,7 +28,7 @@ namespace NPOI.SS.UserModel
      * @author Dmitriy Kumshayev
      * @author Yegor Kozlov
      */
-    public enum ComparisonOperator:byte
+    public enum ComparisonOperator : byte
     {
         NoComparison = 0,
 

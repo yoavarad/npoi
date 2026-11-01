@@ -1,9 +1,9 @@
-﻿using NPOI.OpenXmlFormats.Spreadsheet;
+using EnumsNET;
+using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
-using EnumsNET;
 
 namespace NPOI.OOXML.XSSF.UserModel
 {
@@ -20,17 +20,19 @@ namespace NPOI.OOXML.XSSF.UserModel
 
             List<CT_Dxf> dxfList = dxfs.dxf;
 
-            foreach (CT_TableStyleElement element in tableStyle.tableStyleElement)
+            foreach(CT_TableStyleElement element in tableStyle.tableStyleElement)
             {
                 TableStyleType type = Enums.Parse<TableStyleType>(element.type.GetName());
                 IDifferentialStyleProvider dstyle = null;
-                if (element.dxfIdSpecified)
+                if(element.dxfIdSpecified)
                 {
                     int idx = (int)element.dxfId;
                     CT_Dxf dxf = dxfList[idx];
                     int stripeSize = 0;
-                    if (element.size!=0) stripeSize = (int)element.size;
-                    if (dxf != null) dstyle = new XSSFDxfStyleProvider(dxf, stripeSize, colorMap);
+                    if(element.size!=0)
+                        stripeSize = (int) element.size;
+                    if(dxf != null)
+                        dstyle = new XSSFDxfStyleProvider(dxf, stripeSize, colorMap);
                 }
                 elementMap.Add(type, dstyle);
             }

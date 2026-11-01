@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -26,11 +26,11 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
+    using NPOI.OpenXmlFormats.Dml.Chart;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
     using NPOI.XSSF.UserModel;
-    using NPOI.OpenXmlFormats.Dml.Chart;
 
     /// <summary>
     /// Class <c>XDDFDataSourcesFactory</c> is a factory for <see cref="XDDFDataSource"/> instances.
@@ -426,5 +426,3 @@ namespace NPOI.XDDF.UserModel.Chart
         }
     }
 }
-
-

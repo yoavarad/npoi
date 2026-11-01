@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,7 +11,7 @@ namespace NPOI.OpenXml4Net.OPC
      * @version 0.2
      */
     public static class PackageRelationshipTypes
-    {    
+    {
         /**
          * Core properties relationship type.
          *

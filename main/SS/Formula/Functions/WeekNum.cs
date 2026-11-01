@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,11 +16,11 @@
 ==================================================================== */
 
 using NPOI.SS.Formula.Eval;
-using System;
-using NPOI.SS.Util;
 using NPOI.SS.UserModel;
-using System.Globalization;
+using NPOI.SS.Util;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -58,7 +58,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 serialNum = NumericFunction.SingleOperandEvaluate(serialNumVE, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -67,7 +67,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 serialNumCalendar = DateUtil.GetJavaDate(serialNum, false);
             }
-            catch (Exception )
+            catch(Exception)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -76,20 +76,21 @@ namespace NPOI.SS.Formula.Functions
             {
                 ValueEval ve = OperandResolver.GetSingleValue(returnTypeVE, srcRowIndex, srcColumnIndex);
                 returnType = OperandResolver.CoerceValueToInt(ve);
-                if (ve is MissingArgEval)
+                if(ve is MissingArgEval)
                 {
-                    returnType = (int)DEFAULT_RETURN_TYPE.NumberValue;
+                    returnType = (int) DEFAULT_RETURN_TYPE.NumberValue;
                 }
-                else {
+                else
+                {
                     returnType = OperandResolver.CoerceValueToInt(ve);
                 }
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.NUM_ERROR;
             }
 
-            if (!VALID_RETURN_TYPES.Contains(returnType))
+            if(!VALID_RETURN_TYPES.Contains(returnType))
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -102,31 +103,31 @@ namespace NPOI.SS.Formula.Functions
         {
             GregorianCalendar cal = new GregorianCalendar();
             int weekOfYear;
-            if (weekStartOn == 1 || weekStartOn == 17)
+            if(weekStartOn == 1 || weekStartOn == 17)
             {
                 weekOfYear = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
             }
-            else if (weekStartOn == 2 || weekStartOn == 11)
+            else if(weekStartOn == 2 || weekStartOn == 11)
             {
                 weekOfYear = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
             }
-            else if (weekStartOn == 12)
+            else if(weekStartOn == 12)
             {
                 weekOfYear = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Tuesday);
             }
-            else if (weekStartOn == 13)
+            else if(weekStartOn == 13)
             {
                 weekOfYear = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Wednesday);
             }
-            else if (weekStartOn == 14)
+            else if(weekStartOn == 14)
             {
                 weekOfYear = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Thursday);
             }
-            else if (weekStartOn == 15)
+            else if(weekStartOn == 15)
             {
                 weekOfYear = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Friday);
             }
-            else if (weekStartOn == 16)
+            else if(weekStartOn == 16)
             {
                 weekOfYear = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Saturday);
             }
@@ -139,11 +140,11 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length == 1)
+            if(args.Length == 1)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], DEFAULT_RETURN_TYPE);
             }
-            else if (args.Length == 2)
+            else if(args.Length == 2)
             {
                 return Evaluate(ec.RowIndex, ec.ColumnIndex, args[0], args[1]);
             }

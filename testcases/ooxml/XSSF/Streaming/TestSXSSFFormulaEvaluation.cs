@@ -23,7 +23,8 @@ namespace TestCases.XSSF.Streaming
     using NPOI.XSSF;
     using NPOI.XSSF.Streaming;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.SS.UserModel;
 
     /**
@@ -56,7 +57,8 @@ namespace TestCases.XSSF.Streaming
 
             s.CreateRow(0).CreateCell(0).CellFormula = (/*setter*/"1+2");
             s.CreateRow(1).CreateCell(0).CellFormula = (/*setter*/"A21");
-            for (int i = 2; i < 19; i++) { s.CreateRow(i); }
+            for(int i = 2; i < 19; i++)
+            { s.CreateRow(i); }
 
             // Cells outside window will fail, whether referenced or not
             s.CreateRow(19).CreateCell(0).CellFormula = (/*setter*/"A1+A2");
@@ -66,7 +68,7 @@ namespace TestCases.XSSF.Streaming
                 eval.EvaluateAll();
                 Assert.Fail("Evaluate All shouldn't work, as some cells outside the window");
             }
-            catch (RowFlushedException)
+            catch(RowFlushedException)
             {
                 // Expected
             }
@@ -90,7 +92,7 @@ namespace TestCases.XSSF.Streaming
                 eval.EvaluateAll();
                 Assert.Fail("Evaluate All shouldn't work, as sheets flushed");
             }
-            catch (SheetsFlushedException) { }
+            catch(SheetsFlushedException) { }
 
             wb.Close();
         }
@@ -105,7 +107,8 @@ namespace TestCases.XSSF.Streaming
             ClassicAssert.AreEqual(false, s.AllRowsFlushed);
             ClassicAssert.AreEqual(-1, s.LastFlushedRowNumber);
 
-            for (int i = 1; i <= 19; i++) { s.CreateRow(i); }
+            for(int i = 1; i <= 19; i++)
+            { s.CreateRow(i); }
             ICell c = s.CreateRow(20).CreateCell(0);
             c.CellFormula = (/*setter*/"A1+100");
 
@@ -118,7 +121,7 @@ namespace TestCases.XSSF.Streaming
                 eval.EvaluateFormulaCell(c);
                 Assert.Fail("Evaluate shouldn't work, as reference outside the window");
             }
-            catch (RowFlushedException)
+            catch(RowFlushedException)
             {
                 // Expected
             }
@@ -142,9 +145,9 @@ namespace TestCases.XSSF.Streaming
             IFormulaEvaluator eval = wb.GetCreationHelper().CreateFormulaEvaluator();
             eval.EvaluateAll();
 
-            ClassicAssert.AreEqual(3, (int)s.GetRow(0).GetCell(0).NumericCellValue);
-            ClassicAssert.AreEqual(13, (int)s.GetRow(1).GetCell(1).NumericCellValue);
-            ClassicAssert.AreEqual(113, (int)s.GetRow(2).GetCell(2).NumericCellValue);
+            ClassicAssert.AreEqual(3, (int) s.GetRow(0).GetCell(0).NumericCellValue);
+            ClassicAssert.AreEqual(13, (int) s.GetRow(1).GetCell(1).NumericCellValue);
+            ClassicAssert.AreEqual(113, (int) s.GetRow(2).GetCell(2).NumericCellValue);
 
             wb.Close();
         }
@@ -163,9 +166,9 @@ namespace TestCases.XSSF.Streaming
             c = s.CreateRow(1).CreateCell(0) as SXSSFCell;
             c.CellFormula = (/*setter*/"A1*2");
 
-            ClassicAssert.AreEqual(0, (int)c.NumericCellValue);
+            ClassicAssert.AreEqual(0, (int) c.NumericCellValue);
             eval.EvaluateFormulaCell(c);
-            ClassicAssert.AreEqual(3, (int)c.NumericCellValue);
+            ClassicAssert.AreEqual(3, (int) c.NumericCellValue);
 
             wb.Close();
         }
@@ -180,9 +183,9 @@ namespace TestCases.XSSF.Streaming
 
             SXSSFCell c = s.CreateRow(0).CreateCell(0) as SXSSFCell;
             c.CellFormula = (/*setter*/"1+2");
-            ClassicAssert.AreEqual(0, (int)c.NumericCellValue);
+            ClassicAssert.AreEqual(0, (int) c.NumericCellValue);
             eval.EvaluateFormulaCell(c);
-            ClassicAssert.AreEqual(3, (int)c.NumericCellValue);
+            ClassicAssert.AreEqual(3, (int) c.NumericCellValue);
 
             c = s.CreateRow(1).CreateCell(0) as SXSSFCell;
             c.CellFormula = (/*setter*/"CONCATENATE(\"hello\",\" \",\"world\")");
@@ -191,7 +194,7 @@ namespace TestCases.XSSF.Streaming
         }
 
         [Test]
-        public override void TestUpdateCachedFormulaResultFromErrorToNumber_bug46479() 
+        public override void TestUpdateCachedFormulaResultFromErrorToNumber_bug46479()
         {
             Assume.That(false, "This test is disabled because it fails for SXSSF because " +
                         "handling of errors in formulas is slightly different than in XSSF, " +

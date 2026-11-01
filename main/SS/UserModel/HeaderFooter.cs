@@ -41,4 +41,3 @@ namespace NPOI.SS.UserModel
         String Right { get; set; }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,11 +16,11 @@
 ==================================================================== */
 
 
+using NPOI.POIFS.FileSystem;
+using NPOI.POIFS.Storage;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NPOI.POIFS.FileSystem;
-using NPOI.POIFS.Storage;
 
 namespace NPOI.POIFS.Properties
 {
@@ -40,7 +40,7 @@ namespace NPOI.POIFS.Properties
         {
             _header_block = header_block;
             _properties = properties;
-            PopulatePropertyTree((DirectoryProperty)_properties[0]);
+            PopulatePropertyTree((DirectoryProperty) _properties[0]);
         }
 
         public void AddProperty(Property property)
@@ -55,43 +55,43 @@ namespace NPOI.POIFS.Properties
 
         public RootProperty Root
         {
-            get { return (RootProperty)(_properties[0]); }
+            get { return (RootProperty) (_properties[0]); }
         }
 
         protected void PopulatePropertyTree(DirectoryProperty root)
         {
             int index = root.ChildIndex;
 
-            if (!Property.IsValidIndex(index))
+            if(!Property.IsValidIndex(index))
                 return;
 
             Stack<Property> children = new Stack<Property>();
 
             children.Push(_properties[index]);
 
-            while (children.Count != 0)
+            while(children.Count != 0)
             {
                 Property property = children.Pop();
-                if (property == null)
+                if(property == null)
                 {
                     // unknown / unsupported / corrupted property, skip
                     continue;
                 }
                 root.AddChild(property);
 
-                if (property.IsDirectory)
+                if(property.IsDirectory)
                 {
-                    PopulatePropertyTree((DirectoryProperty)property);
+                    PopulatePropertyTree((DirectoryProperty) property);
                 }
 
                 index = property.PreviousChildIndex;
-                if (Property.IsValidIndex(index))
+                if(Property.IsValidIndex(index))
                 {
                     children.Push(_properties[index]);
                 }
 
                 index = property.NextChildIndex;
-                if (Property.IsValidIndex(index))
+                if(Property.IsValidIndex(index))
                 {
                     children.Push(_properties[index]);
                 }

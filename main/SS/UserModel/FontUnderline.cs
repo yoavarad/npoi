@@ -79,29 +79,29 @@ namespace NPOI.SS.UserModel
         {
             get
             {
-                if (this == DOUBLE)
+                if(this == DOUBLE)
                 {
-                    return (byte)FontUnderlineType.Double;
+                    return (byte) FontUnderlineType.Double;
                 }
-                else if (this == DOUBLE_ACCOUNTING)
+                else if(this == DOUBLE_ACCOUNTING)
                 {
-                    return (byte)FontUnderlineType.DoubleAccounting;
+                    return (byte) FontUnderlineType.DoubleAccounting;
                 }
-                else if (this == SINGLE_ACCOUNTING)
+                else if(this == SINGLE_ACCOUNTING)
                 {
-                    return (byte)FontUnderlineType.SingleAccounting;
+                    return (byte) FontUnderlineType.SingleAccounting;
                 }
-                else if (this == NONE)
+                else if(this == NONE)
                 {
-                    return (byte)FontUnderlineType.None;
+                    return (byte) FontUnderlineType.None;
                 }
-                else if (this == SINGLE)
+                else if(this == SINGLE)
                 {
-                    return (byte)FontUnderlineType.Single;
+                    return (byte) FontUnderlineType.Single;
                 }
                 else
                 {
-                    return (byte)FontUnderlineType.Single;
+                    return (byte) FontUnderlineType.Single;
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace NPOI.SS.UserModel
 
         static FontUnderline()
         {
-            if (_table == null)
+            if(_table == null)
             {
                 _table = new FontUnderline[5];
                 _table[0] = FontUnderline.NONE;
@@ -128,7 +128,7 @@ namespace NPOI.SS.UserModel
         public static FontUnderline ValueOf(FontUnderlineType value)
         {
             FontUnderline val;
-            switch (value)
+            switch(value)
             {
                 case FontUnderlineType.Double:
                     val = FontUnderline.DOUBLE;

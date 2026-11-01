@@ -1,17 +1,17 @@
-﻿using System;
+using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXmlFormats.Vml.Office;
+using NPOI.OpenXmlFormats.Vml.Presentation;
+using NPOI.OpenXmlFormats.Vml.Spreadsheet;
+using NPOI.OpenXmlFormats.Vml.Wordprocessing;
+using NPOI.Util;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Text;
+using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using NPOI.OpenXmlFormats.Vml.Wordprocessing;
-using NPOI.OpenXmlFormats.Vml.Office;
-using NPOI.OpenXmlFormats.Vml.Spreadsheet;
-using NPOI.OpenXmlFormats.Vml.Presentation;
-using System.IO;
-using System.Xml;
-using System.Text;
-using System.ComponentModel;
-using NPOI.OpenXml4Net.Util;
-using NPOI.Util;
 
 namespace NPOI.OpenXmlFormats.Vml
 {
@@ -82,13 +82,13 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public static CT_Fill Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Fill ctObj = new CT_Fill();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
-            if (node.Attributes["type"] != null)
-                ctObj.type = (ST_FillType)Enum.Parse(typeof(ST_FillType), node.Attributes["type"].Value);
-            if (node.Attributes["on"] != null)
+            if(node.Attributes["type"] != null)
+                ctObj.type = (ST_FillType) Enum.Parse(typeof(ST_FillType), node.Attributes["type"].Value);
+            if(node.Attributes["on"] != null)
                 ctObj.on = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["on"]);
             ctObj.color = XmlHelper.ReadString(node.Attributes["color"]);
             ctObj.opacity = XmlHelper.ReadString(node.Attributes["opacity"]);
@@ -97,21 +97,21 @@ namespace NPOI.OpenXmlFormats.Vml
             ctObj.size = XmlHelper.ReadString(node.Attributes["size"]);
             ctObj.origin = XmlHelper.ReadString(node.Attributes["origin"]);
             ctObj.position = XmlHelper.ReadString(node.Attributes["position"]);
-            if (node.Attributes["aspect"] != null)
-                ctObj.aspect = (ST_ImageAspect)Enum.Parse(typeof(ST_ImageAspect), node.Attributes["aspect"].Value);
+            if(node.Attributes["aspect"] != null)
+                ctObj.aspect = (ST_ImageAspect) Enum.Parse(typeof(ST_ImageAspect), node.Attributes["aspect"].Value);
             ctObj.colors = XmlHelper.ReadString(node.Attributes["colors"]);
-            if (node.Attributes["angle"] != null)
+            if(node.Attributes["angle"] != null)
                 ctObj.angle = XmlHelper.ReadDecimal(node.Attributes["angle"]);
-            if (node.Attributes["alignshape"] != null)
-                    ctObj.alignshape = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["alignshape"]);
+            if(node.Attributes["alignshape"] != null)
+                ctObj.alignshape = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["alignshape"]);
             ctObj.focus = XmlHelper.ReadString(node.Attributes["focus"]);
             ctObj.focussize = XmlHelper.ReadString(node.Attributes["focussize"]);
             ctObj.focusposition = XmlHelper.ReadString(node.Attributes["focusposition"]);
-            if (node.Attributes["method"] != null)
-                ctObj.method = (ST_FillMethod)Enum.Parse(typeof(ST_FillMethod), node.Attributes["method"].Value);
-            if (node.Attributes["recolor"] != null)
+            if(node.Attributes["method"] != null)
+                ctObj.method = (ST_FillMethod) Enum.Parse(typeof(ST_FillMethod), node.Attributes["method"].Value);
+            if(node.Attributes["recolor"] != null)
                 ctObj.recolor = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["recolor"]);
-            if (node.Attributes["rotate"] != null)
+            if(node.Attributes["rotate"] != null)
                 ctObj.rotate = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["rotate"]);
             return ctObj;
         }
@@ -133,7 +133,7 @@ namespace NPOI.OpenXmlFormats.Vml
             XmlHelper.WriteAttribute(sw, "position", this.position);
             XmlHelper.WriteAttribute(sw, "aspect", this.aspect.ToString());
             XmlHelper.WriteAttribute(sw, "colors", this.colors);
-            XmlHelper.WriteAttribute(sw, "angle", (double)this.angle);
+            XmlHelper.WriteAttribute(sw, "angle", (double) this.angle);
             NPOI.OpenXmlFormats.Util.XmlHelper.WriteAttribute(sw, "alignshape", this.alignshape);
             XmlHelper.WriteAttribute(sw, "focus", this.focus);
             XmlHelper.WriteAttribute(sw, "focussize", this.focussize);
@@ -615,17 +615,18 @@ namespace NPOI.OpenXmlFormats.Vml
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot("shape",Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class  CT_Shape {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot("shape", Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Shape
+    {
+
+
         private string typeField;
-        
+
         private string adjField;
         private string styleField;
         private CT_Path pathField;
-        
+
         private string equationxmlField;
 
         private string idField;
@@ -638,61 +639,61 @@ namespace NPOI.OpenXmlFormats.Vml
         private string _xml;
         public static CT_Shape Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Shape ctObj = new CT_Shape();
             ctObj.wrapcoords = XmlHelper.ReadString(node.Attributes["wrapcoords"]);
-            if (node.Attributes["stroked"] != null)
+            if(node.Attributes["stroked"] != null)
                 ctObj.stroked = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["stroked"]);
             ctObj.spid = XmlHelper.ReadString(node.Attributes["o:spid"]);
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
             ctObj.fillcolor = XmlHelper.ReadString(node.Attributes["fillcolor"]);
-            if (node.Attributes["o:insetmode"] != null)
-                ctObj.insetmode = (ST_InsetMode)Enum.Parse(typeof(ST_InsetMode), node.Attributes["o:insetmode"].Value);
+            if(node.Attributes["o:insetmode"] != null)
+                ctObj.insetmode = (ST_InsetMode) Enum.Parse(typeof(ST_InsetMode), node.Attributes["o:insetmode"].Value);
             ctObj.type = XmlHelper.ReadString(node.Attributes["type"]);
             ctObj.adj = XmlHelper.ReadString(node.Attributes["adj"]);
             ctObj.equationxml = XmlHelper.ReadString(node.Attributes["equationxml"]);
             ctObj.style = XmlHelper.ReadString(node.Attributes["style"]);
             ctObj.ClientData = new List<CT_ClientData>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "textdata")
+                if(childNode.LocalName == "textdata")
                     ctObj.textdata = CT_Rel.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "anchorlock")
+                else if(childNode.LocalName == "anchorlock")
                     ctObj.anchorlock = new CT_AnchorLock();
-                else if (childNode.LocalName == "borderright")
+                else if(childNode.LocalName == "borderright")
                     ctObj.borderright = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "borderleft")
+                else if(childNode.LocalName == "borderleft")
                     ctObj.borderleft = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "borderbottom")
+                else if(childNode.LocalName == "borderbottom")
                     ctObj.borderbottom = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bordertop")
+                else if(childNode.LocalName == "bordertop")
                     ctObj.bordertop = CT_Border.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "iscomment")
+                else if(childNode.LocalName == "iscomment")
                     ctObj.iscomment = new CT_Empty();
-                else if (childNode.LocalName == "stroke")
+                else if(childNode.LocalName == "stroke")
                     ctObj.stroke = CT_Stroke.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "wrap")
+                else if(childNode.LocalName == "wrap")
                     ctObj.wrap = CT_Wrap.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "textbox")
+                else if(childNode.LocalName == "textbox")
                     ctObj.textbox = CT_Textbox.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fill")
+                else if(childNode.LocalName == "fill")
                     ctObj.fill = CT_Fill.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "formulas")
+                else if(childNode.LocalName == "formulas")
                     ctObj.formulas = CT_Formulas.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "handles")
+                else if(childNode.LocalName == "handles")
                     ctObj.handles = CT_Handles.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "imagedata")
+                else if(childNode.LocalName == "imagedata")
                     ctObj.imagedata = CT_ImageData.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lock")
+                else if(childNode.LocalName == "lock")
                     ctObj.@lock = CT_Lock.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "shadow")
+                else if(childNode.LocalName == "shadow")
                     ctObj.shadow = CT_Shadow.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "path")
+                else if(childNode.LocalName == "path")
                     ctObj.path = CT_Path.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "textpath")
+                else if(childNode.LocalName == "textpath")
                     ctObj.textpath = CT_TextPath.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ClientData")
+                else if(childNode.LocalName == "ClientData")
                     ctObj.ClientData.Add(CT_ClientData.Parse(childNode, namespaceManager));
             }
             ctObj._xml = node.OuterXml;
@@ -715,7 +716,7 @@ namespace NPOI.OpenXmlFormats.Vml
             {
                 return this._xml;
             }
-            
+
         }
         public void Write(StreamWriter sw, string nodeName)
         {
@@ -732,45 +733,45 @@ namespace NPOI.OpenXmlFormats.Vml
             XmlHelper.WriteAttribute(sw, "equationxml", this.equationxml);
             sw.Write('>');
 
-            if (this.iscomment != null)
+            if(this.iscomment != null)
                 sw.Write("<iscomment/>");
-            if (this.stroke != null)
+            if(this.stroke != null)
                 this.stroke.Write(sw, "stroke");
-            if (this.wrap != null)
+            if(this.wrap != null)
                 this.wrap.Write(sw, "wrap");
-            if (this.fill != null)
+            if(this.fill != null)
                 this.fill.Write(sw, "fill");
-            if (this.formulas != null)
+            if(this.formulas != null)
                 this.formulas.Write(sw, "formulas");
-            if (this.handles != null)
+            if(this.handles != null)
                 this.handles.Write(sw, "handles");
-            if (this.imagedata != null)
+            if(this.imagedata != null)
                 this.imagedata.Write(sw, "imagedata");
-            if (this.@lock != null)
+            if(this.@lock != null)
                 this.@lock.Write(sw, "lock");
-            if (this.shadow != null)
+            if(this.shadow != null)
                 this.shadow.Write(sw, "shadow");
-            if (this.path != null)
+            if(this.path != null)
                 this.path.Write(sw, "path");
-            if (this.textpath != null)
+            if(this.textpath != null)
                 this.textpath.Write(sw, "textpath");
-            if (this.textbox != null)
+            if(this.textbox != null)
                 this.textbox.Write(sw, "textbox");
-            if (this.textdata != null)
+            if(this.textdata != null)
                 this.textdata.Write(sw, "textdata");
-            if (this.anchorlock != null)
+            if(this.anchorlock != null)
                 sw.Write("<w:anchorlock/>");
-            if (this.borderright != null)
+            if(this.borderright != null)
                 this.borderright.Write(sw, "borderright");
-            if (this.borderleft != null)
+            if(this.borderleft != null)
                 this.borderleft.Write(sw, "borderleft");
-            if (this.borderbottom != null)
+            if(this.borderbottom != null)
                 this.borderbottom.Write(sw, "borderbottom");
-            if (this.bordertop != null)
+            if(this.bordertop != null)
                 this.bordertop.Write(sw, "bordertop");
-            if (this.ClientData != null)
+            if(this.ClientData != null)
             {
-                foreach (CT_ClientData x in this.ClientData)
+                foreach(CT_ClientData x in this.ClientData)
                 {
                     x.Write(sw, "ClientData");
                 }
@@ -904,7 +905,7 @@ namespace NPOI.OpenXmlFormats.Vml
         }
 
 
-        [XmlElement(Namespace="urn:schemas-microsoft-com:office:word")]
+        [XmlElement(Namespace = "urn:schemas-microsoft-com:office:word")]
         public CT_Wrap wrap
         {
             get { return this.wrapField; }
@@ -973,7 +974,7 @@ namespace NPOI.OpenXmlFormats.Vml
         public CT_Path AddNewPath()
         {
             this.pathField = new CT_Path();
-            return this.pathField;       
+            return this.pathField;
         }
 
         List<CT_ClientData> clientDataField = null;
@@ -985,7 +986,7 @@ namespace NPOI.OpenXmlFormats.Vml
             }
             set
             {
-                    this.clientDataField = value;
+                this.clientDataField = value;
             }
         }
         public CT_ClientData GetClientDataArray(int index)
@@ -994,70 +995,82 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         public int sizeOfClientDataArray()
         {
-            if (clientDataField == null)
+            if(clientDataField == null)
                 return 0;
             return clientDataField.Count;
         }
         public CT_ClientData AddNewClientData()
         {
             CT_ClientData cd=new CT_ClientData();
-            if (clientDataField == null)
+            if(clientDataField == null)
                 this.clientDataField = new List<CT_ClientData>();
             this.clientDataField.Add(cd);
             return cd;
         }
-        
-        
+
+
         [XmlAttribute]
-        public string type {
-            get {
+        public string type
+        {
+            get
+            {
                 return this.typeField;
             }
-            set {
+            set
+            {
                 this.typeField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string adj {
-            get {
+        public string adj
+        {
+            get
+            {
                 return this.adjField;
             }
-            set {
+            set
+            {
                 this.adjField = value;
             }
         }
-        
-        
+
+
         [XmlElement]
-        public CT_Path path {
-            get {
+        public CT_Path path
+        {
+            get
+            {
                 return this.pathField;
             }
-            set {
+            set
+            {
                 this.pathField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string equationxml {
-            get {
+        public string equationxml
+        {
+            get
+            {
                 return this.equationxmlField;
             }
-            set {
+            set
+            {
                 this.equationxmlField = value;
             }
         }
         [XmlAttribute]
         public string style
         {
-            get 
+            get
             {
                 return this.styleField;
             }
-            set 
+            set
             {
                 this.styleField = value;
             }
@@ -1073,7 +1086,7 @@ namespace NPOI.OpenXmlFormats.Vml
         //    using (StringWriter stringWriter = new StringWriter())
         //    {
         //        XmlWriterSettings settings = new XmlWriterSettings();
-                
+
         //        settings.Encoding = Encoding.UTF8;
         //        settings.OmitXmlDeclaration = true;
 
@@ -1138,8 +1151,8 @@ namespace NPOI.OpenXmlFormats.Vml
             return clientDataField == null ? 0 : clientDataField.Count;
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
@@ -1148,7 +1161,7 @@ namespace NPOI.OpenXmlFormats.Vml
     {
         private List<CT_F> fField = null; // 0..* 
 
-       
+
         [XmlElement("f", Form = XmlSchemaForm.Qualified, Namespace = "urn:schemas-microsoft-com:vml")]
         public List<CT_F> f
         {
@@ -1163,7 +1176,7 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public CT_F AddNewF()
         {
-            if (this.fField == null)
+            if(this.fField == null)
                 this.fField = new List<CT_F>();
             this.fField.Add(new CT_F());
             return this.fField[this.fField.Count - 1];
@@ -1171,13 +1184,13 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public static CT_Formulas Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Formulas ctObj = new CT_Formulas();
             ctObj.f = new List<CT_F>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "f")
+                if(childNode.LocalName == "f")
                     ctObj.f.Add(CT_F.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -1189,9 +1202,9 @@ namespace NPOI.OpenXmlFormats.Vml
         {
             sw.WriteStart("v", nodeName);
             sw.Write('>');
-            if (this.f != null)
+            if(this.f != null)
             {
-                foreach (CT_F x in this.f)
+                foreach(CT_F x in this.f)
                 {
                     x.Write(sw, "f");
                 }
@@ -1223,7 +1236,7 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         public static CT_F Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_F ctObj = new CT_F();
             ctObj.eqn = XmlHelper.ReadString(node.Attributes["eqn"]);
@@ -1265,7 +1278,7 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public CT_H AddNewH()
         {
-            if (hField == null)
+            if(hField == null)
                 hField = new List<CT_H>();
             CT_H h = new CT_H();
             hField.Add(h);
@@ -1274,13 +1287,13 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public static CT_Handles Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Handles ctObj = new CT_Handles();
             ctObj.h = new List<CT_H>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "h")
+                if(childNode.LocalName == "h")
                     ctObj.h.Add(CT_H.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -1292,9 +1305,9 @@ namespace NPOI.OpenXmlFormats.Vml
         {
             sw.WriteStart("v", nodeName);
             sw.Write('>');
-            if (this.h != null)
+            if(this.h != null)
             {
-                foreach (CT_H x in this.h)
+                foreach(CT_H x in this.h)
                 {
                     x.Write(sw, "h");
                 }
@@ -1303,182 +1316,219 @@ namespace NPOI.OpenXmlFormats.Vml
         }
 
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    public class CT_H {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    public class CT_H
+    {
+
         private string positionField;
-        
+
         private string polarField;
-        
+
         private string mapField;
-        
+
         private ST_TrueFalse invxField;
-        
+
         private bool invxFieldSpecified;
-        
+
         private ST_TrueFalse invyField;
-        
+
         private bool invyFieldSpecified; // TODO remove
-        
+
         private ST_TrueFalseBlank switchField;
-        
+
         private bool switchFieldSpecified;
-        
+
         private string xrangeField;
-        
+
         private string yrangeField;
-        
+
         private string radiusrangeField;
-        
-        
+
+
         [XmlAttribute]
-        public string position {
-            get {
+        public string position
+        {
+            get
+            {
                 return this.positionField;
             }
-            set {
+            set
+            {
                 this.positionField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string polar {
-            get {
+        public string polar
+        {
+            get
+            {
                 return this.polarField;
             }
-            set {
+            set
+            {
                 this.polarField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string map {
-            get {
+        public string map
+        {
+            get
+            {
                 return this.mapField;
             }
-            set {
+            set
+            {
                 this.mapField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse invx {
-            get {
+        public ST_TrueFalse invx
+        {
+            get
+            {
                 return this.invxField;
             }
-            set {
+            set
+            {
                 this.invxField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool invxSpecified {
-            get {
+        public bool invxSpecified
+        {
+            get
+            {
                 return this.invxFieldSpecified;
             }
-            set {
+            set
+            {
                 this.invxFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse invy {
-            get {
+        public ST_TrueFalse invy
+        {
+            get
+            {
                 return this.invyField;
             }
-            set {
+            set
+            {
                 this.invyField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool invySpecified {
-            get {
+        public bool invySpecified
+        {
+            get
+            {
                 return this.invyFieldSpecified;
             }
-            set {
+            set
+            {
                 this.invyFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalseBlank @switch {
-            get {
+        public ST_TrueFalseBlank @switch
+        {
+            get
+            {
                 return this.switchField;
             }
-            set {
+            set
+            {
                 this.switchField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool switchSpecified {
-            get {
+        public bool switchSpecified
+        {
+            get
+            {
                 return this.switchFieldSpecified;
             }
-            set {
+            set
+            {
                 this.switchFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string xrange {
-            get {
+        public string xrange
+        {
+            get
+            {
                 return this.xrangeField;
             }
-            set {
+            set
+            {
                 this.xrangeField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string yrange {
-            get {
+        public string yrange
+        {
+            get
+            {
                 return this.yrangeField;
             }
-            set {
+            set
+            {
                 this.yrangeField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string radiusrange {
-            get {
+        public string radiusrange
+        {
+            get
+            {
                 return this.radiusrangeField;
             }
-            set {
+            set
+            {
                 this.radiusrangeField = value;
             }
         }
         public static CT_H Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_H ctObj = new CT_H();
             ctObj.position = XmlHelper.ReadString(node.Attributes["position"]);
             ctObj.polar = XmlHelper.ReadString(node.Attributes["polar"]);
             ctObj.map = XmlHelper.ReadString(node.Attributes["map"]);
-            if (node.Attributes["invx"] != null)
+            if(node.Attributes["invx"] != null)
                 ctObj.invx = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["invx"]);
-            if (node.Attributes["invy"] != null)
+            if(node.Attributes["invy"] != null)
                 ctObj.invy = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["invy"]);
-            if (node.Attributes["switch"] != null)
+            if(node.Attributes["switch"] != null)
                 ctObj.@switch = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalseBlank(node.Attributes["switch"]);
             ctObj.xrange = XmlHelper.ReadString(node.Attributes["xrange"]);
             ctObj.yrange = XmlHelper.ReadString(node.Attributes["yrange"]);
@@ -1504,14 +1554,15 @@ namespace NPOI.OpenXmlFormats.Vml
             sw.WriteEndElement("v", nodeName);
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_ImageData {
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_ImageData
+    {
 
 
         private string relidField;
@@ -1519,46 +1570,46 @@ namespace NPOI.OpenXmlFormats.Vml
         private string oleidField;
         private string movieField;
         private string idField;
-        
+
         private string srcField;
-        
+
         private string cropleftField;
-        
+
         private string croptopField;
-        
+
         private string croprightField;
-        
+
         private string cropbottomField;
-        
+
         private string gainField;
-        
+
         private string blacklevelField;
-        
+
         private string gammaField;
-        
+
         private ST_TrueFalse grayscaleField;
-        
+
         private bool grayscaleFieldSpecified;
-        
+
         private ST_TrueFalse bilevelField;
-        
+
         private bool bilevelFieldSpecified;
-        
+
         private string chromakeyField;
-        
+
         private string embosscolorField;
-        
+
         private string recolortargetField;
-        
+
         //private string id1Field;
-        
+
         private string pictField;
-        
+
         private string hrefField;
 
         public static CT_ImageData Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_ImageData ctObj = new CT_ImageData();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
@@ -1570,9 +1621,9 @@ namespace NPOI.OpenXmlFormats.Vml
             ctObj.gain = XmlHelper.ReadString(node.Attributes["gain"]);
             ctObj.blacklevel = XmlHelper.ReadString(node.Attributes["blacklevel"]);
             ctObj.gamma = XmlHelper.ReadString(node.Attributes["gamma"]);
-            if (node.Attributes["grayscale"] != null)
+            if(node.Attributes["grayscale"] != null)
                 ctObj.grayscale = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["grayscale"]);
-            if (node.Attributes["bilevel"] != null)
+            if(node.Attributes["bilevel"] != null)
                 ctObj.bilevel = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["bilevel"]);
             ctObj.chromakey = XmlHelper.ReadString(node.Attributes["chromakey"]);
             ctObj.embosscolor = XmlHelper.ReadString(node.Attributes["embosscolor"]);
@@ -1617,197 +1668,250 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string src {
-            get {
+        public string src
+        {
+            get
+            {
                 return this.srcField;
             }
-            set {
+            set
+            {
                 this.srcField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string cropleft {
-            get {
+        public string cropleft
+        {
+            get
+            {
                 return this.cropleftField;
             }
-            set {
+            set
+            {
                 this.cropleftField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string croptop {
-            get {
+        public string croptop
+        {
+            get
+            {
                 return this.croptopField;
             }
-            set {
+            set
+            {
                 this.croptopField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string cropright {
-            get {
+        public string cropright
+        {
+            get
+            {
                 return this.croprightField;
             }
-            set {
+            set
+            {
                 this.croprightField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string cropbottom {
-            get {
+        public string cropbottom
+        {
+            get
+            {
                 return this.cropbottomField;
             }
-            set {
+            set
+            {
                 this.cropbottomField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string gain {
-            get {
+        public string gain
+        {
+            get
+            {
                 return this.gainField;
             }
-            set {
+            set
+            {
                 this.gainField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string blacklevel {
-            get {
+        public string blacklevel
+        {
+            get
+            {
                 return this.blacklevelField;
             }
-            set {
+            set
+            {
                 this.blacklevelField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string gamma {
-            get {
+        public string gamma
+        {
+            get
+            {
                 return this.gammaField;
             }
-            set {
+            set
+            {
                 this.gammaField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse grayscale {
-            get {
+        public ST_TrueFalse grayscale
+        {
+            get
+            {
                 return this.grayscaleField;
             }
-            set {
+            set
+            {
                 this.grayscaleField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool grayscaleSpecified {
-            get {
+        public bool grayscaleSpecified
+        {
+            get
+            {
                 return this.grayscaleFieldSpecified;
             }
-            set {
+            set
+            {
                 this.grayscaleFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse bilevel {
-            get {
+        public ST_TrueFalse bilevel
+        {
+            get
+            {
                 return this.bilevelField;
             }
-            set {
+            set
+            {
                 this.bilevelField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool bilevelSpecified {
-            get {
+        public bool bilevelSpecified
+        {
+            get
+            {
                 return this.bilevelFieldSpecified;
             }
-            set {
+            set
+            {
                 this.bilevelFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string chromakey {
-            get {
+        public string chromakey
+        {
+            get
+            {
                 return this.chromakeyField;
             }
-            set {
+            set
+            {
                 this.chromakeyField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string embosscolor {
-            get {
+        public string embosscolor
+        {
+            get
+            {
                 return this.embosscolorField;
             }
-            set {
+            set
+            {
                 this.embosscolorField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string recolortarget {
-            get {
+        public string recolortarget
+        {
+            get
+            {
                 return this.recolortargetField;
             }
-            set {
+            set
+            {
                 this.recolortargetField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]//(Form=System.Xml.Schema.XmlSchemaForm.Qualified, Namespace="http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
-        public string pict {
-            get {
+        public string pict
+        {
+            get
+            {
                 return this.pictField;
             }
-            set {
+            set
+            {
                 this.pictField = value;
             }
         }
-        
-        
-        [XmlAttribute(Form=System.Xml.Schema.XmlSchemaForm.Qualified, Namespace="http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
-        public string href {
-            get {
+
+
+        [XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
+        public string href
+        {
+            get
+            {
                 return this.hrefField;
             }
-            set {
+            set
+            {
                 this.hrefField = value;
             }
         }
@@ -1851,58 +1955,60 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute(Namespace = "urn:schemas-microsoft-com:office:office")]
         public string oleid
         {
-            get {
+            get
+            {
                 return this.oleidField;
             }
-            set 
+            set
             {
                 this.oleidField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Path {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Path
+    {
+
         private string idField;
-        
+
         private string vField;
-        
+
         private string limoField;
-        
+
         private string textboxrectField;
-        
+
         private ST_TrueFalse fillokField;
-        
+
         private bool fillokFieldSpecified;
-        
+
         private ST_TrueFalse strokeokField;
-        
+
         private bool strokeokFieldSpecified;
-        
+
         private ST_TrueFalse shadowokField;
-        
+
         private bool shadowokFieldSpecified;
-        
+
         private ST_TrueFalse arrowokField;
-        
+
         private bool arrowokFieldSpecified;
-        
+
         private ST_TrueFalse gradientshapeokField;
-        
+
         private bool gradientshapeokFieldSpecified;
-        
+
         private ST_TrueFalse textpathokField;
-        
+
         private bool textpathokFieldSpecified;
-        
+
         private ST_TrueFalse insetpenokField;
-        
+
         private bool insetpenokFieldSpecified;
 
         private ST_ConnectType connecttypeField;
@@ -1922,10 +2028,12 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
@@ -1941,189 +2049,240 @@ namespace NPOI.OpenXmlFormats.Vml
                 this.connecttypeField = value;
             }
         }
-        
+
         [XmlAttribute]
-        public string v {
-            get {
+        public string v
+        {
+            get
+            {
                 return this.vField;
             }
-            set {
+            set
+            {
                 this.vField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string limo {
-            get {
+        public string limo
+        {
+            get
+            {
                 return this.limoField;
             }
-            set {
+            set
+            {
                 this.limoField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string textboxrect {
-            get {
+        public string textboxrect
+        {
+            get
+            {
                 return this.textboxrectField;
             }
-            set {
+            set
+            {
                 this.textboxrectField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse fillok {
-            get {
+        public ST_TrueFalse fillok
+        {
+            get
+            {
                 return this.fillokField;
             }
-            set {
+            set
+            {
                 this.fillokField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool fillokSpecified {
-            get {
+        public bool fillokSpecified
+        {
+            get
+            {
                 return this.fillokFieldSpecified;
             }
-            set {
+            set
+            {
                 this.fillokFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse strokeok {
-            get {
+        public ST_TrueFalse strokeok
+        {
+            get
+            {
                 return this.strokeokField;
             }
-            set {
+            set
+            {
                 this.strokeokField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool strokeokSpecified {
-            get {
+        public bool strokeokSpecified
+        {
+            get
+            {
                 return this.strokeokFieldSpecified;
             }
-            set {
+            set
+            {
                 this.strokeokFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse shadowok {
-            get {
+        public ST_TrueFalse shadowok
+        {
+            get
+            {
                 return this.shadowokField;
             }
-            set {
+            set
+            {
                 this.shadowokField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool shadowokSpecified {
-            get {
+        public bool shadowokSpecified
+        {
+            get
+            {
                 return this.shadowokFieldSpecified;
             }
-            set {
+            set
+            {
                 this.shadowokFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse arrowok {
-            get {
+        public ST_TrueFalse arrowok
+        {
+            get
+            {
                 return this.arrowokField;
             }
-            set {
+            set
+            {
                 this.arrowokField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool arrowokSpecified {
-            get {
+        public bool arrowokSpecified
+        {
+            get
+            {
                 return this.arrowokFieldSpecified;
             }
-            set {
+            set
+            {
                 this.arrowokFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse gradientshapeok {
-            get {
+        public ST_TrueFalse gradientshapeok
+        {
+            get
+            {
                 return this.gradientshapeokField;
             }
-            set {
+            set
+            {
                 this.gradientshapeokField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool gradientshapeokSpecified {
-            get {
+        public bool gradientshapeokSpecified
+        {
+            get
+            {
                 return this.gradientshapeokFieldSpecified;
             }
-            set {
+            set
+            {
                 this.gradientshapeokFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse textpathok {
-            get {
+        public ST_TrueFalse textpathok
+        {
+            get
+            {
                 return this.textpathokField;
             }
-            set {
+            set
+            {
                 this.textpathokField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool textpathokSpecified {
-            get {
+        public bool textpathokSpecified
+        {
+            get
+            {
                 return this.textpathokFieldSpecified;
             }
-            set {
+            set
+            {
                 this.textpathokFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse insetpenok {
-            get {
+        public ST_TrueFalse insetpenok
+        {
+            get
+            {
                 return this.insetpenokField;
             }
-            set {
+            set
+            {
                 this.insetpenokField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool insetpenokSpecified {
-            get {
+        public bool insetpenokSpecified
+        {
+            get
+            {
                 return this.insetpenokFieldSpecified;
             }
-            set {
+            set
+            {
                 this.insetpenokFieldSpecified = value;
             }
         }
@@ -2175,7 +2334,7 @@ namespace NPOI.OpenXmlFormats.Vml
                 this.connectanglesFieldSpecified = value;
             }
         }
-        [XmlAttribute(Namespace="urn:schemas-microsoft-com:office:office")]
+        [XmlAttribute(Namespace = "urn:schemas-microsoft-com:office:office")]
         public ST_TrueFalse extrusionok
         {
             get
@@ -2201,32 +2360,32 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         public static CT_Path Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Path ctObj = new CT_Path();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
-            if (node.Attributes["o:connecttype"] != null)
-                ctObj.connecttype = (ST_ConnectType)Enum.Parse(typeof(ST_ConnectType), node.Attributes["o:connecttype"].Value);
+            if(node.Attributes["o:connecttype"] != null)
+                ctObj.connecttype = (ST_ConnectType) Enum.Parse(typeof(ST_ConnectType), node.Attributes["o:connecttype"].Value);
             ctObj.v = XmlHelper.ReadString(node.Attributes["v"]);
             ctObj.limo = XmlHelper.ReadString(node.Attributes["limo"]);
             ctObj.textboxrect = XmlHelper.ReadString(node.Attributes["textboxrect"]);
-            if (node.Attributes["fillok"] != null)
+            if(node.Attributes["fillok"] != null)
                 ctObj.fillok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["fillok"]);
-            if (node.Attributes["strokeok"] != null)
+            if(node.Attributes["strokeok"] != null)
                 ctObj.strokeok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["strokeok"]);
-            if (node.Attributes["shadowok"] != null)
+            if(node.Attributes["shadowok"] != null)
                 ctObj.shadowok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["shadowok"]);
-            if (node.Attributes["arrowok"] != null)
+            if(node.Attributes["arrowok"] != null)
                 ctObj.arrowok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["arrowok"]);
-            if (node.Attributes["gradientshapeok"] != null)
+            if(node.Attributes["gradientshapeok"] != null)
                 ctObj.gradientshapeok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["gradientshapeok"]);
-            if (node.Attributes["textpathok"] != null)
+            if(node.Attributes["textpathok"] != null)
                 ctObj.textpathok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["textpathok"]);
-            if (node.Attributes["insetpenok"] != null)
+            if(node.Attributes["insetpenok"] != null)
                 ctObj.insetpenok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["insetpenok"]);
             ctObj.connectlocs = XmlHelper.ReadString(node.Attributes["connectlocs"]);
             ctObj.connectangles = XmlHelper.ReadString(node.Attributes["connectangles"]);
-            if (node.Attributes["o:extrusionok"] != null)
+            if(node.Attributes["o:extrusionok"] != null)
                 ctObj.extrusionok = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["o:extrusionok"]);
             return ctObj;
         }
@@ -2256,53 +2415,54 @@ namespace NPOI.OpenXmlFormats.Vml
         }
 
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Shadow {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Shadow
+    {
+
         private string idField;
-        
+
         private ST_TrueFalse onField;
-        
+
         private bool onFieldSpecified;
-        
+
         private ST_ShadowType typeField;
-        
+
         private bool typeFieldSpecified;
-        
+
         private ST_TrueFalse obscuredField;
-        
+
         private bool obscuredFieldSpecified;
-        
+
         private string colorField;
-        
+
         private string opacityField;
-        
+
         private string offsetField;
-        
+
         private string color2Field;
-        
+
         private string offset2Field;
-        
+
         private string originField;
-        
+
         private string matrixField;
         public static CT_Shadow Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Shadow ctObj = new CT_Shadow();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
-            if (node.Attributes["on"] != null)
+            if(node.Attributes["on"] != null)
                 ctObj.on = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["on"]);
-            if (node.Attributes["type"] != null)
-                ctObj.type = (ST_ShadowType)Enum.Parse(typeof(ST_ShadowType), node.Attributes["type"].Value);
-            if (node.Attributes["obscured"] != null)
+            if(node.Attributes["type"] != null)
+                ctObj.type = (ST_ShadowType) Enum.Parse(typeof(ST_ShadowType), node.Attributes["type"].Value);
+            if(node.Attributes["obscured"] != null)
                 ctObj.obscured = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["obscured"]);
             ctObj.color = XmlHelper.ReadString(node.Attributes["color"]);
             ctObj.opacity = XmlHelper.ReadString(node.Attributes["opacity"]);
@@ -2338,284 +2498,327 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse on {
-            get {
+        public ST_TrueFalse on
+        {
+            get
+            {
                 return this.onField;
             }
-            set {
+            set
+            {
                 this.onField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool onSpecified {
-            get {
+        public bool onSpecified
+        {
+            get
+            {
                 return this.onFieldSpecified;
             }
-            set {
+            set
+            {
                 this.onFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_ShadowType type {
-            get {
+        public ST_ShadowType type
+        {
+            get
+            {
                 return this.typeField;
             }
-            set {
+            set
+            {
                 this.typeField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool typeSpecified {
-            get {
+        public bool typeSpecified
+        {
+            get
+            {
                 return this.typeFieldSpecified;
             }
-            set {
+            set
+            {
                 this.typeFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse obscured {
-            get {
+        public ST_TrueFalse obscured
+        {
+            get
+            {
                 return this.obscuredField;
             }
-            set {
+            set
+            {
                 this.obscuredField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool obscuredSpecified {
-            get {
+        public bool obscuredSpecified
+        {
+            get
+            {
                 return this.obscuredFieldSpecified;
             }
-            set {
+            set
+            {
                 this.obscuredFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string color {
-            get {
+        public string color
+        {
+            get
+            {
                 return this.colorField;
             }
-            set {
+            set
+            {
                 this.colorField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string opacity {
-            get {
+        public string opacity
+        {
+            get
+            {
                 return this.opacityField;
             }
-            set {
+            set
+            {
                 this.opacityField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string offset {
-            get {
+        public string offset
+        {
+            get
+            {
                 return this.offsetField;
             }
-            set {
+            set
+            {
                 this.offsetField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string color2 {
-            get {
+        public string color2
+        {
+            get
+            {
                 return this.color2Field;
             }
-            set {
+            set
+            {
                 this.color2Field = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string offset2 {
-            get {
+        public string offset2
+        {
+            get
+            {
                 return this.offset2Field;
             }
-            set {
+            set
+            {
                 this.offset2Field = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string origin {
-            get {
+        public string origin
+        {
+            get
+            {
                 return this.originField;
             }
-            set {
+            set
+            {
                 this.originField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string matrix {
-            get {
+        public string matrix
+        {
+            get
+            {
                 return this.matrixField;
             }
-            set {
+            set
+            {
                 this.matrixField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_ShadowType {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_ShadowType
+    {
+
+
         single,
-        
-        
+
+
         @double,
-        
-        
+
+
         emboss,
-        
-        
+
+
         perspective,
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Stroke {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Stroke
+    {
+
         private string idField;
-        
+
         private ST_TrueFalse onField;
-        
+
         private bool onFieldSpecified;
-        
+
         private string weightField;
-        
+
         private string colorField;
-        
+
         private string opacityField;
-        
+
         private ST_StrokeLineStyle linestyleField;
-        
+
         private bool linestyleFieldSpecified;
-        
+
         private decimal miterlimitField;
-        
+
         private bool miterlimitFieldSpecified;
-        
+
         private ST_StrokeJoinStyle joinstyleField;
-        
+
         private bool joinstyleFieldSpecified;
-        
+
         private ST_StrokeEndCap endcapField;
-        
+
         private bool endcapFieldSpecified;
-        
+
         private string dashstyleField;
-        
+
         private ST_FillType filltypeField;
-        
+
         private bool filltypeFieldSpecified;
-        
+
         private string srcField;
-        
+
         private ST_ImageAspect imageaspectField;
-        
+
         private bool imageaspectFieldSpecified;
-        
+
         private string imagesizeField;
-        
+
         private ST_TrueFalse imagealignshapeField;
-        
+
         private bool imagealignshapeFieldSpecified;
-        
+
         private string color2Field;
-        
+
         private ST_StrokeArrowType startarrowField;
-        
+
         private bool startarrowFieldSpecified;
-        
+
         private ST_StrokeArrowWidth startarrowwidthField;
-        
+
         private bool startarrowwidthFieldSpecified;
-        
+
         private ST_StrokeArrowLength startarrowlengthField;
-        
+
         private bool startarrowlengthFieldSpecified;
-        
+
         private ST_StrokeArrowType endarrowField;
-        
+
         private bool endarrowFieldSpecified;
-        
+
         private ST_StrokeArrowWidth endarrowwidthField;
-        
+
         private bool endarrowwidthFieldSpecified;
-        
+
         private ST_StrokeArrowLength endarrowlengthField;
-        
+
         private bool endarrowlengthFieldSpecified;
-        
+
         //private string id1Field;
-        
+
         private ST_TrueFalse insetpenField;
-        
+
         private bool insetpenFieldSpecified;
 
         public static CT_Stroke Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Stroke ctObj = new CT_Stroke();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
-            if (node.Attributes["on"] != null)
+            if(node.Attributes["on"] != null)
                 ctObj.on = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["on"]);
             ctObj.weight = XmlHelper.ReadString(node.Attributes["weight"]);
             ctObj.color = XmlHelper.ReadString(node.Attributes["color"]);
             ctObj.opacity = XmlHelper.ReadString(node.Attributes["opacity"]);
-            if (node.Attributes["linestyle"] != null)
+            if(node.Attributes["linestyle"] != null)
             {
-                ctObj.linestyle = (ST_StrokeLineStyle)Enum.Parse(typeof(ST_StrokeLineStyle), node.Attributes["linestyle"].Value);
+                ctObj.linestyle = (ST_StrokeLineStyle) Enum.Parse(typeof(ST_StrokeLineStyle), node.Attributes["linestyle"].Value);
                 ctObj.linestyleFieldSpecified = true;
             }
             else
             {
                 ctObj.linestyleFieldSpecified = false;
             }
-            if (node.Attributes["miterlimit"] != null)
+            if(node.Attributes["miterlimit"] != null)
             {
                 ctObj.miterlimit = XmlHelper.ReadDecimal(node.Attributes["miterlimit"]);
                 ctObj.miterlimitFieldSpecified = true;
@@ -2624,18 +2827,18 @@ namespace NPOI.OpenXmlFormats.Vml
             {
                 ctObj.miterlimitFieldSpecified = false;
             }
-            if (node.Attributes["joinstyle"] != null)
+            if(node.Attributes["joinstyle"] != null)
             {
                 ctObj.joinstyleFieldSpecified = true;
-                ctObj.joinstyle = (ST_StrokeJoinStyle)Enum.Parse(typeof(ST_StrokeJoinStyle), node.Attributes["joinstyle"].Value);
+                ctObj.joinstyle = (ST_StrokeJoinStyle) Enum.Parse(typeof(ST_StrokeJoinStyle), node.Attributes["joinstyle"].Value);
             }
             else
             {
                 ctObj.joinstyleFieldSpecified = false;
             }
-            if (node.Attributes["endcap"] != null)
+            if(node.Attributes["endcap"] != null)
             {
-                ctObj.endcap = (ST_StrokeEndCap)Enum.Parse(typeof(ST_StrokeEndCap), node.Attributes["endcap"].Value);
+                ctObj.endcap = (ST_StrokeEndCap) Enum.Parse(typeof(ST_StrokeEndCap), node.Attributes["endcap"].Value);
                 ctObj.endcapFieldSpecified = true;
             }
             else
@@ -2644,9 +2847,9 @@ namespace NPOI.OpenXmlFormats.Vml
             }
             ctObj.dashstyle = XmlHelper.ReadString(node.Attributes["dashstyle"]);
 
-            if (node.Attributes["filltype"] != null)
+            if(node.Attributes["filltype"] != null)
             {
-                ctObj.filltype = (ST_FillType)Enum.Parse(typeof(ST_FillType), node.Attributes["filltype"].Value);
+                ctObj.filltype = (ST_FillType) Enum.Parse(typeof(ST_FillType), node.Attributes["filltype"].Value);
                 ctObj.filltypeFieldSpecified = true;
             }
             else
@@ -2654,9 +2857,9 @@ namespace NPOI.OpenXmlFormats.Vml
                 ctObj.filltypeFieldSpecified = false;
             }
             ctObj.src = XmlHelper.ReadString(node.Attributes["src"]);
-            if (node.Attributes["imageaspect"] != null)
+            if(node.Attributes["imageaspect"] != null)
             {
-                ctObj.imageaspect = (ST_ImageAspect)Enum.Parse(typeof(ST_ImageAspect), node.Attributes["imageaspect"].Value);
+                ctObj.imageaspect = (ST_ImageAspect) Enum.Parse(typeof(ST_ImageAspect), node.Attributes["imageaspect"].Value);
                 ctObj.imageaspectFieldSpecified = true;
             }
             else
@@ -2664,7 +2867,7 @@ namespace NPOI.OpenXmlFormats.Vml
                 ctObj.imageaspectFieldSpecified = false;
             }
             ctObj.imagesize = XmlHelper.ReadString(node.Attributes["imagesize"]);
-            if (node.Attributes["imagealignshape"] != null)
+            if(node.Attributes["imagealignshape"] != null)
             {
                 ctObj.imagealignshape = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["imagealignshape"]);
                 ctObj.imagealignshapeSpecified = true;
@@ -2674,61 +2877,61 @@ namespace NPOI.OpenXmlFormats.Vml
                 ctObj.imagealignshapeSpecified = false;
             }
             ctObj.color2 = XmlHelper.ReadString(node.Attributes["color2"]);
-            if (node.Attributes["startarrow"] != null)
+            if(node.Attributes["startarrow"] != null)
             {
-                ctObj.startarrow = (ST_StrokeArrowType)Enum.Parse(typeof(ST_StrokeArrowType), node.Attributes["startarrow"].Value);
+                ctObj.startarrow = (ST_StrokeArrowType) Enum.Parse(typeof(ST_StrokeArrowType), node.Attributes["startarrow"].Value);
                 ctObj.startarrowFieldSpecified = true;
             }
             else
             {
                 ctObj.startarrowFieldSpecified = false;
             }
-            if (node.Attributes["startarrowwidth"] != null)
+            if(node.Attributes["startarrowwidth"] != null)
             {
-                ctObj.startarrowwidth = (ST_StrokeArrowWidth)Enum.Parse(typeof(ST_StrokeArrowWidth), node.Attributes["startarrowwidth"].Value);
+                ctObj.startarrowwidth = (ST_StrokeArrowWidth) Enum.Parse(typeof(ST_StrokeArrowWidth), node.Attributes["startarrowwidth"].Value);
                 ctObj.startarrowwidthFieldSpecified = true;
             }
             else
             {
                 ctObj.startarrowwidthFieldSpecified = false;
             }
-            if (node.Attributes["startarrowlength"] != null)
+            if(node.Attributes["startarrowlength"] != null)
             {
-                ctObj.startarrowlength = (ST_StrokeArrowLength)Enum.Parse(typeof(ST_StrokeArrowLength), node.Attributes["startarrowlength"].Value);
+                ctObj.startarrowlength = (ST_StrokeArrowLength) Enum.Parse(typeof(ST_StrokeArrowLength), node.Attributes["startarrowlength"].Value);
                 ctObj.startarrowlengthFieldSpecified = true;
             }
             else
             {
                 ctObj.startarrowlengthFieldSpecified = false;
             }
-            if (node.Attributes["endarrow"] != null)
+            if(node.Attributes["endarrow"] != null)
             {
-                ctObj.endarrow = (ST_StrokeArrowType)Enum.Parse(typeof(ST_StrokeArrowType), node.Attributes["endarrow"].Value);
+                ctObj.endarrow = (ST_StrokeArrowType) Enum.Parse(typeof(ST_StrokeArrowType), node.Attributes["endarrow"].Value);
                 ctObj.endarrowFieldSpecified = true;
             }
             else
             {
                 ctObj.endarrowFieldSpecified = false;
             }
-            if (node.Attributes["endarrowwidth"] != null)
+            if(node.Attributes["endarrowwidth"] != null)
             {
-                ctObj.endarrowwidth = (ST_StrokeArrowWidth)Enum.Parse(typeof(ST_StrokeArrowWidth), node.Attributes["endarrowwidth"].Value);
+                ctObj.endarrowwidth = (ST_StrokeArrowWidth) Enum.Parse(typeof(ST_StrokeArrowWidth), node.Attributes["endarrowwidth"].Value);
                 ctObj.endarrowwidthFieldSpecified = true;
             }
             else
             {
                 ctObj.endarrowwidthFieldSpecified = false;
             }
-            if (node.Attributes["endarrowlength"] != null)
+            if(node.Attributes["endarrowlength"] != null)
             {
-                ctObj.endarrowlength = (ST_StrokeArrowLength)Enum.Parse(typeof(ST_StrokeArrowLength), node.Attributes["endarrowlength"].Value);
+                ctObj.endarrowlength = (ST_StrokeArrowLength) Enum.Parse(typeof(ST_StrokeArrowLength), node.Attributes["endarrowlength"].Value);
                 ctObj.endarrowlengthFieldSpecified = true;
             }
             else
             {
                 ctObj.endarrowlengthFieldSpecified = false;
             }
-            if (node.Attributes["insetpen"] != null)
+            if(node.Attributes["insetpen"] != null)
                 ctObj.insetpen = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["insetpen"]);
             return ctObj;
         }
@@ -2746,7 +2949,7 @@ namespace NPOI.OpenXmlFormats.Vml
             if(linestyleFieldSpecified)
                 XmlHelper.WriteAttribute(sw, "linestyle", this.linestyle.ToString());
             if(miterlimitFieldSpecified)
-                XmlHelper.WriteAttribute(sw, "miterlimit", (float)this.miterlimit);
+                XmlHelper.WriteAttribute(sw, "miterlimit", (float) this.miterlimit);
             if(joinstyleFieldSpecified)
                 XmlHelper.WriteAttribute(sw, "joinstyle", this.joinstyle.ToString());
             if(endcapFieldSpecified)
@@ -2780,570 +2983,693 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse on {
-            get {
+        public ST_TrueFalse on
+        {
+            get
+            {
                 return this.onField;
             }
-            set {
+            set
+            {
                 this.onField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool onSpecified {
-            get {
+        public bool onSpecified
+        {
+            get
+            {
                 return this.onFieldSpecified;
             }
-            set {
+            set
+            {
                 this.onFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string weight {
-            get {
+        public string weight
+        {
+            get
+            {
                 return this.weightField;
             }
-            set {
+            set
+            {
                 this.weightField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string color {
-            get {
+        public string color
+        {
+            get
+            {
                 return this.colorField;
             }
-            set {
+            set
+            {
                 this.colorField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string opacity {
-            get {
+        public string opacity
+        {
+            get
+            {
                 return this.opacityField;
             }
-            set {
+            set
+            {
                 this.opacityField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeLineStyle linestyle {
-            get {
+        public ST_StrokeLineStyle linestyle
+        {
+            get
+            {
                 return this.linestyleField;
             }
-            set {
+            set
+            {
                 this.linestyleField = value;
                 this.linestyleFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool linestyleSpecified {
-            get {
+        public bool linestyleSpecified
+        {
+            get
+            {
                 return this.linestyleFieldSpecified;
             }
-            set {
+            set
+            {
                 this.linestyleFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public decimal miterlimit {
-            get {
+        public decimal miterlimit
+        {
+            get
+            {
                 return this.miterlimitField;
             }
-            set {
+            set
+            {
                 this.miterlimitField = value;
                 this.miterlimitFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool miterlimitSpecified {
-            get {
+        public bool miterlimitSpecified
+        {
+            get
+            {
                 return this.miterlimitFieldSpecified;
             }
-            set {
+            set
+            {
                 this.miterlimitFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeJoinStyle joinstyle {
-            get {
+        public ST_StrokeJoinStyle joinstyle
+        {
+            get
+            {
                 return this.joinstyleField;
             }
-            set {
+            set
+            {
                 this.joinstyleField = value;
                 this.joinstyleFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool joinstyleSpecified {
-            get {
+        public bool joinstyleSpecified
+        {
+            get
+            {
                 return this.joinstyleFieldSpecified;
             }
-            set {
+            set
+            {
                 this.joinstyleFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeEndCap endcap {
-            get {
+        public ST_StrokeEndCap endcap
+        {
+            get
+            {
                 return this.endcapField;
             }
-            set {
+            set
+            {
                 this.endcapField = value;
                 this.endcapFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool endcapSpecified {
-            get {
+        public bool endcapSpecified
+        {
+            get
+            {
                 return this.endcapFieldSpecified;
             }
-            set {
+            set
+            {
                 this.endcapFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string dashstyle {
-            get {
+        public string dashstyle
+        {
+            get
+            {
                 return this.dashstyleField;
             }
-            set {
+            set
+            {
                 this.dashstyleField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_FillType filltype {
-            get {
+        public ST_FillType filltype
+        {
+            get
+            {
                 return this.filltypeField;
             }
-            set {
+            set
+            {
                 this.filltypeField = value;
                 this.filltypeFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool filltypeSpecified {
-            get {
+        public bool filltypeSpecified
+        {
+            get
+            {
                 return this.filltypeFieldSpecified;
             }
-            set {
+            set
+            {
                 this.filltypeFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string src {
-            get {
+        public string src
+        {
+            get
+            {
                 return this.srcField;
             }
-            set {
+            set
+            {
                 this.srcField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_ImageAspect imageaspect {
-            get {
+        public ST_ImageAspect imageaspect
+        {
+            get
+            {
                 return this.imageaspectField;
             }
-            set {
+            set
+            {
                 this.imageaspectField = value;
                 this.imageaspectFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool imageaspectSpecified {
-            get {
+        public bool imageaspectSpecified
+        {
+            get
+            {
                 return this.imageaspectFieldSpecified;
             }
-            set {
+            set
+            {
                 this.imageaspectFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string imagesize {
-            get {
+        public string imagesize
+        {
+            get
+            {
                 return this.imagesizeField;
             }
-            set {
+            set
+            {
                 this.imagesizeField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse imagealignshape {
-            get {
+        public ST_TrueFalse imagealignshape
+        {
+            get
+            {
                 return this.imagealignshapeField;
             }
-            set {
+            set
+            {
                 this.imagealignshapeField = value;
                 this.imagealignshapeFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool imagealignshapeSpecified {
-            get {
+        public bool imagealignshapeSpecified
+        {
+            get
+            {
                 return this.imagealignshapeFieldSpecified;
             }
-            set {
+            set
+            {
                 this.imagealignshapeFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string color2 {
-            get {
+        public string color2
+        {
+            get
+            {
                 return this.color2Field;
             }
-            set {
+            set
+            {
                 this.color2Field = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeArrowType startarrow {
-            get {
+        public ST_StrokeArrowType startarrow
+        {
+            get
+            {
                 return this.startarrowField;
             }
-            set {
+            set
+            {
                 this.startarrowField = value;
                 this.startarrowFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool startarrowSpecified {
-            get {
+        public bool startarrowSpecified
+        {
+            get
+            {
                 return this.startarrowFieldSpecified;
             }
-            set {
+            set
+            {
                 this.startarrowFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeArrowWidth startarrowwidth {
-            get {
+        public ST_StrokeArrowWidth startarrowwidth
+        {
+            get
+            {
                 return this.startarrowwidthField;
             }
-            set {
+            set
+            {
                 this.startarrowwidthField = value;
                 this.startarrowwidthFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool startarrowwidthSpecified {
-            get {
+        public bool startarrowwidthSpecified
+        {
+            get
+            {
                 return this.startarrowwidthFieldSpecified;
             }
-            set {
+            set
+            {
                 this.startarrowwidthFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeArrowLength startarrowlength {
-            get {
+        public ST_StrokeArrowLength startarrowlength
+        {
+            get
+            {
                 return this.startarrowlengthField;
             }
-            set {
+            set
+            {
                 this.startarrowlengthField = value;
                 this.startarrowlengthFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool startarrowlengthSpecified {
-            get {
+        public bool startarrowlengthSpecified
+        {
+            get
+            {
                 return this.startarrowlengthFieldSpecified;
             }
-            set {
+            set
+            {
                 this.startarrowlengthFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeArrowType endarrow {
-            get {
+        public ST_StrokeArrowType endarrow
+        {
+            get
+            {
                 return this.endarrowField;
             }
-            set {
+            set
+            {
                 this.endarrowField = value;
                 this.endarrowFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool endarrowSpecified {
-            get {
+        public bool endarrowSpecified
+        {
+            get
+            {
                 return this.endarrowFieldSpecified;
             }
-            set {
+            set
+            {
                 this.endarrowFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeArrowWidth endarrowwidth {
-            get {
+        public ST_StrokeArrowWidth endarrowwidth
+        {
+            get
+            {
                 return this.endarrowwidthField;
             }
-            set {
+            set
+            {
                 this.endarrowwidthField = value;
                 this.endarrowwidthFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool endarrowwidthSpecified {
-            get {
+        public bool endarrowwidthSpecified
+        {
+            get
+            {
                 return this.endarrowwidthFieldSpecified;
             }
-            set {
+            set
+            {
                 this.endarrowwidthFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_StrokeArrowLength endarrowlength {
-            get {
+        public ST_StrokeArrowLength endarrowlength
+        {
+            get
+            {
                 return this.endarrowlengthField;
             }
-            set {
+            set
+            {
                 this.endarrowlengthField = value;
                 this.endarrowlengthFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool endarrowlengthSpecified {
-            get {
+        public bool endarrowlengthSpecified
+        {
+            get
+            {
                 return this.endarrowlengthFieldSpecified;
             }
-            set {
+            set
+            {
                 this.endarrowlengthFieldSpecified = value;
             }
         }
-                
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse insetpen {
-            get {
+        public ST_TrueFalse insetpen
+        {
+            get
+            {
                 return this.insetpenField;
             }
-            set {
+            set
+            {
                 this.insetpenField = value;
                 this.insetpenFieldSpecified = true;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool insetpenSpecified {
-            get {
+        public bool insetpenSpecified
+        {
+            get
+            {
                 return this.insetpenFieldSpecified;
             }
-            set {
+            set
+            {
                 this.insetpenFieldSpecified = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_StrokeLineStyle {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_StrokeLineStyle
+    {
+
+
         single,
-        
-        
+
+
         thinThin,
-        
-        
+
+
         thinThick,
-        
-        
+
+
         thickThin,
-        
-        
+
+
         thickBetweenThin,
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_StrokeJoinStyle {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_StrokeJoinStyle
+    {
+
+
         round,
-        
-        
+
+
         bevel,
-        
-        
+
+
         miter,
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_StrokeEndCap {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_StrokeEndCap
+    {
+
+
         flat,
-        
-        
+
+
         square,
-        
-        
+
+
         round,
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_StrokeArrowType {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_StrokeArrowType
+    {
+
+
         none,
-        
-        
+
+
         block,
-        
-        
+
+
         classic,
-        
-        
+
+
         oval,
-        
-        
+
+
         diamond,
-        
-        
+
+
         open,
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_StrokeArrowWidth {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_StrokeArrowWidth
+    {
+
+
         narrow,
-        
-        
+
+
         medium,
-        
-        
+
+
         wide,
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_StrokeArrowLength {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_StrokeArrowLength
+    {
+
+
         @short,
-        
-        
+
+
         medium,
-        
-        
+
+
         @long,
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Textbox {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Textbox
+    {
+
         private string itemField;
-        
+
         private string idField;
-        
+
         private string styleField;
-        
+
         private string insetField;
-        
-        
+
+
         //[XmlAnyElement()]
-        public string ItemXml {
-            get {
+        public string ItemXml
+        {
+            get
+            {
                 return this.itemField;
             }
-            set {
+            set
+            {
                 this.itemField = value;
             }
         }
@@ -3352,38 +3678,46 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string style {
-            get {
+        public string style
+        {
+            get
+            {
                 return this.styleField;
             }
-            set {
+            set
+            {
                 this.styleField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string inset {
-            get {
+        public string inset
+        {
+            get
+            {
                 return this.insetField;
             }
-            set {
+            set
+            {
                 this.insetField = value;
             }
         }
         public static CT_Textbox Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Textbox ctObj = new CT_Textbox();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
@@ -3405,63 +3739,64 @@ namespace NPOI.OpenXmlFormats.Vml
             XmlHelper.WriteAttribute(sw, "style", this.style);
             XmlHelper.WriteAttribute(sw, "inset", this.inset);
             sw.Write('>');
-            if (this.ItemXml != null)
+            if(this.ItemXml != null)
                 sw.Write(this.ItemXml);
             sw.WriteEndElement("v", nodeName);
         }
 
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_TextPath {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_TextPath
+    {
+
         private string idField;
-        
+
         private string styleField;
-        
+
         private ST_TrueFalse onField;
-        
+
         private bool onFieldSpecified;
-        
+
         private ST_TrueFalse fitshapeField;
-        
+
         private bool fitshapeFieldSpecified;
-        
+
         private ST_TrueFalse fitpathField;
-        
+
         private bool fitpathFieldSpecified;
-        
+
         private ST_TrueFalse trimField;
-        
+
         private bool trimFieldSpecified;
-        
+
         private ST_TrueFalse xscaleField;
-        
+
         private bool xscaleFieldSpecified;
-        
+
         private string stringField;
 
         public static CT_TextPath Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TextPath ctObj = new CT_TextPath();
             ctObj.id = XmlHelper.ReadString(node.Attributes["id"]);
             ctObj.style = XmlHelper.ReadString(node.Attributes["style"]);
-            if (node.Attributes["on"] != null)
+            if(node.Attributes["on"] != null)
                 ctObj.on = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["on"]);
-            if (node.Attributes["fitshape"] != null)
+            if(node.Attributes["fitshape"] != null)
                 ctObj.fitshape = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["fitshape"]);
-            if (node.Attributes["fitpath"] != null)
+            if(node.Attributes["fitpath"] != null)
                 ctObj.fitpath = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["fitpath"]);
-            if (node.Attributes["trim"] != null)
+            if(node.Attributes["trim"] != null)
                 ctObj.trim = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["trim"]);
-            if (node.Attributes["xscale"] != null)
+            if(node.Attributes["xscale"] != null)
                 ctObj.xscale = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["xscale"]);
             ctObj.@string = XmlHelper.ReadString(node.Attributes["string"]);
             return ctObj;
@@ -3487,260 +3822,300 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string style {
-            get {
+        public string style
+        {
+            get
+            {
                 return this.styleField;
             }
-            set {
+            set
+            {
                 this.styleField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse on {
-            get {
+        public ST_TrueFalse on
+        {
+            get
+            {
                 return this.onField;
             }
-            set {
+            set
+            {
                 this.onField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool onSpecified {
-            get {
+        public bool onSpecified
+        {
+            get
+            {
                 return this.onFieldSpecified;
             }
-            set {
+            set
+            {
                 this.onFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse fitshape {
-            get {
+        public ST_TrueFalse fitshape
+        {
+            get
+            {
                 return this.fitshapeField;
             }
-            set {
+            set
+            {
                 this.fitshapeField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool fitshapeSpecified {
-            get {
+        public bool fitshapeSpecified
+        {
+            get
+            {
                 return this.fitshapeFieldSpecified;
             }
-            set {
+            set
+            {
                 this.fitshapeFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse fitpath {
-            get {
+        public ST_TrueFalse fitpath
+        {
+            get
+            {
                 return this.fitpathField;
             }
-            set {
+            set
+            {
                 this.fitpathField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool fitpathSpecified {
-            get {
+        public bool fitpathSpecified
+        {
+            get
+            {
                 return this.fitpathFieldSpecified;
             }
-            set {
+            set
+            {
                 this.fitpathFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse trim {
-            get {
+        public ST_TrueFalse trim
+        {
+            get
+            {
                 return this.trimField;
             }
-            set {
+            set
+            {
                 this.trimField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool trimSpecified {
-            get {
+        public bool trimSpecified
+        {
+            get
+            {
                 return this.trimFieldSpecified;
             }
-            set {
+            set
+            {
                 this.trimFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse xscale {
-            get {
+        public ST_TrueFalse xscale
+        {
+            get
+            {
                 return this.xscaleField;
             }
-            set {
+            set
+            {
                 this.xscaleField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool xscaleSpecified {
-            get {
+        public bool xscaleSpecified
+        {
+            get
+            {
                 return this.xscaleFieldSpecified;
             }
-            set {
+            set
+            {
                 this.xscaleFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string @string {
-            get {
+        public string @string
+        {
+            get
+            {
                 return this.stringField;
             }
-            set {
+            set
+            {
                 this.stringField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml", IncludeInSchema=false)]
-    public enum ItemsChoiceType1 {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml", IncludeInSchema = false)]
+    public enum ItemsChoiceType1
+    {
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:excel:ClientData")]
         ClientData,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:powerpoint:iscomment")]
         iscomment,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:powerpoint:textdata")]
         textdata,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:anchorlock")]
         anchorlock,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderbottom")]
         borderbottom,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderleft")]
         borderleft,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderright")]
         borderright,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:bordertop")]
         bordertop,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:wrap")]
         wrap,
-        
-        
+
+
         fill,
-        
-        
+
+
         formulas,
-        
-        
+
+
         handles,
-        
-        
+
+
         imagedata,
-        
-        
+
+
         path,
-        
-        
+
+
         shadow,
-        
-        
+
+
         stroke,
-        
-        
+
+
         textbox,
-        
-        
+
+
         textpath,
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot("shapetype",Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Shapetype {
-            
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot("shapetype", Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Shapetype
+    {
+
         private CT_Path pathField;
-        
+
         private List<CT_Formulas> formulasField = new List<CT_Formulas>();
-        
+
         private List<CT_Handles> handlesField = new List<CT_Handles>();
-        
+
         private List<CT_Fill> fillField = new List<CT_Fill>();
-        
+
         private CT_Stroke strokeField;
-        
+
         private List<CT_Shadow> shadowField;
-        
+
         private List<CT_Textbox> textboxField;
-        
+
         private List<CT_TextPath> textpathField = new List<CT_TextPath>();
-        
+
         private List<CT_ImageData> imagedataField;
-        
+
         private List<CT_Wrap> wrapField;
-        
+
         private List<CT_AnchorLock> anchorlockField;
 
         private CT_Lock lockField;
-        
+
         private List<CT_Border> bordertopField;
-        
+
         private List<CT_Border> borderbottomField;
-        
+
         private List<CT_Border> borderleftField;
-        
+
         private List<CT_Border> borderrightField;
-        
+
         private List<CT_ClientData> clientDataField;
-        
+
         private List<CT_Rel> textdataField;
-        
+
         private string adjField;
         private string idField;
         private ST_TrueFalse filledField = ST_TrueFalse.t;
@@ -3761,17 +4136,17 @@ namespace NPOI.OpenXmlFormats.Vml
         private string _xml;
         public static CT_Shapetype Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Shapetype ctObj = new CT_Shapetype();
-            if (node.Attributes["stroked"] != null)
+            if(node.Attributes["stroked"] != null)
                 ctObj.stroked = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["stroked"]);
-            if (node.Attributes["filled"] != null)
+            if(node.Attributes["filled"] != null)
                 ctObj.filled = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["filled"]);
-            if (node.Attributes["o:preferrelative"] != null)
+            if(node.Attributes["o:preferrelative"] != null)
                 ctObj.preferrelative = NPOI.OpenXmlFormats.Util.XmlHelper.ReadTrueFalse2(node.Attributes["o:preferrelative"]);
             ctObj.coordsize = XmlHelper.ReadString(node.Attributes["coordsize"]);
-            if (node.Attributes["o:spt"] != null)
+            if(node.Attributes["o:spt"] != null)
                 ctObj.id = XmlHelper.ReadString(node.Attributes["o:spt"]);
             ctObj.adj = XmlHelper.ReadString(node.Attributes["adj"]);
             ctObj.path2 = XmlHelper.ReadString(node.Attributes["path"]);
@@ -3790,43 +4165,43 @@ namespace NPOI.OpenXmlFormats.Vml
             ctObj.borderright = new List<CT_Border>();
             ctObj.Clientdata = new List<CT_ClientData>();
             ctObj.textdata = new List<CT_Rel>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "stroke")
+                if(childNode.LocalName == "stroke")
                     ctObj.stroke = CT_Stroke.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "path")
+                else if(childNode.LocalName == "path")
                     ctObj.path = CT_Path.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lock")
+                else if(childNode.LocalName == "lock")
                     ctObj.@lock = CT_Lock.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "formulas")
+                else if(childNode.LocalName == "formulas")
                     ctObj.formulas.Add(CT_Formulas.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "handles")
+                else if(childNode.LocalName == "handles")
                     ctObj.handles.Add(CT_Handles.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "fill")
+                else if(childNode.LocalName == "fill")
                     ctObj.fill.Add(CT_Fill.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "shadow")
+                else if(childNode.LocalName == "shadow")
                     ctObj.shadow.Add(CT_Shadow.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "textbox")
+                else if(childNode.LocalName == "textbox")
                     ctObj.textbox.Add(CT_Textbox.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "textpath")
+                else if(childNode.LocalName == "textpath")
                     ctObj.textpath.Add(CT_TextPath.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "imagedata")
+                else if(childNode.LocalName == "imagedata")
                     ctObj.imagedata.Add(CT_ImageData.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "wrap")
+                else if(childNode.LocalName == "wrap")
                     ctObj.wrap.Add(CT_Wrap.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "anchorlock")
+                else if(childNode.LocalName == "anchorlock")
                     ctObj.anchorlock.Add(new CT_AnchorLock());
-                else if (childNode.LocalName == "bordertop")
+                else if(childNode.LocalName == "bordertop")
                     ctObj.bordertop.Add(CT_Border.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "borderbottom")
+                else if(childNode.LocalName == "borderbottom")
                     ctObj.borderbottom.Add(CT_Border.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "borderleft")
+                else if(childNode.LocalName == "borderleft")
                     ctObj.borderleft.Add(CT_Border.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "borderright")
+                else if(childNode.LocalName == "borderright")
                     ctObj.borderright.Add(CT_Border.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "ClientData")
+                else if(childNode.LocalName == "ClientData")
                     ctObj.Clientdata.Add(CT_ClientData.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "textdata")
+                else if(childNode.LocalName == "textdata")
                     ctObj.textdata.Add(CT_Rel.Parse(childNode, namespaceManager));
             }
 
@@ -3851,113 +4226,113 @@ namespace NPOI.OpenXmlFormats.Vml
             XmlHelper.WriteAttribute(sw, "adj", this.adj);
             XmlHelper.WriteAttribute(sw, "path", this.path2);
             sw.Write('>');
-            if (this.stroke != null)
+            if(this.stroke != null)
                 this.stroke.Write(sw, "stroke");
-            if (this.path != null)
+            if(this.path != null)
                 this.path.Write(sw, "path");
-            if (this.textpath != null)
+            if(this.textpath != null)
             {
-                foreach (CT_TextPath x in this.textpath)
+                foreach(CT_TextPath x in this.textpath)
                 {
                     x.Write(sw, "textpath");
                 }
             }
-            if (this.formulas != null)
+            if(this.formulas != null)
             {
-                foreach (CT_Formulas x in this.formulas)
+                foreach(CT_Formulas x in this.formulas)
                 {
                     x.Write(sw, "formulas");
                 }
             }
-            if (this.handles != null)
+            if(this.handles != null)
             {
-                foreach (CT_Handles x in this.handles)
+                foreach(CT_Handles x in this.handles)
                 {
                     x.Write(sw, "handles");
                 }
             }
-            if (this.fill != null)
+            if(this.fill != null)
             {
-                foreach (CT_Fill x in this.fill)
+                foreach(CT_Fill x in this.fill)
                 {
                     x.Write(sw, "fill");
                 }
             }
-            if (this.shadow != null)
+            if(this.shadow != null)
             {
-                foreach (CT_Shadow x in this.shadow)
+                foreach(CT_Shadow x in this.shadow)
                 {
                     x.Write(sw, "shadow");
                 }
             }
-            if (this.@lock != null)
+            if(this.@lock != null)
                 this.@lock.Write(sw, "lock");
-            if (this.textbox != null)
+            if(this.textbox != null)
             {
-                foreach (CT_Textbox x in this.textbox)
+                foreach(CT_Textbox x in this.textbox)
                 {
                     x.Write(sw, "textbox");
                 }
             }
-            if (this.imagedata != null)
+            if(this.imagedata != null)
             {
-                foreach (CT_ImageData x in this.imagedata)
+                foreach(CT_ImageData x in this.imagedata)
                 {
                     x.Write(sw, "imagedata");
                 }
             }
-            if (this.wrap != null)
+            if(this.wrap != null)
             {
-                foreach (CT_Wrap x in this.wrap)
+                foreach(CT_Wrap x in this.wrap)
                 {
                     x.Write(sw, "wrap");
                 }
             }
-            if (this.anchorlock != null)
+            if(this.anchorlock != null)
             {
-                foreach (CT_AnchorLock x in this.anchorlock)
+                foreach(CT_AnchorLock x in this.anchorlock)
                 {
                     sw.Write("<anchorlock/>");
                 }
             }
-            if (this.bordertop != null)
+            if(this.bordertop != null)
             {
-                foreach (CT_Border x in this.bordertop)
+                foreach(CT_Border x in this.bordertop)
                 {
                     x.Write(sw, "bordertop");
                 }
             }
-            if (this.borderbottom != null)
+            if(this.borderbottom != null)
             {
-                foreach (CT_Border x in this.borderbottom)
+                foreach(CT_Border x in this.borderbottom)
                 {
                     x.Write(sw, "borderbottom");
                 }
             }
-            if (this.borderleft != null)
+            if(this.borderleft != null)
             {
-                foreach (CT_Border x in this.borderleft)
+                foreach(CT_Border x in this.borderleft)
                 {
                     x.Write(sw, "borderleft");
                 }
             }
-            if (this.borderright != null)
+            if(this.borderright != null)
             {
-                foreach (CT_Border x in this.borderright)
+                foreach(CT_Border x in this.borderright)
                 {
                     x.Write(sw, "borderright");
                 }
             }
-            if (this.Clientdata != null)
+            if(this.Clientdata != null)
             {
-                foreach (CT_ClientData x in this.Clientdata)
+                foreach(CT_ClientData x in this.Clientdata)
                 {
                     x.Write(sw, "ClientData");
                 }
             }
-            if (this.textdata != null)
+            if(this.textdata != null)
             {
-                foreach (CT_Rel x in this.textdata)
+                foreach(CT_Rel x in this.textdata)
                 {
                     x.Write(sw, "textdata");
                 }
@@ -4031,10 +4406,11 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set 
+            set
             {
                 this.idField = value;
             }
@@ -4065,7 +4441,7 @@ namespace NPOI.OpenXmlFormats.Vml
             set
             {
 
-                    this.formulasField = value;
+                this.formulasField = value;
             }
         }
 
@@ -4079,7 +4455,7 @@ namespace NPOI.OpenXmlFormats.Vml
             }
             set
             {
-                    this.handlesField = value;
+                this.handlesField = value;
             }
         }
 
@@ -4206,7 +4582,7 @@ namespace NPOI.OpenXmlFormats.Vml
             }
             set
             {
-                    this.lockField = value;
+                this.lockField = value;
             }
         }
 
@@ -4264,14 +4640,17 @@ namespace NPOI.OpenXmlFormats.Vml
                 this.borderrightField = value;
             }
         }
-        
-        
-        [XmlElement("clientdata", Namespace="urn:schemas-microsoft-com:office:excel")]
-        public List<CT_ClientData> Clientdata {
-            get {
+
+
+        [XmlElement("clientdata", Namespace = "urn:schemas-microsoft-com:office:excel")]
+        public List<CT_ClientData> Clientdata
+        {
+            get
+            {
                 return this.clientDataField;
             }
-            set {
+            set
+            {
                 this.clientDataField = value;
             }
         }
@@ -4289,25 +4668,31 @@ namespace NPOI.OpenXmlFormats.Vml
                 this.textdataField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string adj {
-            get {
+        public string adj
+        {
+            get
+            {
                 return this.adjField;
             }
-            set {
+            set
+            {
                 this.adjField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute("path")]
-        public string path2 {
-            get {
+        public string path2
+        {
+            get
+            {
                 return this.path1Field;
             }
-            set {
+            set
+            {
                 this.path1Field = value;
             }
         }
@@ -4319,7 +4704,7 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         public CT_Path AddNewPath()
         {
-                this.pathField = new CT_Path();
+            this.pathField = new CT_Path();
             return this.pathField;
         }
         //internal static XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces(new XmlQualifiedName[] {
@@ -4346,7 +4731,7 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public CT_Formulas AddNewFormulas()
         {
-            if (this.formulasField == null)
+            if(this.formulasField == null)
                 this.formulasField = new List<CT_Formulas>();
             CT_Formulas obj = new CT_Formulas();
             this.formulasField.Add(obj);
@@ -4355,7 +4740,7 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public CT_TextPath AddNewTextpath()
         {
-            if (this.textpathField == null)
+            if(this.textpathField == null)
                 this.textpathField = new List<CT_TextPath>();
             CT_TextPath obj = new CT_TextPath();
             this.textpathField.Add(obj);
@@ -4364,7 +4749,7 @@ namespace NPOI.OpenXmlFormats.Vml
 
         public CT_Handles AddNewHandles()
         {
-            if (this.handlesField == null)
+            if(this.handlesField == null)
                 this.handlesField = new List<CT_Handles>();
             CT_Handles obj = new CT_Handles();
             this.handlesField.Add(obj);
@@ -4377,38 +4762,39 @@ namespace NPOI.OpenXmlFormats.Vml
             return lockField;
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Group {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Group
+    {
+
         private List<object> itemsField = new List<object>();
-        
+
         private List<ItemsChoiceType6> itemsElementNameField = new List<ItemsChoiceType6>();
-        
+
         private ST_TrueFalse filledField;
-        
+
         private bool filledFieldSpecified;
-        
+
         private string fillcolorField;
-        
+
         private ST_EditAs editasField;
-        
+
         private bool editasFieldSpecified;
-        
-        
-        [XmlElement("ClientData", typeof(CT_ClientData), Namespace="urn:schemas-microsoft-com:office:excel")]
-        [XmlElement("textdata", typeof(CT_Rel), Namespace="urn:schemas-microsoft-com:office:powerpoint")]
-        [XmlElement("anchorlock", typeof(CT_AnchorLock), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("borderbottom", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("borderleft", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("borderright", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("bordertop", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("wrap", typeof(CT_Wrap), Namespace="urn:schemas-microsoft-com:office:word")]
+
+
+        [XmlElement("ClientData", typeof(CT_ClientData), Namespace = "urn:schemas-microsoft-com:office:excel")]
+        [XmlElement("textdata", typeof(CT_Rel), Namespace = "urn:schemas-microsoft-com:office:powerpoint")]
+        [XmlElement("anchorlock", typeof(CT_AnchorLock), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("borderbottom", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("borderleft", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("borderright", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("bordertop", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("wrap", typeof(CT_Wrap), Namespace = "urn:schemas-microsoft-com:office:word")]
         [XmlElement("arc", typeof(CT_Arc))]
         [XmlElement("curve", typeof(CT_Curve))]
         [XmlElement("fill", typeof(CT_Fill))]
@@ -4430,86 +4816,107 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlElement("textbox", typeof(CT_Textbox))]
         [XmlElement("textpath", typeof(CT_TextPath))]
         [XmlChoiceIdentifier("ItemsElementName")]
-        public object[] Items {
-            get {
-                if (this.itemsField == null)
+        public object[] Items
+        {
+            get
+            {
+                if(this.itemsField == null)
                     return null;
                 return this.itemsField.ToArray();
             }
-            set {
-                if (value == null)
+            set
+            {
+                if(value == null)
                     this.itemsField = new List<object>();
                 else
                     this.itemsField = new List<object>(value);
             }
         }
-        
-        
+
+
         [XmlElement("ItemsElementName")]
         [XmlIgnore]
-        public ItemsChoiceType6[] ItemsElementName {
-            get {
+        public ItemsChoiceType6[] ItemsElementName
+        {
+            get
+            {
                 return this.itemsElementNameField.ToArray();
             }
-            set {
-                if (value == null)
+            set
+            {
+                if(value == null)
                     this.itemsElementNameField = new List<ItemsChoiceType6>();
                 else
                     this.itemsElementNameField = new List<ItemsChoiceType6>(value);
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse filled {
-            get {
+        public ST_TrueFalse filled
+        {
+            get
+            {
                 return this.filledField;
             }
-            set {
+            set
+            {
                 this.filledField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool filledSpecified {
-            get {
+        public bool filledSpecified
+        {
+            get
+            {
                 return this.filledFieldSpecified;
             }
-            set {
+            set
+            {
                 this.filledFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string fillcolor {
-            get {
+        public string fillcolor
+        {
+            get
+            {
                 return this.fillcolorField;
             }
-            set {
+            set
+            {
                 this.fillcolorField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_EditAs editas {
-            get {
+        public ST_EditAs editas
+        {
+            get
+            {
                 return this.editasField;
             }
-            set {
+            set
+            {
                 this.editasField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool editasSpecified {
-            get {
+        public bool editasSpecified
+        {
+            get
+            {
                 return this.editasFieldSpecified;
             }
-            set {
+            set
+            {
                 this.editasFieldSpecified = value;
             }
         }
@@ -4522,12 +4929,12 @@ namespace NPOI.OpenXmlFormats.Vml
 
         private List<T> GetObjectList<T>(ItemsChoiceType6 type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 List<T> list = new List<T>();
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         list.Add(itemsField[i] as T);
                 }
                 return list;
@@ -4535,12 +4942,12 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         private int SizeOfObjectArray(ItemsChoiceType6 type)
         {
-            lock (this)
+            lock(this)
             {
                 int size = 0;
-                for (int i = 0; i < itemsElementNameField.Count; i++)
+                for(int i = 0; i < itemsElementNameField.Count; i++)
                 {
-                    if (itemsElementNameField[i] == type)
+                    if(itemsElementNameField[i] == type)
                         size++;
                 }
                 return size;
@@ -4548,10 +4955,10 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         private T GetObjectArray<T>(int p, ItemsChoiceType6 type) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return null;
                 return itemsField[pos] as T;
             }
@@ -4559,7 +4966,7 @@ namespace NPOI.OpenXmlFormats.Vml
         private T InsertNewObject<T>(ItemsChoiceType6 type, int p) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
                 this.itemsElementNameField.Insert(pos, type);
@@ -4570,7 +4977,7 @@ namespace NPOI.OpenXmlFormats.Vml
         private T AddNewObject<T>(ItemsChoiceType6 type) where T : class, new()
         {
             T t = new T();
-            lock (this)
+            lock(this)
             {
                 this.itemsElementNameField.Add(type);
                 this.itemsField.Add(t);
@@ -4579,12 +4986,12 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         private void SetObjectArray<T>(ItemsChoiceType6 type, int p, T obj) where T : class
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
-                if (this.itemsField[pos] is T)
+                if(this.itemsField[pos] is T)
                     this.itemsField[pos] = obj;
                 else
                     throw new Exception(string.Format(@"object types are difference, itemsField[{0}] is {1}, and parameter obj is {2}",
@@ -4595,11 +5002,11 @@ namespace NPOI.OpenXmlFormats.Vml
         {
             int index = -1;
             int pos = 0;
-            for (int i = 0; i < itemsElementNameField.Count; i++)
+            for(int i = 0; i < itemsElementNameField.Count; i++)
             {
-                if (itemsElementNameField[i] == type)
+                if(itemsElementNameField[i] == type)
                 {
-                    if (pos == p)
+                    if(pos == p)
                     {
                         //return itemsField[p] as T;
                         index = i;
@@ -4613,10 +5020,10 @@ namespace NPOI.OpenXmlFormats.Vml
         }
         private void RemoveObject(ItemsChoiceType6 type, int p)
         {
-            lock (this)
+            lock(this)
             {
                 int pos = GetObjectIndex(type, p);
-                if (pos < 0 || pos >= this.itemsField.Count)
+                if(pos < 0 || pos >= this.itemsField.Count)
                     return;
                 itemsElementNameField.RemoveAt(pos);
                 itemsField.RemoveAt(pos);
@@ -4629,1223 +5036,1498 @@ namespace NPOI.OpenXmlFormats.Vml
             return AddNewObject<CT_Shape>(ItemsChoiceType6.shape);
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Arc {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Arc
+    {
+
         private List<CT_Path> pathField;
-        
+
         private List<CT_Formulas> formulasField;
-        
+
         private List<CT_Handles> handlesField;
-        
+
         private List<CT_Fill> fillField;
-        
+
         private List<CT_Stroke> strokeField;
-        
+
         private List<CT_Shadow> shadowField;
-        
+
         private List<CT_Textbox> textboxField;
-        
+
         private List<CT_TextPath> textpathField;
-        
+
         private List<CT_ImageData> imagedataField;
-        
+
         private List<CT_Wrap> wrapField;
-        
+
         private List<CT_AnchorLock> anchorlockField;
-        
+
         private List<CT_Border> bordertopField;
-        
+
         private List<CT_Border> borderbottomField;
-        
+
         private List<CT_Border> borderleftField;
-        
+
         private List<CT_Border> borderrightField;
-        
+
         private List<CT_ClientData> clientDataField;
-        
+
         private List<CT_Rel> textdataField;
-        
+
         private decimal startAngleField;
-        
+
         private bool startAngleFieldSpecified;
-        
+
         private decimal endAngleField;
-        
+
         private bool endAngleFieldSpecified;
-        
-        
+
+
         [XmlElement("path")]
-        public List<CT_Path> path {
-            get {
+        public List<CT_Path> path
+        {
+            get
+            {
                 return this.pathField;
             }
-            set {
+            set
+            {
                 this.pathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("formulas")]
-        public List<CT_Formulas> formulas {
-            get {
+        public List<CT_Formulas> formulas
+        {
+            get
+            {
                 return this.formulasField;
             }
-            set {
+            set
+            {
                 this.formulasField = value;
             }
         }
-        
-        
+
+
         [XmlElement("handles")]
-        public List<CT_Handles> handles {
-            get {
+        public List<CT_Handles> handles
+        {
+            get
+            {
                 return this.handlesField;
             }
-            set {
+            set
+            {
                 this.handlesField = value;
             }
         }
-        
-        
+
+
         [XmlElement("fill")]
-        public List<CT_Fill> fill {
-            get {
+        public List<CT_Fill> fill
+        {
+            get
+            {
                 return this.fillField;
             }
-            set {
+            set
+            {
                 this.fillField = value;
             }
         }
-        
-        
+
+
         [XmlElement("stroke")]
-        public List<CT_Stroke> stroke {
-            get {
+        public List<CT_Stroke> stroke
+        {
+            get
+            {
                 return this.strokeField;
             }
-            set {
+            set
+            {
                 this.strokeField = value;
             }
         }
-        
-        
+
+
         [XmlElement("shadow")]
-        public List<CT_Shadow> shadow {
-            get {
+        public List<CT_Shadow> shadow
+        {
+            get
+            {
                 return this.shadowField;
             }
-            set {
+            set
+            {
                 this.shadowField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textbox")]
-        public List<CT_Textbox> textbox {
-            get {
+        public List<CT_Textbox> textbox
+        {
+            get
+            {
                 return this.textboxField;
             }
-            set {
+            set
+            {
                 this.textboxField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textpath")]
-        public List<CT_TextPath> textpath {
-            get {
+        public List<CT_TextPath> textpath
+        {
+            get
+            {
                 return this.textpathField;
             }
-            set {
+            set
+            {
                 this.textpathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("imagedata")]
-        public List<CT_ImageData> imagedata {
-            get {
+        public List<CT_ImageData> imagedata
+        {
+            get
+            {
                 return this.imagedataField;
             }
-            set {
+            set
+            {
                 this.imagedataField = value;
             }
         }
-        
-        
-        [XmlElement("wrap", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Wrap> wrap {
-            get {
+
+
+        [XmlElement("wrap", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Wrap> wrap
+        {
+            get
+            {
                 return this.wrapField;
             }
-            set {
+            set
+            {
                 this.wrapField = value;
             }
         }
-        
-        
-        [XmlElement("anchorlock", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_AnchorLock> anchorlock {
-            get {
+
+
+        [XmlElement("anchorlock", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_AnchorLock> anchorlock
+        {
+            get
+            {
                 return this.anchorlockField;
             }
-            set {
+            set
+            {
                 this.anchorlockField = value;
             }
         }
-        
-        
-        [XmlElement("bordertop", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> bordertop {
-            get {
+
+
+        [XmlElement("bordertop", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> bordertop
+        {
+            get
+            {
                 return this.bordertopField;
             }
-            set {
+            set
+            {
                 this.bordertopField = value;
             }
         }
-        
-        
-        [XmlElement("borderbottom", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderbottom {
-            get {
+
+
+        [XmlElement("borderbottom", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderbottom
+        {
+            get
+            {
                 return this.borderbottomField;
             }
-            set {
+            set
+            {
                 this.borderbottomField = value;
             }
         }
-        
-        
-        [XmlElement("borderleft", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderleft {
-            get {
+
+
+        [XmlElement("borderleft", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderleft
+        {
+            get
+            {
                 return this.borderleftField;
             }
-            set {
+            set
+            {
                 this.borderleftField = value;
             }
         }
-        
-        
-        [XmlElement("borderright", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderright {
-            get {
+
+
+        [XmlElement("borderright", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderright
+        {
+            get
+            {
                 return this.borderrightField;
             }
-            set {
+            set
+            {
                 this.borderrightField = value;
             }
         }
-        
-        
-        [XmlElement("ClientData", Namespace="urn:schemas-microsoft-com:office:excel")]
-        public List<CT_ClientData> ClientData {
-            get {
+
+
+        [XmlElement("ClientData", Namespace = "urn:schemas-microsoft-com:office:excel")]
+        public List<CT_ClientData> ClientData
+        {
+            get
+            {
                 return this.clientDataField;
             }
-            set {
+            set
+            {
                 this.clientDataField = value;
             }
         }
-        
-        
-        [XmlElement("textdata", Namespace="urn:schemas-microsoft-com:office:powerpoint")]
-        public List<CT_Rel> textdata {
-            get {
+
+
+        [XmlElement("textdata", Namespace = "urn:schemas-microsoft-com:office:powerpoint")]
+        public List<CT_Rel> textdata
+        {
+            get
+            {
                 return this.textdataField;
             }
-            set {
+            set
+            {
                 this.textdataField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public decimal startAngle {
-            get {
+        public decimal startAngle
+        {
+            get
+            {
                 return this.startAngleField;
             }
-            set {
+            set
+            {
                 this.startAngleField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool startAngleSpecified {
-            get {
+        public bool startAngleSpecified
+        {
+            get
+            {
                 return this.startAngleFieldSpecified;
             }
-            set {
+            set
+            {
                 this.startAngleFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public decimal endAngle {
-            get {
+        public decimal endAngle
+        {
+            get
+            {
                 return this.endAngleField;
             }
-            set {
+            set
+            {
                 this.endAngleField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool endAngleSpecified {
-            get {
+        public bool endAngleSpecified
+        {
+            get
+            {
                 return this.endAngleFieldSpecified;
             }
-            set {
+            set
+            {
                 this.endAngleFieldSpecified = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Curve {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Curve
+    {
+
         private List<CT_Path> pathField;
-        
+
         private List<CT_Formulas> formulasField;
-        
+
         private List<CT_Handles> handlesField;
-        
+
         private List<CT_Fill> fillField;
-        
+
         private List<CT_Stroke> strokeField;
-        
+
         private List<CT_Shadow> shadowField;
-        
+
         private List<CT_Textbox> textboxField;
-        
+
         private List<CT_TextPath> textpathField;
-        
+
         private List<CT_ImageData> imagedataField;
-        
+
         private List<CT_Wrap> wrapField;
-        
+
         private List<CT_AnchorLock> anchorlockField;
-        
+
         private List<CT_Border> bordertopField;
-        
+
         private List<CT_Border> borderbottomField;
-        
+
         private List<CT_Border> borderleftField;
-        
+
         private List<CT_Border> borderrightField;
-        
+
         private List<CT_ClientData> clientDataField;
-        
+
         private List<CT_Rel> textdataField;
-        
+
         private string fromField;
-        
+
         private string control1Field;
-        
+
         private string control2Field;
-        
+
         private string toField;
-        
-        
+
+
         [XmlElement("path")]
-        public List<CT_Path> path {
-            get {
+        public List<CT_Path> path
+        {
+            get
+            {
                 return this.pathField;
             }
-            set {
+            set
+            {
                 this.pathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("formulas")]
-        public List<CT_Formulas> formulas {
-            get {
+        public List<CT_Formulas> formulas
+        {
+            get
+            {
                 return this.formulasField;
             }
-            set {
+            set
+            {
                 this.formulasField = value;
             }
         }
-        
-        
+
+
         [XmlElement("handles")]
-        public List<CT_Handles> handles {
-            get {
+        public List<CT_Handles> handles
+        {
+            get
+            {
                 return this.handlesField;
             }
-            set {
+            set
+            {
                 this.handlesField = value;
             }
         }
-        
-        
+
+
         [XmlElement("fill")]
-        public List<CT_Fill> fill {
-            get {
+        public List<CT_Fill> fill
+        {
+            get
+            {
                 return this.fillField;
             }
-            set {
+            set
+            {
                 this.fillField = value;
             }
         }
-        
-        
+
+
         [XmlElement("stroke")]
-        public List<CT_Stroke> stroke {
-            get {
+        public List<CT_Stroke> stroke
+        {
+            get
+            {
                 return this.strokeField;
             }
-            set {
+            set
+            {
                 this.strokeField = value;
             }
         }
-        
-        
+
+
         [XmlElement("shadow")]
-        public List<CT_Shadow> shadow {
-            get {
+        public List<CT_Shadow> shadow
+        {
+            get
+            {
                 return this.shadowField;
             }
-            set {
+            set
+            {
                 this.shadowField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textbox")]
-        public List<CT_Textbox> textbox {
-            get {
+        public List<CT_Textbox> textbox
+        {
+            get
+            {
                 return this.textboxField;
             }
-            set {
+            set
+            {
                 this.textboxField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textpath")]
-        public List<CT_TextPath> textpath {
-            get {
+        public List<CT_TextPath> textpath
+        {
+            get
+            {
                 return this.textpathField;
             }
-            set {
+            set
+            {
                 this.textpathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("imagedata")]
-        public List<CT_ImageData> imagedata {
-            get {
+        public List<CT_ImageData> imagedata
+        {
+            get
+            {
                 return this.imagedataField;
             }
-            set {
+            set
+            {
                 this.imagedataField = value;
             }
         }
-        
-        
-        [XmlElement("wrap", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Wrap> wrap {
-            get {
+
+
+        [XmlElement("wrap", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Wrap> wrap
+        {
+            get
+            {
                 return this.wrapField;
             }
-            set {
+            set
+            {
                 this.wrapField = value;
             }
         }
-        
-        
-        [XmlElement("anchorlock", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_AnchorLock> anchorlock {
-            get {
+
+
+        [XmlElement("anchorlock", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_AnchorLock> anchorlock
+        {
+            get
+            {
                 return this.anchorlockField;
             }
-            set {
+            set
+            {
                 this.anchorlockField = value;
             }
         }
-        
-        
-        [XmlElement("bordertop", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> bordertop {
-            get {
+
+
+        [XmlElement("bordertop", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> bordertop
+        {
+            get
+            {
                 return this.bordertopField;
             }
-            set {
+            set
+            {
                 this.bordertopField = value;
             }
         }
-        
-        
-        [XmlElement("borderbottom", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderbottom {
-            get {
+
+
+        [XmlElement("borderbottom", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderbottom
+        {
+            get
+            {
                 return this.borderbottomField;
             }
-            set {
+            set
+            {
                 this.borderbottomField = value;
             }
         }
-        
-        
-        [XmlElement("borderleft", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderleft {
-            get {
+
+
+        [XmlElement("borderleft", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderleft
+        {
+            get
+            {
                 return this.borderleftField;
             }
-            set {
+            set
+            {
                 this.borderleftField = value;
             }
         }
-        
-        
-        [XmlElement("borderright", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderright {
-            get {
+
+
+        [XmlElement("borderright", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderright
+        {
+            get
+            {
                 return this.borderrightField;
             }
-            set {
+            set
+            {
                 this.borderrightField = value;
             }
         }
-        
-        
-        [XmlElement("ClientData", Namespace="urn:schemas-microsoft-com:office:excel")]
-        public List<CT_ClientData> ClientData {
-            get {
+
+
+        [XmlElement("ClientData", Namespace = "urn:schemas-microsoft-com:office:excel")]
+        public List<CT_ClientData> ClientData
+        {
+            get
+            {
                 return this.clientDataField;
             }
-            set {
+            set
+            {
                 this.clientDataField = value;
             }
         }
-        
-        
-        [XmlElement("textdata", Namespace="urn:schemas-microsoft-com:office:powerpoint")]
-        public List<CT_Rel> textdata {
-            get {
+
+
+        [XmlElement("textdata", Namespace = "urn:schemas-microsoft-com:office:powerpoint")]
+        public List<CT_Rel> textdata
+        {
+            get
+            {
                 return this.textdataField;
             }
-            set {
+            set
+            {
                 this.textdataField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string from {
-            get {
+        public string from
+        {
+            get
+            {
                 return this.fromField;
             }
-            set {
+            set
+            {
                 this.fromField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string control1 {
-            get {
+        public string control1
+        {
+            get
+            {
                 return this.control1Field;
             }
-            set {
+            set
+            {
                 this.control1Field = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string control2 {
-            get {
+        public string control2
+        {
+            get
+            {
                 return this.control2Field;
             }
-            set {
+            set
+            {
                 this.control2Field = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string to {
-            get {
+        public string to
+        {
+            get
+            {
                 return this.toField;
             }
-            set {
+            set
+            {
                 this.toField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Image {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Image
+    {
+
         private List<CT_Path> pathField;
-        
+
         private List<CT_Formulas> formulasField;
-        
+
         private List<CT_Handles> handlesField;
-        
+
         private List<CT_Fill> fillField;
-        
+
         private List<CT_Stroke> strokeField;
-        
+
         private List<CT_Shadow> shadowField;
-        
+
         private List<CT_Textbox> textboxField;
-        
+
         private List<CT_TextPath> textpathField;
-        
+
         private List<CT_ImageData> imagedataField;
-        
+
         private List<CT_Wrap> wrapField;
-        
+
         private List<CT_AnchorLock> anchorlockField;
-        
+
         private List<CT_Border> bordertopField;
-        
+
         private List<CT_Border> borderbottomField;
-        
+
         private List<CT_Border> borderleftField;
-        
+
         private List<CT_Border> borderrightField;
-        
+
         private List<CT_ClientData> clientDataField;
-        
+
         private List<CT_Rel> textdataField;
-        
+
         private string srcField;
-        
+
         private string cropleftField;
-        
+
         private string croptopField;
-        
+
         private string croprightField;
-        
+
         private string cropbottomField;
-        
+
         private string gainField;
-        
+
         private string blacklevelField;
-        
+
         private string gammaField;
-        
+
         private ST_TrueFalse grayscaleField;
-        
+
         private bool grayscaleFieldSpecified;
-        
+
         private ST_TrueFalse bilevelField;
-        
+
         private bool bilevelFieldSpecified;
-        
-        
+
+
         [XmlElement("path")]
-        public List<CT_Path> path {
-            get {
+        public List<CT_Path> path
+        {
+            get
+            {
                 return this.pathField;
             }
-            set {
+            set
+            {
                 this.pathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("formulas")]
-        public List<CT_Formulas> formulas {
-            get {
+        public List<CT_Formulas> formulas
+        {
+            get
+            {
                 return this.formulasField;
             }
-            set {
+            set
+            {
                 this.formulasField = value;
             }
         }
-        
-        
+
+
         [XmlElement("handles")]
-        public List<CT_Handles> handles {
-            get {
+        public List<CT_Handles> handles
+        {
+            get
+            {
                 return this.handlesField;
             }
-            set {
+            set
+            {
                 this.handlesField = value;
             }
         }
-        
-        
+
+
         [XmlElement("fill")]
-        public List<CT_Fill> fill {
-            get {
+        public List<CT_Fill> fill
+        {
+            get
+            {
                 return this.fillField;
             }
-            set {
+            set
+            {
                 this.fillField = value;
             }
         }
-        
-        
+
+
         [XmlElement("stroke")]
-        public List<CT_Stroke> stroke {
-            get {
+        public List<CT_Stroke> stroke
+        {
+            get
+            {
                 return this.strokeField;
             }
-            set {
+            set
+            {
                 this.strokeField = value;
             }
         }
-        
-        
+
+
         [XmlElement("shadow")]
-        public List<CT_Shadow> shadow {
-            get {
+        public List<CT_Shadow> shadow
+        {
+            get
+            {
                 return this.shadowField;
             }
-            set {
+            set
+            {
                 this.shadowField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textbox")]
-        public List<CT_Textbox> textbox {
-            get {
+        public List<CT_Textbox> textbox
+        {
+            get
+            {
                 return this.textboxField;
             }
-            set {
+            set
+            {
                 this.textboxField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textpath")]
-        public List<CT_TextPath> textpath {
-            get {
+        public List<CT_TextPath> textpath
+        {
+            get
+            {
                 return this.textpathField;
             }
-            set {
+            set
+            {
                 this.textpathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("imagedata")]
-        public List<CT_ImageData> imagedata {
-            get {
+        public List<CT_ImageData> imagedata
+        {
+            get
+            {
                 return this.imagedataField;
             }
-            set {
+            set
+            {
                 this.imagedataField = value;
             }
         }
-        
-        
-        [XmlElement("wrap", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Wrap> wrap {
-            get {
+
+
+        [XmlElement("wrap", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Wrap> wrap
+        {
+            get
+            {
                 return this.wrapField;
             }
-            set {
+            set
+            {
                 this.wrapField = value;
             }
         }
-        
-        
-        [XmlElement("anchorlock", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_AnchorLock> anchorlock {
-            get {
+
+
+        [XmlElement("anchorlock", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_AnchorLock> anchorlock
+        {
+            get
+            {
                 return this.anchorlockField;
             }
-            set {
+            set
+            {
                 this.anchorlockField = value;
             }
         }
-        
-        
-        [XmlElement("bordertop", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> bordertop {
-            get {
+
+
+        [XmlElement("bordertop", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> bordertop
+        {
+            get
+            {
                 return this.bordertopField;
             }
-            set {
+            set
+            {
                 this.bordertopField = value;
             }
         }
-        
-        
-        [XmlElement("borderbottom", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderbottom {
-            get {
+
+
+        [XmlElement("borderbottom", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderbottom
+        {
+            get
+            {
                 return this.borderbottomField;
             }
-            set {
+            set
+            {
                 this.borderbottomField = value;
             }
         }
-        
-        
-        [XmlElement("borderleft", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderleft {
-            get {
+
+
+        [XmlElement("borderleft", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderleft
+        {
+            get
+            {
                 return this.borderleftField;
             }
-            set {
+            set
+            {
                 this.borderleftField = value;
             }
         }
-        
-        
-        [XmlElement("borderright", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderright {
-            get {
+
+
+        [XmlElement("borderright", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderright
+        {
+            get
+            {
                 return this.borderrightField;
             }
-            set {
+            set
+            {
                 this.borderrightField = value;
             }
         }
-        
-        
-        [XmlElement("ClientData", Namespace="urn:schemas-microsoft-com:office:excel")]
-        public List<CT_ClientData> ClientData {
-            get {
+
+
+        [XmlElement("ClientData", Namespace = "urn:schemas-microsoft-com:office:excel")]
+        public List<CT_ClientData> ClientData
+        {
+            get
+            {
                 return this.clientDataField;
             }
-            set {
+            set
+            {
                 this.clientDataField = value;
             }
         }
-        
-        
-        [XmlElement("textdata", Namespace="urn:schemas-microsoft-com:office:powerpoint")]
-        public List<CT_Rel> textdata {
-            get {
+
+
+        [XmlElement("textdata", Namespace = "urn:schemas-microsoft-com:office:powerpoint")]
+        public List<CT_Rel> textdata
+        {
+            get
+            {
                 return this.textdataField;
             }
-            set {
+            set
+            {
                 this.textdataField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string src {
-            get {
+        public string src
+        {
+            get
+            {
                 return this.srcField;
             }
-            set {
+            set
+            {
                 this.srcField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string cropleft {
-            get {
+        public string cropleft
+        {
+            get
+            {
                 return this.cropleftField;
             }
-            set {
+            set
+            {
                 this.cropleftField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string croptop {
-            get {
+        public string croptop
+        {
+            get
+            {
                 return this.croptopField;
             }
-            set {
+            set
+            {
                 this.croptopField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string cropright {
-            get {
+        public string cropright
+        {
+            get
+            {
                 return this.croprightField;
             }
-            set {
+            set
+            {
                 this.croprightField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string cropbottom {
-            get {
+        public string cropbottom
+        {
+            get
+            {
                 return this.cropbottomField;
             }
-            set {
+            set
+            {
                 this.cropbottomField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string gain {
-            get {
+        public string gain
+        {
+            get
+            {
                 return this.gainField;
             }
-            set {
+            set
+            {
                 this.gainField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string blacklevel {
-            get {
+        public string blacklevel
+        {
+            get
+            {
                 return this.blacklevelField;
             }
-            set {
+            set
+            {
                 this.blacklevelField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string gamma {
-            get {
+        public string gamma
+        {
+            get
+            {
                 return this.gammaField;
             }
-            set {
+            set
+            {
                 this.gammaField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse grayscale {
-            get {
+        public ST_TrueFalse grayscale
+        {
+            get
+            {
                 return this.grayscaleField;
             }
-            set {
+            set
+            {
                 this.grayscaleField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool grayscaleSpecified {
-            get {
+        public bool grayscaleSpecified
+        {
+            get
+            {
                 return this.grayscaleFieldSpecified;
             }
-            set {
+            set
+            {
                 this.grayscaleFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse bilevel {
-            get {
+        public ST_TrueFalse bilevel
+        {
+            get
+            {
                 return this.bilevelField;
             }
-            set {
+            set
+            {
                 this.bilevelField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool bilevelSpecified {
-            get {
+        public bool bilevelSpecified
+        {
+            get
+            {
                 return this.bilevelFieldSpecified;
             }
-            set {
+            set
+            {
                 this.bilevelFieldSpecified = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Line {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Line
+    {
+
         private List<CT_Path> pathField;
-        
+
         private List<CT_Formulas> formulasField;
-        
+
         private List<CT_Handles> handlesField;
-        
+
         private List<CT_Fill> fillField;
-        
+
         private List<CT_Stroke> strokeField;
-        
+
         private List<CT_Shadow> shadowField;
-        
+
         private List<CT_Textbox> textboxField;
-        
+
         private List<CT_TextPath> textpathField;
-        
+
         private List<CT_ImageData> imagedataField;
-        
+
         private List<CT_Wrap> wrapField;
-        
+
         private List<CT_AnchorLock> anchorlockField;
-        
+
         private List<CT_Border> bordertopField;
-        
+
         private List<CT_Border> borderbottomField;
-        
+
         private List<CT_Border> borderleftField;
-        
+
         private List<CT_Border> borderrightField;
-        
+
         private List<CT_ClientData> clientDataField;
-        
+
         private List<CT_Rel> textdataField;
-        
+
         private string fromField;
-        
+
         private string toField;
-        
-        
+
+
         [XmlElement("path")]
-        public List<CT_Path> path {
-            get {
+        public List<CT_Path> path
+        {
+            get
+            {
                 return this.pathField;
             }
-            set {
+            set
+            {
                 this.pathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("formulas")]
-        public List<CT_Formulas> formulas {
-            get {
+        public List<CT_Formulas> formulas
+        {
+            get
+            {
                 return this.formulasField;
             }
-            set {
+            set
+            {
                 this.formulasField = value;
             }
         }
-        
-        
+
+
         [XmlElement("handles")]
-        public List<CT_Handles> handles {
-            get {
+        public List<CT_Handles> handles
+        {
+            get
+            {
                 return this.handlesField;
             }
-            set {
+            set
+            {
                 this.handlesField = value;
             }
         }
-        
-        
+
+
         [XmlElement("fill")]
-        public List<CT_Fill> fill {
-            get {
+        public List<CT_Fill> fill
+        {
+            get
+            {
                 return this.fillField;
             }
-            set {
+            set
+            {
                 this.fillField = value;
             }
         }
-        
-        
+
+
         [XmlElement("stroke")]
-        public List<CT_Stroke> stroke {
-            get {
+        public List<CT_Stroke> stroke
+        {
+            get
+            {
                 return this.strokeField;
             }
-            set {
+            set
+            {
                 this.strokeField = value;
             }
         }
-        
-        
+
+
         [XmlElement("shadow")]
-        public List<CT_Shadow> shadow {
-            get {
+        public List<CT_Shadow> shadow
+        {
+            get
+            {
                 return this.shadowField;
             }
-            set {
+            set
+            {
                 this.shadowField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textbox")]
-        public List<CT_Textbox> textbox {
-            get {
+        public List<CT_Textbox> textbox
+        {
+            get
+            {
                 return this.textboxField;
             }
-            set {
+            set
+            {
                 this.textboxField = value;
             }
         }
-        
-        
+
+
         [XmlElement("textpath")]
-        public List<CT_TextPath> textpath {
-            get {
+        public List<CT_TextPath> textpath
+        {
+            get
+            {
                 return this.textpathField;
             }
-            set {
+            set
+            {
                 this.textpathField = value;
             }
         }
-        
-        
+
+
         [XmlElement("imagedata")]
-        public List<CT_ImageData> imagedata {
-            get {
+        public List<CT_ImageData> imagedata
+        {
+            get
+            {
                 return this.imagedataField;
             }
-            set {
+            set
+            {
                 this.imagedataField = value;
             }
         }
-        
-        
-        [XmlElement("wrap", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Wrap> wrap {
-            get {
+
+
+        [XmlElement("wrap", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Wrap> wrap
+        {
+            get
+            {
                 return this.wrapField;
             }
-            set {
+            set
+            {
                 this.wrapField = value;
             }
         }
-        
-        
-        [XmlElement("anchorlock", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_AnchorLock> anchorlock {
-            get {
+
+
+        [XmlElement("anchorlock", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_AnchorLock> anchorlock
+        {
+            get
+            {
                 return this.anchorlockField;
             }
-            set {
+            set
+            {
                 this.anchorlockField = value;
             }
         }
-        
-        
-        [XmlElement("bordertop", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> bordertop {
-            get {
+
+
+        [XmlElement("bordertop", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> bordertop
+        {
+            get
+            {
                 return this.bordertopField;
             }
-            set {
+            set
+            {
                 this.bordertopField = value;
             }
         }
-        
-        
-        [XmlElement("borderbottom", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderbottom {
-            get {
+
+
+        [XmlElement("borderbottom", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderbottom
+        {
+            get
+            {
                 return this.borderbottomField;
             }
-            set {
+            set
+            {
                 this.borderbottomField = value;
             }
         }
-        
-        
-        [XmlElement("borderleft", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderleft {
-            get {
+
+
+        [XmlElement("borderleft", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderleft
+        {
+            get
+            {
                 return this.borderleftField;
             }
-            set {
+            set
+            {
                 this.borderleftField = value;
             }
         }
-        
-        
-        [XmlElement("borderright", Namespace="urn:schemas-microsoft-com:office:word")]
-        public List<CT_Border> borderright {
-            get {
+
+
+        [XmlElement("borderright", Namespace = "urn:schemas-microsoft-com:office:word")]
+        public List<CT_Border> borderright
+        {
+            get
+            {
                 return this.borderrightField;
             }
-            set {
+            set
+            {
                 this.borderrightField = value;
             }
         }
-        
-        
-        [XmlElement("ClientData", Namespace="urn:schemas-microsoft-com:office:excel")]
-        public List<CT_ClientData> ClientData {
-            get {
+
+
+        [XmlElement("ClientData", Namespace = "urn:schemas-microsoft-com:office:excel")]
+        public List<CT_ClientData> ClientData
+        {
+            get
+            {
                 return this.clientDataField;
             }
-            set {
+            set
+            {
                 this.clientDataField = value;
             }
         }
-        
-        
-        [XmlElement("textdata", Namespace="urn:schemas-microsoft-com:office:powerpoint")]
-        public List<CT_Rel> textdata {
-            get {
+
+
+        [XmlElement("textdata", Namespace = "urn:schemas-microsoft-com:office:powerpoint")]
+        public List<CT_Rel> textdata
+        {
+            get
+            {
                 return this.textdataField;
             }
-            set {
+            set
+            {
                 this.textdataField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string from {
-            get {
+        public string from
+        {
+            get
+            {
                 return this.fromField;
             }
-            set {
+            set
+            {
                 this.fromField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string to {
-            get {
+        public string to
+        {
+            get
+            {
                 return this.toField;
             }
-            set {
+            set
+            {
                 this.toField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Oval {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Oval
+    {
+
         private List<object> itemsField = new List<object>();
-        
+
         private List<ItemsChoiceType2> itemsElementNameField = new List<ItemsChoiceType2>();
 
 
@@ -5875,117 +6557,122 @@ namespace NPOI.OpenXmlFormats.Vml
             }
             set
             {
-                if (value == null)
+                if(value == null)
                     this.itemsField = new List<object>();
                 else
                     this.itemsField = new List<object>(value);
             }
         }
-        
-        
+
+
         [XmlElement("ItemsElementName")]
         [XmlIgnore]
-        public ItemsChoiceType2[] ItemsElementName {
-            get {
+        public ItemsChoiceType2[] ItemsElementName
+        {
+            get
+            {
                 return this.itemsElementNameField.ToArray();
             }
-            set {
-                if (value == null)
+            set
+            {
+                if(value == null)
                     this.itemsElementNameField = new List<ItemsChoiceType2>();
                 else
                     this.itemsElementNameField = new List<ItemsChoiceType2>(value);
             }
         }
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml", IncludeInSchema=false)]
-    public enum ItemsChoiceType2 {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml", IncludeInSchema = false)]
+    public enum ItemsChoiceType2
+    {
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:excel:ClientData")]
         ClientData,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:powerpoint:textdata")]
         textdata,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:anchorlock")]
         anchorlock,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderbottom")]
         borderbottom,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderleft")]
         borderleft,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderright")]
         borderright,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:bordertop")]
         bordertop,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:wrap")]
         wrap,
-        
-        
+
+
         fill,
-        
-        
+
+
         formulas,
-        
-        
+
+
         handles,
-        
-        
+
+
         imagedata,
-        
-        
+
+
         path,
-        
-        
+
+
         shadow,
-        
-        
+
+
         stroke,
-        
-        
+
+
         textbox,
-        
-        
+
+
         textpath,
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_PolyLine {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_PolyLine
+    {
+
         private List<object> itemsField = new List<object>();
 
         private List<ItemsChoiceType3> itemsElementNameField = new List<ItemsChoiceType3>();
-        
+
         private string pointsField;
-        
-        
-        [XmlElement("ClientData", typeof(CT_ClientData), Namespace="urn:schemas-microsoft-com:office:excel")]
-        [XmlElement("textdata", typeof(CT_Rel), Namespace="urn:schemas-microsoft-com:office:powerpoint")]
-        [XmlElement("anchorlock", typeof(CT_AnchorLock), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("borderbottom", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("borderleft", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("borderright", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("bordertop", typeof(CT_Border), Namespace="urn:schemas-microsoft-com:office:word")]
-        [XmlElement("wrap", typeof(CT_Wrap), Namespace="urn:schemas-microsoft-com:office:word")]
+
+
+        [XmlElement("ClientData", typeof(CT_ClientData), Namespace = "urn:schemas-microsoft-com:office:excel")]
+        [XmlElement("textdata", typeof(CT_Rel), Namespace = "urn:schemas-microsoft-com:office:powerpoint")]
+        [XmlElement("anchorlock", typeof(CT_AnchorLock), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("borderbottom", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("borderleft", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("borderright", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("bordertop", typeof(CT_Border), Namespace = "urn:schemas-microsoft-com:office:word")]
+        [XmlElement("wrap", typeof(CT_Wrap), Namespace = "urn:schemas-microsoft-com:office:word")]
         [XmlElement("fill", typeof(CT_Fill))]
         [XmlElement("formulas", typeof(CT_Formulas))]
         [XmlElement("handles", typeof(CT_Handles))]
@@ -5996,123 +6683,134 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlElement("textbox", typeof(CT_Textbox))]
         [XmlElement("textpath", typeof(CT_TextPath))]
         [XmlChoiceIdentifier("ItemsElementName")]
-        public object[] Items {
-            get {
+        public object[] Items
+        {
+            get
+            {
                 return this.itemsField.ToArray();
             }
-            set {
-                if (value == null)
+            set
+            {
+                if(value == null)
                     this.itemsField = new List<object>();
                 else
                     this.itemsField = new List<object>(value);
             }
         }
-        
-        
+
+
         [XmlElement("ItemsElementName")]
         [XmlIgnore]
-        public ItemsChoiceType3[] ItemsElementName {
-            get {
+        public ItemsChoiceType3[] ItemsElementName
+        {
+            get
+            {
                 return this.itemsElementNameField.ToArray();
             }
-            set {
-                if (value == null)
+            set
+            {
+                if(value == null)
                     this.itemsElementNameField = new List<ItemsChoiceType3>();
                 else
                     this.itemsElementNameField = new List<ItemsChoiceType3>(value);
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string points {
-            get {
+        public string points
+        {
+            get
+            {
                 return this.pointsField;
             }
-            set {
+            set
+            {
                 this.pointsField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml", IncludeInSchema=false)]
-    public enum ItemsChoiceType3 {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml", IncludeInSchema = false)]
+    public enum ItemsChoiceType3
+    {
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:excel:ClientData")]
         ClientData,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:powerpoint:textdata")]
         textdata,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:anchorlock")]
         anchorlock,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderbottom")]
         borderbottom,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderleft")]
         borderleft,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderright")]
         borderright,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:bordertop")]
         bordertop,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:wrap")]
         wrap,
-        
-        
+
+
         fill,
-        
-        
+
+
         formulas,
-        
-        
+
+
         handles,
-        
-        
+
+
         imagedata,
-        
-        
+
+
         path,
-        
-        
+
+
         shadow,
-        
-        
+
+
         stroke,
-        
-        
+
+
         textbox,
-        
-        
+
+
         textpath,
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Rect {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Rect
+    {
+
         //private List<object> itemsField;
-        
+
         //private ItemsChoiceType4[] itemsElementNameField;
-        
-        
+
+
         //[XmlElement("ClientData", typeof(CT_ClientData), Namespace="urn:schemas-microsoft-com:office:excel")]
         //[XmlElement("textdata", typeof(CT_Rel), Namespace="urn:schemas-microsoft-com:office:powerpoint")]
         //[XmlElement("anchorlock", typeof(CT_AnchorLock), Namespace="urn:schemas-microsoft-com:office:word")]
@@ -6139,8 +6837,8 @@ namespace NPOI.OpenXmlFormats.Vml
         //        this.itemsField = value;
         //    }
         //}
-        
-        
+
+
         //[XmlElement("ItemsElementName")]
         //[XmlIgnore]
         //public ItemsChoiceType4[] ItemsElementName {
@@ -6152,87 +6850,89 @@ namespace NPOI.OpenXmlFormats.Vml
         //    }
         //}
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml", IncludeInSchema=false)]
-    public enum ItemsChoiceType4 {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml", IncludeInSchema = false)]
+    public enum ItemsChoiceType4
+    {
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:excel:ClientData")]
         ClientData,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:powerpoint:textdata")]
         textdata,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:anchorlock")]
         anchorlock,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderbottom")]
         borderbottom,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderleft")]
         borderleft,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderright")]
         borderright,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:bordertop")]
         bordertop,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:wrap")]
         wrap,
-        
-        
+
+
         fill,
-        
-        
+
+
         formulas,
-        
-        
+
+
         handles,
-        
-        
+
+
         imagedata,
-        
-        
+
+
         path,
-        
-        
+
+
         shadow,
-        
-        
+
+
         stroke,
-        
-        
+
+
         textbox,
-        
-        
+
+
         textpath,
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_RoundRect {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_RoundRect
+    {
+
         //private List<object> itemsField;
-        
+
         //private ItemsChoiceType5[] itemsElementNameField;
-        
+
         private string arcsizeField;
-        
-        
+
+
         //[XmlElement("ClientData", typeof(CT_ClientData), Namespace="urn:schemas-microsoft-com:office:excel")]
         //[XmlElement("textdata", typeof(CT_Rel), Namespace="urn:schemas-microsoft-com:office:powerpoint")]
         //[XmlElement("anchorlock", typeof(CT_AnchorLock), Namespace="urn:schemas-microsoft-com:office:word")]
@@ -6259,8 +6959,8 @@ namespace NPOI.OpenXmlFormats.Vml
         //        this.itemsField = value;
         //    }
         //}
-        
-        
+
+
         //[XmlElement("ItemsElementName")]
         //[XmlIgnore]
         //public ItemsChoiceType5[] ItemsElementName {
@@ -6271,234 +6971,244 @@ namespace NPOI.OpenXmlFormats.Vml
         //        this.itemsElementNameField = value;
         //    }
         //}
-        
-        
+
+
         [XmlAttribute]
-        public string arcsize {
-            get {
+        public string arcsize
+        {
+            get
+            {
                 return this.arcsizeField;
             }
-            set {
+            set
+            {
                 this.arcsizeField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml", IncludeInSchema=false)]
-    public enum ItemsChoiceType5 {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml", IncludeInSchema = false)]
+    public enum ItemsChoiceType5
+    {
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:excel:ClientData")]
         ClientData,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:powerpoint:textdata")]
         textdata,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:anchorlock")]
         anchorlock,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderbottom")]
         borderbottom,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderleft")]
         borderleft,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderright")]
         borderright,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:bordertop")]
         bordertop,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:wrap")]
         wrap,
-        
-        
+
+
         fill,
-        
-        
+
+
         formulas,
-        
-        
+
+
         handles,
-        
-        
+
+
         imagedata,
-        
-        
+
+
         path,
-        
-        
+
+
         shadow,
-        
-        
+
+
         stroke,
-        
-        
+
+
         textbox,
-        
-        
+
+
         textpath,
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml", IncludeInSchema=false)]
-    public enum ItemsChoiceType6 {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml", IncludeInSchema = false)]
+    public enum ItemsChoiceType6
+    {
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:excel:ClientData")]
         ClientData,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:powerpoint:textdata")]
         textdata,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:anchorlock")]
         anchorlock,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderbottom")]
         borderbottom,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderleft")]
         borderleft,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:borderright")]
         borderright,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:bordertop")]
         bordertop,
-        
-        
+
+
         [XmlEnum("urn:schemas-microsoft-com:office:word:wrap")]
         wrap,
-        
-        
+
+
         arc,
-        
-        
+
+
         curve,
-        
-        
+
+
         fill,
-        
-        
+
+
         formulas,
-        
-        
+
+
         group,
-        
-        
+
+
         handles,
-        
-        
+
+
         image,
-        
-        
+
+
         imagedata,
-        
-        
+
+
         line,
-        
-        
+
+
         oval,
-        
-        
+
+
         path,
-        
-        
+
+
         polyline,
-        
-        
+
+
         rect,
-        
-        
+
+
         roundrect,
-        
-        
+
+
         shadow,
-        
-        
+
+
         shape,
-        
-        
+
+
         shapetype,
-        
-        
+
+
         stroke,
-        
-        
+
+
         textbox,
-        
-        
+
+
         textpath,
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_EditAs {
-        
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_EditAs
+    {
+
+
         canvas,
-        
-        
+
+
         orgchart,
-        
-        
+
+
         radial,
-        
-        
+
+
         cycle,
-        
-        
+
+
         stacked,
-        
-        
+
+
         venn,
-        
-        
+
+
         bullseye,
     }
-    
-    
+
+
     [Serializable]
 
     [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=true)]
-    public class CT_Background {
-        
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = true)]
+    public class CT_Background
+    {
+
         private CT_Fill fillField;
-        
+
         private string idField;
-        
+
         private ST_TrueFalse filledField;
-        
+
         private bool filledFieldSpecified;
-        
+
         private string fillcolorField;
-        
-        
-        public CT_Fill fill {
-            get {
+
+
+        public CT_Fill fill
+        {
+            get
+            {
                 return this.fillField;
             }
-            set {
+            set
+            {
                 this.fillField = value;
             }
         }
@@ -6507,54 +7217,65 @@ namespace NPOI.OpenXmlFormats.Vml
         [XmlAttribute]
         public string id
         {
-            get {
+            get
+            {
                 return this.idField;
             }
-            set {
+            set
+            {
                 this.idField = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public ST_TrueFalse filled {
-            get {
+        public ST_TrueFalse filled
+        {
+            get
+            {
                 return this.filledField;
             }
-            set {
+            set
+            {
                 this.filledField = value;
             }
         }
-        
-        
+
+
         [XmlIgnore]
-        public bool filledSpecified {
-            get {
+        public bool filledSpecified
+        {
+            get
+            {
                 return this.filledFieldSpecified;
             }
-            set {
+            set
+            {
                 this.filledFieldSpecified = value;
             }
         }
-        
-        
+
+
         [XmlAttribute]
-        public string fillcolor {
-            get {
+        public string fillcolor
+        {
+            get
+            {
                 return this.fillcolorField;
             }
-            set {
+            set
+            {
                 this.fillcolorField = value;
             }
         }
     }
-    
-    
+
+
     [Serializable]
-    [XmlType(Namespace="urn:schemas-microsoft-com:vml")]
-    [XmlRoot(Namespace="urn:schemas-microsoft-com:vml", IsNullable=false)]
-    public enum ST_Ext 
-    {       
+    [XmlType(Namespace = "urn:schemas-microsoft-com:vml")]
+    [XmlRoot(Namespace = "urn:schemas-microsoft-com:vml", IsNullable = false)]
+    public enum ST_Ext
+    {
         NONE,
         view,
         edit,

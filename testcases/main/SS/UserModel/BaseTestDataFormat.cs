@@ -15,11 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
-using System.Collections.Generic;
-using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
 namespace TestCases.SS.UserModel
 {
 
@@ -56,7 +57,7 @@ namespace TestCases.SS.UserModel
             IDataFormat df = wb.CreateDataFormat();
 
             List<String> formats = HSSFDataFormat.GetBuiltinFormats();
-            for (int idx = 0; idx < formats.Count; idx++)
+            for(int idx = 0; idx < formats.Count; idx++)
             {
                 String fmt = formats[idx];
                 ClassicAssert.AreEqual(idx, df.GetFormat(fmt));
@@ -76,7 +77,7 @@ namespace TestCases.SS.UserModel
             //The first user-defined format starts at 164.
             ClassicAssert.IsTrue(customIdx >= HSSFDataFormat.FIRST_USER_DEFINED_FORMAT_INDEX);
             //read and verify the string representation
-            ClassicAssert.AreEqual(customFmt, df.GetFormat((short)customIdx));
+            ClassicAssert.AreEqual(customFmt, df.GetFormat((short) customIdx));
 
             wb.Close();
         }
@@ -167,10 +168,11 @@ namespace TestCases.SS.UserModel
 
             // For all of the contents rows, check that DataFormatter is able
             //  to format the cells to the same value as the one next to it
-            for (int rn = 1; rn < s.LastRowNum; rn++)
+            for(int rn = 1; rn < s.LastRowNum; rn++)
             {
                 IRow r = s.GetRow(rn);
-                if (r == null) break;
+                if(r == null)
+                    break;
 
                 double value = r.GetCell(0).NumericCellValue;
 
@@ -185,7 +187,7 @@ namespace TestCases.SS.UserModel
         /**
          * Localised accountancy formats
          */
-         [Test]
+        [Test]
         public void Test58536()
         {
             IWorkbook wb = _testDataProvider.CreateWorkbook();
@@ -261,13 +263,10 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.AreEqual("1'234", formatter.FormatCellValue(med));
                 ClassicAssert.AreEqual("12'345'678", formatter.FormatCellValue(lge));
             }
-            finally { 
+            finally
+            {
                 wb.Close();
             }
         }
     }
 }
-
-
-
-

@@ -1,9 +1,10 @@
-﻿using System.IO;
-using System.Linq;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System.IO;
+using System.Linq;
 
 namespace TestCases.HSSF.UserModel
 {
@@ -106,7 +107,7 @@ namespace TestCases.HSSF.UserModel
             HSSFSheet sheet1 = srcBook.GetSheetAt(0) as HSSFSheet;
             sheet1.CopyTo(destBook, "First Sheet", true, true);
 
-            using (MemoryStream ms = new MemoryStream())
+            using(MemoryStream ms = new MemoryStream())
             {
                 destBook.Write(ms);
                 ms.Position = 0;
@@ -116,7 +117,7 @@ namespace TestCases.HSSF.UserModel
             }
             HSSFSheet sheet2 = srcBook.GetSheetAt(1) as HSSFSheet;
             sheet2.CopyTo(destBook, "Second Sheet", true, true);
-            using (MemoryStream ms = new MemoryStream())
+            using(MemoryStream ms = new MemoryStream())
             {
                 destBook.Write(ms);
                 ms.Position = 0;

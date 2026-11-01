@@ -18,9 +18,9 @@
 namespace NPOI.SS.Formula
 {
 
-    using System;
-    using NPOI.SS.Formula.PTG;
     using NPOI.SS.Formula.Function;
+    using NPOI.SS.Formula.PTG;
+    using System;
     /**
      * Represents a syntactic element from a formula by encapsulating the corresponding <c>Ptg</c>
      * Token.  Each <c>ParseNode</c> may have child <c>ParseNode</c>s in the case when the wrapped
@@ -38,14 +38,14 @@ namespace NPOI.SS.Formula
         public ParseNode(Ptg token, ParseNode[] children)
         {
             _token = token;
-            _children = (ParseNode[])children.Clone();
+            _children = (ParseNode[]) children.Clone();
             _isIf = IsIf(token);
             int tokenCount = 1;
-            for (int i = 0; i < children.Length; i++)
+            for(int i = 0; i < children.Length; i++)
             {
                 tokenCount += children[i].TokenCount;
             }
-            if (_isIf)
+            if(_isIf)
             {
                 // there will be 2 or 3 extra tAttr Tokens according To whether the false param is present
                 tokenCount += children.Length;
@@ -79,7 +79,7 @@ namespace NPOI.SS.Formula
             get
             {
                 int result = _token is ArrayPtg ? ArrayPtg.PLAIN_TOKEN_SIZE : _token.Size;
-                for (int i = 0; i < _children.Length; i++)
+                for(int i = 0; i < _children.Length; i++)
                 {
                     result += _children[i].EncodedSize;
                 }
@@ -98,16 +98,17 @@ namespace NPOI.SS.Formula
         }
         private void CollectPtgs(TokenCollector temp)
         {
-            if (IsIf(_token))
+            if(IsIf(_token))
             {
                 CollectIfPtgs(temp);
                 return;
             }
             bool isPreFixOperator = _token is MemFuncPtg || _token is MemAreaPtg;
-		    if (isPreFixOperator) {
-			    temp.Add(_token);
-		    }
-            for (int i = 0; i < GetChildren().Length; i++)
+            if(isPreFixOperator)
+            {
+                temp.Add(_token);
+            }
+            for(int i = 0; i < GetChildren().Length; i++)
             {
                 GetChildren()[i].CollectPtgs(temp);
             }
@@ -140,7 +141,7 @@ namespace NPOI.SS.Formula
 
             AttrPtg attrIf = AttrPtg.CreateIf(trueParamSize + 4);// distance to start of false parameter/tFuncVar. +4 for tAttrSkip after true
 
-            if (GetChildren().Length > 2)
+            if(GetChildren().Length > 2)
             {
                 // false param present
 
@@ -171,9 +172,9 @@ namespace NPOI.SS.Formula
 
         private static bool IsIf(Ptg token)
         {
-            if (token is FuncVarPtg func)
+            if(token is FuncVarPtg func)
             {
-                if (FunctionMetadataRegistry.FUNCTION_NAME_IF.Equals(func.Name))
+                if(FunctionMetadataRegistry.FUNCTION_NAME_IF.Equals(func.Name))
                 {
                     return true;
                 }
@@ -206,7 +207,7 @@ namespace NPOI.SS.Formula
             public int sumTokenSizes(int fromIx, int ToIx)
             {
                 int result = 0;
-                for (int i = fromIx; i < ToIx; i++)
+                for(int i = fromIx; i < ToIx; i++)
                 {
                     result += _ptgs[i].Size;
                 }
@@ -220,7 +221,7 @@ namespace NPOI.SS.Formula
 
             public void Add(Ptg token)
             {
-                if (token == null)
+                if(token == null)
                 {
                     throw new ArgumentException("token must not be null");
                 }
@@ -230,7 +231,7 @@ namespace NPOI.SS.Formula
 
             public void SetPlaceholder(int index, Ptg token)
             {
-                if (_ptgs[index] != null)
+                if(_ptgs[index] != null)
                 {
                     throw new InvalidOperationException("Invalid placeholder index (" + index + ")");
                 }

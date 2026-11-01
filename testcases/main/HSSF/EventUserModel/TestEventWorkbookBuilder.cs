@@ -17,20 +17,19 @@
 
 namespace TestCases.HSSF.EventUserModel
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
     using NPOI.HSSF;
     using NPOI.HSSF.EventUserModel;
     using NPOI.HSSF.Model;
-    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
     using NPOI.SS.Formula;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.IO;
 
 
     [TestFixture]
@@ -54,7 +53,7 @@ namespace TestCases.HSSF.EventUserModel
                 POIFSFileSystem fs = new POIFSFileSystem(is1);
                 factory.ProcessWorkbookEvents(req, fs);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
@@ -106,7 +105,7 @@ namespace TestCases.HSSF.EventUserModel
             ClassicAssert.AreEqual("Sh3", stubWB.GetSheetName(2));
 
             // Check we can Get the formula without breaking
-            for (int i = 0; i < fRecs.Length; i++)
+            for(int i = 0; i < fRecs.Length; i++)
             {
                 HSSFFormulaParser.ToFormulaString(stubHSSF, fRecs[i].ParsedExpression);
             }
@@ -160,7 +159,7 @@ namespace TestCases.HSSF.EventUserModel
             public void ProcessRecord(Record record)
             {
                 _records.Add(record);
-                if (record is FormulaRecord)
+                if(record is FormulaRecord)
                 {
                     _frecs.Add(record);
                 }

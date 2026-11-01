@@ -39,9 +39,9 @@ namespace NPOI.POIFS.Crypt
         public static readonly EncryptionMode XOR = new EncryptionMode("NPOI.POIFS.Crypt.XOR.XOREncryptionInfoBuilder", 0, 0, 0);
 
         public string Builder { get; private set; }
-        public int VersionMajor { get;private set; }
-        public int VersionMinor { get;private set; }
-        public int EncryptionFlags { get;private set; }
+        public int VersionMajor { get; private set; }
+        public int VersionMinor { get; private set; }
+        public int EncryptionFlags { get; private set; }
 
         public EncryptionMode(string builder, int versionMajor, int versionMinor, int encryptionFlags)
         {

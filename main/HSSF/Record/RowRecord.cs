@@ -18,9 +18,9 @@
 namespace NPOI.HSSF.Record
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        Row Record
@@ -62,27 +62,27 @@ namespace NPOI.HSSF.Record
         private static BitField badFontHeight = BitFieldFactory.GetInstance(0x40);
         private static BitField formatted = BitFieldFactory.GetInstance(0x80);
 
-    private int field_8_option_flags;   // only if isFormatted
-    private static BitField          xfIndex       = BitFieldFactory.GetInstance(0xFFF);
-    private static BitField          topBorder     = BitFieldFactory.GetInstance(0x1000);
-    private static BitField          bottomBorder  = BitFieldFactory.GetInstance(0x2000);
-    private static BitField          phoeneticGuide  = BitFieldFactory.GetInstance(0x4000);
+        private int field_8_option_flags;   // only if isFormatted
+        private static BitField          xfIndex       = BitFieldFactory.GetInstance(0xFFF);
+        private static BitField          topBorder     = BitFieldFactory.GetInstance(0x1000);
+        private static BitField          bottomBorder  = BitFieldFactory.GetInstance(0x2000);
+        private static BitField          phoeneticGuide  = BitFieldFactory.GetInstance(0x4000);
 
         public RowRecord(int rowNumber)
         {
-            if (rowNumber < 0)
+            if(rowNumber < 0)
             {
                 throw new ArgumentException("Invalid row number (" + rowNumber + ")");
             }
             field_1_row_number = rowNumber;
             //field_2_first_col = -1;
             //field_3_last_col = -1;
-            field_4_height = (short)0x00FF;
-            field_5_optimize = (short)0;
-            field_6_reserved = (short)0;
+            field_4_height = (short) 0x00FF;
+            field_5_optimize = (short) 0;
+            field_6_reserved = (short) 0;
             field_7_option_flags = OPTION_BITS_ALWAYS_SET; // seems necessary for outlining
 
-            field_8_option_flags = (short)0xf;
+            field_8_option_flags = (short) 0xf;
             SetEmpty();
         }
 
@@ -94,7 +94,7 @@ namespace NPOI.HSSF.Record
         public RowRecord(RecordInputStream in1)
         {
             field_1_row_number = in1.ReadUShort();
-            if (field_1_row_number < 0)
+            if(field_1_row_number < 0)
             {
                 throw new ArgumentException("Invalid row number " + field_1_row_number + " found in InputStream");
             }
@@ -108,9 +108,9 @@ namespace NPOI.HSSF.Record
         }
 
         public void SetEmpty()
-        { 
+        {
             field_2_first_col = 0;
-            field_3_last_col = 0;            
+            field_3_last_col = 0;
         }
         /**
          * Get the logical row number for this row (0 based index)
@@ -140,7 +140,7 @@ namespace NPOI.HSSF.Record
 
         public int FirstCol
         {
-            get{return field_2_first_col;}
+            get { return field_2_first_col; }
             set { field_2_first_col = value; }
         }
 
@@ -162,7 +162,7 @@ namespace NPOI.HSSF.Record
 
         public short Height
         {
-            get{return field_4_height;}
+            get { return field_4_height; }
             set { field_4_height = value; }
         }
 
@@ -190,9 +190,9 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return (short)field_7_option_flags;
+                return (short) field_7_option_flags;
             }
-            set { field_7_option_flags = value | (short)OPTION_BITS_ALWAYS_SET; }
+            set { field_7_option_flags = value | (short) OPTION_BITS_ALWAYS_SET; }
         }
 
         // option bitfields
@@ -205,7 +205,7 @@ namespace NPOI.HSSF.Record
 
         public short OutlineLevel
         {
-            get { return (short)outlineLevel.GetValue(field_7_option_flags); }
+            get { return (short) outlineLevel.GetValue(field_7_option_flags); }
             set { field_7_option_flags = outlineLevel.SetValue(field_7_option_flags, value); }
         }
 
@@ -221,9 +221,9 @@ namespace NPOI.HSSF.Record
             {
                 return (colapsed.IsSet(field_7_option_flags));
             }
-            set 
-            { 
-                field_7_option_flags = colapsed.SetBoolean(field_7_option_flags, value); 
+            set
+            {
+                field_7_option_flags = colapsed.SetBoolean(field_7_option_flags, value);
             }
         }
 
@@ -239,9 +239,9 @@ namespace NPOI.HSSF.Record
             {
                 return zeroHeight.IsSet(field_7_option_flags);
             }
-            set 
-            { 
-                field_7_option_flags = zeroHeight.SetBoolean(field_7_option_flags, value); 
+            set
+            {
+                field_7_option_flags = zeroHeight.SetBoolean(field_7_option_flags, value);
             }
         }
 
@@ -257,9 +257,9 @@ namespace NPOI.HSSF.Record
             {
                 return badFontHeight.IsSet(field_7_option_flags);
             }
-            set 
-            { 
-                field_7_option_flags = badFontHeight.SetBoolean(field_7_option_flags, value); 
+            set
+            {
+                field_7_option_flags = badFontHeight.SetBoolean(field_7_option_flags, value);
             }
         }
 
@@ -281,7 +281,7 @@ namespace NPOI.HSSF.Record
         // end bitfields
         public short OptionFlags2
         {
-            get { return (short)this.field_8_option_flags; }
+            get { return (short) this.field_8_option_flags; }
         }
         /**
          * if the row is formatted then this is the index to the extended format record
@@ -291,7 +291,7 @@ namespace NPOI.HSSF.Record
 
         public short XFIndex
         {
-            get { return xfIndex.GetShortValue((short)field_8_option_flags); }
+            get { return xfIndex.GetShortValue((short) field_8_option_flags); }
             set { field_8_option_flags = xfIndex.SetValue(field_8_option_flags, value); }
         }
         /**
@@ -355,8 +355,8 @@ namespace NPOI.HSSF.Record
         public override void Serialize(ILittleEndianOutput out1)
         {
             out1.WriteShort(RowNumber);
-            out1.WriteShort(FirstCol == -1 ? (short)0 : FirstCol);
-            out1.WriteShort(LastCol == -1 ? (short)0 : LastCol);
+            out1.WriteShort(FirstCol == -1 ? (short) 0 : FirstCol);
+            out1.WriteShort(LastCol == -1 ? (short) 0 : LastCol);
             out1.WriteShort(Height);
             out1.WriteShort(Optimize);
             out1.WriteShort(field_6_reserved);
@@ -384,15 +384,15 @@ namespace NPOI.HSSF.Record
         {
             RowRecord loc = (RowRecord)obj;
 
-            if (this.RowNumber == loc.RowNumber)
+            if(this.RowNumber == loc.RowNumber)
             {
                 return 0;
             }
-            if (this.RowNumber < loc.RowNumber)
+            if(this.RowNumber < loc.RowNumber)
             {
                 return -1;
             }
-            if (this.RowNumber > loc.RowNumber)
+            if(this.RowNumber > loc.RowNumber)
             {
                 return 1;
             }
@@ -401,19 +401,19 @@ namespace NPOI.HSSF.Record
 
         public override bool Equals(Object obj)
         {
-            if (obj is not RowRecord loc)
+            if(obj is not RowRecord loc)
             {
                 return false;
             }
 
-            if (this.RowNumber == loc.RowNumber)
+            if(this.RowNumber == loc.RowNumber)
             {
                 return true;
             }
             return false;
         }
 
-        public override int GetHashCode ()
+        public override int GetHashCode()
         {
             return RowNumber;
         }

@@ -18,12 +18,12 @@
 
 namespace NPOI.SS.Formula.Eval.Forked
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Formula.UDF;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * Represents a workbook being used for forked Evaluation. Most operations are delegated to the
@@ -60,7 +60,7 @@ namespace NPOI.SS.Formula.Eval.Forked
             ForkedEvaluationSheet result = null;
             if(_sharedSheetsByName.TryGetValue(sheetName, out ForkedEvaluationSheet value))
                 result = value;
-            if (result == null)
+            if(result == null)
             {
                 result = new ForkedEvaluationSheet(_masterBook.GetSheet(_masterBook.GetSheetIndex(sheetName)));
                 _sharedSheetsByName[sheetName] = result;
@@ -94,7 +94,7 @@ namespace NPOI.SS.Formula.Eval.Forked
         }
         public Ptg[] GetFormulaTokens(IEvaluationCell cell)
         {
-            if (cell is ForkedEvaluationCell)
+            if(cell is ForkedEvaluationCell)
             {
                 // doesn't happen yet because formulas cannot be modified from the master workbook
                 throw new Exception("Updated formulas not supported yet");
@@ -127,7 +127,7 @@ namespace NPOI.SS.Formula.Eval.Forked
         }
         public int GetSheetIndex(IEvaluationSheet sheet)
         {
-            if (sheet is ForkedEvaluationSheet mes)
+            if(sheet is ForkedEvaluationSheet mes)
             {
                 return mes.GetSheetIndex(_masterBook);
             }

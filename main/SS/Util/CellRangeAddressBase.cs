@@ -1,4 +1,4 @@
-﻿namespace NPOI.SS.Util
+namespace NPOI.SS.Util
 {
     using EnumsNET;
     using NPOI.HSSF;
@@ -231,16 +231,21 @@
         public ISet<CellPosition> GetPosition(int rowInd, int colInd)
         {
             HashSet<CellPosition> positions = new HashSet<CellPosition>();
-            if (rowInd > FirstRow && rowInd < LastRow && colInd > FirstColumn && colInd < LastColumn) {
+            if(rowInd > FirstRow && rowInd < LastRow && colInd > FirstColumn && colInd < LastColumn)
+            {
                 positions.Add(CellPosition.INSIDE);
                 return positions; // entirely inside, matches no boundaries
             }
             // check edges
-            if (rowInd == FirstRow) positions.Add(CellPosition.TOP);
-            if (rowInd == LastRow) positions.Add(CellPosition.BOTTOM);
-            if (colInd == FirstColumn) positions.Add(CellPosition.LEFT);
-            if (colInd == LastColumn) positions.Add(CellPosition.RIGHT);
-        
+            if(rowInd == FirstRow)
+                positions.Add(CellPosition.TOP);
+            if(rowInd == LastRow)
+                positions.Add(CellPosition.BOTTOM);
+            if(colInd == FirstColumn)
+                positions.Add(CellPosition.LEFT);
+            if(colInd == LastColumn)
+                positions.Add(CellPosition.RIGHT);
+
             return positions;
         }
 
@@ -407,7 +412,7 @@
 
             public void Dispose()
             {
-                
+
             }
 
             public bool MoveNext()
@@ -441,7 +446,7 @@
             }
         }
 
-}
+    }
 
     /// <summary>
     /// Indicates a cell or range is in the given relative position in a range.

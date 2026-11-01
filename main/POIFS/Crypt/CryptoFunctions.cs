@@ -25,7 +25,8 @@ namespace NPOI.POIFS.Crypt
     /**
      * Helper functions used for standard and agile encryption
      */
-    public class CryptoFunctions {
+    public class CryptoFunctions
+    {
 
         //arbitrarily selected; may need to increase
         private const int DEFAULT_MAX_RECORD_LENGTH = 100_000;
@@ -66,7 +67,8 @@ namespace NPOI.POIFS.Crypt
          * @param spinCount
          * @return the hashed password
          */
-        public static byte[] HashPassword(String password, HashAlgorithm hashAlgorithm, byte[] salt, int spinCount) {
+        public static byte[] HashPassword(String password, HashAlgorithm hashAlgorithm, byte[] salt, int spinCount)
+        {
             return HashPassword(password, hashAlgorithm, salt, spinCount, true);
         }
 
@@ -83,9 +85,11 @@ namespace NPOI.POIFS.Crypt
          *        if false the n-1 hash value is applied first
          * @return the hashed password
          */
-        public static byte[] HashPassword(String password, HashAlgorithm hashAlgorithm, byte[] salt, int spinCount, bool iteratorFirst) {
+        public static byte[] HashPassword(String password, HashAlgorithm hashAlgorithm, byte[] salt, int spinCount, bool iteratorFirst)
+        {
             // If no password was given, use the default
-            if (password == null) {
+            if(password == null)
+            {
                 password = Decryptor.DEFAULT_PASSWORD;
             }
 
@@ -98,15 +102,19 @@ namespace NPOI.POIFS.Crypt
             byte[] first = (iteratorFirst ? iterator : hash);
             byte[] second = (iteratorFirst ? hash : iterator);
 
-            try {
-                for (int i = 0; i < spinCount; i++) {
+            try
+            {
+                for(int i = 0; i < spinCount; i++)
+                {
                     LittleEndian.PutInt(iterator, 0, i);
                     hashAlg.Reset();
                     hashAlg.Update(first);
                     hashAlg.Update(second);
                     hashAlg.Digest(hash, 0, hash.Length); // don't create hash buffer everytime new
                 }
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 throw new EncryptedDocumentException("error in password hashing", e);
             }
 
@@ -130,9 +138,11 @@ namespace NPOI.POIFS.Crypt
         *     array to blockSize bytes.</li>
         * </ul> 
         **/
-        public static byte[] GenerateIv(HashAlgorithm hashAlgorithm, byte[] salt, byte[] blockKey, int blockSize) {
+        public static byte[] GenerateIv(HashAlgorithm hashAlgorithm, byte[] salt, byte[] blockKey, int blockSize)
+        {
             byte[] iv = salt;
-            if (blockKey != null) {
+            if(blockKey != null)
+            {
                 MessageDigest hashAlgo = GetMessageDigest(hashAlgorithm);
                 hashAlgo.Update(salt);
                 iv = hashAlgo.Digest(blockKey);
@@ -161,7 +171,8 @@ namespace NPOI.POIFS.Crypt
          * @param keySize
          * @return intermediate key
          */
-        public static byte[] GenerateKey(byte[] passwordHash, HashAlgorithm hashAlgorithm, byte[] blockKey, int keySize) {
+        public static byte[] GenerateKey(byte[] passwordHash, HashAlgorithm hashAlgorithm, byte[] blockKey, int keySize)
+        {
             MessageDigest hashAlgo = GetMessageDigest(hashAlgorithm);
             hashAlgo.Update(passwordHash);
             byte[] key = hashAlgo.Digest(blockKey);
@@ -183,7 +194,8 @@ namespace NPOI.POIFS.Crypt
         * @throws EncryptedDocumentException if the initialization failed or if an algorithm was specified,
         *   which depends on a missing bouncy castle provider 
         */
-        public static Cipher GetCipher(ISecretKey key, CipherAlgorithm cipherAlgorithm, ChainingMode chain, byte[] vec, int cipherMode) {
+        public static Cipher GetCipher(ISecretKey key, CipherAlgorithm cipherAlgorithm, ChainingMode chain, byte[] vec, int cipherMode)
+        {
             return GetCipher(key, cipherAlgorithm, chain, vec, cipherMode, null);
         }
 
@@ -203,41 +215,57 @@ namespace NPOI.POIFS.Crypt
          * @throws EncryptedDocumentException if the Initialization failed or if an algorithm was specified,
          *   which depends on a missing bouncy castle provider 
          */
-        public static Cipher GetCipher(IKey key, CipherAlgorithm cipherAlgorithm, ChainingMode chain, byte[] vec, int cipherMode, String padding) {
+        public static Cipher GetCipher(IKey key, CipherAlgorithm cipherAlgorithm, ChainingMode chain, byte[] vec, int cipherMode, String padding)
+        {
             int keySizeInBytes = key.GetEncoded().Length;
-            if (padding == null) padding = "NoPadding";
+            if(padding == null)
+                padding = "NoPadding";
 
-            try {
+            try
+            {
                 // Ensure the JCE policies files allow for this sized key
                 /*if (Cipher.GetMaxAllowedKeyLength(cipherAlgorithm.jceId) < keySizeInBytes * 8) {
                     throw new EncryptedDocumentException("Export Restrictions in place - please install JCE Unlimited Strength Jurisdiction Policy files");
                 }*/
 
                 Cipher cipher;
-                if (cipherAlgorithm == CipherAlgorithm.rc4) {
+                if(cipherAlgorithm == CipherAlgorithm.rc4)
+                {
                     cipher = Cipher.GetInstance(cipherAlgorithm.jceId);
-                } else if (cipherAlgorithm.needsBouncyCastle) {
+                }
+                else if(cipherAlgorithm.needsBouncyCastle)
+                {
                     registerBouncyCastle();
                     cipher = Cipher.GetInstance(cipherAlgorithm.jceId + "/" + chain.jceId + "/" + padding, "BC");
-                } else {
+                }
+                else
+                {
                     cipher = Cipher.GetInstance(cipherAlgorithm.jceId + "/" + chain.jceId + "/" + padding);
                 }
-                
+
                 cipher.Algorithm = cipherAlgorithm;
 
-                if (vec == null) {
+                if(vec == null)
+                {
                     cipher.Init(cipherMode, key);
-                } else {
+                }
+                else
+                {
                     AlgorithmParameterSpec aps;
-                    if (cipherAlgorithm == CipherAlgorithm.rc2) {
+                    if(cipherAlgorithm == CipherAlgorithm.rc2)
+                    {
                         aps = new RC2ParameterSpec(key.GetEncoded().Length * 8, vec);
-                    } else {
+                    }
+                    else
+                    {
                         aps = new IvParameterSpec(vec);
                     }
                     cipher.Init(cipherMode, key, aps);
                 }
                 return cipher;
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 throw new EncryptedDocumentException(e);
             }
         }
@@ -250,8 +278,9 @@ namespace NPOI.POIFS.Crypt
          * @param size the size of the returned byte array
          * @return the pAdded hash
          */
-        private static byte[] GetBlock36(byte[] hash, int size) {
-            return GetBlockX(hash, size, (byte)0x36);
+        private static byte[] GetBlock36(byte[] hash, int size)
+        {
+            return GetBlockX(hash, size, (byte) 0x36);
         }
 
         /**
@@ -262,12 +291,15 @@ namespace NPOI.POIFS.Crypt
          * @param size the size of the returned byte array
          * @return the pAdded hash
          */
-        public static byte[] GetBlock0(byte[] hash, int size) {
-            return GetBlockX(hash, size, (byte)0);
+        public static byte[] GetBlock0(byte[] hash, int size)
+        {
+            return GetBlockX(hash, size, (byte) 0);
         }
 
-        private static byte[] GetBlockX(byte[] hash, int size, byte Fill) {
-            if (hash.Length == size) return hash;
+        private static byte[] GetBlockX(byte[] hash, int size, byte Fill)
+        {
+            if(hash.Length == size)
+                return hash;
 
             byte[] result = new byte[size];
             Arrays.Fill(result, Fill);
@@ -275,34 +307,49 @@ namespace NPOI.POIFS.Crypt
             return result;
         }
 
-        public static MessageDigest GetMessageDigest(HashAlgorithm hashAlgorithm) {
-            try {
-                if (hashAlgorithm.needsBouncyCastle) {
+        public static MessageDigest GetMessageDigest(HashAlgorithm hashAlgorithm)
+        {
+            try
+            {
+                if(hashAlgorithm.needsBouncyCastle)
+                {
                     registerBouncyCastle();
                     return MessageDigest.GetInstance(hashAlgorithm.jceId, "BC");
-                } else {
+                }
+                else
+                {
                     return MessageDigest.GetInstance(hashAlgorithm.jceId);
                 }
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 throw new EncryptedDocumentException("hash algo not supported", e);
             }
         }
 
-        public static Mac GetMac(HashAlgorithm hashAlgorithm) {
-            try {
-                if (hashAlgorithm.needsBouncyCastle) {
+        public static Mac GetMac(HashAlgorithm hashAlgorithm)
+        {
+            try
+            {
+                if(hashAlgorithm.needsBouncyCastle)
+                {
                     registerBouncyCastle();
                     return Mac.GetInstance(hashAlgorithm.jceHmacId, "BC");
-                } else {
+                }
+                else
+                {
                     return Mac.GetInstance(hashAlgorithm.jceHmacId);
                 }
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 throw new EncryptedDocumentException("hmac algo not supported", e);
             }
         }
 
         [Obsolete("not necessary for npoi")]
-        public static void registerBouncyCastle() {
+        public static void registerBouncyCastle()
+        {
             //if (Security.GetProvider("BC") != null) return;
             //try {
             //    ClassLoader cl = Thread.CurrentThread().ContextClassLoader;
@@ -360,10 +407,10 @@ namespace NPOI.POIFS.Crypt
 
             // SET Verifier TO 0x0000
             short verifier = 0;
-            if (!"".Equals(password))
+            if(!"".Equals(password))
             {
                 // FOR EACH PasswordByte IN PasswordArray IN REVERSE ORDER
-                for (int i = arrByteChars.Length - 1; i >= 0; i--)
+                for(int i = arrByteChars.Length - 1; i >= 0; i--)
                 {
                     // SET Verifier TO Intermediate3 BITWISE XOR PasswordByte
                     verifier = rotateLeftBase15Bit(verifier);
@@ -373,10 +420,10 @@ namespace NPOI.POIFS.Crypt
                 // as we haven't prepended the password length into the input array
                 // we need to do it now separately ...
                 verifier = rotateLeftBase15Bit(verifier);
-                verifier ^= (short)arrByteChars.Length;
+                verifier ^= (short) arrByteChars.Length;
 
                 // RETURN Verifier BITWISE XOR 0xCE4B
-                verifier ^= unchecked((short)0xCE4B); // (0x8000 | ('N' << 8) | 'K')
+                verifier ^= unchecked((short) 0xCE4B); // (0x8000 | ('N' << 8) | 'K')
             }
             return verifier & 0xFFFF;
         }
@@ -393,14 +440,16 @@ namespace NPOI.POIFS.Crypt
          * @see <a href="http://blogs.msdn.com/b/vsod/archive/2010/04/05/how-to-set-the-editing-restrictions-in-word-using-open-xml-sdk-2-0.aspx">How to Set the editing restrictions in Word using Open XML SDK 2.0</a>
          * @see <a href="http://www.aspose.com/blogs/aspose-blogs/vladimir-averkin/archive/2007/08/20/funny-how-the-new-powerful-cryptography-implemented-in-word-2007-turns-it-into-a-perfect-tool-for-document-password-removal.html">Funny: How the new powerful cryptography implemented in Word 2007 turns it into a perfect tool for document password removal.</a>
          */
-        public static int CreateXorVerifier2(String password) {
+        public static int CreateXorVerifier2(String password)
+        {
             //Array to hold Key Values
             byte[] generatedKey = new byte[4];
 
             //Maximum length of the password is 15 chars.
             int maxPasswordLength = 15;
 
-            if (!"".Equals(password)) {
+            if(!"".Equals(password))
+            {
                 // TRuncate the password to 15 characters
                 password = password.Substring(0, Math.Min(password.Length, maxPasswordLength));
 
@@ -415,10 +464,13 @@ namespace NPOI.POIFS.Crypt
                 //      --> For every bit in the character, starting with the least significant and progressing to (but excluding) 
                 //          the most significant, if the bit is Set, XOR the keys high-order word with the corresponding word from 
                 //          the Encryption Matrix
-                for (int i = 0; i < arrByteChars.Length; i++) {
+                for(int i = 0; i < arrByteChars.Length; i++)
+                {
                     int tmp = maxPasswordLength - arrByteChars.Length + i;
-                    for (int intBit = 0; intBit < 7; intBit++) {
-                        if ((arrByteChars[i] & (0x0001 << intBit)) != 0) {
+                    for(int intBit = 0; intBit < 7; intBit++)
+                    {
+                        if((arrByteChars[i] & (0x0001 << intBit)) != 0)
+                        {
                             highOrderWord ^= ENCRYPTION_MATRIX[tmp][intBit];
                         }
                     }
@@ -431,8 +483,8 @@ namespace NPOI.POIFS.Crypt
                 // The byte order of the result shall be reversed [password "Example": 0x64CEED7E becomes 7EEDCE64],
                 // and that value shall be hashed as defined by the attribute values.
 
-                LittleEndian.PutShort(generatedKey, 0, (short)verifier);
-                LittleEndian.PutShort(generatedKey, 2, (short)highOrderWord);
+                LittleEndian.PutShort(generatedKey, 0, (short) verifier);
+                LittleEndian.PutShort(generatedKey, 2, (short) highOrderWord);
             }
 
             return LittleEndian.GetInt(generatedKey);
@@ -441,7 +493,8 @@ namespace NPOI.POIFS.Crypt
         /**
          * This method generates the xored-hashed password for word documents &lt; 2007.
          */
-        public static String XorHashPassword(String password) {
+        public static String XorHashPassword(String password)
+        {
             int hashedPassword = CreateXorVerifier2(password);
             return String.Format("{0:X8}", hashedPassword);
         }
@@ -450,14 +503,15 @@ namespace NPOI.POIFS.Crypt
          * Convenience function which returns the reversed xored-hashed password for further 
          * Processing in word documents 2007 and newer, which utilize a real hashing algorithm like sha1.
          */
-        public static String XorHashPasswordReversed(String password) {
+        public static String XorHashPasswordReversed(String password)
+        {
             int hashedPassword = CreateXorVerifier2(password);
 
             return String.Format("{0:X2}{1:X2}{2:X2}{3:X2}"
-                , Operator.UnsignedRightShift(hashedPassword , 0) & 0xFF
-                , Operator.UnsignedRightShift(hashedPassword , 8) & 0xFF
-                , Operator.UnsignedRightShift(hashedPassword , 16) & 0xFF
-                , Operator.UnsignedRightShift(hashedPassword , 24) & 0xFF
+                , Operator.UnsignedRightShift(hashedPassword, 0) & 0xFF
+                , Operator.UnsignedRightShift(hashedPassword, 8) & 0xFF
+                , Operator.UnsignedRightShift(hashedPassword, 16) & 0xFF
+                , Operator.UnsignedRightShift(hashedPassword, 24) & 0xFF
             );
         }
 
@@ -471,7 +525,8 @@ namespace NPOI.POIFS.Crypt
          * @param password the password
          * @return the xor key
          */
-        public static int CreateXorKey1(string password) {
+        public static int CreateXorKey1(string password)
+        {
             // the xor key for method 1 is part of the verifier for method 2
             // so we simply chop it from there
             //return CreateXorVerifier2(password) >>> 16;
@@ -487,8 +542,10 @@ namespace NPOI.POIFS.Crypt
          * @param password the password
          * @return the byte array for xor obfuscation
          */
-        public static byte[] CreateXorArray1(string password) {
-            if (password.Length > 15) password = password.Substring(0, 15);
+        public static byte[] CreateXorArray1(string password)
+        {
+            if(password.Length > 15)
+                password = password.Substring(0, 15);
             byte[] passBytes = Encoding.ASCII.GetBytes(password); // password.GetBytes(Charset.ForName("ASCII"));
 
             // this code is based on the libre office implementation.
@@ -500,11 +557,12 @@ namespace NPOI.POIFS.Crypt
             int xorKey = CreateXorKey1(password);
 
             // rotation of key values is application dependent /* Excel = 2; Word = 7 */
-            int nRotateSize = 2; 
+            int nRotateSize = 2;
             int op = Operator.UnsignedRightShift(xorKey, 8); //op => (xorKey >>> 8)
             byte[] baseKeyLE = { (byte)(xorKey & 0xFF), (byte)(op & 0xFF) };
-            
-            for (int i = 0; i < obfuscationArray.Length; i++) {
+
+            for(int i = 0; i < obfuscationArray.Length; i++)
+            {
                 obfuscationArray[i] ^= baseKeyLE[i & 1];
                 obfuscationArray[i] = rotateLeft(obfuscationArray[i], nRotateSize);
             }
@@ -529,7 +587,7 @@ namespace NPOI.POIFS.Crypt
             // Otherwise, take the high byte.
             byte[] arrByteChars = new byte[password.Length];
 
-            for (int i = 0; i < password.Length; i++)
+            for(int i = 0; i < password.Length; i++)
             {
                 int intTemp = password[i];
                 byte lowByte = (byte)(intTemp & 0xFF);
@@ -541,12 +599,14 @@ namespace NPOI.POIFS.Crypt
             return arrByteChars;
         }
 
-        private static byte rotateLeft(byte bits, int Shift) {
+        private static byte rotateLeft(byte bits, int Shift)
+        {
             //return (byte)(((bits & 0xff) << Shift) | ((bits & 0xff) >>> (8 - Shift)));
-            return (byte)(((bits & 0xff) << Shift) | Operator.UnsignedRightShift((bits & 0xff) , (8 - Shift)));
+            return (byte) (((bits & 0xff) << Shift) | Operator.UnsignedRightShift((bits & 0xff), (8 - Shift)));
         }
 
-        private static short rotateLeftBase15Bit(short verifier) {
+        private static short rotateLeftBase15Bit(short verifier)
+        {
             /*
              * IF (Verifier BITWISE AND 0x4000) is 0x0000
              *    SET Intermediate1 TO 0
@@ -581,8 +641,8 @@ namespace NPOI.POIFS.Crypt
             internal static Mac GetInstance(string jceHmacId)
             {
                 var mac = new Mac();
-                
-                switch (jceHmacId.ToUpper())
+
+                switch(jceHmacId.ToUpper())
                 {
                     case "HMACSHA1":
                     case "HMAC-SHA1":
@@ -614,22 +674,22 @@ namespace NPOI.POIFS.Crypt
 
             public byte[] DoFinal(byte[] input)
             {
-                if (!initialized)
+                if(!initialized)
                     throw new InvalidOperationException("Mac not initialized");
 
                 // Update with input data
                 hmacEngine.BlockUpdate(input, 0, input.Length);
-                
+
                 // Get the result
                 byte[] result = new byte[hmacEngine.GetMacSize()];
                 hmacEngine.DoFinal(result, 0);
-                
+
                 return result;
             }
 
             public byte[] DoFinal()
             {
-                if (!initialized)
+                if(!initialized)
                     throw new InvalidOperationException("Mac not initialized");
 
                 byte[] result = new byte[hmacEngine.GetMacSize()];
@@ -639,7 +699,7 @@ namespace NPOI.POIFS.Crypt
 
             public void Init(ISecretKey secretKey)
             {
-                if (hmacEngine == null)
+                if(hmacEngine == null)
                     throw new InvalidOperationException("Mac not created properly");
 
                 byte[] keyBytes = secretKey.GetEncoded();
@@ -650,7 +710,7 @@ namespace NPOI.POIFS.Crypt
 
             public void Update(byte[] buf, int offset, int readBytes)
             {
-                if (!initialized)
+                if(!initialized)
                     throw new InvalidOperationException("Mac not initialized");
 
                 hmacEngine.BlockUpdate(buf, offset, readBytes);
@@ -663,7 +723,7 @@ namespace NPOI.POIFS.Crypt
 
             public void Reset()
             {
-                if (hmacEngine != null)
+                if(hmacEngine != null)
                 {
                     hmacEngine.Reset();
                 }
@@ -688,11 +748,11 @@ namespace NPOI.POIFS.Crypt
 
         public SecretKeySpec(byte[] key, string algorithm)
         {
-            if ((key == null) || (algorithm == null))
+            if((key == null) || (algorithm == null))
             {
                 throw new ArgumentException("Missing argument");
             }
-            if (key.Length == 0)
+            if(key.Length == 0)
             {
                 throw new ArgumentException("Empty key");
             }
@@ -758,4 +818,3 @@ namespace NPOI.POIFS.Crypt
     {
     }
 }
-

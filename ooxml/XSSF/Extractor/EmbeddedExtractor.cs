@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -18,16 +18,16 @@
 namespace NPOI.SS.Extractor
 {
     using NPOI.HPSF;
+    using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
     using NPOI.SS.UserModel;
     using NPOI.Util;
-    using NPOI.HSSF.UserModel;
-    using System.Collections.Generic;
+    using NPOI.XSSF.UserModel;
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
-    using System.Collections;
-    using NPOI.XSSF.UserModel;
 
     /// <summary>
     /// This extractor class tries to identify various embedded documents within Excel files
@@ -64,9 +64,9 @@ namespace NPOI.SS.Extractor
         public virtual EmbeddedData ExtractOne(DirectoryNode src)
         {
 
-            foreach (EmbeddedExtractor ee in this)
+            foreach(EmbeddedExtractor ee in this)
             {
-                if (ee.CanExtract(src))
+                if(ee.CanExtract(src))
                 {
                     return ee.Extract(src);
                 }
@@ -77,9 +77,9 @@ namespace NPOI.SS.Extractor
         public virtual EmbeddedData ExtractOne(IPicture src)
         {
 
-            foreach (EmbeddedExtractor ee in this)
+            foreach(EmbeddedExtractor ee in this)
             {
-                if (ee.CanExtract(src))
+                if(ee.CanExtract(src))
                 {
                     return ee.Extract(src);
                 }
@@ -91,7 +91,7 @@ namespace NPOI.SS.Extractor
         {
 
             IDrawing<IShape> patriarch = sheet.DrawingPatriarch;
-            if (null == patriarch)
+            if(null == patriarch)
             {
                 return new List<EmbeddedData>();
             }
@@ -102,43 +102,43 @@ namespace NPOI.SS.Extractor
 
         protected virtual void ExtractAll<T>(IShapeContainer<T> parent, List<EmbeddedData> embeddings) where T : class, IShape
         {
-            foreach (IShape shape in parent)
+            foreach(IShape shape in parent)
             {
                 EmbeddedData data = null;
-                if (shape is IObjectData)
+                if(shape is IObjectData)
                 {
                     IObjectData od = (IObjectData)shape;
                     try
                     {
-                        if (od.HasDirectoryEntry())
+                        if(od.HasDirectoryEntry())
                         {
-                            data = ExtractOne((DirectoryNode)od.Directory);
+                            data = ExtractOne((DirectoryNode) od.Directory);
                         }
                         else
                         {
                             String contentType = CONTENT_TYPE_BYTES;
-                            if (od is XSSFObjectData)
+                            if(od is XSSFObjectData)
                             {
-                                contentType = ((XSSFObjectData)od).GetObjectPart().ContentType;
+                                contentType = ((XSSFObjectData) od).GetObjectPart().ContentType;
                             }
                             data = new EmbeddedData(od.FileName, od.ObjectData, contentType);
                         }
                     }
-                    catch (Exception e)
+                    catch(Exception e)
                     {
                         LOG.Log(POILogger.WARN, "Entry not found / Readable - ignoring OLE embedding", e);
                     }
                 }
-                else if (shape is IPicture)
+                else if(shape is IPicture)
                 {
-                    data = ExtractOne((IPicture)shape);
+                    data = ExtractOne((IPicture) shape);
                 }
-                else if (shape is IShapeContainer<T>)
+                else if(shape is IShapeContainer<T>)
                 {
-                    ExtractAll((IShapeContainer<T>)shape, embeddings);
+                    ExtractAll((IShapeContainer<T>) shape, embeddings);
                 }
 
-                if (data == null)
+                if(data == null)
                 {
                     continue;
                 }
@@ -148,16 +148,16 @@ namespace NPOI.SS.Extractor
                 String extension = (filename == null || filename.LastIndexOf('.') == -1) ? ".bin" : filename.Substring(filename.LastIndexOf('.'));
 
                 // try to find an alternative name
-                if (filename == null || "".Equals(filename) || filename.StartsWith("MBD") || filename.StartsWith("Root Entry"))
+                if(filename == null || "".Equals(filename) || filename.StartsWith("MBD") || filename.StartsWith("Root Entry"))
                 {
                     filename = shape.ShapeName;
-                    if (filename != null)
+                    if(filename != null)
                     {
                         filename += extension;
                     }
                 }
                 // default to dummy name
-                if (filename == null || "".Equals(filename))
+                if(filename == null || "".Equals(filename))
                 {
                     filename = "picture_" + embeddings.Count + extension;
                 }
@@ -214,7 +214,7 @@ namespace NPOI.SS.Extractor
                     Ole10Native ole10 = Ole10Native.CreateFromEmbeddedOleObject(dn);
                     return new EmbeddedData(ole10.FileName, ole10.DataBuffer, CONTENT_TYPE_BYTES);
                 }
-                catch (Ole10NativeException e)
+                catch(Ole10NativeException e)
                 {
                     throw new IOException("", e);
                 }
@@ -260,7 +260,7 @@ namespace NPOI.SS.Extractor
                 // check for emf+ embedded pdf (poor mans style :( )
                 // Mac Excel 2011 embeds pdf files with this method.
                 IPictureData pd = source.PictureData;
-                if (pd == null || pd.PictureType != PictureType.EMF)
+                if(pd == null || pd.PictureType != PictureType.EMF)
                 {
                     return null;
                 }
@@ -268,13 +268,13 @@ namespace NPOI.SS.Extractor
                 // TODO: investigate if this is just an EMF-hack or if other formats are also embedded in EMF
                 byte[] pictureBytes = pd.Data;
                 int idxStart = IndexOf(pictureBytes, 0, Encoding.ASCII.GetBytes("%PDF-")); //.GetBytes(LocaleUtil.CHARSET_1252)
-                if (idxStart == -1)
+                if(idxStart == -1)
                 {
                     return null;
                 }
 
                 int idxEnd = IndexOf(pictureBytes, idxStart, Encoding.ASCII.GetBytes("%%EOF")); // .GetBytes(LocaleUtil.CHARSET_1252)
-                if (idxEnd == -1)
+                if(idxEnd == -1)
                 {
                     return null;
                 }
@@ -283,7 +283,7 @@ namespace NPOI.SS.Extractor
                 byte[] pdfBytes = IOUtils.SafelyAllocate(pictureBytesLen, MAX_RECORD_LENGTH);
                 System.Array.Copy(pictureBytes, idxStart, pdfBytes, 0, pictureBytesLen);
                 String filename = source.ShapeName.Trim();
-                if (!filename.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+                if(!filename.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                 {
                     filename += ".pdf";
                 }
@@ -306,37 +306,37 @@ namespace NPOI.SS.Extractor
                 ClassID clsId = dn.StorageClsid;
 
                 String contentType, ext;
-                if (ClassID.WORD2007.Equals(clsId))
+                if(ClassID.WORD2007.Equals(clsId))
                 {
                     ext = ".docx";
                     contentType = "application/vnd.Openxmlformats-officedocument.wordProcessingml.document";
                 }
-                else if (ClassID.WORD2007_MACRO.Equals(clsId))
+                else if(ClassID.WORD2007_MACRO.Equals(clsId))
                 {
                     ext = ".docm";
                     contentType = "application/vnd.ms-word.document.macroEnabled.12";
                 }
-                else if (ClassID.EXCEL2007.Equals(clsId) || ClassID.EXCEL2003.Equals(clsId) || ClassID.EXCEL2010.Equals(clsId))
+                else if(ClassID.EXCEL2007.Equals(clsId) || ClassID.EXCEL2003.Equals(clsId) || ClassID.EXCEL2010.Equals(clsId))
                 {
                     ext = ".xlsx";
                     contentType = "application/vnd.Openxmlformats-officedocument.spreadsheetml.sheet";
                 }
-                else if (ClassID.EXCEL2007_MACRO.Equals(clsId))
+                else if(ClassID.EXCEL2007_MACRO.Equals(clsId))
                 {
                     ext = ".xlsm";
                     contentType = "application/vnd.ms-excel.sheet.macroEnabled.12";
                 }
-                else if (ClassID.EXCEL2007_XLSB.Equals(clsId))
+                else if(ClassID.EXCEL2007_XLSB.Equals(clsId))
                 {
                     ext = ".xlsb";
                     contentType = "application/vnd.ms-excel.sheet.binary.macroEnabled.12";
                 }
-                else if (ClassID.POWERPOINT2007.Equals(clsId))
+                else if(ClassID.POWERPOINT2007.Equals(clsId))
                 {
                     ext = ".pptx";
                     contentType = "application/vnd.Openxmlformats-officedocument.presentationml.presentation";
                 }
-                else if (ClassID.POWERPOINT2007_MACRO.Equals(clsId))
+                else if(ClassID.POWERPOINT2007_MACRO.Equals(clsId))
                 {
                     ext = ".ppsm";
                     contentType = "application/vnd.ms-powerpoint.slideShow.macroEnabled.12";
@@ -381,12 +381,12 @@ namespace NPOI.SS.Extractor
             {
 
                 EmbeddedData ed = base.Extract(dn);
-                if (CanExtractExcel(dn))
+                if(CanExtractExcel(dn))
                 {
                     ed.Filename = (/*setter*/dn.Name + ".xls");
                     ed.ContentType = (/*setter*/CONTENT_TYPE_XLS);
                 }
-                else if (CanExtractWord(dn))
+                else if(CanExtractWord(dn))
                 {
                     ed.Filename = (/*setter*/dn.Name + ".doc");
                     ed.ContentType = (/*setter*/CONTENT_TYPE_DOC);
@@ -415,9 +415,9 @@ namespace NPOI.SS.Extractor
         protected static void copyNodes(DirectoryNode src, DirectoryNode dest)
         {
 
-            foreach (Entry e in src)
+            foreach(Entry e in src)
             {
-                if (e is DirectoryNode)
+                if(e is DirectoryNode)
                 {
                     DirectoryNode srcDir = (DirectoryNode)e;
                     DirectoryNode destDir = (DirectoryNode)dest.CreateDirectory(srcDir.Name);
@@ -450,19 +450,20 @@ namespace NPOI.SS.Extractor
             int[] failure = computeFailure(pattern);
 
             int j = 0;
-            if (data.Length == 0)
+            if(data.Length == 0)
             {
                 return -1;
             }
 
-            for (int i = offset; i < data.Length; i++)
+            for(int i = offset; i < data.Length; i++)
             {
-                while (j > 0 && pattern[j] != data[i])
+                while(j > 0 && pattern[j] != data[i])
                 {
                     j = failure[j - 1];
                 }
-                if (pattern[j] == data[i]) { j++; }
-                if (j == pattern.Length)
+                if(pattern[j] == data[i])
+                { j++; }
+                if(j == pattern.Length)
                 {
                     return i - pattern.Length + 1;
                 }
@@ -479,13 +480,13 @@ namespace NPOI.SS.Extractor
             int[] failure = new int[pattern.Length];
 
             int j = 0;
-            for (int i = 1; i < pattern.Length; i++)
+            for(int i = 1; i < pattern.Length; i++)
             {
-                while (j > 0 && pattern[j] != pattern[i])
+                while(j > 0 && pattern[j] != pattern[i])
                 {
                     j = failure[j - 1];
                 }
-                if (pattern[j] == pattern[i])
+                if(pattern[j] == pattern[i])
                 {
                     j++;
                 }
@@ -495,7 +496,6 @@ namespace NPOI.SS.Extractor
             return failure;
         }
 
-        
+
     }
 }
-

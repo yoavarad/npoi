@@ -1,7 +1,7 @@
-﻿using System;
 using Cysharp.Text;
 using NPOI.OpenXmlFormats.Shared;
 using NPOI.WP.UserModel;
+using System;
 using W = NPOI.OpenXmlFormats.Wordprocessing;
 
 namespace NPOI.XWPF.UserModel
@@ -19,10 +19,12 @@ namespace NPOI.XWPF.UserModel
         }
 
         public bool IsBold { get; set; }
-        public bool IsItalic {
-            get {
+        public bool IsItalic
+        {
+            get
+            {
                 W.CT_RPr pr = run.rPr1;
-                if (pr == null || !pr.IsSetI())
+                if(pr == null || !pr.IsSetI())
                     return false;
                 return IsCTOnOff(pr.i);
             }
@@ -39,7 +41,7 @@ namespace NPOI.XWPF.UserModel
          */
         private static bool IsCTOnOff(W.CT_OnOff onoff)
         {
-            if (!onoff.IsSetVal())
+            if(!onoff.IsSetVal())
                 return true;
             return onoff.val;
         }
@@ -84,25 +86,25 @@ namespace NPOI.XWPF.UserModel
             W.CT_RPr pr = run.IsSetRPr1() ? run.rPr1 : run.AddNewRPr1();
             W.CT_Fonts fonts = pr.IsSetRFonts() ? pr.rFonts : pr.AddNewRFonts();
 
-            if (fcr == FontCharRange.None)
+            if(fcr == FontCharRange.None)
             {
                 fonts.ascii = (fontFamily);
-                if (!fonts.IsSetHAnsi())
+                if(!fonts.IsSetHAnsi())
                 {
                     fonts.hAnsi = (fontFamily);
                 }
-                if (!fonts.IsSetCs())
+                if(!fonts.IsSetCs())
                 {
                     fonts.cs = (fontFamily);
                 }
-                if (!fonts.IsSetEastAsia())
+                if(!fonts.IsSetEastAsia())
                 {
                     fonts.eastAsia = (fontFamily);
                 }
             }
             else
             {
-                switch (fcr)
+                switch(fcr)
                 {
                     case FontCharRange.Ascii:
                         fonts.ascii = (fontFamily);
@@ -132,10 +134,11 @@ namespace NPOI.XWPF.UserModel
         public String GetFontFamily(FontCharRange fcr)
         {
             OpenXmlFormats.Wordprocessing.CT_RPr pr = run.rPr1;
-            if (pr == null || !pr.IsSetRFonts()) return null;
+            if(pr == null || !pr.IsSetRFonts())
+                return null;
 
             OpenXmlFormats.Wordprocessing.CT_Fonts fonts = pr.rFonts;
-            switch (fcr == FontCharRange.None ? FontCharRange.Ascii : fcr)
+            switch(fcr == FontCharRange.None ? FontCharRange.Ascii : fcr)
             {
                 default:
                 case FontCharRange.Ascii:
@@ -149,7 +152,7 @@ namespace NPOI.XWPF.UserModel
             }
         }
 
-        public double FontSize 
+        public double FontSize
         {
             get
             {
@@ -174,10 +177,10 @@ namespace NPOI.XWPF.UserModel
             get
             {
                 using var text = ZString.CreateStringBuilder();
-                for (int i = 0; i < run.Items.Count; i++)
+                for(int i = 0; i < run.Items.Count; i++)
                 {
                     object o = run.Items[i];
-                    if (o is CT_Text1 text1)
+                    if(o is CT_Text1 text1)
                     {
                         text.Append(text1.Value);
                     }
@@ -205,7 +208,8 @@ namespace NPOI.XWPF.UserModel
         private XWPFSharedRun SetText(String value, int pos)
         {
             int length = run.SizeOfTArray();
-            if (pos > length) throw new IndexOutOfRangeException("Value too large for the parameter position");
+            if(pos > length)
+                throw new IndexOutOfRangeException("Value too large for the parameter position");
             CT_Text1 t = (pos < length && pos >= 0) ? run.GetTArray(pos) : run.AddNewT();
             t.Value = (value);
             preserveSpaces(t);
@@ -219,7 +223,7 @@ namespace NPOI.XWPF.UserModel
         static void preserveSpaces(CT_Text1 xs)
         {
             String text = xs.Value;
-            if (text != null && (text.StartsWith(' ') || text.EndsWith(' ')))
+            if(text != null && (text.StartsWith(' ') || text.EndsWith(' ')))
             {
                 //    XmlCursor c = xs.NewCursor();
                 //    c.ToNextToken();

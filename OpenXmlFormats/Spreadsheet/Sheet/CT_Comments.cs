@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -21,16 +21,16 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         private CT_ExtensionList extLstField = null; // optional field
         public static CT_Comments Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Comments ctObj = new CT_Comments();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "authors")
+                if(childNode.LocalName == "authors")
                     ctObj.authors = CT_Authors.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "commentList")
+                else if(childNode.LocalName == "commentList")
                     ctObj.commentList = CT_CommentList.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -39,11 +39,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.Write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>");
             sw.Write("<comments xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\">");
-            if (this.authors != null)
+            if(this.authors != null)
                 this.authors.Write(sw, "authors");
-            if (this.commentList != null)
+            if(this.commentList != null)
                 this.commentList.Write(sw, "commentList");
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.Write("</comments>");
         }

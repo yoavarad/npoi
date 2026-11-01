@@ -1,10 +1,9 @@
-﻿using System;
-
-using System.Xml.Serialization;
-using System.Xml;
-using NPOI.OpenXml4Net.Util;
-using System.IO;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.OpenXml4Net.Util;
+using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -90,7 +89,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_Hyperlink Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Hyperlink ctObj = new CT_Hyperlink();
             ctObj.@ref = XmlHelper.ReadString(node.Attributes["ref"]);

@@ -19,7 +19,8 @@ namespace TestCases.SS.Formula.Functions
 {
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
 
     /**
@@ -35,21 +36,21 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invokeMid(ValueEval text, ValueEval startPos, ValueEval numChars)
         {
             ValueEval[] args = new ValueEval[] { text, startPos, numChars, };
-            return TextFunction.MID.Evaluate(args, -1, (short)-1);
+            return TextFunction.MID.Evaluate(args, -1, (short) -1);
         }
 
         private void ConfirmMid(ValueEval text, ValueEval startPos, ValueEval numChars, String expected)
         {
             ValueEval result = invokeMid(text, startPos, numChars);
             ClassicAssert.AreEqual(typeof(StringEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((StringEval)result).StringValue);
+            ClassicAssert.AreEqual(expected, ((StringEval) result).StringValue);
         }
 
         private void ConfirmMid(ValueEval text, ValueEval startPos, ValueEval numChars, ErrorEval expectedError)
         {
             ValueEval result = invokeMid(text, startPos, numChars);
             ClassicAssert.AreEqual(typeof(ErrorEval), result.GetType());
-            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval)result).ErrorCode);
+            ClassicAssert.AreEqual(expectedError.ErrorCode, ((ErrorEval) result).ErrorCode);
         }
         [Test]
         public void TestBasic()

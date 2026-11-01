@@ -1,4 +1,4 @@
-﻿
+
 /* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -27,9 +27,9 @@
  * ==============================================================*/
 
 using System;
-using System.Text;
 using System.Collections;
 using System.Globalization;
+using System.Text;
 
 namespace NPOI.Util
 {
@@ -48,10 +48,10 @@ namespace NPOI.Util
          *
          */
         public POILogger()
-        {}
-        
+        { }
+
         abstract public void Initialize(String cat);
-        
+
         /**
          * Log a message
          *
@@ -59,7 +59,7 @@ namespace NPOI.Util
          * @param obj1 The object to Log.  This is converted to a string.
          */
         abstract public void Log(int level, Object obj1);
-        
+
         /**
          * Log a message
          *
@@ -86,17 +86,17 @@ namespace NPOI.Util
          * @param obj2 second object to place in the message
          */
 
-       /**
-         * Log a message. Lazily appends Object parameters together.
-         *
-         * @param level One of DEBUG, INFO, WARN, ERROR, FATAL
-         * @param obj1 first object to place in the message
-         * @param obj2 second object to place in the message
-         */
+        /**
+          * Log a message. Lazily appends Object parameters together.
+          *
+          * @param level One of DEBUG, INFO, WARN, ERROR, FATAL
+          * @param obj1 first object to place in the message
+          * @param obj2 second object to place in the message
+          */
 
         public virtual void Log(int level, Object obj1, Object obj2)
         {
-            if (Check(level))
+            if(Check(level))
             {
                 Log(level, new StringBuilder(32).Append(obj1).Append(obj2));
             }
@@ -114,9 +114,9 @@ namespace NPOI.Util
         public virtual void Log(int level, Object obj1, Object obj2,
                         Object obj3)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level,
                         new StringBuilder(48).Append(obj1).Append(obj2)
@@ -137,9 +137,9 @@ namespace NPOI.Util
         public virtual void Log(int level, Object obj1, Object obj2,
                         Object obj3, Object obj4)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level,
                         new StringBuilder(64).Append(obj1).Append(obj2)
@@ -161,9 +161,9 @@ namespace NPOI.Util
         public virtual void Log(int level, Object obj1, Object obj2,
                         Object obj3, Object obj4, Object obj5)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level,
                         new StringBuilder(80).Append(obj1).Append(obj2)
@@ -187,11 +187,11 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
-                Log(level ,
+                Log(level,
                         new StringBuilder(96).Append(obj1).Append(obj2)
                             .Append(obj3).Append(obj4).Append(obj5).Append(obj6));
             }
@@ -214,9 +214,9 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6, Object obj7)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level,
                         new StringBuilder(112).Append(obj1).Append(obj2)
@@ -243,9 +243,9 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6, Object obj7, Object obj8)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level,
                         new StringBuilder(128).Append(obj1).Append(obj2)
@@ -278,9 +278,9 @@ namespace NPOI.Util
         public virtual void Log(int level, Object obj1, Object obj2,
                         Exception exception)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level, new StringBuilder(32).Append(obj1).Append(obj2),
                         exception);
@@ -300,9 +300,9 @@ namespace NPOI.Util
         public virtual void Log(int level, Object obj1, Object obj2,
                         Object obj3, Exception exception)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level, new StringBuilder(48).Append(obj1).Append(obj2)
                     .Append(obj3), exception);
@@ -324,9 +324,9 @@ namespace NPOI.Util
                         Object obj3, Object obj4,
                         Exception exception)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level, new StringBuilder(64).Append(obj1).Append(obj2)
                     .Append(obj3).Append(obj4), exception);
@@ -349,9 +349,9 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Exception exception)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level, new StringBuilder(80).Append(obj1).Append(obj2)
                     .Append(obj3).Append(obj4).Append(obj5), exception);
@@ -375,11 +375,11 @@ namespace NPOI.Util
                         Object obj3, Object obj4, Object obj5,
                         Object obj6, Exception exception)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
-                Log(level , new StringBuilder(96).Append(obj1)
+                Log(level, new StringBuilder(96).Append(obj1)
                     .Append(obj2).Append(obj3).Append(obj4).Append(obj5)
                     .Append(obj6), exception);
             }
@@ -404,9 +404,9 @@ namespace NPOI.Util
                         Object obj6, Object obj7,
                         Exception exception)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level, new StringBuilder(112).Append(obj1).Append(obj2)
                     .Append(obj3).Append(obj4).Append(obj5).Append(obj6)
@@ -434,9 +434,9 @@ namespace NPOI.Util
                         Object obj6, Object obj7, Object obj8,
                         Exception exception)
         {
-            
 
-            if (Check(level))
+
+            if(Check(level))
             {
                 Log(level, new StringBuilder(128).Append(obj1).Append(obj2)
                     .Append(obj3).Append(obj4).Append(obj5).Append(obj6)

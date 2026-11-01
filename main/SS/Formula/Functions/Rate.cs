@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System;
 using NPOI.SS.Formula.Eval;
 using NPOI.Util;
+using System;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -125,7 +125,7 @@ namespace NPOI.SS.Formula.Functions
          */
         static void CheckValue(double result)
         {
-            if (double.IsNaN(result) || double.IsInfinity(result))
+            if(double.IsNaN(result) || double.IsInfinity(result))
             {
                 throw new EvaluationException(ErrorEval.NUM_ERROR);
             }

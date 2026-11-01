@@ -18,14 +18,15 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.Formula.UDF;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF;
 
     /**
@@ -45,7 +46,7 @@ namespace TestCases.SS.Formula.Eval
 
             public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
             {
-                if (args.Length != 1 || !(args[0] is StringEval))
+                if(args.Length != 1 || !(args[0] is StringEval))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
@@ -63,7 +64,7 @@ namespace TestCases.SS.Formula.Eval
 
             public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
             {
-                if (args.Length != 1 || !(args[0] is StringEval))
+                if(args.Length != 1 || !(args[0] is StringEval))
                 {
                     return ErrorEval.VALUE_INVALID;
                 }

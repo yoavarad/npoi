@@ -16,10 +16,10 @@
 ==================================================================== */
 namespace NPOI.SS.Format
 {
-    using System;
-    using System.Text;
-    using System.Globalization;
     using NPOI.Util;
+    using System;
+    using System.Globalization;
+    using System.Text;
 
 
 

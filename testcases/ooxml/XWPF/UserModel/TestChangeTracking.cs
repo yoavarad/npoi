@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,12 +16,12 @@
 ==================================================================== */
 namespace TestCases.XWPF.UserModel
 {
-    using System;
-
     using NPOI.XWPF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.IO;
     using NPOI.XWPF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
 
     [TestFixture]
     public class TestChangeTracking
@@ -73,4 +73,3 @@ namespace TestCases.XWPF.UserModel
 
     }
 }
-

@@ -14,14 +14,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using System;
-using NPOI.SS.Util;
-using NPOI.SS.Formula.PTG;
-using NPOI.SS.Formula;
-using NPOI.SS.UserModel;
 using NPOI.OpenXmlFormats.Spreadsheet;
-using System.Text.RegularExpressions;
 using NPOI.SS;
+using NPOI.SS.Formula;
+using NPOI.SS.Formula.PTG;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using System;
+using System.Text.RegularExpressions;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -149,11 +149,11 @@ namespace NPOI.XSSF.UserModel
                 ValidateName(value);
                 String oldName = NameName;
                 int sheetIndex = SheetIndex;
-                
+
                 //Check to ensure no other names have the same case-insensitive name at the same scope
-                foreach (XSSFName foundName in _workbook.GetNames(value))
+                foreach(XSSFName foundName in _workbook.GetNames(value))
                 {
-                    if (foundName != this && sheetIndex == foundName.SheetIndex)
+                    if(foundName != this && sheetIndex == foundName.SheetIndex)
                     {
                         String msg = "The " + (sheetIndex == -1 ? "workbook" : "sheet") + " already contains this name: " + value;
                         throw new ArgumentException(msg);
@@ -170,19 +170,19 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 String result = _ctName.Value;
-                if (result == null || result.Length < 1)
+                if(result == null || result.Length < 1)
                 {
                     return null;
                 }
                 return result;
             }
-            set 
+            set
             {
                 XSSFEvaluationWorkbook fpb = XSSFEvaluationWorkbook.Create(_workbook);
                 //validate through the FormulaParser
                 FormulaParser.Parse(value, fpb, FormulaType.NamedRange, SheetIndex, -1);
 
-                _ctName.Value = value;   
+                _ctName.Value = value;
             }
         }
         public bool IsDeleted
@@ -190,7 +190,7 @@ namespace NPOI.XSSF.UserModel
             get
             {
                 String formulaText = RefersToFormula;
-                if (formulaText == null)
+                if(formulaText == null)
                 {
                     return false;
                 }
@@ -209,24 +209,25 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return _ctName.IsSetLocalSheetId() ? (int)_ctName.localSheetId : -1;
+                return _ctName.IsSetLocalSheetId() ? (int) _ctName.localSheetId : -1;
             }
-            set 
+            set
             {
                 int lastSheetIx = _workbook.NumberOfSheets - 1;
-                if (value < -1 || value > lastSheetIx)
+                if(value < -1 || value > lastSheetIx)
                 {
                     throw new ArgumentException("Sheet index (" + value + ") is out of range" +
                             (lastSheetIx == -1 ? "" : (" (0.." + lastSheetIx + ")")));
                 }
 
-                if (value == -1)
+                if(value == -1)
                 {
-                    if (_ctName.IsSetLocalSheetId()) _ctName.UnsetLocalSheetId();
+                    if(_ctName.IsSetLocalSheetId())
+                        _ctName.UnsetLocalSheetId();
                 }
                 else
                 {
-                    _ctName.localSheetId = (uint)value;
+                    _ctName.localSheetId = (uint) value;
                     _ctName.localSheetIdSpecified = true;
                 }
             }
@@ -244,7 +245,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return _ctName.function;
             }
-            set 
+            set
             {
                 _ctName.function = value;
             }
@@ -266,11 +267,11 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (int)_ctName.functionGroupId;
+                return (int) _ctName.functionGroupId;
             }
-            set 
+            set
             {
-                _ctName.functionGroupId = (uint)value;
+                _ctName.functionGroupId = (uint) value;
             }
         }
 
@@ -284,7 +285,7 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                if (_ctName.IsSetLocalSheetId())
+                if(_ctName.IsSetLocalSheetId())
                 {
                     // Given as explicit sheet id
                     int sheetId = (int)_ctName.localSheetId;
@@ -320,7 +321,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return _ctName.comment;
             }
-            set 
+            set
             {
                 _ctName.comment = value;
             }
@@ -345,11 +346,13 @@ namespace NPOI.XSSF.UserModel
 
         public override bool Equals(Object o)
         {
-            if (o == this) return true;
+            if(o == this)
+                return true;
 
-            if (o is not XSSFName cf) return false;
+            if(o is not XSSFName cf)
+                return false;
 
-            return _ctName.name == cf.GetCTName().name && _ctName.localSheetId == cf.GetCTName().localSheetId && _ctName.Value==cf.RefersToFormula ;
+            return _ctName.name == cf.GetCTName().name && _ctName.localSheetId == cf.GetCTName().localSheetId && _ctName.Value==cf.RefersToFormula;
         }
 
         /**
@@ -384,15 +387,15 @@ namespace NPOI.XSSF.UserModel
             thus we are stuck with Character.isLetter (for now).
             */
 
-            if (name.Length == 0)
+            if(name.Length == 0)
             {
                 throw new ArgumentException("Name cannot be blank");
             }
-            if (name.Length > 255)
+            if(name.Length > 255)
             {
                 throw new ArgumentException("Invalid name: '" + name + "': cannot exceed 255 characters in length");
             }
-            if (name.Equals("R", StringComparison.OrdinalIgnoreCase) || name.Equals("C", StringComparison.OrdinalIgnoreCase))
+            if(name.Equals("R", StringComparison.OrdinalIgnoreCase) || name.Equals("C", StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("Invalid name: '" + name + "': cannot be special shorthand R or C");
             }
@@ -400,17 +403,17 @@ namespace NPOI.XSSF.UserModel
             char c = name[0];
             string allowedSymbols = "_\\";
             bool characterIsValid = (char.IsLetter(c) || allowedSymbols.Contains(c));
-            if (!characterIsValid)
+            if(!characterIsValid)
             {
                 throw new ArgumentException("Invalid name: '" + name + "': first character must be underscore or a letter");
             }
 
             // are all other characters valid?
             allowedSymbols = "_.\\"; //backslashes needed for unicode escape
-            foreach (char ch in name.ToCharArray())
+            foreach(char ch in name.ToCharArray())
             {
                 characterIsValid = (char.IsLetterOrDigit(ch) || allowedSymbols.Contains(ch));
-                if (!characterIsValid)
+                if(!characterIsValid)
                 {
                     throw new ArgumentException("Invalid name: '" + name + "': name must be letter, digit, period, or underscore");
                 }
@@ -418,25 +421,26 @@ namespace NPOI.XSSF.UserModel
 
             // Is the name a valid $A$1 cell reference
             // Because $, :, and ! are disallowed characters, A1-style references become just a letter-number combination
-            if (Regex.IsMatch(name, "[A-Za-z]+\\d+"))
+            if(Regex.IsMatch(name, "[A-Za-z]+\\d+"))
             {
                 string col = Regex.Replace(name, "\\d", "");
                 string row = Regex.Replace(name, "[A-Za-z]", "");
                 try
                 {
-                    if (CellReference.CellReferenceIsWithinRange(col, row, SpreadsheetVersion.EXCEL2007))
+                    if(CellReference.CellReferenceIsWithinRange(col, row, SpreadsheetVersion.EXCEL2007))
                     {
                         throw new ArgumentException("Invalid name: '" + name + "': cannot be $A$1-style cell reference");
                     }
                 }
-                catch (FormatException) {
+                catch(FormatException)
+                {
                     // row was not parseable as an Integer, such as a BigInt
                     // therefore name passes the not-a-cell-reference criteria
                 }
             }
 
             // Is the name a valid R1C1 cell reference?
-            if (Regex.IsMatch(name, "[Rr]\\d+[Cc]\\d+"))
+            if(Regex.IsMatch(name, "[Rr]\\d+[Cc]\\d+"))
             {
                 throw new ArgumentException("Invalid name: '" + name + "': cannot be R1C1-style cell reference");
             }

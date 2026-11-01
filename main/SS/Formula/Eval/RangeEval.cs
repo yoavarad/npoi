@@ -17,9 +17,8 @@
 
 namespace NPOI.SS.Formula.Eval
 {
-    using System;
-
     using NPOI.SS.Formula.Functions;
+    using System;
     /**
      * 
      * @author Josh Micich 
@@ -41,7 +40,7 @@ namespace NPOI.SS.Formula.Eval
                 AreaEval reB = EvaluateRef(arg1);
                 return ResolveRange(reA, reB);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -62,15 +61,15 @@ namespace NPOI.SS.Formula.Eval
 
         private static AreaEval EvaluateRef(ValueEval arg)
         {
-            if (arg is AreaEval eval)
+            if(arg is AreaEval eval)
             {
                 return eval;
             }
-            if (arg is RefEval refEval)
+            if(arg is RefEval refEval)
             {
                 return refEval.Offset(0, 0, 0, 0);
             }
-            if (arg is ErrorEval errorEval)
+            if(arg is ErrorEval errorEval)
             {
                 throw new EvaluationException(errorEval);
             }

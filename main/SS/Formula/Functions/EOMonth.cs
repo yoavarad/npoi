@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using System;
 
     /**
      * Implementation for the Excel EOMONTH() function.<p/>
@@ -44,7 +44,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -55,7 +55,7 @@ namespace NPOI.SS.Formula.Functions
                 int months = (int)NumericFunction.SingleOperandEvaluate(args[1], ec.RowIndex, ec.ColumnIndex);
 
                 // Excel treats date 0 as 1900-01-00; EOMONTH results in 1900-01-31
-                if (startDateAsNumber >= 0.0 && startDateAsNumber < 1.0)
+                if(startDateAsNumber >= 0.0 && startDateAsNumber < 1.0)
                 {
                     startDateAsNumber = 1.0;
                 }
@@ -69,11 +69,11 @@ namespace NPOI.SS.Formula.Functions
                 dtEnd = new DateTime(dtEnd.Year, dtEnd.Month, 1);
                 //last day of the month
                 dtEnd = dtEnd.AddDays(-1);
-                
+
 
                 return new NumberEval(DateUtil.GetExcelDate(dtEnd));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

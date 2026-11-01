@@ -19,10 +19,11 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     [TestFixture]
     public class TestEscherSpgrRecord
     {
@@ -83,7 +84,7 @@ namespace TestCases.DDF
         private EscherSpgrRecord CreateRecord()
         {
             EscherSpgrRecord r = new EscherSpgrRecord();
-            r.Options=(short)0x0010;
+            r.Options=(short) 0x0010;
             r.RecordId=EscherSpgrRecord.RECORD_ID;
             r.RectX1=1;
             r.RectY1=2;

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,13 +15,13 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using TestCases.HSSF.Record;
-
-using System.IO;
-using System;
 using NPOI.SS;
+using NPOI.SS.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.IO;
+using TestCases.HSSF.Record;
 
 namespace TestCases.SS.Util
 {
@@ -48,7 +48,7 @@ namespace TestCases.SS.Util
             cellReference = new CellReference(row, col, absRow, absCol);
             ClassicAssert.AreEqual("A$1", cellReference.FormatAsString());
 
-            cellReference = new CellReference(row, (short)col);
+            cellReference = new CellReference(row, (short) col);
             ClassicAssert.AreEqual("A1", cellReference.FormatAsString());
 
             cellReference = new CellReference(cellRef);
@@ -242,9 +242,9 @@ namespace TestCases.SS.Util
             ConfirmCrInRange(false, "XFD", "1048577", v2007);
             ConfirmCrInRange(false, "XFE", "1048576", v2007);
 
-            if (CellReference.CellReferenceIsWithinRange("B", "0", v97))
+            if(CellReference.CellReferenceIsWithinRange("B", "0", v97))
             {
-                throw new AssertionException ("Identified bug 47312a");
+                throw new AssertionException("Identified bug 47312a");
             }
 
             ConfirmCrInRange(false, "A", "0", v97);
@@ -258,27 +258,27 @@ namespace TestCases.SS.Util
                 new CellReference("Sheet1!#REF!");
                 Assert.Fail("Shouldn't be able to create a #REF! refence");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             try
             {
                 new CellReference("'MySheetName'!#REF!");
                 Assert.Fail("Shouldn't be able to create a #REF! refence");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             try
             {
                 new CellReference("#REF!");
                 Assert.Fail("Shouldn't be able to create a #REF! refence");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
         }
 
         private static void ConfirmCrInRange(bool expResult, String colStr, String rowStr,
                 SpreadsheetVersion sv)
         {
-            if (expResult == CellReference.CellReferenceIsWithinRange(colStr, rowStr, sv))
+            if(expResult == CellReference.CellReferenceIsWithinRange(colStr, rowStr, sv))
             {
                 return;
             }
@@ -358,7 +358,7 @@ namespace TestCases.SS.Util
         {
             String rowNum = "NotANumber";
             CellReference.IsRowWithinRange(rowNum, SpreadsheetVersion.EXCEL2007);
-         }
+        }
 
         [Test]
         public void IsColWithinRange()
@@ -373,14 +373,16 @@ namespace TestCases.SS.Util
         [Test]
         public void UnquotedSheetName()
         {
-            Assert.Throws(typeof(ArgumentException), () => {
+            Assert.Throws(typeof(ArgumentException), () =>
+            {
                 new CellReference("'Sheet 1!A5");
             });
         }
         [Test]
         public void MismatchedQuotesSheetName()
         {
-            Assert.Throws(typeof(ArgumentException), () => {
+            Assert.Throws(typeof(ArgumentException), () =>
+            {
                 new CellReference("Sheet 1!A5");
             });
         }
@@ -396,7 +398,7 @@ namespace TestCases.SS.Util
                 new CellReference(unescapedName);
                 Assert.Fail("Sheet names containing apostrophe's must be escaped via a repeated apostrophe");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.StartsWith("Bad sheet name quote escaping: "));
             }
@@ -405,14 +407,16 @@ namespace TestCases.SS.Util
         [Test]
         public void NegativeRow()
         {
-            Assert.Throws(typeof(ArgumentException), () => {
+            Assert.Throws(typeof(ArgumentException), () =>
+            {
                 new CellReference("sheet", -2, 0, false, false);
             });
         }
         [Test]
         public void NegativeColumn()
         {
-            Assert.Throws(typeof(ArgumentException), () => {
+            Assert.Throws(typeof(ArgumentException), () =>
+            {
                 new CellReference("sheet", 0, -2, false, false);
             });
         }
@@ -420,16 +424,18 @@ namespace TestCases.SS.Util
         [Test]
         public void ClassifyEmptyStringCellReference()
         {
-            Assert.Throws(typeof(ArgumentException), () => {
+            Assert.Throws(typeof(ArgumentException), () =>
+            {
                 CellReference.ClassifyCellReference("", SpreadsheetVersion.EXCEL2007);
             });
         }
         [Test]
         public void ClassifyInvalidFirstCharCellReference()
         {
-            Assert.Throws(typeof(ArgumentException), () => {
+            Assert.Throws(typeof(ArgumentException), () =>
+            {
                 CellReference.ClassifyCellReference("!A5", SpreadsheetVersion.EXCEL2007);
-            }); 
+            });
         }
 
     }

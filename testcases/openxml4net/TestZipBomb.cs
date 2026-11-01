@@ -17,12 +17,12 @@
 
 namespace TestCases.OpenXml4Net.OPC
 {
-    using System;
-    using System.IO;
     using ICSharpCode.SharpZipLib.Zip;
     using NPOI.OpenXml4Net.Util;
     using NUnit.Framework;
     using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
 
     /// <summary>
     /// Regression tests for the OOXML decompression-bomb (zip-bomb) denial-of-service
@@ -130,7 +130,7 @@ namespace TestCases.OpenXml4Net.OPC
         {
             var entries = src.Entries;
             ClassicAssert.IsTrue(entries.MoveNext(), "zip should contain at least one entry");
-            return (ZipEntry)entries.Current;
+            return (ZipEntry) entries.Current;
         }
 
         private static long Drain(Stream s)
@@ -138,7 +138,7 @@ namespace TestCases.OpenXml4Net.OPC
             byte[] buffer = new byte[8192];
             long total = 0;
             int read;
-            while ((read = s.Read(buffer, 0, buffer.Length)) > 0)
+            while((read = s.Read(buffer, 0, buffer.Length)) > 0)
             {
                 total += read;
             }
@@ -151,12 +151,12 @@ namespace TestCases.OpenXml4Net.OPC
             return BuildZip(entryName, dataDescriptor, entryStream =>
             {
                 byte[] chunk = new byte[64 * 1024];
-                for (int i = 0; i < chunk.Length; i++)
+                for(int i = 0; i < chunk.Length; i++)
                 {
-                    chunk[i] = (byte)'A';
+                    chunk[i] = (byte) 'A';
                 }
                 long remaining = uncompressedBytes;
-                while (remaining > 0)
+                while(remaining > 0)
                 {
                     int n = (int)Math.Min(chunk.Length, remaining);
                     entryStream.Write(chunk, 0, n);
@@ -176,14 +176,14 @@ namespace TestCases.OpenXml4Net.OPC
             // A non-seekable wrapper forces System.IO.Compression to emit data descriptors
             // (general-purpose bit 3), leaving the local-header sizes unknown (Size == -1).
             Stream sink = dataDescriptor ? new WriteOnlyNonSeekableStream(backing) : (Stream)backing;
-            
-            using (ZipOutputStream zipStream = new ZipOutputStream(sink))
+
+            using(ZipOutputStream zipStream = new ZipOutputStream(sink))
             {
                 // leaveOpen: true means SharpZipLib should NOT close the underlying sink stream on dispose
                 zipStream.IsStreamOwner = false;
-    
+
                 // CompressionLevel.Optimal corresponds to level 9 in SharpZipLib
-                zipStream.SetLevel(9); 
+                zipStream.SetLevel(9);
 
                 ZipEntry entry = new ZipEntry(entryName);
                 zipStream.PutNextEntry(entry);

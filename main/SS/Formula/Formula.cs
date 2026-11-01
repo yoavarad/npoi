@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -18,10 +18,9 @@
 namespace NPOI.SS.Formula
 {
     using NPOI.SS.Formula;
-    using NPOI.Util;
-
-    using NPOI.SS.Util;
     using NPOI.SS.Formula.PTG;
+    using NPOI.SS.Util;
+    using NPOI.Util;
 
     /**
      * Encapsulates an encoded formula token array. 
@@ -41,7 +40,7 @@ namespace NPOI.SS.Formula
 
         private Formula(byte[] byteEncoding, int encodedTokenLen)
         {
-            _byteEncoding = (byte[])byteEncoding.Clone();
+            _byteEncoding = (byte[]) byteEncoding.Clone();
             _encodedTokenLen = encodedTokenLen;
             //if (false) { // set to true to eagerly check Ptg decoding 
             //    LittleEndianByteArrayInputStream in1 = new LittleEndianByteArrayInputStream(byteEncoding);
@@ -150,7 +149,7 @@ namespace NPOI.SS.Formula
          */
         public static Formula Create(Ptg[] ptgs)
         {
-            if (ptgs == null || ptgs.Length < 1)
+            if(ptgs == null || ptgs.Length < 1)
             {
                 return EMPTY;
             }
@@ -169,7 +168,7 @@ namespace NPOI.SS.Formula
          */
         public static Ptg[] GetTokens(Formula formula)
         {
-            if (formula == null)
+            if(formula == null)
             {
                 return null;
             }
@@ -196,12 +195,12 @@ namespace NPOI.SS.Formula
             get
             {
                 byte[] data = _byteEncoding;
-                if (data.Length != 5)
+                if(data.Length != 5)
                 {
                     // tExp and tTbl are always 5 bytes long, and the only ptg in the formula
                     return null;
                 }
-                switch (data[0])
+                switch(data[0])
                 {
                     case ExpPtg.sid:
                         break;

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.SS;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TestCases.SS
 {

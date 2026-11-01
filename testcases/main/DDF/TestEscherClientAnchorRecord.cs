@@ -19,13 +19,13 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using System.Text;
 
     [TestFixture]
     public class TestEscherClientAnchorRecord
@@ -61,18 +61,18 @@ namespace TestCases.DDF
             int bytesWritten = r.FillFields(data, new DefaultEscherRecordFactory());
 
             ClassicAssert.AreEqual(28, bytesWritten);
-            ClassicAssert.AreEqual((short)55, r.Col1);
-            ClassicAssert.AreEqual((short)44, r.Col2);
-            ClassicAssert.AreEqual((short)33, r.Dx1);
-            ClassicAssert.AreEqual((short)22, r.Dx2);
-            ClassicAssert.AreEqual((short)11, r.Dy1);
-            ClassicAssert.AreEqual((short)66, r.Dy2);
-            ClassicAssert.AreEqual((short)77, r.Flag);
-            ClassicAssert.AreEqual((short)88, r.Row1);
-            ClassicAssert.AreEqual((short)99, r.Row2);
-            ClassicAssert.AreEqual((short)0x0001, r.Options);
-            ClassicAssert.AreEqual((byte)0xFF, r.RemainingData[0]);
-            ClassicAssert.AreEqual((byte)0xDD, r.RemainingData[1]);
+            ClassicAssert.AreEqual((short) 55, r.Col1);
+            ClassicAssert.AreEqual((short) 44, r.Col2);
+            ClassicAssert.AreEqual((short) 33, r.Dx1);
+            ClassicAssert.AreEqual((short) 22, r.Dx2);
+            ClassicAssert.AreEqual((short) 11, r.Dy1);
+            ClassicAssert.AreEqual((short) 66, r.Dy2);
+            ClassicAssert.AreEqual((short) 77, r.Flag);
+            ClassicAssert.AreEqual((short) 88, r.Row1);
+            ClassicAssert.AreEqual((short) 99, r.Row2);
+            ClassicAssert.AreEqual((short) 0x0001, r.Options);
+            ClassicAssert.AreEqual((byte) 0xFF, r.RemainingData[0]);
+            ClassicAssert.AreEqual((byte) 0xDD, r.RemainingData[1]);
         }
         [Test]
         public void TestToString()
@@ -100,17 +100,17 @@ namespace TestCases.DDF
         private EscherClientAnchorRecord CreateRecord()
         {
             EscherClientAnchorRecord r = new EscherClientAnchorRecord();
-            r.Col1=(short)55;
-            r.Col2=(short)44;
-            r.Dx1=(short)33;
-            r.Dx2=(short)22;
-            r.Dy1=(short)11;
-            r.Dy2=(short)66;
-            r.Flag=(short)77;
-            r.Row1=(short)88;
-            r.Row2=(short)99;
-            r.Options=(short)0x0001;
-            r.RemainingData=new byte[] { (byte)0xFF, (byte)0xDD };
+            r.Col1=(short) 55;
+            r.Col2=(short) 44;
+            r.Dx1=(short) 33;
+            r.Dx2=(short) 22;
+            r.Dy1=(short) 11;
+            r.Dy2=(short) 66;
+            r.Flag=(short) 77;
+            r.Row1=(short) 88;
+            r.Row2=(short) 99;
+            r.Options=(short) 0x0001;
+            r.RemainingData=new byte[] { (byte) 0xFF, (byte) 0xDD };
             return r;
         }
 

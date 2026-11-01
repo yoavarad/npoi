@@ -17,15 +17,16 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
     using TestCases.HSSF;
     using TestCases.SS.UserModel;
 
@@ -53,14 +54,14 @@ namespace TestCases.HSSF.UserModel
                 wb.Write(baos, false);
                 baos.Close();
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
             byte[] generatedContent = baos.ToArray();
 #if !HIDE_UNREACHABLE_CODE
             bool isSame;
-            if (false)
+            if(false)
             {
                 // TODO - add proof spreadsheet and compare
                 Stream proofStream = HSSFTestDataSamples.OpenSampleFileStream("TestDataValidation.xls");
@@ -68,7 +69,7 @@ namespace TestCases.HSSF.UserModel
             }
             isSame = true;
 
-            if (isSame)
+            if(isSame)
             {
                 return;
             }
@@ -82,7 +83,7 @@ namespace TestCases.HSSF.UserModel
                 fileOut.Write(generatedContent, 0, generatedContent.Length);
                 fileOut.Close();
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -112,17 +113,17 @@ namespace TestCases.HSSF.UserModel
 
             // The allowable regions where the generated file can differ from the 
             // proof should be small (i.e. much less than 1K)
-            int[] allowableDifferenceRegions = { 
+            int[] allowableDifferenceRegions = {
                 0x0228, 16,  // a region of the file Containing the OS username
                 0x506C, 8,   // See RootProperty (super fields _seconds_2 and _days_2)
         };
             int[] diffs = StreamUtility.DiffStreams(isA, isB, allowableDifferenceRegions);
-            if (diffs == null)
+            if(diffs == null)
             {
                 return true;
             }
             System.Console.Error.WriteLine("Diff from proof: ");
-            for (int i = 0; i < diffs.Length; i++)
+            for(int i = 0; i < diffs.Length; i++)
             {
                 System.Console.Error.WriteLine("diff at offset: 0x" + (diffs[i]).ToString("X2"));
             }
@@ -167,7 +168,7 @@ namespace TestCases.HSSF.UserModel
             {
                 wb.Write(baos, false);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new RuntimeException(e);
             }
@@ -186,7 +187,7 @@ namespace TestCases.HSSF.UserModel
             // nextSid should be for a DVRecord.  If anything comes between the DV header record 
             // and the DV records, Excel will not be able to open the workbook without error.
 
-            if (nextSid == 0x0867)
+            if(nextSid == 0x0867)
             {
                 throw new AssertionException("Identified bug 45519");
             }
@@ -195,22 +196,22 @@ namespace TestCases.HSSF.UserModel
         private int FindIndex(byte[] largeData, byte[] searchPattern)
         {
             byte firstByte = searchPattern[0];
-            for (int i = 0; i < largeData.Length; i++)
+            for(int i = 0; i < largeData.Length; i++)
             {
-                if (largeData[i] != firstByte)
+                if(largeData[i] != firstByte)
                 {
                     continue;
                 }
                 bool match = true;
-                for (int j = 1; j < searchPattern.Length; j++)
+                for(int j = 1; j < searchPattern.Length; j++)
                 {
-                    if (searchPattern[j] != largeData[i + j])
+                    if(searchPattern[j] != largeData[i + j])
                     {
                         match = false;
                         break;
                     }
                 }
-                if (match)
+                if(match)
                 {
                     return i;
                 }
@@ -293,58 +294,60 @@ namespace TestCases.HSSF.UserModel
         }
 
         [Test]
-        public void TestGetDataValidationsintValue(){
-        HSSFWorkbook wb = new HSSFWorkbook();
-        HSSFSheet sheet = wb.CreateSheet() as HSSFSheet;
-        List<IDataValidation> list = sheet.GetDataValidations();
-        ClassicAssert.AreEqual(0, list.Count);
+        public void TestGetDataValidationsintValue()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            HSSFSheet sheet = wb.CreateSheet() as HSSFSheet;
+            List<IDataValidation> list = sheet.GetDataValidations();
+            ClassicAssert.AreEqual(0, list.Count);
 
-        IDataValidationHelper dataValidationHelper = sheet.GetDataValidationHelper();
-        IDataValidationConstraint constraint = dataValidationHelper.CreateintConstraint(OperatorType.BETWEEN, "100",
+            IDataValidationHelper dataValidationHelper = sheet.GetDataValidationHelper();
+            IDataValidationConstraint constraint = dataValidationHelper.CreateintConstraint(OperatorType.BETWEEN, "100",
                 "200");
-        CellRangeAddressList AddressList = new CellRangeAddressList(0, 0, 0, 0);
-        IDataValidation validation = dataValidationHelper.CreateValidation(constraint, AddressList);
-        sheet.AddValidationData(validation);
+            CellRangeAddressList AddressList = new CellRangeAddressList(0, 0, 0, 0);
+            IDataValidation validation = dataValidationHelper.CreateValidation(constraint, AddressList);
+            sheet.AddValidationData(validation);
 
-        list = sheet.GetDataValidations(); // <-- works
-        ClassicAssert.AreEqual(1, list.Count);
+            list = sheet.GetDataValidations(); // <-- works
+            ClassicAssert.AreEqual(1, list.Count);
 
-        HSSFDataValidation dv = list[(0)] as HSSFDataValidation;
-        DVConstraint c = dv.Constraint;
-        ClassicAssert.AreEqual(ValidationType.INTEGER, c.GetValidationType());
-        ClassicAssert.AreEqual(OperatorType.BETWEEN, c.Operator);
-        ClassicAssert.AreEqual(null, c.Formula1);
-        ClassicAssert.AreEqual(null, c.Formula2);
-        ClassicAssert.AreEqual(100, c.Value1);
-        ClassicAssert.AreEqual(200, c.Value2);
-    }
+            HSSFDataValidation dv = list[(0)] as HSSFDataValidation;
+            DVConstraint c = dv.Constraint;
+            ClassicAssert.AreEqual(ValidationType.INTEGER, c.GetValidationType());
+            ClassicAssert.AreEqual(OperatorType.BETWEEN, c.Operator);
+            ClassicAssert.AreEqual(null, c.Formula1);
+            ClassicAssert.AreEqual(null, c.Formula2);
+            ClassicAssert.AreEqual(100, c.Value1);
+            ClassicAssert.AreEqual(200, c.Value2);
+        }
 
         [Test]
-        public void TestGetDataValidationsDecimal(){
-        HSSFWorkbook wb = new HSSFWorkbook();
-        HSSFSheet sheet = wb.CreateSheet() as HSSFSheet;
-        List<IDataValidation> list = sheet.GetDataValidations();
-        ClassicAssert.AreEqual(0, list.Count);
+        public void TestGetDataValidationsDecimal()
+        {
+            HSSFWorkbook wb = new HSSFWorkbook();
+            HSSFSheet sheet = wb.CreateSheet() as HSSFSheet;
+            List<IDataValidation> list = sheet.GetDataValidations();
+            ClassicAssert.AreEqual(0, list.Count);
 
-        IDataValidationHelper dataValidationHelper = sheet.GetDataValidationHelper();
-        IDataValidationConstraint constraint = dataValidationHelper.CreateDecimalConstraint(OperatorType.BETWEEN, "=A2",
+            IDataValidationHelper dataValidationHelper = sheet.GetDataValidationHelper();
+            IDataValidationConstraint constraint = dataValidationHelper.CreateDecimalConstraint(OperatorType.BETWEEN, "=A2",
                 "200");
-        CellRangeAddressList AddressList = new CellRangeAddressList(0, 0, 0, 0);
-        IDataValidation validation = dataValidationHelper.CreateValidation(constraint, AddressList);
-        sheet.AddValidationData(validation);
+            CellRangeAddressList AddressList = new CellRangeAddressList(0, 0, 0, 0);
+            IDataValidation validation = dataValidationHelper.CreateValidation(constraint, AddressList);
+            sheet.AddValidationData(validation);
 
-        list = sheet.GetDataValidations(); // <-- works
-        ClassicAssert.AreEqual(1, list.Count);
+            list = sheet.GetDataValidations(); // <-- works
+            ClassicAssert.AreEqual(1, list.Count);
 
-        HSSFDataValidation dv = list[(0)] as HSSFDataValidation;
-        DVConstraint c = dv.Constraint;
-        ClassicAssert.AreEqual(ValidationType.DECIMAL, c.GetValidationType());
-        ClassicAssert.AreEqual(OperatorType.BETWEEN, c.Operator);
-        ClassicAssert.AreEqual("A2", c.Formula1);
-        ClassicAssert.AreEqual(null, c.Formula2);
-        ClassicAssert.AreEqual(double.NaN, c.Value1);
-        ClassicAssert.AreEqual(200, c.Value2);
-    }
+            HSSFDataValidation dv = list[(0)] as HSSFDataValidation;
+            DVConstraint c = dv.Constraint;
+            ClassicAssert.AreEqual(ValidationType.DECIMAL, c.GetValidationType());
+            ClassicAssert.AreEqual(OperatorType.BETWEEN, c.Operator);
+            ClassicAssert.AreEqual("A2", c.Formula1);
+            ClassicAssert.AreEqual(null, c.Formula2);
+            ClassicAssert.AreEqual(double.NaN, c.Value1);
+            ClassicAssert.AreEqual(200, c.Value2);
+        }
 
         [Test]
         public void TestGetDataValidationsDate()
@@ -467,7 +470,7 @@ namespace TestCases.HSSF.UserModel
         [Test]
         public void TestRemoveDataValidation()
         {
-            
+
             HSSFWorkbook wb = new HSSFWorkbook();
             HSSFSheet sheet = wb.CreateSheet() as HSSFSheet;
             List<IDataValidation> list = sheet.GetDataValidations();

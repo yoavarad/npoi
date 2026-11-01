@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 
 namespace NPOI.Util
 {
     [Serializable]
-    public class RuntimeException:Exception
+    public class RuntimeException : Exception
     {
         public RuntimeException()
-            :base()
+            : base()
         {
-            
+
         }
         public RuntimeException(string message)
             : base(message)

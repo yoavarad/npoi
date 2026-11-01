@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -58,7 +58,7 @@ namespace NPOI.XSSF.UserModel
         {
             //String drawNS = "http://schemas.microsoft.com/office/drawing/2010/main";
 
-            if (prototype == null)
+            if(prototype == null)
             {
                 CT_Shape shape = new CT_Shape();
 
@@ -104,7 +104,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return GetOleObject().progId;
             }
-            
+
         }
 
         /// <summary>
@@ -112,11 +112,11 @@ namespace NPOI.XSSF.UserModel
         /// <return>CTOleObject associated with the shape/// </return>
         public CT_OleObject GetOleObject()
         {
-            if (oleObject == null)
+            if(oleObject == null)
             {
                 long shapeId = GetCTShape().nvSpPr.cNvPr.id;
                 oleObject = GetSheet().ReadOleObject(shapeId);
-                if (oleObject == null)
+                if(oleObject == null)
                 {
                     throw new POIXMLException("Ole object not found in sheet Container - it's probably a control element");
                 }
@@ -140,7 +140,7 @@ namespace NPOI.XSSF.UserModel
         /// <return>package part of the object data/// </return>
         public PackagePart GetObjectPart()
         {
-            if (!GetOleObject().IsSetId())
+            if(!GetOleObject().IsSetId())
             {
                 throw new POIXMLException("Invalid ole object found in sheet Container");
             }
@@ -167,7 +167,7 @@ namespace NPOI.XSSF.UserModel
                 //return NPOIFSFileSystem.HasPOIFSHeader(header8);
                 return FileMagicContainer.ValueOf(header8) == FileMagic.OLE2;
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 LOG.Log(POILogger.WARN, "can't determine if directory entry exists", e);
                 return false;
@@ -208,7 +208,7 @@ namespace NPOI.XSSF.UserModel
 
         protected XSSFSheet GetSheet()
         {
-            return (XSSFSheet)GetDrawing().GetParent();
+            return (XSSFSheet) GetDrawing().GetParent();
         }
         public IPictureData PictureData
         {
@@ -240,8 +240,7 @@ namespace NPOI.XSSF.UserModel
         }
         [Obsolete("PictureData2 is obsolete. Use the PictureData property instead.")]
         [Removal(Version = "4.0.0")]
-        public XSSFPictureData PictureData2 => (XSSFPictureData)PictureData;
-        
+        public XSSFPictureData PictureData2 => (XSSFPictureData) PictureData;
+
     }
 }
-

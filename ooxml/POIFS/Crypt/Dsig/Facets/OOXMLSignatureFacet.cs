@@ -118,10 +118,10 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
 
             //        // TODO: find a better way ...
             //        String partName = baseUri + relationship.TargetURI.ToString();
-                    //if (!partName.startsWith(baseUri))
-                    //{
-                    //    partName = baseUri + partName;
-                    //}
+            //if (!partName.startsWith(baseUri))
+            //{
+            //    partName = baseUri + partName;
+            //}
             //        try
             //        {
             //            partName = new URI(partName).normalize().Path.Replace('\\', '/');
@@ -253,14 +253,14 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         protected static bool IsSignedRelationship(String relationshipType)
         {
             //LOG.Log(POILogger.DEBUG, "relationship type: " + relationshipType);
-            foreach (String signedTypeExtension in signed)
+            foreach(String signedTypeExtension in signed)
             {
-                if (relationshipType.EndsWith(signedTypeExtension))
+                if(relationshipType.EndsWith(signedTypeExtension))
                 {
                     return true;
                 }
             }
-            if (relationshipType.EndsWith("customXml"))
+            if(relationshipType.EndsWith("customXml"))
             {
                 //LOG.Log(POILogger.DEBUG, "customXml relationship type");
                 return true;

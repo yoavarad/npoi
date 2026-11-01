@@ -27,7 +27,7 @@ namespace NPOI.SS.Formula.Functions
 
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            if (args.Length < 2)
+            if(args.Length < 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -35,18 +35,18 @@ namespace NPOI.SS.Formula.Functions
             try
             {
                 int ix = EvaluateFirstArg(args[0], srcRowIndex, srcColumnIndex);
-                if (ix < 1 || ix >= args.Length)
+                if(ix < 1 || ix >= args.Length)
                 {
                     return ErrorEval.VALUE_INVALID;
                 }
                 ValueEval result = OperandResolver.GetSingleValue(args[ix], srcRowIndex, srcColumnIndex);
-                if (result == MissingArgEval.instance)
+                if(result == MissingArgEval.instance)
                 {
                     return BlankEval.instance;
                 }
                 return result;
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -59,4 +59,3 @@ namespace NPOI.SS.Formula.Functions
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,11 +24,9 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
-    using NPOI.Util;
-
-    using NPOI.XDDF.UserModel;
-
     using NPOI.OpenXmlFormats.Dml.Chart;
+    using NPOI.Util;
+    using NPOI.XDDF.UserModel;
     public class XDDFScatterChartData<T, V> : XDDFChartData<T, V>
     {
         private CT_ScatterChart chart;
@@ -114,14 +112,14 @@ namespace NPOI.XDDF.UserModel.Chart
 
             internal Series(CT_ScatterSer series, IXDDFDataSource<T> category, IXDDFNumericalDataSource<V> values)
                 : base(category, values)
-            {   
+            {
                 this.series = series;
             }
 
             internal Series(CT_ScatterSer series, CT_AxDataSource category, CT_NumDataSource values)
-                : base(XDDFDataSourcesFactory.FromDataSource(category) as IXDDFDataSource<T>, 
+                : base(XDDFDataSourcesFactory.FromDataSource(category) as IXDDFDataSource<T>,
                       XDDFDataSourcesFactory.FromDataSource(values) as IXDDFNumericalDataSource<V>)
-            {   
+            {
                 this.series = series;
             }
             protected override CT_SerTx GetSeriesText()

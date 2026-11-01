@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
     /**
      * Implementation of the VLOOKUP() function.<p/>
      * 
@@ -105,7 +105,7 @@ namespace NPOI.SS.Formula.Functions
                 LookupUtils.ColumnVector resultCol = CreateResultColumnVector(tableArray, colIndex);
                 return resultCol.GetItem(rowIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -119,7 +119,7 @@ namespace NPOI.SS.Formula.Functions
          */
         private static LookupUtils.ColumnVector CreateResultColumnVector(TwoDEval tableArray, int colIndex)
         {
-            if (colIndex >= tableArray.Width)
+            if(colIndex >= tableArray.Width)
             {
                 throw EvaluationException.InvalidRef();
             }

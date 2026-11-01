@@ -18,9 +18,10 @@
 namespace TestCases.HSSF.Record
 {
 
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record.AutoFilter;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Tests the AutoFilterInfoRecord class.
@@ -42,14 +43,14 @@ namespace TestCases.HSSF.Record
             ClassicAssert.AreEqual(AutoFilterInfoRecord.sid, record.Sid);
             ClassicAssert.AreEqual(data.Length, record.RecordSize - 4);
             ClassicAssert.AreEqual(5, record.NumEntries);
-            record.NumEntries = (/*setter*/(short)3);
+            record.NumEntries = (/*setter*/(short) 3);
             ClassicAssert.AreEqual(3, record.NumEntries);
         }
         [Test]
         public void TestWrite()
         {
             AutoFilterInfoRecord record = new AutoFilterInfoRecord();
-            record.NumEntries = (/*setter*/(short)3);
+            record.NumEntries = (/*setter*/(short) 3);
 
             byte[] ser = record.Serialize();
             ClassicAssert.AreEqual(ser.Length - 4, data.Length);
@@ -60,7 +61,7 @@ namespace TestCases.HSSF.Record
         public void TestClone()
         {
             AutoFilterInfoRecord record = new AutoFilterInfoRecord();
-            record.NumEntries = (/*setter*/(short)3);
+            record.NumEntries = (/*setter*/(short) 3);
             byte[] src = record.Serialize();
 
             AutoFilterInfoRecord Cloned = (AutoFilterInfoRecord)record.Clone();

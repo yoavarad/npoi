@@ -17,8 +17,8 @@
 
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXmlFormats.Wordprocessing;
+    using System;
 
     /**
      * Default Character Run style, from which other styles will override
@@ -42,8 +42,8 @@ namespace NPOI.XWPF.UserModel
         {
             get
             {
-                if (rpr.IsSetSz())
-                    return (int)rpr.sz.val / 2;
+                if(rpr.IsSetSz())
+                    return (int) rpr.sz.val / 2;
                 return -1;
             }
         }

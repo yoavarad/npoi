@@ -52,12 +52,12 @@ namespace NPOI.SS.UserModel.Helpers
             HashSet<int> removedIndices = [];
             var size = sheet.NumMergedRegions;
 
-            for (var i = 0; i < size; i++)
+            for(var i = 0; i < size; i++)
             {
                 var merged = sheet.GetMergedRegion(i);
 
                 //Shift if the merged region inside the Shifting rows
-                if (RemovalNeeded(merged, startRow, endRow, n))
+                if(RemovalNeeded(merged, startRow, endRow, n))
                 {
                     removedIndices.Add(i);
                     continue;
@@ -67,12 +67,14 @@ namespace NPOI.SS.UserModel.Helpers
                 bool inEnd = (merged.FirstRow <= endRow || merged.LastRow <= endRow);
 
                 //don't check if it's not within the shifted area
-                if (!inStart || !inEnd) {
+                if(!inStart || !inEnd)
+                {
                     continue;
                 }
 
                 //only shift if the region outside the shifted rows is not merged too
-                if (!merged.ContainsRow(startRow - 1) && !merged.ContainsRow(endRow + 1)) {
+                if(!merged.ContainsRow(startRow - 1) && !merged.ContainsRow(endRow + 1))
+                {
                     merged.FirstRow = merged.FirstRow + n;
                     merged.LastRow = merged.LastRow + n;
                     //have to remove/add it back
@@ -81,20 +83,20 @@ namespace NPOI.SS.UserModel.Helpers
                 }
             }
 
-            if (removedIndices.Count != 0)
+            if(removedIndices.Count != 0)
             {
                 sheet.RemoveMergedRegions(removedIndices.ToList());
             }
 
             //add it which is within the shifted area back
-            foreach (var region in shiftedRegions)
+            foreach(var region in shiftedRegions)
             {
                 sheet.AddMergedRegion(region);
             }
 
             return shiftedRegions;
         }
-        
+
         private static bool RemovalNeeded(CellRangeAddress merged, int startRow, int endRow, int n)
         {
             int movedRows = endRow - startRow + 1;
@@ -102,10 +104,13 @@ namespace NPOI.SS.UserModel.Helpers
             // build a range of the rows that are overwritten, i.e. the target-area, but without
             // rows that are moved along
             CellRangeAddress overwrite;
-            if(n > 0) {
+            if(n > 0)
+            {
                 // area is moved down => overwritten area is [endRow + n - movedRows, endRow + n]
                 overwrite = new CellRangeAddress(Math.Max(endRow + 1, endRow + n - movedRows), endRow + n, 0, 0);
-            } else {
+            }
+            else
+            {
                 // area is moved up => overwritten area is [startRow + n, startRow + n + movedRows]
                 overwrite = new CellRangeAddress(startRow + n, Math.Min(startRow - 1, startRow + n + movedRows), 0, 0);
             }
@@ -122,17 +127,17 @@ namespace NPOI.SS.UserModel.Helpers
         /// <exception cref="ArgumentException"></exception>
         public static void ValidateShiftParameters(int firstShiftColumnIndex, int lastShiftColumnIndex, int step)
         {
-            if (step < 0)
+            if(step < 0)
             {
                 throw new ArgumentException("Shifting step may not be negative, but had " + step);
             }
 
-            if (firstShiftColumnIndex > lastShiftColumnIndex)
+            if(firstShiftColumnIndex > lastShiftColumnIndex)
             {
                 throw new ArgumentException(string.Format("Incorrect shifting range : %d-%d", firstShiftColumnIndex, lastShiftColumnIndex));
             }
         }
-        
+
         /// <summary>
         /// Verify that the given column indices and step denote a valid range of columns to shift to the left
         /// </summary>
@@ -144,18 +149,18 @@ namespace NPOI.SS.UserModel.Helpers
         {
             ValidateShiftParameters(firstShiftColumnIndex, lastShiftColumnIndex, step);
 
-            if (firstShiftColumnIndex - step < 0)
+            if(firstShiftColumnIndex - step < 0)
             {
                 throw new InvalidOperationException("Column index less than zero: " + (firstShiftColumnIndex + step));
             }
         }
-        
+
         /// <summary>
         /// Updated named ranges
         /// </summary>
         /// <param name="Shifter"></param>
         public abstract void UpdateNamedRanges(FormulaShifter Shifter);
-        
+
         /// <summary>
         /// Update formulas.
         /// </summary>
@@ -170,7 +175,7 @@ namespace NPOI.SS.UserModel.Helpers
         public abstract void UpdateRowFormulas(IRow row, FormulaShifter Shifter);
 
         public abstract void UpdateConditionalFormatting(FormulaShifter Shifter);
-        
+
         /// <summary>
         /// Shift the Hyperlink anchors (not the hyperlink text, even if the hyperlink
         /// is of type LINK_DOCUMENT and refers to a cell that was Shifted). Hyperlinks

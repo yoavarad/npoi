@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml;
 using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -16,19 +15,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_SheetData Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_SheetData ctObj = new CT_SheetData();
             ctObj.row = new List<CT_Row>();
 
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "row")
+                if(childNode.LocalName == "row")
                 {
                     CT_Row row = CT_Row.Parse(childNode, namespaceManager);
                     ctObj.row.Add(row);
 
-                    if (row.lastCell > ctObj.lastColumnField)
+                    if(row.lastCell > ctObj.lastColumnField)
                     {
                         ctObj.lastColumnField = row.lastCell;
                     }
@@ -42,9 +41,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         {
             sw.WriteStart(nodeName);
             sw.Write('>');
-            if (this.row != null)
+            if(this.row != null)
             {
-                foreach (CT_Row x in this.row)
+                foreach(CT_Row x in this.row)
                 {
                     x.Write(sw, "row");
                 }
@@ -62,34 +61,37 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         //}
         public CT_Row AddNewRow()
         {
-            if (null == rowField) { rowField = new List<CT_Row>(); }
+            if(null == rowField)
+            { rowField = new List<CT_Row>(); }
             CT_Row newrow = new CT_Row();
             rowField.Add(newrow);
             return newrow;
         }
         public CT_Row InsertNewRow(int index)
         {
-            if (null == rowField) { rowField = new List<CT_Row>(); }
+            if(null == rowField)
+            { rowField = new List<CT_Row>(); }
             CT_Row newrow = new CT_Row();
             rowField.Insert(index, newrow);
             return newrow;
         }
         public void RemoveRows(IList<CT_Row> toRemove)
         {
-            if (rowField == null) return;
-            foreach (CT_Row r in toRemove)
+            if(rowField == null)
+                return;
+            foreach(CT_Row r in toRemove)
             {
                 rowField.Remove(r);
             }
         }
         public void RemoveRow(int rowNum)
         {
-            if (null != rowField)
+            if(null != rowField)
             {
                 CT_Row rowToRemove=null;
-                foreach (CT_Row ctrow in rowField)
+                foreach(CT_Row ctrow in rowField)
                 {
-                    if (ctrow.r == rowNum)
+                    if(ctrow.r == rowNum)
                     {
                         rowToRemove = ctrow;
                         break;

@@ -15,11 +15,11 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
-using System.Collections.Generic;
 using NPOI.SS.Formula;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using System;
+using System.Collections.Generic;
 namespace NPOI.SS.Formula.Eval.Forked
 {
 
@@ -64,10 +64,10 @@ namespace NPOI.SS.Formula.Eval.Forked
             RowColKey key = new RowColKey(rowIndex, columnIndex);
 
             ForkedEvaluationCell result = null;
-            if (_sharedCellsByRowCol.TryGetValue(key, out ForkedEvaluationCell value))
+            if(_sharedCellsByRowCol.TryGetValue(key, out ForkedEvaluationCell value))
                 result = value;
 
-            if (result == null)
+            if(result == null)
             {
                 return _masterSheet.GetCell(rowIndex, columnIndex);
             }
@@ -79,12 +79,12 @@ namespace NPOI.SS.Formula.Eval.Forked
             RowColKey key = new RowColKey(rowIndex, columnIndex);
 
             ForkedEvaluationCell result = null;
-            if (_sharedCellsByRowCol.TryGetValue(key, out ForkedEvaluationCell value))
+            if(_sharedCellsByRowCol.TryGetValue(key, out ForkedEvaluationCell value))
                 result = value;
-            if (result == null)
+            if(result == null)
             {
                 IEvaluationCell mcell = _masterSheet.GetCell(rowIndex, columnIndex);
-                if (mcell == null)
+                if(mcell == null)
                 {
                     CellReference cr = new CellReference(rowIndex, columnIndex);
                     throw new InvalidOperationException("Underlying cell '"
@@ -101,16 +101,16 @@ namespace NPOI.SS.Formula.Eval.Forked
             RowColKey[] keys = new RowColKey[_sharedCellsByRowCol.Count];
             _sharedCellsByRowCol.Keys.CopyTo(keys, 0);
             Array.Sort(keys);
-            for (int i = 0; i < keys.Length; i++)
+            for(int i = 0; i < keys.Length; i++)
             {
                 RowColKey key = keys[i];
                 IRow row = sheet.GetRow(key.RowIndex);
-                if (row == null)
+                if(row == null)
                 {
                     row = sheet.CreateRow(key.RowIndex);
                 }
                 ICell destCell = row.GetCell(key.ColumnIndex);
-                if (destCell == null)
+                if(destCell == null)
                 {
                     destCell = row.CreateCell(key.ColumnIndex);
                 }
@@ -159,7 +159,7 @@ namespace NPOI.SS.Formula.Eval.Forked
             public int CompareTo(RowColKey o)
             {
                 int cmp = _rowIndex - o._rowIndex;
-                if (cmp != 0)
+                if(cmp != 0)
                 {
                     return cmp;
                 }

@@ -41,7 +41,3 @@ namespace NPOI.POIFS.EventFileSystem
 
 
 }
-
-
-
-

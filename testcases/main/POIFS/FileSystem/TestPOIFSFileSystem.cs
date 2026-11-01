@@ -27,19 +27,18 @@
 
 namespace TestCases.POIFS.FileSystem
 {
+    using NPOI.POIFS.Common;
+    using NPOI.POIFS.FileSystem;
+    using NPOI.POIFS.Properties;
+    using NPOI.POIFS.Storage;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using NPOI.POIFS.FileSystem;
-    using NPOI.Util;
-    using NPOI.POIFS.Storage;
-    using NPOI.POIFS.Properties;
-    using TestCases.HSSF;
-    using NPOI.POIFS.Common;
     using System.Collections.Generic;
+    using System.IO;
+    using TestCases.HSSF;
 
     /**
      * Tests for POIFSFileSystem
@@ -84,7 +83,7 @@ namespace TestCases.POIFS.FileSystem
             public int Read()
             {
                 int result = _is.ReadByte();
-                if (result >= 0)
+                if(result >= 0)
                 {
                     CheckRead(1);
                 }
@@ -100,7 +99,7 @@ namespace TestCases.POIFS.FileSystem
             private void CheckRead(int nBytes)
             {
                 _currentIx += nBytes;
-                if (_FailIndex > 0 && _currentIx > _FailIndex)
+                if(_FailIndex > 0 && _currentIx > _FailIndex)
                 {
                     throw new MyEx();
                 }
@@ -192,7 +191,7 @@ namespace TestCases.POIFS.FileSystem
             {
                 new OPOIFSFileSystem(testIS);
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
@@ -205,11 +204,11 @@ namespace TestCases.POIFS.FileSystem
                 new OPOIFSFileSystem(testIS);
                 Assert.Fail("ex Should have been thrown");
             }
-            catch (IOException)
+            catch(IOException)
             {
                 throw;
             }
-            catch (MyEx)
+            catch(MyEx)
             {
                 // expected
             }
@@ -233,7 +232,7 @@ namespace TestCases.POIFS.FileSystem
         {
             String[] files = new String[] { "ShortLastBlock.qwp", "ShortLastBlock.wps" };
 
-            for (int i = 0; i < files.Length; i++)
+            for(int i = 0; i < files.Length; i++)
             {
                 // Open the file up
                 OPOIFSFileSystem fs = new OPOIFSFileSystem(
@@ -265,7 +264,7 @@ namespace TestCases.POIFS.FileSystem
                     stream.Close();
                 }
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 String msg = e.Message;
                 ClassicAssert.IsTrue(msg.StartsWith("Your file contains 695 sectors"));
@@ -297,12 +296,12 @@ namespace TestCases.POIFS.FileSystem
 
             BATBlock xbat = BATBlock.CreateBATBlock(POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS, xbatData);
 
-            for (int i = 0; i < 21; i++)
+            for(int i = 0; i < 21; i++)
             {
                 ClassicAssert.IsTrue(xbat.GetValueAt(i) != POIFSConstants.UNUSED_BLOCK);
             }
 
-            for (int i = 21; i < 127; i++)
+            for(int i = 21; i < 127; i++)
                 ClassicAssert.AreEqual(POIFSConstants.UNUSED_BLOCK, xbat.GetValueAt(i));
 
             ClassicAssert.AreEqual(POIFSConstants.END_OF_CHAIN, xbat.GetValueAt(127));
@@ -377,12 +376,12 @@ namespace TestCases.POIFS.FileSystem
         {
             IEnumerator<Entry> it = dir.Entries;
             //foreach (Entry entry in dir)
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 Entry entry = it.Current;
-                if (entry is DirectoryEntry)
+                if(entry is DirectoryEntry)
                 {
-                    CheckAllDirectoryContents((DirectoryEntry)entry);
+                    CheckAllDirectoryContents((DirectoryEntry) entry);
                 }
                 else
                 {

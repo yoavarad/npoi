@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,11 +14,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
+using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NPOI.SS.Formula.Functions;
-using NPOI.SS.Formula.Eval;
 
 namespace NPOI.SS.Formula.Atp
 {
@@ -34,7 +34,7 @@ namespace NPOI.SS.Formula.Atp
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 2)
+            if(args.Length != 2)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -44,7 +44,7 @@ namespace NPOI.SS.Formula.Atp
             {
                 val = EvaluateInternal(args[0], args[1], ec.RowIndex, ec.ColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -55,9 +55,9 @@ namespace NPOI.SS.Formula.Atp
         private static ValueEval EvaluateInternal(ValueEval arg, ValueEval iferror, int srcCellRow, int srcCellCol)
         {
             arg = WorkbookEvaluator.DereferenceResult(arg, srcCellRow, srcCellCol);
-            if (arg is ErrorEval)
+            if(arg is ErrorEval)
             {
-               return iferror;
+                return iferror;
             }
             else
             {

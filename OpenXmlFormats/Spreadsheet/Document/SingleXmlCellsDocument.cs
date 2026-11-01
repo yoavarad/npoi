@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
@@ -9,7 +9,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         CT_SingleXmlCells cells = null;
 
         public SingleXmlCellsDocument()
-        {           
+        {
         }
         public SingleXmlCellsDocument(CT_SingleXmlCells cells)
         {

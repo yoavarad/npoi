@@ -20,10 +20,11 @@
 
 namespace TestCases.HSSF.Record.Chart
 {
-    using System;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the FrameRecord
@@ -63,14 +64,14 @@ namespace TestCases.HSSF.Record.Chart
         {
             FrameRecord record = new FrameRecord();
             record.BorderType = (FrameRecord.BORDER_TYPE_REGULAR);
-            record.Options = ((short)2);
+            record.Options = ((short) 2);
             record.IsAutoSize = (false);
             record.IsAutoPosition = (true);
 
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using ExtendedNumerics;
+using System;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NPOI.SS.Util
 {
@@ -72,7 +72,7 @@ namespace NPOI.SS.Util
         }
         public override StringBuilder Format(object obj, StringBuilder toAppendTo, CultureInfo culture)
         {
-            return toAppendTo.Append(Format((long)obj, culture));
+            return toAppendTo.Append(Format((long) obj, culture));
         }
 
         public override object ParseObject(string source, int pos)
@@ -141,7 +141,7 @@ namespace NPOI.SS.Util
             var sb = new StringBuilder();
             String seg1, seg2, seg3;
             var len = result.Length;
-            if (len <= 4)
+            if(len <= 4)
             {
                 return result;
             }
@@ -152,11 +152,11 @@ namespace NPOI.SS.Util
             beginPos = Math.Max(0, len - 10);
             seg1 = result.Substring(beginPos, Math.Max(0, len - 7) - beginPos);
 
-            if (seg1 != null && seg1.Trim().Length > 0)
+            if(seg1 != null && seg1.Trim().Length > 0)
             {
                 sb.Append('(').Append(seg1).Append(") ");
             }
-            if (seg2 != null && seg2.Trim().Length > 0)
+            if(seg2 != null && seg2.Trim().Length > 0)
             {
                 sb.Append(seg2).Append('-');
             }
@@ -189,10 +189,10 @@ namespace NPOI.SS.Util
 
         private string _pattern;
         private readonly NumberFormatInfo _formatInfo;
-        
+
         public DecimalFormat(string pattern)
         {
-            if (pattern.Contains('\''))
+            if(pattern.Contains('\''))
                 throw new ArgumentException("invalid pattern");
             this._pattern = pattern;
         }
@@ -215,13 +215,13 @@ namespace NPOI.SS.Util
         {
             //invalide fraction
             _pattern = RegexFraction.Replace(_pattern, "/");
-            if (_formatInfo != null)
+            if(_formatInfo != null)
             {
-                culture = (CultureInfo)culture.Clone();
+                culture = (CultureInfo) culture.Clone();
                 culture.NumberFormat = _formatInfo;
             }
-                
-            if (_pattern.Contains('\''))
+
+            if(_pattern.Contains('\''))
             {
                 return Convert.ToDouble(obj, CultureInfo.InvariantCulture).ToString(culture);
             }
@@ -232,7 +232,7 @@ namespace NPOI.SS.Util
                     toConvert = obj.ToString();
                 var value = Convert.ToDouble(toConvert, CultureInfo.InvariantCulture);
                 var ret = value.ToString(_pattern, culture);
-                if (string.IsNullOrEmpty(ret))
+                if(string.IsNullOrEmpty(ret))
                     ret = "0";
                 return ret;
             }
@@ -248,9 +248,10 @@ namespace NPOI.SS.Util
             return Decimal.Parse(source.Substring(pos), CultureInfo.CurrentCulture);
         }
 
-        public bool ParseIntegerOnly {
-            get { return false;}
-        } 
+        public bool ParseIntegerOnly
+        {
+            get { return false; }
+        }
     }
 
     public abstract class DateFormat : FormatBase
@@ -267,7 +268,7 @@ namespace NPOI.SS.Util
             string datePattern = GetDatePattern(dateStyle,locale);
             string timePattern = GetTimePattern(timeStyle, locale);
 
-            if (locale.TextInfo.IsRightToLeft)
+            if(locale.TextInfo.IsRightToLeft)
                 return timePattern + " " + datePattern;
             else
                 return datePattern + " " + timePattern;
@@ -275,7 +276,7 @@ namespace NPOI.SS.Util
         public static string GetDatePattern(int dateStyle, CultureInfo locale)
         {
             DateTimeFormatInfo dfi = locale.DateTimeFormat;
-            switch (dateStyle)
+            switch(dateStyle)
             {
                 case DateFormat.SHORT:
                     return dfi.ShortDatePattern.Replace("yyyy", "yy").Replace("YYYY", "YY");
@@ -292,7 +293,7 @@ namespace NPOI.SS.Util
         public static string GetTimePattern(int timeStyle, CultureInfo locale)
         {
             DateTimeFormatInfo dfi = locale.DateTimeFormat;
-            switch (timeStyle)
+            switch(timeStyle)
             {
                 case DateFormat.SHORT:
                     return dfi.ShortTimePattern;
@@ -309,7 +310,7 @@ namespace NPOI.SS.Util
         private readonly string _pattern;
         private DateTimeFormatInfo _formatData;
         private CultureInfo _culture;
-        public SimpleDateFormat():this("", CultureInfo.CurrentCulture)
+        public SimpleDateFormat() : this("", CultureInfo.CurrentCulture)
         {
 
         }
@@ -321,23 +322,23 @@ namespace NPOI.SS.Util
 
         public SimpleDateFormat(string pattern, CultureInfo culture)
         {
-            if (pattern == null || culture == null)
+            if(pattern == null || culture == null)
             {
                 throw new ArgumentNullException();
             }
             this._pattern = pattern;
-            this._formatData = (DateTimeFormatInfo)culture.DateTimeFormat.Clone();
+            this._formatData = (DateTimeFormatInfo) culture.DateTimeFormat.Clone();
             this._culture = culture;
         }
-        
+
         public SimpleDateFormat(string pattern, DateTimeFormatInfo formatSymbols)
         {
-            if (pattern == null || formatSymbols == null)
+            if(pattern == null || formatSymbols == null)
             {
                 throw new ArgumentNullException();
             }
             this._pattern = pattern;
-            this._formatData = (DateTimeFormatInfo)formatSymbols.Clone();
+            this._formatData = (DateTimeFormatInfo) formatSymbols.Clone();
             this._culture = CultureInfo.CurrentCulture;
         }
 
@@ -352,14 +353,14 @@ namespace NPOI.SS.Util
         public override string Format(object obj, CultureInfo culture)
         {
             DateTime dt = (DateTime)obj;
-            if (TimeZone != null)
+            if(TimeZone != null)
                 dt = TimeZoneInfo.ConvertTime(dt, TimeZone);
-            return  dt.ToString(_pattern, culture); 
+            return dt.ToString(_pattern, culture);
         }
 
         public override StringBuilder Format(object obj, StringBuilder toAppendTo, CultureInfo culture)
         {
-            return toAppendTo.Append(this.Format((DateTime)obj, culture));
+            return toAppendTo.Append(this.Format((DateTime) obj, culture));
         }
 
         public override object ParseObject(string source, int pos)
@@ -369,7 +370,7 @@ namespace NPOI.SS.Util
         }
         public DateTime Parse(string source)
         {
-            if (!DateTime.TryParse(source, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
+            if(!DateTime.TryParse(source, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
             {
                 // Compatibility stub for SAS-generated ill-formed datetime, such as 2020-07-03T 9:41:11-04:00
                 // There should be a leading zero before the one-digit hour.
@@ -382,10 +383,10 @@ namespace NPOI.SS.Util
 
             return TimeZone != null ? TimeZoneInfo.ConvertTime(dt, TimeZone) : dt;
         }
-        
+
     }
-    
-    
+
+
     /**
      * Format class that does nothing and always returns a constant string.
      *

@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,25 +46,25 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_TabJc
     {
 
-    
+
         clear,
 
-    
+
         left,
 
-    
+
         center,
 
-    
+
         right,
 
-    
+
         @decimal,
 
-    
+
         bar,
 
-    
+
         num,
     }
 
@@ -74,22 +74,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_TabTlc
     {
 
-    
+
         none,
 
-    
+
         dot,
 
-    
+
         hyphen,
 
-    
+
         underscore,
 
-    
+
         heavy,
 
-    
+
         middleDot,
     }
     [Serializable]
@@ -108,13 +108,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private string posField;
         public static CT_TabStop Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TabStop ctObj = new CT_TabStop();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_TabJc)Enum.Parse(typeof(ST_TabJc), node.Attributes["w:val"].Value);
-            if (node.Attributes["w:leader"] != null)
-                ctObj.leader = (ST_TabTlc)Enum.Parse(typeof(ST_TabTlc), node.Attributes["w:leader"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_TabJc) Enum.Parse(typeof(ST_TabJc), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:leader"] != null)
+                ctObj.leader = (ST_TabTlc) Enum.Parse(typeof(ST_TabTlc), node.Attributes["w:leader"].Value);
             ctObj.pos = XmlHelper.ReadString(node.Attributes["w:pos"]);
             return ctObj;
         }
@@ -199,15 +199,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private ST_PTabLeader leaderField;
         public static CT_PTab Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PTab ctObj = new CT_PTab();
-            if (node.Attributes["w:alignment"] != null)
-                ctObj.alignment = (ST_PTabAlignment)Enum.Parse(typeof(ST_PTabAlignment), node.Attributes["w:alignment"].Value);
-            if (node.Attributes["w:relativeTo"] != null)
-                ctObj.relativeTo = (ST_PTabRelativeTo)Enum.Parse(typeof(ST_PTabRelativeTo), node.Attributes["w:relativeTo"].Value);
-            if (node.Attributes["w:leader"] != null)
-                ctObj.leader = (ST_PTabLeader)Enum.Parse(typeof(ST_PTabLeader), node.Attributes["w:leader"].Value);
+            if(node.Attributes["w:alignment"] != null)
+                ctObj.alignment = (ST_PTabAlignment) Enum.Parse(typeof(ST_PTabAlignment), node.Attributes["w:alignment"].Value);
+            if(node.Attributes["w:relativeTo"] != null)
+                ctObj.relativeTo = (ST_PTabRelativeTo) Enum.Parse(typeof(ST_PTabRelativeTo), node.Attributes["w:relativeTo"].Value);
+            if(node.Attributes["w:leader"] != null)
+                ctObj.leader = (ST_PTabLeader) Enum.Parse(typeof(ST_PTabLeader), node.Attributes["w:leader"].Value);
             return ctObj;
         }
 
@@ -269,13 +269,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_PTabAlignment
     {
 
-    
+
         left,
 
-    
+
         center,
 
-    
+
         right,
     }
 
@@ -285,10 +285,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_PTabRelativeTo
     {
 
-    
+
         margin,
 
-    
+
         indent,
     }
 
@@ -298,19 +298,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_PTabLeader
     {
 
-    
+
         none,
 
-    
+
         dot,
 
-    
+
         hyphen,
 
-    
+
         underscore,
 
-    
+
         middleDot,
     }
 

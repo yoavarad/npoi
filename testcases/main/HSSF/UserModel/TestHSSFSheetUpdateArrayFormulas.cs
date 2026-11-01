@@ -17,13 +17,14 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using TestCases.HSSF.Record.Aggregates;
 
     /**
@@ -94,7 +95,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.IsTrue(FindRecordOfType(recs, typeof(FormulaRecord), 0) < 0);
             RowRecordsAggregate rra = ((HSSFSheet)s).Sheet.RowsAggregate;
             SharedValueManager svm = TestSharedValueManager.ExtractFromRRA(rra);
-            if (svm.GetArrayRecord(4, 1) != null)
+            if(svm.GetArrayRecord(4, 1) != null)
             {
                 Assert.Fail("Array record was not cleaned up properly.");
             }
@@ -103,7 +104,7 @@ namespace TestCases.HSSF.UserModel
 
         private static void ConfirmRecordClass(Record[] recs, int index, Type cls)
         {
-            if (recs.Length <= index)
+            if(recs.Length <= index)
             {
                 Assert.Fail("Expected (" + cls.Name + ") at index "
                         + index + " but array length is " + recs.Length + ".");
@@ -115,9 +116,9 @@ namespace TestCases.HSSF.UserModel
          */
         private static int FindRecordOfType(Record[] recs, Type type, int fromIndex)
         {
-            for (int i = fromIndex; i < recs.Length; i++)
+            for(int i = fromIndex; i < recs.Length; i++)
             {
-                if (type.IsInstanceOfType(recs[i]))
+                if(type.IsInstanceOfType(recs[i]))
                 {
                     return i;
                 }

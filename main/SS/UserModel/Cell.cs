@@ -17,9 +17,9 @@
 
 namespace NPOI.SS.UserModel
 {
-    using System;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using System;
 
     public enum CellType : int
     {
@@ -103,7 +103,7 @@ namespace NPOI.SS.UserModel
         /// </summary>
         CellType CachedFormulaResultType { get; }
 
-   
+
         /// <summary>
         /// Set a numeric value for the cell
         /// </summary>
@@ -186,7 +186,7 @@ namespace NPOI.SS.UserModel
         /// Sets formula for this cell.
         /// </summary>
         /// <param name="formula">the formula to Set, e.g. <code>"SUM(C4:E4)"</code>.</param>
-        ICell SetCellFormula(String formula);        
+        ICell SetCellFormula(String formula);
 
         /// <summary>
         /// Get the value of the cell as a number.
@@ -269,7 +269,7 @@ namespace NPOI.SS.UserModel
         /// </summary>
         void RemoveCellComment();
 
-         /// <summary>
+        /// <summary>
         /// hyperlink associated with this cell
         /// </summary>
         IHyperlink Hyperlink { get; set; }
@@ -283,7 +283,7 @@ namespace NPOI.SS.UserModel
         ///  Only valid for array formula cells
         /// </summary>
         /// <returns>range of the array formula group that the cell belongs to.</returns>
-        CellRangeAddress ArrayFormulaRange{ get; }
+        CellRangeAddress ArrayFormulaRange { get; }
 
         /// <summary>
         /// if this cell is part of group of cells having a common array formula.
@@ -308,4 +308,3 @@ namespace NPOI.SS.UserModel
         CellType GetCachedFormulaResultTypeEnum();
     }
 }
-

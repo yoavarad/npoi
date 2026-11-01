@@ -20,10 +20,10 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the CommonObjectDataSubRecord
@@ -51,15 +51,15 @@ namespace TestCases.HSSF.Record
 
 
             ClassicAssert.AreEqual(CommonObjectType.ListBox, record.ObjectType);
-            ClassicAssert.AreEqual((short)1, record.ObjectId);
-            ClassicAssert.AreEqual((short)1, record.Option);
+            ClassicAssert.AreEqual((short) 1, record.ObjectId);
+            ClassicAssert.AreEqual((short) 1, record.Option);
             ClassicAssert.AreEqual(true, record.IsLocked);
             ClassicAssert.AreEqual(false, record.IsPrintable);
             ClassicAssert.AreEqual(false, record.IsAutoFill);
             ClassicAssert.AreEqual(false, record.IsAutoline);
-            ClassicAssert.AreEqual((int)24593, record.Reserved1);
-            ClassicAssert.AreEqual((int)218103808, record.Reserved2);
-            ClassicAssert.AreEqual((int)294, record.Reserved3);
+            ClassicAssert.AreEqual((int) 24593, record.Reserved1);
+            ClassicAssert.AreEqual((int) 218103808, record.Reserved2);
+            ClassicAssert.AreEqual((int) 294, record.Reserved3);
             ClassicAssert.AreEqual(18, record.DataSize);
         }
         [Test]
@@ -69,18 +69,18 @@ namespace TestCases.HSSF.Record
 
             record.ObjectType = (CommonObjectType.ListBox);
             record.ObjectId = 1;
-            record.Option = ((short)1);
+            record.Option = ((short) 1);
             record.IsLocked = (true);
             record.IsPrintable = false;
             record.IsAutoFill = false;
             record.IsAutoline = false;
-            record.Reserved1 = ((int)24593);
-            record.Reserved2 = ((int)218103808);
-            record.Reserved3 = ((int)294);
+            record.Reserved1 = ((int) 24593);
+            record.Reserved2 = ((int) 218103808);
+            record.Reserved3 = ((int) 294);
 
             byte[] recordBytes = record.Serialize();
             ClassicAssert.AreEqual(recordBytes.Length - 4, data.Length);
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
                 ClassicAssert.AreEqual(data[i], recordBytes[i + 4], "At offset " + i);
         }
     }

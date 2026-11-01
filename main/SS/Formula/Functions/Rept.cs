@@ -1,4 +1,4 @@
-﻿using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +34,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 veText1 = OperandResolver.GetSingleValue(text, srcRowIndex, srcColumnIndex);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -44,19 +44,19 @@ namespace NPOI.SS.Formula.Functions
             {
                 numberOfTime = OperandResolver.CoerceValueToDouble(number_times);
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }
 
             int numberOfTimeInt = (int)numberOfTime;
             StringBuilder strb = new StringBuilder(strText1.Length * numberOfTimeInt);
-            for (int i = 0; i < numberOfTimeInt; i++)
+            for(int i = 0; i < numberOfTimeInt; i++)
             {
                 strb.Append(strText1);
             }
 
-            if (strb.ToString().Length > 32767)
+            if(strb.ToString().Length > 32767)
             {
                 return ErrorEval.VALUE_INVALID;
             }

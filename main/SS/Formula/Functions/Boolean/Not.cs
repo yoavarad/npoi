@@ -38,9 +38,9 @@ namespace NPOI.SS.Formula.Functions
             {
                 ValueEval ve = OperandResolver.GetSingleValue(arg0, srcRowIndex, srcColumnIndex);
                 bool? b = OperandResolver.CoerceValueToBoolean(ve, false);
-                boolArgVal = b == null ? false : (bool)b;
+                boolArgVal = b == null ? false : (bool) b;
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }

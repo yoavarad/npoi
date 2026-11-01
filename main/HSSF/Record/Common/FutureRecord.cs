@@ -17,9 +17,8 @@
 
 namespace NPOI.HSSF.Record.Common
 {
-    using System;
-
     using NPOI.SS.Util;
+    using System;
 
     /**
      * Title: Future Record, a newer (largely Excel 2007+) record

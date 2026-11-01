@@ -19,14 +19,14 @@
 
 namespace NPOI.SS.Util
 {
-    using System;
-    using System.Text;
-    using System.Text.RegularExpressions;
     using NPOI.SS.Formula;
     using NPOI.SS.UserModel;
+    using System;
     using System.Globalization;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
-    public enum NameType:int
+    public enum NameType : int
     {
         /// <summary>
         /// Allow accessing the Initial value.
@@ -87,7 +87,7 @@ namespace NPOI.SS.Util
 
         public CellReference(ReadOnlySpan<char> cellRef)
         {
-            if (cellRef.EndsWith("#REF!".AsSpan(), StringComparison.OrdinalIgnoreCase))
+            if(cellRef.EndsWith("#REF!".AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("Cell reference invalid: " + cellRef.ToString());
             }
@@ -95,7 +95,7 @@ namespace NPOI.SS.Util
             _sheetName = parts.sheetName;//parts[0];
             ReadOnlySpan<char> colRef = parts.colRef;// parts[1];
             _isColAbs = parts.columnPrefix == '$';
-            if (colRef.Length == 0)
+            if(colRef.Length == 0)
             {
                 _colIndex = -1;
             }
@@ -107,7 +107,7 @@ namespace NPOI.SS.Util
 
             ReadOnlySpan<char> rowRef = parts.rowRef;// parts[2];
             _isRowAbs = parts.rowPrefix == '$';
-            if (rowRef.Length == 0)
+            if(rowRef.Length == 0)
             {
                 _rowIndex = -1;
             }
@@ -117,9 +117,9 @@ namespace NPOI.SS.Util
                 _rowIndex = rowRefNumber - 1; // -1 to convert 1-based to zero-based
             }
         }
-        public CellReference(ICell cell):this(cell.RowIndex, cell.ColumnIndex, false, false)
+        public CellReference(ICell cell) : this(cell.RowIndex, cell.ColumnIndex, false, false)
         {
-            
+
         }
         public CellReference(int pRow, int pCol)
             : this(pRow, pCol, false, false)
@@ -140,11 +140,11 @@ namespace NPOI.SS.Util
         {
             // TODO - "-1" is a special value being temporarily used for whole row and whole column area references.
             // so these Checks are currently N.Q.R.
-            if (pRow < -1)
+            if(pRow < -1)
             {
                 throw new ArgumentException("row index may not be negative, but had " + pRow);
             }
-            if (pCol < -1)
+            if(pCol < -1)
             {
                 throw new ArgumentException("column index may not be negative, but had " + pCol);
             }
@@ -163,7 +163,7 @@ namespace NPOI.SS.Util
         {
             get
             {
-                return (short)_colIndex;
+                return (short) _colIndex;
             }
         }
         public bool IsRowAbsolute
@@ -197,12 +197,12 @@ namespace NPOI.SS.Util
         public static int ConvertColStringToIndex(ReadOnlySpan<char> refs)
         {
             int retval = 0;
-            for (int k = 0; k < refs.Length; k++)
+            for(int k = 0; k < refs.Length; k++)
             {
                 char thechar = char.ToUpperInvariant(refs[k]);
-                if (thechar == ABSOLUTE_REFERENCE_MARKER)
+                if(thechar == ABSOLUTE_REFERENCE_MARKER)
                 {
-                    if (k != 0)
+                    if(k != 0)
                     {
                         throw new ArgumentException("Bad col ref format '" + refs.ToString() + "'");
                     }
@@ -225,37 +225,37 @@ namespace NPOI.SS.Util
         public static NameType ClassifyCellReference(ReadOnlySpan<char> str, SpreadsheetVersion ssVersion)
         {
             int len = str.Length;
-            if (len < 1)
+            if(len < 1)
             {
                 throw new ArgumentException("Empty string not allowed");
             }
             char firstChar = str[0];
-            switch (firstChar)
+            switch(firstChar)
             {
                 case ABSOLUTE_REFERENCE_MARKER:
                 case '.':
                 case '_':
                     break;
                 default:
-                    if (!Char.IsLetter(firstChar) && !Char.IsDigit(firstChar))
+                    if(!Char.IsLetter(firstChar) && !Char.IsDigit(firstChar))
                     {
                         throw new ArgumentException("Invalid first char (" + firstChar
                                 + ") of cell reference or named range.  Letter expected");
                     }
                     break;
             }
-            if (!Char.IsDigit(str[len - 1]))
+            if(!Char.IsDigit(str[len - 1]))
             {
                 // no digits at end of str
                 return ValidateNamedRangeName(str, ssVersion);
             }
 
-            if (!CellReferenceParser.TryParseStrictCellReference(str, out var lettersGroup, out var digitsGroup))
+            if(!CellReferenceParser.TryParseStrictCellReference(str, out var lettersGroup, out var digitsGroup))
             {
                 return ValidateNamedRangeName(str, ssVersion);
             }
 
-            if (CellReferenceIsWithinRange(lettersGroup, digitsGroup, ssVersion))
+            if(CellReferenceIsWithinRange(lettersGroup, digitsGroup, ssVersion))
             {
                 // valid cell reference
                 return NameType.Cell;
@@ -265,7 +265,7 @@ namespace NPOI.SS.Util
             // This behaviour is a little weird.  For example, "IW123" is a valid named range name
             // because the column "IW" is beyond the maximum "IV".  Note - this behaviour is version
             // dependent.  In BIFF12, "IW123" is not a valid named range name, but in BIFF8 it is.
-            if (str.IndexOf(ABSOLUTE_REFERENCE_MARKER) >= 0)
+            if(str.IndexOf(ABSOLUTE_REFERENCE_MARKER) >= 0)
             {
                 // Of course, named range names cannot have '$'
                 return NameType.BadCellOrNamedRange;
@@ -275,22 +275,22 @@ namespace NPOI.SS.Util
 
         private static NameType ValidateNamedRangeName(ReadOnlySpan<char> str, SpreadsheetVersion ssVersion)
         {
-            if (CellReferenceParser.TryParseColumnReference(str, out var colStr))
+            if(CellReferenceParser.TryParseColumnReference(str, out var colStr))
             {
-                if (IsColumnWithinRange(colStr, ssVersion))
+                if(IsColumnWithinRange(colStr, ssVersion))
                 {
                     return NameType.Column;
                 }
             }
-            if (CellReferenceParser.TryParseRowReference(str, out var rowStr))
+            if(CellReferenceParser.TryParseRowReference(str, out var rowStr))
             {
-                if (IsRowWithinRange(rowStr, ssVersion))
+                if(IsRowWithinRange(rowStr, ssVersion))
                 {
                     return NameType.Row;
                 }
             }
             // TODO
-            if (!NAMED_RANGE_NAME_PATTERN.IsMatch(str.ToString()))
+            if(!NAMED_RANGE_NAME_PATTERN.IsMatch(str.ToString()))
             {
                 return NameType.BadCellOrNamedRange;
             }
@@ -310,10 +310,11 @@ namespace NPOI.SS.Util
             StringBuilder colRef = new StringBuilder(2);
             int colRemain = excelColNum;
 
-            while (colRemain > 0)
+            while(colRemain > 0)
             {
                 int thisPart = colRemain % 26;
-                if (thisPart == 0) { thisPart = 26; }
+                if(thisPart == 0)
+                { thisPart = 26; }
                 colRemain = (colRemain - thisPart) / 26;
 
                 // The letter A is at 65
@@ -352,7 +353,7 @@ namespace NPOI.SS.Util
             String sheetName = ParseSheetName(reference, plingPos);
             int start = plingPos + 1;
             String cell = reference.ToString().Substring(plingPos + 1).ToUpper(CultureInfo.InvariantCulture);
-            if (!CellReferenceParser.TryParseCellReference(cell.AsSpan(), out var columnPrefix, out var column, out var rowPrefix, out var row))
+            if(!CellReferenceParser.TryParseCellReference(cell.AsSpan(), out var columnPrefix, out var column, out var rowPrefix, out var row))
                 throw new ArgumentException("Invalid CellReference: " + reference.ToString());
 
             CellRefPartsInner cellRefParts = new CellRefPartsInner(sheetName, rowPrefix, row, columnPrefix, column);
@@ -361,16 +362,16 @@ namespace NPOI.SS.Util
 
         private static String ParseSheetName(ReadOnlySpan<char> reference, int indexOfSheetNameDelimiter)
         {
-            if (indexOfSheetNameDelimiter < 0)
+            if(indexOfSheetNameDelimiter < 0)
             {
                 return null;
             }
 
             bool IsQuoted = reference[0] == SPECIAL_NAME_DELIMITER;
-            if (!IsQuoted)
+            if(!IsQuoted)
             {
                 // sheet names with spaces must be quoted
-                if (reference.IndexOf(' ') == -1)
+                if(reference.IndexOf(' ') == -1)
                 {
                     return reference.Slice(0, indexOfSheetNameDelimiter).ToString();
                 }
@@ -380,7 +381,7 @@ namespace NPOI.SS.Util
                 }
             }
             int lastQuotePos = indexOfSheetNameDelimiter - 1;
-            if (reference[lastQuotePos] != SPECIAL_NAME_DELIMITER)
+            if(reference[lastQuotePos] != SPECIAL_NAME_DELIMITER)
             {
                 throw new ArgumentException("Mismatched quotes: (" + reference.ToString() + ")");
             }
@@ -394,17 +395,17 @@ namespace NPOI.SS.Util
 
             StringBuilder sb = new StringBuilder(indexOfSheetNameDelimiter);
 
-            for (int i = 1; i < lastQuotePos; i++)
+            for(int i = 1; i < lastQuotePos; i++)
             { // Note boundaries - skip outer quotes
                 char ch = reference[i];
-                if (ch != SPECIAL_NAME_DELIMITER)
+                if(ch != SPECIAL_NAME_DELIMITER)
                 {
                     sb.Append(ch);
                     continue;
                 }
-                if (i < lastQuotePos)
+                if(i < lastQuotePos)
                 {
-                    if (reference[i + 1] == SPECIAL_NAME_DELIMITER)
+                    if(reference[i + 1] == SPECIAL_NAME_DELIMITER)
                     {
                         // two consecutive quotes is the escape sequence for a single one
                         i++; // skip this and keep parsing the special name
@@ -432,7 +433,7 @@ namespace NPOI.SS.Util
         {
 
             StringBuilder sb = new StringBuilder(32);
-            if (_sheetName != null)
+            if(_sheetName != null)
             {
                 SheetNameFormatter.AppendFormat(sb, _sheetName);
                 sb.Append(SHEET_NAME_DELIMITER);
@@ -477,18 +478,18 @@ namespace NPOI.SS.Util
         /* package */
         public void AppendCellReference(StringBuilder sb)
         {
-            if (_colIndex != -1)
+            if(_colIndex != -1)
             {
-                if (_isColAbs)
+                if(_isColAbs)
                 {
                     sb.Append(ABSOLUTE_REFERENCE_MARKER);
                 }
                 sb.Append(ConvertNumToColString(_colIndex));
             }
 
-            if (_rowIndex != -1)
+            if(_rowIndex != -1)
             {
-                if (_isRowAbs)
+                if(_isRowAbs)
                 {
                     sb.Append(ABSOLUTE_REFERENCE_MARKER);
                 }
@@ -537,7 +538,7 @@ namespace NPOI.SS.Util
 
         public static bool CellReferenceIsWithinRange(ReadOnlySpan<char> colStr, ReadOnlySpan<char> rowStr, SpreadsheetVersion ssVersion)
         {
-            if (!IsColumnWithinRange(colStr, ssVersion))
+            if(!IsColumnWithinRange(colStr, ssVersion))
             {
                 return false;
             }
@@ -580,15 +581,15 @@ namespace NPOI.SS.Util
             int lastColLength = lastCol.Length;
 
             int numberOfLetters = colStr.Length;
-            if (numberOfLetters > lastColLength)
+            if(numberOfLetters > lastColLength)
             {
                 // "Sheet1" case etc
                 return false; // that was easy
             }
-            if (numberOfLetters == lastColLength)
+            if(numberOfLetters == lastColLength)
             {
                 //if (colStr.ToUpper().CompareTo(lastCol) > 0)
-                if (colStr.CompareTo(lastCol.AsSpan(), StringComparison.OrdinalIgnoreCase) > 0)
+                if(colStr.CompareTo(lastCol.AsSpan(), StringComparison.OrdinalIgnoreCase) > 0)
                 {
                     return false;
                 }
@@ -602,9 +603,9 @@ namespace NPOI.SS.Util
         }
         public override bool Equals(Object o)
         {
-            if (object.ReferenceEquals(this, o))
+            if(object.ReferenceEquals(this, o))
                 return true;
-            if (o is not CellReference cr)
+            if(o is not CellReference cr)
             {
                 return false;
             }
@@ -618,7 +619,7 @@ namespace NPOI.SS.Util
                        : _sheetName.Equals(cr._sheetName));
         }
 
-        public override int GetHashCode ()
+        public override int GetHashCode()
         {
             int result = 17;
             result = 31 * result + _rowIndex;
@@ -631,10 +632,11 @@ namespace NPOI.SS.Util
 
         public int CompareTo(object obj)
         {
-            if (obj == null) return 1;
+            if(obj == null)
+                return 1;
             CellReference otherRef = obj as CellReference;
 
-            if (otherRef != null)
+            if(otherRef != null)
             {
                 return string.Compare(otherRef.ToString(), this.ToString());
             }

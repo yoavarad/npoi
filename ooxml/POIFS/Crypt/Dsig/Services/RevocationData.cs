@@ -70,9 +70,10 @@ namespace NPOI.POIFS.Crypt.Dsig.Services
             byte[] encodedCrl;
             try
             {
-                encodedCrl = crl.getEncoded(); ;
+                encodedCrl = crl.getEncoded();
+                ;
             }
-            catch (CRLException e)
+            catch(CRLException e)
             {
                 throw new ArgumentException("CRL coding error: "
                         + e.Message, e);

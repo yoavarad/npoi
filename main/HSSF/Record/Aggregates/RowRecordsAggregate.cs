@@ -19,14 +19,14 @@
 
 namespace NPOI.HSSF.Record.Aggregates
 {
-    using System;
-    using System.Collections;
-    using NPOI.HSSF.Record;
-    using NPOI.SS.Formula;
     using NPOI.HSSF.Model;
-    using System.Collections.Generic;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Chart;
     using NPOI.SS;
+    using NPOI.SS.Formula;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /**
      *
@@ -48,7 +48,7 @@ namespace NPOI.HSSF.Record.Aggregates
         // Cache values to speed up performance of
         // getStartRowNumberForBlock / getEndRowNumberForBlock, see Bugzilla 47405
         private RowRecord[] _rowRecordValues = null;
-        public IEnumerable<HyperlinkRecord> HyperlinkRecordRecords 
+        public IEnumerable<HyperlinkRecord> HyperlinkRecordRecords
         {
             get { return _hyperlinkRecordRecords; }
         }
@@ -80,10 +80,11 @@ namespace NPOI.HSSF.Record.Aggregates
             //an iterator and use that instance throughout, rather than recreating one and
             //having to move it to the right position.
             int i = 0;
-            for (; i < startIndex && rowIterator.MoveNext(); i++) ;
+            for(; i < startIndex && rowIterator.MoveNext(); i++)
+                ;
 
             int result = 0;
-            while (rowIterator.MoveNext() && (i++ < endIndex))
+            while(rowIterator.MoveNext() && (i++ < endIndex))
             {
                 Record rec = (Record)rowIterator.Current;
                 result += rec.RecordSize;
@@ -98,7 +99,7 @@ namespace NPOI.HSSF.Record.Aggregates
             PositionTrackingVisitor stv = new PositionTrackingVisitor(rv, 0);
             //DBCells are serialized before row records.
             int blockCount = this.RowBlockCount;
-            for (int blockIndex = 0; blockIndex < blockCount; blockIndex++)
+            for(int blockIndex = 0; blockIndex < blockCount; blockIndex++)
             {
                 // Serialize a block of rows.
                 // Hold onto the position of the first row in the block
@@ -112,9 +113,9 @@ namespace NPOI.HSSF.Record.Aggregates
                 DBCellRecord cellRecord = new DBCellRecord();
                 // Note: Cell references start from the second row...
                 int cellRefOffset = (rowBlockSize - RowRecord.ENCODED_SIZE);
-                for (int row = startRowNumber; row <= endRowNumber; row++)
+                for(int row = startRowNumber; row <= endRowNumber; row++)
                 {
-                    if (_valuesAgg.RowHasCells(row))
+                    if(_valuesAgg.RowHasCells(row))
                     {
                         stv.Position = 0;
                         _valuesAgg.VisitCellsForRow(row, stv);
@@ -122,19 +123,19 @@ namespace NPOI.HSSF.Record.Aggregates
                         pos += rowCellSize;
                         // Add the offset to the first cell for the row into the
                         // DBCellRecord.
-                        cellRecord.AddCellOffset((short)cellRefOffset);
+                        cellRecord.AddCellOffset((short) cellRefOffset);
                         cellRefOffset = rowCellSize;
                     }
                 }
                 // Calculate Offset from the start of a DBCellRecord to the first Row
                 cellRecord.RowOffset = (pos);
                 rv.VisitRecord(cellRecord);
-            }            
-            foreach (Record _hyperlinkRecord in _hyperlinkRecordRecords)
+            }
+            foreach(Record _hyperlinkRecord in _hyperlinkRecordRecords)
             {
                 rv.VisitRecord(_hyperlinkRecord);
             }
-            foreach (Record _unknownRecord in _unknownRecords)
+            foreach(Record _unknownRecord in _unknownRecords)
             {
                 // Potentially breaking the file here since we don't know exactly where to write these records
                 rv.VisitRecord(_unknownRecord);
@@ -147,46 +148,47 @@ namespace NPOI.HSSF.Record.Aggregates
         public RowRecordsAggregate(RecordStream rs, SharedValueManager svm)
             : this(svm)
         {
-            while (rs.HasNext())
+            while(rs.HasNext())
             {
                 Record rec = rs.GetNext();
-                switch (rec.Sid)
+                switch(rec.Sid)
                 {
                     case RowRecord.sid:
-                        InsertRow((RowRecord)rec);
+                        InsertRow((RowRecord) rec);
                         continue;
                     case DConRefRecord.sid:
                         AddUnknownRecord(rec);
                         continue;
                     case HyperlinkRecord.sid:
-                        _hyperlinkRecordRecords.Add((HyperlinkRecord)rec);
+                        _hyperlinkRecordRecords.Add((HyperlinkRecord) rec);
                         continue;
                     case DBCellRecord.sid:
                         // end of 'Row Block'.  Should only occur after cell records
                         // ignore DBCELL records because POI generates them upon re-serialization
                         continue;
                 }
-                if (rec is UnknownRecord record)
+                if(rec is UnknownRecord record)
                 {
                     // might need to keep track of where exactly these belong
                     AddUnknownRecord(record);
 
-                    while (rs.PeekNextSid() == ContinueRecord.sid)
+                    while(rs.PeekNextSid() == ContinueRecord.sid)
                     {
                         AddUnknownRecord(rs.GetNext());
                     }
                     continue;
                 }
-       			if (rec is MulBlankRecord blankRecord) {
-    			    _valuesAgg.AddMultipleBlanks(blankRecord);
-				    continue;
-			    }
+                if(rec is MulBlankRecord blankRecord)
+                {
+                    _valuesAgg.AddMultipleBlanks(blankRecord);
+                    continue;
+                }
 
-                if (rec is not CellValueRecordInterface @interface)
+                if(rec is not CellValueRecordInterface @interface)
                 {
                     //TODO: correct it, SeriesIndexRecord will appear in a separate chart sheet that contains a single chart
                     // rule SERIESDATA = Dimensions 3(SIIndex *(Number / BoolErr / Blank / Label))
-                    if (rec.Sid == SeriesIndexRecord.sid)
+                    if(rec.Sid == SeriesIndexRecord.sid)
                     {
                         AddUnknownRecord(rec);
                         continue;
@@ -215,14 +217,14 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             _rowRecords[row.RowNumber] = row;
             // Clear the cached values
-            _rowRecordValues = null; 
+            _rowRecordValues = null;
 
 
-            if (row.RowNumber < firstrow|| firstrow == -1)
+            if(row.RowNumber < firstrow|| firstrow == -1)
             {
                 firstrow = row.RowNumber;
             }
-            if (row.RowNumber > lastrow|| lastrow == -1)
+            if(row.RowNumber > lastrow|| lastrow == -1)
             {
                 lastrow = row.RowNumber;
             }
@@ -235,11 +237,11 @@ namespace NPOI.HSSF.Record.Aggregates
             int key = rowIndex;
             RowRecord rr = (RowRecord)_rowRecords[key];
             _rowRecords.Remove(key);
-            if (rr == null)
+            if(rr == null)
             {
                 throw new Exception("Invalid row index (" + key + ")");
             }
-            if (row != rr)
+            if(row != rr)
             {
                 _rowRecords[key] = rr;
                 throw new Exception("Attempt to remove row that does not belong to this sheet");
@@ -253,7 +255,7 @@ namespace NPOI.HSSF.Record.Aggregates
         }
         public void RemoveCell(CellValueRecordInterface cvRec)
         {
-            if (cvRec is FormulaRecordAggregate aggregate)
+            if(cvRec is FormulaRecordAggregate aggregate)
             {
                 aggregate.NotifyFormulaChanging();
             }
@@ -263,17 +265,17 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             int maxrow = SpreadsheetVersion.EXCEL97.LastRowIndex;
             // Row must be between 0 and 65535
-            if (rowIndex < 0 || rowIndex > maxrow)
+            if(rowIndex < 0 || rowIndex > maxrow)
             {
                 throw new ArgumentException("The row number must be between 0 and " + maxrow + ", but had: " + rowIndex);
             }
-            return (RowRecord)_rowRecords[rowIndex];
+            return (RowRecord) _rowRecords[rowIndex];
         }
         public FormulaRecordAggregate CreateFormula(int row, int col)
         {
             FormulaRecord fr = new FormulaRecord();
             fr.Row=(row);
-            fr.Column=((short)col);
+            fr.Column=((short) col);
             return new FormulaRecordAggregate(fr, null, _sharedValueManager);
         }
         public int PhysicalNumberOfRows
@@ -309,7 +311,7 @@ namespace NPOI.HSSF.Record.Aggregates
             get
             {
                 int size = _rowRecords.Count / DBCellRecord.BLOCK_SIZE;
-                if ((_rowRecords.Count % DBCellRecord.BLOCK_SIZE) != 0)
+                if((_rowRecords.Count % DBCellRecord.BLOCK_SIZE) != 0)
                     size++;
                 return size;
             }
@@ -325,7 +327,7 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             int startIndex = block * DBCellRecord.BLOCK_SIZE;
             int endIndex = startIndex + DBCellRecord.BLOCK_SIZE - 1;
-            if (endIndex >= _rowRecords.Count)
+            if(endIndex >= _rowRecords.Count)
                 endIndex = _rowRecords.Count - 1;
 
             return endIndex - startIndex + 1;
@@ -339,19 +341,19 @@ namespace NPOI.HSSF.Record.Aggregates
             //an iterator and use that instance throughout, rather than recreating one and
             //having to move it to the right position.
 
-            
+
             int startIndex = block * DBCellRecord.BLOCK_SIZE;
 
-            if (_rowRecordValues == null)
+            if(_rowRecordValues == null)
             {
                 _rowRecordValues=new RowRecord[_rowRecords.Count];
-                _rowRecords.Values.CopyTo(_rowRecordValues,0);
+                _rowRecords.Values.CopyTo(_rowRecordValues, 0);
             }
             try
             {
                 return _rowRecordValues[startIndex].RowNumber;
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 throw new Exception("Did not find start row for block " + block);
             }
@@ -361,20 +363,20 @@ namespace NPOI.HSSF.Record.Aggregates
         public int GetEndRowNumberForBlock(int block)
         {
             int endIndex = ((block + 1) * DBCellRecord.BLOCK_SIZE) - 1;
-            if (endIndex >= _rowRecords.Count)
+            if(endIndex >= _rowRecords.Count)
                 endIndex = _rowRecords.Count - 1;
 
-            if (_rowRecordValues == null)
+            if(_rowRecordValues == null)
             {
                 _rowRecordValues = new RowRecord[_rowRecords.Count];
-                _rowRecords.Values.CopyTo(_rowRecordValues,0);
+                _rowRecords.Values.CopyTo(_rowRecordValues, 0);
             }
 
             try
             {
                 return _rowRecordValues[endIndex].RowNumber;
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 throw new Exception("Did not find end row for block " + block);
             }
@@ -392,10 +394,10 @@ namespace NPOI.HSSF.Record.Aggregates
             RowRecord rowRecord = this.GetRow(row);
             int level = rowRecord.OutlineLevel;
             int currentRow = row;
-            while (currentRow >= 0 && this.GetRow(currentRow) != null)
+            while(currentRow >= 0 && this.GetRow(currentRow) != null)
             {
                 rowRecord = this.GetRow(currentRow);
-                if (rowRecord.OutlineLevel < level)
+                if(rowRecord.OutlineLevel < level)
                     return currentRow + 1;
                 currentRow--;
             }
@@ -407,9 +409,9 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             int level = GetRow(row).OutlineLevel;
             int currentRow;
-            for (currentRow = row; currentRow < this.LastRowNum; currentRow++)
+            for(currentRow = row; currentRow < this.LastRowNum; currentRow++)
             {
-                if (GetRow(currentRow) == null || GetRow(currentRow).OutlineLevel < level)
+                if(GetRow(currentRow) == null || GetRow(currentRow).OutlineLevel < level)
                 {
                     break;
                 }
@@ -421,7 +423,7 @@ namespace NPOI.HSSF.Record.Aggregates
         public int WriteHidden(RowRecord rowRecord, int row, bool hidden)
         {
             int level = rowRecord.OutlineLevel;
-            while (rowRecord != null && this.GetRow(row).OutlineLevel >= level)
+            while(rowRecord != null && this.GetRow(row).OutlineLevel >= level)
             {
                 rowRecord.ZeroHeight = (hidden);
                 row++;
@@ -441,7 +443,7 @@ namespace NPOI.HSSF.Record.Aggregates
             int lastRow = WriteHidden(rowRecord, startRow, true);
 
             // Write collapse field
-            if (GetRow(lastRow + 1) != null)
+            if(GetRow(lastRow + 1) != null)
             {
                 GetRow(lastRow + 1).Colapsed = (true);
             }
@@ -498,7 +500,7 @@ namespace NPOI.HSSF.Record.Aggregates
 
             int currentOffset = indexRecordOffset + indexRecSize + sizeOfInitialSheetRecords;
 
-            for (int block = 0; block < blockCount; block++)
+            for(int block = 0; block < blockCount; block++)
             {
                 // each row-block has a DBCELL record.
                 // The offset of each DBCELL record needs to be updated in the INDEX record
@@ -525,11 +527,11 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public void ExpandRow(int rowNumber)
         {
-            if (rowNumber == -1)
+            if(rowNumber == -1)
                 return;
 
             // If it is already expanded do nothing.
-            if (!IsRowGroupCollapsed(rowNumber))
+            if(!IsRowGroupCollapsed(rowNumber))
                 return;
 
             // Find the start of the Group.
@@ -546,13 +548,13 @@ namespace NPOI.HSSF.Record.Aggregates
             //   to look at the start and the end of the current Group to determine which
             //   is the enclosing Group
             // hidden bit only is altered for this outline level.  ie.  don't Un-collapse contained Groups
-            if (!IsRowGroupHiddenByParent(rowNumber))
+            if(!IsRowGroupHiddenByParent(rowNumber))
             {
-                for (int i = startIdx; i <= endIdx; i++)
+                for(int i = startIdx; i <= endIdx; i++)
                 {
-                    if (row.OutlineLevel == GetRow(i).OutlineLevel)
+                    if(row.OutlineLevel == GetRow(i).OutlineLevel)
                         GetRow(i).ZeroHeight = (false);
-                    else if (!IsRowGroupCollapsed(i))
+                    else if(!IsRowGroupCollapsed(i))
                         GetRow(i).ZeroHeight = (false);
                 }
             }
@@ -572,7 +574,7 @@ namespace NPOI.HSSF.Record.Aggregates
             int endLevel;
             bool endHidden;
             int endOfOutlineGroupIdx = FindEndOfRowOutlineGroup(row);
-            if (GetRow(endOfOutlineGroupIdx + 1) == null)
+            if(GetRow(endOfOutlineGroupIdx + 1) == null)
             {
                 endLevel = 0;
                 endHidden = false;
@@ -587,7 +589,7 @@ namespace NPOI.HSSF.Record.Aggregates
             int startLevel;
             bool startHidden;
             int startOfOutlineGroupIdx = FindStartOfRowOutlineGroup(row);
-            if (startOfOutlineGroupIdx - 1 < 0 || GetRow(startOfOutlineGroupIdx - 1) == null)
+            if(startOfOutlineGroupIdx - 1 < 0 || GetRow(startOfOutlineGroupIdx - 1) == null)
             {
                 startLevel = 0;
                 startHidden = false;
@@ -598,7 +600,7 @@ namespace NPOI.HSSF.Record.Aggregates
                 startHidden = GetRow(startOfOutlineGroupIdx - 1).ZeroHeight;
             }
 
-            if (endLevel > startLevel)
+            if(endLevel > startLevel)
             {
                 return endHidden;
             }

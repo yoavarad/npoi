@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +19,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public static CT_NumFmt Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NumFmt ctObj = new CT_NumFmt();
             ctObj.numFmtId = XmlHelper.ReadUInt(node.Attributes["numFmtId"]);
@@ -33,7 +33,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         internal void Write(StreamWriter sw, string nodeName)
         {
             sw.WriteStart(nodeName);
-            XmlHelper.WriteAttribute(sw, "numFmtId", this.numFmtId,true);
+            XmlHelper.WriteAttribute(sw, "numFmtId", this.numFmtId, true);
             if(formatCode!=null)
                 XmlHelper.WriteAttribute(sw, "formatCode", this.formatCode, true);
             sw.Write("/>");

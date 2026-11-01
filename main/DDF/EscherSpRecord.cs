@@ -18,9 +18,9 @@
 
 namespace NPOI.DDF
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /// <summary>
@@ -63,8 +63,10 @@ namespace NPOI.DDF
             int bytesRemaining = ReadHeader(data, offset);
             int pos = offset + 8;
             int size = 0;
-            field_1_shapeId = LittleEndian.GetInt(data, pos + size); size += 4;
-            field_2_flags = LittleEndian.GetInt(data, pos + size); size += 4;
+            field_1_shapeId = LittleEndian.GetInt(data, pos + size);
+            size += 4;
+            field_2_flags = LittleEndian.GetInt(data, pos + size);
+            size += 4;
             //        bytesRemaining -= size;
             //        remainingData  =  new byte[bytesRemaining];
             //        Array.Copy( data, pos + size, remainingData, 0, bytesRemaining );
@@ -82,7 +84,7 @@ namespace NPOI.DDF
         public override int Serialize(int offset, byte[] data, EscherSerializationListener listener)
         {
             listener.BeforeRecordSerialize(offset, RecordId, this);
-            
+
             LittleEndian.PutShort(data, offset, Options);
             LittleEndian.PutShort(data, offset + 2, RecordId);
             int remainingBytes = 8;
@@ -98,9 +100,9 @@ namespace NPOI.DDF
         /// Returns the number of bytes that are required to Serialize this record.
         /// </summary>
         /// <value>Number of bytes</value>
-        public override  int RecordSize
+        public override int RecordSize
         {
-            get{return 8 + 8;}
+            get { return 8 + 8; }
         }
 
         /// <summary>
@@ -171,9 +173,9 @@ namespace NPOI.DDF
             result.Append((flags & FLAG_HASSHAPETYPE) != 0 ? "|HASSHAPETYPE" : "");
 
             //need to check, else blows up on some records - bug 34435
-            if (result.Length > 0)
+            if(result.Length > 0)
             {
-                result.Remove(0,1);
+                result.Remove(0, 1);
             }
             return result.ToString();
         }

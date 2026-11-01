@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -48,35 +48,35 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public SSAggregate(RecordStream rs, ChartRecordAggregate container)
             : base(RuleName_SS, container)
         {
-            dataFormat = (DataFormatRecord)rs.GetNext();
+            dataFormat = (DataFormatRecord) rs.GetNext();
             rs.GetNext();
-            if (rs.PeekNextChartSid() == Chart3DBarShapeRecord.sid)
-                chart3DBarShape = (Chart3DBarShapeRecord)rs.GetNext();
-            if (rs.PeekNextChartSid() == LineFormatRecord.sid)
+            if(rs.PeekNextChartSid() == Chart3DBarShapeRecord.sid)
+                chart3DBarShape = (Chart3DBarShapeRecord) rs.GetNext();
+            if(rs.PeekNextChartSid() == LineFormatRecord.sid)
             {
-                lineFormat = (LineFormatRecord)rs.GetNext();
-                areaFormat = (AreaFormatRecord)rs.GetNext();
-                pieFormat = (PieFormatRecord)rs.GetNext();
+                lineFormat = (LineFormatRecord) rs.GetNext();
+                areaFormat = (AreaFormatRecord) rs.GetNext();
+                pieFormat = (PieFormatRecord) rs.GetNext();
             }
             if(rs.PeekNextChartSid()==SerFmtRecord.sid)
-                serFmt = (SerFmtRecord)rs.GetNext();
+                serFmt = (SerFmtRecord) rs.GetNext();
 
-            if (rs.PeekNextChartSid() == GelFrameRecord.sid)
+            if(rs.PeekNextChartSid() == GelFrameRecord.sid)
                 gelFrame = new GelFrameAggregate(rs, this);
 
-            if (rs.PeekNextChartSid() == MarkerFormatRecord.sid)
-                markerFormat = (MarkerFormatRecord)rs.GetNext();
+            if(rs.PeekNextChartSid() == MarkerFormatRecord.sid)
+                markerFormat = (MarkerFormatRecord) rs.GetNext();
 
-            if (rs.PeekNextChartSid() == AttachedLabelRecord.sid)
-                attachedLabel = (AttachedLabelRecord)rs.GetNext();
+            if(rs.PeekNextChartSid() == AttachedLabelRecord.sid)
+                attachedLabel = (AttachedLabelRecord) rs.GetNext();
 
-            if (rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
+            if(rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
                 shapeProps1 = new ShapePropsAggregate(rs, this);
 
-            if (rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
+            if(rs.PeekNextChartSid() == ShapePropsStreamRecord.sid)
                 shapeProps2 = new ShapePropsAggregate(rs, this);
 
-            if (rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
+            if(rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
                 crtMlFrt = new CrtMlFrtAggregate(rs, this);
 
             Record r = rs.GetNext();//EndRecord
@@ -88,30 +88,30 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(dataFormat);
             rv.VisitRecord(BeginRecord.instance);
 
-            if (chart3DBarShape != null)
+            if(chart3DBarShape != null)
                 rv.VisitRecord(chart3DBarShape);
-            if (lineFormat != null)
+            if(lineFormat != null)
             {
                 rv.VisitRecord(lineFormat);
                 rv.VisitRecord(areaFormat);
                 rv.VisitRecord(pieFormat);
             }
 
-            if (serFmt != null)
+            if(serFmt != null)
                 rv.VisitRecord(serFmt);
 
-            if (gelFrame != null)
+            if(gelFrame != null)
                 gelFrame.VisitContainedRecords(rv);
-            if (markerFormat != null)
+            if(markerFormat != null)
                 rv.VisitRecord(markerFormat);
 
-            if (attachedLabel != null)
+            if(attachedLabel != null)
                 rv.VisitRecord(attachedLabel);
-            if (shapeProps1 != null)
+            if(shapeProps1 != null)
                 shapeProps1.VisitContainedRecords(rv);
-            if (shapeProps2 != null)
+            if(shapeProps2 != null)
                 shapeProps2.VisitContainedRecords(rv);
-            if (crtMlFrt != null)
+            if(crtMlFrt != null)
                 crtMlFrt.VisitContainedRecords(rv);
 
             WriteEndBlock(rv);

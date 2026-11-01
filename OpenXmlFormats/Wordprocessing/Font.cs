@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -269,22 +269,22 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_FontFamily
     {
 
-    
+
         decorative,
 
-    
+
         modern,
 
-    
+
         roman,
 
-    
+
         script,
 
-    
+
         swiss,
 
-    
+
         auto,
     }
 
@@ -318,13 +318,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Pitch
     {
 
-    
+
         @fixed,
 
-    
+
         variable,
 
-    
+
         @default,
     }
 
@@ -462,26 +462,26 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_Fonts Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Fonts ctObj = new CT_Fonts();
             ctObj.ascii = XmlHelper.ReadString(node.Attributes["w:ascii"]);
             ctObj.hAnsi = XmlHelper.ReadString(node.Attributes["w:hAnsi"]);
             ctObj.eastAsia = XmlHelper.ReadString(node.Attributes["w:eastAsia"]);
             ctObj.cs = XmlHelper.ReadString(node.Attributes["w:cs"]);
-            if (node.Attributes["w:hint"] != null)
+            if(node.Attributes["w:hint"] != null)
             {
-                ctObj.hint = (ST_Hint)Enum.Parse(typeof(ST_Hint), node.Attributes["w:hint"].Value);
+                ctObj.hint = (ST_Hint) Enum.Parse(typeof(ST_Hint), node.Attributes["w:hint"].Value);
                 ctObj.hintFieldSpecified = true;
             }
-            if (node.Attributes["w:asciiTheme"] != null)
-                ctObj.asciiTheme = (ST_Theme)Enum.Parse(typeof(ST_Theme), node.Attributes["w:asciiTheme"].Value);
-            if (node.Attributes["w:hAnsiTheme"] != null)
-                ctObj.hAnsiTheme = (ST_Theme)Enum.Parse(typeof(ST_Theme), node.Attributes["w:hAnsiTheme"].Value);
-            if (node.Attributes["w:eastAsiaTheme"] != null)
-                ctObj.eastAsiaTheme = (ST_Theme)Enum.Parse(typeof(ST_Theme), node.Attributes["w:eastAsiaTheme"].Value);
-            if (node.Attributes["w:cstheme"] != null)
-                ctObj.cstheme = (ST_Theme)Enum.Parse(typeof(ST_Theme), node.Attributes["w:cstheme"].Value);
+            if(node.Attributes["w:asciiTheme"] != null)
+                ctObj.asciiTheme = (ST_Theme) Enum.Parse(typeof(ST_Theme), node.Attributes["w:asciiTheme"].Value);
+            if(node.Attributes["w:hAnsiTheme"] != null)
+                ctObj.hAnsiTheme = (ST_Theme) Enum.Parse(typeof(ST_Theme), node.Attributes["w:hAnsiTheme"].Value);
+            if(node.Attributes["w:eastAsiaTheme"] != null)
+                ctObj.eastAsiaTheme = (ST_Theme) Enum.Parse(typeof(ST_Theme), node.Attributes["w:eastAsiaTheme"].Value);
+            if(node.Attributes["w:cstheme"] != null)
+                ctObj.cstheme = (ST_Theme) Enum.Parse(typeof(ST_Theme), node.Attributes["w:cstheme"].Value);
             return ctObj;
         }
 
@@ -499,9 +499,9 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
             if(this.asciiTheme != null)
                 XmlHelper.WriteAttribute(sw, "w:asciiTheme", this.asciiTheme.ToString());
-            if (this.hAnsiTheme != ST_Theme.majorEastAsia)
+            if(this.hAnsiTheme != ST_Theme.majorEastAsia)
                 XmlHelper.WriteAttribute(sw, "w:hAnsiTheme", this.hAnsiTheme.ToString());
-            if (this.cstheme != null)
+            if(this.cstheme != null)
                 XmlHelper.WriteAttribute(sw, "w:cstheme", this.cstheme.ToString());
             sw.Write("/>");
         }
@@ -658,13 +658,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Hint
     {
 
-    
+
         @default,
 
-    
+
         eastAsia,
 
-    
+
         cs,
     }
     [Serializable]
@@ -672,28 +672,28 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_Theme
     {
 
-    
+
         majorEastAsia,
 
-    
+
         majorBidi,
 
-    
+
         majorAscii,
 
-    
+
         majorHAnsi,
 
-    
+
         minorEastAsia,
 
-    
+
         minorBidi,
 
-    
+
         minorAscii,
 
-    
+
         minorHAnsi,
     }
 

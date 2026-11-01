@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {
@@ -23,7 +23,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          */
         public static string GetDirectory(string filepath)
         {
-            return Path.GetDirectoryName(filepath).Replace("\\","/");
+            return Path.GetDirectoryName(filepath).Replace("\\", "/");
         }
 
         /**
@@ -36,8 +36,9 @@ namespace NPOI.OpenXml4Net.OPC.Internal
          * @throws IOException
          *             If an I/O error occur.
          */
-        public static void CopyFile(string inpath, string outpath){
-            File.Copy(inpath, outpath,true);
+        public static void CopyFile(string inpath, string outpath)
+        {
+            File.Copy(inpath, outpath, true);
         }
         public static void CopyFile(FileInfo inpath, FileInfo outpath)
         {
@@ -51,10 +52,10 @@ namespace NPOI.OpenXml4Net.OPC.Internal
             String path = filepath;
             int len = path.Length;
             int num2 = len;
-            while (--num2 >= 0)
+            while(--num2 >= 0)
             {
                 char ch1 = path[num2];
-                if (ch1 == '\\')
+                if(ch1 == '\\')
                     return path.Substring(num2 + 1, len);
             }
             return "";

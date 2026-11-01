@@ -17,12 +17,13 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Common superclass for testing implementatiosn of
@@ -35,8 +36,9 @@ namespace TestCases.SS.UserModel
 
         public BaseTestCellComment()
             : this(TestCases.HSSF.HSSFITestDataProvider.Instance)
-        {}
-        protected BaseTestCellComment(ITestDataProvider testDataProvider) {
+        { }
+        protected BaseTestCellComment(ITestDataProvider testDataProvider)
+        {
             _testDataProvider = testDataProvider;
         }
         [Test]
@@ -149,7 +151,7 @@ namespace TestCases.SS.UserModel
             IRow row;
             IComment comment;
 
-            for (int rownum = 0; rownum < 3; rownum++)
+            for(int rownum = 0; rownum < 3; rownum++)
             {
                 row = sheet.GetRow(rownum);
                 cell = row.GetCell(0);
@@ -158,7 +160,7 @@ namespace TestCases.SS.UserModel
                 ClassicAssert.IsNull(sheet.GetCellComment(new CellAddress(rownum, 0)));
             }
 
-            for (int rownum = 0; rownum < 3; rownum++)
+            for(int rownum = 0; rownum < 3; rownum++)
             {
                 row = sheet.GetRow(rownum);
                 cell = row.GetCell(1);
@@ -191,7 +193,7 @@ namespace TestCases.SS.UserModel
             IRow row;
             IComment comment;
 
-            for (int rownum = 0; rownum < 3; rownum++)
+            for(int rownum = 0; rownum < 3; rownum++)
             {
                 row = sheet.GetRow(rownum);
                 cell = row.GetCell(1);
@@ -205,7 +207,7 @@ namespace TestCases.SS.UserModel
 
             sheet = wb2.GetSheetAt(0);
 
-            for (int rownum = 0; rownum < 3; rownum++)
+            for(int rownum = 0; rownum < 3; rownum++)
             {
                 row = sheet.GetRow(rownum);
                 cell = row.GetCell(1);
@@ -302,7 +304,7 @@ namespace TestCases.SS.UserModel
             IDrawing<IShape> Drawing = sheet.CreateDrawingPatriarch();
 
             double r_mul, c_mul;
-            if (sheet is HSSFSheet)
+            if(sheet is HSSFSheet)
             {
                 double rowheight = Units.ToEMU(row.HeightInPoints) / Units.EMU_PER_PIXEL;
                 r_mul = 256.0 / rowheight;
@@ -343,7 +345,7 @@ namespace TestCases.SS.UserModel
             cell.CellComment = (/*setter*/comment);
             anchor = comment.ClientAnchor;
 
-            if (sheet is HSSFSheet)
+            if(sheet is HSSFSheet)
             {
                 ClassicAssert.AreEqual(0, anchor.Col1);
                 ClassicAssert.AreEqual(0, anchor.Dx1);
@@ -385,12 +387,12 @@ namespace TestCases.SS.UserModel
                 _testDataProvider.WriteOutAndReadBack(wb);
                 Assert.Fail("Expected InvalidOperationException(found multiple cell comments for cell $A$1");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 // HSSFWorkbooks fail when writing out workbook
                 ClassicAssert.AreEqual(e.Message, "found multiple cell comments for cell $A$1");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // XSSFWorkbooks fail when creating and setting the cell address of the comment
                 ClassicAssert.AreEqual(e.Message, "Multiple cell comments in one cell are not allowed, cell: A1");
@@ -439,6 +441,3 @@ namespace TestCases.SS.UserModel
 
     }
 }
-
-
-

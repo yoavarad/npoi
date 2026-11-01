@@ -18,10 +18,11 @@
 namespace TestCases.SS.Formula.Eval
 {
 
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link MissingArgEval}
@@ -46,7 +47,7 @@ namespace TestCases.SS.Formula.Eval
             {
                 cv = fe.Evaluate(cell);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.Error.WriteLine(e.Message);
                 throw new AssertionException("Missing args Evaluation not implemented (bug 43354");

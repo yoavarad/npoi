@@ -18,12 +18,13 @@
 namespace TestCases.OpenXml4Net.OPC.Compliance
 {
 
-    using System;
-    using NPOI.OpenXml4Net.OPC;
     using NPOI.OpenXml4Net.Exceptions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.IO;
+    using NPOI.OpenXml4Net.OPC;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
 
 
 
@@ -81,7 +82,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
             {
                 pkg = OPCPackage.Open(is1);
             }
-            catch (InvalidFormatException e)
+            catch(InvalidFormatException e)
             {
                 // no longer required for successful test
                 return e.Message;
@@ -103,7 +104,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
                 ExtractInvalidFormatMessage("OnlyOneCorePropertiesPartFAIL.docx");
                 Assert.Fail("M4.1 should be being relaxed");
             }
-            catch (AssertionException) { }
+            catch(AssertionException) { }
 
             // We will use the first core properties, and ignore the others
             Stream is1 = OpenXml4NetTestDataSamples.OpenSampleStream("MultipleCoreProperties.docx");
@@ -122,7 +123,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
 
         private static Uri CreateURI(String text)
         {
-            return new Uri(text,UriKind.RelativeOrAbsolute);
+            return new Uri(text, UriKind.RelativeOrAbsolute);
 
         }
 
@@ -144,11 +145,11 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
                 // no longer fail on compliance error
                 //fail("expected OPC compliance exception was not thrown");
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 throw;
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 // expected during successful test
                 ClassicAssert.AreEqual("OPC Compliance error [M4.1]: can't add another core properties part ! Use the built-in package method instead.", e.Message);
@@ -175,7 +176,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
                 // no longer fail on compliance error
                 //fail("expected OPC compliance exception was not thrown");
             }
-            catch (InvalidOperationException e)
+            catch(InvalidOperationException e)
             {
                 // expected during successful test
                 ClassicAssert.AreEqual("OPC Compliance error [M4.1]: you try to add more than one core properties relationship in the package !", e.Message);

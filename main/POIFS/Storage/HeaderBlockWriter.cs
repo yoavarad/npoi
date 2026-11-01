@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -26,11 +26,10 @@
  * ==============================================================*/
 
 
-using System;
-using System.IO;
-
 using NPOI.POIFS.Common;
 using NPOI.Util;
+using System;
+using System.IO;
 
 namespace NPOI.POIFS.Storage
 {
@@ -72,17 +71,17 @@ namespace NPOI.POIFS.Storage
 
             int limit = Math.Min(blockCount, _max_bats_in_header);
             int[] bat_blocks = new int[limit];
-            for (int j = 0; j < limit; j++)
+            for(int j = 0; j < limit; j++)
                 bat_blocks[j] = startBlock + j;
 
             _header_block.BATArray = bat_blocks;
 
-            if (blockCount > _max_bats_in_header)
+            if(blockCount > _max_bats_in_header)
             {
                 int excess_blocks = blockCount - _max_bats_in_header;
                 int[] excess_block_array = new int[excess_blocks];
 
-                for (int j = 0; j < excess_blocks; j++)
+                for(int j = 0; j < excess_blocks; j++)
                     excess_block_array[j] = startBlock + j + _max_bats_in_header;
 
                 rvalue = BATBlock.CreateXBATBlocks(bigBlockSize, excess_block_array,
@@ -165,22 +164,22 @@ namespace NPOI.POIFS.Storage
 
         public void WriteBlock(ByteBuffer block)
         {
-            using (MemoryStream ms = RecyclableMemory.GetStream(_header_block.BigBlockSize.GetBigBlockSize()))
+            using(MemoryStream ms = RecyclableMemory.GetStream(_header_block.BigBlockSize.GetBigBlockSize()))
             {
                 _header_block.WriteData(ms);
 
-                block.Write(ms.GetBuffer(), 0, (int)ms.Length);
+                block.Write(ms.GetBuffer(), 0, (int) ms.Length);
             }
         }
 
 
         public void WriteBlock(byte[] block)
         {
-            using (MemoryStream ms = RecyclableMemory.GetStream(_header_block.BigBlockSize.GetBigBlockSize()))
+            using(MemoryStream ms = RecyclableMemory.GetStream(_header_block.BigBlockSize.GetBigBlockSize()))
             {
                 _header_block.WriteData(ms);
 
-                Array.Copy(ms.GetBuffer(), 0, block, 0, (int)ms.Length);
+                Array.Copy(ms.GetBuffer(), 0, block, 0, (int) ms.Length);
             }
         }
     }

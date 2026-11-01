@@ -15,9 +15,10 @@
    limitations under the License.
 ==================================================================== */
 
-using System;
 using NPOI.XSSF.UserModel.Helpers;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
 namespace TestCases.XSSF.UserModel.Helpers
 {
 

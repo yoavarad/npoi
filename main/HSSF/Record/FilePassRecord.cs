@@ -17,16 +17,16 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using NPOI.Util;
-    using System.Text;
-    using System.Diagnostics;
-    using System.Collections.Generic;
-    using System.IO;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.BinaryRC4;
     using NPOI.POIFS.Crypt.CryptoAPI;
     using NPOI.POIFS.Crypt.XOR;
+    using NPOI.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Text;
 
     /**
      * Title: File Pass Record (0x002F) <p>
@@ -53,7 +53,7 @@ namespace NPOI.HSSF.Record
             encryptionType = input.ReadUShort();
 
             EncryptionMode preferredMode;
-            switch (encryptionType)
+            switch(encryptionType)
             {
                 case ENCRYPTION_XOR:
                     preferredMode = EncryptionMode.XOR;
@@ -69,7 +69,7 @@ namespace NPOI.HSSF.Record
             {
                 encryptionInfo = new EncryptionInfo(input, preferredMode);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new EncryptedDocumentException(e);
             }
@@ -83,25 +83,25 @@ namespace NPOI.HSSF.Record
             byte[] data = new byte[1024];
             var bos = new LittleEndianByteArrayOutputStream(data, 0);
 
-            if (encryptionInfo.EncryptionMode == EncryptionMode.XOR)
+            if(encryptionInfo.EncryptionMode == EncryptionMode.XOR)
             {
-                ((XOREncryptionHeader)encryptionInfo.Header).Write(bos);
-                ((XOREncryptionVerifier)encryptionInfo.Verifier).Write(bos);
+                ((XOREncryptionHeader) encryptionInfo.Header).Write(bos);
+                ((XOREncryptionVerifier) encryptionInfo.Verifier).Write(bos);
             }
-            else if (encryptionInfo.EncryptionMode == EncryptionMode.BinaryRC4)
+            else if(encryptionInfo.EncryptionMode == EncryptionMode.BinaryRC4)
             {
                 output.WriteShort(encryptionInfo.VersionMajor);
                 output.WriteShort(encryptionInfo.VersionMinor);
-                ((BinaryRC4EncryptionHeader)encryptionInfo.Header).Write(bos);
-                ((BinaryRC4EncryptionVerifier)encryptionInfo.Verifier).Write(bos);
+                ((BinaryRC4EncryptionHeader) encryptionInfo.Header).Write(bos);
+                ((BinaryRC4EncryptionVerifier) encryptionInfo.Verifier).Write(bos);
             }
-            else if (encryptionInfo.EncryptionMode == EncryptionMode.CryptoAPI)
+            else if(encryptionInfo.EncryptionMode == EncryptionMode.CryptoAPI)
             {
                 output.WriteShort(encryptionInfo.VersionMajor);
                 output.WriteShort(encryptionInfo.VersionMinor);
                 output.WriteInt(encryptionInfo.EncryptionFlags);
-                ((CryptoAPIEncryptionHeader)encryptionInfo.Header).Write(bos);
-                ((CryptoAPIEncryptionVerifier)encryptionInfo.Verifier).Write(bos);
+                ((CryptoAPIEncryptionHeader) encryptionInfo.Header).Write(bos);
+                ((CryptoAPIEncryptionVerifier) encryptionInfo.Verifier).Write(bos);
             }
             else
             {
@@ -115,11 +115,11 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                using (MemoryStream bos = new MemoryStream())
-                using (var leos = new LittleEndianOutputStream(bos))
+                using(MemoryStream bos = new MemoryStream())
+                using(var leos = new LittleEndianOutputStream(bos))
                 {
                     Serialize(leos);
-                    return (int)bos.Length;
+                    return (int) bos.Length;
                 }
             }
         }

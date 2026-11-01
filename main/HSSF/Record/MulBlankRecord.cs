@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * MulBlankRecord.java
@@ -134,7 +134,7 @@ namespace NPOI.HSSF.Record
         {
             short[] retval = new short[(in1.Remaining - 2) / 2];
 
-            for (int idx = 0; idx < retval.Length; idx++)
+            for(int idx = 0; idx < retval.Length; idx++)
             {
                 retval[idx] = in1.ReadShort();
             }
@@ -152,7 +152,7 @@ namespace NPOI.HSSF.Record
                 .Append(StringUtil.ToHexString(FirstColumn)).Append("\n");
             buffer.Append(" lastcol  = ")
                 .Append(StringUtil.ToHexString(LastColumn)).Append("\n");
-            for (int k = 0; k < NumColumns; k++)
+            for(int k = 0; k < NumColumns; k++)
             {
                 buffer.Append("xf").Append(k).Append("        = ")
                     .Append(StringUtil.ToHexString(GetXFAt(k))).Append("\n");
@@ -175,7 +175,7 @@ namespace NPOI.HSSF.Record
             out1.WriteShort(_row);
             out1.WriteShort(_first_col);
             int nItems = _xfs.Length;
-            for (int i = 0; i < nItems; i++)
+            for(int i = 0; i < nItems; i++)
             {
                 out1.WriteShort(_xfs[i]);
             }

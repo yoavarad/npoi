@@ -1,4 +1,4 @@
-﻿namespace TestCases.POIFS.Crypt
+namespace TestCases.POIFS.Crypt
 {
     using NPOI.HSSF.Record.Crypto;
     using NPOI.HSSF.UserModel;
@@ -185,7 +185,7 @@
                 for(int c = 0; c < maxColumns; c++)
                 {
                     var cell = row.GetCell(c);
-                    if (cell == null)
+                    if(cell == null)
                     {
                         rowData.Add("");
                         continue;

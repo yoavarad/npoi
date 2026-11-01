@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -27,8 +27,8 @@
 
 
 using System;
-using System.Text;
 using System.IO;
+using System.Text;
 
 namespace NPOI.POIFS.FileSystem
 {
@@ -69,16 +69,16 @@ namespace NPOI.POIFS.FileSystem
         /// root of a POIFSFileSystem</param>
         public POIFSDocumentPath(string[] components)
         {
-            if (components == null)
+            if(components == null)
             {
                 this.components = [];
             }
             else
             {
                 this.components = new string[components.Length];
-                for (int i = 0; i < components.Length; i++)
+                for(int i = 0; i < components.Length; i++)
                 {
-                    if ((components[i] == null) 
+                    if((components[i] == null)
                         || (components[i].Length == 0))
                     {
                         throw new ArgumentException("components cannot contain null or empty strings");
@@ -95,7 +95,7 @@ namespace NPOI.POIFS.FileSystem
         /// <param name="components">the additional subdirectory names to be added</param>
         public POIFSDocumentPath(POIFSDocumentPath path, string[] components)
         {
-            if (components == null)
+            if(components == null)
             {
                 this.components = new string[path.components.Length];
             }
@@ -103,21 +103,21 @@ namespace NPOI.POIFS.FileSystem
             {
                 this.components = new string[path.components.Length + components.Length];
             }
-            for (int i = 0; i < path.components.Length; i++)
+            for(int i = 0; i < path.components.Length; i++)
             {
                 this.components[i] = path.components[i];
             }
-            if (components != null)
+            if(components != null)
             {
-                for (int j = 0; j < components.Length; j++)
+                for(int j = 0; j < components.Length; j++)
                 {
-                    if (components[j] == null)
+                    if(components[j] == null)
                     {
                         throw new ArgumentException("components cannot contain null");
                     }
-                    if (components[j].Length == 0)
+                    if(components[j].Length == 0)
                     {
-                       // throw new ArgumentException("components cannot contain null or empty strings");
+                        // throw new ArgumentException("components cannot contain null or empty strings");
                     }
                     this.components[j + path.components.Length] = components[j];
                 }
@@ -133,21 +133,21 @@ namespace NPOI.POIFS.FileSystem
         public override bool Equals(object o)
         {
             bool flag = false;
-            if ((o != null) && (o.GetType() == this.GetType()))
+            if((o != null) && (o.GetType() == this.GetType()))
             {
-                if (this == o)
+                if(this == o)
                 {
                     flag = true;
                 }
                 else
                 {
                     POIFSDocumentPath path = (POIFSDocumentPath)o;
-                    if (path.components.Length == this.components.Length)
+                    if(path.components.Length == this.components.Length)
                     {
                         flag = true;
-                        for (int i = 0; i < this.components.Length; i++)
+                        for(int i = 0; i < this.components.Length; i++)
                         {
-                            if (!path.components[i].Equals(this.components[i]))
+                            if(!path.components[i].Equals(this.components[i]))
                             {
                                 flag = false;
                                 break;
@@ -176,7 +176,7 @@ namespace NPOI.POIFS.FileSystem
         /// </returns>
         public override int GetHashCode()
         {
-            if (this.hashcode == 0)
+            if(this.hashcode == 0)
             {
                 this.hashcode = ComputeHashCode();
             }
@@ -185,7 +185,7 @@ namespace NPOI.POIFS.FileSystem
         private int ComputeHashCode()
         {
             int code = 0;
-            for (int j = 0; j < components.Length; j++)
+            for(int j = 0; j < components.Length; j++)
             {
                 code += components[j].GetHashCode();
             }
@@ -202,10 +202,10 @@ namespace NPOI.POIFS.FileSystem
             StringBuilder builder = new StringBuilder();
             int length = this.Length;
             builder.Append(Path.DirectorySeparatorChar);
-            for (int i = 0; i < length; i++)
+            for(int i = 0; i < length; i++)
             {
                 builder.Append(this.GetComponent(i));
-                if (i < (length - 1))
+                if(i < (length - 1))
                 {
                     builder.Append(Path.DirectorySeparatorChar);
                 }
@@ -234,7 +234,7 @@ namespace NPOI.POIFS.FileSystem
             get
             {
                 int length = this.components.Length - 1;
-                if (length < 0)
+                if(length < 0)
                 {
                     return null;
                 }
@@ -258,13 +258,13 @@ namespace NPOI.POIFS.FileSystem
         {
             get
             {
-                if (components.Length == 0)
+                if(components.Length == 0)
                 {
                     return "";
                 }
                 return components[components.Length - 1];
             }
-            
+
         }
     }
 }

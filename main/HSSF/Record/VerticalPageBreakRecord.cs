@@ -65,7 +65,7 @@ namespace NPOI.HSSF.Record
         {
             PageBreakRecord result = new VerticalPageBreakRecord();
             IEnumerator<Break> iterator = GetBreaksEnumerator();
-            while (iterator.MoveNext())
+            while(iterator.MoveNext())
             {
                 Break original = iterator.Current;
                 result.AddBreak(original.main, original.subFrom, original.subTo);

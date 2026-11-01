@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,12 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
-using System;
 using NPOI.Util;
+using System;
 using System.Collections.Generic;
-using System.Security;
+using System.IO;
 using System.Reflection;
+using System.Security;
 //using System.IO.MemoryMappedFiles;
 namespace NPOI.POIFS.NIO
 {
@@ -49,16 +49,16 @@ namespace NPOI.POIFS.NIO
         public FileBackedDataSource(FileInfo file)
             : this(file, false)
         {
-            
+
         }
         public FileBackedDataSource(FileInfo file, bool readOnly)
         {
-            if (!file.Exists)
+            if(!file.Exists)
                 throw new FileNotFoundException(file.FullName);
             this.fileinfo = file;
             FileStream stream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
             byte[] temp = new byte[stream.Length];
-            stream.Read(temp, 0, (int)stream.Length);
+            stream.Read(temp, 0, (int) stream.Length);
             MemoryStream ms = new MemoryStream(temp, 0, temp.Length);
             fileStream = ms;
             this.writable = !readOnly;
@@ -68,7 +68,7 @@ namespace NPOI.POIFS.NIO
         {
             stream.Position = 0;
             byte[] temp = new byte[stream.Length];
-            stream.Read(temp, 0, (int)stream.Length);
+            stream.Read(temp, 0, (int) stream.Length);
             MemoryStream ms = new MemoryStream(temp, 0, temp.Length);
             fileStream = ms;
             this.writable = !readOnly;
@@ -85,9 +85,9 @@ namespace NPOI.POIFS.NIO
 
         private void Dispose(bool disposing)
         {
-            if (disposing)
+            if(disposing)
             {
-                if (null != fileStream)
+                if(null != fileStream)
                 {
                     fileStream.Dispose();
                     fileStream = null;
@@ -123,12 +123,12 @@ namespace NPOI.POIFS.NIO
         /// <returns></returns>
         public override ByteBuffer Read(int length, long position)
         {
-            if (position >= Size)
+            if(position >= Size)
                 throw new IndexOutOfRangeException("Position " + position + " past the end of the file");
 
             // Do we read or map (for read/write)?
             ByteBuffer dst;
-            if (writable)
+            if(writable)
             {
                 //dst = channel.map(FileChannel.MapMode.READ_WRITE, position, length);
                 dst = ByteBuffer.CreateBuffer(length);
@@ -144,7 +144,7 @@ namespace NPOI.POIFS.NIO
                 // Read the contents and check that we could read some data
                 int worked = IOUtils.ReadFully(fileStream, dst.Buffer);
                 // Check
-                if (worked == -1)
+                if(worked == -1)
                     throw new IndexOutOfRangeException("Position " + position + " past the end of the file");
             }
             // make it ready for reading
@@ -160,9 +160,9 @@ namespace NPOI.POIFS.NIO
         /// <param name="src">The Stream from which bytes are to be transferred</param>
         /// <param name="position">The file position at which the transfer is to begin;
         /// must be non-negative</param>
-        public override void  Write(ByteBuffer src, long position)
+        public override void Write(ByteBuffer src, long position)
         {
-            fileStream.Write(src.Buffer, (int)position, src.Length);
+            fileStream.Write(src.Buffer, (int) position, src.Length);
         }
 
         public override void CopyTo(Stream stream)
@@ -170,13 +170,14 @@ namespace NPOI.POIFS.NIO
             //byte[] tempBuffer = new byte[stream.Length];
             //fileStream.Read(tempBuffer, 0, tempBuffer.Length);
             byte[] tempBuffer = fileStream.ToArray();
-            stream.Write(tempBuffer, 0, tempBuffer.Length);        }
+            stream.Write(tempBuffer, 0, tempBuffer.Length);
+        }
 
         public override long Size
         {
-            get 
+            get
             {
-                if (fileStream != null)
+                if(fileStream != null)
                 {
                     return fileStream.Length;
                 }
@@ -191,17 +192,17 @@ namespace NPOI.POIFS.NIO
         {
             // also ensure that all buffers are unmapped so we do not keep files locked on Windows
             // We consider it a bug if a Buffer is still in use now! 
-            foreach (ByteBuffer buffer in buffersToClean)
+            foreach(ByteBuffer buffer in buffersToClean)
             {
                 unmap(buffer);
             }
             buffersToClean.Clear();
 
-            if (fileStream != null)
+            if(fileStream != null)
             {
                 fileStream.Close();
             }
-            
+
         }
 
         // need to use reflection to avoid depending on the sun.nio internal API

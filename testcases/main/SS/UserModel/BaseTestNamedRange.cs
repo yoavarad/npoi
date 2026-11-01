@@ -17,13 +17,14 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using System.Collections.Generic;
     using NPOI.Util;
-    using NPOI.HSSF.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * Tests of implementations of {@link NPOI.ss.usermodel.Name}.
@@ -59,7 +60,7 @@ namespace TestCases.SS.UserModel
                 name2.NameName = ("testOne");
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("The workbook already contains this name: testOne", e.Message);
             }
@@ -69,7 +70,7 @@ namespace TestCases.SS.UserModel
                 name2.NameName = ("TESTone");
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("The workbook already contains this name: TESTone", e.Message);
             }
@@ -94,7 +95,7 @@ namespace TestCases.SS.UserModel
                 name1.SheetIndex = (2);
                 Assert.Fail("should throw ArgumentException");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Sheet index (2) is out of range (0..1)", e.Message);
             }
@@ -108,14 +109,14 @@ namespace TestCases.SS.UserModel
 
             //names cannot be blank and must begin with a letter or underscore and not contain spaces
             String[] invalidNames = { "", "123", "1Name", "Named Range" };
-            foreach (String name in invalidNames)
+            foreach(String name in invalidNames)
             {
                 try
                 {
                     name1.NameName = (name);
                     Assert.Fail("should have thrown exceptiuon due to invalid name: " + name);
                 }
-                catch (ArgumentException)
+                catch(ArgumentException)
                 {
                     // expected during successful Test
                 }
@@ -177,7 +178,7 @@ namespace TestCases.SS.UserModel
                 name.NameName = ("aaa");
                 Assert.Fail("Expected exception");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ClassicAssert.AreEqual("The workbook already contains this name: aaa", e.Message);
             }
@@ -192,7 +193,7 @@ namespace TestCases.SS.UserModel
                 name.NameName = ("aaa");
                 Assert.Fail("Expected exception");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ClassicAssert.AreEqual("The sheet already contains this name: aaa", e.Message);
             }
@@ -207,7 +208,7 @@ namespace TestCases.SS.UserModel
                 name.NameName = ("aaa");
                 Assert.Fail("Expected exception");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ClassicAssert.AreEqual("The sheet already contains this name: aaa", e.Message);
             }
@@ -571,9 +572,9 @@ namespace TestCases.SS.UserModel
             {
                 formula = n.RefersToFormula;
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
-                if (e.Message.Equals("ptgs must not be null"))
+                if(e.Message.Equals("ptgs must not be null"))
                 {
                     throw new AssertionException("Identified bug 46973");
                 }
@@ -590,7 +591,7 @@ namespace TestCases.SS.UserModel
             // contrived example to expose bug:
             n.RefersToFormula = ("if(A1,\"#REF!\", \"\")");
 
-            if (n.IsDeleted)
+            if(n.IsDeleted)
             {
                 throw new AssertionException("Identified bug in recoginising formulas referring to deleted cells");
             }
@@ -635,7 +636,7 @@ namespace TestCases.SS.UserModel
                 n2.NameName = ("sale_1");
                 Assert.Fail("Expected exception");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ClassicAssert.AreEqual("The workbook already contains this name: sale_1", e.Message);
             }
@@ -675,7 +676,7 @@ namespace TestCases.SS.UserModel
             IWorkbook wb = _testDataProvider.CreateWorkbook();
 
             IName name = wb.CreateName();
-            foreach (string valid in Arrays.AsList(
+            foreach(string valid in Arrays.AsList(
                     "Hello",
                     "number1",
                     "_underscore",
@@ -701,12 +702,12 @@ namespace TestCases.SS.UserModel
                 name.NameName = "";
                 Assert.Fail("expected exception: (blank)");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("Name cannot be blank", e.Message);
             }
 
-            foreach (string invalid in Arrays.AsList(
+            foreach(string invalid in Arrays.AsList(
                     "1number",
                     "Sheet1!A1",
                     "Exclamation!",
@@ -732,7 +733,7 @@ namespace TestCases.SS.UserModel
                     name.NameName = invalid;
                     Assert.Fail("expected exception: " + invalid);
                 }
-                catch (ArgumentException e)
+                catch(ArgumentException e)
                 {
                     ClassicAssert.IsTrue(e.Message.StartsWith("Invalid name: '" + invalid + "'"), invalid);
                 }

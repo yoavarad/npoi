@@ -1,4 +1,4 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra;
 using NPOI.SS.Formula.Eval;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using static NPOI.SS.Formula.Functions.MatrixFunction;
 
 namespace NPOI.SS.Formula.Functions
 {
-    public class MMulti: TwoArrayArg
+    public class MMulti : TwoArrayArg
     {
         private MutableValueCollector instance = new MutableValueCollector(false, false);
         protected override double[] CollectValues(ValueEval arg)
@@ -15,7 +15,7 @@ namespace NPOI.SS.Formula.Functions
             double[] values = instance.collectValues(arg);
 
             /* handle case where MMULT is operating on an array that is not completely filled*/
-            if (arg is AreaEval && values.Length == 1)
+            if(arg is AreaEval && values.Length == 1)
                 throw new EvaluationException(ErrorEval.VALUE_INVALID);
 
             return values;

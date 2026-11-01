@@ -19,8 +19,9 @@ namespace TestCases.SS.Formula.Functions
 {
 
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Test cases for SUMPRODUCT()
@@ -34,11 +35,11 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invokeSumproduct(ValueEval[] args)
         {
             // srcCellRow and srcCellColumn are ignored by SUMPRODUCT
-            return new Sumproduct().Evaluate(args, -1, (short)-1);
+            return new Sumproduct().Evaluate(args, -1, (short) -1);
         }
         private static void ConfirmDouble(double expected, ValueEval actualEval)
         {
-            if (!(actualEval is NumericValueEval))
+            if(!(actualEval is NumericValueEval))
             {
                 Assert.Fail("Expected numeric result");
             }
@@ -51,9 +52,9 @@ namespace TestCases.SS.Formula.Functions
 
             RefEval refEval = EvalFactory.CreateRefEval("A1", new NumberEval(3));
             ValueEval[] args = {
-			refEval,
-			new NumberEval(2),
-		};
+            refEval,
+            new NumberEval(2),
+        };
             ValueEval result = invokeSumproduct(args);
             ConfirmDouble(6D, result);
         }
@@ -61,15 +62,15 @@ namespace TestCases.SS.Formula.Functions
         public void TestAreaSimple()
         {
             ValueEval[] aValues = {
-			new NumberEval(2),
-			new NumberEval(4),
-			new NumberEval(5),
-		};
+            new NumberEval(2),
+            new NumberEval(4),
+            new NumberEval(5),
+        };
             ValueEval[] bValues = {
-			new NumberEval(3),
-			new NumberEval(6),
-			new NumberEval(7),
-		};
+            new NumberEval(3),
+            new NumberEval(6),
+            new NumberEval(7),
+        };
             AreaEval aeA = EvalFactory.CreateAreaEval("A1:A3", aValues);
             AreaEval aeB = EvalFactory.CreateAreaEval("B1:B3", bValues);
 
@@ -88,9 +89,9 @@ namespace TestCases.SS.Formula.Functions
             AreaEval ae = EvalFactory.CreateAreaEval("A1:A1", new ValueEval[] { new NumberEval(7), });
 
             ValueEval[] args = {
-				ae,
-				new NumberEval(2),
-			};
+                ae,
+                new NumberEval(2),
+            };
             ValueEval result = invokeSumproduct(args);
             ConfirmDouble(14D, result);
         }
@@ -112,9 +113,9 @@ namespace TestCases.SS.Formula.Functions
         public void TestAreaWithErrorCell()
         {
             ValueEval[] aValues = {
-			ErrorEval.REF_INVALID,
-			null,
-		};
+            ErrorEval.REF_INVALID,
+            null,
+        };
             AreaEval aeA = EvalFactory.CreateAreaEval("A1:A2", aValues);
             AreaEval aeB = EvalFactory.CreateAreaEval("B1:B2", new ValueEval[2]);
 

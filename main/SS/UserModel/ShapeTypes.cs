@@ -22,7 +22,7 @@ namespace NPOI.SS.UserModel
      *
      * @author Yegor Kozlov
      */
-    public enum ShapeTypes:int
+    public enum ShapeTypes : int
     {
         /// <summary>
         /// Allow accessing the Initial value.

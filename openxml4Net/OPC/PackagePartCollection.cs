@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -36,12 +36,12 @@ namespace NPOI.OpenXml4Net.OPC
             String[] segments = partName.URI.OriginalString.Split(
                     PackagingUriHelper.FORWARD_SLASH_CHAR);
             StringBuilder concatSeg = new StringBuilder();
-            foreach (String seg in segments)
+            foreach(String seg in segments)
             {
-                if (!seg.Equals(""))
+                if(!seg.Equals(""))
                     concatSeg.Append(PackagingUriHelper.FORWARD_SLASH_CHAR);
                 concatSeg.Append(seg);
-                if (this.registerPartNameStr.Contains(concatSeg.ToString()))
+                if(this.registerPartNameStr.Contains(concatSeg.ToString()))
                 {
                     throw new InvalidOperationException(
                             "You can't add a part with a part name derived from another part ! [M1.11]");
@@ -53,7 +53,7 @@ namespace NPOI.OpenXml4Net.OPC
 
         public new void Remove(PackagePartName key)
         {
-            this.registerPartNameStr.Remove(((PackagePartName)key).Name);
+            this.registerPartNameStr.Remove(((PackagePartName) key).Name);
             base.Remove(key);
         }
     }

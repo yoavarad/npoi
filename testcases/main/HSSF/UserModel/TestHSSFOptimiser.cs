@@ -15,12 +15,12 @@
 ==================================================================== */
 namespace TestCases.HSSF.UserModel
 {
-    using System;
-    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Model;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     [TestFixture]
     public class TestHSSFOptimiser
@@ -70,27 +70,27 @@ namespace TestCases.HSSF.UserModel
 
             // Add 6 fonts, some duplicates
             IFont f1 = wb.CreateFont();
-            f1.FontHeight = ((short)11);
+            f1.FontHeight = ((short) 11);
             f1.FontName = ("Testing");
 
             IFont f2 = wb.CreateFont();
-            f2.FontHeight = ((short)22);
+            f2.FontHeight = ((short) 22);
             f2.FontName = ("Also Testing");
 
             IFont f3 = wb.CreateFont();
-            f3.FontHeight = ((short)33);
+            f3.FontHeight = ((short) 33);
             f3.FontName = ("Unique");
 
             IFont f4 = wb.CreateFont();
-            f4.FontHeight = ((short)11);
+            f4.FontHeight = ((short) 11);
             f4.FontName = ("Testing");
 
             IFont f5 = wb.CreateFont();
-            f5.FontHeight = ((short)22);
+            f5.FontHeight = ((short) 22);
             f5.FontName = ("Also Testing");
 
             IFont f6 = wb.CreateFont();
-            f6.FontHeight = ((short)66);
+            f6.FontHeight = ((short) 66);
             f6.FontName = ("Also Unique");
 
 
@@ -176,11 +176,11 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(4, wb.NumberOfFonts);
 
             IFont f1 = wb.CreateFont();
-            f1.FontHeight = ((short)11);
+            f1.FontHeight = ((short) 11);
             f1.FontName = ("Testing");
 
             IFont f2 = wb.CreateFont();
-            f2.FontHeight = ((short)22);
+            f2.FontHeight = ((short) 22);
             f2.FontName = ("Also Testing");
 
             ClassicAssert.AreEqual(6, wb.NumberOfFonts);
@@ -225,9 +225,9 @@ namespace TestCases.HSSF.UserModel
             r.CreateCell(6).CellStyle = (cs1);
             r.CreateCell(7).CellStyle = (cs2);
 
-            ClassicAssert.AreEqual(21, ((HSSFCell)r.GetCell(0)).CellValueRecord.XFIndex);
-            ClassicAssert.AreEqual(26, ((HSSFCell)r.GetCell(5)).CellValueRecord.XFIndex);
-            ClassicAssert.AreEqual(21, ((HSSFCell)r.GetCell(6)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(21, ((HSSFCell) r.GetCell(0)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(26, ((HSSFCell) r.GetCell(5)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(21, ((HSSFCell) r.GetCell(6)).CellValueRecord.XFIndex);
 
 
             // Optimise
@@ -239,22 +239,22 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(25, wb.NumCellStyles);
 
             // cs1 -> 21
-            ClassicAssert.AreEqual(21, ((HSSFCell)r.GetCell(0)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(21, ((HSSFCell) r.GetCell(0)).CellValueRecord.XFIndex);
             // cs2 -> 22
-            ClassicAssert.AreEqual(22, ((HSSFCell)r.GetCell(1)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(22, ((HSSFCell) r.GetCell(1)).CellValueRecord.XFIndex);
             ClassicAssert.AreEqual(22, r.GetCell(1).CellStyle.GetFont(wb).FontHeight);
             // cs3 = cs1 -> 21
-            ClassicAssert.AreEqual(21, ((HSSFCell)r.GetCell(2)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(21, ((HSSFCell) r.GetCell(2)).CellValueRecord.XFIndex);
             // cs4 --> 24 -> 23
-            ClassicAssert.AreEqual(23, ((HSSFCell)r.GetCell(3)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(23, ((HSSFCell) r.GetCell(3)).CellValueRecord.XFIndex);
             // cs5 --> 25 -> 24
-            ClassicAssert.AreEqual(24, ((HSSFCell)r.GetCell(4)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(24, ((HSSFCell) r.GetCell(4)).CellValueRecord.XFIndex);
             // cs6 = cs2 -> 22
-            ClassicAssert.AreEqual(22, ((HSSFCell)r.GetCell(5)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(22, ((HSSFCell) r.GetCell(5)).CellValueRecord.XFIndex);
             // cs1 -> 21
-            ClassicAssert.AreEqual(21, ((HSSFCell)r.GetCell(6)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(21, ((HSSFCell) r.GetCell(6)).CellValueRecord.XFIndex);
             // cs2 -> 22
-            ClassicAssert.AreEqual(22, ((HSSFCell)r.GetCell(7)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(22, ((HSSFCell) r.GetCell(7)).CellValueRecord.XFIndex);
 
 
             // Add a new duplicate, and two that aren't used
@@ -263,10 +263,10 @@ namespace TestCases.HSSF.UserModel
             r.CreateCell(8).CellStyle=(csD);
 
             HSSFFont f3 = (HSSFFont)wb.CreateFont();
-            f3.FontHeight=((short)23);
+            f3.FontHeight=((short) 23);
             f3.FontName=("Testing 3");
             HSSFFont f4 = (HSSFFont)wb.CreateFont();
-            f4.FontHeight=((short)24);
+            f4.FontHeight=((short) 24);
             f4.FontName=("Testing 4");
 
             HSSFCellStyle csU1 = (HSSFCellStyle)wb.CreateCellStyle();
@@ -286,7 +286,7 @@ namespace TestCases.HSSF.UserModel
             ClassicAssert.AreEqual(25, wb.NumCellStyles);
 
             // csD -> cs1 -> 21
-            ClassicAssert.AreEqual(21, ((HSSFCell)r.GetCell(8)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(21, ((HSSFCell) r.GetCell(8)).CellValueRecord.XFIndex);
         }
         [Test]
         public void TestOptimiseStylesCheckActualStyles()
@@ -315,9 +315,9 @@ namespace TestCases.HSSF.UserModel
             r.CreateCell(1).CellStyle=(cs2);
             r.CreateCell(2).CellStyle=(cs3);
 
-            ClassicAssert.AreEqual(21, ((HSSFCell)r.GetCell(0)).CellValueRecord.XFIndex);
-            ClassicAssert.AreEqual(22, ((HSSFCell)r.GetCell(1)).CellValueRecord.XFIndex);
-            ClassicAssert.AreEqual(23, ((HSSFCell)r.GetCell(2)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(21, ((HSSFCell) r.GetCell(0)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(22, ((HSSFCell) r.GetCell(1)).CellValueRecord.XFIndex);
+            ClassicAssert.AreEqual(23, ((HSSFCell) r.GetCell(2)).CellValueRecord.XFIndex);
 
             // Optimise
             HSSFOptimiser.OptimiseCellStyles(wb);

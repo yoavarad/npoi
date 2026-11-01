@@ -24,7 +24,7 @@ namespace NPOI.HSSF.UserModel
     /// Used to modify the print Setup.
     /// @author Shawn Laubach (slaubach at apache dot org)
     /// </summary>
-    public class HSSFPrintSetup :NPOI.SS.UserModel.IPrintSetup
+    public class HSSFPrintSetup : NPOI.SS.UserModel.IPrintSetup
     {
         PrintSetupRecord printSetupRecord;
 
@@ -47,7 +47,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.PaperSize;
             }
-            set 
+            set
             {
                 printSetupRecord.PaperSize = value;
             }
@@ -63,7 +63,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.Scale;
             }
-            set 
+            set
             {
                 printSetupRecord.Scale = value;
             }
@@ -79,7 +79,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.PageStart;
             }
-            set 
+            set
             {
                 printSetupRecord.PageStart=value;
             }
@@ -95,7 +95,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.FitWidth;
             }
-            set 
+            set
             {
                 printSetupRecord.FitWidth = value;
             }
@@ -111,7 +111,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.FitHeight;
             }
-            set 
+            set
             {
                 printSetupRecord.FitHeight = value;
             }
@@ -137,7 +137,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.LeftToRight;
             }
-            set 
+            set
             {
                 printSetupRecord.LeftToRight = value;
             }
@@ -153,7 +153,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return !printSetupRecord.Landscape;
             }
-            set 
+            set
             {
                 printSetupRecord.Landscape = !value;
             }
@@ -169,7 +169,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.ValidSettings;
             }
-            set 
+            set
             {
                 printSetupRecord.ValidSettings = value;
             }
@@ -185,7 +185,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.NoColor;
             }
-            set 
+            set
             {
                 printSetupRecord.NoColor=value;
             }
@@ -194,15 +194,15 @@ namespace NPOI.HSSF.UserModel
         public bool EndNote
         {
             get { return printSetupRecord.EndNote; }
-            set 
+            set
             {
                 printSetupRecord.EndNote = value;
             }
         }
         public NPOI.SS.UserModel.DisplayCellErrorType CellError
         {
-            get { return (NPOI.SS.UserModel.DisplayCellErrorType)printSetupRecord.CellError; }
-            set { printSetupRecord.CellError=(short)value; }
+            get { return (NPOI.SS.UserModel.DisplayCellErrorType) printSetupRecord.CellError; }
+            set { printSetupRecord.CellError=(short) value; }
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.Draft;
             }
-            set 
+            set
             {
                 printSetupRecord.Draft = value;
             }
@@ -231,7 +231,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.Notes;
             }
-            set 
+            set
             {
                 printSetupRecord.Notes = value;
             }
@@ -247,7 +247,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.NoOrientation;
             }
-            set 
+            set
             {
                 printSetupRecord.NoOrientation = value;
             }
@@ -263,7 +263,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.UsePage;
             }
-            set 
+            set
             {
                 printSetupRecord.UsePage = value;
             }
@@ -295,7 +295,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.VResolution;
             }
-            set 
+            set
             {
                 printSetupRecord.VResolution = value;
             }
@@ -327,7 +327,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.FooterMargin;
             }
-            set 
+            set
             {
                 printSetupRecord.FooterMargin = value;
             }
@@ -343,7 +343,7 @@ namespace NPOI.HSSF.UserModel
             {
                 return printSetupRecord.Copies;
             }
-            set 
+            set
             {
                 printSetupRecord.Copies = value;
             }

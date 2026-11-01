@@ -17,38 +17,41 @@
 
 namespace NPOI.POIFS.Crypt.CryptoAPI
 {
-    using System;
-
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.Crypt.Standard;
     using NPOI.Util;
+    using System;
 
-    public class CryptoAPIEncryptionVerifier : StandardEncryptionVerifier {
+    public class CryptoAPIEncryptionVerifier : StandardEncryptionVerifier
+    {
 
         protected internal CryptoAPIEncryptionVerifier(ILittleEndianInput is1,
                 CryptoAPIEncryptionHeader header) :
             base(is1, header)
         {
-        
+
         }
 
         protected internal CryptoAPIEncryptionVerifier(CipherAlgorithm cipherAlgorithm,
                 HashAlgorithm hashAlgorithm, int keyBits, int blockSize,
                 ChainingMode chainingMode)
             : base(cipherAlgorithm, hashAlgorithm, keyBits, blockSize, chainingMode)
-        { 
-            
+        {
+
         }
 
-        protected new void SetSalt(byte[] salt) {
+        protected new void SetSalt(byte[] salt)
+        {
             base.SetSalt(salt);
         }
 
-        protected new void SetEncryptedVerifier(byte[] encryptedVerifier) {
+        protected new void SetEncryptedVerifier(byte[] encryptedVerifier)
+        {
             base.SetEncryptedVerifier(encryptedVerifier);
         }
 
-        protected new void SetEncryptedVerifierHash(byte[] encryptedVerifierHash) {
+        protected new void SetEncryptedVerifierHash(byte[] encryptedVerifierHash)
+        {
             base.SetEncryptedVerifierHash(encryptedVerifierHash);
         }
     }

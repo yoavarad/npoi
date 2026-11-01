@@ -17,13 +17,14 @@
 
 namespace TestCases.HPSF.Extractor
 {
-    using System;
     using NPOI.HPSF;
     using NPOI.HPSF.Extractor;
     using NPOI.HSSF.Extractor;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
     using NPOI.POIFS.FileSystem;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.IO;
     using TestCases.HSSF;
 
@@ -107,7 +108,7 @@ namespace TestCases.HPSF.Extractor
                 fs = new POIFSFileSystem(_samples.OpenResourceAsStream("TestUnicode.xls"));
                 wb = new HSSFWorkbook(fs);
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new Exception("TestConstructors", e);
             }
@@ -199,17 +200,17 @@ namespace TestCases.HPSF.Extractor
             }
         }
         [Test]
-        public void Test61300Extractor() 
+        public void Test61300Extractor()
         {
-		    //HPSFPropertiesExtractor.Main(new String[]{
-				//POIDataSamples.GetPOIFSInstance().GetFile("61300.bin").Name
-		    //});
+            //HPSFPropertiesExtractor.Main(new String[]{
+            //POIDataSamples.GetPOIFSInstance().GetFile("61300.bin").Name
+            //});
             var testfile = POIDataSamples.GetPOIFSInstance().GetFileInfo("61300.bin");
             HPSFPropertiesExtractor ext = new HPSFPropertiesExtractor(new POIFSFileSystem(testfile));
-            
-                
+
+
             Console.WriteLine(ext.Text);
-            
+
         }
     }
 

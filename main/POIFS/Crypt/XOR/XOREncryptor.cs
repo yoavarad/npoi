@@ -17,11 +17,11 @@
 
 namespace NPOI.POIFS.Crypt.XOR
 {
-    using System;
-    using System.IO;
     using NPOI.POIFS.Crypt;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
+    using System;
+    using System.IO;
 
     public class XOREncryptor : Encryptor
     {
@@ -114,17 +114,17 @@ namespace NPOI.POIFS.Crypt.XOR
 
             public void SetNextRecordSize(int recordSize, bool isPlain)
             {
-                if (recordEnd > 0 && !isPlain)
+                if(recordEnd > 0 && !isPlain)
                 {
                     // Process last record if needed
                 }
-                recordStart = (int)Length + 4;
+                recordStart = (int) Length + 4;
                 recordEnd = recordStart + recordSize;
             }
 
             public override void Write(int b)
             {
-                oneByte[0] = (byte)b;
+                oneByte[0] = (byte) b;
                 EncryptByte(oneByte, 0, 1);
                 base.Write(oneByte);
             }
@@ -145,7 +145,8 @@ namespace NPOI.POIFS.Crypt.XOR
 
             private void EncryptBytes(byte[] data, int offset, int length)
             {
-                if (xorArray == null) return;
+                if(xorArray == null)
+                    return;
 
                 /*
                  * From: http://social.msdn.microsoft.com/Forums/en-US/3dadbed3-0e68-4f11-8b43-3a2328d9ebd5
@@ -159,7 +160,7 @@ namespace NPOI.POIFS.Crypt.XOR
                  */
                 int xorArrayIndex = (int)(Length + offset) % 16;
 
-                for (int i = 0; i < length; i++)
+                for(int i = 0; i < length; i++)
                 {
                     byte value = data[offset + i];
                     value ^= xorArray[xorArrayIndex];
@@ -171,7 +172,7 @@ namespace NPOI.POIFS.Crypt.XOR
 
             private static byte RotateLeft(byte bits, int shift)
             {
-                return (byte)(((bits & 0xff) << shift) | ((bits & 0xff) >> (8 - shift)));
+                return (byte) (((bits & 0xff) << shift) | ((bits & 0xff) >> (8 - shift)));
             }
         }
     }

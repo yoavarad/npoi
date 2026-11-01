@@ -17,12 +17,12 @@
 
 namespace NPOI.HSSF.Record.CF
 {
-    using System;
-    using System.Text;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
     /**
      * Threshold / value (CFVO) for Changes in Conditional Formatting
@@ -35,7 +35,7 @@ namespace NPOI.HSSF.Record.CF
 
         protected Threshold()
         {
-            type = (byte)RangeType.NUMBER.id;
+            type = (byte) RangeType.NUMBER.id;
             formula = Formula.Create(null);
             value = 0d;
         }
@@ -43,9 +43,9 @@ namespace NPOI.HSSF.Record.CF
         /** Creates new Threshold */
         protected Threshold(ILittleEndianInput in1)
         {
-            type = (byte)in1.ReadByte();
+            type = (byte) in1.ReadByte();
             short formulaLen = in1.ReadShort();
-            if (formulaLen > 0)
+            if(formulaLen > 0)
             {
                 formula = Formula.Read(formulaLen, in1);
             }
@@ -54,8 +54,8 @@ namespace NPOI.HSSF.Record.CF
                 formula = Formula.Create(null);
             }
             // Value is only there for non-formula, non min/max thresholds
-            if (formulaLen == 0 && type != RangeType.MIN.id &&
-                    type != RangeType.MAX.id && 
+            if(formulaLen == 0 && type != RangeType.MIN.id &&
+                    type != RangeType.MAX.id &&
                     type != RangeType.AUTOMIN.id &&
                     type != RangeType.AUTOMAX.id)
             {
@@ -74,14 +74,14 @@ namespace NPOI.HSSF.Record.CF
                 this.type = value;
 
                 // Ensure the value presence / absence is consistent for the new type
-                if (type == RangeType.MIN.id || type == RangeType.MAX.id ||
-                       type == RangeType.FORMULA.id || 
+                if(type == RangeType.MIN.id || type == RangeType.MAX.id ||
+                       type == RangeType.FORMULA.id ||
                        type== RangeType.AUTOMIN.id ||
                        type==RangeType.AUTOMAX.id)
                 {
                     this.value = null;
                 }
-                else if (this.value == null)
+                else if(this.value == null)
                 {
                     this.value = 0d;
                 }
@@ -89,7 +89,7 @@ namespace NPOI.HSSF.Record.CF
         }
         public void SetType(int type)
         {
-            this.type = (byte)type;
+            this.type = (byte) type;
         }
 
         protected Formula Formula
@@ -102,9 +102,10 @@ namespace NPOI.HSSF.Record.CF
         public Ptg[] ParsedExpression
         {
             get { return formula.Tokens; }
-            set {
+            set
+            {
                 formula = Formula.Create(value);
-                if (value.Length > 0)
+                if(value.Length > 0)
                 {
                     this.value = null;
                 }
@@ -128,13 +129,13 @@ namespace NPOI.HSSF.Record.CF
             get
             {
                 int len = 1 + formula.EncodedSize;
-                if (value != null)
+                if(value != null)
                 {
                     len += 8;
                 }
                 return len;
             }
-            
+
         }
 
         public override String ToString()
@@ -158,7 +159,7 @@ namespace NPOI.HSSF.Record.CF
         public virtual void Serialize(ILittleEndianOutput out1)
         {
             out1.WriteByte(type);
-            if (formula.Tokens.Length == 0)
+            if(formula.Tokens.Length == 0)
             {
                 out1.WriteShort(0);
             }
@@ -166,7 +167,7 @@ namespace NPOI.HSSF.Record.CF
             {
                 formula.Serialize(out1);
             }
-            if (value != null)
+            if(value != null)
             {
                 out1.WriteDouble(value.Value);
             }

@@ -17,9 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * Interface specifying how an algorithm to be used by {@link DStarRunner} should look like.

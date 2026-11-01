@@ -15,14 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using System.Diagnostics;
-
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
-
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System.Diagnostics;
 
 namespace TestCases.SS.Util
 {
@@ -50,7 +48,7 @@ namespace TestCases.SS.Util
             data.CreateCell(1).SetCellValue(0.001);
             data.CreateCell(2).SetCellValue(false);
 
-            for (int col = 0; col < 3; col++)
+            for(int col = 0; col < 3; col++)
             {
                 double widthFromUtil = SheetUtil.GetColumnWidth(sheet, col, false);
                 ClassicAssert.IsTrue(widthFromUtil > 0, $"Column {col} should have positive width");
@@ -103,7 +101,7 @@ namespace TestCases.SS.Util
             ISheet sheet = wb.CreateSheet("test");
 
             // Create several merged regions to exercise the pre-fetched list
-            for (int i = 0; i < 10; i++)
+            for(int i = 0; i < 10; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 row.CreateCell(0).SetCellValue($"Row {i} merged content");
@@ -133,7 +131,7 @@ namespace TestCases.SS.Util
             sheet.CreateRow(50).CreateCell(0).SetCellValue(
                 "This is a very long string that should make the column much wider than the short text above");
             // Rows 1-49: fill with medium text
-            for (int i = 1; i < 50; i++)
+            for(int i = 1; i < 50; i++)
             {
                 sheet.CreateRow(i).CreateCell(0).SetCellValue("Medium");
             }
@@ -175,16 +173,19 @@ namespace TestCases.SS.Util
             ICellStyle boldStyle = wb.CreateCellStyle();
             boldStyle.SetFont(boldFont);
 
-            for (int i = 0; i < 30; i++)
+            for(int i = 0; i < 30; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 ICell cell = row.CreateCell(0);
                 cell.SetCellValue($"Row {i} text content");
 
                 // Cycle through styles to exercise font cache
-                if (i % 3 == 0) cell.CellStyle = bigStyle;
-                else if (i % 3 == 1) cell.CellStyle = boldStyle;
-                else cell.CellStyle = normalStyle;
+                if(i % 3 == 0)
+                    cell.CellStyle = bigStyle;
+                else if(i % 3 == 1)
+                    cell.CellStyle = boldStyle;
+                else
+                    cell.CellStyle = normalStyle;
             }
 
             double width = SheetUtil.GetColumnWidth(sheet, 0, false);
@@ -205,24 +206,24 @@ namespace TestCases.SS.Util
 
             string[] words = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor".Split(' ');
             int wordIdx = 0;
-            for (int r = 0; r < rowCount; r++)
+            for(int r = 0; r < rowCount; r++)
             {
                 IRow row = sheet.CreateRow(r);
-                for (int c = 0; c < colCount; c++)
+                for(int c = 0; c < colCount; c++)
                 {
                     row.CreateCell(c).SetCellValue(words[wordIdx++ % words.Length]);
                 }
             }
 
             var sw = Stopwatch.StartNew();
-            for (int c = 0; c < colCount; c++)
+            for(int c = 0; c < colCount; c++)
             {
                 sheet.AutoSizeColumn(c);
             }
             sw.Stop();
 
             // Verify correctness: all columns should have been sized
-            for (int c = 0; c < colCount; c++)
+            for(int c = 0; c < colCount; c++)
             {
                 ClassicAssert.IsTrue(sheet.GetColumnWidth(c) > 0, $"Column {c} should have positive width");
             }
@@ -244,7 +245,7 @@ namespace TestCases.SS.Util
             using var wb = new XSSFWorkbook();
             ISheet sheet = wb.CreateSheet("perf_merged");
 
-            for (int r = 0; r < rowCount; r++)
+            for(int r = 0; r < rowCount; r++)
             {
                 IRow row = sheet.CreateRow(r);
                 row.CreateCell(0).SetCellValue($"Content row {r}");
@@ -253,7 +254,7 @@ namespace TestCases.SS.Util
             }
 
             // Add merged regions on every 10th row to create a meaningful number
-            for (int r = 0; r < rowCount; r += 10)
+            for(int r = 0; r < rowCount; r += 10)
             {
                 sheet.AddMergedRegion(new CellRangeAddress(r, r, 0, 1));
             }
@@ -305,10 +306,10 @@ namespace TestCases.SS.Util
             ISheet sheet = wb.CreateSheet("test");
 
             // Create rows but only populate some cells in column 0
-            for (int r = 0; r < 100; r++)
+            for(int r = 0; r < 100; r++)
             {
                 IRow row = sheet.CreateRow(r);
-                if (r % 10 == 0)
+                if(r % 10 == 0)
                 {
                     row.CreateCell(0).SetCellValue($"Value at row {r}");
                 }
@@ -331,7 +332,7 @@ namespace TestCases.SS.Util
             // Row 0: short text
             sheet.CreateRow(0).CreateCell(0).SetCellValue("Hi");
             // Rows 1-99: medium text
-            for (int i = 1; i < 100; i++)
+            for(int i = 1; i < 100; i++)
             {
                 sheet.CreateRow(i).CreateCell(0).SetCellValue("Medium text");
             }
@@ -358,7 +359,7 @@ namespace TestCases.SS.Util
             ISheet sheet = wb.CreateSheet("test");
 
             // Create a merged region spanning multiple rows
-            for (int r = 0; r < 20; r++)
+            for(int r = 0; r < 20; r++)
             {
                 IRow row = sheet.CreateRow(r);
                 row.CreateCell(0).SetCellValue($"Row {r}");

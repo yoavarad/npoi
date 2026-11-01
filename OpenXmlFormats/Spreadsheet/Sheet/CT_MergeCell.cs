@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml;
 using NPOI.OpenXml4Net.Util;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -15,7 +14,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     {
         public static CT_MergeCell Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MergeCell ctObj = new CT_MergeCell();
             ctObj.@ref = XmlHelper.ReadString(node.Attributes["ref"]);
@@ -24,12 +23,12 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
 
 
-    internal void Write(StreamWriter sw, string nodeName)
-    {
-        sw.WriteStart(nodeName);
-        XmlHelper.WriteAttribute(sw, "ref", this.@ref);
-        sw.Write("/>");
-    }
+        internal void Write(StreamWriter sw, string nodeName)
+        {
+            sw.WriteStart(nodeName);
+            XmlHelper.WriteAttribute(sw, "ref", this.@ref);
+            sw.Write("/>");
+        }
 
 
         private string refField;

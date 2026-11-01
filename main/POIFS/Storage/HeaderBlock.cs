@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -26,12 +26,12 @@
  * ==============================================================*/
 
 
-using System;
-using System.IO;
+using NPOI.HSSF;
 using NPOI.POIFS.Common;
 using NPOI.POIFS.FileSystem;
 using NPOI.Util;
-using NPOI.HSSF;
+using System;
+using System.IO;
 
 
 
@@ -48,10 +48,10 @@ namespace NPOI.POIFS.Storage
         private static int MAX_RECORD_LENGTH = 100_000;
 
         private static byte _default_value = (byte)0xFF;
-         /**
-         * What big block Size the file uses. Most files
-         *  use 512 bytes, but a few use 4096
-         */
+        /**
+        * What big block Size the file uses. Most files
+        *  use 512 bytes, but a few use 4096
+        */
         private POIFSBigBlockSize bigBlockSize;
 
         // number of big block allocation table blocks (int)
@@ -64,10 +64,10 @@ namespace NPOI.POIFS.Storage
         // start of the small block allocation table (int index of small
         // block allocation table's first big block)
         private int _sbat_start;
-            /**
-         * Number of small block allocation table blocks (int)
-         * (Number of MiniFAT Sectors in Microsoft parlance)
-         */
+        /**
+     * Number of small block allocation table blocks (int)
+     * (Number of MiniFAT Sectors in Microsoft parlance)
+     */
         private int _sbat_count;
         // big block index for extension to the big block allocation table
         private int _xbat_start;
@@ -82,7 +82,7 @@ namespace NPOI.POIFS.Storage
         {
             stream.Position = 0;
             PrivateHeaderBlock(ReadFirst512(stream));
-            if (bigBlockSize.GetBigBlockSize() != 512)
+            if(bigBlockSize.GetBigBlockSize() != 512)
             {
                 int rest = bigBlockSize.GetBigBlockSize() - 512;
                 byte[] temp = IOUtils.SafelyAllocate(rest, MAX_RECORD_LENGTH);
@@ -106,39 +106,40 @@ namespace NPOI.POIFS.Storage
 
             // verify signature
             FileMagic fm = FileMagicContainer.ValueOf(data);
-       
-            switch (fm) {
+
+            switch(fm)
+            {
                 case FileMagic.OLE2:
-                   break;
+                    break;
                 case FileMagic.OOXML:
-                   throw new OfficeXmlFileException("The supplied data appears to be in the Office 2007+ XML. "
-                       + "You are calling the part of POI that deals with OLE2 Office Documents. "
-                       + "You need to call a different part of POI to process this data (eg XSSF instead of HSSF)");
+                    throw new OfficeXmlFileException("The supplied data appears to be in the Office 2007+ XML. "
+                        + "You are calling the part of POI that deals with OLE2 Office Documents. "
+                        + "You need to call a different part of POI to process this data (eg XSSF instead of HSSF)");
                 case FileMagic.XML:
-                   throw new NotOLE2FileException("The supplied data appears to be a raw XML file. "
-                       + "Formats such as Office 2003 XML are not supported");
+                    throw new NotOLE2FileException("The supplied data appears to be a raw XML file. "
+                        + "Formats such as Office 2003 XML are not supported");
                 case FileMagic.MSWRITE:
-                   throw new NotOLE2FileException("The supplied data appears to be in the old MS Write format. "
-                       + "Apache POI doesn't currently support this format");
+                    throw new NotOLE2FileException("The supplied data appears to be in the old MS Write format. "
+                        + "Apache POI doesn't currently support this format");
                 case FileMagic.BIFF2:
                 case FileMagic.BIFF3:
                 case FileMagic.BIFF4:
-                   throw new OldExcelFormatException("The supplied data appears to be in "+fm+" format. "
-                       + "HSSF only supports the BIFF8 format, try OldExcelExtractor");
+                    throw new OldExcelFormatException("The supplied data appears to be in "+fm+" format. "
+                        + "HSSF only supports the BIFF8 format, try OldExcelExtractor");
                 default:
-                   // Give a generic error if the OLE2 signature isn't found
-                   String exp = new String(HexDump.LongToHex(_signature));
-                   String act = new String(HexDump.LongToHex(LittleEndian.GetLong(data, 0)));
-                   throw new NotOLE2FileException(
-                       "Invalid header signature; read " + act + ", expected " + exp +
-                       " - Your file appears not to be a valid OLE2 document");
+                    // Give a generic error if the OLE2 signature isn't found
+                    String exp = new String(HexDump.LongToHex(_signature));
+                    String act = new String(HexDump.LongToHex(LittleEndian.GetLong(data, 0)));
+                    throw new NotOLE2FileException(
+                        "Invalid header signature; read " + act + ", expected " + exp +
+                        " - Your file appears not to be a valid OLE2 document");
             }
 
-            if (_data[30] == 12)
+            if(_data[30] == 12)
             {
                 bigBlockSize = POIFSConstants.LARGER_BIG_BLOCK_SIZE_DETAILS;
             }
-            else if (_data[30] == 9)
+            else if(_data[30] == 9)
             {
                 bigBlockSize = POIFSConstants.SMALLER_BIG_BLOCK_SIZE_DETAILS;
             }
@@ -164,7 +165,7 @@ namespace NPOI.POIFS.Storage
             _data = new byte[POIFSConstants.SMALLER_BIG_BLOCK_SIZE];
 
             //fill the array.
-            for (int i = 0; i < _data.Length; i++)
+            for(int i = 0; i < _data.Length; i++)
                 _data[i] = _default_value;
 
             new LongField(_signature_offset, _signature, _data);
@@ -173,9 +174,9 @@ namespace NPOI.POIFS.Storage
             new IntegerField(0x10, 0, _data);
             new IntegerField(0x14, 0, _data);
 
-            new ShortField((int)0x18, (short)0x3b, ref _data);
-            new ShortField((int)0x1a, (short)0x3, ref _data);
-            new ShortField((int)0x1c, (short)-2, ref _data);
+            new ShortField((int) 0x18, (short) 0x3b, ref _data);
+            new ShortField((int) 0x1a, (short) 0x3, ref _data);
+            new ShortField((int) 0x1c, (short) -2, ref _data);
 
             new ShortField(0x1e, bigBlockSize.GetHeaderValue(), ref _data);
             new IntegerField(0x20, 0x6, _data);
@@ -200,7 +201,7 @@ namespace NPOI.POIFS.Storage
             // (For 4096 sized blocks, the remaining 3584 bytes are zero)
             byte[] data = new byte[512];
             int bsCount = IOUtils.ReadFully(stream, data);
-            if (bsCount != 512)
+            if(bsCount != 512)
             {
                 AlertShortRead(bsCount, 512);
             }
@@ -214,7 +215,7 @@ namespace NPOI.POIFS.Storage
         /// <param name="expectedReadSize">The expected size.</param>
         private static IOException AlertShortRead(int read, int expectedReadSize)
         {
-            if (read < 0)
+            if(read < 0)
                 //Cant have -1 bytes Read in the error message!
                 read = 0;
             String type = " byte" + ((read == 1) ? (""): ("s"));
@@ -230,7 +231,7 @@ namespace NPOI.POIFS.Storage
         /// <value>the index of the first block of the Property Table</value>
         public int PropertyStart
         {
-            get{return _property_start;}
+            get { return _property_start; }
             set { _property_start = value; }
         }
 
@@ -240,7 +241,7 @@ namespace NPOI.POIFS.Storage
         /// <value>The SBAT start.</value>
         public int SBATStart
         {
-            get{return _sbat_start;}
+            get { return _sbat_start; }
             set { _sbat_start = value; }
         }
 
@@ -250,7 +251,7 @@ namespace NPOI.POIFS.Storage
         /// <value>The BAT count.</value>
         public int SBATCount
         {
-            get{return _sbat_count;}
+            get { return _sbat_count; }
             set { _sbat_count = value; }
         }
 
@@ -271,17 +272,18 @@ namespace NPOI.POIFS.Storage
         /// Gets the BAT array.
         /// </summary>
         /// <value>The BAT array.</value>
-        public int [] BATArray
+        public int[] BATArray
         {
-            get{
-               // int[] result = new int[HeaderBlockConstants._max_bats_in_header];
-               // int offset = HeaderBlockConstants._bat_array_offset;
+            get
+            {
+                // int[] result = new int[HeaderBlockConstants._max_bats_in_header];
+                // int offset = HeaderBlockConstants._bat_array_offset;
                 int[] result = new int[Math.Min(_bat_count, _max_bats_in_header)];
                 int offset = _bat_array_offset;
 
-                for (int j = 0; j < result.Length; j++)
+                for(int j = 0; j < result.Length; j++)
                 {
-                    result[ j ] = LittleEndian.GetInt(_data, offset);
+                    result[j] = LittleEndian.GetInt(_data, offset);
                     offset += LittleEndianConsts.INT_SIZE;
                 }
                 return result;
@@ -292,14 +294,14 @@ namespace NPOI.POIFS.Storage
                 int blank = _max_bats_in_header - count;
 
                 int offset = _bat_array_offset;
-                
-                for (int i = 0; i < count; i++)
+
+                for(int i = 0; i < count; i++)
                 {
-                    LittleEndian.PutInt(_data, offset ,value[i]);
+                    LittleEndian.PutInt(_data, offset, value[i]);
                     offset += LittleEndianConsts.INT_SIZE;
                 }
 
-                for (int i = 0; i < blank; i++)
+                for(int i = 0; i < blank; i++)
                 {
                     LittleEndian.PutInt(_data, offset, POIFSConstants.UNUSED_BLOCK);
                     offset += LittleEndianConsts.INT_SIZE;
@@ -314,7 +316,7 @@ namespace NPOI.POIFS.Storage
         /// @return XBAT count
         public int XBATCount
         {
-            get{return _xbat_count;}
+            get { return _xbat_count; }
             set { _xbat_count = value; }
         }
 
@@ -324,7 +326,7 @@ namespace NPOI.POIFS.Storage
         /// <value>The index of the XBAT.</value>
         public int XBATIndex
         {
-            get{return _xbat_start;}
+            get { return _xbat_start; }
             set { _xbat_count = value; }
         }
 
@@ -332,7 +334,7 @@ namespace NPOI.POIFS.Storage
         {
             set { _xbat_start = value; }
         }
-        
+
         /// <summary>
         /// Gets The Big Block Size, normally 512 bytes, sometimes 4096 bytes
         /// </summary>
@@ -340,7 +342,7 @@ namespace NPOI.POIFS.Storage
         /// @return 
         public POIFSBigBlockSize BigBlockSize
         {
-            get{return bigBlockSize;}
+            get { return bigBlockSize; }
         }
 
         //public void Write(Stream stream)
@@ -379,7 +381,7 @@ namespace NPOI.POIFS.Storage
 
             stream.Write(_data, 0, 512);
 
-            for (int i = POIFSConstants.SMALLER_BIG_BLOCK_SIZE; i < bigBlockSize.GetBigBlockSize(); i++)
+            for(int i = POIFSConstants.SMALLER_BIG_BLOCK_SIZE; i < bigBlockSize.GetBigBlockSize(); i++)
             {
                 //stream.Write(Write(0);
                 stream.WriteByte(0);
@@ -390,10 +392,10 @@ namespace NPOI.POIFS.Storage
         private static bool cmp(byte[] magic, byte[] data)
         {
             int i = 0;
-            foreach (byte m in magic)
+            foreach(byte m in magic)
             {
                 byte d = data[i++];
-                if (!(d == m || (m == 0x70 && (d == 0x10 || d == 0x20 || d == 0x40))))
+                if(!(d == m || (m == 0x70 && (d == 0x10 || d == 0x20 || d == 0x40))))
                 {
                     return false;
                 }

@@ -18,8 +18,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula;
+    using NPOI.SS.Formula.Eval;
 
     /**
      * Implementation for Excel ROWS function.
@@ -32,11 +32,11 @@ namespace NPOI.SS.Formula.Functions
         {
 
             int result;
-            if (arg0 is TwoDEval eval)
+            if(arg0 is TwoDEval eval)
             {
                 result = eval.Height;
             }
-            else if (arg0 is RefEval)
+            else if(arg0 is RefEval)
             {
                 result = 1;
             }

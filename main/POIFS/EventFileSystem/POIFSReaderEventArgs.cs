@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,9 +25,8 @@
  * 
  * ==============================================================*/
 
-using System;
-
 using NPOI.POIFS.FileSystem;
+using System;
 
 namespace NPOI.POIFS.EventFileSystem
 {
@@ -35,7 +34,7 @@ namespace NPOI.POIFS.EventFileSystem
     /// EventArgs for POIFSReader
     /// author: Tony Qu
     /// </summary>
-    public class POIFSReaderEventArgs:EventArgs
+    public class POIFSReaderEventArgs : EventArgs
     {
         public POIFSReaderEventArgs(string name, POIFSDocumentPath path, OPOIFSDocument document)
         {
@@ -58,8 +57,9 @@ namespace NPOI.POIFS.EventFileSystem
         }
         public virtual DocumentInputStream Stream
         {
-            get { 
-                return new DocumentInputStream(this.document); 
+            get
+            {
+                return new DocumentInputStream(this.document);
             }
         }
         public virtual string Name

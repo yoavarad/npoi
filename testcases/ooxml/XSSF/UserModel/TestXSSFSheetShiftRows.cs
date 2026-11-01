@@ -21,7 +21,8 @@ using NPOI.SS.Util;
 using NPOI.Util;
 using NPOI.XSSF;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using TestCases.SS.UserModel;
@@ -75,7 +76,8 @@ namespace TestCases.XSSF.UserModel
             // when shifted by less than -1 negative amount (try -2)
             testSheet.ShiftRows(3, 3, -2);
 
-            IRow newRow = null; ICell newCell = null;
+            IRow newRow = null;
+            ICell newCell = null;
             // 2) attempt to create a new row IN PLACE of a removed row by a negative shift causes corrupted 
             // xlsx file with  unreadable data in the negative shifted row. 
             // NOTE it's ok to create any other row.
@@ -90,7 +92,7 @@ namespace TestCases.XSSF.UserModel
             // place of previously shifted rows were attempted to be created as explained above.
             // -- CHANGE the shift to positive once the behaviour of the above has been tested
             testSheet.ShiftRows(6, 7, 1);
-            
+
 
             IWorkbook read = XSSFTestDataSamples.WriteOutAndReadBack(wb);
             wb.Close();
@@ -153,13 +155,13 @@ namespace TestCases.XSSF.UserModel
         private void verifyCellContent(ISheet readSheet, int row, String expect)
         {
             IRow readRow = readSheet.GetRow(row);
-            if (expect == null)
+            if(expect == null)
             {
                 ClassicAssert.IsNull(readRow);
                 return;
             }
             ICell readCell = readRow.GetCell(0);
-            if (readCell.CellType == CellType.Numeric)
+            if(readCell.CellType == CellType.Numeric)
             {
                 ClassicAssert.AreEqual(expect, readCell.NumericCellValue.ToString("0.0"));
             }
@@ -175,7 +177,7 @@ namespace TestCases.XSSF.UserModel
 
             ISheet testSheet = wb.GetSheetAt(0);
             testSheet.ShiftRows(3, 3, -1);
-            foreach (IRow r in testSheet)
+            foreach(IRow r in testSheet)
             {
                 int x = r.RowNum;
             }
@@ -353,7 +355,7 @@ namespace TestCases.XSSF.UserModel
                 wb.RemoveSheetAt(0);
                 Assert.Fail("Should catch exception as no more sheets are there");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
                 // expected
             }
@@ -392,7 +394,7 @@ namespace TestCases.XSSF.UserModel
             // Must make this sheet active (otherwise, for XLSX, Excel might protest that active sheet no longer exists)
             // I think POI should automatically handle this case when deleting sheets...
             //      wb.SetActiveSheet(0);
-            for (int sn = sheetNb - 1; sn > 0; sn--)
+            for(int sn = sheetNb - 1; sn > 0; sn--)
             {
                 wb.RemoveSheetAt(sn);
             }
@@ -455,7 +457,7 @@ namespace TestCases.XSSF.UserModel
                 ClassicAssert.AreEqual("SUM(E2:E5)", getCellFormula(sheet, "E6"));
                 POITestCase.TestPassesNow(59983);
             }
-            catch (AssertionException e)
+            catch(AssertionException e)
             {
                 POITestCase.SkipTest(e);
             }

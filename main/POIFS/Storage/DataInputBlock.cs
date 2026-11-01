@@ -138,11 +138,11 @@ namespace NPOI.POIFS.Storage
             int b6 = _buf[i++] & 0xFF;
             int b7 = _buf[i++] & 0xFF;
             _readIndex = i;
-            return (((long)b7 << 56) +
-                    ((long)b6 << 48) +
-                    ((long)b5 << 40) +
-                    ((long)b4 << 32) +
-                    ((long)b3 << 24) +
+            return (((long) b7 << 56) +
+                    ((long) b6 << 48) +
+                    ((long) b5 << 40) +
+                    ((long) b4 << 32) +
+                    ((long) b3 << 24) +
                     (b2 << 16) +
                     (b1 << 8) +
                     (b0 << 0));
@@ -165,11 +165,11 @@ namespace NPOI.POIFS.Storage
             int b5 = buf[5] & 0xFF;
             int b6 = buf[6] & 0xFF;
             int b7 = buf[7] & 0xFF;
-            return (((long)b7 << 56) +
-                    ((long)b6 << 48) +
-                    ((long)b5 << 40) +
-                    ((long)b4 << 32) +
-                    ((long)b3 << 24) +
+            return (((long) b7 << 56) +
+                    ((long) b6 << 48) +
+                    ((long) b5 << 40) +
+                    ((long) b4 << 32) +
+                    ((long) b3 << 24) +
                     (b2 << 16) +
                     (b1 << 8) +
                     (b0 << 0));
@@ -199,4 +199,3 @@ namespace NPOI.POIFS.Storage
         }
     }
 }
-

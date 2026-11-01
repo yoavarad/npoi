@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,8 +15,8 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.Formula.Functions;
 using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Functions;
 
 namespace NPOI.SS.Formula.Atp
 {
@@ -57,7 +57,7 @@ namespace NPOI.SS.Formula.Atp
          */
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length < 2 || args.Length > 3)
+            if(args.Length < 2 || args.Length > 3)
             {
                 return ErrorEval.VALUE_INVALID;
             }
@@ -71,7 +71,7 @@ namespace NPOI.SS.Formula.Atp
             {
                 start = ArgumentsEvaluator.EvaluateDateArg(args[0], srcCellRow, srcCellCol);
                 end = ArgumentsEvaluator.EvaluateDateArg(args[1], srcCellRow, srcCellCol);
-                if (start > end)
+                if(start > end)
                 {
                     return ErrorEval.NAME_INVALID;
                 }
@@ -79,7 +79,7 @@ namespace NPOI.SS.Formula.Atp
                 holidays = ArgumentsEvaluator.EvaluateDatesArg(holidaysCell, srcCellRow, srcCellCol);
                 return new NumberEval(WorkdayCalculator.instance.CalculateWorkdays(start, end, holidays));
             }
-            catch (EvaluationException)
+            catch(EvaluationException)
             {
                 return ErrorEval.VALUE_INVALID;
             }

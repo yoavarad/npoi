@@ -17,10 +17,10 @@
 
 namespace NPOI.SS.Formula.Constant
 {
-    using System;
-    using System.Text;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Text;
 
     /// <summary>
     /// Represents a constant error code value as encoded in a constant values array.
@@ -65,7 +65,7 @@ namespace NPOI.SS.Formula.Constant
         {
             get
             {
-                if (FormulaError.IsValidCode(_errorCode))
+                if(FormulaError.IsValidCode(_errorCode))
                 {
                     return FormulaError.ForInt(_errorCode).String;
                 }
@@ -80,18 +80,26 @@ namespace NPOI.SS.Formula.Constant
         /// <returns></returns>
         public static ErrorConstant ValueOf(int errorCode)
         {
-            if (FormulaError.IsValidCode(errorCode))
+            if(FormulaError.IsValidCode(errorCode))
             {
-                switch ((FormulaErrorEnum)errorCode)
+                switch((FormulaErrorEnum) errorCode)
                 {
-                    case FormulaErrorEnum.NULL: return NULL;
-                    case FormulaErrorEnum.DIV_0: return DIV_0;
-                    case FormulaErrorEnum.VALUE: return VALUE;
-                    case FormulaErrorEnum.REF: return REF;
-                    case FormulaErrorEnum.NAME: return NAME;
-                    case FormulaErrorEnum.NUM: return NUM;
-                    case FormulaErrorEnum.NA: return NA;
-                    default: break;
+                    case FormulaErrorEnum.NULL:
+                        return NULL;
+                    case FormulaErrorEnum.DIV_0:
+                        return DIV_0;
+                    case FormulaErrorEnum.VALUE:
+                        return VALUE;
+                    case FormulaErrorEnum.REF:
+                        return REF;
+                    case FormulaErrorEnum.NAME:
+                        return NAME;
+                    case FormulaErrorEnum.NUM:
+                        return NUM;
+                    case FormulaErrorEnum.NA:
+                        return NA;
+                    default:
+                        break;
                 }
             }
             Console.Error.WriteLine("Warning - Unexpected error code (" + errorCode + ")");

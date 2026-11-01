@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXmlFormats.Shared;
+using NPOI.OpenXmlFormats.Shared;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,33 +50,33 @@ namespace NPOI.XWPF.UserModel
 
         private void BuildListsInOrderFromXml(ArrayList items)
         {
-            foreach (object o in items)
+            foreach(object o in items)
             {
-                if (o is CT_R r)
+                if(o is CT_R r)
                 {
                     runs.Add(new XWPFSharedRun(r, this));
                 }
-                if (o is CT_Acc acc)
+                if(o is CT_Acc acc)
                 {
                     accs.Add(new XWPFAcc(acc, this));
                 }
 
-                if (o is CT_Nary nary)
+                if(o is CT_Nary nary)
                 {
                     naries.Add(new XWPFNary(nary, this));
                 }
 
-                if (o is CT_SSub sub)
+                if(o is CT_SSub sub)
                 {
                     sSubs.Add(new XWPFSSub(sub, this));
                 }
 
-                if (o is CT_F f)
+                if(o is CT_F f)
                 {
                     fs.Add(new XWPFF(f, this));
                 }
 
-                if (o is CT_Rad rad)
+                if(o is CT_Rad rad)
                 {
                     rads.Add(new XWPFRad(rad, this));
                 }

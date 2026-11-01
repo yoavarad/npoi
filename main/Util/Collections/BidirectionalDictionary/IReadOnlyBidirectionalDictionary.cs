@@ -1,4 +1,4 @@
-﻿namespace System.Collections.Generic
+namespace System.Collections.Generic
 {
     public interface IReadOnlyBidirectionalDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
         where TKey : notnull

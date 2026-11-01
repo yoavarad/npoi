@@ -17,21 +17,20 @@
 
 namespace TestCases.HSSF.Util
 {
-    using System;
-    using System.IO;
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
     //using NPOI.HSSF.Model;
     using NPOI.SS;
-    using NPOI.HSSF.Record;
-    using NPOI.HSSF.UserModel;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using TestCases.HSSF;
+    using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
     using NPOI.SS.Util;
-    using NPOI.HSSF.Model;
-    using NPOI.SS.Formula.PTG;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
+    using TestCases.HSSF;
 
     [TestFixture]
     [Obsolete]
@@ -130,19 +129,19 @@ namespace TestCases.HSSF.Util
                 new AreaReference(refDCSimple, SpreadsheetVersion.EXCEL97);
                 Assert.Fail("expected ArgumentException");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 new AreaReference(refDC2D, SpreadsheetVersion.EXCEL97);
                 Assert.Fail("expected ArgumentException");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 new AreaReference(refDC3D, SpreadsheetVersion.EXCEL97);
                 Assert.Fail("expected ArgumentException");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             // Test that we split as expected
             AreaReference[] refs;
@@ -236,7 +235,7 @@ namespace TestCases.HSSF.Util
             ClassicAssert.AreEqual(refA, arefs[0].FormatAsString());
             ClassicAssert.AreEqual(refB, arefs[1].FormatAsString());
 
-            for (int i = 0; i < arefs.Length; i++)
+            for(int i = 0; i < arefs.Length; i++)
             {
                 AreaReference ar = arefs[i];
                 ConfirmResolveCellRef(wb, ar.FirstCell);

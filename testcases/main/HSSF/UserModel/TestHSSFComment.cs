@@ -16,17 +16,18 @@
 ==================================================================== */
 namespace TestCases.HSSF.UserModel
 {
+    using NPOI.DDF;
+    using NPOI.HSSF.Model;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
-    using TestCases.SS.UserModel;
-    using System;
-    using TestCases.HSSF.Model;
-    using NPOI.HSSF.Record;
-    using NPOI.DDF;
     using NPOI.Util;
-    using NPOI.HSSF.Model;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF;
+    using TestCases.HSSF.Model;
+    using TestCases.SS.UserModel;
     using static TestCases.POIFS.Storage.RawDataUtil;
 
     /**
@@ -35,9 +36,9 @@ namespace TestCases.HSSF.UserModel
      * @author  Yegor Kozlov
      */
     [TestFixture]
-    public class TestHSSFComment:BaseTestCellComment
+    public class TestHSSFComment : BaseTestCellComment
     {
-        public TestHSSFComment(): base(HSSFITestDataProvider.Instance)
+        public TestHSSFComment() : base(HSSFITestDataProvider.Instance)
         {
 
         }
@@ -96,7 +97,7 @@ namespace TestCases.HSSF.UserModel
             int noOfRows = 1025;
             String comment = "c";
 
-            for (int i = 0; i < noOfRows; i++)
+            for(int i = 0; i < noOfRows; i++)
             {
                 IRow row = sheet.CreateRow(i);
                 ICell cell = row.CreateCell(0);
@@ -135,13 +136,13 @@ namespace TestCases.HSSF.UserModel
                 IDrawing<IShape> drawing = sheet.CreateDrawingPatriarch();
                 String comment = "c";
 
-                for (int rowNum = 0; rowNum < 258; rowNum++)
+                for(int rowNum = 0; rowNum < 258; rowNum++)
                 {
                     sheet.CreateRow(rowNum);
                 }
 
                 // should still work, for some reason DrawingManager2.AllocateShapeId() skips the first 1024...
-                for (int count = 1025; count < 65535; count++)
+                for(int count = 1025; count < 65535; count++)
                 {
                     int rowNum = count / 255;
                     int cellNum = count % 255;
@@ -150,9 +151,9 @@ namespace TestCases.HSSF.UserModel
                     {
                         IComment commentObj = insertComment(drawing, cell, comment + cellNum);
 
-                        ClassicAssert.AreEqual(count, ((HSSFComment)commentObj).NoteRecord.ShapeId);
+                        ClassicAssert.AreEqual(count, ((HSSFComment) commentObj).NoteRecord.ShapeId);
                     }
-                    catch (ArgumentException e)
+                    catch(ArgumentException e)
                     {
                         throw new ArgumentException("While Adding shape number " + count, e);
                     }
@@ -171,7 +172,7 @@ namespace TestCases.HSSF.UserModel
 
         private void CheckComments(ISheet sheet, int noOfRows, String comment)
         {
-            for (int i = 0; i < noOfRows; i++)
+            for(int i = 0; i < noOfRows; i++)
             {
                 ClassicAssert.IsNotNull(sheet.GetRow(i));
                 ClassicAssert.IsNotNull(sheet.GetRow(i).GetCell(0));
@@ -280,7 +281,7 @@ namespace TestCases.HSSF.UserModel
             HSSFComment comment = patriarch.CreateCellComment(new HSSFClientAnchor()) as HSSFComment;
             comment.Column = (5);
             comment.String = new HSSFRichTextString("comment1");
-            comment = patriarch.CreateCellComment(new HSSFClientAnchor(0, 0, 100, 100, (short)0, 0, (short)10, 10)) as HSSFComment;
+            comment = patriarch.CreateCellComment(new HSSFClientAnchor(0, 0, 100, 100, (short) 0, 0, (short) 10, 10)) as HSSFComment;
             comment.Row = (5);
             comment.String = new HSSFRichTextString("comment2");
             comment.SetBackgroundImage(idx);
@@ -292,7 +293,7 @@ namespace TestCases.HSSF.UserModel
             sh = wbBack.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
 
-            comment = (HSSFComment)patriarch.Children[(1)];
+            comment = (HSSFComment) patriarch.Children[(1)];
             ClassicAssert.AreEqual(comment.GetBackgroundImageId(), idx);
             comment.ResetBackgroundImage();
             ClassicAssert.AreEqual(comment.GetBackgroundImageId(), 0);
@@ -305,12 +306,12 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wbBack2 = HSSFTestDataSamples.WriteOutAndReadBack(wbBack);
             sh = wbBack2.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
-            comment = (HSSFComment)patriarch.Children[1];
+            comment = (HSSFComment) patriarch.Children[1];
             ClassicAssert.AreEqual(comment.GetBackgroundImageId(), 0);
             ClassicAssert.AreEqual(patriarch.Children.Count, 3);
-            ClassicAssert.AreEqual(((HSSFComment)patriarch.Children[0]).String.String, "comment1");
-            ClassicAssert.AreEqual(((HSSFComment)patriarch.Children[1]).String.String, "comment2");
-            ClassicAssert.AreEqual(((HSSFComment)patriarch.Children[2]).String.String, "comment3");
+            ClassicAssert.AreEqual(((HSSFComment) patriarch.Children[0]).String.String, "comment1");
+            ClassicAssert.AreEqual(((HSSFComment) patriarch.Children[1]).String.String, "comment2");
+            ClassicAssert.AreEqual(((HSSFComment) patriarch.Children[2]).String.String, "comment3");
 
             wb.Close();
             wbBack.Close();
@@ -343,7 +344,7 @@ namespace TestCases.HSSF.UserModel
             sh = wbBack.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
 
-            comment = (HSSFComment)patriarch.Children[0];
+            comment = (HSSFComment) patriarch.Children[0];
 
             ClassicAssert.AreEqual(comment.String.String, "comment1");
             ClassicAssert.AreEqual("poi", comment.Author);
@@ -360,7 +361,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wbBack2 = HSSFTestDataSamples.WriteOutAndReadBack(wbBack);
             sh = wbBack2.GetSheetAt(0) as HSSFSheet;
             patriarch = sh.DrawingPatriarch as HSSFPatriarch;
-            comment = (HSSFComment)patriarch.Children[0];
+            comment = (HSSFComment) patriarch.Children[0];
 
             ClassicAssert.AreEqual(comment.String.String, "comment12");
             ClassicAssert.AreEqual("poi2", comment.Author);

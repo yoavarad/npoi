@@ -19,11 +19,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using System.Collections.Generic;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * Tests BoundSheetRecord.
@@ -60,34 +61,35 @@ namespace TestCases.HSSF.Record
                 record.Sheetname = ("s//*s");
                 ClassicAssert.IsTrue(false, "Should have thrown ArgumentException, but didnt");
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
 
             }
 
         }
         [Test]
-        public void TestDeSerializeUnicode() {
+        public void TestDeSerializeUnicode()
+        {
 
-		byte[] data = HexRead.ReadFromString(""
-			+ "85 00 1A 00" // sid, length
+            byte[] data = HexRead.ReadFromString(""
+            + "85 00 1A 00" // sid, length
 			+ "3C 09 00 00" // bof
 			+ "00 00"// flags
 			+ "09 01" // str-len. unicode flag
 			// string data
 			+ "21 04 42 04 40 04"
-			+ "30 04 3D 04 38 04"
-			+ "47 04 3A 04 30 04"
-		);
+            + "30 04 3D 04 38 04"
+            + "47 04 3A 04 30 04"
+        );
 
-		RecordInputStream in1 = TestcaseRecordInputStream.Create(data);
-		BoundSheetRecord bsr = new BoundSheetRecord(in1);
-		// sheet name is unicode Russian for 'minor page'
-		ClassicAssert.AreEqual("\u0421\u0442\u0440\u0430\u043D\u0438\u0447\u043A\u0430", bsr.Sheetname);
+            RecordInputStream in1 = TestcaseRecordInputStream.Create(data);
+            BoundSheetRecord bsr = new BoundSheetRecord(in1);
+            // sheet name is unicode Russian for 'minor page'
+            ClassicAssert.AreEqual("\u0421\u0442\u0440\u0430\u043D\u0438\u0447\u043A\u0430", bsr.Sheetname);
 
-		byte[] data2 = bsr.Serialize();
-		ClassicAssert.IsTrue(Arrays.Equals(data, data2));
-	}
+            byte[] data2 = bsr.Serialize();
+            ClassicAssert.IsTrue(Arrays.Equals(data, data2));
+        }
         [Test]
         public void TestOrdering()
         {
@@ -132,14 +134,14 @@ namespace TestCases.HSSF.Record
             try
             {
                 new BoundSheetRecord(sheetName);
-                if (!expectedResult)
+                if(!expectedResult)
                 {
                     throw new AssertionException("Expected sheet name '" + sheetName + "' to be invalid");
                 }
             }
-            catch (ArgumentException)
+            catch(ArgumentException)
             {
-                if (expectedResult)
+                if(expectedResult)
                 {
                     throw new AssertionException("Expected sheet name '" + sheetName + "' to be valid");
                 }

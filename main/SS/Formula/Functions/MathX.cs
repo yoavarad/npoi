@@ -171,7 +171,7 @@ namespace NPOI.SS.Formula.Functions
                 if(p != 0)
                 {
                     var value = new BigDecimal(n);
-                    retval = (double)BigDecimal.Round(value, p);
+                    retval = (double) BigDecimal.Round(value, p);
                 }
                 else
                 {

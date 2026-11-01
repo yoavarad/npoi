@@ -15,16 +15,17 @@
    limitations under the License.
 ==================================================================== */
 
-using TestCases.SS.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System.Collections.Generic;
+using NPOI.OpenXmlFormats.Dml.Spreadsheet;
 using NPOI.SS.UserModel;
 using NPOI.Util;
-using System.Text;
-using NPOI.OpenXmlFormats.Dml.Spreadsheet;
-using System.Collections;
-using NPOI.XSSF.UserModel;
 using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -69,13 +70,13 @@ namespace TestCases.XSSF.UserModel
 
             int jpegIdx = wb.AddPicture(jpegData, PictureType.JPEG);
             ClassicAssert.AreEqual(1, pictures.Count);
-            ClassicAssert.AreEqual("jpeg", ((XSSFPictureData)pictures[jpegIdx]).SuggestFileExtension());
-            ClassicAssert.IsTrue(Arrays.Equals(jpegData, ((XSSFPictureData)pictures[jpegIdx]).Data));
+            ClassicAssert.AreEqual("jpeg", ((XSSFPictureData) pictures[jpegIdx]).SuggestFileExtension());
+            ClassicAssert.IsTrue(Arrays.Equals(jpegData, ((XSSFPictureData) pictures[jpegIdx]).Data));
 
             XSSFClientAnchor anchor = new XSSFClientAnchor(0, 0, 0, 0, 1, 1, 10, 30);
-            ClassicAssert.AreEqual(AnchorType.MoveAndResize, (AnchorType)anchor.AnchorType);
+            ClassicAssert.AreEqual(AnchorType.MoveAndResize, (AnchorType) anchor.AnchorType);
             anchor.AnchorType = AnchorType.DontMoveAndResize;
-            ClassicAssert.AreEqual(AnchorType.DontMoveAndResize, (AnchorType)anchor.AnchorType);
+            ClassicAssert.AreEqual(AnchorType.DontMoveAndResize, (AnchorType) anchor.AnchorType);
 
             XSSFPicture shape = (XSSFPicture)drawing.CreatePicture(anchor, jpegIdx);
             ClassicAssert.IsTrue(anchor.Equals(shape.GetAnchor()));
@@ -104,12 +105,12 @@ namespace TestCases.XSSF.UserModel
             int jpegIdx = wb.AddPicture(jpegData, PictureType.JPEG);
 
             XSSFPicture shape1 = (XSSFPicture)drawing.CreatePicture(anchor, jpegIdx);
-            ClassicAssert.AreEqual((uint)1, shape1.GetCTPicture().nvPicPr.cNvPr.id);
+            ClassicAssert.AreEqual((uint) 1, shape1.GetCTPicture().nvPicPr.cNvPr.id);
 
             jpegData = Encoding.UTF8.GetBytes("picture2");
             jpegIdx = wb.AddPicture(jpegData, PictureType.JPEG);
             XSSFPicture shape2 = (XSSFPicture)drawing.CreatePicture(anchor, jpegIdx);
-            ClassicAssert.AreEqual((uint)2, shape2.GetCTPicture().nvPicPr.cNvPr.id);
+            ClassicAssert.AreEqual((uint) 2, shape2.GetCTPicture().nvPicPr.cNvPr.id);
         }
 
         /**
@@ -162,4 +163,3 @@ namespace TestCases.XSSF.UserModel
         }
     }
 }
-

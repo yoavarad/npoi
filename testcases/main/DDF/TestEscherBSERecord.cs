@@ -19,14 +19,14 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     [TestFixture]
     public class TestEscherBSERecord
@@ -40,17 +40,17 @@ namespace TestCases.DDF
             EscherBSERecord r = new EscherBSERecord();
             int bytesWritten = r.FillFields(HexRead.ReadFromString(data), 0, new DefaultEscherRecordFactory());
             ClassicAssert.AreEqual(44, bytesWritten);
-            ClassicAssert.AreEqual((short)0x0001, r.Options);
+            ClassicAssert.AreEqual((short) 0x0001, r.Options);
             ClassicAssert.AreEqual(EscherBSERecord.BT_JPEG, r.BlipTypeWin32);
             ClassicAssert.AreEqual(EscherBSERecord.BT_JPEG, r.BlipTypeMacOS);
             ClassicAssert.AreEqual("[01, 02, 03, 04, 05, 06, 07, 08, 09, 0A, 0B, 0C, 0D, 0E, 0F, 00]", HexDump.ToHex(r.UID));
-            ClassicAssert.AreEqual((short)1, r.Tag);
+            ClassicAssert.AreEqual((short) 1, r.Tag);
             ClassicAssert.AreEqual(2, r.Ref);
             ClassicAssert.AreEqual(3, r.Offset);
-            ClassicAssert.AreEqual((byte)4, r.Usage);
-            ClassicAssert.AreEqual((byte)5, r.Name);
-            ClassicAssert.AreEqual((byte)6, r.Unused2);
-            ClassicAssert.AreEqual((byte)7, r.Unused3);
+            ClassicAssert.AreEqual((byte) 4, r.Usage);
+            ClassicAssert.AreEqual((byte) 5, r.Name);
+            ClassicAssert.AreEqual((byte) 6, r.Unused2);
+            ClassicAssert.AreEqual((byte) 7, r.Unused3);
             ClassicAssert.AreEqual(0, r.RemainingData.Length);
         }
         [Test]
@@ -71,17 +71,17 @@ namespace TestCases.DDF
         private EscherBSERecord CreateRecord()
         {
             EscherBSERecord r = new EscherBSERecord();
-            r.Options=(short)0x0001;
+            r.Options=(short) 0x0001;
             r.BlipTypeWin32=EscherBSERecord.BT_JPEG;
             r.BlipTypeMacOS=EscherBSERecord.BT_JPEG;
             r.UID=HexRead.ReadFromString("01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 00");
-            r.Tag=(short)1;
+            r.Tag=(short) 1;
             r.Ref=2;
             r.Offset=3;
-            r.Usage=(byte)4;
-            r.Name=(byte)5;
-            r.Unused2=(byte)6;
-            r.Unused3=(byte)7;
+            r.Usage=(byte) 4;
+            r.Name=(byte) 5;
+            r.Unused2=(byte) 6;
+            r.Unused3=(byte) 7;
             r.RemainingData=new byte[0];
             return r;
 

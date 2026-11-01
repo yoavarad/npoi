@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -28,8 +28,6 @@ namespace NPOI.XDDF.UserModel.Chart
 {
     public interface IXDDFNumericalDataSource<T> : IXDDFDataSource<T>
     {
-        public string FormatCode { get;set; }
+        public string FormatCode { get; set; }
     }
 }
-
-

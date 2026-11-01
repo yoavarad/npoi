@@ -37,7 +37,7 @@ namespace TestCases.XSSF.UserModel
         {
             ClassicAssert.IsNotNull(actual, "Colour must be given");
             XSSFColor colour = (XSSFColor)actual;
-            if (hexExpected.Length == 8)
+            if(hexExpected.Length == 8)
             {
                 ClassicAssert.AreEqual(hexExpected, colour.ARGBHex);
             }

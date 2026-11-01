@@ -47,7 +47,7 @@ public class SetCellStylePropertiesBenchmark
         _hssfWorkbook = new HSSFWorkbook();
         ISheet hssfSheet = _hssfWorkbook.CreateSheet("Sheet1");
         _hssfCells = new ICell[CellCount];
-        for (int i = 0; i < CellCount; i++)
+        for(int i = 0; i < CellCount; i++)
         {
             _hssfCells[i] = hssfSheet.CreateRow(i).CreateCell(0);
         }
@@ -56,7 +56,7 @@ public class SetCellStylePropertiesBenchmark
         _xssfWorkbook = new XSSFWorkbook();
         ISheet xssfSheet = _xssfWorkbook.CreateSheet("Sheet1");
         _xssfCells = new ICell[CellCount];
-        for (int i = 0; i < CellCount; i++)
+        for(int i = 0; i < CellCount; i++)
         {
             _xssfCells[i] = xssfSheet.CreateRow(i).CreateCell(0);
         }
@@ -75,7 +75,7 @@ public class SetCellStylePropertiesBenchmark
 
         // Multiple distinct style combos (one per cell) to measure cache-miss overhead.
         _multiStyleProps = new Dictionary<string, object>[CellCount];
-        for (int i = 0; i < CellCount; i++)
+        for(int i = 0; i < CellCount; i++)
         {
             _multiStyleProps[i] = new Dictionary<string, object>
             {
@@ -104,7 +104,7 @@ public class SetCellStylePropertiesBenchmark
     [Benchmark]
     public void HSSF_SingleStyle()
     {
-        foreach (ICell cell in _hssfCells)
+        foreach(ICell cell in _hssfCells)
         {
             CellUtil.SetCellStyleProperties(cell, _singleStyleProps);
         }
@@ -118,7 +118,7 @@ public class SetCellStylePropertiesBenchmark
     [Benchmark]
     public void HSSF_MultipleStyles()
     {
-        for (int i = 0; i < _hssfCells.Length; i++)
+        for(int i = 0; i < _hssfCells.Length; i++)
         {
             CellUtil.SetCellStyleProperties(_hssfCells[i], _multiStyleProps[i]);
         }
@@ -130,7 +130,7 @@ public class SetCellStylePropertiesBenchmark
     [Benchmark]
     public void XSSF_SingleStyle()
     {
-        foreach (ICell cell in _xssfCells)
+        foreach(ICell cell in _xssfCells)
         {
             CellUtil.SetCellStyleProperties(cell, _singleStyleProps);
         }
@@ -142,7 +142,7 @@ public class SetCellStylePropertiesBenchmark
     [Benchmark]
     public void XSSF_MultipleStyles()
     {
-        for (int i = 0; i < _xssfCells.Length; i++)
+        for(int i = 0; i < _xssfCells.Length; i++)
         {
             CellUtil.SetCellStyleProperties(_xssfCells[i], _multiStyleProps[i]);
         }

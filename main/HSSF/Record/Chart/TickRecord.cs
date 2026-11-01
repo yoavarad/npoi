@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * The Tick record defines how tick marks and label positioning/formatting
@@ -66,11 +66,11 @@ namespace NPOI.HSSF.Record
         public TickRecord(RecordInputStream in1)
         {
 
-            field_1_majorTickType = (byte)in1.ReadByte();
-            field_2_minorTickType = (byte)in1.ReadByte();
-            field_3_labelPosition = (byte)in1.ReadByte();
-            field_4_background = (byte)in1.ReadByte();
-            field_5_labelColorRgb = (byte)in1.ReadInt();
+            field_1_majorTickType = (byte) in1.ReadByte();
+            field_2_minorTickType = (byte) in1.ReadByte();
+            field_3_labelPosition = (byte) in1.ReadByte();
+            field_4_background = (byte) in1.ReadByte();
+            field_5_labelColorRgb = (byte) in1.ReadInt();
             field_6_zero1 = in1.ReadInt();
             field_7_zero2 = in1.ReadInt();
             field_8_zero3 = in1.ReadInt();
@@ -78,7 +78,7 @@ namespace NPOI.HSSF.Record
 
             field_10_options = in1.ReadShort();
             field_11_tickColor = in1.ReadShort();
-            field_12_zero5 = in1.ReadShort();    
+            field_12_zero5 = in1.ReadShort();
         }
 
         public override String ToString()
@@ -191,7 +191,7 @@ namespace NPOI.HSSF.Record
          */
         public byte MajorTickType
         {
-            get{return field_1_majorTickType;}
+            get { return field_1_majorTickType; }
             set { this.field_1_majorTickType = value; }
         }
         /**
@@ -219,7 +219,7 @@ namespace NPOI.HSSF.Record
          */
         public byte Background
         {
-            get{return field_4_background;}
+            get { return field_4_background; }
             set { this.field_4_background = value; }
         }
 
@@ -296,7 +296,7 @@ namespace NPOI.HSSF.Record
          */
         public bool IsAutoTextBackground
         {
-            get{return autoTextBackground.IsSet(field_10_options);}
+            get { return autoTextBackground.IsSet(field_10_options); }
             set { field_10_options = autoTextBackground.SetShortBoolean(field_10_options, value); }
         }
 

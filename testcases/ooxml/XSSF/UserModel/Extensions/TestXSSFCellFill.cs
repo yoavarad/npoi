@@ -15,11 +15,12 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.OpenXmlFormats.Spreadsheet;
-using NPOI.XSSF.UserModel.Extensions;
-using NPOI.XSSF.UserModel;
 using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NPOI.XSSF.UserModel.Extensions;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace TestCases.XSSF.UserModel.Extensions
 {
@@ -87,8 +88,8 @@ namespace TestCases.XSSF.UserModel.Extensions
             // 73 * (1.0 - 0.39998) + (255 - 255 * (1.0 - 0.39998)) = 145.79636 => -111 (byte)
             // 125 * (1.0 - 0.39998) + (255 - 255 * (1.0 - 0.39998)) = 176.99740 => -80 (byte)
             ClassicAssert.AreEqual(rgbWithTint[0], 120);
-            ClassicAssert.AreEqual((sbyte)rgbWithTint[1], -111);
-            ClassicAssert.AreEqual((sbyte)rgbWithTint[2], -80);
+            ClassicAssert.AreEqual((sbyte) rgbWithTint[1], -111);
+            ClassicAssert.AreEqual((sbyte) rgbWithTint[2], -80);
 
         }
 

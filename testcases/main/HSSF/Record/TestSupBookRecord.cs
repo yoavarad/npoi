@@ -21,9 +21,10 @@
 namespace TestCases.HSSF.Record
 {
 
-    using System;
     using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests the serialization and deserialization of the SupBook record
@@ -45,12 +46,12 @@ namespace TestCases.HSSF.Record
     };
         byte[] dataER = new byte[] {
         (byte)0x02,(byte)0x00,
-        (byte)0x07,(byte)0x00,   (byte)0x00,   
-                (byte)'t', (byte)'e', (byte)'s', (byte)'t', (byte)'U', (byte)'R', (byte)'L',  
-        (byte)0x06,(byte)0x00,   (byte)0x00,   
-                (byte)'S', (byte)'h', (byte)'e', (byte)'e', (byte)'t', (byte)'1', 
-        (byte)0x06,(byte)0x00,   (byte)0x00,   
-                (byte)'S', (byte)'h', (byte)'e', (byte)'e', (byte)'t', (byte)'2', 
+        (byte)0x07,(byte)0x00,   (byte)0x00,
+                (byte)'t', (byte)'e', (byte)'s', (byte)'t', (byte)'U', (byte)'R', (byte)'L',
+        (byte)0x06,(byte)0x00,   (byte)0x00,
+                (byte)'S', (byte)'h', (byte)'e', (byte)'e', (byte)'t', (byte)'1',
+        (byte)0x06,(byte)0x00,   (byte)0x00,
+                (byte)'S', (byte)'h', (byte)'e', (byte)'e', (byte)'t', (byte)'2',
    };
 
         public TestSupBookRecord()

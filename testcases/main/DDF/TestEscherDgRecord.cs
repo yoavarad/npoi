@@ -19,14 +19,14 @@
 namespace TestCases.DDF
 {
 
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.IO;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.DDF;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     [TestFixture]
     public class TestEscherDgRecord
@@ -68,7 +68,7 @@ namespace TestCases.DDF
             String nl = Environment.NewLine;
 
             String expected = "EscherDgRecord:" + nl +
-                    "  RecordId: 0xF008" +nl +    
+                    "  RecordId: 0xF008" +nl +
                     "  Version: 0x0000" + nl +
                     "  Instance: 0x0001" + nl +
                     "  NumShapes: 2" + nl +
@@ -79,7 +79,7 @@ namespace TestCases.DDF
         private EscherDgRecord CreateRecord()
         {
             EscherDgRecord r = new EscherDgRecord();
-            r.Options=(short)0x0010;
+            r.Options=(short) 0x0010;
             r.RecordId=EscherDgRecord.RECORD_ID;
             r.NumShapes=2;
             r.LastMSOSPID=1025;

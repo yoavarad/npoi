@@ -17,13 +17,13 @@
 
 namespace TestCases.SS.Formula.Constant
 {
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.UserModel;
-    using NPOI.Util;
-
-    using TestCases.HSSF.Record;
     using NPOI.SS.Formula.Constant;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using TestCases.HSSF.Record;
 
     /**
 * 
@@ -33,12 +33,12 @@ namespace TestCases.SS.Formula.Constant
     public class TestConstantValueParser
     {
         private static object[] SAMPLE_VALUES = {
-			true,
-			null,
-			1.1,
-			"Sample text",
-			ErrorConstant.ValueOf(FormulaError.DIV0.Code),
-		};
+            true,
+            null,
+            1.1,
+            "Sample text",
+            ErrorConstant.ValueOf(FormulaError.DIV0.Code),
+        };
         private static byte[] SAMPLE_ENCODING = HexRead.ReadFromString(
             "04 01 00 00 00 00 00 00 00 " +
             "00 00 00 00 00 00 00 00 00 " +
@@ -59,7 +59,7 @@ namespace TestCases.SS.Formula.Constant
 
             ConstantValueParser.Encode(new LittleEndianByteArrayOutputStream(data, 0), SAMPLE_VALUES);
 
-            if (!Arrays.Equals(data, SAMPLE_ENCODING))
+            if(!Arrays.Equals(data, SAMPLE_ENCODING))
             {
                 Assert.Fail("Encoding differs");
             }
@@ -70,9 +70,9 @@ namespace TestCases.SS.Formula.Constant
             ILittleEndianInput in1 = TestcaseRecordInputStream.CreateLittleEndian(SAMPLE_ENCODING);
 
             object[] values = ConstantValueParser.Parse(in1, 4);
-            for (int i = 0; i < values.Length; i++)
+            for(int i = 0; i < values.Length; i++)
             {
-                if (!IsEqual(SAMPLE_VALUES[i], values[i]))
+                if(!IsEqual(SAMPLE_VALUES[i], values[i]))
                 {
                     Assert.Fail("Decoded result differs");
                 }
@@ -80,7 +80,7 @@ namespace TestCases.SS.Formula.Constant
         }
         private static bool IsEqual(object a, object b)
         {
-            if (a == null)
+            if(a == null)
             {
                 return b == null;
             }

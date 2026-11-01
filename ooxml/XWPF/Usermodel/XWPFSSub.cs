@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
 using NPOI.OpenXmlFormats.Shared;
+using System;
+using System.Collections.Generic;
 
 namespace NPOI.XWPF.UserModel
 {
@@ -21,13 +21,13 @@ namespace NPOI.XWPF.UserModel
             this.ssub = ssub;
             this.parent = p;
 
-            if (ssub.e == null)
+            if(ssub.e == null)
             {
                 ssub.e = new CT_OMathArg();
             }
             this.e = new XWPFOMathArg(ssub.e, this);
 
-            if (ssub.sub == null)
+            if(ssub.sub == null)
             {
                 ssub.sub = new CT_OMathArg();
             }

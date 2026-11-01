@@ -17,13 +17,11 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using NPOI.Util;
-    
-    using NPOI.SS.Formula;
-
     using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
     using NPOI.SS.UserModel;
+    using NPOI.Util;
+    using System;
 
     /**
      * Title:        Deleted Area 3D Ptg - 3D referecnce (Sheet + Area)

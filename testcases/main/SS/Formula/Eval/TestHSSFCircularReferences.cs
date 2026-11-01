@@ -17,12 +17,12 @@
 
 namespace TestCases.SS.Formula.Eval
 {
-    using System;
-
     using NPOI.HSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
     using NPOI.SS.Formula.Eval;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF;
 
     /**
      * Tests HSSFFormulaEvaluator for its handling of cell formula circular references.

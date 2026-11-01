@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
 
     /**
@@ -59,7 +59,7 @@ namespace NPOI.SS.Formula.Functions
                 result = Evaluate(d0, d1, d2, d3, d4 != 0.0);
                 NumericFunction.CheckValue(result);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -67,25 +67,25 @@ namespace NPOI.SS.Formula.Functions
         }
         public ValueEval Evaluate(ValueEval[] args, int srcRowIndex, int srcColumnIndex)
         {
-            switch (args.Length)
+            switch(args.Length)
             {
                 case 3:
                     return Evaluate(srcRowIndex, srcColumnIndex, args[0], args[1], args[2], DEFAULT_ARG3, DEFAULT_ARG4);
                 case 4:
                     ValueEval arg3 = args[3];
-                    if (arg3 == MissingArgEval.instance)
+                    if(arg3 == MissingArgEval.instance)
                     {
                         arg3 = DEFAULT_ARG3;
                     }
                     return Evaluate(srcRowIndex, srcColumnIndex, args[0], args[1], args[2], arg3, DEFAULT_ARG4);
                 case 5:
                     arg3 = args[3];
-                    if (arg3 == MissingArgEval.instance)
+                    if(arg3 == MissingArgEval.instance)
                     {
                         arg3 = DEFAULT_ARG3;
                     }
                     ValueEval arg4 = args[4];
-                    if (arg4 == MissingArgEval.instance)
+                    if(arg4 == MissingArgEval.instance)
                     {
                         arg4 = DEFAULT_ARG4;
                     }
@@ -105,7 +105,7 @@ namespace NPOI.SS.Formula.Functions
             double arg3 = 0.0;
             double arg4 = 0.0;
 
-            switch (ds.Length)
+            switch(ds.Length)
             {
                 case 5:
                     arg4 = ds[4];

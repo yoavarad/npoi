@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
-        
+
 
 /*
  * MulRKRecord.java
@@ -24,10 +24,10 @@
  */
 namespace NPOI.HSSF.Record
 {
+    using NPOI.HSSF.Util;
     using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.HSSF.Util;
 
     /**
      * Used to store multiple RK numbers on a row.  1 MulRk = Multiple Cell values.
@@ -144,7 +144,7 @@ namespace NPOI.HSSF.Record
             buffer.Append("	.row	 = ").Append(HexDump.ShortToHex(Row)).Append("\n");
             buffer.Append(" .firstcol= ").Append(StringUtil.ToHexString(FirstColumn)).Append("\n");
             buffer.Append(" .lastcol = ").Append(StringUtil.ToHexString(LastColumn)).Append("\n");
-            for (int k = 0; k < NumColumns; k++)
+            for(int k = 0; k < NumColumns; k++)
             {
                 buffer.Append(" xf[").Append(k).Append("] = ").Append(StringUtil.ToHexString(GetXFAt(k))).Append("\n");
                 buffer.Append(" rk[").Append(k).Append("] = ").Append(GetRKNumberAt(k)).Append("\n");
@@ -186,7 +186,7 @@ namespace NPOI.HSSF.Record
             {
                 int nItems = (in1.Remaining - 2) / ENCODED_SIZE;
                 RkRec[] retval = new RkRec[nItems];
-                for (int i = 0; i < nItems; i++)
+                for(int i = 0; i < nItems; i++)
                 {
                     retval[i] = new RkRec(in1);
                 }
@@ -195,5 +195,5 @@ namespace NPOI.HSSF.Record
         }
     }
 
-    
+
 }

@@ -17,13 +17,14 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.HSSF.Record;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.Util;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System.IO;
     using TestCases.HSSF.Record;
-    using NPOI.HSSF.Record;
 
     /**
      * Tests the serialization and deserialization of the LbsDataSubRecord class works correctly.
@@ -140,7 +141,8 @@ namespace TestCases.HSSF.Record
             byte[] ser = record.Serialize();
 
             ClassicAssert.AreEqual(data.Length - 5, ser.Length);
-            for (int i = 0; i < ser.Length; i++) ClassicAssert.AreEqual(data[i], ser[i]);
+            for(int i = 0; i < ser.Length; i++)
+                ClassicAssert.AreEqual(data[i], ser[i]);
 
             //check we can read the Trimmed record
             RecordInputStream in2 = TestcaseRecordInputStream.Create(ser);

@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using NPOI.XSSF.Model;
 using NPOI.XSSF.UserModel;
 using System;

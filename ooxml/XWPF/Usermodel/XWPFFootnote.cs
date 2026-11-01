@@ -16,9 +16,9 @@
 ==================================================================== */
 namespace NPOI.XWPF.UserModel
 {
+    using NPOI.OpenXmlFormats.Wordprocessing;
     using System;
     using System.Collections.Generic;
-    using NPOI.OpenXmlFormats.Wordprocessing;
     using System.Xml;
 
     public class XWPFFootnote : IEnumerator<XWPFParagraph>, IBody
@@ -50,22 +50,22 @@ namespace NPOI.XWPF.UserModel
         {
             //copied from XWPFDocument...should centralize this code
             //to avoid duplication       
-            foreach (object o in ctFtnEdn.Items)
+            foreach(object o in ctFtnEdn.Items)
             {
 
-                if (o is CT_P ctP)
+                if(o is CT_P ctP)
                 {
                     XWPFParagraph p = new XWPFParagraph(ctP, this);
                     bodyElements.Add(p);
                     paragraphs.Add(p);
                 }
-                else if (o is CT_Tbl tbl)
+                else if(o is CT_Tbl tbl)
                 {
                     XWPFTable t = new XWPFTable(tbl, this);
                     bodyElements.Add(t);
                     tables.Add(t);
                 }
-                else if (o is CT_SdtBlock block)
+                else if(o is CT_SdtBlock block)
                 {
                     XWPFSDT c = new XWPFSDT(block, this);
                     bodyElements.Add(c);
@@ -118,14 +118,14 @@ namespace NPOI.XWPF.UserModel
             ctFtnEdn = footnote;
         }
 
-         /// <summary>
-         /// 
-         /// </summary>
-         /// <param name="pos">position in table array</param>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pos">position in table array</param>
         /// <returns>The table at position pos</returns>
         public XWPFTable GetTableArray(int pos)
         {
-            if (pos >= 0 && pos < tables.Count)
+            if(pos >= 0 && pos < tables.Count)
             {
                 return tables[(pos)];
             }
@@ -141,9 +141,11 @@ namespace NPOI.XWPF.UserModel
         {
             bodyElements.Insert(pos, table);
             int i;
-            for (i = 0; i < ctFtnEdn.GetTblList().Count; i++) {
+            for(i = 0; i < ctFtnEdn.GetTblList().Count; i++)
+            {
                 CT_Tbl tbl = ctFtnEdn.GetTblArray(i);
-                if(tbl == table.GetCTTbl()){
+                if(tbl == table.GetCTTbl())
+                {
                     break;
                 }
             }
@@ -159,11 +161,12 @@ namespace NPOI.XWPF.UserModel
          */
         public XWPFTable GetTable(CT_Tbl ctTable)
         {
-            foreach (XWPFTable table in tables) {
+            foreach(XWPFTable table in tables)
+            {
                 if(table==null)
                     return null;
                 if(table.GetCTTbl().Equals(ctTable))
-                    return table;	
+                    return table;
             }
             return null;
         }
@@ -179,7 +182,8 @@ namespace NPOI.XWPF.UserModel
          */
         public XWPFParagraph GetParagraph(CT_P p)
         {
-            foreach (XWPFParagraph paragraph in paragraphs) {
+            foreach(XWPFParagraph paragraph in paragraphs)
+            {
                 if(paragraph.GetCTP().Equals(p))
                     return paragraph;
             }
@@ -192,7 +196,7 @@ namespace NPOI.XWPF.UserModel
         /// <returns></returns>
         public XWPFParagraph GetParagraphArray(int pos)
         {
-            if (pos >= 0 && pos < paragraphs.Count)
+            if(pos >= 0 && pos < paragraphs.Count)
             {
                 return paragraphs[pos];
             }
@@ -207,18 +211,19 @@ namespace NPOI.XWPF.UserModel
         public XWPFTableCell GetTableCell(CT_Tc cell)
         {
             object obj = cell.Parent;
-            if (obj is not CT_Row row)
+            if(obj is not CT_Row row)
                 return null;
 
-            if (row.Parent is not CT_Tbl tbl)
+            if(row.Parent is not CT_Tbl tbl)
                 return null;
 
             XWPFTable table = GetTable(tbl);
-            if(table == null){
+            if(table == null)
+            {
                 return null;
             }
             XWPFTableRow tableRow = table.GetRow(row);
-            if (tableRow == null)
+            if(tableRow == null)
             {
                 return null;
             }
@@ -272,7 +277,7 @@ namespace NPOI.XWPF.UserModel
             // If the paragraph is the first paragraph in the footnote, 
             // ensure that it has a footnote reference run.
 
-            if (p.Equals(GetParagraphs()[0]))
+            if(p.Equals(GetParagraphs()[0]))
             {
                 EnsureFootnoteRef(p);
             }
@@ -295,25 +300,25 @@ namespace NPOI.XWPF.UserModel
         {
 
             XWPFRun r = null;
-            if (p.Runs.Count > 0)
+            if(p.Runs.Count > 0)
             {
                 r = p.Runs[0];
             }
-            if (r == null)
+            if(r == null)
             {
                 r = p.CreateRun();
             }
             CT_R ctr = r.GetCTR();
             bool foundRef = false;
-            foreach (CT_FtnEdnRef reference in ctr.GetFootnoteReferenceList())
+            foreach(CT_FtnEdnRef reference in ctr.GetFootnoteReferenceList())
             {
-                if (Id.ToString().Equals(reference.id))
+                if(Id.ToString().Equals(reference.id))
                 {
                     foundRef = true;
                     break;
                 }
             }
-            if (!foundRef)
+            if(!foundRef)
             {
                 ctr.AddNewRPr().AddNewRStyle().val="FootnoteReference";
                 ctr.AddNewFootnoteRef();
@@ -328,7 +333,7 @@ namespace NPOI.XWPF.UserModel
         public XWPFTable CreateTable()
         {
             XWPFTable table = new XWPFTable(ctFtnEdn.AddNewTbl(), this);
-            if (bodyElements.Count == 0)
+            if(bodyElements.Count == 0)
             {
                 XWPFParagraph p = CreateParagraph();
                 EnsureFootnoteRef(p);

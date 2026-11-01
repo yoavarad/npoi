@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -71,7 +71,7 @@ namespace NPOI.HSSF.Record
             get { return protectFlag.IsSet(_options); }
             set
             {
-                _options = (short)protectFlag.SetBoolean(_options, value);
+                _options = (short) protectFlag.SetBoolean(_options, value);
             }
         }
 

@@ -16,13 +16,14 @@
 */
 namespace TestCases.HSSF.UserModel
 {
-    using System;
+    using NPOI.HSSF.Record;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.IO;
     using TestCases.HSSF;
-    using NPOI.SS.UserModel;
-    using NPOI.HSSF.Record;
 
     /**
      * Test <c>HSSFTextbox</c>.

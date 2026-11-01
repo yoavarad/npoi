@@ -19,8 +19,8 @@ using NPOI.SS.Formula.Functions;
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
+    using System;
 
 
     public class SimpleValueVector : ValueVector
@@ -78,7 +78,7 @@ namespace NPOI.SS.Formula.Functions
                 ValueVector lookupVector;
                 ValueVector resultVector;
 
-                if (lookupArray.Width > lookupArray.Height)
+                if(lookupArray.Width > lookupArray.Height)
                 {
                     // If array covers an area that is wider than it is tall (more columns than rows), LOOKUP searches for the value of lookup_value in the first row.
                     lookupVector = CreateVector(lookupArray.GetRow(0));
@@ -96,7 +96,8 @@ namespace NPOI.SS.Formula.Functions
                 int index = LookupUtils.LookupFirstIndexOfValue(lookupValue, lookupVector, true);
                 return resultVector.GetItem(index);
             }
-            catch (EvaluationException e) {
+            catch(EvaluationException e)
+            {
                 return e.GetErrorEval();
             }
 
@@ -113,7 +114,7 @@ namespace NPOI.SS.Formula.Functions
 
                 ValueVector lookupVector = CreateVector(aeLookupVector);
                 ValueVector resultVector = CreateVector(aeResultVector);
-                if (lookupVector.Size > resultVector.Size)
+                if(lookupVector.Size > resultVector.Size)
                 {
                     // Excel seems to handle this by accessing past the end of the result vector.
                     throw new NPOI.Util.RuntimeException("Lookup vector and result vector of differing sizes not supported yet");
@@ -122,7 +123,7 @@ namespace NPOI.SS.Formula.Functions
 
                 return resultVector.GetItem(index);
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 return e.GetErrorEval();
             }
@@ -130,7 +131,7 @@ namespace NPOI.SS.Formula.Functions
         private static ValueVector CreateVector(TwoDEval ae)
         {
             ValueVector result = LookupUtils.CreateVector(ae);
-            if (result != null)
+            if(result != null)
             {
                 return result;
             }

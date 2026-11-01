@@ -25,16 +25,16 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.IO;
-using System.Collections;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NPOI.POIFS.FileSystem;
 using NPOI.POIFS.Storage;
 using NPOI.Util;
-using NPOI.POIFS.FileSystem;
-using TestCases.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections;
+using System.IO;
 using TestCases.POIFS.FileSystem;
+using TestCases.Util;
 
 namespace TestCases.POIFS.Storage
 {
@@ -61,9 +61,9 @@ namespace TestCases.POIFS.Storage
         {
             byte[] data = new byte[512];
 
-            for (int j = 0; j < 512; j++)
+            for(int j = 0; j < 512; j++)
             {
-                data[j] = (byte)j;
+                data[j] = (byte) j;
             }
             RawDataBlock block = new RawDataBlock(new MemoryStream(data));
 
@@ -71,7 +71,7 @@ namespace TestCases.POIFS.Storage
             byte[] out_data = block.Data;
 
             ClassicAssert.AreEqual(data.Length, out_data.Length, "Should be same Length");
-            for (int j = 0; j < 512; j++)
+            for(int j = 0; j < 512; j++)
             {
                 ClassicAssert.AreEqual(data[j],
                              out_data[j], "Should be same value at offset " + j);
@@ -94,7 +94,7 @@ namespace TestCases.POIFS.Storage
             {
                 byte[] a = block.Data;
             }
-            catch (IOException )
+            catch(IOException)
             {
 
                 // as expected
@@ -111,7 +111,7 @@ namespace TestCases.POIFS.Storage
         {
             //// Get the logger to be used
             POILogger logger = POILogFactory.GetLogger(typeof(RawDataBlock));
-            if (!(logger is DummyPOILogger dummyPoiLogger))
+            if(!(logger is DummyPOILogger dummyPoiLogger))
             {
                 // NET Core
                 Assert.Ignore("Logger configuration not working under NET Core");
@@ -122,13 +122,13 @@ namespace TestCases.POIFS.Storage
             ClassicAssert.AreEqual(0, dummyPoiLogger.logged.Count);
 
             // Test for various data sizes
-            for (int k = 1; k <= 512; k++)
+            for(int k = 1; k <= 512; k++)
             {
                 byte[] data = new byte[k];
 
-                for (int j = 0; j < k; j++)
+                for(int j = 0; j < k; j++)
                 {
-                    data[j] = (byte)j;
+                    data[j] = (byte) j;
                 }
                 RawDataBlock block = null;
 
@@ -140,7 +140,7 @@ namespace TestCases.POIFS.Storage
                 ClassicAssert.IsNotNull(block);
 
                 // Check for the warning Is there for <512
-                if (k < 512)
+                if(k < 512)
                 {
                     ClassicAssert.AreEqual(
                             1, dummyPoiLogger.logged.Count, "Warning on " + k + " byte short block"
@@ -148,13 +148,13 @@ namespace TestCases.POIFS.Storage
 
                     // Build the expected warning message, and check
                     String bts = k + " byte";
-                    if (k > 1)
+                    if(k > 1)
                     {
                         bts += "s";
                     }
 
                     ClassicAssert.AreEqual(
-                            (String)dummyPoiLogger.logged[0],
+                            (String) dummyPoiLogger.logged[0],
                             "7 - Unable to read entire block; " + bts + " read before EOF; expected 512 bytes. Your document was either written by software that ignores the spec, or has been truncated!"
                     );
                 }
@@ -176,7 +176,7 @@ namespace TestCases.POIFS.Storage
             // Get the logger to be used
             POILogger logger = POILogFactory.GetLogger(typeof(RawDataBlock));
 
-            if (!(logger is DummyPOILogger dummyPoiLogger))
+            if(!(logger is DummyPOILogger dummyPoiLogger))
             {
                 // NET Core
                 Assert.Ignore("Logger configuration not working under NET Core");
@@ -187,12 +187,12 @@ namespace TestCases.POIFS.Storage
             ClassicAssert.AreEqual(0, dummyPoiLogger.logged.Count);
 
             // Test for various ok data sizes
-            for (int k = 1; k < 512; k++)
+            for(int k = 1; k < 512; k++)
             {
                 byte[] data = new byte[512];
-                for (int j = 0; j < data.Length; j++)
+                for(int j = 0; j < data.Length; j++)
                 {
-                    data[j] = (byte)j;
+                    data[j] = (byte) j;
                 }
 
                 // Shouldn't complain, as there Is enough data,
@@ -204,12 +204,12 @@ namespace TestCases.POIFS.Storage
 
             // But if there wasn't enough data available, will
             //  complain
-            for (int k = 1; k < 512; k++)
+            for(int k = 1; k < 512; k++)
             {
                 byte[] data = new byte[511];
-                for (int j = 0; j < data.Length; j++)
+                for(int j = 0; j < data.Length; j++)
                 {
-                    data[j] = (byte)j;
+                    data[j] = (byte) j;
                 }
 
                 dummyPoiLogger.Reset();

@@ -1,4 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 
@@ -65,7 +65,8 @@ public class DataFormatReadBenchmark
             for(var c = 0; c<numCells; c++)
             {
                 ICell cell = row.GetCell(c);
-                if(cell is null) continue;
+                if(cell is null)
+                    continue;
                 readRow[c] = df.FormatCellValue(cell);
             }
         }

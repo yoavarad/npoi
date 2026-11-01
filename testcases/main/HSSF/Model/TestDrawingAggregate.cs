@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -14,19 +14,20 @@
    See the License for the specific language governing permissions and
    limitations Under the License.
 ==================================================================== */
+using NPOI.DDF;
+using NPOI.HSSF.Model;
+using NPOI.HSSF.Record;
+using NPOI.HSSF.Record.Aggregates;
+using NPOI.HSSF.UserModel;
+using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using NPOI.HSSF.Record;
-using NPOI.HSSF.UserModel;
-using System.IO;
-using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using TestCases.HSSF.UserModel;
-using NPOI.HSSF.Model;
-using NPOI.DDF;
-using NPOI.HSSF.Record.Aggregates;
 using static TestCases.POIFS.Storage.RawDataUtil;
 
 namespace TestCases.HSSF.Model
@@ -60,16 +61,16 @@ namespace TestCases.HSSF.Model
                 DrawingAggregateInfo info = null;
                 InternalSheet isheet = HSSFTestHelper.GetSheetForTest(sheet);
                 List<RecordBase> records = isheet.Records;
-                for (int i = 0; i < records.Count; i++)
+                for(int i = 0; i < records.Count; i++)
                 {
                     RecordBase rb = records[(i)];
-                    if ((rb is DrawingRecord) && info == null)
+                    if((rb is DrawingRecord) && info == null)
                     {
                         info = new DrawingAggregateInfo();
                         info.startRecordIndex = i;
                         info.endRecordIndex = i;
                     }
-                    else if (info != null && (
+                    else if(info != null && (
                           rb is DrawingRecord
                                   || rb is ObjRecord
                                   || rb is TextObjectRecord
@@ -81,13 +82,14 @@ namespace TestCases.HSSF.Model
                     }
                     else
                     {
-                        if (rb is EscherAggregate)
+                        if(rb is EscherAggregate)
                             throw new InvalidOperationException("Drawing data already aggregated. " +
                                     "You should cal this method before the first invocation of HSSFSheet#getDrawingPatriarch()");
-                        if (info != null) break;
+                        if(info != null)
+                            break;
                     }
                 }
-                if (info != null)
+                if(info != null)
                 {
                     info.aggRecords = new List<RecordBase>(
                             records.GetRange(info.startRecordIndex, info.endRecordIndex + 1));
@@ -101,7 +103,7 @@ namespace TestCases.HSSF.Model
             internal byte[] GetRawBytes()
             {
                 MemoryStream out1 = new MemoryStream();
-                foreach (RecordBase rb in aggRecords)
+                foreach(RecordBase rb in aggRecords)
                 {
                     NPOI.HSSF.Record.Record r = (NPOI.HSSF.Record.Record)rb;
                     try
@@ -109,7 +111,7 @@ namespace TestCases.HSSF.Model
                         byte[] data = r.Serialize();
                         out1.Write(data, 0, data.Length);
                     }
-                    catch (IOException e)
+                    catch(IOException e)
                     {
                         throw new RuntimeException(e);
                     }
@@ -129,11 +131,11 @@ namespace TestCases.HSSF.Model
         {
             // map aggregate info by sheet index
             Dictionary<int, DrawingAggregateInfo> aggs = new Dictionary<int, DrawingAggregateInfo>();
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 HSSFSheet sheet = wb.GetSheetAt(i) as HSSFSheet;
                 DrawingAggregateInfo info = DrawingAggregateInfo.Get(sheet);
-                if (info != null)
+                if(info != null)
                 {
                     aggs.Add(i, info);
                     HSSFPatriarch p = sheet.DrawingPatriarch as HSSFPatriarch;
@@ -149,13 +151,13 @@ namespace TestCases.HSSF.Model
                 }
             }
 
-            if (aggs.Count != 0)
+            if(aggs.Count != 0)
             {
                 HSSFWorkbook wb2 = HSSFTestDataSamples.WriteOutAndReadBack(wb);
-                for (int i = 0; i < wb2.NumberOfSheets; i++)
+                for(int i = 0; i < wb2.NumberOfSheets; i++)
                 {
                     DrawingAggregateInfo info1 = aggs[(i)];
-                    if (info1 != null)
+                    if(info1 != null)
                     {
                         HSSFSheet sheet2 = wb2.GetSheetAt(i) as HSSFSheet;
                         DrawingAggregateInfo info2 = DrawingAggregateInfo.Get(sheet2);
@@ -228,7 +230,7 @@ namespace TestCases.HSSF.Model
             List<EscherRecord> records = new List<EscherRecord>();
             IEscherRecordFactory recordFactory = new DefaultEscherRecordFactory();
             int pos = 0;
-            while (pos < dgBytes.Length)
+            while(pos < dgBytes.Length)
             {
                 EscherRecord r = recordFactory.CreateRecord(dgBytes, pos);
                 int bytesRead = r.FillFields(dgBytes, pos, recordFactory);
@@ -240,7 +242,7 @@ namespace TestCases.HSSF.Model
             // serialize to byte array
             MemoryStream out1 = new MemoryStream();
 
-            foreach (EscherRecord r in records)
+            foreach(EscherRecord r in records)
             {
                 byte[] data1 = r.Serialize();
                 out1.Write(data1, 0, data1.Length);
@@ -267,7 +269,7 @@ namespace TestCases.HSSF.Model
         private static byte[] ToArray(List<RecordBase> records)
         {
             MemoryStream out1 = new MemoryStream();
-            foreach (RecordBase rb in records)
+            foreach(RecordBase rb in records)
             {
                 NPOI.HSSF.Record.Record r = (NPOI.HSSF.Record.Record)rb;
                 try
@@ -275,7 +277,7 @@ namespace TestCases.HSSF.Model
                     byte[] data = r.Serialize();
                     out1.Write(data, 0, data.Length);
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new RuntimeException(e);
                 }
@@ -301,13 +303,13 @@ namespace TestCases.HSSF.Model
             sh = wb2.GetSheetAt(0) as HSSFSheet;
             p = sh.DrawingPatriarch as HSSFPatriarch;
             ish = HSSFTestHelper.GetSheetForTest(sh);
-            agg = (EscherAggregate)ish.FindFirstRecordBySid(EscherAggregate.sid);
+            agg = (EscherAggregate) ish.FindFirstRecordBySid(EscherAggregate.sid);
             ClassicAssert.AreEqual(agg.EscherRecords[0].ChildRecords.Count, 3);
             ClassicAssert.AreEqual(agg.EscherRecords[0].GetChild(2).RecordId, EscherContainerRecord.SOLVER_CONTAINER);
 
 
             // collect Drawing records into a byte buffer.
-            agg = (EscherAggregate)ish.FindFirstRecordBySid(EscherAggregate.sid);
+            agg = (EscherAggregate) ish.FindFirstRecordBySid(EscherAggregate.sid);
             byte[] dgBytesAfterSave = agg.Serialize();
             ClassicAssert.AreEqual(dgBytes.Length, dgBytesAfterSave.Length, "different size of Drawing data before and After save");
             ClassicAssert.IsTrue(Arrays.Equals(dgBytes, dgBytesAfterSave), "drawing data before and After save is different");
@@ -350,9 +352,9 @@ namespace TestCases.HSSF.Model
             EscherAggregate agg = (EscherAggregate)ish.FindFirstRecordBySid(EscherAggregate.sid);
             byte[] dgBytesAfterSave = agg.Serialize();
             ClassicAssert.AreEqual(dgBytes.Length, dgBytesAfterSave.Length, "different size of Drawing data before and After save");
-            for (int i = 0; i < dgBytes.Length; i++)
+            for(int i = 0; i < dgBytes.Length; i++)
             {
-                if (dgBytes[i] != dgBytesAfterSave[i])
+                if(dgBytes[i] != dgBytesAfterSave[i])
                 {
                     Console.WriteLine("pos = " + i);
                 }
@@ -387,7 +389,7 @@ namespace TestCases.HSSF.Model
             // collect Drawing records into a byte buffer.
             byte[] dgBytes = ToArray(dgRecords);
 
-            foreach (RecordBase rb in dgRecords)
+            foreach(RecordBase rb in dgRecords)
             {
                 NPOI.HSSF.Record.Record r = (NPOI.HSSF.Record.Record)rb;
                 short sid = r.Sid;
@@ -450,7 +452,7 @@ namespace TestCases.HSSF.Model
 
             // records to be aggregated
             List<RecordBase> dgRecords = records.GetRange(19, 26-19);
-            foreach (RecordBase rb in dgRecords)
+            foreach(RecordBase rb in dgRecords)
             {
                 NPOI.HSSF.Record.Record r = (NPOI.HSSF.Record.Record)rb;
                 short sid = r.Sid;
@@ -476,7 +478,7 @@ namespace TestCases.HSSF.Model
             EscherAggregate agg = (EscherAggregate)records[(loc)];
 
             ClassicAssert.AreEqual(26, records.Count, "wrong size of the aggregated sheet records stream");
-            ClassicAssert.IsTrue(records[(18)] is RowRecordsAggregate, 
+            ClassicAssert.IsTrue(records[(18)] is RowRecordsAggregate,
                 "records.Get(18) is expected to be RowRecordsAggregate but was " + records[(18)].GetType().Name);
             ClassicAssert.IsTrue(records[(19)] is EscherAggregate,
                 "records.Get(19) is expected to be EscherAggregate but was " + records[19].GetType().Name);
@@ -484,7 +486,7 @@ namespace TestCases.HSSF.Model
                 "records.Get(20) is expected to be Window2 but was " + records[20].GetType().Name);
 
             byte[] dgBytesAfterSave = agg.Serialize();
-            ClassicAssert.AreEqual(dgBytes.Length, dgBytesAfterSave.Length,"different size of Drawing data before and After save");
+            ClassicAssert.AreEqual(dgBytes.Length, dgBytesAfterSave.Length, "different size of Drawing data before and After save");
             ClassicAssert.IsTrue(Arrays.Equals(dgBytes, dgBytesAfterSave), "drawing data before and After save is different");
 
             wb.Close();
@@ -505,16 +507,16 @@ namespace TestCases.HSSF.Model
             List<RecordBase> records2 = isheet2.Records;
 
             ClassicAssert.AreEqual(records.Count, records2.Count);
-            for (int i = 0; i < records.Count; i++)
+            for(int i = 0; i < records.Count; i++)
             {
                 RecordBase r1 = records[(i)];
                 RecordBase r2 = records2[(i)];
                 ClassicAssert.IsTrue(r1.GetType() == r2.GetType());
                 ClassicAssert.AreEqual(r1.RecordSize, r2.RecordSize);
-                if (r1 is NPOI.HSSF.Record.Record)
+                if(r1 is NPOI.HSSF.Record.Record)
                 {
-                    ClassicAssert.AreEqual(((NPOI.HSSF.Record.Record)r1).Sid, ((NPOI.HSSF.Record.Record)r2).Sid);
-                    ClassicAssert.IsTrue(Arrays.Equals(((NPOI.HSSF.Record.Record)r1).Serialize(), ((NPOI.HSSF.Record.Record)r2).Serialize()));
+                    ClassicAssert.AreEqual(((NPOI.HSSF.Record.Record) r1).Sid, ((NPOI.HSSF.Record.Record) r2).Sid);
+                    ClassicAssert.IsTrue(Arrays.Equals(((NPOI.HSSF.Record.Record) r1).Serialize(), ((NPOI.HSSF.Record.Record) r2).Serialize()));
                 }
             }
             wb2.Close();
@@ -537,7 +539,7 @@ namespace TestCases.HSSF.Model
 
             // records to be aggregated
             List<RecordBase> dgRecords = records.GetRange(19, 39 - 19);
-            foreach (RecordBase rb in dgRecords)
+            foreach(RecordBase rb in dgRecords)
             {
                 NPOI.HSSF.Record.Record r = (NPOI.HSSF.Record.Record)rb;
                 short sid = r.Sid;
@@ -595,7 +597,7 @@ namespace TestCases.HSSF.Model
 
             // records to be aggregated
             List<RecordBase> dgRecords = records.GetRange(22, 300 - 22);
-            foreach (RecordBase rb in dgRecords)
+            foreach(RecordBase rb in dgRecords)
             {
                 NPOI.HSSF.Record.Record r = (NPOI.HSSF.Record.Record)rb;
                 short sid = r.Sid;
@@ -762,7 +764,7 @@ namespace TestCases.HSSF.Model
                     ContinueRecord.sid,
                     TextObjectRecord.sid
             };
-            for (int i = 0; i < expectedSids.Length; i++)
+            for(int i = 0; i < expectedSids.Length; i++)
             {
                 ClassicAssert.AreEqual(expectedSids[i], dgRecords[(i)].Sid, "unexpected record.sid and index[" + i + "]");
             }
@@ -937,7 +939,7 @@ namespace TestCases.HSSF.Model
                     ObjRecord.sid
             };
 
-            for (int i = 0; i < expectedSids.Length; i++)
+            for(int i = 0; i < expectedSids.Length; i++)
             {
                 ClassicAssert.AreEqual(expectedSids[i], dgRecords[(i)].Sid, "unexpected record.sid and index[" + i + "]");
             }
@@ -952,8 +954,8 @@ namespace TestCases.HSSF.Model
 
             sheet.AggregateDrawingRecords(drawingManager, false);
             ClassicAssert.AreEqual(2, records.Count, "drawing was not fully aggregated");
-            ClassicAssert.IsTrue(records[(0)] is EscherAggregate , "expected EscherAggregate");
-            ClassicAssert.IsTrue(records[(1)] is EOFRecord , "expected EOFRecord");
+            ClassicAssert.IsTrue(records[(0)] is EscherAggregate, "expected EscherAggregate");
+            ClassicAssert.IsTrue(records[(1)] is EOFRecord, "expected EOFRecord");
 
             EscherAggregate agg = (EscherAggregate)records[(0)];
 

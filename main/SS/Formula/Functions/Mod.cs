@@ -29,12 +29,14 @@ namespace NPOI.SS.Formula.Functions
     public class Mod : TwoArg
     {
 
-		public override double Evaluate(double d0, double d1) {
-			if (d1 == NumericFunction.ZERO) {
-				throw new EvaluationException(ErrorEval.DIV_ZERO);
-			}
-			return MathX.Mod(d0, d1);
-		}
+        public override double Evaluate(double d0, double d1)
+        {
+            if(d1 == NumericFunction.ZERO)
+            {
+                throw new EvaluationException(ErrorEval.DIV_ZERO);
+            }
+            return MathX.Mod(d0, d1);
+        }
 
     }
 }

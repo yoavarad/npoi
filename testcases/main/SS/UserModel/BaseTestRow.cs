@@ -17,17 +17,14 @@
 
 namespace TestCases.SS.UserModel
 {
-    using System;
-
-
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
     using NPOI.SS;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using TestCases.SS;
-    using NPOI.SS.UserModel;
 
     /**
      * A base class for Testing implementations of
@@ -54,7 +51,8 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(-1, row.LastCellNum);
 
             //getting cells from an empty row should returns null
-            for (int i = 0; i < 10; i++) ClassicAssert.IsNull(row.GetCell(i));
+            for(int i = 0; i < 10; i++)
+                ClassicAssert.IsNull(row.GetCell(i));
 
             row.CreateCell(2);
             ClassicAssert.AreEqual(2, row.FirstCellNum);
@@ -153,7 +151,7 @@ namespace TestCases.SS.UserModel
                 sheet.CreateRow(-1);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // expected during successful Test
                 ClassicAssert.IsTrue(e.Message.StartsWith("Invalid row number (-1)"),
@@ -168,7 +166,7 @@ namespace TestCases.SS.UserModel
                 sheet.CreateRow(maxRowNum + 1);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // expected during successful Test
                 ClassicAssert.AreEqual("Invalid row number (" + (maxRowNum + 1) + ") outside allowable range (0.." + maxRowNum + ")", e.Message);
@@ -187,7 +185,7 @@ namespace TestCases.SS.UserModel
                 row.CreateCell(-1);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // expected during successful Test
                 ClassicAssert.IsTrue(e.Message.StartsWith("Invalid column index (-1)"));
@@ -199,12 +197,12 @@ namespace TestCases.SS.UserModel
                 row.CreateCell(maxCellNum + 1);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 // expected during successful Test
                 ClassicAssert.IsTrue(e.Message.StartsWith("Invalid column index (" + (maxCellNum + 1) + ")"));
             }
-            for (int i = 0; i < maxCellNum; i++)
+            for(int i = 0; i < maxCellNum; i++)
             {
                 row.CreateCell(i);
             }
@@ -215,7 +213,7 @@ namespace TestCases.SS.UserModel
             sheet = wb2.GetSheetAt(0);
             row = sheet.GetRow(0);
             ClassicAssert.AreEqual(maxCellNum, row.PhysicalNumberOfCells);
-            for (int i = 0; i < maxCellNum; i++)
+            for(int i = 0; i < maxCellNum; i++)
             {
                 ICell cell = row.GetCell(i);
                 ClassicAssert.AreEqual(i, cell.ColumnIndex);
@@ -236,7 +234,7 @@ namespace TestCases.SS.UserModel
 
             // New row has last col -1
             ClassicAssert.AreEqual(-1, row.LastCellNum);
-            if (row.LastCellNum == 0)
+            if(row.LastCellNum == 0)
             {
                 Assert.Fail("Identified bug 43901");
             }
@@ -336,19 +334,19 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(sheet.DefaultRowHeight, row1.Height);
 
             sheet.DefaultRowHeightInPoints = (/*setter*/20);
-            row1.Height = (short)-1; //reset the row height
+            row1.Height = (short) -1; //reset the row height
             ClassicAssert.AreEqual(20.0f, row1.HeightInPoints, 0F);
             ClassicAssert.AreEqual(20 * 20, row1.Height);
 
             IRow row2 = sheet.CreateRow(1);
             ClassicAssert.AreEqual(sheet.DefaultRowHeight, row2.Height);
-            row2.Height = (short)310;
+            row2.Height = (short) 310;
             ClassicAssert.AreEqual(310, row2.Height);
             ClassicAssert.AreEqual(310F / 20, row2.HeightInPoints, 0F);
 
             IRow row3 = sheet.CreateRow(2);
             row3.HeightInPoints = (/*setter*/25.5f);
-            ClassicAssert.AreEqual((short)(25.5f * 20), row3.Height);
+            ClassicAssert.AreEqual((short) (25.5f * 20), row3.Height);
             ClassicAssert.AreEqual(25.5f, row3.HeightInPoints, 0F);
 
             IRow row4 = sheet.CreateRow(3);
@@ -369,7 +367,7 @@ namespace TestCases.SS.UserModel
             ClassicAssert.AreEqual(310, row2.Height);
             ClassicAssert.AreEqual(310F / 20, row2.HeightInPoints, 0F);
 
-            ClassicAssert.AreEqual((short)(25.5f * 20), row3.Height);
+            ClassicAssert.AreEqual((short) (25.5f * 20), row3.Height);
             ClassicAssert.AreEqual(25.5f, row3.HeightInPoints, 0F);
 
             ClassicAssert.IsFalse(row1.ZeroHeight);
@@ -393,14 +391,16 @@ namespace TestCases.SS.UserModel
             // One cell at the beginning
             ICell cell1 = row.CreateCell(1);
             var cells = new List<ICell>();
-            foreach (ICell c in row) cells.Add(c);
+            foreach(ICell c in row)
+                cells.Add(c);
             ClassicAssert.AreEqual(1, cells.Count);
             ClassicAssert.IsTrue(cells.Contains(cell1));
 
             // Add another cell at the end
             ICell cell2 = row.CreateCell(99);
             cells.Clear();
-            foreach (ICell c in row) cells.Add(c);
+            foreach(ICell c in row)
+                cells.Add(c);
             ClassicAssert.AreEqual(2, cells.Count);
             ClassicAssert.IsTrue(cells.Contains(cell1));
             ClassicAssert.IsTrue(cells.Contains(cell2));
@@ -408,7 +408,8 @@ namespace TestCases.SS.UserModel
             // Add another cell at the beginning
             ICell cell3 = row.CreateCell(0);
             cells.Clear();
-            foreach (ICell c in row) cells.Add(c);
+            foreach(ICell c in row)
+                cells.Add(c);
             ClassicAssert.AreEqual(3, cells.Count);
             ClassicAssert.IsTrue(cells.Contains(cell1));
             ClassicAssert.IsTrue(cells.Contains(cell2));
@@ -417,7 +418,8 @@ namespace TestCases.SS.UserModel
             // Replace cell1
             ICell cell4 = row.CreateCell(1);
             cells.Clear();
-            foreach (ICell c in row) cells.Add(c);
+            foreach(ICell c in row)
+                cells.Add(c);
             ClassicAssert.AreEqual(3, cells.Count);
             ClassicAssert.IsTrue(cells.Contains(cell4)); // cell1 is replaced
             ClassicAssert.IsFalse(cells.Contains(cell1)); // old cell1 should be removed
@@ -427,7 +429,8 @@ namespace TestCases.SS.UserModel
             // Add another cell, specifying the cellType
             ICell cell5 = row.CreateCell(2, CellType.String);
             cells.Clear();
-            foreach (ICell c in row) cells.Add(c);
+            foreach(ICell c in row)
+                cells.Add(c);
             ClassicAssert.AreEqual(4, cells.Count);
             ClassicAssert.IsTrue(cells.Contains(cell5));
             ClassicAssert.IsTrue(cells.Contains(cell4));
@@ -453,7 +456,7 @@ namespace TestCases.SS.UserModel
 
             // Style one
             ICellStyle style = wb1.CreateCellStyle();
-            style.DataFormat = (/*setter*/(short)4);
+            style.DataFormat = (/*setter*/(short) 4);
             row2.RowStyle = (/*setter*/style);
 
             // Check

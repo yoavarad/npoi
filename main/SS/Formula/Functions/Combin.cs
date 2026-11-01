@@ -29,13 +29,14 @@ namespace NPOI.SS.Formula.Functions
     public class Combin : TwoArg
     {
 
-		public override double Evaluate(double d0, double d1)
+        public override double Evaluate(double d0, double d1)
         {
-			if (d0 > int.MaxValue || d1 > int.MaxValue) {
-				throw new EvaluationException(ErrorEval.NUM_ERROR);
-			}
-			return  MathX.NChooseK((int) d0, (int) d1);
-		}
+            if(d0 > int.MaxValue || d1 > int.MaxValue)
+            {
+                throw new EvaluationException(ErrorEval.NUM_ERROR);
+            }
+            return MathX.NChooseK((int) d0, (int) d1);
+        }
 
     }
 }

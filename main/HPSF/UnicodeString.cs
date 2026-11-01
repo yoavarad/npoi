@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -15,9 +15,9 @@
    limitations Under the License.
 ==================================================================== */
 
+using NPOI.Util;
 using System;
 using System.IO;
-using NPOI.Util;
 
 namespace NPOI.HPSF
 {
@@ -27,7 +27,7 @@ namespace NPOI.HPSF
         //   .getLogger( UnicodeString.class );
         //arbitrarily selected; may need to increase
         private static int MAX_RECORD_LENGTH = 100_000;
-        internal UnicodeString() {}
+        internal UnicodeString() { }
         private byte[] _value;
 
         internal void Read(LittleEndianByteArrayInputStream lei)
@@ -35,27 +35,27 @@ namespace NPOI.HPSF
             int length = lei.ReadInt();
             int unicodeBytes = length*2;
             _value = IOUtils.SafelyAllocate(unicodeBytes, MAX_RECORD_LENGTH);
-        
+
             // If Length is zero, this field MUST be zero bytes in length. If Length is
             // nonzero, this field MUST be a null-terminated array of 16-bit Unicode characters, followed by
             // zero padding to a multiple of 4 bytes. The string represented by this field SHOULD NOT
             // contain embedded or additional trailing null characters.
-        
-            if (length == 0)
+
+            if(length == 0)
             {
                 return;
             }
 
-             int offset = lei.GetReadIndex();
-        
+            int offset = lei.GetReadIndex();
+
             lei.ReadFully(_value);
 
-            if (_value[unicodeBytes-2] != 0 || _value[unicodeBytes-1] != 0) 
+            if(_value[unicodeBytes-2] != 0 || _value[unicodeBytes-1] != 0)
             {
                 string msg = "UnicodeString started at offset #" + offset + " is not NULL-terminated";
                 throw new IllegalPropertySetDataException(msg);
             }
-        
+
             TypedPropertyValue.SkipPadding(lei);
         }
 
@@ -66,14 +66,14 @@ namespace NPOI.HPSF
 
         internal String ToJavaString()
         {
-            if (_value.Length == 0)
+            if(_value.Length == 0)
                 return null;
 
             String result = StringUtil.GetFromUnicodeLE(_value, 0,
                     _value.Length >> 1);
 
             int terminator = result.IndexOf('\0');
-            if (terminator == -1)
+            if(terminator == -1)
             {
                 //logger.log(
                 //        POILogger.WARN,
@@ -81,7 +81,7 @@ namespace NPOI.HPSF
                 //                + "Continue without trimming and hope for the best." );
                 return result;
             }
-            if (terminator != result.Length - 1)
+            if(terminator != result.Length - 1)
             {
                 //logger.log(
                 //        POILogger.WARN,
@@ -91,15 +91,15 @@ namespace NPOI.HPSF
             return result.Substring(0, terminator);
         }
 
-        internal void SetJavaValue(string string1 ) 
+        internal void SetJavaValue(string string1)
         {
             _value = CodePageUtil.GetBytesInCodePage(string1 + "\0", CodePageUtil.CP_UNICODE);
         }
 
-        internal int Write( Stream out1 ) 
+        internal int Write(Stream out1)
         {
-            LittleEndian.PutUInt( _value.Length / 2, out1 );
-            out1.Write( _value, 0, _value.Length );
+            LittleEndian.PutUInt(_value.Length / 2, out1);
+            out1.Write(_value, 0, _value.Length);
             return LittleEndianConsts.INT_SIZE + _value.Length;
         }
     }

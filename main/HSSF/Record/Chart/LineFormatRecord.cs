@@ -20,9 +20,9 @@
 namespace NPOI.HSSF.Record.Chart
 {
 
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -125,7 +125,7 @@ namespace NPOI.HSSF.Record.Chart
          */
         protected override int DataSize
         {
-            get { return  4 + 2 + 2 + 2 + 2; }
+            get { return 4 + 2 + 2 + 2 + 2; }
         }
 
         public override short Sid
@@ -157,7 +157,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_lineColor;
             }
-            set 
+            set
             {
                 this.field_1_lineColor = value;
             }
@@ -182,12 +182,12 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_linePattern;
             }
-            set 
+            set
             {
                 this.field_2_linePattern = value;
-                if (value == LINE_PATTERN_NONE)
+                if(value == LINE_PATTERN_NONE)
                 {
-                    field_3_weight = (short)-1;
+                    field_3_weight = (short) -1;
                     field_5_colourPaletteIndex = 0x004D;
                 }
             }
@@ -208,7 +208,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_3_weight;
             }
-            set 
+            set
             {
                 this.field_3_weight = value;
             }
@@ -223,7 +223,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_4_format;
             }
-            set 
+            set
             {
                 this.field_4_format = value;
             }
@@ -251,7 +251,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return auto.IsSet(field_4_format);
             }
-            set 
+            set
             {
                 field_4_format = auto.SetShortBoolean(field_4_format, value);
             }
@@ -267,7 +267,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return drawTicks.IsSet(field_4_format);
             }
-            set 
+            set
             {
                 field_4_format = drawTicks.SetShortBoolean(field_4_format, value);
             }
@@ -283,7 +283,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return Unknown.IsSet(field_4_format);
             }
-            set 
+            set
             {
                 field_4_format = Unknown.SetShortBoolean(field_4_format, value);
             }
@@ -292,5 +292,3 @@ namespace NPOI.HSSF.Record.Chart
 
     }
 }
-
-

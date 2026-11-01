@@ -18,12 +18,12 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
-    using System.Text;
-    using System.Text.RegularExpressions;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using System;
     using System.Globalization;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
     /**
      * Implementation for the function COUNTIF<p/>

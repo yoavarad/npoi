@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,49 +60,49 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         }
         public static CT_Workbook Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Workbook ctObj = new CT_Workbook();
             ctObj.fileRecoveryPr = new List<CT_FileRecoveryPr>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "fileVersion")
+                if(childNode.LocalName == "fileVersion")
                     ctObj.fileVersion = CT_FileVersion.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fileSharing")
+                else if(childNode.LocalName == "fileSharing")
                     ctObj.fileSharing = CT_FileSharing.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "workbookPr")
+                else if(childNode.LocalName == "workbookPr")
                     ctObj.workbookPr = CT_WorkbookPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "workbookProtection")
+                else if(childNode.LocalName == "workbookProtection")
                     ctObj.workbookProtection = CT_WorkbookProtection.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "bookViews")
+                else if(childNode.LocalName == "bookViews")
                     ctObj.bookViews = CT_BookViews.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "sheets")
+                else if(childNode.LocalName == "sheets")
                     ctObj.sheets = CT_Sheets.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "functionGroups")
+                else if(childNode.LocalName == "functionGroups")
                     ctObj.functionGroups = CT_FunctionGroups.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "externalReferences")
+                else if(childNode.LocalName == "externalReferences")
                     ctObj.externalReferences = CT_ExternalReferences.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "definedNames")
+                else if(childNode.LocalName == "definedNames")
                     ctObj.definedNames = CT_DefinedNames.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "calcPr")
+                else if(childNode.LocalName == "calcPr")
                     ctObj.calcPr = CT_CalcPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "oleSize")
+                else if(childNode.LocalName == "oleSize")
                     ctObj.oleSize = CT_OleSize.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "customWorkbookViews")
+                else if(childNode.LocalName == "customWorkbookViews")
                     ctObj.customWorkbookViews = CT_CustomWorkbookViews.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pivotCaches")
+                else if(childNode.LocalName == "pivotCaches")
                     ctObj.pivotCaches = CT_PivotCaches.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "smartTagPr")
+                else if(childNode.LocalName == "smartTagPr")
                     ctObj.smartTagPr = CT_SmartTagPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "smartTagTypes")
+                else if(childNode.LocalName == "smartTagTypes")
                     ctObj.smartTagTypes = CT_SmartTagTypes.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "webPublishing")
+                else if(childNode.LocalName == "webPublishing")
                     ctObj.webPublishing = CT_WebPublishing.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "webPublishObjects")
+                else if(childNode.LocalName == "webPublishObjects")
                     ctObj.webPublishObjects = CT_WebPublishObjects.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "extLst")
+                else if(childNode.LocalName == "extLst")
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "fileRecoveryPr")
+                else if(childNode.LocalName == "fileRecoveryPr")
                     ctObj.fileRecoveryPr.Add(CT_FileRecoveryPr.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -122,48 +122,48 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.Write("xmlns:xr6=\"http://schemas.microsoft.com/office/spreadsheetml/2016/revision6\" ");
             sw.Write("xmlns:xr10=\"http://schemas.microsoft.com/office/spreadsheetml/2016/revision10\" ");
             sw.Write("xmlns:xr2=\"http://schemas.microsoft.com/office/spreadsheetml/2015/revision2\">");
-            if (this.fileVersion != null)
+            if(this.fileVersion != null)
                 this.fileVersion.Write(sw, "fileVersion");
-            if (this.fileSharing != null)
+            if(this.fileSharing != null)
                 this.fileSharing.Write(sw, "fileSharing");
-            if (this.workbookPr != null)
+            if(this.workbookPr != null)
                 this.workbookPr.Write(sw, "workbookPr");
-            if (this.workbookProtection != null)
+            if(this.workbookProtection != null)
                 this.workbookProtection.Write(sw, "workbookProtection");
-            if (this.bookViews != null)
+            if(this.bookViews != null)
                 this.bookViews.Write(sw, "bookViews");
-            if (this.sheets != null)
+            if(this.sheets != null)
                 this.sheets.Write(sw, "sheets");
-            if (this.functionGroups != null)
+            if(this.functionGroups != null)
                 this.functionGroups.Write(sw, "functionGroups");
-            if (this.externalReferences != null)
+            if(this.externalReferences != null)
                 this.externalReferences.Write(sw, "externalReferences");
-            if (this.definedNames != null)
+            if(this.definedNames != null)
                 this.definedNames.Write(sw, "definedNames");
-            if (this.calcPr != null)
+            if(this.calcPr != null)
                 this.calcPr.Write(sw, "calcPr");
-            if (this.oleSize != null)
+            if(this.oleSize != null)
                 this.oleSize.Write(sw, "oleSize");
-            if (this.customWorkbookViews != null)
+            if(this.customWorkbookViews != null)
                 this.customWorkbookViews.Write(sw, "customWorkbookViews");
-            if (this.pivotCaches != null)
+            if(this.pivotCaches != null)
                 this.pivotCaches.Write(sw, "pivotCaches");
-            if (this.smartTagPr != null)
+            if(this.smartTagPr != null)
                 this.smartTagPr.Write(sw, "smartTagPr");
-            if (this.smartTagTypes != null)
+            if(this.smartTagTypes != null)
                 this.smartTagTypes.Write(sw, "smartTagTypes");
-            if (this.webPublishing != null)
+            if(this.webPublishing != null)
                 this.webPublishing.Write(sw, "webPublishing");
-            if (this.webPublishObjects != null)
+            if(this.webPublishObjects != null)
                 this.webPublishObjects.Write(sw, "webPublishObjects");
-            if (this.fileRecoveryPr != null)
+            if(this.fileRecoveryPr != null)
             {
-                foreach (CT_FileRecoveryPr x in this.fileRecoveryPr)
+                foreach(CT_FileRecoveryPr x in this.fileRecoveryPr)
                 {
                     x.Write(sw, "fileRecoveryPr");
                 }
             }
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
             sw.Write("</workbook>");
         }

@@ -17,10 +17,10 @@
 
 namespace NPOI
 {
-    using System;
-    using System.Text;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.OpenXml4Net.Util;
+    using System;
+    using System.Text;
 
     public abstract class POIXMLTextExtractor : POITextExtractor
     {
@@ -63,7 +63,8 @@ namespace NPOI
          */
         public POIXMLDocument Document
         {
-            get{
+            get
+            {
                 return _document;
             }
         }
@@ -94,10 +95,10 @@ namespace NPOI
         public override void Close()
         {
             // e.g. XSSFEventBaseExcelExtractor passes a null-document
-            if (_document != null)
+            if(_document != null)
             {
                 OPCPackage pkg = _document.Package;
-                if (pkg != null)
+                if(pkg != null)
                 {
                     pkg.Revert();
                 }
@@ -124,8 +125,3 @@ namespace NPOI
     }
 
 }
-
-
-
-
-

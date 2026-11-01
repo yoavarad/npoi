@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -33,7 +33,8 @@ namespace TestCases.SS.Formula
     using NPOI.Util;
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /// <summary>
     /// Test <see cref="FormulaParser"/>'s handling of row numbers at the edge of the
@@ -259,4 +260,3 @@ namespace TestCases.SS.Formula
         }
     }
 }
-

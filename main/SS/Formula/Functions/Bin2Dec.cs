@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -16,12 +16,12 @@
 ==================================================================== */
 
 using NPOI.SS.Formula.Eval;
-using System;
-using NPOI.SS.Util;
 using NPOI.SS.UserModel;
-using System.Globalization;
+using NPOI.SS.Util;
 using NPOI.Util;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 namespace NPOI.SS.Formula.Functions
 {
 
@@ -50,7 +50,7 @@ namespace NPOI.SS.Formula.Functions
         public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval numberVE)
         {
             String number;
-            if (numberVE is RefEval re)
+            if(numberVE is RefEval re)
             {
                 number = OperandResolver.CoerceValueToString(re.GetInnerValueEval(re.FirstSheetIndex));
             }
@@ -58,7 +58,7 @@ namespace NPOI.SS.Formula.Functions
             {
                 number = OperandResolver.CoerceValueToString(numberVE);
             }
-            if (number.Length > 10)
+            if(number.Length > 10)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -67,7 +67,7 @@ namespace NPOI.SS.Formula.Functions
 
             //If the leftmost bit is 0 -- number is positive.
             bool isPositive;
-            if (number.Length < 10)
+            if(number.Length < 10)
             {
                 unsigned = number;
                 isPositive = true;
@@ -81,7 +81,7 @@ namespace NPOI.SS.Formula.Functions
             String value;
             try
             {
-                if (isPositive)
+                if(isPositive)
                 {
                     //bit9*2^8 + bit8*2^7 + bit7*2^6 + bit6*2^5 + bit5*2^4+ bit3*2^2+ bit2*2^1+ bit1*2^0
                     int sum = getDecimalValue(unsigned);
@@ -101,7 +101,7 @@ namespace NPOI.SS.Formula.Functions
                     value = "-" + sum.ToString();
                 }
             }
-            catch (FormatException)
+            catch(FormatException)
             {
                 return ErrorEval.NUM_ERROR;
             }
@@ -114,7 +114,7 @@ namespace NPOI.SS.Formula.Functions
             int numBits = unsigned.Length;
             int power = numBits - 1;
 
-            for (int i = 0; i < numBits; i++)
+            for(int i = 0; i < numBits; i++)
             {
                 int bit = int.Parse(unsigned.Substring(i, 1));
                 int term = (int)(bit * Math.Pow(2, power));
@@ -129,13 +129,14 @@ namespace NPOI.SS.Formula.Functions
             long i = Convert.ToInt64(s, 2);
             long i2 = i ^ ((1L << s.Length) - 1);
             String s2 = Convert.ToString(i2, 2);
-            while (s2.Length < s.Length) s2 = '0' + s2;
+            while(s2.Length < s.Length)
+                s2 = '0' + s2;
             return s2;
         }
 
         public ValueEval Evaluate(ValueEval[] args, OperationEvaluationContext ec)
         {
-            if (args.Length != 1)
+            if(args.Length != 1)
             {
                 return ErrorEval.VALUE_INVALID;
             }

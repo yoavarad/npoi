@@ -16,14 +16,14 @@
 ==================================================================== */
 namespace NPOI.XWPF.Extractor
 {
-    using System;
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Wordprocessing;
     using NPOI.XWPF.Model;
     using NPOI.XWPF.UserModel;
-    using NPOI.OpenXml4Net.OPC;
-    using System.Text;
+    using System;
     using System.Collections.Generic;
-    using NPOI.OpenXmlFormats.Wordprocessing;
     using System.IO;
+    using System.Text;
     using System.Xml;
 
     /**
@@ -33,7 +33,7 @@ namespace NPOI.XWPF.Extractor
     {
         public static XWPFRelation[] SUPPORTED_TYPES = new XWPFRelation[] {
             XWPFRelation.DOCUMENT, XWPFRelation.TEMPLATE,
-            XWPFRelation.MACRO_DOCUMENT, 
+            XWPFRelation.MACRO_DOCUMENT,
             XWPFRelation.MACRO_TEMPLATE_DOCUMENT
         };
 
@@ -67,7 +67,8 @@ namespace NPOI.XWPF.Extractor
          * Should we concatenate phonetic runs in extraction.  Default is <code>true</code>
          * @param concatenatePhoneticRuns
          */
-        public void SetConcatenatePhoneticRuns(bool concatenatePhoneticRuns) {
+        public void SetConcatenatePhoneticRuns(bool concatenatePhoneticRuns)
+        {
             this.concatenatePhoneticRuns = concatenatePhoneticRuns;
         }
 
@@ -82,7 +83,7 @@ namespace NPOI.XWPF.Extractor
                 XWPFWordExtractor.ExtractHeaders(text, hfPolicy);
 
                 // body elements
-                foreach (IBodyElement e in document.BodyElements)
+                foreach(IBodyElement e in document.BodyElements)
                 {
                     AppendBodyElementText(text, e);
                     text.Append('\n');
@@ -97,15 +98,15 @@ namespace NPOI.XWPF.Extractor
 
         public void AppendBodyElementText(StringBuilder text, IBodyElement e)
         {
-            if (e is XWPFParagraph paragraph)
+            if(e is XWPFParagraph paragraph)
             {
                 AppendParagraphText(text, paragraph);
             }
-            else if (e is XWPFTable table)
+            else if(e is XWPFTable table)
             {
                 AppendTableText(text, table);
             }
-            else if (e is XWPFSDT xwpfsdt)
+            else if(e is XWPFSDT xwpfsdt)
             {
                 text.Append(xwpfsdt.Content.Text);
             }
@@ -116,23 +117,23 @@ namespace NPOI.XWPF.Extractor
             try
             {
                 CT_SectPr ctSectPr = null;
-                if (paragraph.GetCTP().pPr != null)
+                if(paragraph.GetCTP().pPr != null)
                 {
                     ctSectPr = paragraph.GetCTP().pPr.sectPr;
                 }
 
                 XWPFHeaderFooterPolicy headerFooterPolicy = null;
 
-                if (ctSectPr != null)
+                if(ctSectPr != null)
                 {
                     headerFooterPolicy = new XWPFHeaderFooterPolicy(document, ctSectPr);
                     XWPFWordExtractor.ExtractHeaders(text, headerFooterPolicy);
                 }
 
 
-                foreach (IRunElement run in paragraph.Runs)
+                foreach(IRunElement run in paragraph.Runs)
                 {
-                    if (!concatenatePhoneticRuns && run is XWPFRun xr)
+                    if(!concatenatePhoneticRuns && run is XWPFRun xr)
                     {
                         text.Append(xr.GetText());
                     }
@@ -140,10 +141,10 @@ namespace NPOI.XWPF.Extractor
                     {
                         text.Append(run.ToString());
                     }
-                    if (run is XWPFHyperlinkRun hyperlinkRun && fetchHyperlinks)
+                    if(run is XWPFHyperlinkRun hyperlinkRun && fetchHyperlinks)
                     {
                         XWPFHyperlink link = hyperlinkRun.GetHyperlink(document);
-                        if (link != null)
+                        if(link != null)
                             text.Append(" <" + link.URL + ">");
                     }
                 }
@@ -151,28 +152,28 @@ namespace NPOI.XWPF.Extractor
                 // Add comments
                 XWPFCommentsDecorator decorator = new XWPFCommentsDecorator(paragraph, null);
                 String commentText = decorator.GetCommentText();
-                if (commentText.Length > 0)
+                if(commentText.Length > 0)
                 {
                     text.Append(commentText).Append('\n');
                 }
 
                 // Do endnotes and footnotes
                 String footnameText = paragraph.FootnoteText;
-                if (footnameText != null && footnameText.Length > 0)
+                if(footnameText != null && footnameText.Length > 0)
                 {
                     text.Append(footnameText + '\n');
                 }
 
-                if (ctSectPr != null)
+                if(ctSectPr != null)
                 {
                     ExtractFooters(text, headerFooterPolicy);
                 }
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 throw new POIXMLException(e);
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new POIXMLException(e);
             }
@@ -182,21 +183,21 @@ namespace NPOI.XWPF.Extractor
         private static void AppendTableText(StringBuilder text, XWPFTable table)
         {
             //this works recursively to pull embedded tables from tables
-            foreach (XWPFTableRow row in table.Rows)
+            foreach(XWPFTableRow row in table.Rows)
             {
                 List<ICell> cells = row.GetTableICells();
-                for (int i = 0; i < cells.Count; i++)
+                for(int i = 0; i < cells.Count; i++)
                 {
                     ICell cell = cells[(i)];
-                    if (cell is XWPFTableCell tableCell)
+                    if(cell is XWPFTableCell tableCell)
                     {
                         text.Append(tableCell.GetTextRecursively());
                     }
-                    else if (cell is XWPFSDTCell xwpfsdtCell)
+                    else if(cell is XWPFSDTCell xwpfsdtCell)
                     {
                         text.Append(xwpfsdtCell.Content.Text);
                     }
-                    if (i < cells.Count - 1)
+                    if(i < cells.Count - 1)
                     {
                         text.Append("\t");
                     }
@@ -207,16 +208,17 @@ namespace NPOI.XWPF.Extractor
 
         private static void ExtractFooters(StringBuilder text, XWPFHeaderFooterPolicy hfPolicy)
         {
-            if (hfPolicy == null) return;
-            if (hfPolicy.GetFirstPageFooter() != null)
+            if(hfPolicy == null)
+                return;
+            if(hfPolicy.GetFirstPageFooter() != null)
             {
                 text.Append(hfPolicy.GetFirstPageFooter().Text);
             }
-            if (hfPolicy.GetEvenPageFooter() != null)
+            if(hfPolicy.GetEvenPageFooter() != null)
             {
                 text.Append(hfPolicy.GetEvenPageFooter().Text);
             }
-            if (hfPolicy.GetDefaultFooter() != null)
+            if(hfPolicy.GetDefaultFooter() != null)
             {
                 text.Append(hfPolicy.GetDefaultFooter().Text);
             }
@@ -224,16 +226,17 @@ namespace NPOI.XWPF.Extractor
 
         private static void ExtractHeaders(StringBuilder text, XWPFHeaderFooterPolicy hfPolicy)
         {
-            if (hfPolicy == null) return;
-            if (hfPolicy.GetFirstPageHeader() != null)
+            if(hfPolicy == null)
+                return;
+            if(hfPolicy.GetFirstPageHeader() != null)
             {
                 text.Append(hfPolicy.GetFirstPageHeader().Text);
             }
-            if (hfPolicy.GetEvenPageHeader() != null)
+            if(hfPolicy.GetEvenPageHeader() != null)
             {
                 text.Append(hfPolicy.GetEvenPageHeader().Text);
             }
-            if (hfPolicy.GetDefaultHeader() != null)
+            if(hfPolicy.GetDefaultHeader() != null)
             {
                 text.Append(hfPolicy.GetDefaultHeader().Text);
             }

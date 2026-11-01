@@ -15,16 +15,16 @@
    limitations under the License.
 ==================================================================== */
 
-using System.IO;
 using NPOI.POIFS.EventFileSystem;
 using NPOI.Util;
+using System.IO;
 
 namespace NPOI.POIFS.Crypt
 {
-    using System;
-    using System.Text;
     using NPOI.POIFS.Crypt.Standard;
     using NPOI.POIFS.FileSystem;
+    using System;
+    using System.Text;
 
 
     public class DataSpaceMapUtils
@@ -58,10 +58,10 @@ namespace NPOI.POIFS.Crypt
         public static DocumentEntry CreateEncryptionEntry(DirectoryEntry dir, String path, EncryptionRecord out1)
         {
             String[] parts = path.Split("/".ToCharArray());
-            for (int i = 0; i < parts.Length - 1; i++)
+            for(int i = 0; i < parts.Length - 1; i++)
             {
                 dir = dir.HasEntry(parts[i])
-                    ? (DirectoryEntry)dir.GetEntry(parts[i])
+                    ? (DirectoryEntry) dir.GetEntry(parts[i])
                     : dir.CreateDirectory(parts[i]);
             }
 
@@ -71,13 +71,13 @@ namespace NPOI.POIFS.Crypt
 
             String fileName = parts[parts.Length - 1];
 
-            if (dir.HasEntry(fileName))
+            if(dir.HasEntry(fileName))
             {
                 dir.GetEntry(fileName).Delete();
             }
 
             return dir.CreateDocument(fileName, bos.WriteIndex, new POIFSWriterListenerImpl(buf));
-            
+
         }
         public class POIFSWriterListenerImpl : POIFSWriterListener
         {
@@ -92,7 +92,7 @@ namespace NPOI.POIFS.Crypt
                 {
                     event1.Stream.Write(buf, 0, event1.Limit);
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new EncryptedDocumentException(e);
                 }
@@ -113,7 +113,7 @@ namespace NPOI.POIFS.Crypt
                 int length = is1.ReadInt();
                 int entryCount = is1.ReadInt();
                 entries = new DataSpaceMapEntry[entryCount];
-                for (int i = 0; i < entryCount; i++)
+                for(int i = 0; i < entryCount; i++)
                 {
                     entries[i] = new DataSpaceMapEntry(is1);
                 }
@@ -123,7 +123,7 @@ namespace NPOI.POIFS.Crypt
             {
                 os.WriteInt(8);
                 os.WriteInt(entries.Length);
-                foreach (DataSpaceMapEntry dsme in entries)
+                foreach(DataSpaceMapEntry dsme in entries)
                 {
                     dsme.Write(os);
                 }
@@ -150,7 +150,7 @@ namespace NPOI.POIFS.Crypt
                 int referenceComponentCount = is1.ReadInt();
                 referenceComponentType = new int[referenceComponentCount];
                 referenceComponent = new String[referenceComponentCount];
-                for (int i = 0; i < referenceComponentCount; i++)
+                for(int i = 0; i < referenceComponentCount; i++)
                 {
                     referenceComponentType[i] = is1.ReadInt();
                     referenceComponent[i] = ReadUnicodeLPP4(is1);
@@ -163,7 +163,7 @@ namespace NPOI.POIFS.Crypt
                 int start = os.WriteIndex;
                 ILittleEndianOutput sizeOut = os.CreateDelayedOutput(LittleEndianConsts.INT_SIZE);
                 os.WriteInt(referenceComponent.Length);
-                for (int i = 0; i < referenceComponent.Length; i++)
+                for(int i = 0; i < referenceComponent.Length; i++)
                 {
                     os.WriteInt(referenceComponentType[i]);
                     WriteUnicodeLPP4(os, referenceComponent[i]);
@@ -187,7 +187,7 @@ namespace NPOI.POIFS.Crypt
                 int headerLength = is1.ReadInt();
                 int transformReferenceCount = is1.ReadInt();
                 transformer = new String[transformReferenceCount];
-                for (int i = 0; i < transformReferenceCount; i++)
+                for(int i = 0; i < transformReferenceCount; i++)
                 {
                     transformer[i] = ReadUnicodeLPP4(is1);
                 }
@@ -197,7 +197,7 @@ namespace NPOI.POIFS.Crypt
             {
                 bos.WriteInt(8);
                 bos.WriteInt(transformer.Length);
-                foreach (String str in transformer)
+                foreach(String str in transformer)
                 {
                     WriteUnicodeLPP4(bos, str);
                 }
@@ -344,7 +344,7 @@ namespace NPOI.POIFS.Crypt
         public static String ReadUnicodeLPP4(ILittleEndianInput is1)
         {
             int length = is1.ReadInt();
-            if (length % 2 != 0)
+            if(length % 2 != 0)
             {
                 throw new EncryptedDocumentException(
                     "UNICODE-LP-P4 structure is a multiple of 4 bytes. "
@@ -352,7 +352,7 @@ namespace NPOI.POIFS.Crypt
             }
 
             String result = StringUtil.ReadUnicodeLE(is1, length / 2);
-            if (length % 4 == 2)
+            if(length % 4 == 2)
             {
                 // PAdding (variable): A Set of bytes that MUST be of the correct size such that the size of the 
                 // UNICODE-LP-P4 structure is a multiple of 4 bytes. If PAdding is present, it MUST be exactly 
@@ -368,7 +368,7 @@ namespace NPOI.POIFS.Crypt
             byte[] buf = StringUtil.GetToUnicodeLE(string1);
             os.WriteInt(buf.Length);
             os.Write(buf);
-            if (buf.Length % 4 == 2)
+            if(buf.Length % 4 == 2)
             {
                 os.WriteShort(0);
             }
@@ -377,7 +377,7 @@ namespace NPOI.POIFS.Crypt
         public static String ReadUtf8LPP4(ILittleEndianInput is1)
         {
             int length = is1.ReadInt();
-            if (length == 0 || length == 4)
+            if(length == 0 || length == 4)
             {
                 //@SuppressWarnings("unused")
                 int skip = is1.ReadInt(); // ignore
@@ -393,21 +393,21 @@ namespace NPOI.POIFS.Crypt
             // exactly 4 bytes. If the length is exactly 0x00000004, this specifies an empty string, and the 
             // entire structure also uses exactly 4 bytes
             int scratchedBytes = length % 4;
-            if (scratchedBytes > 0)
+            if(scratchedBytes > 0)
             {
-                for (int i = 0; i < (4 - scratchedBytes); i++)
+                for(int i = 0; i < (4 - scratchedBytes); i++)
                 {
                     is1.ReadByte();
                 }
             }
-            
+
             return Encoding.UTF8.GetString(data, 0, data.Length);
             //return new String(data, 0, data.length, Charset.forName("UTF-8"));
         }
 
         public static void WriteUtf8LPP4(ILittleEndianOutput os, String str)
         {
-            if (str == null || "".Equals(str))
+            if(str == null || "".Equals(str))
             {
                 os.WriteInt(str == null ? 0 : 4);
                 os.WriteInt(0);
@@ -419,9 +419,9 @@ namespace NPOI.POIFS.Crypt
                 os.WriteInt(buf.Length);
                 os.Write(buf);
                 int scratchBytes = buf.Length % 4;
-                if (scratchBytes > 0)
+                if(scratchBytes > 0)
                 {
-                    for (int i = 0; i < (4 - scratchBytes); i++)
+                    for(int i = 0; i < (4 - scratchBytes); i++)
                     {
                         os.WriteByte(0);
                     }

@@ -17,11 +17,11 @@
 
 namespace TestCases.SS.Util
 {
-    using System;
-
     using NPOI.SS.Util;
     using NPOI.Util;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
 
 

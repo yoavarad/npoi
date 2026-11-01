@@ -17,9 +17,9 @@
 
 namespace NPOI.XWPF.UserModel
 {
-    using System;
     using NPOI.OpenXml4Net.OPC;
     using NPOI.Util;
+    using System;
     using System.IO;
 
     /// <summary>
@@ -38,19 +38,19 @@ namespace NPOI.XWPF.UserModel
         static XWPFPictureData()
         {
             RELATIONS = new POIXMLRelation[15];
-            RELATIONS[(int)PictureType.EMF] = XWPFRelation.IMAGE_EMF;
-            RELATIONS[(int)PictureType.WMF] = XWPFRelation.IMAGE_WMF;
-            RELATIONS[(int)PictureType.PICT] = XWPFRelation.IMAGE_PICT;
-            RELATIONS[(int)PictureType.JPEG] = XWPFRelation.IMAGE_JPEG;
-            RELATIONS[(int)PictureType.PNG] = XWPFRelation.IMAGE_PNG;
-            RELATIONS[(int)PictureType.DIB] = XWPFRelation.IMAGE_DIB;
-            RELATIONS[(int)PictureType.GIF] = XWPFRelation.IMAGE_GIF;
-            RELATIONS[(int)PictureType.TIFF] = XWPFRelation.IMAGE_TIFF;
-            RELATIONS[(int)PictureType.EPS] = XWPFRelation.IMAGE_EPS;
-            RELATIONS[(int)PictureType.BMP] = XWPFRelation.IMAGE_BMP;
-            RELATIONS[(int)PictureType.WPG] = XWPFRelation.IMAGE_WPG;
+            RELATIONS[(int) PictureType.EMF] = XWPFRelation.IMAGE_EMF;
+            RELATIONS[(int) PictureType.WMF] = XWPFRelation.IMAGE_WMF;
+            RELATIONS[(int) PictureType.PICT] = XWPFRelation.IMAGE_PICT;
+            RELATIONS[(int) PictureType.JPEG] = XWPFRelation.IMAGE_JPEG;
+            RELATIONS[(int) PictureType.PNG] = XWPFRelation.IMAGE_PNG;
+            RELATIONS[(int) PictureType.DIB] = XWPFRelation.IMAGE_DIB;
+            RELATIONS[(int) PictureType.GIF] = XWPFRelation.IMAGE_GIF;
+            RELATIONS[(int) PictureType.TIFF] = XWPFRelation.IMAGE_TIFF;
+            RELATIONS[(int) PictureType.EPS] = XWPFRelation.IMAGE_EPS;
+            RELATIONS[(int) PictureType.BMP] = XWPFRelation.IMAGE_BMP;
+            RELATIONS[(int) PictureType.WPG] = XWPFRelation.IMAGE_WPG;
             RELATIONS[(int) PictureType.WDP] = XWPFRelation.HDPHOTO_WDP;
-            RELATIONS[(int)PictureType.SVG] = XWPFRelation.IMAGE_SVG;
+            RELATIONS[(int) PictureType.SVG] = XWPFRelation.IMAGE_SVG;
         }
 
         private long? checksum = null;
@@ -107,7 +107,7 @@ namespace NPOI.XWPF.UserModel
                 {
                     return IOUtils.ToByteArray(GetPackagePart().GetInputStream());
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw new POIXMLException(e);
                 }
@@ -151,14 +151,14 @@ namespace NPOI.XWPF.UserModel
         public int GetPictureType()
         {
             String contentType = GetPackagePart().ContentType;
-            for (int i = 0; i < RELATIONS.Length; i++)
+            for(int i = 0; i < RELATIONS.Length; i++)
             {
-                if (RELATIONS[i] == null)
+                if(RELATIONS[i] == null)
                 {
                     continue;
                 }
 
-                if (RELATIONS[i].ContentType.Equals(contentType))
+                if(RELATIONS[i].ContentType.Equals(contentType))
                 {
                     return i;
                 }
@@ -170,7 +170,7 @@ namespace NPOI.XWPF.UserModel
         {
             get
             {
-                if (this.checksum == null)
+                if(this.checksum == null)
                 {
                     Stream is1 = null;
                     byte[] data;
@@ -179,7 +179,7 @@ namespace NPOI.XWPF.UserModel
                         is1 = GetPackagePart().GetInputStream();
                         data = IOUtils.ToByteArray(is1);
                     }
-                    catch (IOException e)
+                    catch(IOException e)
                     {
                         throw new POIXMLException(e);
                     }
@@ -187,10 +187,10 @@ namespace NPOI.XWPF.UserModel
                     {
                         try
                         {
-                            if (is1 != null)
+                            if(is1 != null)
                                 is1.Close();
                         }
-                        catch (IOException e)
+                        catch(IOException e)
                         {
                             throw new POIXMLException(e);
                         }
@@ -216,17 +216,17 @@ namespace NPOI.XWPF.UserModel
              * CRC32, MD5 and SHA-1 Checksums, Additionally compare the
              * data-byte-array lengths).
              */
-            if (obj == this)
+            if(obj == this)
             {
                 return true;
             }
 
-            if (obj == null)
+            if(obj == null)
             {
                 return false;
             }
 
-            if (obj is not XWPFPictureData picData)
+            if(obj is not XWPFPictureData picData)
             {
                 return false;
             }
@@ -234,26 +234,26 @@ namespace NPOI.XWPF.UserModel
             PackagePart foreignPackagePart = picData.GetPackagePart();
             PackagePart ownPackagePart = this.GetPackagePart();
 
-            if ((foreignPackagePart != null && ownPackagePart == null)
+            if((foreignPackagePart != null && ownPackagePart == null)
                     || (foreignPackagePart == null && ownPackagePart != null))
             {
                 return false;
             }
 
-            if (ownPackagePart != null)
+            if(ownPackagePart != null)
             {
                 OPCPackage foreignPackage = foreignPackagePart.Package;
                 OPCPackage ownPackage = ownPackagePart.Package;
 
-                if ((foreignPackage != null && ownPackage == null)
+                if((foreignPackage != null && ownPackage == null)
                         || (foreignPackage == null && ownPackage != null))
                 {
                     return false;
                 }
-                if (ownPackage != null)
+                if(ownPackage != null)
                 {
 
-                    if (!ownPackage.Equals(foreignPackage))
+                    if(!ownPackage.Equals(foreignPackage))
                     {
                         return false;
                     }
@@ -263,7 +263,7 @@ namespace NPOI.XWPF.UserModel
             long foreignChecksum = picData.Checksum;
             long localChecksum = Checksum;
 
-            if (!(localChecksum.Equals(foreignChecksum)))
+            if(!(localChecksum.Equals(foreignChecksum)))
             {
                 return false;
             }

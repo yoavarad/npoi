@@ -1,7 +1,7 @@
-﻿using System;
+using ICSharpCode.SharpZipLib.Zip;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using ICSharpCode.SharpZipLib.Zip;
 
 namespace NPOI.OpenXml4Net.OPC.Internal.Unmarshallers
 {
@@ -43,7 +43,7 @@ namespace NPOI.OpenXml4Net.OPC.Internal.Unmarshallers
             {
                 return _package;
             }
-            set 
+            set
             {
                 this._package = value;
             }

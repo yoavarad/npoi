@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.EventModel
 {
-    using System.IO;
-    using System.Collections;
     using NPOI.HSSF.Record;
+    using System.Collections;
+    using System.IO;
 
 
     /**
@@ -50,24 +50,24 @@ namespace NPOI.HSSF.EventModel
             _listener = listener;
             _sids = sids;
 
-            if (_sids == null)
+            if(_sids == null)
             {
                 _sids = null;
             }
             else
             {
-                if (_sids == null)
-                _sids = new ArrayList();
+                if(_sids == null)
+                    _sids = new ArrayList();
                 _sids.Sort(); // for faster binary search
             }
         }
         private bool IsSidIncluded(int sid)
         {
-            if (_sids == null)
+            if(_sids == null)
             {
                 return true;
             }
-            return _sids.BinarySearch((short)sid) >= 0;
+            return _sids.BinarySearch((short) sid) >= 0;
         }
         /**
      * sends the record event to all registered listeners.
@@ -77,7 +77,7 @@ namespace NPOI.HSSF.EventModel
      */
         private bool ProcessRecord(Record record)
         {
-            if (!IsSidIncluded(record.Sid))
+            if(!IsSidIncluded(record.Sid))
             {
                 return true;
             }
@@ -98,34 +98,45 @@ namespace NPOI.HSSF.EventModel
 
             RecordInputStream recStream = new RecordInputStream(in1);
 
-            while (recStream.HasNextRecord) {
+            while(recStream.HasNextRecord)
+            {
                 recStream.NextRecord();
                 Record[] recs = RecordFactory.CreateRecord(recStream);   // handle MulRK records
-                if (recs.Length > 1) {
-                    for (int k = 0; k < recs.Length; k++) {
-                        if ( last_record != null ) {
-                            if (!ProcessRecord(last_record)) {
-                                return;   
+                if(recs.Length > 1)
+                {
+                    for(int k = 0; k < recs.Length; k++)
+                    {
+                        if(last_record != null)
+                        {
+                            if(!ProcessRecord(last_record))
+                            {
+                                return;
                             }
                         }
-                        last_record = recs[ k ]; // do to keep the algorithm homogeneous...you can't
+                        last_record = recs[k]; // do to keep the algorithm homogeneous...you can't
                     }                            // actually continue a number record anyhow.
-                } else {
+                }
+                else
+                {
                     Record record = recs[ 0 ];
 
-                    if (record != null) {
-                        if (last_record != null) {
-                            if (!ProcessRecord(last_record)) {
-                                return;   
+                    if(record != null)
+                    {
+                        if(last_record != null)
+                        {
+                            if(!ProcessRecord(last_record))
+                            {
+                                return;
                             }
                         }
-                         last_record = record;
+                        last_record = record;
                     }
                 }
             }
-                
-            if (last_record != null) {
-        	    ProcessRecord(last_record);               
+
+            if(last_record != null)
+            {
+                ProcessRecord(last_record);
             }
         }
     }

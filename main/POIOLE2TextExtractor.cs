@@ -48,7 +48,7 @@ namespace NPOI
             //  will get cleaned up if the user calls #close()
             SetFilesystem(document);
         }
-       
+
         /// <summary>
         /// Creates a new text extractor, using the same document as another
         /// text extractor. Normally only used by properties extractors.
@@ -102,7 +102,7 @@ namespace NPOI
         public DirectoryEntry Root
         {
             get { return document.Directory; }
-            
+
         }
     }
 }

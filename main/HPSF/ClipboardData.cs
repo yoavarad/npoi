@@ -1,5 +1,5 @@
-﻿using System.IO;
 using NPOI.Util;
+using System.IO;
 
 namespace NPOI.HPSF
 {
@@ -10,13 +10,14 @@ namespace NPOI.HPSF
 
         private int _format = 0;
         private byte[] _value;
-        internal ClipboardData() {}
-        internal void Read( LittleEndianByteArrayInputStream lei ) 
+        internal ClipboardData() { }
+        internal void Read(LittleEndianByteArrayInputStream lei)
         {
             int offset = lei.GetReadIndex();
             int size = lei.ReadInt();
 
-            if ( size < 4 ) {
+            if(size < 4)
+            {
                 //String msg = 
                 //    "ClipboardData at offset "+offset+" size less than 4 bytes "+
                 //    "(doesn't even have format field!). Setting to format == 0 and hope for the best";
@@ -34,21 +35,21 @@ namespace NPOI.HPSF
         public byte[] Value
         {
             get { return _value; }
-            set { _value = (byte[])value.Clone(); }
+            set { _value = (byte[]) value.Clone(); }
         }
 
-        internal byte[] ToByteArray() 
+        internal byte[] ToByteArray()
         {
             byte[] result = new byte[LittleEndianConsts.INT_SIZE*2+_value.Length];
             LittleEndianByteArrayOutputStream bos = new LittleEndianByteArrayOutputStream(result,0);
-            try 
+            try
             {
                 bos.WriteInt(LittleEndianConsts.INT_SIZE + _value.Length);
                 bos.WriteInt(_format);
                 bos.Write(_value);
                 return result;
-            } 
-            finally 
+            }
+            finally
             {
                 //IOUtils.CloseQuietly(bos); //bos is not a stream object
             }

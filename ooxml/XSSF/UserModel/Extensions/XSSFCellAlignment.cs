@@ -49,12 +49,12 @@ namespace NPOI.XSSF.UserModel.Extensions
             get
             {
                 ST_VerticalAlignment align = cellAlignement.vertical;
-                return (VerticalAlignment)((int)align);
+                return (VerticalAlignment) ((int) align);
             }
-            set 
+            set
             {
-                cellAlignement.vertical = (ST_VerticalAlignment)((int)value);
-                cellAlignement.verticalSpecified = true;            
+                cellAlignement.vertical = (ST_VerticalAlignment) ((int) value);
+                cellAlignement.verticalSpecified = true;
             }
         }
 
@@ -69,11 +69,11 @@ namespace NPOI.XSSF.UserModel.Extensions
             get
             {
                 ST_HorizontalAlignment align = cellAlignement.horizontal;
-                return (HorizontalAlignment)align;
+                return (HorizontalAlignment) align;
             }
-            set 
+            set
             {
-                cellAlignement.horizontal = ((ST_HorizontalAlignment)value);
+                cellAlignement.horizontal = ((ST_HorizontalAlignment) value);
                 cellAlignement.horizontalSpecified = true;
             }
         }
@@ -84,13 +84,13 @@ namespace NPOI.XSSF.UserModel.Extensions
             {
                 if(cellAlignement != null && cellAlignement.readingOrderSpecified)
                 {
-                    return (ReadingOrder)cellAlignement.readingOrder;
+                    return (ReadingOrder) cellAlignement.readingOrder;
                 }
                 return ReadingOrder.CONTEXT;
             }
             set
             {
-                cellAlignement.readingOrder = (long)value;
+                cellAlignement.readingOrder = (long) value;
             }
         }
 
@@ -105,10 +105,10 @@ namespace NPOI.XSSF.UserModel.Extensions
             {
                 return cellAlignement.indent;
             }
-            set 
+            set
             {
                 cellAlignement.indent = value;
-                cellAlignement.indentSpecified = true;            
+                cellAlignement.indentSpecified = true;
             }
         }
 
@@ -139,12 +139,12 @@ namespace NPOI.XSSF.UserModel.Extensions
             set
             {
                 long rotation = value;
-                if (rotation < 0 && rotation >= -90)
+                if(rotation < 0 && rotation >= -90)
                 {
                     rotation = 90 + ((-1) * rotation);
                 }
                 cellAlignement.textRotation = rotation;
-                cellAlignement.textRotationSpecified = true;            
+                cellAlignement.textRotationSpecified = true;
             }
         }
 
@@ -159,10 +159,10 @@ namespace NPOI.XSSF.UserModel.Extensions
             {
                 return cellAlignement.wrapText;
             }
-            set 
+            set
             {
                 cellAlignement.wrapText = value;
-                cellAlignement.wrapTextSpecified = true;            
+                cellAlignement.wrapTextSpecified = true;
             }
         }
 
@@ -187,4 +187,3 @@ namespace NPOI.XSSF.UserModel.Extensions
     }
 
 }
-

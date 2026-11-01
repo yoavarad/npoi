@@ -15,15 +15,15 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.SS.UserModel;
-using System.Text.RegularExpressions;
-using NPOI.OpenXmlFormats.Spreadsheet;
-using System;
-using System.Text; 
 using Cysharp.Text;
-using System.Collections.Generic;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.Model;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NPOI.XSSF.UserModel
 {
@@ -107,7 +107,7 @@ namespace NPOI.XSSF.UserModel
                 }
             }
         }
-        
+
         /**
          * Create empty rich text string and Initialize it with empty string
          */

@@ -17,11 +17,10 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    using System.Text;
-
     using NPOI.SS.Formula.Function;
     using NPOI.Util;
+    using System;
+    using System.Text;
 
 
     /**
@@ -51,12 +50,12 @@ namespace NPOI.SS.Formula.PTG
         protected AbstractFunctionPtg(int functionIndex, int pReturnClass, byte[] paramTypes, int nParams)
         {
             _numberOfArgs = nParams;
-            if (functionIndex < short.MinValue || functionIndex > short.MaxValue)
+            if(functionIndex < short.MinValue || functionIndex > short.MaxValue)
                 throw new RuntimeException("functionIndex " + functionIndex + " cannot be cast to short");
-            _functionIndex = (short)functionIndex;
-            if (pReturnClass < Byte.MinValue || pReturnClass > Byte.MaxValue)
+            _functionIndex = (short) functionIndex;
+            if(pReturnClass < Byte.MinValue || pReturnClass > Byte.MaxValue)
                 throw new RuntimeException("pReturnClass " + pReturnClass + " cannot be cast to byte");
-            returnClass = (byte)pReturnClass;
+            returnClass = (byte) pReturnClass;
             paramClass = paramTypes;
         }
 
@@ -112,7 +111,7 @@ namespace NPOI.SS.Formula.PTG
         {
             StringBuilder buf = new StringBuilder();
 
-            if (IsExternalFunction)
+            if(IsExternalFunction)
             {
                 buf.Append(operands[0]); // first operand is actually the function name
                 AppendArgs(buf, 1, operands);
@@ -128,9 +127,9 @@ namespace NPOI.SS.Formula.PTG
         private static void AppendArgs(StringBuilder buf, int firstArgIx, String[] operands)
         {
             buf.Append('(');
-            for (int i = firstArgIx; i < operands.Length; i++)
+            for(int i = firstArgIx; i < operands.Length; i++)
             {
-                if (i > firstArgIx)
+                if(i > firstArgIx)
                 {
                     buf.Append(',');
                 }
@@ -153,12 +152,12 @@ namespace NPOI.SS.Formula.PTG
         }
         protected String LookupName(short index)
         {
-            if (index == FunctionMetadataRegistry.FUNCTION_INDEX_EXTERNAL)
+            if(index == FunctionMetadataRegistry.FUNCTION_INDEX_EXTERNAL)
             {
                 return "#external#";
             }
             FunctionMetadata fm = FunctionMetadataRegistry.GetFunctionByIndex(index);
-            if (fm == null)
+            if(fm == null)
             {
                 throw new Exception("bad function index (" + index + ")");
             }
@@ -174,7 +173,7 @@ namespace NPOI.SS.Formula.PTG
         protected static short LookupIndex(String name)
         {
             short ix = FunctionMetadataRegistry.LookupIndexByName(name.ToUpper());
-            if (ix < 0)
+            if(ix < 0)
             {
                 return FUNCTION_INDEX_EXTERNAL;
             }
@@ -188,7 +187,7 @@ namespace NPOI.SS.Formula.PTG
 
         public byte GetParameterClass(int index)
         {
-            if (index >= paramClass.Length)
+            if(index >= paramClass.Length)
             {
                 // For var-arg (and other?) functions, the metadata does not list all the parameter
                 // operand classes.  In these cases, all extra parameters are assumed to have the 

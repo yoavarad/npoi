@@ -15,28 +15,30 @@
    limitations under the License.
 ==================================================================== */
 
-using NPOI.Util;
 using NPOI.OpenXml4Net.OPC;
+using NPOI.Util;
+using NPOI.XWPF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using TestCases.OpenXml4Net;
 using System.IO;
 using System.Text.RegularExpressions;
-using NPOI.XWPF.UserModel;
+using TestCases.OpenXml4Net;
 namespace TestCases.OpenXml4Net.OPC
 {
 
 
     [TestFixture]
-    public class TestRelationships  {
-    private static String HYPERLINK_REL_TYPE =
+    public class TestRelationships
+    {
+        private static String HYPERLINK_REL_TYPE =
         "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
-    private static String COMMENTS_REL_TYPE =
+        private static String COMMENTS_REL_TYPE =
         "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
-    private static String SHEET_WITH_COMMENTS =
+        private static String SHEET_WITH_COMMENTS =
         "/xl/worksheets/sheet1.xml";
 
-    private static POILogger logger = POILogFactory.GetLogger(typeof(TestPackageCoreProperties));
+        private static POILogger logger = POILogFactory.GetLogger(typeof(TestPackageCoreProperties));
 
         /**
          * Test relationships are correctly loaded. This at the moment fails (as of r499)
@@ -45,7 +47,8 @@ namespace TestCases.OpenXml4Net.OPC
          * really look also for not yet loaded parts.
          */
         [Test]
-        public void TestLoadRelationships() {
+        public void TestLoadRelationships()
+        {
             Stream is1 = OpenXml4NetTestDataSamples.OpenSampleStream("sample.xlsx");
             OPCPackage pkg = OPCPackage.Open(is1);
             logger.Log(POILogger.DEBUG, "1: " + pkg);
@@ -53,7 +56,8 @@ namespace TestCases.OpenXml4Net.OPC
             PackageRelationship coreDocRelationship = rels.GetRelationship(0);
             PackagePart corePart = pkg.GetPart(coreDocRelationship);
             String[] relIds = { "rId1", "rId2", "rId3" };
-            foreach (String relId in relIds) {
+            foreach(String relId in relIds)
+            {
                 PackageRelationship rel = corePart.GetRelationship(relId);
                 ClassicAssert.IsNotNull(rel);
                 PackagePartName relName = PackagingUriHelper.CreatePartName(rel.TargetUri);
@@ -61,22 +65,23 @@ namespace TestCases.OpenXml4Net.OPC
                 ClassicAssert.AreEqual(1, sheetPart.Relationships.Size, "Number of relationships1 for " + sheetPart.PartName);
             }
         }
-        
+
         /**
          * Checks that we can fetch a collection of relations by
          *  type, then grab from within there by id
          */
         [Test]
-        public void TestFetchFromCollection() {
+        public void TestFetchFromCollection()
+        {
             Stream is1 = OpenXml4NetTestDataSamples.OpenSampleStream("ExcelWithHyperlinks.xlsx");
             OPCPackage pkg = OPCPackage.Open(is1);
             PackagePart sheet = pkg.GetPart(
                     PackagingUriHelper.CreatePartName(SHEET_WITH_COMMENTS));
             ClassicAssert.IsNotNull(sheet);
-            
+
             ClassicAssert.IsTrue(sheet.HasRelationships);
             ClassicAssert.AreEqual(6, sheet.Relationships.Size);
-            
+
             // Should have three hyperlinks, and one comment
             PackageRelationshipCollection hyperlinks =
                 sheet.GetRelationshipsByType(HYPERLINK_REL_TYPE);
@@ -84,7 +89,7 @@ namespace TestCases.OpenXml4Net.OPC
                 sheet.GetRelationshipsByType(COMMENTS_REL_TYPE);
             ClassicAssert.AreEqual(3, hyperlinks.Size);
             ClassicAssert.AreEqual(1, comments.Size);
-            
+
             // Check we can Get bits out by id
             // Hyperlinks are rId1, rId2 and rId3
             // Comment is rId6
@@ -92,24 +97,25 @@ namespace TestCases.OpenXml4Net.OPC
             ClassicAssert.IsNotNull(hyperlinks.GetRelationshipByID("rId2"));
             ClassicAssert.IsNotNull(hyperlinks.GetRelationshipByID("rId3"));
             ClassicAssert.IsNull(hyperlinks.GetRelationshipByID("rId6"));
-            
+
             ClassicAssert.IsNull(comments.GetRelationshipByID("rId1"));
             ClassicAssert.IsNull(comments.GetRelationshipByID("rId2"));
             ClassicAssert.IsNull(comments.GetRelationshipByID("rId3"));
             ClassicAssert.IsNotNull(comments.GetRelationshipByID("rId6"));
-            
+
             ClassicAssert.IsNotNull(sheet.GetRelationship("rId1"));
             ClassicAssert.IsNotNull(sheet.GetRelationship("rId2"));
             ClassicAssert.IsNotNull(sheet.GetRelationship("rId3"));
             ClassicAssert.IsNotNull(sheet.GetRelationship("rId6"));
         }
-        
+
         /**
          * Excel uses relations on sheets to store the details of 
          *  external hyperlinks. Check we can load these ok.
          */
         [Test]
-        public void TestLoadExcelHyperlinkRelations() {
+        public void TestLoadExcelHyperlinkRelations()
+        {
             Stream is1 = OpenXml4NetTestDataSamples.OpenSampleStream("ExcelWithHyperlinks.xlsx");
             OPCPackage pkg = OPCPackage.Open(is1);
             PackagePart sheet = pkg.GetPart(
@@ -122,14 +128,14 @@ namespace TestCases.OpenXml4Net.OPC
             ClassicAssert.AreEqual("rId1", url.Id);
             ClassicAssert.AreEqual("/xl/worksheets/sheet1.xml", url.SourceUri.ToString());
             ClassicAssert.AreEqual("http://poi.apache.org/", url.TargetUri.ToString());
-            
+
             // rId2 is file
             PackageRelationship file = sheet.GetRelationship("rId2");
             ClassicAssert.IsNotNull(file);
             ClassicAssert.AreEqual("rId2", file.Id);
             ClassicAssert.AreEqual("/xl/worksheets/sheet1.xml", file.SourceUri.ToString());
             ClassicAssert.AreEqual("WithVariousData.xlsx", file.TargetUri.ToString());
-            
+
             // rId3 is mailto
             PackageRelationship mailto = sheet.GetRelationship("rId3");
             ClassicAssert.IsNotNull(mailto);
@@ -137,22 +143,23 @@ namespace TestCases.OpenXml4Net.OPC
             ClassicAssert.AreEqual("/xl/worksheets/sheet1.xml", mailto.SourceUri.ToString());
             ClassicAssert.AreEqual("mailto:dev@poi.apache.org?subject=XSSF%20Hyperlinks", mailto.TargetUri.AbsoluteUri);
         }
-    
+
         /*
          * Excel uses relations on sheets to store the details of 
          *  external hyperlinks. Check we can create these OK, 
          *  then still read them later
          */
         [Test]
-        public void TestCreateExcelHyperlinkRelations() {
+        public void TestCreateExcelHyperlinkRelations()
+        {
             String filepath = OpenXml4NetTestDataSamples.GetSampleFileName("ExcelWithHyperlinks.xlsx");
             OPCPackage pkg = OPCPackage.Open(filepath, PackageAccess.READ_WRITE);
             PackagePart sheet = pkg.GetPart(
                     PackagingUriHelper.CreatePartName(SHEET_WITH_COMMENTS));
             ClassicAssert.IsNotNull(sheet);
-            
+
             ClassicAssert.AreEqual(3, sheet.GetRelationshipsByType(HYPERLINK_REL_TYPE).Size);
-            
+
             // Add three new ones
             PackageRelationship openxml4j =
                 sheet.AddExternalRelationship("http://www.Openxml4j.org/", HYPERLINK_REL_TYPE);
@@ -160,32 +167,32 @@ namespace TestCases.OpenXml4Net.OPC
                 sheet.AddExternalRelationship("http://openxml4j.sf.net/", HYPERLINK_REL_TYPE);
             PackageRelationship file =
                 sheet.AddExternalRelationship("MyDocument.docx", HYPERLINK_REL_TYPE);
-            
+
             // Check they were Added properly
             ClassicAssert.IsNotNull(openxml4j);
             ClassicAssert.IsNotNull(sf);
             ClassicAssert.IsNotNull(file);
-            
+
             ClassicAssert.AreEqual(6, sheet.GetRelationshipsByType(HYPERLINK_REL_TYPE).Size);
-            
+
             ClassicAssert.AreEqual("http://www.openxml4j.org/", openxml4j.TargetUri.ToString());
             ClassicAssert.AreEqual("/xl/worksheets/sheet1.xml", openxml4j.SourceUri.ToString());
             ClassicAssert.AreEqual(HYPERLINK_REL_TYPE, openxml4j.RelationshipType);
-            
+
             ClassicAssert.AreEqual("http://openxml4j.sf.net/", sf.TargetUri.ToString());
             ClassicAssert.AreEqual("/xl/worksheets/sheet1.xml", sf.SourceUri.ToString());
             ClassicAssert.AreEqual(HYPERLINK_REL_TYPE, sf.RelationshipType);
-            
+
             ClassicAssert.AreEqual("MyDocument.docx", file.TargetUri.ToString());
             ClassicAssert.AreEqual("/xl/worksheets/sheet1.xml", file.SourceUri.ToString());
             ClassicAssert.AreEqual(HYPERLINK_REL_TYPE, file.RelationshipType);
-            
+
             // Will Get ids 7, 8 and 9, as we already have 1-6
             ClassicAssert.AreEqual("rId7", openxml4j.Id);
             ClassicAssert.AreEqual("rId8", sf.Id);
             ClassicAssert.AreEqual("rId9", file.Id);
-            
-            
+
+
             // Write out and re-load
             MemoryStream baos = new MemoryStream();
             pkg.Save(baos);
@@ -196,14 +203,14 @@ namespace TestCases.OpenXml4Net.OPC
             // Check again
             sheet = pkg.GetPart(
                     PackagingUriHelper.CreatePartName(SHEET_WITH_COMMENTS));
-            
+
             ClassicAssert.AreEqual(6, sheet.GetRelationshipsByType(HYPERLINK_REL_TYPE).Size);
-            
+
             ClassicAssert.AreEqual("http://poi.apache.org/",
                     sheet.GetRelationship("rId1").TargetUri.ToString());
             ClassicAssert.AreEqual("mailto:dev@poi.apache.org?subject=XSSF Hyperlinks",
                     sheet.GetRelationship("rId3").TargetUri.ToString());
-            
+
             ClassicAssert.AreEqual("http://www.openxml4j.org/",
                     sheet.GetRelationship("rId7").TargetUri.ToString());
             ClassicAssert.AreEqual("http://openxml4j.sf.net/",
@@ -212,49 +219,50 @@ namespace TestCases.OpenXml4Net.OPC
                     sheet.GetRelationship("rId9").TargetUri.ToString());
         }
         [Test]
-        public void TestCreateRelationsFromScratch() {
+        public void TestCreateRelationsFromScratch()
+        {
             MemoryStream baos = new MemoryStream();
             OPCPackage pkg = OPCPackage.Create(baos);
-            
+
             PackagePart partA =
                 pkg.CreatePart(PackagingUriHelper.CreatePartName("/partA"), "text/plain");
             PackagePart partB =
                 pkg.CreatePart(PackagingUriHelper.CreatePartName("/partB"), "image/png");
             ClassicAssert.IsNotNull(partA);
             ClassicAssert.IsNotNull(partB);
-            
+
             // Internal
             partA.AddRelationship(partB.PartName, TargetMode.Internal, "http://example/Rel");
-            
+
             // External
             partA.AddExternalRelationship("http://poi.apache.org/", "http://example/poi");
             partB.AddExternalRelationship("http://poi.apache.org/ss/", "http://example/poi/ss");
 
             // Check as expected currently
             ClassicAssert.AreEqual("/partB", partA.GetRelationship("rId1").TargetUri.ToString());
-            ClassicAssert.AreEqual("http://poi.apache.org/", 
+            ClassicAssert.AreEqual("http://poi.apache.org/",
                     partA.GetRelationship("rId2").TargetUri.ToString());
-            ClassicAssert.AreEqual("http://poi.apache.org/ss/", 
+            ClassicAssert.AreEqual("http://poi.apache.org/ss/",
                     partB.GetRelationship("rId1").TargetUri.ToString());
-            
-            
+
+
             // Save, and re-load
             pkg.Close();
             MemoryStream bais = new MemoryStream(baos.ToArray());
             pkg = OPCPackage.Open(bais);
-            
+
             partA = pkg.GetPart(PackagingUriHelper.CreatePartName("/partA"));
             partB = pkg.GetPart(PackagingUriHelper.CreatePartName("/partB"));
-            
-            
+
+
             // Check the relations
             ClassicAssert.AreEqual(2, partA.Relationships.Size);
             ClassicAssert.AreEqual(1, partB.Relationships.Size);
-            
+
             ClassicAssert.AreEqual("/partB", partA.GetRelationship("rId1").TargetUri.OriginalString);
-            ClassicAssert.AreEqual("http://poi.apache.org/", 
+            ClassicAssert.AreEqual("http://poi.apache.org/",
                     partA.GetRelationship("rId2").TargetUri.ToString());
-            ClassicAssert.AreEqual("http://poi.apache.org/ss/", 
+            ClassicAssert.AreEqual("http://poi.apache.org/ss/",
                     partB.GetRelationship("rId1").TargetUri.ToString());
             // Check core too
             ClassicAssert.AreEqual("/docProps/core.xml",
@@ -300,7 +308,8 @@ namespace TestCases.OpenXml4Net.OPC
             Assert_50154(pkg);
         }
 
-        public void Assert_50154(OPCPackage pkg) {
+        public void Assert_50154(OPCPackage pkg)
+        {
             Uri drawingUri = new Uri("/xl/drawings/drawing1.xml",UriKind.Relative);
             PackagePart drawingPart = pkg.GetPart(PackagingUriHelper.CreatePartName(drawingUri));
             PackageRelationshipCollection drawingRels = drawingPart.Relationships;
@@ -316,7 +325,7 @@ namespace TestCases.OpenXml4Net.OPC
             Uri parent = drawingPart.PartName.URI;
             Uri rel1 = new Uri(Path.Combine(parent.ToString(),rId1.TargetUri.ToString()),UriKind.Relative);
             Uri rel11 = PackagingUriHelper.RelativizeUri(drawingPart.PartName.URI, rId1.TargetUri);
-            ClassicAssert.AreEqual("'Another Sheet'!A1", Uri.UnescapeDataString(rel1.ToString().Split(new char[]{'#'})[1]));
+            ClassicAssert.AreEqual("'Another Sheet'!A1", Uri.UnescapeDataString(rel1.ToString().Split(new char[] { '#' })[1]));
             ClassicAssert.AreEqual("'Another Sheet'!A1", Uri.UnescapeDataString(rel11.ToString().Split(new char[] { '#' })[1]));
 
             PackageRelationship rId2 = drawingPart.GetRelationship("rId2");
@@ -346,7 +355,7 @@ namespace TestCases.OpenXml4Net.OPC
         }
         public static string ResolveRelativePath(string referencePath, string relativePath)
         {
-            return Path.GetFullPath(Path.Combine(referencePath, relativePath));  
+            return Path.GetFullPath(Path.Combine(referencePath, relativePath));
         }
         [Test]
         public void TestSelfRelations_bug51187()
@@ -386,7 +395,7 @@ namespace TestCases.OpenXml4Net.OPC
         public void TestTrailingSpacesInURI_53282()
         {
             OPCPackage pkg = null;
-            using (Stream stream = OpenXml4NetTestDataSamples.OpenSampleStream("53282.xlsx"))
+            using(Stream stream = OpenXml4NetTestDataSamples.OpenSampleStream("53282.xlsx"))
             {
                 pkg = OPCPackage.Open(stream);
             }
@@ -425,13 +434,13 @@ namespace TestCases.OpenXml4Net.OPC
 
             // Should have 3 root relationships
             bool foundDocRel = false, foundCorePropRel = false, foundExtPropRel = false;
-            foreach (PackageRelationship pr in p.Relationships)
+            foreach(PackageRelationship pr in p.Relationships)
             {
-                if (pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_DOCUMENT))
+                if(pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_DOCUMENT))
                     foundDocRel = true;
-                if (pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
+                if(pr.RelationshipType.Equals(PackageRelationshipTypes.CORE_PROPERTIES))
                     foundCorePropRel = true;
-                if (pr.RelationshipType.Equals(PackageRelationshipTypes.EXTENDED_PROPERTIES))
+                if(pr.RelationshipType.Equals(PackageRelationshipTypes.EXTENDED_PROPERTIES))
                     foundExtPropRel = true;
             }
             ClassicAssert.IsTrue(foundDocRel, "Core/Doc Relationship not found in " + p.Relationships);
@@ -440,19 +449,19 @@ namespace TestCases.OpenXml4Net.OPC
 
             // Should have normal work parts
             bool foundCoreProps = false, foundDocument = false, foundTheme1 = false;
-            foreach (PackagePart part in p.GetParts())
+            foreach(PackagePart part in p.GetParts())
             {
-                if (part.PartName.ToString().Equals("/docProps/core.xml"))
+                if(part.PartName.ToString().Equals("/docProps/core.xml"))
                 {
                     ClassicAssert.AreEqual(ContentTypes.CORE_PROPERTIES_PART, part.ContentType);
                     foundCoreProps = true;
                 }
-                if (part.PartName.ToString().Equals("/word/document.xml"))
+                if(part.PartName.ToString().Equals("/word/document.xml"))
                 {
                     ClassicAssert.AreEqual(XWPFRelation.DOCUMENT.ContentType, part.ContentType);
                     foundDocument = true;
                 }
-                if (part.PartName.ToString().Equals("/word/theme/theme1.xml"))
+                if(part.PartName.ToString().Equals("/word/theme/theme1.xml"))
                 {
                     ClassicAssert.AreEqual(XWPFRelation.THEME.ContentType, part.ContentType);
                     foundTheme1 = true;
@@ -465,4 +474,3 @@ namespace TestCases.OpenXml4Net.OPC
 
     }
 }
-

@@ -17,10 +17,11 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     /**
      * 
      */
@@ -32,11 +33,11 @@ namespace TestCases.HSSF.UserModel
         {
 
             NPOI.SS.UserModel.ISheet sht = book.CreateSheet("s" + sheet);
-            for (int r = 0; r < 4; r++)
+            for(int r = 0; r < 4; r++)
             {
 
                 IRow row = sht.CreateRow(r);
-                for (int c = 0; c < 4; c++)
+                for(int c = 0; c < 4; c++)
                 {
 
                     ICell cel = row.CreateCell(c);

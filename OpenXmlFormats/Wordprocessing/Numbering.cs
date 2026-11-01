@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,16 +27,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Num Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Num ctObj = new CT_Num();
             ctObj.numId = XmlHelper.ReadString(node.Attributes["w:numId"]);
             ctObj.lvlOverride = new List<CT_NumLvl>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "abstractNumId")
+                if(childNode.LocalName == "abstractNumId")
                     ctObj.abstractNumId = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lvlOverride")
+                else if(childNode.LocalName == "lvlOverride")
                     ctObj.lvlOverride.Add(CT_NumLvl.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -49,11 +49,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:numId", this.numId);
             sw.Write('>');
-            if (this.abstractNumId != null)
+            if(this.abstractNumId != null)
                 this.abstractNumId.Write(sw, "abstractNumId");
-            if (this.lvlOverride != null)
+            if(this.lvlOverride != null)
             {
-                foreach (CT_NumLvl x in this.lvlOverride)
+                foreach(CT_NumLvl x in this.lvlOverride)
                 {
                     x.Write(sw, "lvlOverride");
                 }
@@ -104,7 +104,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_DecimalNumber AddNewAbstractNumId()
         {
-            if (this.abstractNumIdField == null)
+            if(this.abstractNumIdField == null)
                 abstractNumIdField = new CT_DecimalNumber();
             return abstractNumIdField;
         }
@@ -141,15 +141,15 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_NumLvl Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NumLvl ctObj = new CT_NumLvl();
             ctObj.ilvl = XmlHelper.ReadString(node.Attributes["w:ilvl"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "startOverride")
+                if(childNode.LocalName == "startOverride")
                     ctObj.startOverride = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lvl")
+                else if(childNode.LocalName == "lvl")
                     ctObj.lvl = CT_Lvl.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -162,9 +162,9 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:ilvl", this.ilvl);
             sw.Write('>');
-            if (this.startOverride != null)
+            if(this.startOverride != null)
                 this.startOverride.Write(sw, "startOverride");
-            if (this.lvl != null)
+            if(this.lvl != null)
                 this.lvl.Write(sw, "lvl");
             sw.WriteEndW(nodeName);
         }
@@ -223,21 +223,21 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private CT_DecimalNumber numIdMacAtCleanupField;
         public static CT_Numbering Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Numbering ctObj = new CT_Numbering();
             ctObj.numPicBullet = new List<CT_NumPicBullet>();
             ctObj.abstractNum = new List<CT_AbstractNum>();
             ctObj.num = new List<CT_Num>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "numIdMacAtCleanup")
+                if(childNode.LocalName == "numIdMacAtCleanup")
                     ctObj.numIdMacAtCleanup = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "numPicBullet")
+                else if(childNode.LocalName == "numPicBullet")
                     ctObj.numPicBullet.Add(CT_NumPicBullet.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "abstractNum")
+                else if(childNode.LocalName == "abstractNum")
                     ctObj.abstractNum.Add(CT_AbstractNum.Parse(childNode, namespaceManager));
-                else if (childNode.LocalName == "num")
+                else if(childNode.LocalName == "num")
                     ctObj.num.Add(CT_Num.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -253,25 +253,25 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.Write("xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" ");
             sw.Write("xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" ");
             sw.Write("xmlns:wne=\"http://schemas.microsoft.com/office/word/2006/wordml\">");
-            if (this.numIdMacAtCleanup != null)
+            if(this.numIdMacAtCleanup != null)
                 this.numIdMacAtCleanup.Write(sw, "numIdMacAtCleanup");
-            if (this.numPicBullet != null)
+            if(this.numPicBullet != null)
             {
-                foreach (CT_NumPicBullet x in this.numPicBullet)
+                foreach(CT_NumPicBullet x in this.numPicBullet)
                 {
                     x.Write(sw, "numPicBullet");
                 }
             }
-            if (this.abstractNum != null)
+            if(this.abstractNum != null)
             {
-                foreach (CT_AbstractNum x in this.abstractNum)
+                foreach(CT_AbstractNum x in this.abstractNum)
                 {
                     x.Write(sw, "abstractNum");
                 }
             }
-            if (this.num != null)
+            if(this.num != null)
             {
-                foreach (CT_Num x in this.num)
+                foreach(CT_Num x in this.num)
                 {
                     x.Write(sw, "num");
                 }
@@ -357,7 +357,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         public CT_Num AddNewNum()
         {
             CT_Num num = new CT_Num();
-            if (this.numField == null)
+            if(this.numField == null)
                 this.numField = new List<CT_Num>();
             numField.Add(num);
             return num;
@@ -365,10 +365,10 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public void SetNumArray(int pos, CT_Num ct_Num)
         {
-            if (this.numField == null)
+            if(this.numField == null)
                 this.numField = new List<CT_Num>();
 
-            if (pos < 0 || pos >= numField.Count)
+            if(pos < 0 || pos >= numField.Count)
                 numField.Add(ct_Num);
             numField[pos] = ct_Num;
         }
@@ -376,7 +376,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         public CT_AbstractNum AddNewAbstractNum()
         {
             CT_AbstractNum num = new CT_AbstractNum();
-            if (this.abstractNumField == null)
+            if(this.abstractNumField == null)
                 this.abstractNumField = new List<CT_AbstractNum>();
             this.abstractNumField.Add(num);
             return num;
@@ -384,16 +384,16 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public void SetAbstractNumArray(int pos, CT_AbstractNum cT_AbstractNum)
         {
-            if (this.abstractNumField == null)
+            if(this.abstractNumField == null)
                 this.abstractNumField = new List<CT_AbstractNum>();
-            if (pos < 0 || pos >= abstractNumField.Count)
+            if(pos < 0 || pos >= abstractNumField.Count)
                 abstractNumField.Add(cT_AbstractNum);
             abstractNumField[pos] = cT_AbstractNum;
         }
 
         public void RemoveAbstractNum(int p)
         {
-            if (this.abstractNumField == null)
+            if(this.abstractNumField == null)
                 return;
             abstractNumField.RemoveAt(p);
         }
@@ -443,13 +443,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_NumPicBullet Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NumPicBullet ctObj = new CT_NumPicBullet();
             ctObj.numPicBulletId = XmlHelper.ReadString(node.Attributes["w:numPicBulletId"]);
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "pict")
+                if(childNode.LocalName == "pict")
                     ctObj.pict = CT_Picture.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -462,7 +462,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:numPicBulletId", this.numPicBulletId);
             sw.Write('>');
-            if (this.pict != null)
+            if(this.pict != null)
                 this.pict.Write(sw, "pict");
             sw.WriteEndW(nodeName);
         }
@@ -481,11 +481,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_NumFmt Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NumFmt ctObj = new CT_NumFmt();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_NumberFormat)Enum.Parse(typeof(ST_NumberFormat), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_NumberFormat) Enum.Parse(typeof(ST_NumberFormat), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -521,185 +521,185 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_NumberFormat
     {
 
-    
+
         [XmlEnum("decimal")]
         @decimal,
 
-    
+
         upperRoman,
 
-    
+
         lowerRoman,
 
-    
+
         upperLetter,
 
-    
+
         lowerLetter,
 
-    
+
         ordinal,
 
-    
+
         cardinalText,
 
-    
+
         ordinalText,
 
-    
+
         hex,
 
-    
+
         chicago,
 
-    
+
         ideographDigital,
 
-    
+
         japaneseCounting,
 
-    
+
         aiueo,
 
-    
+
         iroha,
 
-    
+
         decimalFullWidth,
 
-    
+
         decimalHalfWidth,
 
-    
+
         japaneseLegal,
 
-    
+
         japaneseDigitalTenThousand,
 
-    
+
         decimalEnclosedCircle,
 
-    
+
         decimalFullWidth2,
 
-    
+
         aiueoFullWidth,
 
-    
+
         irohaFullWidth,
 
-    
+
         decimalZero,
 
-    
+
         bullet,
 
-    
+
         ganada,
 
-    
+
         chosung,
 
-    
+
         decimalEnclosedFullstop,
 
-    
+
         decimalEnclosedParen,
 
-    
+
         decimalEnclosedCircleChinese,
 
-    
+
         ideographEnclosedCircle,
 
-    
+
         ideographTraditional,
 
-    
+
         ideographZodiac,
 
-    
+
         ideographZodiacTraditional,
 
-    
+
         taiwaneseCounting,
 
-    
+
         ideographLegalTraditional,
 
-    
+
         taiwaneseCountingThousand,
 
-    
+
         taiwaneseDigital,
 
-    
+
         chineseCounting,
 
-    
+
         chineseLegalSimplified,
 
-    
+
         chineseCountingThousand,
 
-    
+
         koreanDigital,
 
-    
+
         koreanCounting,
 
-    
+
         koreanLegal,
 
-    
+
         koreanDigital2,
 
-    
+
         vietnameseCounting,
 
-    
+
         russianLower,
 
-    
+
         russianUpper,
 
-    
+
         none,
 
-    
+
         numberInDash,
 
-    
+
         hebrew1,
 
-    
+
         hebrew2,
 
-    
+
         arabicAlpha,
 
-    
+
         arabicAbjad,
 
-    
+
         hindiVowels,
 
-    
+
         hindiConsonants,
 
-    
+
         hindiNumbers,
 
-    
+
         hindiCounting,
 
-    
+
         thaiLetters,
 
-    
+
         thaiNumbers,
 
-    
+
         thaiCounting,
     }
 
@@ -712,11 +712,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_NumRestart Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NumRestart ctObj = new CT_NumRestart();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_RestartNumber)Enum.Parse(typeof(ST_RestartNumber), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_RestartNumber) Enum.Parse(typeof(ST_RestartNumber), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -752,13 +752,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_RestartNumber
     {
 
-    
+
         continuous,
 
-    
+
         eachSect,
 
-    
+
         eachPage,
     }
     [Serializable]
@@ -785,18 +785,18 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_NumPr Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_NumPr ctObj = new CT_NumPr();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "ilvl")
+                if(childNode.LocalName == "ilvl")
                     ctObj.ilvl = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "numId")
+                else if(childNode.LocalName == "numId")
                     ctObj.numId = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "numberingChange")
+                else if(childNode.LocalName == "numberingChange")
                     ctObj.numberingChange = CT_TrackChangeNumbering.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "ins")
+                else if(childNode.LocalName == "ins")
                     ctObj.ins = CT_TrackChange.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -808,13 +808,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             sw.Write('>');
-            if (this.ilvl != null)
+            if(this.ilvl != null)
                 this.ilvl.Write(sw, "ilvl");
-            if (this.numId != null)
+            if(this.numId != null)
                 this.numId.Write(sw, "numId");
-            if (this.numberingChange != null)
+            if(this.numberingChange != null)
                 this.numberingChange.Write(sw, "numberingChange");
-            if (this.ins != null)
+            if(this.ins != null)
                 this.ins.Write(sw, "ins");
             sw.WriteEndW(nodeName);
         }
@@ -897,7 +897,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         private byte[] charField;
         public static CT_Sym Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Sym ctObj = new CT_Sym();
             ctObj.font = XmlHelper.ReadString(node.Attributes["w:font"]);
@@ -1066,7 +1066,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             }
             set
             {
-                 this.lvlField = value;
+                this.lvlField = value;
             }
         }
 
@@ -1116,26 +1116,26 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_AbstractNum Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_AbstractNum ctObj = new CT_AbstractNum();
             ctObj.abstractNumId = XmlHelper.ReadString(node.Attributes["w:abstractNumId"]);
             ctObj.lvl = new List<CT_Lvl>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "nsid")
+                if(childNode.LocalName == "nsid")
                     ctObj.nsid = CT_LongHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "multiLevelType")
+                else if(childNode.LocalName == "multiLevelType")
                     ctObj.multiLevelType = CT_MultiLevelType.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "tmpl")
+                else if(childNode.LocalName == "tmpl")
                     ctObj.tmpl = CT_LongHexNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "name")
+                else if(childNode.LocalName == "name")
                     ctObj.name = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "styleLink")
+                else if(childNode.LocalName == "styleLink")
                     ctObj.styleLink = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "numStyleLink")
+                else if(childNode.LocalName == "numStyleLink")
                     ctObj.numStyleLink = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lvl")
+                else if(childNode.LocalName == "lvl")
                     ctObj.lvl.Add(CT_Lvl.Parse(childNode, namespaceManager));
             }
             return ctObj;
@@ -1146,21 +1146,21 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:abstractNumId", this.abstractNumId);
             sw.Write('>');
-            if (this.nsid != null)
+            if(this.nsid != null)
                 this.nsid.Write(sw, "nsid");
-            if (this.multiLevelType != null)
+            if(this.multiLevelType != null)
                 this.multiLevelType.Write(sw, "multiLevelType");
-            if (this.tmpl != null)
+            if(this.tmpl != null)
                 this.tmpl.Write(sw, "tmpl");
-            if (this.name != null)
+            if(this.name != null)
                 this.name.Write(sw, "name");
-            if (this.styleLink != null)
+            if(this.styleLink != null)
                 this.styleLink.Write(sw, "styleLink");
-            if (this.numStyleLink != null)
+            if(this.numStyleLink != null)
                 this.numStyleLink.Write(sw, "numStyleLink");
-            if (this.lvl != null)
+            if(this.lvl != null)
             {
-                foreach (CT_Lvl x in this.lvl)
+                foreach(CT_Lvl x in this.lvl)
                 {
                     x.Write(sw, "lvl");
                 }
@@ -1170,7 +1170,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public CT_Lvl AddNewLvl()
         {
-            if (this.lvl == null)
+            if(this.lvl == null)
                 this.lvlField = new List<CT_Lvl>();
             CT_Lvl lvl = new CT_Lvl();
             this.lvlField.Add(lvl);
@@ -1198,11 +1198,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_MultiLevelType Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_MultiLevelType ctObj = new CT_MultiLevelType();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_MultiLevelType)Enum.Parse(typeof(ST_MultiLevelType), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_MultiLevelType) Enum.Parse(typeof(ST_MultiLevelType), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -1237,13 +1237,13 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     public enum ST_MultiLevelType
     {
 
-    
+
         singleLevel,
 
-    
+
         multilevel,
 
-    
+
         hybridMultilevel,
     }
 
@@ -1305,41 +1305,41 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         }
         public static CT_Lvl Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_Lvl ctObj = new CT_Lvl();
             ctObj.ilvl = XmlHelper.ReadString(node.Attributes["w:ilvl"]);
             ctObj.tplc = XmlHelper.ReadBytes(node.Attributes["w:tplc"]);
-            if (node.Attributes["w:tentative"] != null)
+            if(node.Attributes["w:tentative"] != null)
             {
-                ctObj.tentative = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:tentative"].Value, true);
+                ctObj.tentative = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:tentative"].Value, true);
                 ctObj.tentativeSpecified = true;
             }
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "start")
+                if(childNode.LocalName == "start")
                     ctObj.start = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "numFmt")
+                else if(childNode.LocalName == "numFmt")
                     ctObj.numFmt = CT_NumFmt.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lvlRestart")
+                else if(childNode.LocalName == "lvlRestart")
                     ctObj.lvlRestart = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pStyle")
+                else if(childNode.LocalName == "pStyle")
                     ctObj.pStyle = CT_String.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "isLgl")
+                else if(childNode.LocalName == "isLgl")
                     ctObj.isLgl = CT_OnOff.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "suff")
+                else if(childNode.LocalName == "suff")
                     ctObj.suff = CT_LevelSuffix.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lvlText")
+                else if(childNode.LocalName == "lvlText")
                     ctObj.lvlText = CT_LevelText.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lvlPicBulletId")
+                else if(childNode.LocalName == "lvlPicBulletId")
                     ctObj.lvlPicBulletId = CT_DecimalNumber.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "legacy")
+                else if(childNode.LocalName == "legacy")
                     ctObj.legacy = CT_LvlLegacy.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "lvlJc")
+                else if(childNode.LocalName == "lvlJc")
                     ctObj.lvlJc = CT_Jc.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "pPr")
+                else if(childNode.LocalName == "pPr")
                     ctObj.pPr = CT_PPr.Parse(childNode, namespaceManager);
-                else if (childNode.LocalName == "rPr")
+                else if(childNode.LocalName == "rPr")
                     ctObj.rPr = CT_RPr.Parse(childNode, namespaceManager);
             }
             return ctObj;
@@ -1353,31 +1353,31 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
             XmlHelper.WriteAttribute(sw, "w:ilvl", this.ilvl);
             XmlHelper.WriteAttribute(sw, "w:tplc", this.tplc);
             if(Util.XmlHelper.ConvertSTOnOffToBoolean(this.tentative) || this.tentativeFieldSpecified)
-                XmlHelper.WriteAttribute(sw, "w:tentative", Util.XmlHelper.ConvertSTOnOffToBoolean(this.tentative)?1:0);
+                XmlHelper.WriteAttribute(sw, "w:tentative", Util.XmlHelper.ConvertSTOnOffToBoolean(this.tentative) ? 1 : 0);
             sw.Write('>');
-            if (this.start != null)
+            if(this.start != null)
                 this.start.Write(sw, "start");
-            if (this.numFmt != null)
+            if(this.numFmt != null)
                 this.numFmt.Write(sw, "numFmt");
-            if (this.lvlRestart != null)
+            if(this.lvlRestart != null)
                 this.lvlRestart.Write(sw, "lvlRestart");
-            if (this.pStyle != null)
+            if(this.pStyle != null)
                 this.pStyle.Write(sw, "pStyle");
-            if (this.isLgl != null)
+            if(this.isLgl != null)
                 this.isLgl.Write(sw, "isLgl");
-            if (this.suff != null)
+            if(this.suff != null)
                 this.suff.Write(sw, "suff");
-            if (this.lvlText != null)
+            if(this.lvlText != null)
                 this.lvlText.Write(sw, "lvlText");
-            if (this.lvlPicBulletId != null)
+            if(this.lvlPicBulletId != null)
                 this.lvlPicBulletId.Write(sw, "lvlPicBulletId");
-            if (this.legacy != null)
+            if(this.legacy != null)
                 this.legacy.Write(sw, "legacy");
-            if (this.lvlJc != null)
+            if(this.lvlJc != null)
                 this.lvlJc.Write(sw, "lvlJc");
-            if (this.pPr != null)
+            if(this.pPr != null)
                 this.pPr.Write(sw, "pPr");
-            if (this.rPr != null)
+            if(this.rPr != null)
                 this.rPr.Write(sw, "rPr");
             sw.WriteEndW(nodeName);
         }
@@ -1615,11 +1615,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static CT_LevelSuffix Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LevelSuffix ctObj = new CT_LevelSuffix();
-            if (node.Attributes["w:val"] != null)
-                ctObj.val = (ST_LevelSuffix)Enum.Parse(typeof(ST_LevelSuffix), node.Attributes["w:val"].Value);
+            if(node.Attributes["w:val"] != null)
+                ctObj.val = (ST_LevelSuffix) Enum.Parse(typeof(ST_LevelSuffix), node.Attributes["w:val"].Value);
             return ctObj;
         }
 
@@ -1678,8 +1678,8 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
                 return null;
             CT_LevelText ctObj = new CT_LevelText();
             ctObj.val = XmlHelper.ReadString(node.Attributes["w:val"]);
-            if (node.Attributes["w:null"]!=null)
-                ctObj.@null = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:null"].Value,true);
+            if(node.Attributes["w:null"]!=null)
+                ctObj.@null = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:null"].Value, true);
             return ctObj;
         }
 
@@ -1755,11 +1755,11 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_LvlLegacy Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LvlLegacy ctObj = new CT_LvlLegacy();
-            if (node.Attributes["w:legacy"] != null)
-                ctObj.legacy = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:legacy"].Value,true);
+            if(node.Attributes["w:legacy"] != null)
+                ctObj.legacy = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:legacy"].Value, true);
             ctObj.legacySpace = XmlHelper.ReadULong(node.Attributes["w:legacySpace"]);
             ctObj.legacyIndent = XmlHelper.ReadString(node.Attributes["w:legacyIndent"]);
             return ctObj;
@@ -1878,19 +1878,19 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
 
         public static CT_LsdException Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_LsdException ctObj = new CT_LsdException();
             ctObj.name = XmlHelper.ReadString(node.Attributes["w:name"]);
-            if (node.Attributes["w:locked"] != null)
-                ctObj.locked = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:locked"].Value,true);
+            if(node.Attributes["w:locked"] != null)
+                ctObj.locked = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:locked"].Value, true);
             ctObj.uiPriority = XmlHelper.ReadString(node.Attributes["w:uiPriority"]);
-            if (node.Attributes["w:semiHidden"] != null)
-                ctObj.semiHidden = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:semiHidden"].Value,true);
-            if (node.Attributes["w:unhideWhenUsed"] != null)
-                ctObj.unhideWhenUsed = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:unhideWhenUsed"].Value,true);
-            if (node.Attributes["w:qFormat"] != null)
-                ctObj.qFormat = (ST_OnOff)Enum.Parse(typeof(ST_OnOff), node.Attributes["w:qFormat"].Value,true);
+            if(node.Attributes["w:semiHidden"] != null)
+                ctObj.semiHidden = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:semiHidden"].Value, true);
+            if(node.Attributes["w:unhideWhenUsed"] != null)
+                ctObj.unhideWhenUsed = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:unhideWhenUsed"].Value, true);
+            if(node.Attributes["w:qFormat"] != null)
+                ctObj.qFormat = (ST_OnOff) Enum.Parse(typeof(ST_OnOff), node.Attributes["w:qFormat"].Value, true);
             return ctObj;
         }
 
@@ -1900,14 +1900,14 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
         {
             sw.WriteStartW(nodeName);
             XmlHelper.WriteAttribute(sw, "w:name", this.name);
-            if (locked != ST_OnOff.off)
+            if(locked != ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:locked", this.locked.ToString());
             if(this.semiHidden== ST_OnOff.on)
                 XmlHelper.WriteAttribute(sw, "w:semiHidden", "1");
             XmlHelper.WriteAttribute(sw, "w:uiPriority", this.uiPriority);
-            if (this.unhideWhenUsed == ST_OnOff.on)
+            if(this.unhideWhenUsed == ST_OnOff.on)
                 XmlHelper.WriteAttribute(sw, "w:unhideWhenUsed", "1");
-            if (qFormat != ST_OnOff.off)
+            if(qFormat != ST_OnOff.off)
                 XmlHelper.WriteAttribute(sw, "w:qFormat", "1");
             sw.Write("/>");
         }
@@ -2052,7 +2052,7 @@ namespace NPOI.OpenXmlFormats.Wordprocessing
     {
         public static new CT_TrackChangeNumbering Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_TrackChangeNumbering ctObj = new CT_TrackChangeNumbering();
             ctObj.original = XmlHelper.ReadString(node.Attributes["original"]);

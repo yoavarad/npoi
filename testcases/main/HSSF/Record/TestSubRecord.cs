@@ -18,12 +18,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using NPOI.Util;
-    using TestCases.HSSF.Record;
     using NPOI.HSSF.Record;
+    using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using TestCases.HSSF.Record;
 
     /**
      * Tests Subrecord components of an OBJ record.  Test data taken directly
@@ -79,7 +79,7 @@ namespace TestCases.HSSF.Record
             RecordInputStream in1 = TestcaseRecordInputStream.Create(dataAutoFilter);
             ObjRecord or = new ObjRecord(in1);
             byte[] data2 = or.Serialize();
-            if (data2.Length == 8228)
+            if(data2.Length == 8228)
             {
                 throw new AssertionException("Identified bug 45778");
             }
@@ -103,14 +103,14 @@ namespace TestCases.HSSF.Record
             RecordInputStream in1 = TestcaseRecordInputStream.Create(data);
             ObjRecord or = new ObjRecord(in1);
             byte[] data2 = or.Serialize();
-            if (data2.Length == 8228)
+            if(data2.Length == 8228)
             {
                 throw new AssertionException("Identified bug 45778");
             }
             ClassicAssert.AreEqual(data.Length, data2.Length, "Encoded length");
-            for (int i = 0; i < data.Length; i++)
+            for(int i = 0; i < data.Length; i++)
             {
-                if (data[i] != data2[i])
+                if(data[i] != data2[i])
                 {
                     throw new AssertionException("Encoded data differs at index " + i);
                 }
@@ -159,9 +159,9 @@ namespace TestCases.HSSF.Record
             {
                 or = new ObjRecord(in1);
             }
-            catch (RecordFormatException e)
+            catch(RecordFormatException e)
             {
-                if (e.Message.StartsWith("Leftover 8154 bytes in subrecord data"))
+                if(e.Message.StartsWith("Leftover 8154 bytes in subrecord data"))
                 {
                     throw new AssertionException("Identified bug 46545");
                 }

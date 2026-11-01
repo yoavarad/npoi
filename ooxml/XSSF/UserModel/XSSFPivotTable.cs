@@ -16,17 +16,17 @@
 ==================================================================== */
 namespace NPOI.XSSF.UserModel
 {
+    using NPOI.OOXML.XSSF.UserModel;
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.OpenXmlFormats.Spreadsheet;
+    using NPOI.SS;
+    using NPOI.SS.UserModel;
+    using NPOI.SS.Util;
+    using NPOI.XSSF.Model;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Xml;
-    using NPOI.OpenXml4Net.OPC;
-    using NPOI.SS.UserModel;
-    using NPOI.SS.Util;
-    using NPOI.OpenXmlFormats.Spreadsheet;
-    using NPOI.SS;
-    using NPOI.OOXML.XSSF.UserModel;
-    using NPOI.XSSF.Model;
 
     public class XSSFPivotTable : POIXMLDocumentPart
     {
@@ -84,7 +84,7 @@ namespace NPOI.XSSF.UserModel
                 XmlDocument xmlDoc = ConvertStreamToXml(is1);
                 pivotTableDefinition = CT_PivotTableDefinition.Parse(xmlDoc.DocumentElement, NamespaceManager);
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
@@ -168,7 +168,7 @@ namespace NPOI.XSSF.UserModel
 
         public IPivotTableStyleInfo Style => styleInfo;
 
-        protected StylesTable StylesSource => ((XSSFWorkbook)((XSSFSheet)GetParent()).Workbook).GetStylesSource();
+        protected StylesTable StylesSource => ((XSSFWorkbook) ((XSSFSheet) GetParent()).Workbook).GetStylesSource();
 
         private void SetDataSheet(ISheet dataSheet)
         {
@@ -198,11 +198,11 @@ namespace NPOI.XSSF.UserModel
             //Indentation increment for compact rows
             pivotTableDefinition.indent = (/*setter*/0);
             //The pivot version which Created the pivot cache Set to default value
-            pivotTableDefinition.createdVersion = (byte)CREATED_VERSION;
+            pivotTableDefinition.createdVersion = (byte) CREATED_VERSION;
             //Minimun version required to update the pivot cache
-            pivotTableDefinition.minRefreshableVersion = (byte)MIN_REFRESHABLE_VERSION;
+            pivotTableDefinition.minRefreshableVersion = (byte) MIN_REFRESHABLE_VERSION;
             //Version of the application which "updated the spreadsheet last"
-            pivotTableDefinition.updatedVersion = (byte)UPDATED_VERSION;
+            pivotTableDefinition.updatedVersion = (byte) UPDATED_VERSION;
             //Titles Shown at the top of each page when printed
             pivotTableDefinition.itemPrintTitles = (/*setter*/true);
             //Set autoformat properties
@@ -220,8 +220,7 @@ namespace NPOI.XSSF.UserModel
             //Set the default style for the pivot table
             CT_PivotTableStyle style = pivotTableDefinition.AddNewPivotTableStyleInfo();
 
-            styleInfo = new XSSFPivotTableStyleInfo(StylesSource, style)
-            {
+            styleInfo = new XSSFPivotTableStyleInfo(StylesSource, style) {
                 Name = "PivotStyleLight16",
                 IsShowLastColumn = true,
                 IsShowColumnStripes = false,
@@ -249,7 +248,7 @@ namespace NPOI.XSSF.UserModel
         {
             AreaReference pivotArea = GetPivotArea();
             int size = pivotArea.LastCell.Col - pivotArea.FirstCell.Col + 1;
-            if (columnIndex < 0 || columnIndex >= size)
+            if(columnIndex < 0 || columnIndex >= size)
             {
                 throw new IndexOutOfRangeException("Column Index: " + columnIndex + ", Size: " + size);
             }
@@ -273,7 +272,7 @@ namespace NPOI.XSSF.UserModel
 
             pivotField.axis = (/*setter*/ST_Axis.axisRow);
             pivotField.showAll = (/*setter*/false);
-            for (int i = 0; i <= lastRowIndex; i++)
+            for(int i = 0; i <= lastRowIndex; i++)
             {
                 items.AddNewItem().t = (/*setter*/ST_ItemType.@default);
             }
@@ -281,7 +280,7 @@ namespace NPOI.XSSF.UserModel
             pivotFields.SetPivotFieldArray(columnIndex, pivotField);
 
             CT_RowFields rowFields;
-            if (pivotTableDefinition.rowFields != null)
+            if(pivotTableDefinition.rowFields != null)
             {
                 rowFields = pivotTableDefinition.rowFields;
             }
@@ -296,10 +295,10 @@ namespace NPOI.XSSF.UserModel
 
         public IList<int> GetRowLabelColumns()
         {
-            if (pivotTableDefinition.rowFields != null)
+            if(pivotTableDefinition.rowFields != null)
             {
                 List<int> columnIndexes = new List<int>();
-                foreach (CT_Field f in pivotTableDefinition.rowFields.GetFieldArray())
+                foreach(CT_Field f in pivotTableDefinition.rowFields.GetFieldArray())
                 {
                     columnIndexes.Add(f.x);
                 }
@@ -321,7 +320,7 @@ namespace NPOI.XSSF.UserModel
         public void AddColLabel(int columnIndex, string valueFormat)
         {
             CheckColumnIndex(columnIndex);
-        
+
             AreaReference pivotArea = GetPivotArea();
             int lastRowIndex = pivotArea.LastCell.Row - pivotArea.FirstCell.Row;
             CT_PivotFields pivotFields = pivotTableDefinition.pivotFields;
@@ -331,12 +330,12 @@ namespace NPOI.XSSF.UserModel
 
             pivotField.axis = ST_Axis.axisCol;
             pivotField.showAll = false;
-            if (valueFormat != null && !string.IsNullOrEmpty(valueFormat.Trim()))
+            if(valueFormat != null && !string.IsNullOrEmpty(valueFormat.Trim()))
             {
                 IDataFormat df = parentSheet.Workbook.CreateDataFormat();
-                pivotField.numFmtId = (uint)df.GetFormat(valueFormat);
+                pivotField.numFmtId = (uint) df.GetFormat(valueFormat);
             }
-            for (int i = 0; i <= lastRowIndex; i++)
+            for(int i = 0; i <= lastRowIndex; i++)
             {
                 items.AddNewItem().t = ST_ItemType.@default;
             }
@@ -369,10 +368,10 @@ namespace NPOI.XSSF.UserModel
         }
         public List<int> GetColLabelColumns()
         {
-            if (pivotTableDefinition.colFields != null)
+            if(pivotTableDefinition.colFields != null)
             {
                 List<int> columnIndexes = new List<int>();
-                foreach (CT_Field f in pivotTableDefinition.colFields.field)
+                foreach(CT_Field f in pivotTableDefinition.colFields.field)
                 {
                     columnIndexes.Add(f.x);
                 }
@@ -393,7 +392,7 @@ namespace NPOI.XSSF.UserModel
          * @param valueFieldName the name of pivot table value field
          */
 
-        public void AddColumnLabel(DataConsolidateFunction function, int columnIndex, 
+        public void AddColumnLabel(DataConsolidateFunction function, int columnIndex,
             String valueFieldName, string valueFormat)
         {
             CheckColumnIndex(columnIndex);
@@ -402,10 +401,10 @@ namespace NPOI.XSSF.UserModel
             AddDataField(function, columnIndex, valueFieldName, valueFormat);
 
             // colfield should be Added for the second one.
-            if (pivotTableDefinition.dataFields.count == 2)
+            if(pivotTableDefinition.dataFields.count == 2)
             {
                 CT_ColFields colFields;
-                if (pivotTableDefinition.colFields != null)
+                if(pivotTableDefinition.colFields != null)
                 {
                     colFields = pivotTableDefinition.colFields;
                 }
@@ -455,13 +454,13 @@ namespace NPOI.XSSF.UserModel
          * @param valueFieldName the name of pivot table value field
          */
 
-        private void AddDataField(DataConsolidateFunction function, int columnIndex, 
+        private void AddDataField(DataConsolidateFunction function, int columnIndex,
             String valueFieldName, string valueFormat)
         {
             CheckColumnIndex(columnIndex);
             AreaReference pivotArea = GetPivotArea();
             CT_DataFields dataFields;
-            if (pivotTableDefinition.dataFields != null)
+            if(pivotTableDefinition.dataFields != null)
             {
                 dataFields = pivotTableDefinition.dataFields;
             }
@@ -470,16 +469,16 @@ namespace NPOI.XSSF.UserModel
                 dataFields = pivotTableDefinition.AddNewDataFields();
             }
             CT_DataField dataField = dataFields.AddNewDataField();
-            dataField.subtotal = (ST_DataConsolidateFunction)(function.Value);
+            dataField.subtotal = (ST_DataConsolidateFunction) (function.Value);
             ICell cell = GetDataSheet().GetRow(pivotArea.FirstCell.Row)
                 .GetCell(pivotArea.FirstCell.Col + columnIndex);
             cell.SetCellType(CellType.String);
             dataField.name = (/*setter*/valueFieldName);
-            dataField.fld = (uint)columnIndex;
-            if (valueFormat != null && !"".Equals(valueFormat.Trim()))
+            dataField.fld = (uint) columnIndex;
+            if(valueFormat != null && !"".Equals(valueFormat.Trim()))
             {
                 IDataFormat df = parentSheet.Workbook.CreateDataFormat();
-                dataField.numFmtId = (uint)df.GetFormat(valueFormat);
+                dataField.numFmtId = (uint) df.GetFormat(valueFormat);
             }
             dataFields.count = (/*setter*/dataFields.SizeOfDataFieldArray());
         }
@@ -511,13 +510,13 @@ namespace NPOI.XSSF.UserModel
         {
             CheckColumnIndex(columnIndex);
             AreaReference pivotArea = GetPivotArea();
-            
+
             int lastRowIndex = pivotArea.LastCell.Row - pivotArea.FirstCell.Row;
 
             // check and change row of location
             CT_Location location = pivotTableDefinition.location;
             AreaReference destination = new AreaReference(location.@ref, SpreadsheetVersion.EXCEL2007);
-            if (destination.FirstCell.Row < 2)
+            if(destination.FirstCell.Row < 2)
             {
                 AreaReference newDestination = new AreaReference(new CellReference(2, destination.FirstCell.Col), new CellReference(
                         3, destination.FirstCell.Col+1), SpreadsheetVersion.EXCEL2007);
@@ -530,7 +529,7 @@ namespace NPOI.XSSF.UserModel
 
             pivotField.axis = (/*setter*/ST_Axis.axisPage);
             pivotField.showAll = (/*setter*/false);
-            for (int i = 0; i <= lastRowIndex; i++)
+            for(int i = 0; i <= lastRowIndex; i++)
             {
                 items.AddNewItem().t = (/*setter*/ST_ItemType.@default);
             }
@@ -538,7 +537,7 @@ namespace NPOI.XSSF.UserModel
             pivotFields.SetPivotFieldArray(columnIndex, pivotField);
 
             CT_PageFields pageFields;
-            if (pivotTableDefinition.pageFields != null)
+            if(pivotTableDefinition.pageFields != null)
             {
                 pageFields = pivotTableDefinition.pageFields;
                 //Another filter has already been Created
@@ -570,7 +569,7 @@ namespace NPOI.XSSF.UserModel
                 new CellReference(position.Row + 1, position.Col + 1), SpreadsheetVersion.EXCEL2007);
 
             CT_Location location;
-            if (pivotTableDefinition.location == null)
+            if(pivotTableDefinition.location == null)
             {
                 location = pivotTableDefinition.AddNewLocation();
                 location.firstDataCol = (/*setter*/1);
@@ -593,7 +592,7 @@ namespace NPOI.XSSF.UserModel
             SetDataSheet(sourceSheet);
 
             refConfig.ConfigureReference(worksheetSource);
-            if (worksheetSource.name == null && worksheetSource.@ref == null)
+            if(worksheetSource.name == null && worksheetSource.@ref == null)
                 throw new ArgumentException("Pivot table source area reference or name must be specified.");
         }
 
@@ -601,7 +600,7 @@ namespace NPOI.XSSF.UserModel
         protected internal void CreateDefaultDataColumns()
         {
             CT_PivotFields pivotFields;
-            if (pivotTableDefinition.pivotFields != null)
+            if(pivotTableDefinition.pivotFields != null)
             {
                 pivotFields = pivotTableDefinition.pivotFields;
             }
@@ -613,7 +612,7 @@ namespace NPOI.XSSF.UserModel
             int firstColumn = sourceArea.FirstCell.Col;
             int lastColumn = sourceArea.LastCell.Col;
             CT_PivotField pivotField;
-            for (int i = firstColumn; i <= lastColumn; i++)
+            for(int i = firstColumn; i <= lastColumn; i++)
             {
                 pivotField = pivotFields.AddNewPivotField();
                 pivotField.dataField = (/*setter*/false);

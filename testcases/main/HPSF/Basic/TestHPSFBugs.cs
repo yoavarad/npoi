@@ -17,14 +17,15 @@
 
 namespace TestCases.HPSF.Basic
 {
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.UserModel;
-    using System;
-    using NPOI.SS.UserModel;
-    using NPOI.POIFS.FileSystem;
-    using NPOI.HPSF;
     using NPOI;
+    using NPOI.HPSF;
+    using NPOI.HSSF.UserModel;
+    using NPOI.POIFS.FileSystem;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
 
     /**
      * Tests various bugs have been fixed

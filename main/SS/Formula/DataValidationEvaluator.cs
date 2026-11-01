@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -328,7 +328,7 @@ namespace NPOI.SS.Formula
                     {
                         // we know it is a number in the proper range, now check if it is an int
                         double value = cell.NumericCellValue; // can't Get here without a valid numeric value
-                        return value.CompareTo((int)value) == 0;
+                        return value.CompareTo((int) value) == 0;
                     }
                     return false;
                 }

@@ -17,9 +17,9 @@
 
 namespace NPOI.XSSF.UserModel.Helpers
 {
+    using Cysharp.Text;
     using System;
-    using System.Text; 
-using Cysharp.Text;
+    using System.Text;
 
     public class HeaderFooterHelper
     {
@@ -73,7 +73,7 @@ using Cysharp.Text;
         private static String[] GetParts(String str)
         {
             String[] parts = new String[] { "", "", "" };
-            if (str == null)
+            if(str == null)
                 return parts;
 
             // They can come in any order, which is just nasty
@@ -83,7 +83,7 @@ using Cysharp.Text;
             int cAt = 0;
             int rAt = 0;
 
-            while (
+            while(
                 // Ensure all indicies get updated, then -1 tested
                 (lAt = str.IndexOf(HeaderFooterEntity_L)) > -2 &&
                 (cAt = str.IndexOf(HeaderFooterEntity_C)) > -2 &&
@@ -92,12 +92,12 @@ using Cysharp.Text;
             )
             {
                 // Pick off the last one
-                if (rAt > cAt && rAt > lAt)
+                if(rAt > cAt && rAt > lAt)
                 {
                     parts[2] = str.Substring(rAt + HeaderFooterEntity_R.Length);
                     str = str.Substring(0, rAt);
                 }
-                else if (cAt > rAt && cAt > lAt)
+                else if(cAt > rAt && cAt > lAt)
                 {
                     parts[1] = str.Substring(cAt + HeaderFooterEntity_C.Length);
                     str = str.Substring(0, cAt);
@@ -121,17 +121,17 @@ using Cysharp.Text;
         {
             using var ret = ZString.CreateStringBuilder();
             // Join as c, l, r
-            if (c.Length > 0)
+            if(c.Length > 0)
             {
                 ret.Append(HeaderFooterEntity_C);
                 ret.Append(c);
             }
-            if (l.Length > 0)
+            if(l.Length > 0)
             {
                 ret.Append(HeaderFooterEntity_L);
                 ret.Append(l);
             }
-            if (r.Length > 0)
+            if(r.Length > 0)
             {
                 ret.Append(HeaderFooterEntity_R);
                 ret.Append(r);

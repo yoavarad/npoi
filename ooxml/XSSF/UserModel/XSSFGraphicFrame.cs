@@ -17,10 +17,10 @@
  * ====================================================================
  */
 
-using System;
 using NPOI.OpenXmlFormats;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.OpenXmlFormats.Dml.Spreadsheet;
+using System;
 using System.Xml;
 
 namespace NPOI.XSSF.UserModel
@@ -50,21 +50,21 @@ namespace NPOI.XSSF.UserModel
             this.graphicFrame = ctGraphicFrame;
             // TODO: there may be a better way to delegate this
             CT_GraphicalObjectData graphicData = graphicFrame.graphic.graphicData;
-            if (graphicData != null)
+            if(graphicData != null)
             {
                 XmlNodeList nodes = graphicData.DomNode.ChildNodes;
-                for (int i = 0; i < nodes.Count; i++)
+                for(int i = 0; i < nodes.Count; i++)
                 {
                     XmlNode node = nodes.Item(i);
                     // if the frame references a chart, associate the chart with this instance
-                    if (node.Name.Equals("c:chart"))
+                    if(node.Name.Equals("c:chart"))
                     {
                         // this better succeed or the document is invalid
                         POIXMLDocumentPart relation = drawing.GetRelationById(node.Attributes.GetNamedItem("r:id").Value);
                         // Do XWPF charts need similar treatment?
-                        if (relation is XSSFChart)
+                        if(relation is XSSFChart)
                         {
-                            ((XSSFChart)relation).SetGraphicFrame(this);
+                            ((XSSFChart) relation).SetGraphicFrame(this);
                         }
                     }
                 }
@@ -105,7 +105,7 @@ namespace NPOI.XSSF.UserModel
             CT_GraphicalObject graphic = graphicFrame.AddNewGraphic();
 
             prototype = graphicFrame;
-            
+
             return prototype;
         }
 
@@ -139,7 +139,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return GetNonVisualProperties().name;
             }
-            set 
+            set
             {
                 GetNonVisualProperties().name = value;
             }
@@ -159,9 +159,9 @@ namespace NPOI.XSSF.UserModel
         {
             get
             {
-                return (XSSFClientAnchor)anchor;
+                return (XSSFClientAnchor) anchor;
             }
-            set 
+            set
             {
                 this.anchor = value;
             }
@@ -187,23 +187,23 @@ namespace NPOI.XSSF.UserModel
             {
                 return graphicFrame.nvGraphicFramePr.cNvPr.id;
             }
-            set 
+            set
             {
-                graphicFrame.nvGraphicFramePr.cNvPr.id = (uint)value;
+                graphicFrame.nvGraphicFramePr.cNvPr.id = (uint) value;
             }
-        } 
+        }
         /// <summary>
         /// The low level code to insert <code><c:chart></code> tag into <code><a:graphicData></code>
         /// </summary>
         /// <param name="data"></param>
         /// <param name="id"></param>
         /// <example>
-         /// <complexType name="CT_GraphicalObjectData">
-         ///   <sequence>
-         ///     <any minOccurs="0" maxOccurs="unbounded" ProcessContents="strict"/>
-         ///   </sequence>
-         ///   <attribute name="uri" type="xsd:token"/>
-         /// </complexType>
+        /// <complexType name="CT_GraphicalObjectData">
+        ///   <sequence>
+        ///     <any minOccurs="0" maxOccurs="unbounded" ProcessContents="strict"/>
+        ///   </sequence>
+        ///   <attribute name="uri" type="xsd:token"/>
+        /// </complexType>
         /// </example>
         private static void AppendChartElement(CT_GraphicalObjectData data, String id)
         {
@@ -213,7 +213,7 @@ namespace NPOI.XSSF.UserModel
             //AppendChartElement
             string el = string.Format("<c:chart xmlns:c=\"{1}\" xmlns:r=\"{2}\" r:id=\"{0}\"/>", id, c_namespaceUri, r_namespaceUri);
             data.AddChartElement(el);
-            
+
             //XmlCursor cursor = data.newCursor();
             //cursor.ToNextToken();
             //cursor.beginElement(new QName(c_namespaceUri, "chart", "c"));
@@ -232,6 +232,3 @@ namespace NPOI.XSSF.UserModel
         public override string ShapeName => graphicFrame.nvGraphicFramePr.cNvPr.name;
     }
 }
-
-
-

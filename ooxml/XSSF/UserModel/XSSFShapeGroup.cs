@@ -58,30 +58,30 @@ namespace NPOI.XSSF.UserModel
         internal static CT_GroupShape Prototype()
         {
 
-                CT_GroupShape shape = new CT_GroupShape();
+            CT_GroupShape shape = new CT_GroupShape();
 
 
-                CT_GroupShapeNonVisual nv = shape.AddNewNvGrpSpPr();
-                NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualDrawingProps nvpr = nv.AddNewCNvPr();
-                nvpr.id = (0);
-                nvpr.name = ("Group 0");
-                nv.AddNewCNvGrpSpPr();
-                CT_GroupShapeProperties sp = shape.AddNewGrpSpPr();
-                CT_GroupTransform2D t2d = sp.AddNewXfrm();
-                CT_PositiveSize2D p1 = t2d.AddNewExt();
-                p1.cx = (0);
-                p1.cy = (0);
-                CT_Point2D p2 = t2d.AddNewOff();
-                p2.x = (0);
-                p2.y = (0);
-                CT_PositiveSize2D p3 = t2d.AddNewChExt();
-                p3.cx = (0);
-                p3.cy = (0);
-                CT_Point2D p4 = t2d.AddNewChOff();
-                p4.x = (0);
-                p4.y = (0);
+            CT_GroupShapeNonVisual nv = shape.AddNewNvGrpSpPr();
+            NPOI.OpenXmlFormats.Dml.Spreadsheet.CT_NonVisualDrawingProps nvpr = nv.AddNewCNvPr();
+            nvpr.id = (0);
+            nvpr.name = ("Group 0");
+            nv.AddNewCNvGrpSpPr();
+            CT_GroupShapeProperties sp = shape.AddNewGrpSpPr();
+            CT_GroupTransform2D t2d = sp.AddNewXfrm();
+            CT_PositiveSize2D p1 = t2d.AddNewExt();
+            p1.cx = (0);
+            p1.cy = (0);
+            CT_Point2D p2 = t2d.AddNewOff();
+            p2.x = (0);
+            p2.y = (0);
+            CT_PositiveSize2D p3 = t2d.AddNewChExt();
+            p3.cx = (0);
+            p3.cy = (0);
+            CT_Point2D p4 = t2d.AddNewChOff();
+            p4.x = (0);
+            p4.y = (0);
 
-                prototype = shape;
+            prototype = shape;
             return prototype;
         }
 
@@ -204,7 +204,8 @@ namespace NPOI.XSSF.UserModel
         /// <returns></returns>
         public XSSFFreeform CreateFreeform(
               BuildFreeForm BFF
-        ) {
+        )
+        {
             var anchor = new XSSFChildAnchor((int)BFF.Left, (int)BFF.Top
                                             , (int)BFF.Rigth, (int)BFF.Bottom);
             //long shapeId = newShapeId();
@@ -308,9 +309,11 @@ namespace NPOI.XSSF.UserModel
             ctGroup.grpSpPr.xfrm.chExt.cx   = ctGroup.grpSpPr.xfrm.ext.cx;
             ctGroup.grpSpPr.xfrm.chExt.cy   = ctGroup.grpSpPr.xfrm.ext.cy;
 
-            if(parent == null) { // top level group
+            if(parent == null)
+            { // top level group
                 var ac = new XSSFClientAnchor(Sheet, (int)min.x, (int)min.y, (int)max.x, (int)max.y);
-                if(cellanchor is CT_TwoCellAnchor cellAnchor) {
+                if(cellanchor is CT_TwoCellAnchor cellAnchor)
+                {
                     ((CT_TwoCellAnchor) cellanchor).from = ac.From;
                     ((CT_TwoCellAnchor) cellanchor).to= ac.To;
                 }
@@ -319,7 +322,8 @@ namespace NPOI.XSSF.UserModel
 
         private static void AutoFit(CT_GroupShape CtGroup, Coords Min, Coords Max)
         {
-            foreach(var cxn in CtGroup.Connectors) {
+            foreach(var cxn in CtGroup.Connectors)
+            {
                 var cd = new Coords(cxn.spPr.xfrm.off.x, cxn.spPr.xfrm.off.y);
                 Min.Min(cd);
                 Max.Max(cd);
@@ -327,7 +331,8 @@ namespace NPOI.XSSF.UserModel
                 Min.Min(cd);
                 Max.Max(cd);
             }
-            foreach(var pic in CtGroup.Pictures) {
+            foreach(var pic in CtGroup.Pictures)
+            {
                 var cd = new Coords(pic.spPr.xfrm.off.x, pic.spPr.xfrm.off.y);
                 Min.Min(cd);
                 Max.Max(cd);
@@ -335,7 +340,8 @@ namespace NPOI.XSSF.UserModel
                 Min.Min(cd);
                 Max.Max(cd);
             }
-            foreach(var sp in CtGroup.Shapes) {
+            foreach(var sp in CtGroup.Shapes)
+            {
                 var cd = new Coords(sp.spPr.xfrm.off.x, sp.spPr.xfrm.off.y);
                 Min.Min(cd);
                 Max.Max(cd);
@@ -343,7 +349,8 @@ namespace NPOI.XSSF.UserModel
                 Min.Min(cd);
                 Max.Max(cd);
             }
-            foreach(var gp in CtGroup.Groups) {
+            foreach(var gp in CtGroup.Groups)
+            {
                 var min = new Coords(long.MaxValue, long.MaxValue);
                 var max = new Coords(long.MinValue, long.MinValue);
 

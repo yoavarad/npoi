@@ -17,10 +17,11 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * 
@@ -40,13 +41,13 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invokeLeft(ValueEval text, ValueEval operand)
         {
             ValueEval[] args = new ValueEval[] { text, operand };
-            return TextFunction.LEFT.Evaluate(args, -1, (short)-1);
+            return TextFunction.LEFT.Evaluate(args, -1, (short) -1);
         }
 
         private static ValueEval invokeRight(ValueEval text, ValueEval operand)
         {
             ValueEval[] args = new ValueEval[] { text, operand };
-            return TextFunction.RIGHT.Evaluate(args, -1, (short)-1);
+            return TextFunction.RIGHT.Evaluate(args, -1, (short) -1);
         }
         [Test]
         public void TestLeftRight_bug49841()
@@ -57,7 +58,7 @@ namespace TestCases.SS.Formula.Functions
                 invokeLeft(ANY_STRING_VALUE, NEGATIVE_OPERAND);
                 invokeRight(ANY_STRING_VALUE, NEGATIVE_OPERAND);
             }
-            catch (IndexOutOfRangeException)
+            catch(IndexOutOfRangeException)
             {
                 Assert.Fail("Identified bug 49841");
             }

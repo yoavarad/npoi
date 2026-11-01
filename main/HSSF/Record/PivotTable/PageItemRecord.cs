@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record.PivotTable
 {
-    using System.Text;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using System.Text;
     /**
      * SXPI - Page Item (0x00B6)<br/>
      * 
@@ -63,12 +63,12 @@ namespace NPOI.HSSF.Record.PivotTable
             }
         }
 
-	    private readonly FieldInfo[] _fieldInfos;
+        private readonly FieldInfo[] _fieldInfos;
 
         public PageItemRecord(RecordInputStream in1)
         {
             int dataSize = in1.Remaining;
-            if (dataSize % FieldInfo.ENCODED_SIZE != 0)
+            if(dataSize % FieldInfo.ENCODED_SIZE != 0)
             {
                 throw new RecordFormatException("Bad data size " + dataSize);
             }
@@ -76,7 +76,7 @@ namespace NPOI.HSSF.Record.PivotTable
             int nItems = dataSize / FieldInfo.ENCODED_SIZE;
 
             FieldInfo[] fis = new FieldInfo[nItems];
-            for (int i = 0; i < fis.Length; i++)
+            for(int i = 0; i < fis.Length; i++)
             {
                 fis[i] = new FieldInfo(in1);
             }
@@ -86,7 +86,7 @@ namespace NPOI.HSSF.Record.PivotTable
 
         public override void Serialize(ILittleEndianOutput out1)
         {
-            for (int i = 0; i < _fieldInfos.Length; i++)
+            for(int i = 0; i < _fieldInfos.Length; i++)
             {
                 _fieldInfos[i].Serialize(out1);
             }
@@ -115,7 +115,7 @@ namespace NPOI.HSSF.Record.PivotTable
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("[SXPI]\n");
-            for (int i = 0; i < _fieldInfos.Length; i++)
+            for(int i = 0; i < _fieldInfos.Length; i++)
             {
                 sb.Append("    item[").Append(i).Append("]=");
                 _fieldInfos[i].AppendDebugInfo(sb);

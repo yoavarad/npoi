@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -15,14 +15,14 @@
    limitations under the License.
 ==================================================================== */
 
+using NPOI.Util;
 using System;
 using System.Text;
-using NPOI.Util;
 
 
 namespace NPOI.HSSF.Record
 {
-    public abstract class CellRecord : StandardRecord, CellValueRecordInterface,IComparable
+    public abstract class CellRecord : StandardRecord, CellValueRecordInterface, IComparable
     {
         private int _rowIndex;
         private int _columnIndex;
@@ -75,7 +75,7 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                return (short)_formatIndex;
+                return (short) _formatIndex;
             }
             set
             {
@@ -87,24 +87,24 @@ namespace NPOI.HSSF.Record
         {
             CellValueRecordInterface loc = (CellValueRecordInterface)obj;
 
-            if ((this.Row == loc.Row)
+            if((this.Row == loc.Row)
                     && (this.Column == loc.Column))
             {
                 return 0;
             }
-            if (this.Row < loc.Row)
+            if(this.Row < loc.Row)
             {
                 return -1;
             }
-            if (this.Row > loc.Row)
+            if(this.Row > loc.Row)
             {
                 return 1;
             }
-            if (this.Column < loc.Column)
+            if(this.Column < loc.Column)
             {
                 return -1;
             }
-            if (this.Column > loc.Column)
+            if(this.Column > loc.Column)
             {
                 return 1;
             }
@@ -173,12 +173,12 @@ namespace NPOI.HSSF.Record
 
         public override bool Equals(object obj)
         {
-            if (obj is not CellValueRecordInterface loc)
+            if(obj is not CellValueRecordInterface loc)
             {
                 return false;
             }
 
-            if ((this.Row == loc.Row)
+            if((this.Row == loc.Row)
                 && (this.Column == loc.Column))
             {
                 return true;
@@ -186,7 +186,7 @@ namespace NPOI.HSSF.Record
             return false;
         }
 
-        public override int GetHashCode ()
+        public override int GetHashCode()
         {
             return Row ^ Column;
         }

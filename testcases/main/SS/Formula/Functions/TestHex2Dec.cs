@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -17,13 +17,13 @@
 
 namespace TestCases.SS.Formula.Functions
 {
-    using System;
-
+    using NPOI.HSSF.UserModel;
+    using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.SS.Formula.Functions;
-using NPOI.SS.Formula;
-using NPOI.HSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link Hex2Dec}
@@ -44,7 +44,7 @@ using NPOI.HSSF.UserModel;
         {
             ValueEval result = invokeValue(number1);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).StringValue, msg);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).StringValue, msg);
         }
 
         private static void ConfirmValueError(String msg, String number1, ErrorEval numError)
@@ -78,7 +78,7 @@ using NPOI.HSSF.UserModel;
             ValueEval result = new Hex2Dec().Evaluate(args, ctx);
 
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual("0", ((NumberEval)result).StringValue);
+            ClassicAssert.AreEqual("0", ((NumberEval) result).StringValue);
         }
 
         [Test]
@@ -120,7 +120,7 @@ using NPOI.HSSF.UserModel;
             ValueEval result = new Hex2Dec().Evaluate(args, -1, -1);
 
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual("0", ((NumberEval)result).StringValue);
+            ClassicAssert.AreEqual("0", ((NumberEval) result).StringValue);
         }
 
     }

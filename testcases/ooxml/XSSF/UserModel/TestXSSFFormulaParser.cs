@@ -15,17 +15,18 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using System;
-using NPOI.SS.Formula.PTG;
-using NPOI.SS.Formula;
-using NPOI.SS.UserModel;
-using TestCases.HSSF;
 using NPOI.HSSF.UserModel;
-using NPOI.Util;
+using NPOI.SS.Formula;
+using NPOI.SS.Formula.PTG;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using NPOI.XSSF.UserModel;
+using NPOI.Util;
 using NPOI.XSSF;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using TestCases.HSSF;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -74,7 +75,7 @@ namespace TestCases.XSSF.UserModel
                 ptgs = Parse(fpb, "XFE10");
                 Assert.Fail("expected exception");
             }
-            catch (FormulaParseException e)
+            catch(FormulaParseException e)
             {
                 ClassicAssert.AreEqual("Specified named range 'XFE10' does not exist in the current workbook.", e.Message);
             }
@@ -85,7 +86,7 @@ namespace TestCases.XSSF.UserModel
                 ptgs = Parse(fpb, "XFD1048577");
                 Assert.Fail("expected exception");
             }
-            catch (FormulaParseException e)
+            catch(FormulaParseException e)
             {
                 ClassicAssert.AreEqual("Specified named range 'XFD1048577' does not exist in the current workbook.", e.Message);
             }
@@ -158,10 +159,10 @@ namespace TestCases.XSSF.UserModel
             ptgs = Parse(fpb, "[0]!NR_Global_B2");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(NameXPxg), ptgs[0].GetType());
-            ClassicAssert.AreEqual(0, ((NameXPxg)ptgs[0]).ExternalWorkbookNumber);
-            ClassicAssert.AreEqual(null, ((NameXPxg)ptgs[0]).SheetName);
-            ClassicAssert.AreEqual("NR_Global_B2", ((NameXPxg)ptgs[0]).NameName);
-            ClassicAssert.AreEqual("[0]!NR_Global_B2", ((NameXPxg)ptgs[0]).ToFormulaString());
+            ClassicAssert.AreEqual(0, ((NameXPxg) ptgs[0]).ExternalWorkbookNumber);
+            ClassicAssert.AreEqual(null, ((NameXPxg) ptgs[0]).SheetName);
+            ClassicAssert.AreEqual("NR_Global_B2", ((NameXPxg) ptgs[0]).NameName);
+            ClassicAssert.AreEqual("[0]!NR_Global_B2", ((NameXPxg) ptgs[0]).ToFormulaString());
 
             wb.Close();
         }
@@ -178,34 +179,34 @@ namespace TestCases.XSSF.UserModel
             ptgs = Parse(fpb, "Uses!A1");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(Ref3DPxg), ptgs[0].GetType());
-            ClassicAssert.AreEqual(-1, ((Ref3DPxg)ptgs[0]).ExternalWorkbookNumber);
-            ClassicAssert.AreEqual("A1", ((Ref3DPxg)ptgs[0]).Format2DRefAsString());
-            ClassicAssert.AreEqual("Uses!A1", ((Ref3DPxg)ptgs[0]).ToFormulaString());
+            ClassicAssert.AreEqual(-1, ((Ref3DPxg) ptgs[0]).ExternalWorkbookNumber);
+            ClassicAssert.AreEqual("A1", ((Ref3DPxg) ptgs[0]).Format2DRefAsString());
+            ClassicAssert.AreEqual("Uses!A1", ((Ref3DPxg) ptgs[0]).ToFormulaString());
 
             // Reference to a single cell in a different sheet, which needs quoting
             ptgs = Parse(fpb, "'Testing 47100'!A1");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(Ref3DPxg), ptgs[0].GetType());
-            ClassicAssert.AreEqual(-1, ((Ref3DPxg)ptgs[0]).ExternalWorkbookNumber);
-            ClassicAssert.AreEqual("Testing 47100", ((Ref3DPxg)ptgs[0]).SheetName);
-            ClassicAssert.AreEqual("A1", ((Ref3DPxg)ptgs[0]).Format2DRefAsString());
-            ClassicAssert.AreEqual("'Testing 47100'!A1", ((Ref3DPxg)ptgs[0]).ToFormulaString());
-        
+            ClassicAssert.AreEqual(-1, ((Ref3DPxg) ptgs[0]).ExternalWorkbookNumber);
+            ClassicAssert.AreEqual("Testing 47100", ((Ref3DPxg) ptgs[0]).SheetName);
+            ClassicAssert.AreEqual("A1", ((Ref3DPxg) ptgs[0]).Format2DRefAsString());
+            ClassicAssert.AreEqual("'Testing 47100'!A1", ((Ref3DPxg) ptgs[0]).ToFormulaString());
+
 
             // Reference to a sheet scoped named range from another sheet
             ptgs = Parse(fpb, "Defines!NR_To_A1");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(NameXPxg), ptgs[0].GetType());
-            ClassicAssert.AreEqual(-1, ((NameXPxg)ptgs[0]).ExternalWorkbookNumber);
-            ClassicAssert.AreEqual("Defines", ((NameXPxg)ptgs[0]).SheetName);
-            ClassicAssert.AreEqual("NR_To_A1", ((NameXPxg)ptgs[0]).NameName);
-            ClassicAssert.AreEqual("Defines!NR_To_A1", ((NameXPxg)ptgs[0]).ToFormulaString());
+            ClassicAssert.AreEqual(-1, ((NameXPxg) ptgs[0]).ExternalWorkbookNumber);
+            ClassicAssert.AreEqual("Defines", ((NameXPxg) ptgs[0]).SheetName);
+            ClassicAssert.AreEqual("NR_To_A1", ((NameXPxg) ptgs[0]).NameName);
+            ClassicAssert.AreEqual("Defines!NR_To_A1", ((NameXPxg) ptgs[0]).ToFormulaString());
 
             // Reference to a workbook scoped named range
             ptgs = Parse(fpb, "NR_Global_B2");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(NamePtg), ptgs[0].GetType());
-            ClassicAssert.AreEqual("NR_Global_B2", ((NamePtg)ptgs[0]).ToFormulaString(fpb));
+            ClassicAssert.AreEqual("NR_Global_B2", ((NamePtg) ptgs[0]).ToFormulaString(fpb));
 
             wb.Close();
         }
@@ -222,28 +223,28 @@ namespace TestCases.XSSF.UserModel
             ptgs = Parse(fpb, "[1]Uses!$A$1");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(Ref3DPxg), ptgs[0].GetType());
-            ClassicAssert.AreEqual(1, ((Ref3DPxg)ptgs[0]).ExternalWorkbookNumber);
-            ClassicAssert.AreEqual("Uses", ((Ref3DPxg)ptgs[0]).SheetName);
-            ClassicAssert.AreEqual("$A$1", ((Ref3DPxg)ptgs[0]).Format2DRefAsString());
-            ClassicAssert.AreEqual("[1]Uses!$A$1", ((Ref3DPxg)ptgs[0]).ToFormulaString());
+            ClassicAssert.AreEqual(1, ((Ref3DPxg) ptgs[0]).ExternalWorkbookNumber);
+            ClassicAssert.AreEqual("Uses", ((Ref3DPxg) ptgs[0]).SheetName);
+            ClassicAssert.AreEqual("$A$1", ((Ref3DPxg) ptgs[0]).Format2DRefAsString());
+            ClassicAssert.AreEqual("[1]Uses!$A$1", ((Ref3DPxg) ptgs[0]).ToFormulaString());
 
             // Reference to a sheet-scoped named range in a different workbook
             ptgs = Parse(fpb, "[1]Defines!NR_To_A1");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(NameXPxg), ptgs[0].GetType());
-            ClassicAssert.AreEqual(1, ((NameXPxg)ptgs[0]).ExternalWorkbookNumber);
-            ClassicAssert.AreEqual("Defines", ((NameXPxg)ptgs[0]).SheetName);
-            ClassicAssert.AreEqual("NR_To_A1", ((NameXPxg)ptgs[0]).NameName);
-            ClassicAssert.AreEqual("[1]Defines!NR_To_A1", ((NameXPxg)ptgs[0]).ToFormulaString());
+            ClassicAssert.AreEqual(1, ((NameXPxg) ptgs[0]).ExternalWorkbookNumber);
+            ClassicAssert.AreEqual("Defines", ((NameXPxg) ptgs[0]).SheetName);
+            ClassicAssert.AreEqual("NR_To_A1", ((NameXPxg) ptgs[0]).NameName);
+            ClassicAssert.AreEqual("[1]Defines!NR_To_A1", ((NameXPxg) ptgs[0]).ToFormulaString());
 
             // Reference to a global named range in a different workbook
             ptgs = Parse(fpb, "[1]!NR_Global_B2");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(typeof(NameXPxg), ptgs[0].GetType());
-            ClassicAssert.AreEqual(1, ((NameXPxg)ptgs[0]).ExternalWorkbookNumber);
-            ClassicAssert.AreEqual(null, ((NameXPxg)ptgs[0]).SheetName);
-            ClassicAssert.AreEqual("NR_Global_B2", ((NameXPxg)ptgs[0]).NameName);
-            ClassicAssert.AreEqual("[1]!NR_Global_B2", ((NameXPxg)ptgs[0]).ToFormulaString());
+            ClassicAssert.AreEqual(1, ((NameXPxg) ptgs[0]).ExternalWorkbookNumber);
+            ClassicAssert.AreEqual(null, ((NameXPxg) ptgs[0]).SheetName);
+            ClassicAssert.AreEqual("NR_Global_B2", ((NameXPxg) ptgs[0]).NameName);
+            ClassicAssert.AreEqual("[1]!NR_Global_B2", ((NameXPxg) ptgs[0]).ToFormulaString());
 
             wb.Close();
         }
@@ -265,7 +266,7 @@ namespace TestCases.XSSF.UserModel
                 HSSFTestDataSamples.OpenSampleWorkbook("55906-MultiSheetRefs.xls"),
                 XSSFTestDataSamples.OpenSampleWorkbook("55906-MultiSheetRefs.xlsx")
         };
-            foreach (IWorkbook wb in wbs)
+            foreach(IWorkbook wb in wbs)
             {
                 ISheet s1 = wb.GetSheetAt(0);
                 Ptg[] ptgs;
@@ -302,21 +303,21 @@ namespace TestCases.XSSF.UserModel
                 ICell countFA = s1.GetRow(5).GetCell(8);
                 ClassicAssert.IsNotNull(countFA);
                 ClassicAssert.AreEqual("COUNT(Sheet1:Sheet3!$A$1:$B$2)", countFA.CellFormula);
-            
+
 
                 // Create a formula Parser
                 IFormulaParsingWorkbook fpb = null;
-                if (wb is HSSFWorkbook)
-                    fpb = HSSFEvaluationWorkbook.Create((HSSFWorkbook)wb);
+                if(wb is HSSFWorkbook)
+                    fpb = HSSFEvaluationWorkbook.Create((HSSFWorkbook) wb);
                 else
-                    fpb = XSSFEvaluationWorkbook.Create((XSSFWorkbook)wb);
+                    fpb = XSSFEvaluationWorkbook.Create((XSSFWorkbook) wb);
 
                 // Check things parse as expected:
 
                 // SUM to one cell over 3 workbooks, relative reference
                 ptgs = Parse(fpb, "SUM(Sheet1:Sheet3!A1)");
                 ClassicAssert.AreEqual(2, ptgs.Length);
-                if (wb is HSSFWorkbook)
+                if(wb is HSSFWorkbook)
                 {
                     ClassicAssert.AreEqual(typeof(Ref3DPtg), ptgs[0].GetType());
                 }
@@ -331,7 +332,7 @@ namespace TestCases.XSSF.UserModel
                 // MAX to one cell over 3 workbooks, absolute row reference
                 ptgs = Parse(fpb, "MAX(Sheet1:Sheet3!A$1)");
                 ClassicAssert.AreEqual(2, ptgs.Length);
-                if (wb is HSSFWorkbook)
+                if(wb is HSSFWorkbook)
                 {
                     ClassicAssert.AreEqual(typeof(Ref3DPtg), ptgs[0].GetType());
                 }
@@ -341,12 +342,12 @@ namespace TestCases.XSSF.UserModel
                 }
                 ClassicAssert.AreEqual("Sheet1:Sheet3!A$1", ToFormulaString(ptgs[0], fpb));
                 ClassicAssert.AreEqual(typeof(FuncVarPtg), ptgs[1].GetType());
-                ClassicAssert.AreEqual( "MAX", ToFormulaString(ptgs[1], fpb));
+                ClassicAssert.AreEqual("MAX", ToFormulaString(ptgs[1], fpb));
 
                 // MIN to one cell over 3 workbooks, absolute reference
                 ptgs = Parse(fpb, "MIN(Sheet1:Sheet3!$A$1)");
                 ClassicAssert.AreEqual(2, ptgs.Length);
-                if (wb is HSSFWorkbook)
+                if(wb is HSSFWorkbook)
                 {
                     ClassicAssert.AreEqual(typeof(Ref3DPtg), ptgs[0].GetType());
                 }
@@ -361,7 +362,7 @@ namespace TestCases.XSSF.UserModel
                 // SUM to a range of cells over 3 workbooks
                 ptgs = Parse(fpb, "SUM(Sheet1:Sheet3!A1:B2)");
                 ClassicAssert.AreEqual(2, ptgs.Length);
-                if (wb is HSSFWorkbook)
+                if(wb is HSSFWorkbook)
                 {
                     ClassicAssert.AreEqual(typeof(Area3DPtg), ptgs[0].GetType());
                 }
@@ -376,7 +377,7 @@ namespace TestCases.XSSF.UserModel
                 // MIN to a range of cells over 3 workbooks, absolute reference
                 ptgs = Parse(fpb, "MIN(Sheet1:Sheet3!$A$1:$B$2)");
                 ClassicAssert.AreEqual(2, ptgs.Length);
-                if (wb is HSSFWorkbook)
+                if(wb is HSSFWorkbook)
                 {
                     ClassicAssert.AreEqual(typeof(Area3DPtg), ptgs[0].GetType());
                 }
@@ -403,9 +404,9 @@ namespace TestCases.XSSF.UserModel
         }
         private static String ToFormulaString(Ptg ptg, IFormulaParsingWorkbook wb)
         {
-            if (ptg is WorkbookDependentFormula)
+            if(ptg is WorkbookDependentFormula)
             {
-                return ((WorkbookDependentFormula)ptg).ToFormulaString((IFormulaRenderingWorkbook)wb);
+                return ((WorkbookDependentFormula) ptg).ToFormulaString((IFormulaRenderingWorkbook) wb);
             }
             return ptg.ToFormulaString();
         }
@@ -465,20 +466,20 @@ namespace TestCases.XSSF.UserModel
         {
             IWorkbook wb = XSSFTestDataSamples.OpenSampleWorkbook("58648.xlsx");
             IFormulaEvaluator evaluator = wb.GetCreationHelper().CreateFormulaEvaluator();
-            for (int i = 0; i < wb.NumberOfSheets; i++)
+            for(int i = 0; i < wb.NumberOfSheets; i++)
             {
                 ISheet xsheet = wb.GetSheetAt(i);
-                foreach (IRow row in xsheet)
+                foreach(IRow row in xsheet)
                 {
-                    foreach (ICell cell in row)
+                    foreach(ICell cell in row)
                     {
-                        if (cell.CellType == CellType.Formula)
+                        if(cell.CellType == CellType.Formula)
                         {
                             try
                             {
                                 evaluator.EvaluateFormulaCell(cell);
                             }
-                            catch (Exception e)
+                            catch(Exception e)
                             {
                                 CellReference cellRef = new CellReference(cell.RowIndex, cell.ColumnIndex);
                                 throw new RuntimeException("error at: " + cellRef.ToString(), e);
@@ -641,12 +642,12 @@ namespace TestCases.XSSF.UserModel
             ptgs = Parse(fpb, tbl + "[@]", 2);
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual("Table!A3:C3", ptgs[0].ToFormulaString());
-            
+
             ////// Evaluate "Table1[#This Row]" when rowIndex is outside Table ////////
             ptgs = Parse(fpb, tbl + "[#This Row]", 10);
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(ErrPtg.VALUE_INVALID, ptgs[0], "Table1[#This Row]");
-            
+
             ////// Evaluate "Table1[@]" when rowIndex is outside Table ////////
             ptgs = Parse(fpb, tbl + "[@]", 10);
             ClassicAssert.AreEqual(1, ptgs.Length);
@@ -655,12 +656,12 @@ namespace TestCases.XSSF.UserModel
             ptgs = Parse(fpb, tbl + "[[#Data], [Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual("Table!C2:C7", ptgs[0].ToFormulaString(), "Table1[[#Data],[col]]");
-            
+
             ////// Case 9: Evaluate "Table1[[#All],[col]]" ////////
             ptgs = Parse(fpb, tbl + "[[#All], [Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual("Table!C1:C7", ptgs[0].ToFormulaString(), "Table1[[#All],[col]]");
-            
+
             ////// Case 10: Evaluate "Table1[[#Headers],[col]]" ////////
             ptgs = Parse(fpb, tbl + "[[#Headers], [Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
@@ -670,38 +671,38 @@ namespace TestCases.XSSF.UserModel
             ptgs = Parse(fpb, tbl + "[[#Totals],[Name]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(ErrPtg.REF_INVALID, ptgs[0], "Table1[[#Totals],[col]]" + noTotalsRowReason);
-            
+
             ////// Case 12: Evaluate "Table1[[#All],[col1]:[col2]]" ////////
             ptgs = Parse(fpb, tbl + "[[#All], [Name]:[Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual("Table!B1:C7", ptgs[0].ToFormulaString(), "Table1[[#All],[col1]:[col2]]");
-            
+
             ////// Case 13: Evaluate "Table1[[#Data],[col]:[col2]]" ////////
             ptgs = Parse(fpb, tbl + "[[#Data], [Name]:[Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual("Table!B2:C7", ptgs[0].ToFormulaString(), "Table1[[#Data],[col]:[col2]]");
-            
+
             ////// Case 14: Evaluate "Table1[[#Headers],[col1]:[col2]]" ////////
             ptgs = Parse(fpb, tbl + "[[#Headers], [Name]:[Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual("Table!B1:C1", ptgs[0].ToFormulaString(), "Table1[[#Headers],[col1]:[col2]]");
-            
+
             ////// Case 15: Evaluate "Table1[[#Totals],[col]:[col2]]" ////////
             ptgs = Parse(fpb, tbl + "[[#Totals], [Name]:[Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual(ErrPtg.REF_INVALID, ptgs[0], "Table1[[#Totals],[col]:[col2]]" + noTotalsRowReason);
-            
+
             ////// Case 16: Evaluate "Table1[[#Headers],[#Data],[col]]" ////////
             ptgs = Parse(fpb, tbl + "[[#Headers],[#Data],[Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
             ClassicAssert.AreEqual("Table!C1:C7", ptgs[0].ToFormulaString(), "Table1[[#Headers],[#Data],[col]]");
-            
+
             ////// Case 17: Evaluate "Table1[[#This Row], [col1]]" ////////
             ptgs = Parse(fpb, tbl + "[[#This Row], [Number]]", 2);
             ClassicAssert.AreEqual(1, ptgs.Length);
             // also acceptable: Table!C3
             ClassicAssert.AreEqual("Table!C3:C3", ptgs[0].ToFormulaString(), "Table1[[#This Row], [col1]]");
-            
+
             ////// Case 18: Evaluate "Table1[[col]:[col2]]" ////////
             ptgs = Parse(fpb, tbl + "[[Name]:[Number]]");
             ClassicAssert.AreEqual(1, ptgs.Length);
@@ -711,4 +712,3 @@ namespace TestCases.XSSF.UserModel
 
     }
 }
-

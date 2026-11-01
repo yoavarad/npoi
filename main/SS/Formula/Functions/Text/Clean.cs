@@ -1,6 +1,6 @@
-﻿using System;
-using System.Text;
 using NPOI.SS.Formula.Eval;
+using System;
+using System.Text;
 
 namespace NPOI.SS.Formula.Functions
 {
@@ -10,10 +10,10 @@ namespace NPOI.SS.Formula.Functions
         public override ValueEval Evaluate(String arg)
         {
             StringBuilder result = new StringBuilder();
-            for (int i = 0; i < arg.Length; i++)
+            for(int i = 0; i < arg.Length; i++)
             {
                 char c = arg[i];
-                if (TextFunction.IsPrintable(c))
+                if(TextFunction.IsPrintable(c))
                 {
                     result.Append(c);
                 }

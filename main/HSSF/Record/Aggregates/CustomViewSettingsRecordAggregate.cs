@@ -17,9 +17,9 @@
 
 namespace NPOI.HSSF.Record.Aggregates
 {
-    using System;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
+    using System;
     using System.Collections.Generic;
 
     /**
@@ -42,21 +42,21 @@ namespace NPOI.HSSF.Record.Aggregates
         public CustomViewSettingsRecordAggregate(RecordStream rs)
         {
             _begin = rs.GetNext();
-            if (_begin.Sid != UserSViewBegin.sid)
+            if(_begin.Sid != UserSViewBegin.sid)
             {
                 throw new InvalidOperationException("Bad begin record");
             }
             List<RecordBase> temp = new List<RecordBase>();
-            while (rs.PeekNextSid() != UserSViewEnd.sid)
+            while(rs.PeekNextSid() != UserSViewEnd.sid)
             {
-                if (PageSettingsBlock.IsComponentRecord(rs.PeekNextSid()))
+                if(PageSettingsBlock.IsComponentRecord(rs.PeekNextSid()))
                 {
-                    if (_psBlock != null)
+                    if(_psBlock != null)
                     {
-                        if (rs.PeekNextSid() == HeaderFooterRecord.sid)
+                        if(rs.PeekNextSid() == HeaderFooterRecord.sid)
                         {
                             // test samples: 45538_classic_Footer.xls, 45538_classic_Header.xls
-                            _psBlock.AddLateHeaderFooter((HeaderFooterRecord)rs.GetNext());
+                            _psBlock.AddLateHeaderFooter((HeaderFooterRecord) rs.GetNext());
                             continue;
                         }
                         throw new InvalidOperationException(
@@ -70,7 +70,7 @@ namespace NPOI.HSSF.Record.Aggregates
             }
             _recs = temp;
             _end = rs.GetNext(); // no need to save EOF in field
-            if (_end.Sid != UserSViewEnd.sid)
+            if(_end.Sid != UserSViewEnd.sid)
             {
                 throw new InvalidOperationException("Bad custom view Settings end record");
             }
@@ -78,21 +78,21 @@ namespace NPOI.HSSF.Record.Aggregates
 
         public override void VisitContainedRecords(RecordVisitor rv)
         {
-            if (_recs.Count == 0)
+            if(_recs.Count == 0)
             {
                 return;
             }
             rv.VisitRecord(_begin);
-            for (int i = 0; i < _recs.Count; i++)
+            for(int i = 0; i < _recs.Count; i++)
             {
                 RecordBase rb = _recs[i];
-                if (rb is RecordAggregate aggregate)
+                if(rb is RecordAggregate aggregate)
                 {
                     aggregate.VisitContainedRecords(rv);
                 }
                 else
                 {
-                    rv.VisitRecord((Record)rb);
+                    rv.VisitRecord((Record) rb);
                 }
             }
             rv.VisitRecord(_end);
@@ -109,4 +109,3 @@ namespace NPOI.HSSF.Record.Aggregates
         }
     }
 }
-

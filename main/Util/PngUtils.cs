@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -41,7 +41,7 @@ namespace NPOI.Util
          */
         public static bool MatchesPngHeader(byte[] data, int offset)
         {
-            if (data == null || data.Length - offset < PNG_FILE_HEADER.Length)
+            if(data == null || data.Length - offset < PNG_FILE_HEADER.Length)
             {
                 return false;
             }

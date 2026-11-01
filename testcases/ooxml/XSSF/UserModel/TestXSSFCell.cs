@@ -15,20 +15,21 @@
    limitations under the License.
 ==================================================================== */
 
-using NUnit.Framework;using NUnit.Framework.Legacy;
-using TestCases.SS.UserModel;
-using NPOI.SS.UserModel;
 using NPOI.OpenXmlFormats.Spreadsheet;
-using System;
-using NPOI.XSSF.Model;
-using NPOI.SS.Util;
 using NPOI.SS;
-using TestCases.HSSF;
-using System.Text;
-using System.Collections.Generic;
-using NPOI.XSSF;
-using NPOI.XSSF.UserModel;
 using NPOI.SS.Formula;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.XSSF;
+using NPOI.XSSF.Model;
+using NPOI.XSSF.UserModel;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using TestCases.HSSF;
+using TestCases.SS.UserModel;
 
 namespace TestCases.XSSF.UserModel
 {
@@ -123,7 +124,7 @@ namespace TestCases.XSSF.UserModel
 
             //case 2. cell.SetCellValue((String)null);
             ICell cell_1 = row.CreateCell(1);
-            cell_1.SetCellValue((String)null);
+            cell_1.SetCellValue((String) null);
             ClassicAssert.AreEqual(0, sst.Count);
             ClassicAssert.AreEqual(CellType.Blank, cell_1.CellType);
         }
@@ -157,7 +158,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(cell.StringCellValue, "t='str'");
 
             //revert to a blank cell
-            cell.SetCellValue((String)null);
+            cell.SetCellValue((String) null);
             ClassicAssert.AreEqual(CellType.Blank, cell.CellType);
             ClassicAssert.AreEqual(ST_CellType.n, ctCell.t);
             ClassicAssert.AreEqual(cell.StringCellValue, "");
@@ -173,7 +174,7 @@ namespace TestCases.XSSF.UserModel
             {
                 cell.SetCellFormula(validFormula);
             }
-            catch (FormulaParseException e)
+            catch(FormulaParseException e)
             {
                 fpe = e;
             }
@@ -184,7 +185,7 @@ namespace TestCases.XSSF.UserModel
             {
                 cell.SetCellFormula(invalidFormula);
             }
-            catch (FormulaParseException e)
+            catch(FormulaParseException e)
             {
                 fpe = e;
             }
@@ -201,7 +202,7 @@ namespace TestCases.XSSF.UserModel
                 cell.SetCellFormula(validFormula);
                 cell.SetCellFormula(invalidFormula);
             }
-            catch (FormulaParseException e)
+            catch(FormulaParseException e)
             {
                 fpe = e;
             }
@@ -281,8 +282,8 @@ namespace TestCases.XSSF.UserModel
 
             assertCellsWithMissingR(row);
 
-            wb = (XSSFWorkbook)_testDataProvider.WriteOutAndReadBack(wb);
-            row = (XSSFRow)wb.GetSheetAt(0).GetRow(0);
+            wb = (XSSFWorkbook) _testDataProvider.WriteOutAndReadBack(wb);
+            row = (XSSFRow) wb.GetSheetAt(0).GetRow(0);
             assertCellsWithMissingR(row);
         }
 
@@ -328,14 +329,14 @@ namespace TestCases.XSSF.UserModel
             // For each cell from the reference sheet find the corresponding cell in the problematic file (with missing R)
             // and assert that POI reads them equally:
             DataFormatter formater = new DataFormatter();
-            foreach (IRow r in sheetRef)
+            foreach(IRow r in sheetRef)
             {
                 XSSFRow rowRef = (XSSFRow)r;
                 XSSFRow row = (XSSFRow)sheet.GetRow(rowRef.RowNum);
 
                 ClassicAssert.AreEqual(rowRef.PhysicalNumberOfCells, row.PhysicalNumberOfCells, "number of cells in row[" + row.RowNum + "]");
 
-                foreach (ICell c in rowRef.Cells)
+                foreach(ICell c in rowRef.Cells)
                 {
                     XSSFCell cellRef = (XSSFCell)c;
                     XSSFCell cell = (XSSFCell)row.GetCell(cellRef.ColumnIndex);
@@ -343,7 +344,7 @@ namespace TestCases.XSSF.UserModel
                     ClassicAssert.AreEqual(cellRef.ColumnIndex, cell.ColumnIndex);
                     ClassicAssert.AreEqual(cellRef.GetReference(), cell.GetReference());
 
-                    if (!cell.GetCTCell().IsSetR())
+                    if(!cell.GetCTCell().IsSetR())
                     {
                         ClassicAssert.IsTrue(cellRef.GetCTCell().IsSetR(), "R must e set in cellRef");
 
@@ -442,9 +443,9 @@ namespace TestCases.XSSF.UserModel
         private void validateRow(IRow row)
         {
             // trigger bug with CArray handling
-            ((XSSFRow)row).OnDocumentWrite();
+            ((XSSFRow) row).OnDocumentWrite();
 
-            foreach (ICell cell in row)
+            foreach(ICell cell in row)
             {
                 ClassicAssert.IsNotNull(cell.ToString());
             }
@@ -505,18 +506,18 @@ namespace TestCases.XSSF.UserModel
         {
             StringBuilder sb = new StringBuilder();
             // test all possible characters
-            for (int i = 0; i < char.MaxValue; i++)
+            for(int i = 0; i < char.MaxValue; i++)
             {
                 if(i >= '\uD800' || i <= '\uD8FF')
                     continue;
-                sb.Append((char)i);
+                sb.Append((char) i);
             }
 
             String strAll = sb.ToString();
 
             // process in chunks as we have a limit on size of column now
             int pos = 0;
-            while (pos < strAll.Length)
+            while(pos < strAll.Length)
             {
                 String str = strAll.Substring(pos, Math.Min(strAll.Length, pos + SpreadsheetVersion.EXCEL2007.MaxTextLength)- pos);
 
@@ -601,7 +602,7 @@ namespace TestCases.XSSF.UserModel
         public void TestCopyCellFrom_CellCopyPolicy_style()
         {
             setUp_testCopyCellFrom_CellCopyPolicy();
-            srcCell.SetCellValue((String)null);
+            srcCell.SetCellValue((String) null);
 
             // Paste styles only
             CellCopyPolicy policy = new CellCopyPolicy.Builder().CellValue(false).Build();
@@ -708,7 +709,7 @@ namespace TestCases.XSSF.UserModel
 
             ICellStyle style = wb.CreateCellStyle();
             style.BorderTop = BorderStyle.Thick;
-            style.FillBackgroundColor = ((short)5);
+            style.FillBackgroundColor = ((short) 5);
             srcCell.CellStyle = (style);
 
             destCell.SetCellValue(true);
@@ -744,7 +745,7 @@ namespace TestCases.XSSF.UserModel
                 ClassicAssert.AreEqual("SUM(A3:B3)", c3.CellFormula);  // formula in the follower cell is rebuilt
 
             }
-            catch (Exception)
+            catch(Exception)
             {
                 //Assert.Fail(e.Message);
                 wb.Close();

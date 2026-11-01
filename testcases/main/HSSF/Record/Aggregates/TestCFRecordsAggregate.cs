@@ -17,21 +17,20 @@
 
 namespace TestCases.HSSF.Record.Aggregates
 {
-    using System;
-    using System.IO;
-    using System.Collections;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
+    using NPOI.HSSF.Model;
     using NPOI.HSSF.Record;
     using NPOI.HSSF.Record.Aggregates;
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Util;
-    using NPOI.SS.Util;
     using NPOI.SS.UserModel;
-    using System.Collections.Generic;
-    using NPOI.HSSF.Model;
+    using NPOI.SS.Util;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
 
     /**
      * Tests the serialization and deserialization of the CFRecordsAggregate
@@ -55,9 +54,9 @@ namespace TestCases.HSSF.Record.Aggregates
             CFRuleBase rule3 = CFRuleRecord.Create(sheet, (byte)ComparisonOperator.GreaterThanOrEqual, "100", null);
             header.NumberOfConditionalFormats = (3);
             CellRangeAddress[] cellRanges = {
-				new CellRangeAddress(0,1,0,0),
-				new CellRangeAddress(0,1,2,2),
-		    };
+                new CellRangeAddress(0,1,0,0),
+                new CellRangeAddress(0,1,2,2),
+            };
             header.CellRanges = (cellRanges);
             recs.Add(header);
             recs.Add(rule1);
@@ -67,7 +66,7 @@ namespace TestCases.HSSF.Record.Aggregates
 
             // Serialize
             byte [] serializedRecord = new byte[record.RecordSize];
-		    record.Serialize(0, serializedRecord);
+            record.Serialize(0, serializedRecord);
             ByteArrayInputStream in1 = new ByteArrayInputStream(serializedRecord);
 
             //Parse
@@ -77,12 +76,12 @@ namespace TestCases.HSSF.Record.Aggregates
             ClassicAssert.IsNotNull(recs);
             ClassicAssert.AreEqual(4, recs.Count);
 
-            header = (CFHeaderRecord)recs[0];
-            rule1 = (CFRuleRecord)recs[1];
+            header = (CFHeaderRecord) recs[0];
+            rule1 = (CFRuleRecord) recs[1];
             ClassicAssert.IsNotNull(rule1);
-            rule2 = (CFRuleRecord)recs[2];
+            rule2 = (CFRuleRecord) recs[2];
             ClassicAssert.IsNotNull(rule2);
-            rule3 = (CFRuleRecord)recs[3];
+            rule3 = (CFRuleRecord) recs[3];
             ClassicAssert.IsNotNull(rule3);
             cellRanges = header.CellRanges;
 
@@ -119,19 +118,19 @@ namespace TestCases.HSSF.Record.Aggregates
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = (HSSFSheet)workbook.CreateSheet();
             CellRangeAddress[] cellRanges = {
-				new CellRangeAddress(0,1,0,0),
-				new CellRangeAddress(0,1,2,2),
-		    };
+                new CellRangeAddress(0,1,0,0),
+                new CellRangeAddress(0,1,2,2),
+            };
             CFRuleRecord[] rules = {
-			CFRuleRecord.Create(sheet, "7"),
-			CFRuleRecord.Create(sheet, (byte)ComparisonOperator.Between, "2", "5"),
-		    };
+            CFRuleRecord.Create(sheet, "7"),
+            CFRuleRecord.Create(sheet, (byte)ComparisonOperator.Between, "2", "5"),
+            };
             CFRecordsAggregate agg = new CFRecordsAggregate(cellRanges, rules);
             byte[] serializedRecord = new byte[agg.RecordSize];
             agg.Serialize(0, serializedRecord);
 
             int nRules = NPOI.Util.LittleEndian.GetUShort(serializedRecord, 4);
-            if (nRules == 0)
+            if(nRules == 0)
             {
                 throw new AssertionException("Identified bug 45682 b");
             }
@@ -156,7 +155,7 @@ namespace TestCases.HSSF.Record.Aggregates
                 new CFRecordsAggregate(cellRanges, rules);
                 Assert.Fail("Shouldn't be able to mix between types");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             rules = new CFRuleBase[] { CFRuleRecord.Create(sheet, "7") };
             CFRecordsAggregate agg = new CFRecordsAggregate(cellRanges, rules);
@@ -167,7 +166,7 @@ namespace TestCases.HSSF.Record.Aggregates
                 agg.AddRule(CFRule12Record.Create(sheet, "7"));
                 Assert.Fail("Shouldn't be able to mix between types");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
         }
 
     }

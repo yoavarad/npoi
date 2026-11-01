@@ -17,9 +17,8 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
-    
     using NPOI.Util;
+    using System;
 
     //import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
@@ -57,9 +56,9 @@ namespace NPOI.SS.Formula.PTG
             get { return 1; }
         }
 
-        public override String ToFormulaString() 
+        public override String ToFormulaString()
         {
-    	    throw new NotImplementedException("ToFormulaString(String[] operands) should be used for subclasses of OperationPtgs");
-	    }
+            throw new NotImplementedException("ToFormulaString(String[] operands) should be used for subclasses of OperationPtgs");
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace NPOI.XWPF.UserModel
+namespace NPOI.XWPF.UserModel
 {
     /// <summary>
     /// The width types for tables and table cells. Table width can be specified as "auto" (AUTO),

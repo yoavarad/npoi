@@ -24,7 +24,8 @@ namespace TestCases
     using NPOI.XSSF;
     using NPOI.XSSF.UserModel;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.XWPF;
 
@@ -92,7 +93,7 @@ namespace TestCases
 
             ClassicAssert.AreEqual(application, newProperties.Application);
             ClassicAssert.AreEqual(appVersion, newProperties.AppVersion);
-        
+
 
             CT_ExtendedProperties
                     newCtProps = newProperties.GetUnderlyingProperties();
@@ -122,7 +123,7 @@ namespace TestCases
                 customProps.AddProperty("test-3", 36.6);
                 Assert.Fail("expected exception");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.AreEqual("A property with this name already exists in the custom properties", e.Message);
             }
@@ -272,7 +273,7 @@ namespace TestCases
 
         private static String ZeroPad(long i)
         {
-            if (i >= 0 && i <= 9)
+            if(i >= 0 && i <= 9)
             {
                 return "0" + i;
             }
@@ -283,5 +284,3 @@ namespace TestCases
         }
     }
 }
-
-

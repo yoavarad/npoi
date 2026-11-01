@@ -17,9 +17,10 @@
 
 namespace TestCases.XWPF
 {
-    using NPOI.XWPF.UserModel;
     using NPOI.OpenXmlFormats;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NPOI.XWPF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Tests if the {@link CoreProperties#getKeywords()} method. This test has been

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  ====================================================================
  *    Licensed to the Apache Software Foundation (ASF) under one or more
  *    contributor license agreements.  See the NOTICE file distributed with
@@ -17,14 +17,15 @@
  * ====================================================================
  */
 
-using System;
-using System.Globalization;
-using System.IO;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.Util;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Globalization;
+using System.IO;
 
 namespace TestCases.SS.Util
 {
@@ -39,9 +40,9 @@ namespace TestCases.SS.Util
             try
             {
                 String sheetName;
-                if (dates)
+                if(dates)
                 {
-                    if (times)
+                    if(times)
                     {
                         sheetName = "DateTimes";
                     }
@@ -65,9 +66,9 @@ namespace TestCases.SS.Util
                 header.CreateCell(6).SetCellValue("Excel pattern");
 
                 int rowNum = 1;
-                foreach (CultureInfo locale in CultureInfo.GetCultures(CultureTypes.AllCultures))
+                foreach(CultureInfo locale in CultureInfo.GetCultures(CultureTypes.AllCultures))
                 {
-                    if (string.IsNullOrEmpty(locale.ToString()))
+                    if(string.IsNullOrEmpty(locale.ToString()))
                         continue;
                     IRow row = sheet.CreateRow(rowNum++);
 
@@ -75,9 +76,9 @@ namespace TestCases.SS.Util
                     row.CreateCell(1).SetCellValue(locale.DisplayName);
 
                     string csharpDateFormatPattern;
-                    if (dates)
+                    if(dates)
                     {
-                        if (times)
+                        if(times)
                         {
                             csharpDateFormatPattern = DateFormat.GetDateTimePattern(style, style, locale);
                         }
@@ -134,7 +135,7 @@ namespace TestCases.SS.Util
             {
                 workbook.Close();
             }
-            
+
 
         }
         [Test]
@@ -142,7 +143,7 @@ namespace TestCases.SS.Util
         {
 
             DateTime date = DateTime.Now;
-            
+
             OutputLocaleDataFormats(date, true, false, DateFormat.DEFAULT, "Default");
             OutputLocaleDataFormats(date, true, false, DateFormat.SHORT, "Short");
             OutputLocaleDataFormats(date, true, false, DateFormat.MEDIUM, "Medium");

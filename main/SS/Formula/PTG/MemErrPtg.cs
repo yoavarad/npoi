@@ -17,8 +17,8 @@
 
 namespace NPOI.SS.Formula.PTG
 {
-    using System;
     using NPOI.Util;
+    using System;
 
     /**
      *
@@ -31,22 +31,22 @@ namespace NPOI.SS.Formula.PTG
     {
         public new const short sid = 0x27;
         // fix warning CS0414 "never used": private const int SIZE = 7;
-	    private int field_1_reserved = 0;
-	    private short field_2_subex_len = 0;
+        private int field_1_reserved = 0;
+        private short field_2_subex_len = 0;
 
         /** Creates new MemErrPtg */
 
         public MemErrPtg(ILittleEndianInput in1)
             : base(in1)
         {
-        
+
         }
 
         public override void Write(ILittleEndianOutput out1)
         {
-		    out1.WriteByte(sid + PtgClass);
-		    out1.WriteInt(field_1_reserved);
-		    out1.WriteShort(field_2_subex_len);
+            out1.WriteByte(sid + PtgClass);
+            out1.WriteInt(field_1_reserved);
+            out1.WriteShort(field_2_subex_len);
         }
 
 

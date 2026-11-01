@@ -17,13 +17,11 @@
 
 namespace TestCases.HSSF.Util
 {
-    using System;
-
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-
-    using NPOI.SS.Util;
     using NPOI.SS;
+    using NPOI.SS.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
 
     [TestFixture]
@@ -61,7 +59,7 @@ namespace TestCases.HSSF.Util
                 CellReference.ConvertColStringToIndex("A$B$");
                 Assert.Fail("Column reference is invalid and shouldn't be accepted");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
         }
 
         [Test]
@@ -188,7 +186,7 @@ namespace TestCases.HSSF.Util
                 CellReference.ConvertColStringToIndex("A$");
                 Assert.Fail("Should throw exception here");
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 ClassicAssert.IsTrue(e.Message.Contains("A$"));
             }

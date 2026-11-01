@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,12 +25,12 @@
  * 
  * ==============================================================*/
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-
-using NUnit.Framework;using NUnit.Framework.Legacy;
 using NPOI.Util;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace TestCases.Util
 {
@@ -65,10 +65,10 @@ namespace TestCases.Util
         [Test]
         public void TestGetShortValue()
         {
-            ClassicAssert.AreEqual(bf_multi.GetShortValue((short)-1), (short)127);
-            ClassicAssert.AreEqual(bf_multi.GetShortValue((short)0), (short)0);
-            ClassicAssert.AreEqual(bf_single.GetShortValue((short)-1), (short)1);
-            ClassicAssert.AreEqual(bf_single.GetShortValue((short)0), (short)0);
+            ClassicAssert.AreEqual(bf_multi.GetShortValue((short) -1), (short) 127);
+            ClassicAssert.AreEqual(bf_multi.GetShortValue((short) 0), (short) 0);
+            ClassicAssert.AreEqual(bf_single.GetShortValue((short) -1), (short) 1);
+            ClassicAssert.AreEqual(bf_single.GetShortValue((short) 0), (short) 0);
         }
         /// <summary>
         /// Tests the get raw value.
@@ -87,12 +87,12 @@ namespace TestCases.Util
         [Test]
         public void TestGetShortRawValue()
         {
-            ClassicAssert.AreEqual(bf_multi.GetShortRawValue((short)-1),
-                         (short)0x3F80);
-            ClassicAssert.AreEqual(bf_multi.GetShortRawValue((short)0), (short)0);
-            ClassicAssert.AreEqual(bf_single.GetShortRawValue((short)-1),
-                         (short)0x4000);
-            ClassicAssert.AreEqual(bf_single.GetShortRawValue((short)0), (short)0);
+            ClassicAssert.AreEqual(bf_multi.GetShortRawValue((short) -1),
+                         (short) 0x3F80);
+            ClassicAssert.AreEqual(bf_multi.GetShortRawValue((short) 0), (short) 0);
+            ClassicAssert.AreEqual(bf_single.GetShortRawValue((short) -1),
+                         (short) 0x4000);
+            ClassicAssert.AreEqual(bf_single.GetShortRawValue((short) 0), (short) 0);
         }
         /// <summary>
         /// Tests the is set.
@@ -101,7 +101,7 @@ namespace TestCases.Util
         public void TestIsSet()
         {
             ClassicAssert.IsTrue(!bf_multi.IsSet(0));
-            for (int j = 0x80; j <= 0x3F80; j += 0x80)
+            for(int j = 0x80; j <= 0x3F80; j += 0x80)
             {
                 ClassicAssert.IsTrue(bf_multi.IsSet(j));
             }
@@ -114,7 +114,7 @@ namespace TestCases.Util
         [Test]
         public void TestIsAllSet()
         {
-            for (int j = 0; j < 0x3F80; j += 0x80)
+            for(int j = 0; j < 0x3F80; j += 0x80)
             {
                 ClassicAssert.IsTrue(!bf_multi.IsAllSet(j));
             }
@@ -128,7 +128,7 @@ namespace TestCases.Util
         [Test]
         public void TestSetValue()
         {
-            for (int j = 0; j < 128; j++)
+            for(int j = 0; j < 128; j++)
             {
                 ClassicAssert.AreEqual(bf_multi.GetValue(bf_multi.SetValue(0, j)), j);
                 ClassicAssert.AreEqual(bf_multi.SetValue(0, j), j << 7);
@@ -136,7 +136,7 @@ namespace TestCases.Util
 
             // verify that excess bits are stripped off
             ClassicAssert.AreEqual(bf_multi.SetValue(0x3f80, 128), 0);
-            for (int j = 0; j < 2; j++)
+            for(int j = 0; j < 2; j++)
             {
                 ClassicAssert.AreEqual(bf_single.GetValue(bf_single.SetValue(0, j)), j);
                 ClassicAssert.AreEqual(bf_single.SetValue(0, j), j << 14);
@@ -151,30 +151,30 @@ namespace TestCases.Util
         [Test]
         public void TestSetShortValue()
         {
-            for (int j = 0; j < 128; j++)
+            for(int j = 0; j < 128; j++)
             {
                 ClassicAssert.AreEqual(bf_multi
                     .GetShortValue(bf_multi
-                        .SetShortValue((short)0, (short)j)), (short)j);
-                ClassicAssert.AreEqual(bf_multi.SetShortValue((short)0, (short)j),
-                             (short)(j << 7));
+                        .SetShortValue((short) 0, (short) j)), (short) j);
+                ClassicAssert.AreEqual(bf_multi.SetShortValue((short) 0, (short) j),
+                             (short) (j << 7));
             }
 
             // verify that excess bits are stripped off
-            ClassicAssert.AreEqual(bf_multi.SetShortValue((short)0x3f80, (short)128),
-                         (short)0);
-            for (int j = 0; j < 2; j++)
+            ClassicAssert.AreEqual(bf_multi.SetShortValue((short) 0x3f80, (short) 128),
+                         (short) 0);
+            for(int j = 0; j < 2; j++)
             {
                 ClassicAssert.AreEqual(bf_single
                     .GetShortValue(bf_single
-                        .SetShortValue((short)0, (short)j)), (short)j);
-                ClassicAssert.AreEqual(bf_single.SetShortValue((short)0, (short)j),
-                             (short)(j << 14));
+                        .SetShortValue((short) 0, (short) j)), (short) j);
+                ClassicAssert.AreEqual(bf_single.SetShortValue((short) 0, (short) j),
+                             (short) (j << 14));
             }
 
             // verify that excess bits are stripped off
-            ClassicAssert.AreEqual(bf_single.SetShortValue((short)0x4000, (short)2),
-                         (short)0);
+            ClassicAssert.AreEqual(bf_single.SetShortValue((short) 0x4000, (short) 2),
+                         (short) 0);
         }
         /// <summary>
         /// Tests the byte.
@@ -182,23 +182,23 @@ namespace TestCases.Util
         [Test]
         public void TestByte()
         {
-            ClassicAssert.AreEqual(1, BitFieldFactory.GetInstance(1).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(2, BitFieldFactory.GetInstance(2).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(4, BitFieldFactory.GetInstance(4).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(8, BitFieldFactory.GetInstance(8).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(16, BitFieldFactory.GetInstance(16).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(32, BitFieldFactory.GetInstance(32).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(64, BitFieldFactory.GetInstance(64).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(128, BitFieldFactory.GetInstance(128).SetByteBoolean((byte)0, true));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(1).SetByteBoolean((byte)1, false));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(2).SetByteBoolean((byte)2, false));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(4).SetByteBoolean((byte)4, false));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(8).SetByteBoolean((byte)8, false));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(16).SetByteBoolean((byte)16, false));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(32).SetByteBoolean((byte)32, false));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(64).SetByteBoolean((byte)64, false));
-            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(127).SetByteBoolean((byte)127, false));
-            ClassicAssert.AreEqual(254, BitFieldFactory.GetInstance(1).SetByteBoolean((byte)254, false));
+            ClassicAssert.AreEqual(1, BitFieldFactory.GetInstance(1).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(2, BitFieldFactory.GetInstance(2).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(4, BitFieldFactory.GetInstance(4).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(8, BitFieldFactory.GetInstance(8).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(16, BitFieldFactory.GetInstance(16).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(32, BitFieldFactory.GetInstance(32).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(64, BitFieldFactory.GetInstance(64).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(128, BitFieldFactory.GetInstance(128).SetByteBoolean((byte) 0, true));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(1).SetByteBoolean((byte) 1, false));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(2).SetByteBoolean((byte) 2, false));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(4).SetByteBoolean((byte) 4, false));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(8).SetByteBoolean((byte) 8, false));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(16).SetByteBoolean((byte) 16, false));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(32).SetByteBoolean((byte) 32, false));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(64).SetByteBoolean((byte) 64, false));
+            ClassicAssert.AreEqual(0, BitFieldFactory.GetInstance(127).SetByteBoolean((byte) 127, false));
+            ClassicAssert.AreEqual(254, BitFieldFactory.GetInstance(1).SetByteBoolean((byte) 254, false));
             byte clearedBit = BitFieldFactory.GetInstance(0x40).SetByteBoolean(unchecked((byte)-63), false);
 
             ClassicAssert.AreEqual(false, BitFieldFactory.GetInstance(0x40).IsSet(clearedBit));
@@ -209,8 +209,8 @@ namespace TestCases.Util
         [Test]
         public void TestClear()
         {
-            ClassicAssert.AreEqual(bf_multi.Clear(-1), unchecked((Int32)0xFFFFC07F));
-            ClassicAssert.AreEqual(bf_single.Clear(-1), unchecked((Int32)0xFFFFBFFF));
+            ClassicAssert.AreEqual(bf_multi.Clear(-1), unchecked((Int32) 0xFFFFC07F));
+            ClassicAssert.AreEqual(bf_single.Clear(-1), unchecked((Int32) 0xFFFFBFFF));
         }
 
         /// <summary>
@@ -219,8 +219,8 @@ namespace TestCases.Util
         [Test]
         public void TestClearShort()
         {
-            ClassicAssert.AreEqual(bf_multi.ClearShort((short)-1), unchecked((short)0xC07F));
-            ClassicAssert.AreEqual(bf_single.ClearShort((short)-1), unchecked((short)0xBFFF));
+            ClassicAssert.AreEqual(bf_multi.ClearShort((short) -1), unchecked((short) 0xC07F));
+            ClassicAssert.AreEqual(bf_single.ClearShort((short) -1), unchecked((short) 0xBFFF));
         }
         /// <summary>
         /// Tests the set.
@@ -237,8 +237,8 @@ namespace TestCases.Util
         [Test]
         public void TestSetShort()
         {
-            ClassicAssert.AreEqual(bf_multi.SetShort((short)0), (short)0x3F80);
-            ClassicAssert.AreEqual(bf_single.SetShort((short)0), (short)0x4000);
+            ClassicAssert.AreEqual(bf_multi.SetShort((short) 0), (short) 0x3F80);
+            ClassicAssert.AreEqual(bf_single.SetShort((short) 0), (short) 0x4000);
         }
         /// <summary>
         /// Tests the set boolean.
@@ -257,14 +257,14 @@ namespace TestCases.Util
         [Test]
         public void TestSetShortBoolean()
         {
-            ClassicAssert.AreEqual(bf_multi.SetShort((short)0),
-                         bf_multi.SetShortBoolean((short)0, true));
-            ClassicAssert.AreEqual(bf_single.SetShort((short)0),
-                         bf_single.SetShortBoolean((short)0, true));
-            ClassicAssert.AreEqual(bf_multi.ClearShort((short)-1),
-                         bf_multi.SetShortBoolean((short)-1, false));
-            ClassicAssert.AreEqual(bf_single.ClearShort((short)-1),
-                         bf_single.SetShortBoolean((short)-1, false));
+            ClassicAssert.AreEqual(bf_multi.SetShort((short) 0),
+                         bf_multi.SetShortBoolean((short) 0, true));
+            ClassicAssert.AreEqual(bf_single.SetShort((short) 0),
+                         bf_single.SetShortBoolean((short) 0, true));
+            ClassicAssert.AreEqual(bf_multi.ClearShort((short) -1),
+                         bf_multi.SetShortBoolean((short) -1, false));
+            ClassicAssert.AreEqual(bf_single.ClearShort((short) -1),
+                         bf_single.SetShortBoolean((short) -1, false));
         }
         [Test]
         public void TestSetLargeValues()

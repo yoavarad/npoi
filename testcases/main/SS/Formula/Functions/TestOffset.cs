@@ -21,7 +21,8 @@ namespace TestCases.SS.Formula.Functions
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
     using NPOI.SS.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Tests for OFFSET function implementation
@@ -38,7 +39,7 @@ namespace TestCases.SS.Formula.Functions
             {
                 ClassicAssert.AreEqual(expected, Offset.EvaluateIntArg(new NumberEval(doubleVal), -1, -1));
             }
-            catch (EvaluationException e)
+            catch(EvaluationException e)
             {
                 throw new AssertionException("Unexpected error '" + e.GetErrorEval().ToString() + "'.");
             }

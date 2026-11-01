@@ -1,4 +1,4 @@
-﻿using NPOI.OpenXml4Net.Util;
+using NPOI.OpenXml4Net.Util;
 using System.Collections.Generic;
 using System.IO;
 using System.Security;
@@ -14,7 +14,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
         CT_Sst sst = null;
 
         public SstDocument()
-        {         
+        {
         }
         public SstDocument(CT_Sst sst)
         {
@@ -42,9 +42,9 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                 sst.uniqueCount = XmlHelper.ReadInt(xml.DocumentElement.Attributes["uniqueCount"]);
 
                 XmlNodeList nl = xml.SelectNodes("//d:sst/d:si", namespaceManager);
-                if (nl != null)
+                if(nl != null)
                 {
-                    foreach (XmlNode node in nl)
+                    foreach(XmlNode node in nl)
                     {
                         CT_Rst rst = CT_Rst.Parse(node, namespaceManager);
                         sstDoc.sst.si.Add(rst);
@@ -52,11 +52,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
                 }
                 return sstDoc;
             }
-            catch (XmlException e)
+            catch(XmlException e)
             {
                 throw new IOException(e.Message);
             }
-        }        
+        }
 
         public void Save(Stream stream)
         {
@@ -65,7 +65,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.WriteAttribute("count", this.GetSst().count);
             sw.WriteAttribute("uniqueCount", this.GetSst().uniqueCount);
             sw.Write('>');
-            foreach (CT_Rst ssi in this.GetSst().si)
+            foreach(CT_Rst ssi in this.GetSst().si)
             {
                 ssi.Write(sw, "si");
             }

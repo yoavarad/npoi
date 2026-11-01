@@ -20,9 +20,9 @@
 
 namespace NPOI.HSSF.Record
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
     /**
      * Title:        VCenter record
@@ -49,9 +49,9 @@ namespace NPOI.HSSF.Record
          */
 
         public VCenterRecord(RecordInputStream in1)
-    {
-        field_1_vcenter = in1.ReadShort();
-    }
+        {
+            field_1_vcenter = in1.ReadShort();
+        }
 
         /**
          * Get whether to center vertically or not
@@ -66,7 +66,7 @@ namespace NPOI.HSSF.Record
             }
             set
             {
-                if (value == true)
+                if(value == true)
                 {
                     field_1_vcenter = 1;
                 }

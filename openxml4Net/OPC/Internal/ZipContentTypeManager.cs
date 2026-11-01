@@ -1,7 +1,7 @@
-﻿using System.IO;
-using System.Xml;
 using ICSharpCode.SharpZipLib.Zip;
 using NPOI.Util;
+using System.IO;
+using System.Xml;
 
 namespace NPOI.OpenXml4Net.OPC.Internal
 {

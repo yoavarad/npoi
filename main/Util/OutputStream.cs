@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,20 +15,20 @@ namespace NPOI.Util
         }
         public override void Write(byte[] b, int off, int len)
         {
-            if (b == null)
+            if(b == null)
             {
                 throw new NullReferenceException();
             }
-            else if ((off < 0) || (off > b.Length) || (len < 0) ||
+            else if((off < 0) || (off > b.Length) || (len < 0) ||
                          ((off + len) > b.Length) || ((off + len) < 0))
             {
                 throw new IndexOutOfRangeException();
             }
-            else if (len == 0)
+            else if(len == 0)
             {
                 return;
             }
-            for (int i = 0; i < len; i++)
+            for(int i = 0; i < len; i++)
             {
                 Write(b[off + i]);
             }

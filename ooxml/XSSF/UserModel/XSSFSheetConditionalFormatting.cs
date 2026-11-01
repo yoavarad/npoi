@@ -17,13 +17,13 @@
  * ====================================================================
  */
 
-using System;
+using NPOI.HSSF.Record.CF;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.SS;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
-using NPOI.HSSF.Record.CF;
+using System;
 using System.Collections.Generic;
-using NPOI.SS;
 namespace NPOI.XSSF.UserModel
 {
 
@@ -78,28 +78,37 @@ namespace NPOI.XSSF.UserModel
             XSSFConditionalFormattingRule rule = new XSSFConditionalFormattingRule(_sheet);
             CT_CfRule cfRule = rule.GetCTCfRule();
             cfRule.AddFormula(formula1);
-            if (formula2 != null) cfRule.AddFormula(formula2);
+            if(formula2 != null)
+                cfRule.AddFormula(formula2);
             cfRule.type = (ST_CfType.cellIs);
             ST_ConditionalFormattingOperator operator1;
-            switch (comparisonOperation)
+            switch(comparisonOperation)
             {
-                case ComparisonOperator.Between: 
-                    operator1 = ST_ConditionalFormattingOperator.between; break;
-                case ComparisonOperator.NotBetween: 
-                    operator1 = ST_ConditionalFormattingOperator.notBetween; break;
-                case ComparisonOperator.LessThan: 
-                    operator1 = ST_ConditionalFormattingOperator.lessThan; break;
-                case ComparisonOperator.LessThanOrEqual: 
-                    operator1 = ST_ConditionalFormattingOperator.lessThanOrEqual; break;
-                case ComparisonOperator.GreaterThan: 
-                    operator1 = ST_ConditionalFormattingOperator.greaterThan; break;
-                case ComparisonOperator.GreaterThanOrEqual: 
-                    operator1 = ST_ConditionalFormattingOperator.greaterThanOrEqual; break;
-                case ComparisonOperator.Equal: 
-                    operator1 = ST_ConditionalFormattingOperator.equal; break;
-                case ComparisonOperator.NotEqual: 
-                    operator1 = ST_ConditionalFormattingOperator.notEqual; break;
-                default: 
+                case ComparisonOperator.Between:
+                    operator1 = ST_ConditionalFormattingOperator.between;
+                    break;
+                case ComparisonOperator.NotBetween:
+                    operator1 = ST_ConditionalFormattingOperator.notBetween;
+                    break;
+                case ComparisonOperator.LessThan:
+                    operator1 = ST_ConditionalFormattingOperator.lessThan;
+                    break;
+                case ComparisonOperator.LessThanOrEqual:
+                    operator1 = ST_ConditionalFormattingOperator.lessThanOrEqual;
+                    break;
+                case ComparisonOperator.GreaterThan:
+                    operator1 = ST_ConditionalFormattingOperator.greaterThan;
+                    break;
+                case ComparisonOperator.GreaterThanOrEqual:
+                    operator1 = ST_ConditionalFormattingOperator.greaterThanOrEqual;
+                    break;
+                case ComparisonOperator.Equal:
+                    operator1 = ST_ConditionalFormattingOperator.equal;
+                    break;
+                case ComparisonOperator.NotEqual:
+                    operator1 = ST_ConditionalFormattingOperator.notEqual;
+                    break;
+                default:
                     throw new ArgumentException("Unknown comparison operator: " + comparisonOperation);
             }
             cfRule.@operator = (operator1);
@@ -170,7 +179,7 @@ namespace NPOI.XSSF.UserModel
         }
         public IConditionalFormattingRule CreateConditionalFormattingRule(ExtendedColor color)
         {
-            return CreateConditionalFormattingRule((XSSFColor)color);
+            return CreateConditionalFormattingRule((XSSFColor) color);
         }
         /**
          * Create a Color Scale / Color Gradient conditional formatting rule.
@@ -196,40 +205,41 @@ namespace NPOI.XSSF.UserModel
 
         public int AddConditionalFormatting(CellRangeAddress[] regions, IConditionalFormattingRule[] cfRules)
         {
-            if (regions == null)
+            if(regions == null)
             {
                 throw new ArgumentException("regions must not be null");
             }
-            foreach (CellRangeAddress range in regions) range.Validate(SpreadsheetVersion.EXCEL2007);
+            foreach(CellRangeAddress range in regions)
+                range.Validate(SpreadsheetVersion.EXCEL2007);
 
-            if (cfRules == null)
+            if(cfRules == null)
             {
                 throw new ArgumentException("cfRules must not be null");
             }
-            if (cfRules.Length == 0)
+            if(cfRules.Length == 0)
             {
                 throw new ArgumentException("cfRules must not be empty");
             }
-            
+
             CellRangeAddress[] mergeCellRanges = CellRangeUtil.MergeCellRanges(regions);
             CT_ConditionalFormatting cf = _sheet.GetCTWorksheet().AddNewConditionalFormatting();
             string refs = string.Empty;
-            foreach (CellRangeAddress a in mergeCellRanges)
+            foreach(CellRangeAddress a in mergeCellRanges)
             {
-                if (refs.Length == 0)
+                if(refs.Length == 0)
                     refs = a.FormatAsString();
                 else
-                    refs += " " +a.FormatAsString() ;
+                    refs += " " +a.FormatAsString();
             }
             cf.sqref = refs;
 
             int priority = 1;
-            foreach (CT_ConditionalFormatting c in _sheet.GetCTWorksheet().conditionalFormatting)
+            foreach(CT_ConditionalFormatting c in _sheet.GetCTWorksheet().conditionalFormatting)
             {
                 priority += c.sizeOfCfRuleArray();
             }
 
-            foreach (IConditionalFormattingRule rule in cfRules)
+            foreach(IConditionalFormattingRule rule in cfRules)
             {
                 XSSFConditionalFormattingRule xRule = (XSSFConditionalFormattingRule)rule;
                 xRule.GetCTCfRule().priority = (priority++);
@@ -315,7 +325,7 @@ namespace NPOI.XSSF.UserModel
         private void CheckIndex(int index)
         {
             int cnt = NumConditionalFormattings;
-            if (index < 0 || index >= cnt)
+            if(index < 0 || index >= cnt)
             {
                 throw new ArgumentException("Specified CF index " + index
                         + " is outside the allowable range (0.." + (cnt - 1) + ")");

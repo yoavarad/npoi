@@ -17,11 +17,11 @@
 
 namespace NPOI.XWPF.UserModel
 {
+    using Cysharp.Text;
     using NPOI.OpenXmlFormats.Wordprocessing;
     using System;
     using System.Collections.Generic;
-    using System.Text; 
-using Cysharp.Text;
+    using System.Text;
     using System.Xml;
 
     /**
@@ -46,21 +46,21 @@ using Cysharp.Text;
 
         protected void Init()
         {
-            foreach (var o in ctComment.Items)
+            foreach(var o in ctComment.Items)
             {
-                if (o is CT_P ctP)
+                if(o is CT_P ctP)
                 {
                     XWPFParagraph p = new XWPFParagraph(ctP, this);
                     bodyElements.Add(p);
                     paragraphs.Add(p);
                 }
-                else if (o is CT_Tbl tbl)
+                else if(o is CT_Tbl tbl)
                 {
                     XWPFTable t = new XWPFTable(tbl, this);
                     bodyElements.Add(t);
                     tables.Add(t);
                 }
-                else if (o is CT_SdtBlock block)
+                else if(o is CT_SdtBlock block)
                 {
                     XWPFSDT c = new XWPFSDT(block, this);
                     bodyElements.Add(c);
@@ -173,9 +173,9 @@ using Cysharp.Text;
 
         public XWPFParagraph GetParagraph(CT_P p)
         {
-            foreach (XWPFParagraph paragraph in paragraphs)
+            foreach(XWPFParagraph paragraph in paragraphs)
             {
-                if (paragraph.GetCTP().Equals(p))
+                if(paragraph.GetCTP().Equals(p))
                     return paragraph;
             }
             return null;
@@ -183,11 +183,11 @@ using Cysharp.Text;
 
         public XWPFTable GetTable(CT_Tbl ctTable)
         {
-            foreach (XWPFTable table in tables)
+            foreach(XWPFTable table in tables)
             {
-                if (table == null)
+                if(table == null)
                     return null;
-                if (table.GetCTTbl().Equals(ctTable))
+                if(table.GetCTTbl().Equals(ctTable))
                     return table;
             }
             return null;
@@ -195,7 +195,7 @@ using Cysharp.Text;
 
         public XWPFParagraph GetParagraphArray(int pos)
         {
-            if (pos >= 0 && pos < paragraphs.Count)
+            if(pos >= 0 && pos < paragraphs.Count)
             {
                 return paragraphs[pos];
             }
@@ -204,7 +204,7 @@ using Cysharp.Text;
 
         public XWPFTable GetTableArray(int pos)
         {
-            if (pos >= 0 && pos < tables.Count)
+            if(pos >= 0 && pos < tables.Count)
             {
                 return tables[pos];
             }
@@ -320,9 +320,9 @@ using Cysharp.Text;
         {
             bodyElements.Insert(pos, table);
             int i = 0;
-            foreach (CT_Tbl tbl in ctComment.GetTblList())
+            foreach(CT_Tbl tbl in ctComment.GetTblList())
             {
-                if (tbl == table.GetCTTbl())
+                if(tbl == table.GetCTTbl())
                 {
                     break;
                 }
@@ -374,9 +374,9 @@ using Cysharp.Text;
         public String GetText()
         {
             using var text = ZString.CreateStringBuilder();
-            foreach (XWPFParagraph p in paragraphs)
+            foreach(XWPFParagraph p in paragraphs)
             {
-                if (text.Length > 0)
+                if(text.Length > 0)
                 {
                     text.Append("\n");
                 }

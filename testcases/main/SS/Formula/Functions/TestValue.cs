@@ -18,9 +18,10 @@
 namespace TestCases.SS.Formula.Functions
 {
     using NPOI.SS.Formula.Eval;
-    using System;
     using NPOI.SS.Formula.Functions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
 
     /**
      * Tests for {@link Value}
@@ -34,14 +35,14 @@ namespace TestCases.SS.Formula.Functions
         private static ValueEval invokeValue(String strText)
         {
             ValueEval[] args = new ValueEval[] { new StringEval(strText), };
-            return new Value().Evaluate(args, -1, (short)-1);
+            return new Value().Evaluate(args, -1, (short) -1);
         }
 
         private static void ConfirmValue(String strText, double expected)
         {
             ValueEval result = invokeValue(strText);
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(expected, ((NumberEval)result).NumberValue, 0.0);
+            ClassicAssert.AreEqual(expected, ((NumberEval) result).NumberValue, 0.0);
         }
 
         private static void ConfirmValueError(String strText)

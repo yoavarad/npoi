@@ -1,9 +1,9 @@
-﻿using System;
-using NPOI.HSSF.Record.AutoFilter;
 using NPOI.HSSF.Model;
 using NPOI.HSSF.Record;
+using NPOI.HSSF.Record.AutoFilter;
 using NPOI.SS.Formula.PTG;
 using NPOI.SS.UserModel;
+using System;
 
 namespace NPOI.HSSF.UserModel
 {
@@ -21,12 +21,12 @@ namespace NPOI.HSSF.UserModel
             _sheet = sheet;
         }
 
-        public HSSFAutoFilter(string formula,HSSFWorkbook workbook)
+        public HSSFAutoFilter(string formula, HSSFWorkbook workbook)
         {
             //this.workbook = workbook;
 
             Ptg[] ptgs = HSSFFormulaParser.Parse(formula, workbook);
-            if (ptgs[0] is not Area3DPtg)
+            if(ptgs[0] is not Area3DPtg)
                 throw new ArgumentException("incorrect formula");
 
             Area3DPtg ptg = (Area3DPtg)ptgs[0];
@@ -34,24 +34,24 @@ namespace NPOI.HSSF.UserModel
             //look for the prior record
             int loc = sheet.Sheet.FindFirstRecordLocBySid(DefaultColWidthRecord.sid) ;
             CreateFilterModeRecord(sheet, loc+1);
-            CreateAutoFilterInfoRecord(sheet, loc + 2,ptg);
+            CreateAutoFilterInfoRecord(sheet, loc + 2, ptg);
             //look for "_FilterDatabase" NameRecord of the sheet
             NameRecord name = workbook.Workbook.GetSpecificBuiltinRecord(NameRecord.BUILTIN_FILTER_DB, ptg.ExternSheetIndex+1);
-            if (name == null)
+            if(name == null)
                 name = workbook.Workbook.CreateBuiltInName(NameRecord.BUILTIN_FILTER_DB, ptg.ExternSheetIndex + 1);
             name.IsHiddenName = true;
 
             name.NameDefinition = ptgs;
         }
 
-        private void CreateFilterModeRecord(HSSFSheet sheet,int insertPos)
+        private void CreateFilterModeRecord(HSSFSheet sheet, int insertPos)
         {
             //look for the FilterModeRecord
             NPOI.HSSF.Record.Record record = sheet.Sheet.FindFirstRecordBySid(FilterModeRecord.sid);
 
             // this local variable hides the class one: FilterModeRecord filtermode;
             //if not found, add a new one
-            if (record == null)
+            if(record == null)
             {
                 filtermode = new FilterModeRecord();
                 sheet.Sheet.Records.Insert(insertPos, filtermode);
@@ -63,7 +63,7 @@ namespace NPOI.HSSF.UserModel
             //look for the AutoFilterInfo Record
             NPOI.HSSF.Record.Record record = sheet.Sheet.FindFirstRecordBySid(AutoFilterInfoRecord.sid);
             AutoFilterInfoRecord info;
-            if (record == null)
+            if(record == null)
             {
                 info = new AutoFilterInfoRecord();
                 sheet.Sheet.Records.Insert(insertPos, info);
@@ -72,7 +72,7 @@ namespace NPOI.HSSF.UserModel
             {
                 info = record as AutoFilterInfoRecord;
             }
-            info.NumEntries = (short)(ptg.LastColumn - ptg.FirstColumn + 1);
+            info.NumEntries = (short) (ptg.LastColumn - ptg.FirstColumn + 1);
         }
 
         private void RemoveFilterModeRecord(HSSFSheet sheet)

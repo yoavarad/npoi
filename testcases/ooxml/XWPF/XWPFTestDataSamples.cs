@@ -52,7 +52,7 @@ namespace TestCases.XWPF
 
         public static void WriteTo(string fileName, byte[] data)
         {
-            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
+            using(FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
             {
                 fs.Write(data, 0, data.Length);
                 fs.Flush();

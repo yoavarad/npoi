@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -25,11 +25,10 @@
  * 
  * ==============================================================*/
 
+using NPOI.POIFS.FileSystem;
 using System;
 using System.Collections;
 using System.IO;
-
-using NPOI.POIFS.FileSystem;
 
 namespace NPOI.POIFS.Dev
 {
@@ -37,7 +36,7 @@ namespace NPOI.POIFS.Dev
     {
         public static void ViewFile(String filename)
         {
-            using (Stream stream = new FileStream(filename, FileMode.Open))
+            using(Stream stream = new FileStream(filename, FileMode.Open))
             {
                 POIFSFileSystem fs = new POIFSFileSystem(stream);
                 DisplayDirectory(fs.Root, "");
@@ -50,10 +49,10 @@ namespace NPOI.POIFS.Dev
             String newIndent = indent + "  ";
 
             IEnumerator it = dir.Entries;
-            while (it.MoveNext())
+            while(it.MoveNext())
             {
                 Object entry = it.Current;
-                if (entry is DirectoryNode node)
+                if(entry is DirectoryNode node)
                 {
                     DisplayDirectory(node, newIndent);
                 }
@@ -61,7 +60,7 @@ namespace NPOI.POIFS.Dev
                 {
                     DocumentNode doc = (DocumentNode)entry;
                     String name = doc.Name;
-                    if (name[0] < 10)
+                    if(name[0] < 10)
                     {
                         String altname = "(0x0" + (int)name[0] + ")" + name.Substring(1);
                         name = name.Substring(1) + " <" + altname + ">";

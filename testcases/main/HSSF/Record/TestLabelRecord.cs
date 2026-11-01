@@ -18,11 +18,12 @@
 namespace TestCases.HSSF.Record
 {
 
+    using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using TestCases.HSSF;
-    using NPOI.HSSF.UserModel;
-    using NPOI.HSSF.Record;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     /**
      * Tests for <c>LabelRecord</c>
      * 
@@ -39,7 +40,7 @@ namespace TestCases.HSSF.Record
             {
                 wb = HSSFTestDataSamples.OpenSampleWorkbook("ex42570-20305.xls");
             }
-            catch (NullReferenceException)
+            catch(NullReferenceException)
             {
                 throw new AssertionException("Identified bug 42570");
             }

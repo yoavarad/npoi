@@ -62,7 +62,7 @@ namespace NPOI.SS.Formula.Functions
      */
     public class FinanceLib
     {
-        
+
         // constants for default values
 
 
@@ -83,7 +83,7 @@ namespace NPOI.SS.Formula.Functions
         public static double fv(double r, double n, double y, double p, bool t)
         {
             double retval = 0;
-            if (r == 0)
+            if(r == 0)
             {
                 retval = -1 * (p + (n * y));
             }
@@ -111,7 +111,7 @@ namespace NPOI.SS.Formula.Functions
         public static double pv(double r, double n, double y, double f, bool t)
         {
             double retval = 0;
-            if (r == 0)
+            if(r == 0)
             {
                 retval = -1 * ((n * y) + f);
             }
@@ -139,7 +139,7 @@ namespace NPOI.SS.Formula.Functions
             double npv = 0;
             double r1 = r + 1;
             double trate = r1;
-            for (int i = 0, iSize = cfs.Length; i < iSize; i++)
+            for(int i = 0, iSize = cfs.Length; i < iSize; i++)
             {
                 npv += cfs[i] / trate;
                 trate *= r1;
@@ -158,7 +158,7 @@ namespace NPOI.SS.Formula.Functions
         public static double pmt(double r, double n, double p, double f, bool t)
         {
             double retval = 0;
-            if (r == 0)
+            if(r == 0)
             {
                 retval = -1 * (f + p) / n;
             }
@@ -183,7 +183,7 @@ namespace NPOI.SS.Formula.Functions
         public static double nper(double r, double y, double p, double f, bool t)
         {
             double retval = 0;
-            if (r == 0)
+            if(r == 0)
             {
                 retval = -1 * (f + p) / y;
             }

@@ -17,11 +17,11 @@
 
 namespace NPOI.XSSF.UserModel
 {
-    using System;
-    using System.Collections.Generic;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
 
     /**
      * Internal POI use only - parent of XSSF and SXSSF formula Evaluators
@@ -50,19 +50,19 @@ namespace NPOI.XSSF.UserModel
         {
             IEvaluationCell evalCell = ToEvaluationCell(cell);
             ValueEval eval = _bookEvaluator.Evaluate(evalCell);
-            if (eval is NumberEval numberEval)
+            if(eval is NumberEval numberEval)
             {
                 return new CellValue(numberEval.NumberValue);
             }
-            if (eval is BoolEval be)
+            if(eval is BoolEval be)
             {
                 return CellValue.ValueOf(be.BooleanValue);
             }
-            if (eval is StringEval ne)
+            if(eval is StringEval ne)
             {
                 return new CellValue(ne.StringValue);
             }
-            if (eval is ErrorEval errorEval)
+            if(eval is ErrorEval errorEval)
             {
                 return CellValue.GetError(errorEval.ErrorCode);
             }

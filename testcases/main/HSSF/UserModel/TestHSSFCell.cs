@@ -17,16 +17,16 @@
 
 namespace TestCases.HSSF.UserModel
 {
-    using System;
     using NPOI.HSSF.Model;
-    using NPOI.HSSF.Util;
-    using NPOI.HSSF.UserModel;
-
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using TestCases.HSSF;
-    using NPOI.SS.UserModel;
     using NPOI.HSSF.Record;
+    using NPOI.HSSF.UserModel;
+    using NPOI.HSSF.Util;
+    using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     using System.Text;
+    using TestCases.HSSF;
     using TestCases.SS.UserModel;
 
     /**
@@ -132,7 +132,7 @@ namespace TestCases.HSSF.UserModel
             ConfirmStringRecord(sheet, true);
             cell.SetCellValue(123);
             NPOI.HSSF.Record.Record[] recs = RecordInspector.GetRecords(sheet, 0);
-            if (recs.Length == 28 && recs[23] is StringRecord)
+            if(recs.Length == 28 && recs[23] is StringRecord)
             {
                 wb.Close();
                 Assert.Fail("Identified bug - leftover StringRecord");
@@ -161,7 +161,7 @@ namespace TestCases.HSSF.UserModel
             int index = 22;
             Record fr = recs[index++];
             ClassicAssert.AreEqual(typeof(FormulaRecord), fr.GetType());
-            if (isPresent)
+            if(isPresent)
             {
                 ClassicAssert.AreEqual(typeof(StringRecord), recs[index++].GetType());
             }
@@ -179,7 +179,7 @@ namespace TestCases.HSSF.UserModel
             IRow row = sheet.GetRow(rowIdx);
             ICell cell = row.GetCell(colIdx);
 
-            if (cell == null)
+            if(cell == null)
             {
                 cell = row.CreateCell(colIdx);
             }
@@ -219,7 +219,7 @@ namespace TestCases.HSSF.UserModel
             HSSFWorkbook wb2 = WriteOutAndReadBack(wb1);
             wb1.Close();
 
-            umSheet = (HSSFSheet)wb2.GetSheetAt(0);
+            umSheet = (HSSFSheet) wb2.GetSheetAt(0);
             s = umSheet.Sheet;
 
             ClassicAssert.AreEqual(2, s.ActiveCellCol, "After serialize, active cell should be in col 2");
@@ -242,14 +242,14 @@ namespace TestCases.HSSF.UserModel
             ICell cell = sh.GetRow(1).CreateCell(3);
             sh.GetRow(3).CreateCell(3);
 
-            ClassicAssert.AreEqual(0, ((HSSFSheet)wb.GetSheetAt(0)).Sheet.ActiveCellRow);
-            ClassicAssert.AreEqual(0, ((HSSFSheet)wb.GetSheetAt(0)).Sheet.ActiveCellCol);
+            ClassicAssert.AreEqual(0, ((HSSFSheet) wb.GetSheetAt(0)).Sheet.ActiveCellRow);
+            ClassicAssert.AreEqual(0, ((HSSFSheet) wb.GetSheetAt(0)).Sheet.ActiveCellCol);
 
             cell.SetAsActiveCell();
             cell.SetCellValue("this should be active");
 
-            ClassicAssert.AreEqual(1, ((HSSFSheet)wb.GetSheetAt(0)).Sheet.ActiveCellRow);
-            ClassicAssert.AreEqual(3, ((HSSFSheet)wb.GetSheetAt(0)).Sheet.ActiveCellCol);
+            ClassicAssert.AreEqual(1, ((HSSFSheet) wb.GetSheetAt(0)).Sheet.ActiveCellRow);
+            ClassicAssert.AreEqual(3, ((HSSFSheet) wb.GetSheetAt(0)).Sheet.ActiveCellCol);
 
             //	    FileOutputStream fos = new FileOutputStream("/tmp/56114.xls");
             //
@@ -259,13 +259,13 @@ namespace TestCases.HSSF.UserModel
 
             IWorkbook wbBack = _testDataProvider.WriteOutAndReadBack(wb);
 
-            ClassicAssert.AreEqual(1, ((HSSFSheet)wbBack.GetSheetAt(0)).Sheet.ActiveCellRow);
-            ClassicAssert.AreEqual(3, ((HSSFSheet)wbBack.GetSheetAt(0)).Sheet.ActiveCellCol);
+            ClassicAssert.AreEqual(1, ((HSSFSheet) wbBack.GetSheetAt(0)).Sheet.ActiveCellRow);
+            ClassicAssert.AreEqual(3, ((HSSFSheet) wbBack.GetSheetAt(0)).Sheet.ActiveCellCol);
 
             wbBack.GetSheetAt(0).GetRow(3).GetCell(3).SetAsActiveCell();
 
-            ClassicAssert.AreEqual(3, ((HSSFSheet)wbBack.GetSheetAt(0)).Sheet.ActiveCellRow);
-            ClassicAssert.AreEqual(3, ((HSSFSheet)wbBack.GetSheetAt(0)).Sheet.ActiveCellCol);
+            ClassicAssert.AreEqual(3, ((HSSFSheet) wbBack.GetSheetAt(0)).Sheet.ActiveCellRow);
+            ClassicAssert.AreEqual(3, ((HSSFSheet) wbBack.GetSheetAt(0)).Sheet.ActiveCellCol);
 
             //	    fos = new FileOutputStream("/tmp/56114a.xls");
             //
@@ -276,8 +276,8 @@ namespace TestCases.HSSF.UserModel
             IWorkbook wbBack2 = _testDataProvider.WriteOutAndReadBack(wbBack);
             wbBack.Close();
 
-            ClassicAssert.AreEqual(3, ((HSSFSheet)wbBack2.GetSheetAt(0)).Sheet.ActiveCellRow);
-            ClassicAssert.AreEqual(3, ((HSSFSheet)wbBack2.GetSheetAt(0)).Sheet.ActiveCellCol);
+            ClassicAssert.AreEqual(3, ((HSSFSheet) wbBack2.GetSheetAt(0)).Sheet.ActiveCellRow);
+            ClassicAssert.AreEqual(3, ((HSSFSheet) wbBack2.GetSheetAt(0)).Sheet.ActiveCellCol);
 
             wbBack2.Close();
         }
@@ -390,13 +390,13 @@ namespace TestCases.HSSF.UserModel
                 styA.VerifyBelongsToWorkbook(wbB);
                 Assert.Fail("expected ArgumentException");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 styB.VerifyBelongsToWorkbook(wbA);
                 Assert.Fail("expected ArgumentException");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             ICell cellA = wbA.CreateSheet().CreateRow(0).CreateCell(0);
             ICell cellB = wbB.CreateSheet().CreateRow(0).CreateCell(0);
@@ -408,13 +408,13 @@ namespace TestCases.HSSF.UserModel
                 cellA.CellStyle = (styB);
                 Assert.Fail("expected ArgumentException");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
             try
             {
                 cellB.CellStyle = (styA);
                 Assert.Fail("expected ArgumentException");
             }
-            catch (ArgumentException) { }
+            catch(ArgumentException) { }
 
             wbA.Close();
             wbB.Close();
@@ -458,16 +458,16 @@ namespace TestCases.HSSF.UserModel
                 CellType t = cell.CachedFormulaResultType;
                 Assert.Fail("Should catch exception");
             }
-            catch (InvalidOperationException)
+            catch(InvalidOperationException)
             {
             }
 
             try
             {
-                ClassicAssert.IsNotNull(new HSSFCell(wb, sheet, 0, (short)0, CellType.Error + 1));
+                ClassicAssert.IsNotNull(new HSSFCell(wb, sheet, 0, (short) 0, CellType.Error + 1));
                 Assert.Fail("Should catch exception");
             }
-            catch (Exception)
+            catch(Exception)
             {
             }
 
@@ -517,8 +517,8 @@ namespace TestCases.HSSF.UserModel
             cell.SetCellType(CellType.String);
             ClassicAssert.AreEqual("1.2", cell.ToString());
 
-            cell.SetCellValue((String)null);
-            cell.SetCellValue((IRichTextString)null);
+            cell.SetCellValue((String) null);
+            cell.SetCellValue((IRichTextString) null);
             wb.Close();
         }
 

@@ -19,12 +19,13 @@
 
 namespace NPOI.HSSF.Record
 {
-    using System;
-    using System.Text;
-    using System.Collections;
     using NPOI.Util;
+    using System;
+    using System.Collections;
+    using System.Text;
 
-    public enum BOFRecordType {
+    public enum BOFRecordType
+    {
         Workbook = 0x05,
         VBModule = 0x06,
         Worksheet = 0x10,
@@ -125,19 +126,19 @@ namespace NPOI.HSSF.Record
 
             // Some external tools don't generate all of
             //  the remaining fields
-            if (in1.Remaining >= 2)
+            if(in1.Remaining >= 2)
             {
                 field_3_build = in1.ReadShort();
             }
-            if (in1.Remaining >= 2)
+            if(in1.Remaining >= 2)
             {
                 field_4_year = in1.ReadShort();
             }
-            if (in1.Remaining >= 4)
+            if(in1.Remaining >= 4)
             {
                 field_5_history = in1.ReadInt();
             }
-            if (in1.Remaining >= 4)
+            if(in1.Remaining >= 4)
             {
                 field_6_rversion = in1.ReadInt();
             }
@@ -200,14 +201,20 @@ namespace NPOI.HSSF.Record
         {
             get
             {
-                switch (Type)
+                switch(Type)
                 {
-                    case BOFRecordType.Chart: return "chart";
-                    case BOFRecordType.Excel4Macro: return "excel 4 macro";
-                    case BOFRecordType.VBModule: return "vb module";
-                    case BOFRecordType.Workbook: return "workbook";
-                    case BOFRecordType.Worksheet: return "worksheet";
-                    case BOFRecordType.WorkspaceFile: return "workspace file";
+                    case BOFRecordType.Chart:
+                        return "chart";
+                    case BOFRecordType.Excel4Macro:
+                        return "excel 4 macro";
+                    case BOFRecordType.VBModule:
+                        return "vb module";
+                    case BOFRecordType.Workbook:
+                        return "workbook";
+                    case BOFRecordType.Worksheet:
+                        return "worksheet";
+                    case BOFRecordType.WorkspaceFile:
+                        return "workspace file";
                 }
                 return "#error unknown type#";
             }

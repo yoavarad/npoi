@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) Under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -16,15 +16,15 @@
 ==================================================================== */
 
 using NPOI.HSSF.Model;
-using System.Diagnostics;
 using NPOI.HSSF.Record.Chart;
+using System.Diagnostics;
 
 namespace NPOI.HSSF.Record.Aggregates.Chart
 {
     /// <summary>
     /// SERIESAXIS = Axis Begin [CatSerRange] AXS [CRTMLFRT] End
     /// </summary>
-    public class SeriesAxisAggregate: ChartRecordAggregate
+    public class SeriesAxisAggregate : ChartRecordAggregate
     {
         private AxisRecord axis;
         private CatSerRangeRecord catSerRange;
@@ -33,14 +33,14 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
         public SeriesAxisAggregate(RecordStream rs, ChartRecordAggregate container)
             : base("SERIESAXIS", container)
         {
-            axis = (AxisRecord)rs.GetNext();
+            axis = (AxisRecord) rs.GetNext();
             rs.GetNext();
 
-            if (rs.PeekNextChartSid() == CatSerRangeRecord.sid)
-                catSerRange = (CatSerRangeRecord)rs.GetNext();
+            if(rs.PeekNextChartSid() == CatSerRangeRecord.sid)
+                catSerRange = (CatSerRangeRecord) rs.GetNext();
 
             axs = new AXSAggregate(rs, this);
-            if (rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
+            if(rs.PeekNextChartSid() == CrtMlFrtRecord.sid)
                 crtmlfrt = new CrtMlFrtAggregate(rs, this);
 
             Record r = rs.GetNext();//EndRecord
@@ -52,11 +52,11 @@ namespace NPOI.HSSF.Record.Aggregates.Chart
             rv.VisitRecord(axis);
             rv.VisitRecord(BeginRecord.instance);
 
-            if (catSerRange != null)
+            if(catSerRange != null)
                 rv.VisitRecord(catSerRange);
 
             axs.VisitContainedRecords(rv);
-            if (crtmlfrt != null)
+            if(crtmlfrt != null)
                 crtmlfrt.VisitContainedRecords(rv);
 
             WriteEndBlock(rv);

@@ -18,11 +18,12 @@
 
 namespace TestCases.SS.Formula.Functions
 {
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.Eval;
     using NPOI.SS.Formula.Functions;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
-    using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
 
     /**
      * Tests for {@link FinanceFunction#NPER}
@@ -37,14 +38,14 @@ namespace TestCases.SS.Formula.Functions
         {
 
             ValueEval[] args = {
-			new NumberEval(0.05),
-			new NumberEval(250),
-			new NumberEval(-1000),
-		};
+            new NumberEval(0.05),
+            new NumberEval(250),
+            new NumberEval(-1000),
+        };
             ValueEval result = FinanceFunction.NPER.Evaluate(args, 0, (short)0);
 
             ClassicAssert.AreEqual(typeof(NumberEval), result.GetType());
-            ClassicAssert.AreEqual(4.57353557, ((NumberEval)result).NumberValue, 0.00000001);
+            ClassicAssert.AreEqual(4.57353557, ((NumberEval) result).NumberValue, 0.00000001);
         }
         [Test]
         public void TestEvaluate_bug_45732()

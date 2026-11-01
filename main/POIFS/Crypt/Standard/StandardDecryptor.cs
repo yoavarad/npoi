@@ -16,18 +16,18 @@
 ==================================================================== */
 namespace NPOI.POIFS.Crypt.Standard
 {
-    using System;
-    using System.Diagnostics;
-    using System.IO;
     using NPOI.POIFS.Crypt;
-
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
     using Org.BouncyCastle.Crypto;
+    using System;
+    using System.Diagnostics;
+    using System.IO;
 
     /**
      */
-    public class StandardDecryptor : Decryptor {
+    public class StandardDecryptor : Decryptor
+    {
         private long _length = -1;
 
         internal StandardDecryptor(IEncryptionInfoBuilder builder)
@@ -36,12 +36,14 @@ namespace NPOI.POIFS.Crypt.Standard
 
         }
 
-        public override bool VerifyPassword(String password) {
+        public override bool VerifyPassword(String password)
+        {
             EncryptionVerifier ver = builder.GetVerifier();
             ISecretKey skey = GenerateSecretKey(password, ver, GetKeySizeInBytes());
             Cipher cipher = GetCipher(skey);
 
-            try {
+            try
+            {
                 byte[] encryptedVerifier = ver.EncryptedVerifier;
                 byte[] verifier = cipher.DoFinal(encryptedVerifier);
                 SetVerifier(verifier);
@@ -55,18 +57,24 @@ namespace NPOI.POIFS.Crypt.Standard
                 // TODO: check and Trim/pad the hashes to 32
                 byte[] verifierHash = Arrays.CopyOf(decryptedVerifierHash, calcVerifierHash.Length);
 
-                if (Arrays.Equals(calcVerifierHash, verifierHash)) {
+                if(Arrays.Equals(calcVerifierHash, verifierHash))
+                {
                     SetSecretKey(skey);
                     return true;
-                } else {
+                }
+                else
+                {
                     return false;
                 }
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 throw new EncryptedDocumentException(e);
             }
         }
 
-        protected internal static ISecretKey GenerateSecretKey(string password, EncryptionVerifier ver, int keySize) {
+        protected internal static ISecretKey GenerateSecretKey(string password, EncryptionVerifier ver, int keySize)
+        {
             HashAlgorithm hashAlgo = ver.HashAlgorithm;
 
             byte[] pwHash = CryptoFunctions.HashPassword(password, hashAlgo, ver.Salt, ver.SpinCount);
@@ -88,19 +96,22 @@ namespace NPOI.POIFS.Crypt.Standard
             return skey;
         }
 
-        protected static byte[] FillAndXor(byte[] hash, byte FillByte) {
+        protected static byte[] FillAndXor(byte[] hash, byte FillByte)
+        {
             byte[] buff = new byte[64];
             Arrays.Fill(buff, FillByte);
 
-            for (int i = 0; i < hash.Length; i++) {
-                buff[i] = (byte)(buff[i] ^ hash[i]);
+            for(int i = 0; i < hash.Length; i++)
+            {
+                buff[i] = (byte) (buff[i] ^ hash[i]);
             }
 
             MessageDigest sha1 = CryptoFunctions.GetMessageDigest(HashAlgorithm.sha1);
             return sha1.Digest(buff);
         }
 
-        private Cipher GetCipher(ISecretKey key) {
+        private Cipher GetCipher(ISecretKey key)
+        {
             EncryptionHeader em = builder.GetHeader();
             ChainingMode cm = em.ChainingMode;
             Debug.Assert(cm == ChainingMode.ecb);
@@ -108,11 +119,12 @@ namespace NPOI.POIFS.Crypt.Standard
             return CryptoFunctions.GetCipher(key, em.CipherAlgorithm, cm, null, Cipher.DECRYPT_MODE);
         }
 
-        public override InputStream GetDataStream(DirectoryNode dir) {
+        public override InputStream GetDataStream(DirectoryNode dir)
+        {
             DocumentInputStream dis = dir.CreateDocumentInputStream(Encryptor.DEFAULT_POIFS_ENTRY);
 
             _length = dis.ReadLong();
-            if (GetSecretKey() == null)
+            if(GetSecretKey() == null)
             {
                 VerifyPassword(null);
             }
@@ -133,8 +145,10 @@ namespace NPOI.POIFS.Crypt.Standard
         /**
          * @return the length of the stream returned by {@link #getDataStream(DirectoryNode)}
          */
-        public override long GetLength() {
-            if (_length == -1) throw new InvalidOperationException("Decryptor.DataStream was not called");
+        public override long GetLength()
+        {
+            if(_length == -1)
+                throw new InvalidOperationException("Decryptor.DataStream was not called");
             return _length;
         }
     }
@@ -392,7 +406,7 @@ namespace NPOI.POIFS.Crypt.Standard
 
         public void Init(bool forEncryption, ICipherParameters parameters)
         {
-            
+
         }
 
         public byte[] ProcessByte(byte input)
@@ -427,7 +441,7 @@ namespace NPOI.POIFS.Crypt.Standard
 
         public void Reset()
         {
-            
+
         }
 
 #if NET6_0_OR_GREATER

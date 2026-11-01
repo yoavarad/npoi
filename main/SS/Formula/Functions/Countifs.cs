@@ -18,9 +18,9 @@
 
 namespace NPOI.SS.Formula.Functions
 {
-    using System;
     using NPOI.SS.Formula;
     using NPOI.SS.Formula.Eval;
+    using System;
 
     /**
      * Implementation for the function COUNTIFS

@@ -17,11 +17,12 @@
 
 namespace TestCases.HSSF.Record
 {
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Record;
     using NPOI.Util;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using System.Text;
 
 
@@ -32,11 +33,13 @@ namespace TestCases.HSSF.Record
      *
      * @author Jason Height (jheight at apache.org)
      */
-    public class TestcaseRecordInputStream {
-    	
-	    private TestcaseRecordInputStream() {
-		    // no instances of this class
-	    }
+    public class TestcaseRecordInputStream
+    {
+
+        private TestcaseRecordInputStream()
+        {
+            // no instances of this class
+        }
         /// <summary>
         /// Prepends a mock record identifier to the supplied data and opens a record input stream
         /// </summary>
@@ -47,30 +50,32 @@ namespace TestCases.HSSF.Record
             return new LittleEndianByteArrayInputStream(data);
 
         }
-	    public static RecordInputStream Create(int sid, byte[] data) {
-		    return Create(MergeDataAndSid(sid, data.Length, data));
-	    }
+        public static RecordInputStream Create(int sid, byte[] data)
+        {
+            return Create(MergeDataAndSid(sid, data.Length, data));
+        }
         /// <summary>
         ///First 4 bytes of data are assumed to be record identifier and length. The supplied 
 	    ///data can contain multiple records (sequentially encoded in the same way) 
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-	    public static RecordInputStream Create(byte[] data) {
-		    Stream inputStream = new MemoryStream(data);
-		    RecordInputStream result = new RecordInputStream(inputStream);
-		    result.NextRecord();
-		    return result;
-	    }
+	    public static RecordInputStream Create(byte[] data)
+        {
+            Stream inputStream = new MemoryStream(data);
+            RecordInputStream result = new RecordInputStream(inputStream);
+            result.NextRecord();
+            return result;
+        }
 
 
         public static byte[] MergeDataAndSid(int sid, int length, byte[] data)
         {
-          byte[] result = new byte[data.Length + 4];
-          LittleEndian.PutUShort(result, 0, sid);
-          LittleEndian.PutUShort(result, 2, length);
-          Array.Copy(data, 0, result, 4, data.Length);
-          return result;
+            byte[] result = new byte[data.Length + 4];
+            LittleEndian.PutUShort(result, 0, sid);
+            LittleEndian.PutUShort(result, 2, length);
+            Array.Copy(data, 0, result, 4, data.Length);
+            return result;
         }
         /// <summary>
         /// Confirms data sections are equal
@@ -82,14 +87,14 @@ namespace TestCases.HSSF.Record
         public static void ConfirmRecordEncoding(String msgPrefix, int expectedSid, byte[] expectedData, byte[] actualRecordBytes)
         {
             int expectedDataSize = expectedData.Length;
-            ClassicAssert.AreEqual(actualRecordBytes.Length - 4, expectedDataSize,"Size of encode data mismatch");
+            ClassicAssert.AreEqual(actualRecordBytes.Length - 4, expectedDataSize, "Size of encode data mismatch");
             ClassicAssert.AreEqual(expectedSid, LittleEndian.GetShort(actualRecordBytes, 0));
             ClassicAssert.AreEqual(expectedDataSize, LittleEndian.GetShort(actualRecordBytes, 2));
-            for (int i = 0; i < expectedDataSize; i++)
-                if (expectedData[i] != actualRecordBytes[i + 4])
+            for(int i = 0; i < expectedDataSize; i++)
+                if(expectedData[i] != actualRecordBytes[i + 4])
                 {
                     StringBuilder sb = new StringBuilder(64);
-                    if (msgPrefix != null)
+                    if(msgPrefix != null)
                     {
                         sb.Append(msgPrefix).Append(": ");
                     }

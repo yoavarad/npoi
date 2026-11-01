@@ -18,10 +18,11 @@
 
 namespace TestCases.OpenXml4Net.OPC.Compliance
 {
-    using System;
-    using NPOI.OpenXml4Net.OPC;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.OpenXml4Net.Exceptions;
+    using NPOI.OpenXml4Net.OPC;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
     /**
      * Test part name Open Packaging Convention compliance.
      *
@@ -86,7 +87,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
         public void TestInvalidPartNames()
         {
             String[] invalidNames = { "/", "/xml./doc.xml", "[Content_Types].xml", "//xml/." };
-            foreach (String s in invalidNames)
+            foreach(String s in invalidNames)
             {
                 Uri uri = null;
                 try
@@ -111,7 +112,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
         {
             String[] validNames = { "/xml/item1.xml", "/document.xml",
                 "/a/%D1%86.xml" };
-            foreach (String s in validNames)
+            foreach(String s in validNames)
                 ClassicAssert.IsTrue(
                         PackagingUriHelper.IsValidPartName(new Uri(s, UriKind.RelativeOrAbsolute)),
                         "This part name SHOULD be valid: " + s);
@@ -128,7 +129,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
                 PackagingUriHelper.CreatePartName(new Uri("", UriKind.Relative));
                 Assert.Fail("A part name shall not be empty. [M1.1]");
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 // Normal behaviour
             }
@@ -148,7 +149,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
                 "/word//document.rels", "/word//rels//document.rels",
                 "/xml./doc.xml", "/document.", "/./document.xml",
                 "/word/./doc.rels", "/%2F/document.xml" };
-            foreach (String s in invalidNames)
+            foreach(String s in invalidNames)
                 ClassicAssert.IsFalse(
                         PackagingUriHelper.IsValidPartName(new Uri(s, UriKind.RelativeOrAbsolute)),
                         "A part name shall not have empty segments. [M1.3]");
@@ -164,14 +165,14 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
             String[] validNames = { "/doc&.xml" };
             try
             {
-                foreach (String s in validNames)
+                foreach(String s in validNames)
                     ClassicAssert.IsTrue(
                             PackagingUriHelper
                                     .IsValidPartName(new Uri(s, UriKind.RelativeOrAbsolute)),
                                     "A segment shall not contain non pchar characters [M1.6] : "
                                     + s);
             }
-            catch (UriFormatException e)
+            catch(UriFormatException e)
             {
                 Assert.Fail(e.Message);
             }
@@ -186,14 +187,14 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
             String[] invalidNames = { "/a/docum%65nt.xml" };
             try
             {
-                foreach (String s in invalidNames)
+                foreach(String s in invalidNames)
                     ClassicAssert.IsFalse(
                              PackagingUriHelper
                                     .IsValidPartName(new Uri(s, UriKind.RelativeOrAbsolute)),
                                     "A segment shall not contain percent-encoded unreserved characters [M1.8] : "
                                     + s);
             }
-            catch (UriFormatException e)
+            catch(UriFormatException e)
             {
                 Assert.Fail(e.Message);
             }
@@ -210,7 +211,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
                 PackagingUriHelper.CreatePartName(new Uri("document.xml", UriKind.RelativeOrAbsolute));
                 Assert.Fail("A part name shall start with a forward slash ('/') character. [M1.4]");
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 // Normal behaviour
             }
@@ -227,7 +228,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
                 PackagingUriHelper.CreatePartName(new Uri("/document.xml/", UriKind.Relative));
                 Assert.Fail("A part name shall not have a forward slash as the last character. [M1.5]");
             }
-            catch (InvalidFormatException)
+            catch(InvalidFormatException)
             {
                 // Normal behaviour
             }
@@ -242,7 +243,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
         {
             String[] partName1 = { "/word/document.xml", "/docProps/core.xml", "/rels/.rels" };
             String[] partName2 = { "/WORD/DocUment.XML", "/docProps/core.xml", "/rels/.rels" };
-            for (int i = 0; i < partName1.Length || i < partName2.Length; ++i)
+            for(int i = 0; i < partName1.Length || i < partName2.Length; ++i)
             {
                 PackagePartName p1 = PackagingUriHelper.CreatePartName(partName1[i]);
                 PackagePartName p2 = PackagingUriHelper.CreatePartName(partName2[i]);
@@ -263,7 +264,7 @@ namespace TestCases.OpenXml4Net.OPC.Compliance
         {
             String[] partName1 = { "/word/document.xml", "/docProps/core.xml", "/rels/.rels" };
             String[] partName2 = { "/WORD/DocUment.XML2", "/docProp/core.xml", "/rels/rels" };
-            for (int i = 0; i < partName1.Length || i < partName2.Length; ++i)
+            for(int i = 0; i < partName1.Length || i < partName2.Length; ++i)
             {
                 PackagePartName p1 = PackagingUriHelper.CreatePartName(partName1[i]);
                 PackagePartName p2 = PackagingUriHelper.CreatePartName(partName2[i]);

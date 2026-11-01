@@ -14,15 +14,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 ==================================================================== */
-using NUnit.Framework;
-using System;
 using NPOI.OpenXmlFormats.Wordprocessing;
 using NPOI.Util;
 using NPOI.WP.UserModel;
 using NPOI.XDDF.UserModel.Chart;
 using NPOI.XWPF.Model;
 using NPOI.XWPF.UserModel;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -745,7 +745,8 @@ namespace TestCases.XWPF.UserModel
             }
         }
         [Test]
-        public void TestAddChartGetEmbeddedCharts() {
+        public void TestAddChartGetEmbeddedCharts()
+        {
             XWPFRun run1 = p.CreateRun();
             XWPFChart chart1 = doc.CreateChart(run1, XDDFChart.DEFAULT_WIDTH, XDDFChart.DEFAULT_HEIGHT);
             ClassicAssert.AreEqual(1, run1.GetEmbeddedCharts().Count);

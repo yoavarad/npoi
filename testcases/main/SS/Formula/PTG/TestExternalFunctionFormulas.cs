@@ -18,13 +18,14 @@
 namespace TestCases.SS.Formula.PTG
 {
 
-    using System;
-    using System.IO;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
     using NPOI.HSSF.Model;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.Formula.PTG;
     using NPOI.SS.UserModel;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
+    using System;
+    using System.IO;
     using TestCases.HSSF;
     /**
      * Tests for functions from external workbooks (e.g. YEARFRAC).
@@ -61,7 +62,7 @@ namespace TestCases.SS.Formula.PTG
 
             wb.GetSheetAt(0).GetRow(0).CreateCell(6).CellFormula = ("YEARFRAC(C1,B1)");
 #if !HIDE_UNREACHABLE_CODE
-            if (false)
+            if(false)
             {
                 // In case you fancy Checking in excel
                 try
@@ -72,7 +73,7 @@ namespace TestCases.SS.Formula.PTG
                     tempFile.Close();
                     //Console.WriteLine("check out " + tempFile.getAbsolutePath());
                 }
-                catch (IOException e)
+                catch(IOException e)
                 {
                     throw e;
                 }
@@ -82,8 +83,8 @@ namespace TestCases.SS.Formula.PTG
         [Test]
         public void TestEvaluate()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US"); 
-            
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
             HSSFWorkbook wb = HSSFTestDataSamples.OpenSampleWorkbook("externalFunctionExample.xls");
             ISheet sheet = wb.GetSheetAt(0);
             HSSFFormulaEvaluator fe = new HSSFFormulaEvaluator(wb);

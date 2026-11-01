@@ -17,15 +17,15 @@
 
 namespace NPOI.POIFS.Crypt.Dsig
 {
+    using NPOI.OpenXml4Net.OPC;
+    using NPOI.POIFS.Crypt;
+    using NPOI.POIFS.Crypt.Dsig.Facets;
+    using NPOI.POIFS.Crypt.Dsig.Services;
     using System;
     using System.Collections.Generic;
     using System.Security.Cryptography.X509Certificates;
     using System.Security.Cryptography.Xml;
     using System.Threading;
-    using NPOI.OpenXml4Net.OPC;
-    using NPOI.POIFS.Crypt;
-    using NPOI.POIFS.Crypt.Dsig.Facets;
-    using NPOI.POIFS.Crypt.Dsig.Services;
 
 
     /**
@@ -138,19 +138,19 @@ namespace NPOI.POIFS.Crypt.Dsig
          */
         protected internal void Init(bool onlyValidation)
         {
-            if (opcPackage == null)
+            if(opcPackage == null)
             {
                 throw new EncryptedDocumentException("opcPackage is null");
             }
-            if (uriDereferencer == null)
+            if(uriDereferencer == null)
             {
                 uriDereferencer = new OOXMLURIDereferencer();
             }
-            if (uriDereferencer is ISignatureConfigurable configurable)
+            if(uriDereferencer is ISignatureConfigurable configurable)
             {
                 configurable.SetSignatureConfig(this);
             }
-            if (namespacePrefixes.Count == 0)
+            if(namespacePrefixes.Count == 0)
             {
                 /*
                  * OOo doesn't like ds namespaces so per default prefixing is off.
@@ -160,24 +160,25 @@ namespace NPOI.POIFS.Crypt.Dsig
                 namespacePrefixes.Add(SignatureFacet.XADES_132_NS, "xd");
             }
 
-            if (onlyValidation) return;
+            if(onlyValidation)
+                return;
 
-            if (signatureMarshalListener == null)
+            if(signatureMarshalListener == null)
             {
                 signatureMarshalListener = new SignatureMarshalListener();
             }
 
-            if (signatureMarshalListener is ISignatureConfigurable signatureConfigurable)
+            if(signatureMarshalListener is ISignatureConfigurable signatureConfigurable)
             {
                 signatureConfigurable.SetSignatureConfig(this);
             }
 
-            if (tspService != null)
+            if(tspService != null)
             {
                 tspService.SetSignatureConfig(this);
             }
 
-            if (signatureFacets.Count==0)
+            if(signatureFacets.Count==0)
             {
                 AddSignatureFacet(new OOXMLSignatureFacet());
                 AddSignatureFacet(new KeyInfoSignatureFacet());
@@ -185,7 +186,7 @@ namespace NPOI.POIFS.Crypt.Dsig
                 AddSignatureFacet(new Office2010SignatureFacet());
             }
 
-            foreach (SignatureFacet sf in signatureFacets)
+            foreach(SignatureFacet sf in signatureFacets)
             {
                 sf.SetSignatureConfig(this);
             }
@@ -766,7 +767,7 @@ namespace NPOI.POIFS.Crypt.Dsig
             // see https://www.ietf.org/rfc/rfc3110.txt
             // RSA/SHA1 SIG Resource Records
             byte[] result;
-            switch (GetDigestAlgo().jceId)
+            switch(GetDigestAlgo().jceId)
             {
                 case "sha1":
                     result = new byte[]
@@ -821,14 +822,20 @@ namespace NPOI.POIFS.Crypt.Dsig
          */
         public String GetSignatureMethodUri()
         {
-            switch (GetDigestAlgo().jceId)
+            switch(GetDigestAlgo().jceId)
             {
-                case "sha1": return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA1;
-                case "sha224": return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA224;
-                case "sha256": return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA256;
-                case "sha384": return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA384;
-                case "sha512": return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA512;
-                case "ripemd160": return XMLSignature.ALGO_ID_SIGNATURE_RSA_RIPEMD160;
+                case "sha1":
+                    return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA1;
+                case "sha224":
+                    return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA224;
+                case "sha256":
+                    return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA256;
+                case "sha384":
+                    return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA384;
+                case "sha512":
+                    return XMLSignature.ALGO_ID_SIGNATURE_RSA_SHA512;
+                case "ripemd160":
+                    return XMLSignature.ALGO_ID_SIGNATURE_RSA_RIPEMD160;
                 default:
                     throw new EncryptedDocumentException("Hash algorithm "
                + GetDigestAlgo() + " not supported for signing.");
@@ -849,14 +856,20 @@ namespace NPOI.POIFS.Crypt.Dsig
          */
         public static String GetDigestMethodUri(HashAlgorithm digestAlgo)
         {
-            switch (digestAlgo.jceId)
+            switch(digestAlgo.jceId)
             {
-                case "sha1": return "http://www.w3.org/2000/09/xmldsig#sha1";
-                case "sha224": return "http://www.w3.org/2001/04/xmldsig-more#sha224";
-                case "sha256": return "http://www.w3.org/2001/04/xmlenc#sha256";
-                case "sha384": return "http://www.w3.org/2001/04/xmldsig-more#sha384";
-                case "sha512": return "http://www.w3.org/2001/04/xmlenc#sha512";
-                case "ripemd160": return "http://www.w3.org/2001/04/xmlenc#ripemd160";
+                case "sha1":
+                    return "http://www.w3.org/2000/09/xmldsig#sha1";
+                case "sha224":
+                    return "http://www.w3.org/2001/04/xmldsig-more#sha224";
+                case "sha256":
+                    return "http://www.w3.org/2001/04/xmlenc#sha256";
+                case "sha384":
+                    return "http://www.w3.org/2001/04/xmldsig-more#sha384";
+                case "sha512":
+                    return "http://www.w3.org/2001/04/xmlenc#sha512";
+                case "ripemd160":
+                    return "http://www.w3.org/2001/04/xmlenc#ripemd160";
                 default:
                     throw new EncryptedDocumentException("Hash algorithm "
                + digestAlgo + " not supported for signing.");

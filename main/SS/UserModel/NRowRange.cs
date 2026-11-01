@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NPOI.SS.UserModel
 {
-    public class NRowRange:IEnumerable<IRow>
+    public class NRowRange : IEnumerable<IRow>
     {
         private int _fromRow;
         private int _toRow;
@@ -44,8 +44,9 @@ namespace NPOI.SS.UserModel
 
         public short Height
         {
-            get=> throw new NotImplementedException();
-            set {
+            get => throw new NotImplementedException();
+            set
+            {
                 for(int i = _fromRow; i<=_toRow; i++)
                 {
                     var row = _sheet.GetRow(i);
@@ -105,7 +106,7 @@ namespace NPOI.SS.UserModel
             return this;
         }
         public NRowRange Ungroup()
-        { 
+        {
             _sheet.UngroupRow(_fromRow, _toRow);
             return this;
         }
@@ -113,7 +114,7 @@ namespace NPOI.SS.UserModel
         public List<IRow> Rows
         {
             get
-            { 
+            {
                 var rows= new List<IRow>();
                 for(int i = _fromRow; i<=_toRow; i++)
                 {

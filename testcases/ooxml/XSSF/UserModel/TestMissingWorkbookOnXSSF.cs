@@ -18,7 +18,8 @@
 namespace TestCases.XSSF.UserModel
 {
     using NPOI.XSSF;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using TestCases.HSSF;
     using TestCases.SS.Formula;
 

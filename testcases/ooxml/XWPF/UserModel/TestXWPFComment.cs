@@ -1,10 +1,11 @@
-﻿namespace TestCases.XWPF.UserModel
+namespace TestCases.XWPF.UserModel
 {
     using NPOI.OpenXmlFormats.Wordprocessing;
     using NPOI.Util;
     using NPOI.XWPF.Model;
     using NPOI.XWPF.UserModel;
-    using NUnit.Framework;using NUnit.Framework.Legacy;
+    using NUnit.Framework;
+    using NUnit.Framework.Legacy;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -15,7 +16,7 @@
         [Test]
         public void TestText()
         {
-            using (XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("comment.docx"))
+            using(XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("comment.docx"))
             {
                 ClassicAssert.AreEqual(1, doc.GetComments().Length);
                 XWPFComment comment = doc.GetComments()[0];
@@ -30,7 +31,7 @@
         {
             var cId = 0;
             var date = LocaleUtil.GetLocaleCalendar().ToString();
-            using (XWPFDocument docOut = new XWPFDocument())
+            using(XWPFDocument docOut = new XWPFDocument())
             {
                 ClassicAssert.IsNull(docOut.GetDocComments());
 
@@ -54,7 +55,7 @@
         [Test]
         public void TestRemoveComment()
         {
-            using (XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("comment.docx"))
+            using(XWPFDocument doc = XWPFTestDataSamples.OpenSampleDocument("comment.docx"))
             {
                 ClassicAssert.AreEqual(1, doc.GetComments().Length);
 
@@ -68,7 +69,7 @@
         [Test]
         public void TestCreateParagraph()
         {
-            using (XWPFDocument doc = new XWPFDocument())
+            using(XWPFDocument doc = new XWPFDocument())
             {
                 XWPFComments comments = doc.CreateComments();
                 XWPFComment comment = comments.CreateComment("1");
@@ -86,14 +87,14 @@
         [Test]
         public void TestAddPicture()
         {
-            using (XWPFDocument doc = new XWPFDocument())
+            using(XWPFDocument doc = new XWPFDocument())
             {
                 XWPFComments comments = doc.CreateComments();
                 XWPFComment comment = comments.CreateComment("1");
                 XWPFParagraph paragraph = comment.CreateParagraph();
                 XWPFRun r = paragraph.CreateRun();
                 r.AddPicture(new ByteArrayInputStream(new byte[0]),
-                        (int)PictureType.JPEG/*Document.PICTURE_TYPE_JPEG*/, "test.jpg", 21, 32);
+                        (int) PictureType.JPEG/*Document.PICTURE_TYPE_JPEG*/, "test.jpg", 21, 32);
 
                 ClassicAssert.AreEqual(1, comments.GetAllPictures().Count);
                 ClassicAssert.AreEqual(1, doc.AllPackagePictures.Count);
@@ -103,7 +104,7 @@
         [Test]
         public void TestCreateTable()
         {
-            using (XWPFDocument doc = new XWPFDocument())
+            using(XWPFDocument doc = new XWPFDocument())
             {
                 XWPFComments comments = doc.CreateComments();
                 XWPFComment comment = comments.CreateComment("1");

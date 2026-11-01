@@ -17,9 +17,9 @@
 namespace NPOI.HSSF.Util
 {
 
+    using NPOI.HSSF.Record;
     using NPOI.Util;
     using System.Collections;
-    using NPOI.HSSF.Record;
     /**
      * <p>Title: HSSFCellRangeAddress</p>
      * <p>Description:
@@ -72,14 +72,14 @@ namespace NPOI.HSSF.Util
             this.field_Addr_number = in1.ReadShort();
             this.field_regions_list = new ArrayList(this.field_Addr_number);
 
-            for (int k = 0; k < this.field_Addr_number; k++)
+            for(int k = 0; k < this.field_Addr_number; k++)
             {
                 short first_row = in1.ReadShort();
                 short first_col = in1.ReadShort();
 
                 short last_row = first_row;
                 short last_col = first_col;
-                if (in1.Remaining >= 4)
+                if(in1.Remaining >= 4)
                 {
                     last_row = in1.ReadShort();
                     last_col = in1.ReadShort();
@@ -120,7 +120,7 @@ namespace NPOI.HSSF.Util
          */
         public int AddAddRStructure(short first_row, short first_col, short last_row, short last_col)
         {
-            if (this.field_regions_list == null)
+            if(this.field_regions_list == null)
             {
                 //just to be sure :-)
                 this.field_Addr_number = 0;
@@ -149,7 +149,7 @@ namespace NPOI.HSSF.Util
          */
         public AddrStructure GetAddRStructureAt(int index)
         {
-            return (AddrStructure)this.field_regions_list[index];
+            return (AddrStructure) this.field_regions_list[index];
         }
 
         public int Serialize(int offSet, byte[] data)
@@ -157,7 +157,7 @@ namespace NPOI.HSSF.Util
             int pos = 2;
 
             LittleEndian.PutShort(data, offSet, this.AddRStructureNumber);
-            for (int k = 0; k < this.AddRStructureNumber; k++)
+            for(int k = 0; k < this.AddRStructureNumber; k++)
             {
                 AddrStructure region = this.GetAddRStructureAt(k);
                 LittleEndian.PutShort(data, offSet + pos, region.FirstRow);
@@ -198,7 +198,7 @@ namespace NPOI.HSSF.Util
              */
             public short FirstColumn
             {
-                get{return this._first_col;}
+                get { return this._first_col; }
                 set { this._first_col = value; }
             }
 
@@ -208,7 +208,7 @@ namespace NPOI.HSSF.Util
              */
             public short FirstRow
             {
-                get{return this._first_row;}
+                get { return this._first_row; }
                 set { this._first_row = value; }
             }
 
@@ -218,7 +218,7 @@ namespace NPOI.HSSF.Util
              */
             public short LastColumn
             {
-                get{return this._last_col;}
+                get { return this._last_col; }
                 set { this._last_col = value; }
             }
 

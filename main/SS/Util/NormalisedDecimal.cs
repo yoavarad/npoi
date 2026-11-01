@@ -17,11 +17,11 @@
 
 namespace NPOI.SS.Util
 {
-    using System;
-    using System.Text; 
-using Cysharp.Text;
+    using Cysharp.Text;
     using NPOI.Util;
+    using System;
     using System.Globalization;
+    using System.Text;
 
     /*
      * Represents a transformation of a 64 bit IEEE double quantity having a decimal exponent and a
@@ -81,7 +81,7 @@ using Cysharp.Text;
         {
             // estimate pow2&pow10 first, perform optional mulShift, then normalize
             int pow10;
-            if (binaryExponent > 49 || binaryExponent < 46)
+            if(binaryExponent > 49 || binaryExponent < 46)
             {
 
                 // working with ints (left Shifted 20) instead of doubles
@@ -95,15 +95,15 @@ using Cysharp.Text;
                 pow10 = 0;
             }
             MutableFPNumber cc = new MutableFPNumber(frac, binaryExponent);
-            if (pow10 != 0)
+            if(pow10 != 0)
             {
                 cc.multiplyByPowerOfTen(-pow10);
             }
 
-            switch (cc.Get64BitNormalisedExponent())
+            switch(cc.Get64BitNormalisedExponent())
             {
                 case 46:
-                    if (cc.IsAboveMinRep())
+                    if(cc.IsAboveMinRep())
                     {
                         break;
                     }
@@ -117,7 +117,7 @@ using Cysharp.Text;
                 case 48:
                     break;
                 case 49:
-                    if (cc.IsBelowMaxRep())
+                    if(cc.IsBelowMaxRep())
                     {
                         break;
                     }
@@ -141,14 +141,14 @@ using Cysharp.Text;
         public NormalisedDecimal RoundUnits()
         {
             long wholePart = _wholePart;
-            if (_fractionalPart >= FRAC_HALF)
+            if(_fractionalPart >= FRAC_HALF)
             {
                 wholePart++;
             }
 
             int de = _relativeDecimalExponent;
 
-            if (wholePart < MAX_REP_WHOLE_PART)
+            if(wholePart < MAX_REP_WHOLE_PART)
             {
                 return new NormalisedDecimal(wholePart, 0, de);
             }
@@ -207,18 +207,18 @@ using Cysharp.Text;
             long wp = _wholePart;
             int fp = _fractionalPart;
             return new BigInteger(new byte[] {
-				(byte) (wp >> 56), // N.B. assuming sign bit is zero
+                (byte) (wp >> 56), // N.B. assuming sign bit is zero
 				(byte) (wp >> 48),
-				(byte) (wp >> 40),
-				(byte) (wp >> 32),
-				(byte) (wp >> 24),
-				(byte) (wp >> 16),
-				(byte) (wp >>  8),
-				(byte) (wp >>  0),
-				(byte) (fp >> 16),
-				(byte) (fp >> 8),
-				(byte) (fp >> 0),
-		});
+                (byte) (wp >> 40),
+                (byte) (wp >> 32),
+                (byte) (wp >> 24),
+                (byte) (wp >> 16),
+                (byte) (wp >>  8),
+                (byte) (wp >>  0),
+                (byte) (fp >> 16),
+                (byte) (fp >> 8),
+                (byte) (fp >> 0),
+        });
         }
 
         public String GetSignificantDecimalDigits()
@@ -253,15 +253,15 @@ using Cysharp.Text;
         public int CompareNormalised(NormalisedDecimal other)
         {
             int cmp = _relativeDecimalExponent - other._relativeDecimalExponent;
-            if (cmp != 0)
+            if(cmp != 0)
             {
                 return cmp;
             }
-            if (_wholePart > other._wholePart)
+            if(_wholePart > other._wholePart)
             {
                 return 1;
             }
-            if (_wholePart < other._wholePart)
+            if(_wholePart < other._wholePart)
             {
                 return -1;
             }
@@ -274,7 +274,7 @@ using Cysharp.Text;
 
         private String GetFractionalDigits()
         {
-            if (_fractionalPart == 0)
+            if(_fractionalPart == 0)
             {
                 return "0";
             }

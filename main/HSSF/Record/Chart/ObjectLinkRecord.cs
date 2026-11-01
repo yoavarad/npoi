@@ -19,9 +19,9 @@
 
 namespace NPOI.HSSF.Record.Chart
 {
+    using NPOI.Util;
     using System;
     using System.Text;
-    using NPOI.Util;
 
 
     /**
@@ -134,7 +134,8 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_1_anchorId;
             }
-            set {
+            set
+            {
                 this.field_1_anchorId =value;
             }
         }
@@ -148,7 +149,7 @@ namespace NPOI.HSSF.Record.Chart
             {
                 return field_2_link1;
             }
-            set 
+            set
             {
                 field_2_link1 = value;
             }
@@ -165,7 +166,7 @@ namespace NPOI.HSSF.Record.Chart
                 return field_3_link2;
             }
 
-            set 
+            set
             {
                 field_3_link2 = value;
             }

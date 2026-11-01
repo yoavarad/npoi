@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
 using NPOI.OpenXml4Net.Util;
-using System.Xml;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NPOI.OpenXmlFormats.Spreadsheet
 {
@@ -14,19 +14,19 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
     {
         public static CT_PivotCacheRecords Parse(XmlNode node, XmlNamespaceManager namespaceManager)
         {
-            if (node == null)
+            if(node == null)
                 return null;
             CT_PivotCacheRecords ctObj = new CT_PivotCacheRecords();
-            if (node.Attributes["count"] != null)
+            if(node.Attributes["count"] != null)
                 ctObj.count = XmlHelper.ReadUInt(node.Attributes["count"]);
             ctObj.r = new List<CT_PivotCacheRecord>();
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "extLst")
+                if(childNode.LocalName == "extLst")
                 {
                     ctObj.extLst = CT_ExtensionList.Parse(childNode, namespaceManager);
                 }
-                else if (childNode.LocalName == "r")
+                else if(childNode.LocalName == "r")
                 {
                     ctObj.rField.Add(CT_PivotCacheRecord.Parse(childNode, namespaceManager));
                 }
@@ -45,11 +45,11 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             sw.Write("xmlns:xr=\"http://schemas.microsoft.com/office/spreadsheetml/2014/revision\" ");
             XmlHelper.WriteAttribute(sw, "count", this.count);
             sw.Write('>');
-            if (this.extLst != null)
+            if(this.extLst != null)
                 this.extLst.Write(sw, "extLst");
-            if (this.r != null && this.r.Count > 0)
+            if(this.r != null && this.r.Count > 0)
             {
-                foreach (CT_PivotCacheRecord o in this.r)
+                foreach(CT_PivotCacheRecord o in this.r)
                 {
                     o.Write(sw);
                 }
@@ -59,7 +59,7 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         public void Save(Stream stream)
         {
-            using (StreamWriter sw = new StreamWriter(stream))
+            using(StreamWriter sw = new StreamWriter(stream))
             {
                 //TODO add namespaceUri
                 this.Write(sw);
@@ -138,33 +138,33 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
             CT_PivotCacheRecord ctObj = new CT_PivotCacheRecord();
             ctObj.fields = new List<object>();
 
-            foreach (XmlNode childNode in node.ChildNodes)
+            foreach(XmlNode childNode in node.ChildNodes)
             {
-                if (childNode.LocalName == "n")
+                if(childNode.LocalName == "n")
                 {
                     ctObj.fields.Add(CT_Number.Parse(childNode, namespaceManager));
                 }
-                else if (childNode.LocalName == "b")
+                else if(childNode.LocalName == "b")
                 {
                     ctObj.fields.Add(CT_Boolean.Parse(childNode, namespaceManager));
                 }
-                else if (childNode.LocalName == "d")
+                else if(childNode.LocalName == "d")
                 {
                     ctObj.fields.Add(CT_DateTime.Parse(childNode, namespaceManager));
                 }
-                else if (childNode.LocalName == "e")
+                else if(childNode.LocalName == "e")
                 {
                     ctObj.fields.Add(CT_Error.Parse(childNode, namespaceManager));
                 }
-                else if (childNode.LocalName == "m")
+                else if(childNode.LocalName == "m")
                 {
                     ctObj.fields.Add(CT_Missing.Parse(childNode, namespaceManager));
                 }
-                else if (childNode.LocalName == "s")
+                else if(childNode.LocalName == "s")
                 {
                     ctObj.fields.Add(CT_String.Parse(childNode, namespaceManager));
                 }
-                else if (childNode.LocalName == "x")
+                else if(childNode.LocalName == "x")
                 {
                     ctObj.fields.Add(CT_Index.Parse(childNode, namespaceManager));
                 }
@@ -194,25 +194,25 @@ namespace NPOI.OpenXmlFormats.Spreadsheet
 
         internal void Write(StreamWriter sw)
         {
-            if (this.fields != null && fields.Count > 0)
+            if(this.fields != null && fields.Count > 0)
             {
                 sw.Write("<r>");
 
-                foreach (object o in this.fields)
+                foreach(object o in this.fields)
                 {
-                    if (o is CT_Number number)
+                    if(o is CT_Number number)
                         number.Write(sw, "n");
-                    else if (o is CT_Boolean b)
+                    else if(o is CT_Boolean b)
                         b.Write(sw, "b");
-                    else if (o is CT_DateTime time)
+                    else if(o is CT_DateTime time)
                         time.Write(sw, "d");
-                    else if (o is CT_Error error)
+                    else if(o is CT_Error error)
                         error.Write(sw, "e");
-                    else if (o is CT_Missing missing)
+                    else if(o is CT_Missing missing)
                         missing.Write(sw, "m");
-                    else if (o is CT_String ctString)
+                    else if(o is CT_String ctString)
                         ctString.Write(sw, "s");
-                    else if (o is CT_Index index)
+                    else if(o is CT_Index index)
                         index.Write(sw, "x");
                 }
 

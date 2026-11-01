@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for Additional information regarding copyright ownership.
@@ -19,7 +19,8 @@ using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.Util;
 using NPOI.XSSF.UserModel;
-using NUnit.Framework;using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.IO;
 
@@ -82,7 +83,7 @@ namespace TestCases.XSSF.UserModel
             XSSFSheet sheet = (XSSFSheet)wb.CreateSheet("sheet1");
             int colNumber = 12;
 
-            for (int i = 0; i < colNumber; i++)
+            for(int i = 0; i < colNumber; i++)
             {
                 _ = sheet.CreateColumn(i);
             }
@@ -418,7 +419,7 @@ namespace TestCases.XSSF.UserModel
 
             XSSFColumn anotherColumn = (XSSFColumn)sheet.CreateColumn(copyColIndex);
             anotherColumn.CreateCell(0).SetCellValue("POI");
-            anotherColumn.Width = (short)(width * 2);
+            anotherColumn.Width = (short) (width * 2);
             XSSFColumn originalColumn = (XSSFColumn)sheet.CreateColumn(originalColIndex);
             originalColumn.Width = width;
             XSSFCell formulaCell1 = (XSSFCell)originalColumn.CreateCell(0);
@@ -542,7 +543,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(7, sheet.LastColumnNum);
             ClassicAssert.AreEqual(10, sheet.GetColumn(6).GetCell(0).NumericCellValue);
             ClassicAssert.AreEqual(20, sheet.GetColumn(7).GetCell(0).NumericCellValue);
-            cell1 = (XSSFCell)sheet.GetColumn(6).GetCell(0);
+            cell1 = (XSSFCell) sheet.GetColumn(6).GetCell(0);
             ClassicAssert.AreEqual("POI", cell1.CellComment.Author);
             ClassicAssert.AreEqual("G1+H1", formulaCell.CellFormula);
             ClassicAssert.AreEqual(30, formulaCell.NumericCellValue);
@@ -603,7 +604,7 @@ namespace TestCases.XSSF.UserModel
             ClassicAssert.AreEqual(6, sheet.LastColumnNum);
             ClassicAssert.AreEqual(10, sheet.GetColumn(6).GetCell(0).NumericCellValue);
             ClassicAssert.AreEqual(20, sheet.GetColumn(3).GetCell(0).NumericCellValue);
-            cell1 = (XSSFCell)sheet.GetColumn(6).GetCell(0);
+            cell1 = (XSSFCell) sheet.GetColumn(6).GetCell(0);
             ClassicAssert.AreEqual("POI", cell1.CellComment.Author);
             ClassicAssert.AreEqual("G1+D1", formulaCell.CellFormula);
             ClassicAssert.AreEqual(30, formulaCell.NumericCellValue);

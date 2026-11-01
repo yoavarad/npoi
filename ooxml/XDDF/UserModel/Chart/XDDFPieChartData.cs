@@ -1,4 +1,4 @@
-﻿/* ====================================================================
+/* ====================================================================
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -24,9 +24,9 @@ using System.Text;
 
 namespace NPOI.XDDF.UserModel.Chart
 {
+    using NPOI.OpenXmlFormats.Dml.Chart;
     using NPOI.Util;
     using NPOI.XDDF.UserModel;
-    using NPOI.OpenXmlFormats.Dml.Chart;
     public class XDDFPieChartData<T, V> : XDDFChartData<T, V>
     {
         private CT_PieChart chart;
@@ -60,8 +60,8 @@ namespace NPOI.XDDF.UserModel.Chart
             CT_PieSer ctSer = this.chart.AddNewSer();
             ctSer.AddNewCat();
             ctSer.AddNewVal();
-            ctSer.AddNewIdx().val = (uint)index;
-            ctSer.AddNewOrder().val = (uint)index;
+            ctSer.AddNewIdx().val = (uint) index;
+            ctSer.AddNewOrder().val = (uint) index;
             Series added = new Series(ctSer, category, values);
             this.series.Add(added);
             return added;
@@ -160,11 +160,11 @@ namespace NPOI.XDDF.UserModel.Chart
             {
                 if(series.IsSetExplosion())
                 {
-                    series.explosion.val = (uint)explosion;
+                    series.explosion.val = (uint) explosion;
                 }
                 else
                 {
-                    series.AddNewExplosion().val = (uint)explosion;
+                    series.AddNewExplosion().val = (uint) explosion;
                 }
             }
             protected override CT_AxDataSource GetAxDS()
@@ -178,12 +178,12 @@ namespace NPOI.XDDF.UserModel.Chart
 
             public void UpdateIdXVal(long val)
             {
-                series.idx.val = (uint)val;
+                series.idx.val = (uint) val;
             }
 
             public void UpdateOrderVal(long val)
             {
-                series.order.val = (uint)val;
+                series.order.val = (uint) val;
             }
         }
     }

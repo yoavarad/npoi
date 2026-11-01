@@ -43,13 +43,15 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
      * @author Frank Cornelis
      * @see XAdESSignatureFacet
      */
-    public class XAdESXLSignatureFacet : SignatureFacet {
+    public class XAdESXLSignatureFacet : SignatureFacet
+    {
 
         //private static POILogger LOG = POILogFactory.GetLogger(typeof(XAdESXLSignatureFacet));
 
         //private CertificateFactory certificateFactory;
 
-        public XAdESXLSignatureFacet() {
+        public XAdESXLSignatureFacet()
+        {
             //try {
             //    this.certificateFactory = CertificateFactory.GetInstance("X.509");
             //} catch (CertificateException e) {
@@ -59,7 +61,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
         }
 
 
-        public override void postSign(XmlDocument document) {
+        public override void postSign(XmlDocument document)
+        {
             throw new NotImplementedException();
             //LOG.Log(POILogger.DEBUG, "XAdES-X-L post sign phase");
 
@@ -247,7 +250,8 @@ namespace NPOI.POIFS.Crypt.Dsig.Facets
             //qualNl.Item(0).ParentNode.ReplaceChild(n, qualNl.Item(0));
         }
 
-        public static byte[] GetC14nValue(List<XmlNode> nodeList, String c14nAlgoId) {
+        public static byte[] GetC14nValue(List<XmlNode> nodeList, String c14nAlgoId)
+        {
             throw new NotImplementedException();
             //MemoryStream c14nValue = new MemoryStream();
             //try {
