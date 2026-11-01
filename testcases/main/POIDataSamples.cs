@@ -243,7 +243,10 @@ namespace TestCases
             //{
             //    throw new RuntimeException(e);
             //}
-            return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            // Read-only with ReadWrite sharing: the net472 and net10.0 test hosts run in parallel and
+            // read the same sample files, and a ReadWrite handle here makes every concurrent
+            // reader fail with "being used by another process" on Windows.
+            return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         }
         public string[] GetFiles()
         {

@@ -912,7 +912,7 @@ namespace NPOI.HSSF.UserModel
         /// <summary>
         /// Get the value of the cell as a string - for numeric cells we throw an exception.
         /// For blank cells we return an empty string.
-        /// For formulaCells that are not string Formulas, we return empty String
+        /// For formula cells whose cached result is not a string, we throw an exception.
         /// </summary>
         /// <value>The string cell value.</value>
         public String StringCellValue
@@ -927,7 +927,7 @@ namespace NPOI.HSSF.UserModel
         /// <summary>
         /// Get the value of the cell as a string - for numeric cells we throw an exception.
         /// For blank cells we return an empty string.
-        /// For formulaCells that are not string Formulas, we return empty String
+        /// For formula cells whose cached result is not a string, we throw an exception.
         /// </summary>
         /// <value>The rich string cell value.</value>
         public IRichTextString RichStringCellValue
