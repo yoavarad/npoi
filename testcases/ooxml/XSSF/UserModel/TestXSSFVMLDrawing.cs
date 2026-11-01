@@ -135,7 +135,7 @@ namespace TestCases.XSSF.UserModel
             XSSFVMLDrawing vml = new XSSFVMLDrawing();
 
             // Act
-            TestDelegate testDelegate = () => vml.Read(POIDataSamples.GetSpreadSheetInstance().OpenResourceAsStream("vmlDrawing1.vml"));
+            Action testDelegate = () => vml.Read(POIDataSamples.GetSpreadSheetInstance().OpenResourceAsStream("vmlDrawing1.vml"));
 
             // Assert
             Assert.DoesNotThrow(testDelegate);

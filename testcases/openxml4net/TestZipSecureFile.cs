@@ -118,7 +118,7 @@ namespace TestCases.OpenXml4Net.OPC
             return new ZipInputStreamZipEntrySource(new ZipInputStream(new MemoryStream(zip)));
         }
 
-        private static void AssertBomb(TestDelegate d)
+        private static void AssertBomb(Action d)
         {
             var ex = Assert.Throws<ZipSecurityException>(d);
             StringAssert.StartsWith("Zip bomb detected!", ex.Message);
