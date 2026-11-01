@@ -85,13 +85,18 @@ namespace TestCases.XSSF.UserModel.Charts
 
         private static List<string> AxisTypes(CT_PlotArea plotArea)
         {
-            return plotArea.GetAxesInDocumentOrder().Select(axis => axis switch {
+            return plotArea.GetAxesInDocumentOrder().Select(AxisType).ToList();
+        }
+
+        private static string AxisType(object axis)
+        {
+            return axis switch {
                 CT_CatAx => "catAx",
                 CT_ValAx => "valAx",
                 CT_DateAx => "dateAx",
                 CT_SerAx => "serAx",
                 _ => axis.GetType().Name,
-            }).ToList();
+            };
         }
 
         private static List<string> AxisElementNames(XSSFChart chart)
