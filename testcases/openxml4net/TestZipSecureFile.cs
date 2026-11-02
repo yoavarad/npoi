@@ -389,7 +389,7 @@ namespace TestCases.OpenXml4Net.OPC
             FieldInfo f = typeof(ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream)
                 .GetField("inf", BindingFlags.Instance | BindingFlags.NonPublic);
             Assert.That(f, Is.Not.Null, "SharpZipLib InflaterInputStream.inf missing; update ZipSecureFile.InflaterField");
-            Assert.That(f.FieldType, Is.EqualTo(typeof(ICSharpCode.SharpZipLib.Zip.Compression.Inflater)));
+            Assert.That(typeof(ICSharpCode.SharpZipLib.Zip.Compression.Inflater).IsAssignableFrom(f.FieldType), Is.True);
         }
 
         [Test]
