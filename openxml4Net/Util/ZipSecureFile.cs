@@ -250,6 +250,17 @@ namespace NPOI.OpenXml4Net.Util
         // whole entries clamp the effective entry limit to this (public defaults unchanged).
         internal static long StreamEntryLimit = 0x7FFFFFC7L;
 
+        /// <summary>
+        /// Throws <see cref="ZipSecurityException"/> if the inflated byte count exceeds the max entry size
+        /// or the inflated/compressed ratio is below the min inflate ratio. Kept for upstream NPOI 2.8.1 API parity.
+        /// </summary>
+        /// <param name="inflated">number of bytes inflated so far</param>
+        /// <param name="compressed">number of compressed bytes consumed so far</param>
+        public static void CheckThreshold(long inflated, long compressed)
+        {
+            CheckThreshold(inflated, () => compressed);
+        }
+
         internal static void CheckThreshold(long inflated, Func<long> compressed, long entryLimit = long.MaxValue)
         {
             if(inflated > MAX_ENTRY_SIZE || inflated > entryLimit)

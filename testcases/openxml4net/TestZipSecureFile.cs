@@ -9,6 +9,7 @@ namespace TestCases.OpenXml4Net.OPC
     using System;
     using System.Collections;
     using System.IO;
+    using System.Reflection;
 
     /// <summary>Zip-bomb protection (ZipSecureFile limits) enforced on counted bytes.</summary>
     [TestFixture]
@@ -379,6 +380,18 @@ namespace TestCases.OpenXml4Net.OPC
             }
         }
 
+        // ZipSecureFile.CompressedCounter reads the private "inf" field of SharpZipLib's
+        // InflaterInputStream by reflection. If a SharpZipLib upgrade renames or retypes it,
+        // the production code fails closed (every deflated entry is refused); fail loudly here instead.
+        [Test]
+        public void InflaterInputStream_PrivateInfField_StillExists()
+        {
+            FieldInfo f = typeof(ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream)
+                .GetField("inf", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(f, Is.Not.Null, "SharpZipLib InflaterInputStream.inf missing; update ZipSecureFile.InflaterField");
+            Assert.That(typeof(ICSharpCode.SharpZipLib.Zip.Compression.Inflater).IsAssignableFrom(f.FieldType), Is.True);
+        }
+
         [Test]
         public void MaxTotalSize_StreamPath()
         {
@@ -387,6 +400,26 @@ namespace TestCases.OpenXml4Net.OPC
             AssertBomb(() => StreamSource(zip));
             ZipSecureFile.SetMaxTotalSize(180_000);
             DrainAll(StreamSource(zip));
+        }
+
+        [Test]
+        public void CheckThreshold_Public_ThrowsOnBadRatio()
+        {
+            AssertBomb(() => ZipSecureFile.CheckThreshold(1_000_000, 10));
+        }
+
+        [Test]
+        public void CheckThreshold_Public_PassesOnGoodRatio()
+        {
+            ZipSecureFile.CheckThreshold(1_000_000, 500_000);
+            ZipSecureFile.CheckThreshold(1_000, 0); // below grace size
+        }
+
+        [Test]
+        public void CheckThreshold_Public_ThrowsOnMaxEntrySize()
+        {
+            ZipSecureFile.SetMaxEntrySize(1000);
+            AssertBomb(() => ZipSecureFile.CheckThreshold(2000, 2000));
         }
 
         private static void AssertChainHasBomb(Exception e)
