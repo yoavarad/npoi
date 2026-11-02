@@ -389,6 +389,26 @@ namespace TestCases.OpenXml4Net.OPC
             DrainAll(StreamSource(zip));
         }
 
+        [Test]
+        public void CheckThreshold_Public_ThrowsOnBadRatio()
+        {
+            AssertBomb(() => ZipSecureFile.CheckThreshold(1_000_000, 10));
+        }
+
+        [Test]
+        public void CheckThreshold_Public_PassesOnGoodRatio()
+        {
+            ZipSecureFile.CheckThreshold(1_000_000, 500_000);
+            ZipSecureFile.CheckThreshold(1_000, 0); // below grace size
+        }
+
+        [Test]
+        public void CheckThreshold_Public_ThrowsOnMaxEntrySize()
+        {
+            ZipSecureFile.SetMaxEntrySize(1000);
+            AssertBomb(() => ZipSecureFile.CheckThreshold(2000, 2000));
+        }
+
         private static void AssertChainHasBomb(Exception e)
         {
             Exception e0 = e;
