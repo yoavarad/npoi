@@ -13,11 +13,11 @@ namespace NPOI.OpenXml4Net.Util
 {
     public class ZipSecureFile : ZipFile
     {
-        private static double MIN_INFLATE_RATIO = 0.01d;
-        private static long MAX_ENTRY_SIZE = 0xFFFFFFFFL;
+        private static double MIN_INFLATE_RATIO { get => ZipLimits.MinInflateRatio; set => ZipLimits.MinInflateRatio = value; }
+        private static long MAX_ENTRY_SIZE { get => ZipLimits.MaxEntrySize; set => ZipLimits.MaxEntrySize = value; }
 
         // don't alert for expanded sizes smaller than 100k
-        private static long GRACE_ENTRY_SIZE = 100*1024L;
+        private static long GRACE_ENTRY_SIZE { get => ZipLimits.GraceEntrySize; set => ZipLimits.GraceEntrySize = value; }
 
         // The default maximum size of extracted text 
         private static long MAX_TEXT_SIZE = 10*1024*1024L;
@@ -116,7 +116,7 @@ namespace NPOI.OpenXml4Net.Util
         {
             return MAX_TEXT_SIZE;
         }
-        private static long MAX_ENTRY_COUNT = 10000;
+        private static long MAX_ENTRY_COUNT { get => ZipLimits.MaxEntryCount; set => ZipLimits.MaxEntryCount = value; }
         private static long MAX_TOTAL_SIZE = 0xFFFFFFFFL;
 
         /// <summary>
