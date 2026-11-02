@@ -18,6 +18,7 @@
 namespace NPOI.POIFS.Macros
 {
     using ICSharpCode.SharpZipLib.Zip;
+    using NPOI.OpenXml4Net.Util;
     using NPOI.POIFS.FileSystem;
     using NPOI.Util;
     using System;
@@ -80,7 +81,7 @@ namespace NPOI.POIFS.Macros
                 if(++entryCount > ZipLimits.MaxEntryCount)
                 {
                     zis.Close();
-                    throw new IOException("Zip entry count exceeds limit of " + ZipLimits.MaxEntryCount);
+                    throw new ZipSecurityException("Zip entry count exceeds limit of " + ZipLimits.MaxEntryCount);
                 }
                 if(zipEntry.Name.EndsWith(VBA_PROJECT_OOXML, StringComparison.OrdinalIgnoreCase))
                 {
@@ -121,7 +122,7 @@ namespace NPOI.POIFS.Macros
                 if(inf == null)
                 {
                     // fail closed: cannot measure the real compressed size
-                    throw new IOException("Zip bomb detection could not be applied to this entry; refusing to read it.");
+                    throw new ZipSecurityException("Zip bomb detection could not be applied to this entry; refusing to read it.");
                 }
             }
             MemoryStream ms = new MemoryStream();
@@ -133,12 +134,12 @@ namespace NPOI.POIFS.Macros
                 total += n;
                 if(total > ZipLimits.MaxEntrySize || total > int.MaxValue - 64)
                 {
-                    throw new IOException("Zip entry too large: possible zip bomb");
+                    throw new ZipSecurityException("Zip entry too large: possible zip bomb");
                 }
                 if(inf != null && total > ZipLimits.GraceEntrySize
                     && (double) inf.TotalIn / total < ZipLimits.MinInflateRatio)
                 {
-                    throw new IOException("Zip bomb detected: inflate ratio too low");
+                    throw new ZipSecurityException("Zip bomb detected: inflate ratio too low");
                 }
                 ms.Write(buf, 0, n);
             }

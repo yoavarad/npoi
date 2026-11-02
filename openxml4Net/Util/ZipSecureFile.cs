@@ -9,6 +9,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
+[assembly: System.Runtime.CompilerServices.TypeForwardedTo(typeof(NPOI.OpenXml4Net.Util.ZipSecurityException))]
+
 namespace NPOI.OpenXml4Net.Util
 {
     public class ZipSecureFile : ZipFile
@@ -357,11 +359,5 @@ namespace NPOI.OpenXml4Net.Util
                 base.Dispose(disposing);
             }
         }
-    }
-
-    /// <summary>Thrown when a zip violates a ZipSecureFile limit (zip-bomb protection).</summary>
-    public class ZipSecurityException : IOException
-    {
-        public ZipSecurityException(string message) : base(message) { }
     }
 }
