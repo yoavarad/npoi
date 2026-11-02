@@ -9,6 +9,7 @@ namespace TestCases.OpenXml4Net.OPC
     using System;
     using System.Collections;
     using System.IO;
+    using System.Reflection;
 
     /// <summary>Zip-bomb protection (ZipSecureFile limits) enforced on counted bytes.</summary>
     [TestFixture]
@@ -377,6 +378,18 @@ namespace TestCases.OpenXml4Net.OPC
             {
                 f.SetValue(null, orig);
             }
+        }
+
+        // ZipSecureFile.CompressedCounter reads the private "inf" field of SharpZipLib's
+        // InflaterInputStream by reflection. If a SharpZipLib upgrade renames or retypes it,
+        // the production code fails closed (every deflated entry is refused); fail loudly here instead.
+        [Test]
+        public void InflaterInputStream_PrivateInfField_StillExists()
+        {
+            FieldInfo f = typeof(ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream)
+                .GetField("inf", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(f, Is.Not.Null, "SharpZipLib InflaterInputStream.inf missing; update ZipSecureFile.InflaterField");
+            Assert.That(f.FieldType, Is.EqualTo(typeof(ICSharpCode.SharpZipLib.Zip.Compression.Inflater)));
         }
 
         [Test]
