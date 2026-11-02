@@ -30,6 +30,8 @@ namespace TestCases.POIFS.Macros
     using TestCases;
 
     [TestFixture]
+
+    [NonParallelizable]
     public class TestVBAMacroReader
     {
         private static IReadOnlyDictionary<POIDataSamples, String> expectedMacroContents;
@@ -410,16 +412,16 @@ namespace TestCases.POIFS.Macros
         [Test]
         public void TestZipBombEntryTooLarge()
         {
-            long old = VBAMacroReader.MAX_ENTRY_SIZE;
+            long old = ZipLimits.MaxEntrySize;
             string path = WriteZip(zos => AddEntry(zos, "word/vbaProject.bin", new byte[8192]));
             try
             {
-                VBAMacroReader.MAX_ENTRY_SIZE = 4096;
+                ZipLimits.MaxEntrySize = 4096;
                 Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
             }
             finally
             {
-                VBAMacroReader.MAX_ENTRY_SIZE = old;
+                ZipLimits.MaxEntrySize = old;
                 File.Delete(path);
             }
         }
@@ -431,6 +433,51 @@ namespace TestCases.POIFS.Macros
             string path = WriteZip(zos => AddEntry(zos, "word/vbaProject.bin", new byte[20 * 1024 * 1024]));
             try
             {
+                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+            }
+            finally
+            {
+                File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void TestZipBombRatioSetterHonoured()
+        {
+            // ~4:1 compressible data passes the default 1% ratio; raising the shared limit must make it fail
+            double old = ZipLimits.MinInflateRatio;
+            byte[] data = new byte[300 * 1024];
+            Random rnd = new Random(42);
+            for(int i = 0; i < data.Length; i++)
+                data[i] = (byte) rnd.Next(4);
+            string path = WriteZip(zos => AddEntry(zos, "word/vbaProject.bin", data));
+            try
+            {
+                ZipLimits.MinInflateRatio = 1.0;
+                IOException ex = Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                StringAssert.Contains("inflate ratio", ex.Message);
+            }
+            finally
+            {
+                ZipLimits.MinInflateRatio = old;
+                File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void TestZipBombForgedHeader()
+        {
+            // 20 MB of zeros; forge the local header CompressedSize (when present) to look harmless.
+            // The check must use real inflater input, not the header.
+            string path = WriteZip(zos => AddEntry(zos, "word/vbaProject.bin", new byte[20 * 1024 * 1024]));
+            try
+            {
+                byte[] data = File.ReadAllBytes(path);
+                // local header: sig 50 4B 03 04, compressed size at offset 18
+                Assert.AreEqual(0x04034b50, BitConverter.ToInt32(data, 0));
+                uint forged = 20u * 1024 * 1024;
+                Array.Copy(BitConverter.GetBytes(forged), 0, data, 18, 4);
+                File.WriteAllBytes(path, data);
                 Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
             }
             finally
