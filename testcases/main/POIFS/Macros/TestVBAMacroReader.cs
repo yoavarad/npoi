@@ -493,7 +493,8 @@ namespace TestCases.POIFS.Macros
                 }
 
                 // ZipSecurityException derives from IOException, so this holds across the exception-type change.
-                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                IOException ex = Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                StringAssert.Contains("ratio", ex.Message.ToLowerInvariant());
             }
             finally
             {
