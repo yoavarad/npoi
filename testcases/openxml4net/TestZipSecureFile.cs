@@ -392,6 +392,26 @@ namespace TestCases.OpenXml4Net.OPC
             Assert.That(typeof(ICSharpCode.SharpZipLib.Zip.Compression.Inflater).IsAssignableFrom(f.FieldType), Is.True);
         }
 
+        // VBAMacroReader reflects the same "inf" field off a ZipInputStream. Pin the lookup it actually
+        // uses (its private InflaterField) and that it yields an Inflater for a deflated entry.
+        [Test]
+        public void VBAMacroReader_InflaterField_ResolvesOnZipInputStream()
+        {
+            FieldInfo f = typeof(NPOI.POIFS.Macros.VBAMacroReader)
+                .GetField("InflaterField", BindingFlags.Static | BindingFlags.NonPublic);
+            Assert.That(f, Is.Not.Null, "VBAMacroReader.InflaterField not found");
+            FieldInfo inf = f.GetValue(null) as FieldInfo;
+            Assert.That(inf, Is.Not.Null, "SharpZipLib InflaterInputStream.inf missing; update VBAMacroReader.InflaterField");
+
+            byte[] zip = MakeZip(1, 100, (int) CompressionMethod.Deflated, zeros: false);
+            using(ZipInputStream zis = new ZipInputStream(new MemoryStream(zip)))
+            {
+                ZipEntry entry = zis.GetNextEntry();
+                Assert.That(entry.CompressionMethod, Is.EqualTo(CompressionMethod.Deflated));
+                Assert.That(inf.GetValue(zis), Is.InstanceOf<ICSharpCode.SharpZipLib.Zip.Compression.Inflater>());
+            }
+        }
+
         [Test]
         public void MaxTotalSize_StreamPath()
         {
