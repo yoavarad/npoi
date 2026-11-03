@@ -17,6 +17,7 @@
 
 namespace TestCases.POIFS.Macros
 {
+    using NPOI.OpenXml4Net.Util;
     using NPOI.POIFS.FileSystem;
     using NPOI.POIFS.Macros;
     using NPOI.Util;
@@ -401,7 +402,7 @@ namespace TestCases.POIFS.Macros
             });
             try
             {
-                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                Assert.Throws<ZipSecurityException>(() => new VBAMacroReader(new FileInfo(path)));
             }
             finally
             {
@@ -417,7 +418,7 @@ namespace TestCases.POIFS.Macros
             try
             {
                 ZipLimits.MaxEntrySize = 4096;
-                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                Assert.Throws<ZipSecurityException>(() => new VBAMacroReader(new FileInfo(path)));
             }
             finally
             {
@@ -433,7 +434,7 @@ namespace TestCases.POIFS.Macros
             string path = WriteZip(zos => AddEntry(zos, "word/vbaProject.bin", new byte[20 * 1024 * 1024]));
             try
             {
-                Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                Assert.Throws<ZipSecurityException>(() => new VBAMacroReader(new FileInfo(path)));
             }
             finally
             {
@@ -454,7 +455,7 @@ namespace TestCases.POIFS.Macros
             try
             {
                 ZipLimits.MinInflateRatio = 1.0;
-                IOException ex = Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                ZipSecurityException ex = Assert.Throws<ZipSecurityException>(() => new VBAMacroReader(new FileInfo(path)));
                 StringAssert.Contains("inflate ratio", ex.Message);
             }
             finally
@@ -492,9 +493,10 @@ namespace TestCases.POIFS.Macros
                     Assert.Less(new FileInfo(path).Length, 200 * 1024, "real compressed data must be tiny");
                 }
 
-                // ZipSecurityException derives from IOException, so this holds across the exception-type change.
-                IOException ex = Assert.Throws<IOException>(() => new VBAMacroReader(new FileInfo(path)));
+                // Must be the dedicated security exception, and the message must name the ratio check.
+                ZipSecurityException ex = Assert.Throws<ZipSecurityException>(() => new VBAMacroReader(new FileInfo(path)));
                 StringAssert.Contains("ratio", ex.Message.ToLowerInvariant());
+
             }
             finally
             {
