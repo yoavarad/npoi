@@ -479,7 +479,24 @@ namespace TestCases.POIFS.Macros
                 uint forged = 20u * 1024 * 1024;
                 Array.Copy(BitConverter.GetBytes(forged), 0, data, 18, 4);
                 File.WriteAllBytes(path, data);
-                Assert.Throws<ZipSecurityException>(() => new VBAMacroReader(new FileInfo(path)));
+
+                // Preconditions: the forged header is what a header-based reader would see (ratio ~1.0,
+                // looks safe), the real compressed input is tiny, and the size cap cannot be what trips.
+                using(FileStream chk = File.OpenRead(path))
+                using(ICSharpCode.SharpZipLib.Zip.ZipInputStream zis = new ICSharpCode.SharpZipLib.Zip.ZipInputStream(chk))
+                {
+                    ICSharpCode.SharpZipLib.Zip.ZipEntry e = zis.GetNextEntry();
+                    Assert.AreEqual(forged, (uint) e.CompressedSize, "forged header size must be what the zip stream reports");
+                    Assert.Greater((double) e.CompressedSize / (20 * 1024 * 1024), ZipLimits.MinInflateRatio,
+                        "header-based ratio must look safe");
+                    Assert.Less(20L * 1024 * 1024, ZipLimits.MaxEntrySize, "size cap must not be the trigger");
+                    Assert.Less(new FileInfo(path).Length, 200 * 1024, "real compressed data must be tiny");
+                }
+
+                // Must be the dedicated security exception, and the message must name the ratio check.
+                ZipSecurityException ex = Assert.Throws<ZipSecurityException>(() => new VBAMacroReader(new FileInfo(path)));
+                StringAssert.Contains("ratio", ex.Message.ToLowerInvariant());
+
             }
             finally
             {
