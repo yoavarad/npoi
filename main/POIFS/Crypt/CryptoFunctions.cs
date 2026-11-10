@@ -570,6 +570,70 @@ namespace NPOI.POIFS.Crypt
             return obfuscationArray;
         }
 
+        /// <summary>XOR obfuscation array, method 2 ([MS-OFFCRYPTO] 2.3.7.5, Word 97-2003 .doc, [MS-DOC] 2.2.6.1).</summary>
+        /// <param name="password">1..15 chars used; longer input is truncated to 15.</param>
+        /// <exception cref="ArgumentNullException">password is null</exception>
+        /// <exception cref="ArgumentException">password is empty</exception>
+        public static byte[] CreateXorArray2(string password)
+        {
+            if(password == null)
+                throw new ArgumentNullException(nameof(password));
+            if(password.Length == 0)
+                throw new ArgumentException("password must not be empty", nameof(password));
+            if(password.Length > 15)
+                password = password.Substring(0, 15);
+            byte[] passBytes = toAnsiPassword(password);
+
+            byte[] obfuscationArray = new byte[16];
+            Array.Copy(passBytes, 0, obfuscationArray, 0, passBytes.Length);
+            Array.Copy(PAD_ARRAY, 0, obfuscationArray, passBytes.Length, PAD_ARRAY.Length - passBytes.Length + 1);
+
+            int xorKey = CreateXorKey1(password);
+            byte lowKey = (byte)(xorKey & 0xFF);
+            byte highKey = (byte)(Operator.UnsignedRightShift(xorKey, 8) & 0xFF);
+
+            for(int i = 0; i < obfuscationArray.Length; i++)
+            {
+                obfuscationArray[i] ^= (i & 1) == 0 ? lowKey : highKey;
+                obfuscationArray[i] = rotateLeft(obfuscationArray[i], 7);
+            }
+
+            return obfuscationArray;
+        }
+
+        /// <summary>
+        /// XOR data transformation method 2 ([MS-OFFCRYPTO] 2.3.7.6), in place. Encrypts and decrypts (the transform is its own inverse).
+        /// Byte data[offset + i] is at stream offset streamOffset + i; key index = (streamOffset + i) % 16.
+        /// A byte is left unchanged when it is 0x00 or when (byte ^ key) is 0x00.
+        /// </summary>
+        /// <remarks>Word: WordDocument is transformed from stream offset 68 to the end; the table stream (1Table/0Table) and Data are transformed whole. Verify the password with CreateXorVerifier2(password) == FibBase lKey.</remarks>
+        /// <exception cref="ArgumentNullException">data or xorArray is null</exception>
+        /// <exception cref="ArgumentException">xorArray.Length != 16</exception>
+        /// <exception cref="ArgumentOutOfRangeException">offset/count outside data, or streamOffset &lt; 0</exception>
+        public static void XorTransform2(byte[] data, int offset, int count, byte[] xorArray, long streamOffset)
+        {
+            if(data == null)
+                throw new ArgumentNullException(nameof(data));
+            if(xorArray == null)
+                throw new ArgumentNullException(nameof(xorArray));
+            if(xorArray.Length != 16)
+                throw new ArgumentException("xorArray must be 16 bytes", nameof(xorArray));
+            if(offset < 0)
+                throw new ArgumentOutOfRangeException(nameof(offset));
+            if(count < 0 || offset > data.Length - count)
+                throw new ArgumentOutOfRangeException(nameof(count));
+            if(streamOffset < 0)
+                throw new ArgumentOutOfRangeException(nameof(streamOffset));
+
+            for(int i = 0; i < count; i++)
+            {
+                byte b = data[offset + i];
+                byte k = xorArray[(int)((streamOffset + i) & 15)];
+                if(b != 0 && (b ^ k) != 0)
+                    data[offset + i] = (byte) (b ^ k);
+            }
+        }
+
         /**
          * The provided Unicode password string is converted to a ANSI string
          *
