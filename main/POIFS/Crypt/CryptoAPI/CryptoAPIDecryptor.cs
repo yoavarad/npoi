@@ -205,32 +205,83 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
 
         public override InputStream GetDataStream(DirectoryNode dir)
         {
+            NPOIFSFileSystem fsOut = GetSummaryEntries(dir, "EncryptedSummary");
+            MemoryStream bos = new MemoryStream();
+            fsOut.WriteFileSystem(bos);
+            fsOut.Close();
+            _length = bos.Length;
+            ByteArrayInputStream bis = new ByteArrayInputStream(bos.ToArray());
+            return bis;
+        }
+
+        /// <summary>
+        /// Decrypts the encrypted summary stream with the given name into a new file system.
+        /// </summary>
+        /// <param name="root">directory holding the encrypted summary stream</param>
+        /// <param name="encryptedStream">stream name, e.g. "encryption" (xls/doc) or "EncryptedSummary" (ppt)</param>
+        /// <exception cref="FileNotFoundException">if the stream does not exist</exception>
+        /// <exception cref="EncryptedDocumentException">if the descriptors are invalid</exception>
+        public NPOIFSFileSystem GetSummaryEntries(DirectoryNode root, string encryptedStream)
+        {
             NPOIFSFileSystem fsOut = new NPOIFSFileSystem();
-            DocumentNode es = (DocumentNode)dir.GetEntry("EncryptedSummary");
-            DocumentInputStream dis = dir.CreateDocumentInputStream(es);
+            DocumentNode es = (DocumentNode)root.GetEntryCaseInsensitive(encryptedStream);
+            DocumentInputStream dis = root.CreateDocumentInputStream(es);
             MemoryStream bos = new MemoryStream();
             IOUtils.Copy(dis, bos);
             dis.Close();
-            SeekableMemoryStream sbis = new SeekableMemoryStream(bos.ToArray(), this);
+            byte[] data = bos.ToArray();
+            long len = data.Length;
+            SeekableMemoryStream sbis = new SeekableMemoryStream(data, this);
             LittleEndianInputStream leis = new LittleEndianInputStream(sbis);
-            int streamDescriptorArrayOffset = (int)leis.ReadUInt();
-            int streamDescriptorArraySize = (int)leis.ReadUInt();
-            sbis.Seek(streamDescriptorArrayOffset - 8, SeekOrigin.Current);// sbis.Skip(streamDescriptorArrayOffset - 8);
+
+            if(len < 12)
+            {
+                throw new EncryptedDocumentException("Invalid EncryptedSummary: stream too short (" + len + ")");
+            }
+            long streamDescriptorArrayOffset = leis.ReadUInt();
+            leis.ReadUInt(); // streamDescriptorArraySize, unused
+            if(streamDescriptorArrayOffset < 8 || streamDescriptorArrayOffset > len - 4)
+            {
+                throw new EncryptedDocumentException("Invalid streamDescriptorArrayOffset in EncryptedSummary: " + streamDescriptorArrayOffset);
+            }
+            sbis.Seek((int) streamDescriptorArrayOffset);
 
             sbis.SetBlock(0);
-            int encryptedStreamDescriptorCount = (int)leis.ReadUInt();
-            StreamDescriptorEntry[] entries = new StreamDescriptorEntry[encryptedStreamDescriptorCount];
-            for(int i = 0; i < encryptedStreamDescriptorCount; i++)
+            long encryptedStreamDescriptorCount = leis.ReadUInt();
+            long maxCount = (len - (streamDescriptorArrayOffset + 4)) / 18;
+            if(encryptedStreamDescriptorCount > maxCount)
+            {
+                throw new EncryptedDocumentException("Invalid streamDescriptorCount in EncryptedSummary: " + encryptedStreamDescriptorCount);
+            }
+            var entries = new System.Collections.Generic.List<StreamDescriptorEntry>();
+            for(long i = 0; i < encryptedStreamDescriptorCount; i++)
             {
                 StreamDescriptorEntry entry = new StreamDescriptorEntry();
-                entries[i] = entry;
-                entry.streamOffset = (int) leis.ReadUInt();
-                entry.streamSize = (int) leis.ReadUInt();
+                entries.Add(entry);
+                if(len - sbis.Position < 16)
+                {
+                    throw new EncryptedDocumentException("Invalid streamDescriptor in EncryptedSummary: truncated");
+                }
+                long streamOffset = leis.ReadUInt();
+                long streamSize = leis.ReadUInt();
+                if(streamOffset > len)
+                {
+                    throw new EncryptedDocumentException("Invalid streamOffset in EncryptedSummary: " + streamOffset);
+                }
+                if(streamSize > len || streamOffset + streamSize > len)
+                {
+                    throw new EncryptedDocumentException("Invalid streamSize in EncryptedSummary: " + streamSize);
+                }
+                entry.streamOffset = (int) streamOffset;
+                entry.streamSize = (int) streamSize;
                 entry.block = leis.ReadUShort();
                 int nameSize = leis.ReadUByte();
                 entry.flags = leis.ReadUByte();
-                bool IsStream = StreamDescriptorEntry.flagStream.IsSet(entry.flags);
                 entry.reserved2 = leis.ReadInt();
+                if(nameSize * 2L + 2 > len - sbis.Position)
+                {
+                    throw new EncryptedDocumentException("Invalid nameSize in EncryptedSummary: " + nameSize);
+                }
                 entry.streamName = StringUtil.ReadUnicodeLE(leis, nameSize);
                 leis.ReadShort();
                 Debug.Assert(entry.streamName.Length == nameSize);
@@ -240,11 +291,6 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             {
                 sbis.Seek(entry.streamOffset);
                 sbis.SetBlock(entry.block);
-                long remaining = sbis.Length - sbis.Position;
-                if(entry.streamSize < 0 || entry.streamSize > remaining)
-                {
-                    throw new EncryptedDocumentException("Invalid stream size in EncryptedSummary: " + entry.streamSize);
-                }
                 byte[] streamData = new byte[entry.streamSize];
                 int total = 0;
                 while(total < streamData.Length)
@@ -260,14 +306,7 @@ namespace NPOI.POIFS.Crypt.CryptoAPI
             }
 
             leis.Close();
-            sbis = null;
-
-            bos.SetLength(0); //bos.Reset();
-            fsOut.WriteFileSystem(bos);
-            fsOut.Close();
-            _length = bos.Length;
-            ByteArrayInputStream bis = new ByteArrayInputStream(bos.ToArray());
-            return bis;
+            return fsOut;
         }
 
         public override InputStream GetDataStream(InputStream stream, int size, int initialPos)
