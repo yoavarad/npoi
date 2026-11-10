@@ -61,7 +61,6 @@ namespace TestCases.HSSF.Record.Crypto
         }
 
         [Test]
-        [Ignore("not implemented")]
         public void TestUserFile()
         {
             Biff8EncryptionKey.CurrentUserPassword = (/*setter*/"abc");

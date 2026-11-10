@@ -2949,7 +2949,6 @@ namespace TestCases.HSSF.UserModel
         }
 
         [Test]
-        [Ignore("TODO NOT IMPLEMENTED")]
         public void Bug35897()
         {
             // password is abc

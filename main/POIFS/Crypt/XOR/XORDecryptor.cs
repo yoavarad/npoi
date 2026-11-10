@@ -13,14 +13,40 @@ namespace NPOI.POIFS.Crypt.XOR
 
         private sealed class XORCipherInputStream : ChunkedCipherInputStream
         {
+            private int recordSize;
+            private byte[] keyArray;
+
             protected override Cipher InitCipherForBlock(Cipher existing, int block)
             {
                 return XORDecryptor.InitCipherForBlock(existing, block, decryptor.GetSecretKey(), Cipher.DECRYPT_MODE);
             }
 
-            public XORCipherInputStream(InputStream stream, long size, int chunkSize, XORDecryptor decryptor)
-                : base(stream, size, chunkSize, decryptor)
+            public XORCipherInputStream(InputStream stream, long size, int chunkSize, int initialPos, XORDecryptor decryptor)
+                : base(stream, size, chunkSize, initialPos, decryptor)
             {
+            }
+
+            public override void SetNextRecordSize(int recordSize)
+            {
+                this.recordSize = recordSize;
+            }
+
+            // XOR key index depends on the stream offset plus current record size, so decrypt lazily on read.
+            protected override int InvokeCipher(int totalBytes, bool doFinal)
+            {
+                return totalBytes;
+            }
+
+            protected override void DecryptOnRead(byte[] buffer, int offset, int count, long streamPos)
+            {
+                byte[] xorArray = keyArray ??= decryptor.GetSecretKey().GetEncoded();
+                for(int i = 0; i < count; i++)
+                {
+                    int idx = (int) ((streamPos + i + recordSize) % xorArray.Length);
+                    byte b = buffer[offset + i];
+                    b = (byte) ((b << 3) | (b >> 5));
+                    buffer[offset + i] = (byte) (b ^ xorArray[idx]);
+                }
             }
         }
 
@@ -62,13 +88,18 @@ namespace NPOI.POIFS.Crypt.XOR
         {
             DocumentInputStream dis = dir.CreateDocumentInputStream(DEFAULT_POIFS_ENTRY);
             _length = dis.ReadLong();
-            XORCipherInputStream cipherStream = new XORCipherInputStream(dis, _length, chunkSize, this);
+            XORCipherInputStream cipherStream = new XORCipherInputStream(dis, _length, chunkSize, 0, this);
             return cipherStream;
         }
 
-        public InputStream GetDataStream(InputStream stream, int size, int initialPos)
+        public override InputStream GetDataStream(InputStream stream, int size, int initialPos)
         {
-            return new XORCipherInputStream(stream, initialPos, chunkSize, this);
+            return new XORCipherInputStream(stream, size, chunkSize, initialPos, this);
+        }
+
+        public override void SetChunkSize(int chunkSize)
+        {
+            this.chunkSize = chunkSize;
         }
 
         public override long GetLength()
