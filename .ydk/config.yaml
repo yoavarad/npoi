@@ -34,7 +34,7 @@ verification:
   - dotnet-tdd-guard
   - conventions
 ai:
-  provider: anthropic
+  provider: claude-cli
   model_tiers:
     smart: claude-sonnet-5-5
     fast: claude-sonnet-5-5

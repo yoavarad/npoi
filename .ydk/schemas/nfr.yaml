@@ -1,6 +1,6 @@
 name: nfr
 description: "A non-functional requirement with quantified target and measurement method"
-version: 1
+version: 2
 fields:
   id:
     type: string
@@ -16,6 +16,9 @@ fields:
     values: [performance, scalability, reliability, security, observability]
     required: true
     description: "NFR category"
+  tags:
+    type: list
+    description: "Labels for generators to select this NFR by (e.g. [shutdown])"
   target:
     type: string
     required: true
