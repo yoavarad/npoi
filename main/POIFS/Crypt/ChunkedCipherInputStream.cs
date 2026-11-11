@@ -144,6 +144,12 @@ namespace NPOI.POIFS.Crypt
         /// </summary>
         public virtual void SetNextRecordSize(int recordSize) { }
 
+        /// <summary>
+        /// Hook for ciphers whose key depends on record boundaries (XOR): transforms bytes
+        /// in place after they are copied out of the chunk. Default no-op.
+        /// </summary>
+        protected virtual void DecryptOnRead(byte[] buffer, int offset, int count, long streamPos) { }
+
         /// <summary>Returns the internal chunk buffer (encrypted)</summary>
         protected byte[] GetChunk() => _chunk;
 
@@ -187,6 +193,8 @@ namespace NPOI.POIFS.Crypt
                 int toCopy = Math.Min(availStream, Math.Min(availInChunk, count));
                 byte[] src = readPlain ? _plain : _chunk;
                 Buffer.BlockCopy(src, posInChunk, destination, offset, toCopy);
+                if(!readPlain)
+                    DecryptOnRead(destination, offset, toCopy, _pos);
 
                 offset += toCopy;
                 count -= toCopy;
