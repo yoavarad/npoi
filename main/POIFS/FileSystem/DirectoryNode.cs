@@ -303,7 +303,7 @@ namespace NPOI.POIFS.FileSystem
 
             if(name != null)
             {
-                rval = _byUCName[name.ToUpperInvariant()];
+                _byUCName.TryGetValue(name.ToUpperInvariant(), out rval);
             }
 
             if(rval == null)

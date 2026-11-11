@@ -235,16 +235,8 @@ namespace NPOI
                         throw new EncryptedDocumentException("can't find encrypted property stream '"+encryptedStream+"'");
                     }
                     CryptoAPIDecryptor dec = (CryptoAPIDecryptor)encryptionInfo.Decryptor;
-                    InputStream is1 = dec.GetDataStream(directory);
-                    try
-                    {
-                        encPoifs = new NPOIFSFileSystem(is1);
-                        dirNode = encPoifs.Root;
-                    }
-                    finally
-                    {
-                        is1.Close();
-                    }
+                    encPoifs = dec.GetSummaryEntries(dirNode, encryptedStream);
+                    dirNode = encPoifs.Root;
                 }
 
                 //directory can be null when creating new documents
