@@ -1,6 +1,6 @@
 name: contract
 description: "An interface or protocol contract that defines method signatures for a service"
-version: 1
+version: 2
 fields:
   id:
     type: string
@@ -11,6 +11,10 @@ fields:
     type: text
     required: true
     description: "What this service contract represents"
+  ext_ref:
+    type: ref
+    ref_type: ext
+    description: "The ydk:ext component (ydk:ext:<ns>/<name>) whose adapter implements this contract"
   methods:
     type: map
     required: true
