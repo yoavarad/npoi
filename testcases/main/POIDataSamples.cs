@@ -126,8 +126,21 @@ namespace TestCases
  */
         private Stream OpenClasspathResource(String sampleFileName)
         {
-            FileStream file = new FileStream(_resolvedDataDir + sampleFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream file = new FileStream(ResolveSample(sampleFileName), FileMode.Open, FileAccess.Read, FileShare.Read);
             return file;
+        }
+
+        // Password-protected/encrypted samples live in the shared protected-files dir.
+        private string ResolveSample(string sampleFileName)
+        {
+            string path = _resolvedDataDir + sampleFileName;
+            if(!File.Exists(path))
+            {
+                string alt = Path.Combine(_resolvedDataDir, "..", "protected-files", sampleFileName);
+                if(File.Exists(alt))
+                    return Path.GetFullPath(alt);
+            }
+            return path;
         }
 
         private void Initialise()
@@ -188,7 +201,7 @@ namespace TestCases
             }
 
 
-            if(!File.Exists(_resolvedDataDir + sampleFileName))
+            if(!File.Exists(ResolveSample(sampleFileName)))
             {
                 throw new Exception("Sample file '" + sampleFileName
                         + "' not found in data dir '" + _resolvedDataDir + "'");
@@ -198,7 +211,7 @@ namespace TestCases
             //		System.out.println("Opening " + f.GetAbsolutePath());
             try
             {
-                return new FileStream(_resolvedDataDir + sampleFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                return new FileStream(ResolveSample(sampleFileName), FileMode.Open, FileAccess.Read, FileShare.Read);
             }
             catch(FileNotFoundException)
             {
@@ -208,7 +221,7 @@ namespace TestCases
 
         public FileInfo GetFileInfo(String sampleFileName)
         {
-            string path = _resolvedDataDir + sampleFileName;
+            string path = ResolveSample(sampleFileName);
             if(!File.Exists(path))
             {
                 throw new Exception("Sample file '" + sampleFileName
@@ -225,7 +238,7 @@ namespace TestCases
          */
         public FileStream GetFile(String sampleFileName)
         {
-            string path = _resolvedDataDir+ sampleFileName;
+            string path = ResolveSample(sampleFileName);
             if(!File.Exists(path))
             {
                 throw new Exception("Sample file '" + sampleFileName
