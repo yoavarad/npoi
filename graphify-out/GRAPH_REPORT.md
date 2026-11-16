@@ -1,29 +1,29 @@
-# Graph Report - 208  (2026-11-12)
+# Graph Report - npoi  (2026-11-16)
 
 ## Corpus Check
-- 2092 files · ~1,577,489 words
+- 2093 files · ~1,577,890 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 39 file(s) not represented in the graph (top: (none) 8, .xml 7, .resx 6)
+- Unclassified: 38 file(s) not represented in the graph (top: (none) 7, .xml 7, .resx 6)
 
 ## Summary
-- 42084 nodes · 98437 edges · 756 communities (704 shown, 52 thin omitted)
+- 42115 nodes · 98467 edges · 828 communities (742 shown, 86 thin omitted)
 - Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 12806 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b86ee861`
+- Built from commit: `d44bb629`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - system
-- .ShortToHex
+- ParseNode
 - System.Collections.Generic
-- HSSFColor
+- .GetAllColors
 - NPOI.SS.UserModel
 - HSSFChart
 - Math.cs
-- CT_CatAx
+- CT_DateAx
 - HSSFWorkbook
 - ILittleEndianOutput
 - ValueEval
@@ -31,22 +31,22 @@
 - NPOI.SS.Formula.Eval
 - Record
 - OperationEvaluationContext
-- PageSettingsBlock
+- List
 - ICell
-- StandardRecord
+- InternalChart
 - CT_CacheHierarchy
 - InternalSheet
 - CT_PrintSettings
-- .ReadShort
-- Cipher
+- Object
+- EncryptedDocumentException
 - XSSFSheet
-- .ToHexString
+- ISheet
 - CT_RPrElt
 - .WriteAttribute
-- .ReadInt
+- UnicodeString
 - HSSFShapeTypes
 - RowRecord
-- Chart.cs
+- CT_AxDataSource
 - CT_TrPrBase
 - CT_SolidColorFillProperties
 - Borders
@@ -54,50 +54,49 @@
 - ShapeTypes
 - PresetGeometry
 - ST_ShapeType
-- XWPFDocument
+- XWPFComment
 - CT_Comment
 - system_collections
-- .ToHex
+- EscherBSERecord
 - BitField
 - NPOI.POIFS.FileSystem
-- .Parse
 - DirectoryNode
-- Object
-- NumberEval
+- .ReadInt
+- Function
 - CT_TableCellProperties
-- ISheet
-- IEvaluationName
-- CT_Border
+- XSSFWorkbook
+- Ptg
+- XSSFColor
 - InputStream
-- CT_EffectList
+- CT_OuterShadowEffect
 - CT_NonVisualDrawingProps
-- SignatureConfig
+- String
 - CT_TextCharacterProperties
 - XSSFBuiltinTableStyleEnum
 - .ReadInt
 - CellAddress
-- String
+- XmlDocument
 - SXSSFSheet
 - Spreadsheet/Sheet.cs
 - CT_Property
 - ST_PresetColorVal
 - PresetColor
-- HSSFSheet
-- CultureInfo
-- FormulaShifter
+- CellRangeAddress
+- DataFormatter
+- AreaPtgBase
 - CT_LineProperties
-- IBody
-- Baseifs
-- CT_BarSer
-- PackagePartName
+- XWPFSDT
+- HSSFSheet
+- CT_BarChart
+- XSSFRow
 - HSSFCell
-- CT_LineSer
+- CT_ScatterSer
 - CT_TblPrBase
 - .ReadString
-- LinkTable
+- StandardRecord
 - ItemsChoiceType12
 - StreamWriter
-- XSSFBSheetHandler
+- .GetUInt
 - BigInteger
 - CT_P
 - CT_Col
@@ -106,83 +105,83 @@
 - CT_DLbls
 - XWPFHeaderFooter
 - EncryptionDocument
-- Function
-- MathX
+- CT_AreaSer
+- EvaluationException
 - HSSFShape
-- CT_XYAdjustHandle
+- CT_PolarAdjustHandle
 - ItemsChoiceType18
 - XWPFTableCell
 - XmlElement
 - XDDFTextRun
-- CellCacheEntry
-- LookupUtils
+- IEvaluationCell
+- TwoDEval
 - RowDataRecord
 - XSSFCell
 - XWPFParagraph
 - StylesTable
-- XWPFFootnote
-- XSSFFont
+- XWPFDocument
+- HSSFFontFormatting
 - CT_TextParagraphProperties
 - XSSFTextParagraph
-- CT_OfficeArtExtensionList
+- Drawing/BaseTypes.cs
 - Dictionary
-- Ptg
+- FormulaParser
 - CT_Legend
-- Fixed2ArgFunction
+- RefEval
 - XDDFChart
 - CT_Settings
-- Stream
+- Obsolete
 - DirectoryEntry
 - CT_Worksheet
 - CT_Shape3D
 - CT_ColorScheme
 - CT_RPr
 - CT_PlotArea
-- EncryptedDocumentException
+- EncryptionInfo
 - ByteArrayOutputStream
 - CT_R
 - EscherContainerRecord
-- CT_CellAlignment
+- XSSFCellStyle
 - CT_MathPr
 - CT_QueryTableRefresh
 - NPOI
 - system_linq
-- FreeRefFunction
+- XmlHelper
 - CT_PivotTableDefinition
 - XWPFRun
 - PackagePart
-- FormulaRecord
+- RecordFormatException
 - XWPFNumbering
 - IHyperlink
 - CT_TwoCellAnchor
 - POIXMLDocumentPart
-- AreaEval
+- DStarRunner
 - AutonumberScheme
 - CT_Error
-- XDDFTextParagraph
-- CT_DateAx
-- CT_ScatterSer
+- XDDFParagraphProperties
+- CT_LineSer
+- CT_ScatterChart
 - CT_OMathArg
 - CT_ValAx
 - ChunkedCipherInputStream
-- ZipPackage
-- LittleEndianByteArrayInputStream
-- SXSSFPicture
+- Stream
+- .SafelyAllocate
+- OneArg
 - CT_TextListStyle
 - CT_ExternalLink
 - CT_Arc
 - CT_Style
-- BATBlock
+- POIFSBigBlockSize
 - CT_CustomSheetView
-- CT_Inline
+- XSSFSimpleShape
 - Section
 - CT_Shape
 - EscherRecord
 - CT_ManualLayout
-- CT_Fill
+- XSSFBSheetHandler
 - CT_Shapetype
-- CT_ExtensionList
-- ObjRecord
+- CT_SheetView
+- CommonObjectType
 - XSSFDialogsheet
 - CT_BlipFillProperties
 - CT_GradientStop
@@ -190,10 +189,10 @@
 - .Log
 - CT_CfRule
 - CT_TextBodyProperties
-- HashAlgorithm
-- StringEval
+- CryptoFunctions
+- ComplexFunction
 - CT_PPrBase
-- XSSFConditionalFormattingRule
+- IBorderFormatting
 - CT_RadarSer
 - CT_Stylesheet
 - XDDFCustomGeometry2D
@@ -202,17 +201,17 @@
 - .Write
 - CT_Stroke
 - ItemsChoiceType
-- XSSFEventBasedExcelExtractor
-- EvaluationConditionalFormatRule
-- ArrayList
+- CT_BarSer
+- .Write
+- XWPFSharedRun
 - CT_ExtendedProperties
 - ST_PivotFilterType
-- HSSFShapeGroup
+- HSSFChildAnchor
 - SystemColor
 - CT_Chartsheet
 - CT_R
 - CT_Compat
-- CFRule12Record
+- DataBarFormatting
 - ST_ConstraintType
 - CT_ShapeDefaults
 - CellReference
@@ -224,41 +223,41 @@
 - .PutShort
 - ColumnInfoRecordsAggregate
 - CT_ShapeProperties
-- CT_Cfvo
+- CT_GradientFill
 - CT_PivotCacheDefinition
 - CT_Anchor
-- LogicalFunction
-- ParagraphAlignment
+- CultureInfo
+- StringBuilder
 - NumberFormat
-- CT_Extension
+- CT_BubbleSer
 - ST_NumberFormat
-- LittleEndianByteArrayOutputStream
-- CT_GroupShape
+- DocumentInputStream
+- CT_Transform2D
 - ItemsChoiceType13
 - MutableBigInteger
 - CT_Extrusion
-- HSSFConditionalFormattingRule
+- IConditionalFormattingThreshold
 - .AddColLabel
 - CT_TileInfoProperties
-- PaletteRecord
+- HSSFPalette
 - CT_NonVisualDrawingProps
 - CT_SectPr
-- CT_Odso
+- ST_MailMergeSourceType
 - CT_SectPrBase
 - NPOIFSFileSystem
 - IEnumerator
 - DocumentSummaryInformation
-- CT_Row
-- CT_Scene3D
+- PropertySet
+- CT_LightRig
 - IConditionalFormattingRule
-- TwoDEval
+- AreaEval
 - XSSFTable
 - NPOI.HSSF.Model
 - EscherDggRecord
 - HSSFClientAnchor
-- XSSFDrawing
-- CT_Title
-- CT_DefinedName
+- XSSFShape
+- CT_TextBody
+- CustomProperties
 - ST_ParameterId
 - ByteArrayInputStream
 - IClientAnchor
@@ -268,7 +267,7 @@
 - ItemsChoiceType6
 - CT_CustomXmlPr
 - POIFSDocumentPath
-- SXSSFEvaluationCell
+- AttrPtg
 - HyperlinkRecord
 - CT_StyleMatrixReference
 - SharedStringsTable
@@ -277,61 +276,61 @@
 - ItemsChoiceType1
 - CT_StrokeChild
 - CT_Lock
-- HSSFCellStyle
-- CT_TblBorders
-- XSSFColor
+- ExtendedFormatRecord
+- ICellRange
+- ThemesTable
 - CT_Table
 - CT_TupleCache
 - CT_LineEndProperties
 - ItemsChoiceType19
-- SheetDataWriter
-- SeekOrigin
+- POIXMLProperties
+- POIFSDocumentWriter
 - NCellRange
-- XSSFSimpleShape
-- CT_CacheField
+- XDDFTextParagraph
+- CT_SharedItems
 - CT_ElemPropSet
 - CT_Image
 - CT_ParaRPr
 - ItemsChoiceType6
 - CT_CharacterSpacing
 - ST_TextAutonumberScheme
-- CT_PPr
-- NameXPxg
-- CT_CtrlPr
+- XDDFColor
+- PropertyIDMap
+- CT_PhantPr
 - RunItemsChoiceType
 - RLEDecompressingInputStream
-- RecordInputStream
-- PushbackStream
+- ILittleEndianInput
+- SeekOrigin
 - AbstractFunctionPtg
 - CT_PageSetup
 - CT_Fill
 - CT_OleObject
-- .AddPicture
+- CT_Picture
 - CT_StyleDefinition
 - ItemsChoiceType7
 - ItemsChoiceType8
 - ST_XmlDataType
 - CT_ParaRPrOriginal
-- XSSFPicture
+- CT_GroupShape
 - DateTime
 - TableStyleType
 - XSSFBRecordType
-- MapInfo
+- XSSFExportToXml
 - ST_DocPartGallery
 - CT_RPrOriginal
-- CT_TableProperties
+- CT_BlipFillProperties
 - TwoOperandNumericOperation
-- IntList
+- CT_ConnectorLocking
 - CT_RPR
 - HSSFCellRangeAddress
-- AbstractEscherHolderRecord
+- SdtPrElementType
 - XDDFLineProperties
 - AreaEvalBase
 - UnderlineType
 - CT_FFHelpText
 - CT_IgnoredError
 - .SetFillProperties
-- CT_View3D
+- Chart.cs
 - ST_TextShapeType
 - ST_DynamicFilterType
 - CT_DocProtect
@@ -343,7 +342,7 @@
 - CT_DateGroupItem
 - .RemoveMergedRegions
 - SchemeColor
-- XSSFXmlColumnPr
+- TOC
 - CT_ShapeProperties
 - CT_ColHierarchiesUsage
 - ST_EdGrp
@@ -351,8 +350,8 @@
 - ItemsChoiceType5
 - CT_TcPrBase
 - POIFSWriterEvent
-- OldExcelExtractor
-- XSSFPrintSetup
+- CT_ColorMapping
+- PaperSize
 - ItemsChoiceType16
 - ST_Shd
 - IDataValidationConstraint
@@ -362,20 +361,20 @@
 - DataValidationEvaluator
 - BidirectionalDictionary
 - CT_Curve
-- POIFSBigBlockSize
-- XSSFClientAnchor
+- OPOIFSFileSystem
+- CT_Spacing
 - CT_SheetPr
-- ST_IconSetType
+- CT_SortCondition
 - ST_OnOff
 - CT_DocVars
 - CT_Lvl
-- StringBuilder
+- CellNumberFormatter
 - EG_ColorTransform
 - MainForm
 - HeaderFooter
-- NPOIFSStream
+- NPOIFSDocument
 - RelationalOperationEval
-- CT_ErrBars
+- DVConstraint
 - ChunkedCipherOutputStream
 - SheetIterator
 - ShapeEffects.cs
@@ -385,36 +384,36 @@
 - FontGroup
 - CT_TableStyle
 - ODocumentInputStream
-- CT_TableStyleInfo
+- CT_EffectList
 - CT_TableColumn
 - CT_TextSpacing
 - ItemChoiceType
-- PictureType
+- EscherPictBlip
 - with
-- ExtendedProperties
+- CT_Cxn
 - ItemsChoiceType6
 - CT_CustomWorkbookView
 - ParagraphItemsChoiceType
 - CT_Path2D
-- CT_OfPieChart
+- steps
 - BuiltinFormats
 - CT_CalcChain
-- SingleXmlCells
+- TextRecord
 - ST_LightRigType
-- IDataValidation
-- CT_RangePr
+- CT_DataValidation
+- CT_FieldGroup
 - CT_RevisionDefinedName
 - ItemsChoiceType24
 - ItemsChoiceType25
-- CT_PivotAreaReference
-- NPOI.POIFS.Crypt.Dsig
+- XSSFHyperlink
+- XSSFPrintSetup
 - CellFormatPart
-- XWPFChart
+- NumberPtg
 - with
 - Resources
 - Format.yml
-- XSSFObjectData
-- CT_Trendline
+- PictureType
+- XDDFBodyProperties
 - XSSFTextRun
 - steps
 - CT_LatentStyles
@@ -423,12 +422,12 @@
 - DocumentBodyItemChoiceType
 - ItemsChoiceType7
 - ItemsChoiceType8
-- ItemsChoiceType50
+- Type
 - ItemsChoiceType
-- CacheAreaEval
-- FinanceFunction
-- XWPFAcc
-- CT_PictureBase
+- ErrorEval
+- FinanceLib
+- CT_GroupLocking
+- CT_Picture
 - CT_Connection
 - XWPFF
 - CT_WorkbookPr
@@ -436,12 +435,12 @@
 - CT_Wrap
 - ItemsChoiceType26
 - StyleDocumentInitializer
-- RangeAddress
-- IName
+- EscherArrayProperty
+- ExternalSheet
 - ST_Underline
 - CT_Fonts
-- ITable
-- CT_Item
+- CellRangeAddressBase
+- ST_ItemType
 - CT_MetadataType
 - CT_OLEObject
 - ItemsChoiceType21
@@ -451,48 +450,48 @@
 - AxcExtRecord
 - Double
 - PresetLineDash
-- CT_Br
+- ParagraphAlignment
 - CT_DLbl
 - CT_Macrosheet
 - CT_BookView
 - ST_BorderType
 - CT_FramePr
 - CT_EdnProps
-- CT_SdtDate
+- CT_RubyPr
 - CT_WebSettings
 - MemoryPackagePartOutputStream
-- CT_Scenario
+- NormalisedDecimal
 - CT_WebPublishItem
 - CT_Hyperlink
-- CT_Map
+- SimpleDateFormat
 - CT_PivotHierarchy
 - ST_TrueFalse
 - Form1
 - HSSFBorderFormatting
-- XSSFEvaluationCell
+- XSSFDataValidation
 - CT_SheetProtection
 - ST_PresetShadowVal
-- .Parse
+- CT_PivotSelection
 - CT_Diagram
 - CT_Border
 - CT_TableCell
 - steps
 - Biff8RC4
-- EscherProperty
+- CT_Dialogsheet
 - CT_PathShadeProperties
 - CT_TextAutonumberBullet
-- CT_PolarAdjustHandle
+- Fields
 - CT_PivotFilter
 - CT_Shadow
 - CT_ColorSchemeMapping
 - steps
-- Builder
+- CellCopyPolicy
 - CT_Number
-- BOFRecord
+- CryptoAPIDecryptor
 - HSSFComment
-- NPOIFSDocument
+- CT_WrapTight
 - NDocumentInputStream
-- Obsolete
+- CT_TabStop
 - XSSFBHeaderFooter
 - Arrays
 - CT_String
@@ -500,26 +499,26 @@
 - CT_DiagramDefinition
 - ST_AxisType
 - CT_CalcPr
-- CT_FldChar
+- FFDataItemsType
 - CT_SignatureLine
 - HSSFObjectData
 - POIFSDocumentReader
 - GraphicalObjectAnimation.cs
 - CT_ImageData
-- .ReadUShort
-- IPrintSetup
+- .ReadShort
+- HSSFPrintSetup
 - ShortList
-- CT_ConnectionSite
-- CT_CustomGeometry2D
+- CellFormat
+- NotFoundAreaEval
 - ST_VectorBaseType
 - CT_Parameter
 - CT_ConditionalFormat
 - CT_WebPublishing
 - ItemsChoiceType3
-- XSSFName
+- ExternalLinksTable
 - CT_CacheSource
 - ExtendedColor
-- FillPattern
+- Ole10Native
 - CT_Missing
 - ydk-delete-merged-branch.yml
 - CT_TextPr
@@ -528,7 +527,7 @@
 - PosRecord
 - CT_PageBorders
 - CT_TblStylePr
-- ST_PTabLeader
+- CT_PTab
 - CT_TblPPr
 - FontCharset
 - LineEndType
@@ -536,9 +535,9 @@
 - UDFFinder
 - TextAlignment
 - CT_TextBulletSizePercent
-- TextSegment
-- CT_Ind
-- ST_AlgorithmType
+- CT_Line
+- IPrintSetup
+- ListAutoNumber
 - CT_When
 - CT_Font
 - CT_PCDKPI
@@ -559,51 +558,49 @@
 - NPOI.Pack.csproj
 - LegacyDigestInfoRsa
 - FractionFormat
-- CT_Shd
+- CT_ObjectPr
 - NPOI.Core.csproj
 - YearFracCalculator
-- DateFunc
+- CT_CacheField
 - SS.Formula unimplemented-function inventory (task #43)
-- CloseIgnoringInputStream
+- IDataValidation
 - ST_SourceType
 - ItemsChoiceType
 - AxisTickMark
 - CT_Constraint
-- DiagramLayoutVariables.cs
+- CT_LayoutVariablePropertySet
 - CT_BorderBoxPr
 - CT_RevisionComment
 - ItemsChoiceType4
 - ItemsChoiceType5
 - ST_HighlightColor
-- KeyInfoKeySelector
+- SignaturePart
 - CT_Set
 - Remaining broad catches (non-priority areas)
-- ReplacingInputStream
+- IndexedColors
 - ST_LineCap
 - ST_CompoundLine
 - ST_ExternalConnectionType
 - FontElementNameType
 - CT_RevisionAutoFormatting
-- CT_CellStyle
 - CT_Frame
-- .Build
+- MutableFPNumber
 - HSSFTextbox
-- CT_TableCellBorderStyle
+- FormulaType
 - CT_Boolean
-- ST_CellType
-- CT_PageField
-- CT_SdtComboBox
+- XSSFHeaderFooter
+- CT_Item
+- .Write
 - PanePosition
 - CT_EastAsianLayout
 - CT_Dimensions
 - Structure.cs
-- SheetVisibility
 - CT_MeasureDimensionMaps
 - ByteField
-- CT_RevisionFormatting
-- CT_PresetGeometry2D
+- CT_ExtensionList
+- ST_BevelPresetType
 - CT_LineNumber
-- ContentType
+- CT_FldChar
 - Default
 - CT_NumericRule
 - CT_RevisionRowColumn
@@ -620,13 +617,13 @@
 - CT_DateTime
 - CT_Tuples
 - ST_TickLblPos
-- CT_SharedUser
+- IDictionary
 - PictureType
 - CT_Characteristic
 - CT_RangeSet
 - ST_FillType1
 - CT_MdxTuple
-- CT_TcPr
+- HSSFColor
 - FontFamily
 - DStarAlgorithmEnum
 - CT_DocGrid
@@ -635,24 +632,24 @@
 - IDataFormat
 - CT_Zoom
 - CT_Variant
-- List
-- XWPFBorderType
+- CT_Shape
+- ICharacterRun
 - CT_DdeItem
 - ST_BWMode
-- CT_FontCollection
+- CT_TableStyleTextStyle
 - CT_MeasureGroups
 - CT_PresentationOf
-- ST_SortType
-- DVRecord
-- CT_ChartFormat
+- ST_PresetMaterialType
+- HSSFDataValidation
+- CT_CellStyle
 - CT_SmartTagType
-- HideObjRecord
+- ConditionFilterType
 - TableRowAlign
 - ST_FunctionOperator
 - CT_Schema
 - CT_AbsSizeAnchor
-- CT_TransformEffect
-- STAThread
+- LegendPosition
+- ST_TextAnchoringType
 - CT_ExternalReferences
 - POIFSWriterEventArgs
 - XDDFExtensionList
@@ -660,8 +657,8 @@
 - MarkerType
 - ExternSheetSubRecord
 - CT_FileVersion
-- CT_WorkbookProtection
-- FloorCeilingMathBase
+- .PrivateHeaderBlock
+- NumberEval
 - MSOFillType
 - FormulaErrorEnum
 - CT_CustomXmlCell
@@ -673,78 +670,150 @@
 - CT_OlapPr
 - ST_MdxKPIProperty
 - CT_MultiLevelType
-- ST_TotalsRowFunction
+- HPSFException
 - CT_Background
 - CT_DocType
-- ZipEntryData
-- CT_TcMar
+- ZipEntryType
+- IHeader
 - ST_DisplacedByCustomXml
 - ZipLimits
-- CT_FileRecoveryPr
+- CT_TextNormalAutofit
 - Units
 - NPOI.OOXML.Core.csproj
 - CT_DocRsids
-- CT_DataBinding
-- CT_ShapeLocking
+- CT_PivotCacheRecords
+- CT_OfficeArtExtensionList
 - Security Policy
 - MethodImpl
 - ST_DocPartType
-- CT_TextEffect
+- CT_Format
 - .ForEach
-- ST_OnOffStyleType
+- CT_PhoneticPr
 - ST_Qualifier
-- ST_TableType
+- NumberListFuncBase
 - NPOI.OpenXml4Net.Core.csproj
 - DocumentPropertiesVariantTypes.cs
-- ST_FontScheme
+- CT_Scene3D
 - ST_FunctionType
 - NPOI.OpenXmlFormats.Core.csproj
 - CT_CalculatedMember
-- ST_VerticalAlignRun
-- ST_PTabAlignment
+- XSSFDataValidationConstraint
+- CT_RangePr
 - NPOIStyleViewerException.cs
 - AutonumberSchemeExtensions
 - FUNDING.yml
+- ST_DataValidationImeMode
 - ST_View
 - NPOI.Core.Test.sln
 - pr-body-gate.py
 - IFontInfo
-- CT_GraphicalObjectFrameLocking
-- CT_Location
+- ST_MdxFunctionType
+- DocumentFactoryHelper
+- DataValidationContext
+- ArrayPtg
+- RevocationData
+- CT_Metadata
+- RelationshipTransformService
+- CT_CalculatedItem
+- ST_ShowDataAs
+- CellElapsedFormatter
+- CT_LinearShadeProperties
+- .CloseImpl
+- ST_GroupBy
+- CT_RevisionMove
+- ST_DataValidationOperator
+- Filetime
+- Util
+- NameIdentifier
+- CT_Sources
 - ST_DocPartBehavior
-- CT_Lock
+- CT_SSubSup
 - CT_Proof
+- CT_MetadataBlocks
+- UnknownPtg
 - ValueOperatorPtg
+- LZWDecompresser
 - ItemsChoiceType
+- CT_DatastoreItem
 - CT_RevisionInsertSheet
 - CT_SmartTagPr
+- CT_Choose
+- ST_Style
 - ST_ScreenSize
+- DisplayCellErrorType
+- CT_RecipientData
+- Blue
+- BrightGreen
+- DarkBlue
 - bug_report.md
+- DarkRed
+- LightTurquoise
+- Pink
+- Plum
+- Teal
+- Turquoise
 - CT_Top10
 - CT_Extension
 - CT_RevisionConflict
-- ST_UnderlineValues
+- Violet
+- Yellow
 - ST_CF
+- UserModel/Font.cs
+- PrintCellComments
 - build.sh
 - feature_request.md
 - FontCharsetInfo
 - AxisLineType
-- Finance
-- DoublePrecisionHelper
+- ST_EditAs
+- CT_MetadataStrings
+- ST_TblWidth
+- Aqua
+- Black
+- BlueGrey
+- CornflowerBlue
+- DarkGreen
+- DarkTeal
+- DarkYellow
+- Green
+- Grey25Percent
+- Grey40Percent
+- Grey50Percent
+- Grey80Percent
+- Indigo
+- LemonChiffon
+- LightBlue
+- LightCornflowerBlue
+- LightGreen
+- LightOrange
+- LightYellow
+- Maroon
 - CertificateEmbeddingOption.cs
+- OliveGreen
 - CT_RelIds
+- Orange
+- Red
 - ST_AnimationChartOnlyBuildType
 - CT_Path2DArcTo
+- Rose
+- SeaGreen
+- SkyBlue
+- Tan
 - CT_DbPr
 - ST_CredMethod
+- White
 - ST_CalloutPlacement
 - ST_ConnectorType
+- PageOrder
 - XMLSlideShow
 - task.md
 - PULL_REQUEST_TEMPLATE.md
+- PrintOrientation
+- ST_TextVertOverflowType
 - DocPartViewer.csproj
 - PresetColorExtensions
 - PresetGeometryExtensions
+- EncryptionOption.cs
+- CT_MetadataTypes
 - CT_ColorFilter
 - CT_RevisionQueryTableField
 - ST_HrAlign
@@ -786,75 +855,79 @@
 ## Import Cycles
 - None detected.
 
-## Communities (756 total, 52 thin omitted)
+## Communities (828 total, 86 thin omitted)
 
 ### Community 0 - "system"
 Cohesion: 0.01
-Nodes (19): NPOI.HSSF.Record.AutoFilter, NPOI.SS.Formula.Constant, NPOI.SS.UserModel.Drawing, NPOI.HSSF.Record.Drawing, NPOI.HSSF.Record.Cont, NPOI.Util, NPOI.SS.Formula.PTG, NPOI.HSSF.Record.Common (+11 more)
+Nodes (21): NPOI.HSSF.Record.CF, NPOI.HSSF.Record.AutoFilter, NPOI.SS.Formula.Constant, NPOI.SS.UserModel.Drawing, NPOI.HSSF.Record.Drawing, NPOI.HSSF.Record.Cont, NPOI.Util, NPOI.SS.Formula.PTG (+13 more)
 
-### Community 1 - ".ShortToHex"
-Cohesion: 0.03
-Nodes (43): ChartEndBlockRecord, DataSize, Sid, DataLabelExtensionRecord, DataSize, Sid, CodepageRecord, Codepage (+35 more)
+### Community 1 - "ParseNode"
+Cohesion: 0.13
+Nodes (5): ParseNode, Children, Token, TokenCollector, Result
 
 ### Community 2 - "System.Collections.Generic"
-Cohesion: 0.02
-Nodes (58): NPOI.OpenXmlFormats, NPOI.POIFS.Crypt.Dsig.Services, NPOI.OpenXmlFormats.Wordprocessing, NPOI.XWPF.UserModel, NPOI.OpenXml4Net.Util, NPOI.OpenXmlFormats.Shared, NPOI.OpenXml4Net.Exceptions, NPOI.OpenXml4Net.OPC.Internal.Unmarshallers (+50 more)
+Cohesion: 0.03
+Nodes (43): NPOI.OpenXmlFormats, NPOI.OpenXmlFormats.Wordprocessing, NPOI.OpenXml4Net.Util, DocPartViewer, NPOI.OpenXmlFormats.Dml.WordProcessing, NPOI.OOXML.XWPF.Util, NPOI.OpenXmlFormats.Spreadsheet.Document, System.Collections.Generic (+35 more)
 
-### Community 3 - "HSSFColor"
-Cohesion: 0.01
-Nodes (115): Aqua, Indexed, Automatic, Black, Indexed, Blue, Indexed, Indexed2 (+107 more)
+### Community 3 - ".GetAllColors"
+Cohesion: 0.09
+Nodes (10): Brown, Indexed, Coral, Indexed, Lavender, Indexed, Orchid, Indexed (+2 more)
 
 ### Community 4 - "NPOI.SS.UserModel"
-Cohesion: 0.01
-Nodes (38): NPOI.HSSF.Record.CF, NPOI.SS.Util, NPOI.XSSF.UserModel.Charts, NPOI.SS.Converter, NPOI.SS.UserModel.Helpers, NPOI.HSSF.UserModel.Helpers, NPOI.HSSF.UserModel.helpers, NPOI.HSSF.UserModel (+30 more)
+Cohesion: 0.02
+Nodes (35): NPOI.SS.Util, NPOI.OpenXml4Net.Exceptions, NPOI.XSSF.UserModel.Charts, NPOI.SS.Converter, NPOI.SS.UserModel.Helpers, NPOI.HSSF.UserModel.Helpers, NPOI.OpenXml4Net.OPC.Internal.Unmarshallers, NPOI.HSSF.UserModel.helpers (+27 more)
 
 ### Community 5 - "HSSFChart"
 Cohesion: 0.01
-Nodes (147): ChartRecord, DataSize, Height, Sid, Width, X, Y, DataFormatRecord (+139 more)
+Nodes (170): AreaFormatRecord, BackcolorIndex, BackgroundColor, DataSize, ForecolorIndex, ForegroundColor, FormatFlags, IsAutomatic (+162 more)
 
 ### Community 6 - "Math.cs"
-Cohesion: 0.04
-Nodes (58): CT_Bar, barPr, e, CT_BarPr, ctrlPr, pos, CT_Func, e (+50 more)
+Cohesion: 0.03
+Nodes (88): CT_AccPr, chr, ctrlPr, CT_Bar, barPr, e, CT_BarPr, ctrlPr (+80 more)
 
-### Community 7 - "CT_CatAx"
-Cohesion: 0.02
-Nodes (71): AxisOrientation, MaxMin, MinMax, AxisOrientationExtensions, XDDFCategoryAxis, XDDFSeriesAxis, CT_CatAx, auto (+63 more)
+### Community 7 - "CT_DateAx"
+Cohesion: 0.01
+Nodes (98): AxisPosition, Bottom, Left, Right, Top, AxisPositionExtensions, XDDFCategoryAxis, XDDFDateAxis (+90 more)
 
 ### Community 8 - "HSSFWorkbook"
-Cohesion: 0.01
-Nodes (127): 1. CPU: dotnet-trace sampling, 2. Allocations: dotnet-trace gc-verbose, 3. CPU %, GC heap, allocation rate, working set: dotnet-counters, 4. BenchmarkDotNet EventPipeProfiler (not usable yet), Prerequisites, Profiling the xls read path (Windows), Reading the results, Workload: the console harness (+119 more)
+Cohesion: 0.02
+Nodes (78): 1. CPU: dotnet-trace sampling, 2. Allocations: dotnet-trace gc-verbose, 3. CPU %, GC heap, allocation rate, working set: dotnet-counters, 4. BenchmarkDotNet EventPipeProfiler (not usable yet), Prerequisites, Profiling the xls read path (Windows), Reading the results, Workload: the console harness (+70 more)
+
+### Community 9 - "ILittleEndianOutput"
+Cohesion: 0.02
+Nodes (5): IDelayableLittleEndianOutput, LittleEndianByteArrayOutputStream, WriteIndex, ILittleEndianOutput, LittleEndianOutputStream
 
 ### Community 10 - "ValueEval"
 Cohesion: 0.02
-Nodes (59): DynamicArrayFunctions, Function, IfNa, ParityFunction, TextJoinFunction, YearFrac, BlankEval, EvaluationException (+51 more)
+Nodes (67): DynamicArrayFunctions, Function, CacheAreaEval, BlankEval, ConcatEval, MissingArgEval, RefListEval, StringEval (+59 more)
 
 ### Community 11 - "CT_UnsignedInt"
 Cohesion: 0.02
-Nodes (87): Grouping, PercentStacked, Stacked, Standard, GroupingExtensions, XDDFArea3DChartData, XDDFAreaChartData, XDDFChartData (+79 more)
+Nodes (45): Series, XDDFArea3DChartData, Series, XDDFBar3DChartData, XDDFChartAxis, Crosses, Id, IsVisible (+37 more)
 
 ### Community 12 - "NPOI.SS.Formula.Eval"
-Cohesion: 0.02
-Nodes (6): System.Collections.ObjectModel, NPOI.SS.Formula, NPOI.SS.Formula.Atp, NPOI.SS.Formula.Eval, NPOI.SS.Formula.Functions, NPOI.Util.ArrayExtensions
+Cohesion: 0.01
+Nodes (9): System.Collections.ObjectModel, NPOI.SS.Formula, NPOI.SS.Formula.Atp, NPOI.SS.Formula.Function, NPOI.SS.Formula.Eval, NPOI.SS.Formula.UDF, NPOI.SS.Formula.Eval.Forked, NPOI.SS.Formula.Functions (+1 more)
 
 ### Community 13 - "Record"
 Cohesion: 0.02
-Nodes (86): IERFListener, EventRecordFactory, AbortableHSSFListener, DummyRecordBase, RecordSize, Sid, LastCellOfRowDummyRecord, LastColumnNumber (+78 more)
+Nodes (62): NPOI.HSSF.EventModel, IERFListener, EventRecordFactory, AbortableHSSFListener, DummyRecordBase, RecordSize, Sid, LastCellOfRowDummyRecord (+54 more)
 
 ### Community 14 - "OperationEvaluationContext"
 Cohesion: 0.02
-Nodes (76): HSSFEvaluationSheet, HSSFSheet, LastRowNum, IfError, CollaboratingWorkbooksEnvironment, ExternalNameEval, Name, ForkedEvaluationCell (+68 more)
+Nodes (67): OperationEvaluatorFactory, NotImplemented, IfError, IfNa, Ifs, MRound, ParityFunction, RandBetween (+59 more)
 
-### Community 15 - "PageSettingsBlock"
+### Community 15 - "List"
 Cohesion: 0.03
-Nodes (103): RecordStream, RowBlocksReader, LooseMergedCells, PlainRecordStream, SharedFormulaManager, AttachedLabelAggregate, IsFirst, ObjectLink (+95 more)
+Nodes (109): PLSAggregateVisitor, RecordCloner, RecordVisitor1, RecordOrderer, RecordStream, RowBlocksReader, LooseMergedCells, PlainRecordStream (+101 more)
 
 ### Community 16 - "ICell"
 Cohesion: 0.01
-Nodes (141): HSSFEvaluationCell, ArrayFormulaRange, BooleanCellValue, CachedFormulaResultType, CellType, ColumnIndex, ErrorCellValue, HSSFCell (+133 more)
+Nodes (129): Evaluation and spill, Task 110 deferred (F5 formula-eval items), HSSFEvaluationCell, ArrayFormulaRange, BooleanCellValue, CachedFormulaResultType, CellType, ColumnIndex (+121 more)
 
-### Community 17 - "StandardRecord"
+### Community 17 - "InternalChart"
 Cohesion: 0.01
-Nodes (185): InternalChart, BottomMarginRecord, DataSize, Margin, Sid, AreaFormatRecord, BackcolorIndex, BackgroundColor (+177 more)
+Nodes (97): InternalChart, PageSettingsBlock, ColumnBreaks, ColumnBreaksRecord, Footer, HCenter, Header, NumColumnBreaks (+89 more)
 
 ### Community 18 - "CT_CacheHierarchy"
 Cohesion: 0.03
@@ -862,35 +935,35 @@ Nodes (70): CT_CacheHierarchies, cacheHierarchy, count, countSpecified, CT_Cache
 
 ### Community 19 - "InternalSheet"
 Cohesion: 0.01
-Nodes (150): InternalSheet, ActiveCellCol, ActiveCellRow, ColumnInfos, ConditionalFormattingTable, DefaultColumnWidth, DefaultRowHeight, DisplayFormulas (+142 more)
+Nodes (171): InternalSheet, ActiveCellCol, ActiveCellRow, ColumnInfos, ConditionalFormattingTable, DefaultColumnWidth, DefaultRowHeight, DisplayFormulas (+163 more)
 
 ### Community 20 - "CT_PrintSettings"
-Cohesion: 0.05
-Nodes (36): CT_HeaderFooter, alignWithMargins, differentFirst, differentOddEven, evenFooter, evenHeader, firstFooter, firstHeader (+28 more)
+Cohesion: 0.04
+Nodes (42): CT_HeaderFooter, alignWithMargins, differentFirst, differentOddEven, evenFooter, evenHeader, firstFooter, firstHeader (+34 more)
 
-### Community 21 - ".ReadShort"
+### Community 21 - "Object"
 Cohesion: 0.01
-Nodes (193): AutoFilterInfoRecord, DataSize, NumEntries, Sid, CalcCountRecord, DataSize, Iterations, Sid (+185 more)
+Nodes (213): AreaRecord, DataSize, FormatFlags, IsDisplayAsPercentage, IsShadow, IsStacked, Sid, AttachedLabelRecord (+205 more)
 
-### Community 22 - "Cipher"
-Cohesion: 0.05
-Nodes (20): Cipher, Algorithm, AlgorithmParameterSpec, IKeySpec, IvParameterSpec, RC2ParameterSpec, SecretKeySpec, IEncryptionInfoBuilder (+12 more)
+### Community 22 - "EncryptedDocumentException"
+Cohesion: 0.03
+Nodes (32): EncryptedDocumentException, ChainingMode, ecmaId, jceId, Cipher, Algorithm, CipherAlgorithm, AlgorithmParameterSpec (+24 more)
 
 ### Community 23 - "XSSFSheet"
 Cohesion: 0.01
-Nodes (96): CellCopyPolicy, IsCondenseRows, IsCopyCellFormula, IsCopyCellStyle, IsCopyCellValue, IsCopyColumnWidth, IsCopyHyperlink, IsCopyMergedRegions (+88 more)
+Nodes (125): IDrawing, IShape, Anchor, CompoundLineType, CountOfAllChildren, FillColor, ID, IsNoFill (+117 more)
 
-### Community 24 - ".ToHexString"
+### Community 24 - "ISheet"
 Cohesion: 0.02
-Nodes (65): BookBoolRecord, DataSize, SaveLinkValues, Sid, CountryRecord, CurrentCountry, DataSize, DefaultCountry (+57 more)
+Nodes (94): Adding a new format/feature, Building and Testing, Code Style, Code Verification, Common Tasks, Directory → Project Map, Format Acronyms, Format Selection Guide (+86 more)
 
 ### Community 25 - "CT_RPrElt"
 Cohesion: 0.02
-Nodes (73): CT_RPrElt, b, bSpecified, charset, charsetSpecified, color, colorSpecified, condense (+65 more)
+Nodes (97): FontCharset, Value, FontFamily, Value, FontScheme, Value, XSSFFont, Charset (+89 more)
 
-### Community 27 - ".ReadInt"
-Cohesion: 0.04
-Nodes (37): MarkerFormatRecord, Auto, DataMarkerType, DataSize, IcvBack, IcvFore, NotShowBorder, NotShowInt (+29 more)
+### Community 27 - "UnicodeString"
+Cohesion: 0.02
+Nodes (80): ExtRst, DataSize, FormattingFontIndex, FormattingOptions, NumberOfRuns, PhoneticText, PhRuns, FormatRun (+72 more)
 
 ### Community 28 - "HSSFShapeTypes"
 Cohesion: 0.01
@@ -898,19 +971,19 @@ Nodes (204): HSSFShapeTypes, AccentBorderCallout1, AccentBorderCallout2, AccentB
 
 ### Community 29 - "RowRecord"
 Cohesion: 0.03
-Nodes (43): RowRecordsAggregate, FirstRowNum, HyperlinkRecordRecords, LastRowNum, PhysicalNumberOfRows, RowBlockCount, ValueEnumerator, Current (+35 more)
+Nodes (45): RowRecordsAggregate, FirstRowNum, HyperlinkRecordRecords, LastRowNum, PhysicalNumberOfRows, RowBlockCount, ValueEnumerator, Current (+37 more)
 
-### Community 30 - "Chart.cs"
+### Community 30 - "CT_AxDataSource"
 Cohesion: 0.02
-Nodes (109): XDDFCategoryDataSource, Series, IXDDFDataSource, IXDDFDataSource, ColIndex, DataRangeReference, Formula, IsNumeric (+101 more)
+Nodes (81): XDDFCategoryDataSource, Series, AbstractArrayDataSource, ColIndex, DataRangeReference, Formula, IsNumeric, IsReference (+73 more)
 
 ### Community 31 - "CT_TrPrBase"
-Cohesion: 0.02
-Nodes (51): CT_DecimalNumber, val, CT_NumPr, ilvl, ins, numberingChange, numId, CT_Jc (+43 more)
+Cohesion: 0.03
+Nodes (35): CT_DecimalNumber, val, CT_Jc, val, CT_Height, hRule, val, CT_TblWidth (+27 more)
 
 ### Community 32 - "CT_SolidColorFillProperties"
 Cohesion: 0.02
-Nodes (126): XDDFColor, ColorContainer, XDDFColorHsl, Hue, Luminance, Saturation, XDDFColorPreset, Value (+118 more)
+Nodes (91): CT_CustomColor, hslClr, name, prstClr, schemeClr, scrgbClr, srgbClr, sysClr (+83 more)
 
 ### Community 33 - "Borders"
 Cohesion: 0.01
@@ -932,73 +1005,73 @@ Nodes (189): PresetGeometry, AccentBorderCallout1, AccentBorderCallout2, AccentB
 Cohesion: 0.01
 Nodes (189): ST_ShapeType, accentBorderCallout1, accentBorderCallout2, accentBorderCallout3, accentCallout1, accentCallout2, accentCallout3, actionButtonBackPrevious (+181 more)
 
-### Community 39 - "XWPFDocument"
-Cohesion: 0.02
-Nodes (54): Document, XWPFComment, Author, BodyElements, Date, Id, Initials, Paragraphs (+46 more)
+### Community 39 - "XWPFComment"
+Cohesion: 0.06
+Nodes (16): XWPFComment, Author, BodyElements, Date, Id, Initials, Paragraphs, Part (+8 more)
 
 ### Community 40 - "CT_Comment"
 Cohesion: 0.01
-Nodes (36): CT_OMath, Items, ItemsElementName, CT_OMathPara, oMath, oMathParaPr, CT_CustomXmlBlock, customXmlPr (+28 more)
+Nodes (65): CT_OMath, Items, ItemsElementName, CT_OMathPara, oMath, oMathParaPr, CT_CustomXmlBlock, customXmlPr (+57 more)
 
 ### Community 41 - "system_collections"
 Cohesion: 0.03
-Nodes (11): NPOI.OpenXmlFormats.Dml.Chart, NPOI.Util.Optional, NPOI.XDDF.UserModel.Chart, NPOI.XDDF.UserModel, NPOI.XDDF.UserModel.Text, NPOI.HSSF.EventModel, NPOI.OpenXmlFormats.Dml, NPOI.Common.UserModel.Fonts (+3 more)
+Nodes (10): NPOI.OpenXmlFormats.Dml.Chart, NPOI.Util.Optional, NPOI.XDDF.UserModel.Chart, NPOI.XDDF.UserModel, NPOI.XDDF.UserModel.Text, NPOI.OpenXmlFormats.Dml, NPOI.Common.UserModel.Fonts, Angles (+2 more)
 
-### Community 42 - ".ToHex"
-Cohesion: 0.01
-Nodes (165): EscherArrayEnumerator, Current, EscherArrayProperty, NumberOfElementsInArray, NumberOfElementsInMemory, SizeOfElements, EscherBitmapBlip, Marker (+157 more)
+### Community 42 - "EscherBSERecord"
+Cohesion: 0.03
+Nodes (55): EscherBitmapBlip, Marker, RecordSize, UID, EscherBlipRecord, PictureData, RecordName, RecordSize (+47 more)
 
 ### Community 43 - "BitField"
-Cohesion: 0.02
-Nodes (106): EscherColorRef, SysIndexProcedure, SysIndexSource, CFRecordsAggregate, Header, NumberOfRules, Sid, ConditionalFormattingTable (+98 more)
+Cohesion: 0.01
+Nodes (127): EscherColorRef, SysIndexProcedure, SysIndexSource, BorderFormatting, BorderBottom, BorderDiagonal, BorderLeft, BorderRight (+119 more)
 
 ### Community 44 - "NPOI.POIFS.FileSystem"
 Cohesion: 0.02
-Nodes (19): NPOI.Openxml4Net.Exceptions, NPOI.POIFS.Storage, NPOI.POIFS.Crypt, NPOI.POIFS.FileSystem, NPOI.HSSF, NPOI.POIFS.Crypt.CryptoAPI, NPOI.POIFS.Common, NPOI.POIFS.Properties (+11 more)
+Nodes (28): NPOI.POIFS.Crypt.Dsig.Services, NPOI.Openxml4Net.Exceptions, NPOI.POIFS.Storage, NPOI.POIFS.Crypt, NPOI.POIFS.FileSystem, NPOI.HSSF, NPOI.OpenXmlFormats.Encryption, NPOI.POIFS.Crypt.Dsig (+20 more)
 
 ### Community 46 - "DirectoryNode"
-Cohesion: 0.05
-Nodes (33): OldExcelFormatException, DirectoryNode, CanRead, CanSeek, CanWrite, Entries, EntryCount, EntryNames (+25 more)
+Cohesion: 0.03
+Nodes (43): HPSFPropertiesOnlyDocument, OldExcelExtractor, BiffVersion, FileType, Text, POIDocument, Directory, DocumentSummaryInformation (+35 more)
 
-### Community 47 - "Object"
-Cohesion: 0.01
-Nodes (95): CellRecord, Column, DataSize, RecordName, Row, ValueDataSize, XFIndex, SeriesChartGroupIndexRecord (+87 more)
-
-### Community 48 - "NumberEval"
+### Community 47 - ".ReadInt"
 Cohesion: 0.02
-Nodes (73): NumberEval, NumberValue, StringValue, PercentEval, RefListEval, UnaryMinusEval, UnaryPlusEval, Address (+65 more)
+Nodes (104): AxisRecord, AxisType, DataSize, Reserved1, Reserved2, Reserved3, Reserved4, Sid (+96 more)
+
+### Community 48 - "Function"
+Cohesion: 0.03
+Nodes (62): PercentEval, UnaryMinusEval, UnaryPlusEval, Address, Areas, And, InitialResultValue, BooleanFunction (+54 more)
 
 ### Community 49 - "CT_TableCellProperties"
-Cohesion: 0.04
-Nodes (47): AnchorType, Bottom, Center, Distributed, Justified, Top, AnchorTypeExtensions, CT_TableCellProperties (+39 more)
+Cohesion: 0.06
+Nodes (34): CT_TableCellProperties, anchor, anchorCtr, blipFill, cell3D, extLst, gradFill, grpFill (+26 more)
 
-### Community 50 - "ISheet"
+### Community 50 - "XSSFWorkbook"
 Cohesion: 0.01
-Nodes (125): Adding a new format/feature, Building and Testing, Code Style, Code Verification, Common Tasks, Directory → Project Map, Format Acronyms, Format Selection Guide (+117 more)
+Nodes (108): openxml4Net / ooxml findings (CA2000, 11 + 18 unique), POIFSLister, POIFSFileSystem, IName, Comment, IsDeleted, IsFunctionName, NameName (+100 more)
 
-### Community 51 - "IEvaluationName"
-Cohesion: 0.03
-Nodes (54): Name, HasFormula, IsFunctionName, IsRange, NameDefinition, NameText, IEvaluationName, HasFormula (+46 more)
-
-### Community 52 - "CT_Border"
+### Community 51 - "Ptg"
 Cohesion: 0.04
-Nodes (46): BorderSide, BOTTOM, DIAGONAL, LEFT, RIGHT, TOP, XSSFCellBorder, XSSFBorderFormatting (+38 more)
+Nodes (28): HSSFFormulaParser, HSSFEvaluationWorkbook, Name, HasFormula, IsFunctionName, IsRange, NameDefinition, NameText (+20 more)
+
+### Community 52 - "XSSFColor"
+Cohesion: 0.02
+Nodes (72): BorderSide, BOTTOM, DIAGONAL, LEFT, RIGHT, TOP, XSSFCellBorder, XSSFBorderFormatting (+64 more)
 
 ### Community 54 - "InputStream"
-Cohesion: 0.04
-Nodes (18): BinaryRC4CipherInputStream, BinaryRC4Decryptor, Decryptor, BufferedInputStream, FilterInputStream, CanRead, CanSeek, CanWrite (+10 more)
-
-### Community 55 - "CT_EffectList"
 Cohesion: 0.03
-Nodes (67): RectangleAlignment, Bottom, BottomLeft, BottomRight, Center, Left, Right, Top (+59 more)
+Nodes (28): BinaryRC4CipherInputStream, BinaryRC4Decryptor, Decryptor, XORCipherInputStream, XORDecryptor, BufferedInputStream, FilterInputStream, CanRead (+20 more)
+
+### Community 55 - "CT_OuterShadowEffect"
+Cohesion: 0.06
+Nodes (37): RectangleAlignment, Bottom, BottomLeft, BottomRight, Center, Left, Right, Top (+29 more)
 
 ### Community 56 - "CT_NonVisualDrawingProps"
 Cohesion: 0.03
-Nodes (70): CT_RelId, id, CT_Connector, fPublished, macro, nvCxnSpPr, spPr, style (+62 more)
+Nodes (58): CT_GraphicFrame, fPublished, graphic, macro, nvGraphicFramePr, xfrm, CT_GraphicFrameNonVisual, cNvGraphicFramePr (+50 more)
 
-### Community 57 - "SignatureConfig"
-Cohesion: 0.02
-Nodes (35): DigestInfo, DsigUtil, EnvelopedSignatureFacet, KeyInfoSignatureFacet, Office2010SignatureFacet, OOXMLSignatureFacet, SignatureFacet, XAdESSignatureFacet (+27 more)
+### Community 57 - "String"
+Cohesion: 0.01
+Nodes (99): EscherSpgrRecord, RecordId, RecordName, RecordSize, RectX1, RectX2, RectY1, RectY2 (+91 more)
 
 ### Community 58 - "CT_TextCharacterProperties"
 Cohesion: 0.02
@@ -1006,31 +1079,31 @@ Nodes (77): XDDFFont, Charset, Group, Panose, PitchFamily, Typeface, XDDFRunProp
 
 ### Community 59 - "XSSFBuiltinTableStyleEnum"
 Cohesion: 0.01
-Nodes (154): ITableStyle, Index, IsBuiltin, Name, XSSFBuiltinTableStyle, XSSFBuiltinTableStyleEnum, PivotStyleDark1, PivotStyleDark10 (+146 more)
+Nodes (180): IPivotTableStyleInfo, IsShowColumnHeaders, IsShowRowHeaders, ITableStyle, Index, IsBuiltin, Name, ITableStyleInfo (+172 more)
 
 ### Community 60 - ".ReadInt"
-Cohesion: 0.02
-Nodes (84): XDDFGroupFillProperties, CT_BackgroundFillStyleList, blipFill, gradFill, grpFill, noFill, pattFill, solidFill (+76 more)
+Cohesion: 0.05
+Nodes (10): XDDFGroupFillProperties, CT_EffectStyleItem, effectDag, effectLst, scene3d, sp3d, CT_EffectStyleList, effectStyle (+2 more)
 
 ### Community 61 - "CellAddress"
 Cohesion: 0.02
-Nodes (50): IComment, Address, Author, ClientAnchor, Column, Row, String, Visible (+42 more)
+Nodes (55): IComment, Address, Author, ClientAnchor, Column, Row, String, Visible (+47 more)
 
-### Community 62 - "String"
-Cohesion: 0.01
-Nodes (58): FeatProtection, DataSize, POIFSLister, POIFSViewEngine, POIFSViewer, AnalysisToolPak, ErrorConstant, ErrorCode (+50 more)
+### Community 62 - "XmlDocument"
+Cohesion: 0.03
+Nodes (26): EnvelopedSignatureFacet, KeyInfoSignatureFacet, Office2010SignatureFacet, OOXMLSignatureFacet, SignatureFacet, XAdESXLSignatureFacet, RelationshipTransformParameterSpec, CoreProperties (+18 more)
 
 ### Community 63 - "SXSSFSheet"
-Cohesion: 0.02
-Nodes (77): NRowRange, Height, HeightInPoints, NumberOfRows, PhysicalNumberOfRows, Rows, RowStyle, ZeroHeight (+69 more)
+Cohesion: 0.03
+Nodes (54): AutoSizeColumnTracker, TrackedColumns, ColumnWidthPair, SXSSFSheet, ActiveCell, AllRowsFlushed, Autobreaks, Cells (+46 more)
 
 ### Community 64 - "Spreadsheet/Sheet.cs"
-Cohesion: 0.03
-Nodes (86): CT_CellSmartTag, cellSmartTagPr, deleted, type, xmlBased, CT_CellSmartTagPr, key, val (+78 more)
+Cohesion: 0.02
+Nodes (115): CT_CellSmartTag, cellSmartTagPr, deleted, type, xmlBased, CT_CellSmartTagPr, key, val (+107 more)
 
 ### Community 65 - "CT_Property"
 Cohesion: 0.04
-Nodes (9): CT_CustomProperties, property, CT_Property, fmtid, Item, ItemElementName, linkTarget, name (+1 more)
+Nodes (7): CT_Property, fmtid, Item, ItemElementName, linkTarget, name, pid
 
 ### Community 66 - "ST_PresetColorVal"
 Cohesion: 0.01
@@ -1040,245 +1113,241 @@ Nodes (141): ST_PresetColorVal, aliceBlue, antiqueWhite, aqua, aquamarine, azure
 Cohesion: 0.01
 Nodes (139): PresetColor, AliceBlue, AntiqueWhite, Aqua, Aquamarine, Azure, Beige, Bisque (+131 more)
 
-### Community 68 - "HSSFSheet"
-Cohesion: 0.01
-Nodes (123): FilterModeRecord, DataSize, Sid, CFHeaderBase, CellRanges, DataSize, EnclosingCellRange, ID (+115 more)
+### Community 68 - "CellRangeAddress"
+Cohesion: 0.02
+Nodes (64): CFHeader12Record, DataSize, RecordName, Sid, CFHeaderBase, CellRanges, DataSize, EnclosingCellRange (+56 more)
 
-### Community 69 - "CultureInfo"
-Cohesion: 0.04
-Nodes (21): CellFormatResultWrapper, DataFormatter, Use4DigitYearsInAllDateFormats, UseCachedValuesForFormulaCells, InternalDecimalFormatWithScale, ExcelGeneralNumberFormat, ExcelStyleDateFormatter, DateFormatConverter (+13 more)
-
-### Community 70 - "FormulaShifter"
+### Community 69 - "DataFormatter"
 Cohesion: 0.03
-Nodes (46): HSSFRowColShifter, HSSFRowShifter, FormulaShifter, ShiftMode, ColumnCopy, ColumnMove, RowCopy, RowMove (+38 more)
+Nodes (37): ConditionalFormattingEvaluator, WorkbookEvaluator, EvaluationConditionalFormatRule, Formatting, FormattingIndex, Formula1, Formula2, NumberFormat (+29 more)
+
+### Community 70 - "AreaPtgBase"
+Cohesion: 0.11
+Nodes (16): AreaI, FirstColumn, FirstRow, LastColumn, LastRow, AreaPtgBase, DefaultOperandClass, FirstColumn (+8 more)
 
 ### Community 71 - "CT_LineProperties"
 Cohesion: 0.06
 Nodes (31): XDDFLineJoinBevelProperties, XDDFLineJoinMiterProperties, Limit, IXDDFLineJoinProperties, XDDFLineJoinRoundProperties, CT_LineJoinBevel, CT_LineJoinMiterProperties, lim (+23 more)
 
-### Community 72 - "IBody"
-Cohesion: 0.05
-Nodes (37): AbstractXWPFSDT, Content, BodyElementType, CONTENTCONTROL, PARAGRAPH, TABLE, BodyType, COMMENT (+29 more)
-
-### Community 74 - "Baseifs"
-Cohesion: 0.09
-Nodes (15): Baseifs, HasInitialRange, IAggregator, Countifs, HasInitialRange, MyAggregator, Maxifs, HasInitialRange (+7 more)
-
-### Community 75 - "CT_BarSer"
-Cohesion: 0.02
-Nodes (79): BarDirection, Bar, Col, BarDirectionExtensions, BarGrouping, Clustered, PercentStacked, Stacked (+71 more)
-
-### Community 76 - "PackagePartName"
+### Community 72 - "XWPFSDT"
 Cohesion: 0.06
-Nodes (12): InvalidFormatException, OpenXml4NetException, OpenXML4NetRuntimeException, ContentTypeManager, PackagePartCollection, PackagePartName, Extension, Name (+4 more)
+Nodes (27): AbstractXWPFSDT, Content, BodyElementType, CONTENTCONTROL, PARAGRAPH, TABLE, BodyType, COMMENT (+19 more)
+
+### Community 74 - "HSSFSheet"
+Cohesion: 0.02
+Nodes (65): HSSFSheet, ActiveCell, AlternativeExpression, AlternativeFormula, Autobreaks, Cells, ColumnBreaks, DefaultColumnWidth (+57 more)
+
+### Community 75 - "CT_BarChart"
+Cohesion: 0.05
+Nodes (39): BarDirection, Bar, Col, BarDirectionExtensions, BarGrouping, Clustered, PercentStacked, Stacked (+31 more)
+
+### Community 76 - "XSSFRow"
+Cohesion: 0.03
+Nodes (35): XSSFRow, Cells, Collapsed, FirstCellNum, Height, HeightInPoints, Hidden, IsFormatted (+27 more)
 
 ### Community 77 - "HSSFCell"
 Cohesion: 0.02
-Nodes (86): FormulaRecordAggregate, Column, FormulaRecord, FormulaTokens, IsPartOfArrayFormula, RecordSize, Row, Sid (+78 more)
+Nodes (72): LabelSSTRecord, RecordName, Sid, SSTIndex, ValueDataSize, HSSFCell, Address, ArrayFormulaRange (+64 more)
 
-### Community 78 - "CT_LineSer"
+### Community 78 - "CT_ScatterSer"
 Cohesion: 0.03
 Nodes (51): MarkerStyle, Circle, Dash, Diamond, Dot, None, Picture, Plus (+43 more)
 
 ### Community 79 - "CT_TblPrBase"
 Cohesion: 0.03
-Nodes (56): CT_ShortHexNumber, val, CT_SdtDocPart, docPartCategory, docPartGallery, docPartUnique, CT_TblCellMar, bottom (+48 more)
+Nodes (61): CT_ShortHexNumber, val, CT_TblBorders, bottom, insideH, insideV, left, right (+53 more)
 
-### Community 81 - "LinkTable"
-Cohesion: 0.03
-Nodes (48): EventWorkbookBuilder, SheetRecordCollectingListener, CRNBlock, ExternalBookBlock, NumberOfNames, LinkTable, NumNames, RecordCount (+40 more)
+### Community 81 - "StandardRecord"
+Cohesion: 0.01
+Nodes (189): EventWorkbookBuilder, SheetRecordCollectingListener, InternalWorkbook, BackupRecord, CustomPalette, DrawingManager, FileSharing, Formats (+181 more)
 
 ### Community 82 - "ItemsChoiceType12"
 Cohesion: 0.04
-Nodes (47): XWPFHyperlinkRun, Anchor, HyperlinkId, CT_Hyperlink1, anchor, docLocation, history, historySpecified (+39 more)
+Nodes (44): CT_Hyperlink1, anchor, docLocation, history, historySpecified, id, Items, ItemsElementName (+36 more)
 
 ### Community 84 - "StreamWriter"
 Cohesion: 0.02
 Nodes (4): CT_MacroName, val, CT_FFName, val
 
-### Community 85 - "XSSFBSheetHandler"
-Cohesion: 0.04
-Nodes (29): XSSFBCellHeader, ColNum, StyleIdx, XSSFBCellRange, XSSFBComment, Address, Author, ClientAnchor (+21 more)
-
-### Community 86 - "BigInteger"
-Cohesion: 0.05
-Nodes (7): ExpandedDouble, MutableFPNumber, Rounder, TenPower, NormalisedDecimal, NumberToTextConverter, BigInteger
+### Community 85 - ".GetUInt"
+Cohesion: 0.06
+Nodes (16): XSSFBCellHeader, ColNum, StyleIdx, XSSFBCellRange, HyperlinkSheetScraper, XSSFBParseException, XSSFBParser, XSSFBRichStr (+8 more)
 
 ### Community 87 - "CT_P"
 Cohesion: 0.02
-Nodes (40): XMLParagraph, CT_CustomXmlRun, customXmlPr, element, Items, ItemsElementName, uri, CT_SmartTagRun (+32 more)
+Nodes (49): XMLParagraph, CT_CustomXmlRun, customXmlPr, element, Items, ItemsElementName, uri, CT_SmartTagRun (+41 more)
 
 ### Community 88 - "CT_Col"
 Cohesion: 0.04
 Nodes (23): ColumnHelper, TreeSet, Count, CTColComparator, CTColComparatorByMax, CTColComparatorByMinMax, NumericRanges, DuplicateComparer (+15 more)
 
 ### Community 89 - "SXSSFCell"
-Cohesion: 0.03
-Nodes (53): NPOI.XSSF.Streaming.Properties, NPOI.XSSF.Streaming.Values, CellType, Blank, Boolean, Error, Formula, _None (+45 more)
+Cohesion: 0.02
+Nodes (70): NPOI.XSSF.Streaming.Properties, NPOI.XSSF.Streaming.Values, CellType, Blank, Boolean, Error, Formula, _None (+62 more)
 
 ### Community 90 - "XWPFTable"
 Cohesion: 0.02
-Nodes (100): TableWidthType, AUTO, DXA, NIL, PCT, XWPFTable, Body, CellMarginBottom (+92 more)
+Nodes (111): IBody, BodyElements, Paragraphs, Part, PartType, Tables, TableWidthType, AUTO (+103 more)
 
 ### Community 91 - "CT_DLbls"
 Cohesion: 0.03
-Nodes (46): Series, Series, Series, CT_AreaSer, cat, dLbls, dPt, errBars (+38 more)
+Nodes (58): Series, CT_DLbls, delete, dLbl, dLblPos, extLst, numFmt, separator (+50 more)
 
 ### Community 92 - "XWPFHeaderFooter"
 Cohesion: 0.04
-Nodes (34): HeaderFooterType, DEFAULT, EVEN, FIRST, XWPFWordExtractor, Text, XWPFHeaderFooterPolicy, XWPFFooter (+26 more)
+Nodes (39): HeaderFooterType, DEFAULT, EVEN, FIRST, XWPFWordExtractor, Text, XWPFCommentsDecorator, Text (+31 more)
 
 ### Community 93 - "EncryptionDocument"
-Cohesion: 0.03
-Nodes (66): CT_DataIntegrity, encryptedHmacKey, encryptedHmacValue, CT_Encryption, dataIntegrity, keyData, keyEncryptors, CT_KeyData (+58 more)
+Cohesion: 0.06
+Nodes (31): CT_DataIntegrity, encryptedHmacKey, encryptedHmacValue, CT_Encryption, dataIntegrity, keyData, keyEncryptors, CT_KeyData (+23 more)
 
-### Community 94 - "Function"
-Cohesion: 0.05
-Nodes (42): OperationEvaluatorFactory, NotImplemented, FunctionEval, FunctionID, NotImplementedFunctionException, FunctionName, Db, Ddb (+34 more)
+### Community 94 - "CT_AreaSer"
+Cohesion: 0.04
+Nodes (34): Grouping, PercentStacked, Stacked, Standard, GroupingExtensions, Series, XDDFAreaChartData, CT_AreaChart (+26 more)
 
-### Community 95 - "MathX"
+### Community 95 - "EvaluationException"
 Cohesion: 0.02
-Nodes (43): AggregateFunction, AVEDEV, AVERAGE, DEVSQ, LARGE, MAX, MEDIAN, MIN (+35 more)
+Nodes (57): DateParser, EvaluationException, AggregateFunction, AVEDEV, AVERAGE, DEVSQ, LARGE, MAX (+49 more)
 
 ### Community 96 - "HSSFShape"
-Cohesion: 0.06
-Nodes (36): DefaultEscherRecordFactory, HSSFCombobox, ShapeType, HSSFPatriarch, Children, CountOfAllChildren, Sheet, X1 (+28 more)
+Cohesion: 0.04
+Nodes (44): DefaultEscherRecordFactory, HSSFCombobox, ShapeType, HSSFPatriarch, Children, CountOfAllChildren, Sheet, X1 (+36 more)
 
-### Community 97 - "CT_XYAdjustHandle"
-Cohesion: 0.09
-Nodes (17): XDDFAdjustHandleXY, CT_AdjustHandleList, Items, CT_XYAdjustHandle, gdRefX, gdRefXSpecified, gdRefY, gdRefYSpecified (+9 more)
+### Community 97 - "CT_PolarAdjustHandle"
+Cohesion: 0.05
+Nodes (32): XDDFAdjustHandlePolar, XDDFAdjustHandleXY, CT_AdjustHandleList, Items, CT_PolarAdjustHandle, gdRefAng, gdRefAngSpecified, gdRefR (+24 more)
 
 ### Community 98 - "ItemsChoiceType18"
-Cohesion: 0.06
-Nodes (36): CT_SdtContentRun, Items, ItemsElementName, ItemsChoiceType18, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart (+28 more)
+Cohesion: 0.05
+Nodes (37): T, CT_SdtContentRun, Items, ItemsElementName, ItemsChoiceType18, bookmarkEnd, bookmarkStart, commentRangeEnd (+29 more)
 
 ### Community 99 - "XWPFTableCell"
-Cohesion: 0.03
-Nodes (50): ICell, XWPFSDTCell, Content, XWPFTableCell, BodyElements, Paragraphs, Part, PartType (+42 more)
+Cohesion: 0.02
+Nodes (96): ICell, XWPFSDTCell, Content, XWPFTableCell, BodyElements, Paragraphs, Part, PartType (+88 more)
 
 ### Community 100 - "XmlElement"
-Cohesion: 0.07
-Nodes (15): HtmlDocumentFacade, Body, Document, Head, Title, ExcelToHtmlConverter, Document, OutputColumnHeaders (+7 more)
+Cohesion: 0.05
+Nodes (25): HtmlDocumentFacade, Body, Document, Head, Title, HorizontalAlignment, Center, CenterSelection (+17 more)
 
 ### Community 101 - "XDDFTextRun"
 Cohesion: 0.03
 Nodes (59): CapsType, All, None, Small, CapsTypeExtensions, StrikeType, DoubleStrike, NoStrike (+51 more)
 
-### Community 102 - "CellCacheEntry"
-Cohesion: 0.05
-Nodes (23): CellCacheEntry, CellEvaluationFrame, EntryOperation, EvaluationCache, FormulaCellCache, IEntryOperation, FormulaCellCacheEntry, IsInputSensitive (+15 more)
+### Community 102 - "IEvaluationCell"
+Cohesion: 0.02
+Nodes (69): HSSFEvaluationSheet, HSSFSheet, LastRowNum, CellCacheEntry, CellEvaluationFrame, ForkedEvaluationCell, ArrayFormulaRange, BooleanCellValue (+61 more)
 
-### Community 103 - "LookupUtils"
+### Community 103 - "TwoDEval"
 Cohesion: 0.04
-Nodes (40): XLookupFunction, XMatchFunction, RefEval, Column, NumberOfSheets, Row, Hlookup, Lookup (+32 more)
+Nodes (42): XLookupFunction, XMatchFunction, SubtotalPredicate, SubtotalVisibleOnlyPredicate, Lookup, BinarySearchIndexes, BooleanLookupComparer, ColumnVector (+34 more)
 
 ### Community 104 - "RowDataRecord"
 Cohesion: 0.02
-Nodes (76): BopPopCustomRecord, DataSize, Sid, BopPopRecord, DataSize, Sid, CrtLineRecord, DataSize (+68 more)
+Nodes (79): BopPopCustomRecord, DataSize, Sid, BopPopRecord, DataSize, Sid, CrtLineRecord, DataSize (+71 more)
 
 ### Community 105 - "XSSFCell"
 Cohesion: 0.02
-Nodes (89): XSSFCell, Address, ArrayFormulaRange, BooleanCellValue, CachedFormulaResultType, CellComment, CellFormula, CellStyle (+81 more)
+Nodes (83): HSSFRowColShifter, HSSFRowShifter, FormulaRenderer, FormulaShifter, ShiftMode, ColumnCopy, ColumnMove, RowCopy (+75 more)
 
 ### Community 106 - "XWPFParagraph"
 Cohesion: 0.02
-Nodes (84): IParagraph, FirstLineIndent, FontAlignment, IndentFromLeft, IndentFromRight, IsWordWrapped, LineSpacingRule, ATLEAST (+76 more)
+Nodes (89): IParagraph, FirstLineIndent, FontAlignment, IndentFromLeft, IndentFromRight, IsWordWrapped, XSSFVMLDrawing, PositionInParagraph (+81 more)
 
 ### Community 107 - "StylesTable"
 Cohesion: 0.02
-Nodes (78): StylesTable, DXfsSize, ExplicitTableStyleNames, Fonts, IndexedColors, MaxNumberOfDataFormats, NumberFormatSize, NumCellStyles (+70 more)
+Nodes (67): StylesTable, DXfsSize, ExplicitTableStyleNames, Fonts, IndexedColors, MaxNumberOfDataFormats, NumberFormatSize, NumCellStyles (+59 more)
 
-### Community 108 - "XWPFFootnote"
-Cohesion: 0.04
-Nodes (30): XWPFFootnote, BodyElements, Current, Id, Owner, Paragraphs, Part, PartType (+22 more)
-
-### Community 109 - "XSSFFont"
+### Community 108 - "XWPFDocument"
 Cohesion: 0.02
-Nodes (62): HSSFFont, Charset, Color, FontHeight, FontHeightInPoints, FontName, Index, IsBold (+54 more)
+Nodes (61): Document, IBodyElement, Body, ElementType, Part, PartType, XWPFDocument, AllPackagePictures (+53 more)
+
+### Community 109 - "HSSFFontFormatting"
+Cohesion: 0.04
+Nodes (48): HSSFFontFormatting, EscapementType, FontColor, FontColorIndex, FontHeight, FontWeight, IsBold, IsEscapementTypeModified (+40 more)
 
 ### Community 110 - "CT_TextParagraphProperties"
-Cohesion: 0.04
-Nodes (49): IXDDFBulletStyle, XDDFBulletStyleCharacter, XDDFBulletStyleNone, ParagraphPropertyFetcherBulletFontColor, CT_TextBulletColorFollowText, CT_TextBulletTypefaceFollowText, CT_TextCharBullet, @char (+41 more)
+Cohesion: 0.03
+Nodes (53): IXDDFBulletStyle, XDDFBulletStyleCharacter, XDDFBulletStyleNone, XDDFParagraphBulletProperties, BulletColor, BulletFont, BulletSize, BulletStyle (+45 more)
 
 ### Community 111 - "XSSFTextParagraph"
 Cohesion: 0.03
-Nodes (75): ParagraphPropertyFetcher, ParagraphPropertyFetcher, ListAutoNumber, ALPHA_LC_PARENT_BOTH, ALPHA_LC_PARENT_R, ALPHA_LC_PERIOD, ALPHA_UC_PARENT_BOTH, ALPHA_UC_PARENT_R (+67 more)
+Nodes (59): ParagraphPropertyFetcher, ParagraphPropertyFetcher, TextAlign, CENTER, DIST, JUSTIFY, JUSTIFY_LOW, LEFT (+51 more)
 
-### Community 112 - "CT_OfficeArtExtensionList"
-Cohesion: 0.02
-Nodes (96): CT_AudioCD, end, extLst, st, CT_AudioCDTime, time, track, CT_AudioFile (+88 more)
+### Community 112 - "Drawing/BaseTypes.cs"
+Cohesion: 0.05
+Nodes (42): CT_Angle, val, CT_ColorMRU, Items, CT_ComplementTransform, CT_FixedPercentage, val, CT_GammaTransform (+34 more)
 
 ### Community 113 - "Dictionary"
-Cohesion: 0.04
-Nodes (38): ICellStyle, Alignment, BorderBottom, BorderDiagonal, BorderDiagonalColor, BorderDiagonalLineStyle, BorderLeft, BorderRight (+30 more)
+Cohesion: 0.01
+Nodes (116): HSSFCellStyle, Alignment, BorderBottom, BorderDiagonal, BorderDiagonalColor, BorderDiagonalLineStyle, BorderLeft, BorderRight (+108 more)
 
-### Community 114 - "Ptg"
-Cohesion: 0.02
-Nodes (56): ParseNode, Children, Token, TokenCollector, Result, FormulaParseException, FormulaParser, IFormulaParsingWorkbook (+48 more)
+### Community 114 - "FormulaParser"
+Cohesion: 0.10
+Nodes (5): FormulaParseException, FormulaParser, ParseNode, EncodedSize, TokenCount
 
 ### Community 115 - "CT_Legend"
 Cohesion: 0.03
-Nodes (44): LegendPosition, Bottom, Left, Right, Top, TopRight, LegendPositionExtensions, XDDFChartExtensionList (+36 more)
+Nodes (39): XDDFChartExtensionList, XDDFChartLegend, ExtensionList, IsOverlay, Layout, Position, ShapeProperties, TextBody (+31 more)
 
-### Community 116 - "Fixed2ArgFunction"
+### Community 116 - "RefEval"
 Cohesion: 0.03
-Nodes (40): ConcatEval, Eval, OperationEval, NumberOfOperands, LargeSmall, Percentile, Fixed2ArgFunction, AreaValueArray (+32 more)
+Nodes (47): Eval, OperationEval, NumberOfOperands, RefEval, Column, NumberOfSheets, Row, RefEvalBase (+39 more)
 
 ### Community 117 - "XDDFChart"
 Cohesion: 0.02
-Nodes (66): DisplayBlanks, Gap, Span, Zero, DisplayBlanksExtensions, XDDFChart, TitleOverlay, CT_Chart (+58 more)
+Nodes (68): DisplayBlanks, Gap, Span, Zero, DisplayBlanksExtensions, XDDFChart, TitleOverlay, CT_Boolean (+60 more)
 
 ### Community 118 - "CT_Settings"
 Cohesion: 0.02
 Nodes (110): CT_Kinsoku, lang, val, CT_SaveThroughXslt, id, solutionID, CT_Settings, activeWritingStyle (+102 more)
 
-### Community 119 - "Stream"
-Cohesion: 0.02
-Nodes (45): EscherDump, PropName, CodePageString, Size, NoFormatIDException, TypeWriter, UnicodeString, Value (+37 more)
+### Community 119 - "Obsolete"
+Cohesion: 0.03
+Nodes (36): CipherProvider, cipherProviderName, ecmaId, jceId, EncryptionHeader, BlockSize, ChainingMode, CipherAlgorithm (+28 more)
 
 ### Community 120 - "DirectoryEntry"
-Cohesion: 0.03
-Nodes (44): POIFSWriterListener, DirectoryEntry, Entries, EntryCount, EntryNames, IsEmpty, StorageClsid, DocumentEntry (+36 more)
+Cohesion: 0.05
+Nodes (25): DirectoryEntry, Entries, EntryCount, EntryNames, IsEmpty, StorageClsid, Entry, IsDirectoryEntry (+17 more)
 
 ### Community 121 - "CT_Worksheet"
 Cohesion: 0.03
-Nodes (57): WorksheetDocument, CT_Worksheet, autoFilter, cellWatches, colBreaks, cols, conditionalFormatting, controls (+49 more)
+Nodes (56): WorksheetDocument, CT_Worksheet, autoFilter, cellWatches, colBreaks, cols, conditionalFormatting, controls (+48 more)
 
 ### Community 122 - "CT_Shape3D"
-Cohesion: 0.03
-Nodes (69): XDDFShape3D, CT_StyleLabel, extLst, name, scene3d, sp3d, style, txPr (+61 more)
+Cohesion: 0.09
+Nodes (23): XDDFShape3D, CT_StyleLabel, extLst, name, scene3d, sp3d, style, txPr (+15 more)
 
 ### Community 123 - "CT_ColorScheme"
-Cohesion: 0.03
-Nodes (75): XWPFTheme, MajorFont, MinorFont, Name, CT_BaseStyles, clrScheme, extLst, fmtScheme (+67 more)
+Cohesion: 0.05
+Nodes (40): XWPFTheme, MajorFont, MinorFont, Name, CT_BaseStyles, clrScheme, extLst, fmtScheme (+32 more)
 
 ### Community 124 - "CT_RPr"
 Cohesion: 0.02
-Nodes (59): CT_SignedHpsMeasure, val, CT_SignedTwipsMeasure, val, CT_RPr, b, bCs, bdr (+51 more)
+Nodes (65): CT_HpsMeasure, val, CT_SignedHpsMeasure, val, CT_SignedTwipsMeasure, val, CT_RPr, b (+57 more)
 
 ### Community 125 - "CT_PlotArea"
-Cohesion: 0.03
-Nodes (48): XDDFPieChartData, CT_PlotArea, area3DChart, areaChart, bar3DChart, barChart, bubbleChart, catAx (+40 more)
-
-### Community 126 - "EncryptedDocumentException"
 Cohesion: 0.02
-Nodes (67): EncryptedDocumentException, FilePassRecord, DataSize, Sid, BinaryRC4EncryptionHeader, BinaryRC4EncryptionInfoBuilder, BinaryRC4EncryptionVerifier, BinaryRC4Encryptor (+59 more)
+Nodes (98): XDDFPieChartData, CT_Area3DChart, axId, dLbls, dropLines, extLst, gapDepth, grouping (+90 more)
+
+### Community 126 - "EncryptionInfo"
+Cohesion: 0.04
+Nodes (37): FilePassRecord, DataSize, Sid, BinaryRC4EncryptionHeader, BinaryRC4EncryptionInfoBuilder, BinaryRC4EncryptionVerifier, BinaryRC4CipherOutputStream, BinaryRC4Encryptor (+29 more)
 
 ### Community 127 - "ByteArrayOutputStream"
-Cohesion: 0.06
-Nodes (12): CryptoAPICipherInputStream, CryptoAPIDecryptor, SeekableMemoryStream, StreamDescriptorEntry, CipherByteArrayOutputStream, XORCipherOutputStream, ByteArrayOutputStream, CanRead (+4 more)
+Cohesion: 0.04
+Nodes (28): StreamDescriptorEntry, CipherByteArrayOutputStream, XORCipherOutputStream, FileMagic, BIFF2, BIFF3, BIFF4, HTML (+20 more)
 
 ### Community 128 - "CT_R"
 Cohesion: 0.02
-Nodes (44): CT_Empty, CT_FtnEdnRef, customMarkFollows, customMarkFollowsSpecified, DomNode, id, CT_Sym, @char (+36 more)
+Nodes (15): CT_Empty, CT_Sym, @char, font, CT_R, alternateContent, Items, ItemsElementName (+7 more)
 
 ### Community 129 - "EscherContainerRecord"
-Cohesion: 0.05
-Nodes (33): EscherBoolProperty, IsFalse, IsTrue, EscherClientDataRecord, RecordId, RecordName, RecordSize, RemainingData (+25 more)
+Cohesion: 0.04
+Nodes (47): AbstractEscherOptRecord, EscherProperties, PropertiesSize, RecordSize, EscherPropertyComparer, EscherBoolProperty, IsFalse, IsTrue (+39 more)
 
-### Community 130 - "CT_CellAlignment"
-Cohesion: 0.03
-Nodes (62): HorizontalAlignment, Center, CenterSelection, Distributed, Fill, General, Justify, Left (+54 more)
+### Community 130 - "XSSFCellStyle"
+Cohesion: 0.02
+Nodes (82): XSSFCellAlignment, Horizontal, Indent, ReadingOrder, ShrinkToFit, TextRotation, Vertical, WrapText (+74 more)
 
 ### Community 131 - "CT_MathPr"
 Cohesion: 0.05
@@ -1290,31 +1359,31 @@ Nodes (30): CT_DeletedField, name, CT_QueryTableDeletedFields, count, countSpeci
 
 ### Community 133 - "NPOI"
 Cohesion: 0.06
-Nodes (9): NPOI.XSSF.EventUserModel, NPOI.XSSF.Binary, NPOI.XSSF, NPOI.HPSF.Extractor, NPOI.OpenXml4Net, NPOI, OldFileFormatException, UnsupportedFileFormatException (+1 more)
+Nodes (6): NPOI.XSSF.Binary, NPOI.HSSF.Extractor, NPOI.HPSF.Extractor, NPOI.HSSF.EventUserModel.DummyRecord, NPOI, NPOI.HSSF.EventUserModel
 
 ### Community 134 - "system_linq"
-Cohesion: 0.04
-Nodes (9): NPOI.WP.UserModel, DocPartViewer, NPOI.POIFS.Crypt.XOR, NPOI.StyleViewer, XmlSerializationCodeGenerator, SingleValueAttribute, IsSingleValue, RemovalAttribute (+1 more)
+Cohesion: 0.02
+Nodes (9): NPOI.XWPF.UserModel, NPOI.OpenXmlFormats.Shared, NPOI.WP.UserModel, NPOI.XWPF.Model, NPOI.OpenXmlFormats.Dml.Picture, SingleValueAttribute, IsSingleValue, RemovalAttribute (+1 more)
 
-### Community 135 - "FreeRefFunction"
-Cohesion: 0.05
-Nodes (28): Ifs, MRound, RandBetween, AverageIf, BaseConvert, ErfFunction, Effect, Gcd (+20 more)
+### Community 135 - "XmlHelper"
+Cohesion: 0.04
+Nodes (36): XmlHelper, ST_CipherAlgorithm, AES, DES, DESX, Item3DES, Item3DES_112, RC2 (+28 more)
 
 ### Community 136 - "CT_PivotTableDefinition"
 Cohesion: 0.02
 Nodes (94): CT_PivotTableDefinition, applyAlignmentFormats, applyAlignmentFormatsSpecified, applyBorderFormats, applyBorderFormatsSpecified, applyFontFormats, applyFontFormatsSpecified, applyNumberFormats (+86 more)
 
 ### Community 137 - "XWPFRun"
-Cohesion: 0.03
-Nodes (54): IRunElement, VerticalAlign, BASELINE, SUBSCRIPT, SUPERSCRIPT, XWPFPicture, Height, Width (+46 more)
+Cohesion: 0.04
+Nodes (40): VerticalAlign, BASELINE, SUBSCRIPT, SUPERSCRIPT, XWPFRun, CharacterSpacing, Document, EmphasisMark (+32 more)
 
 ### Community 138 - "PackagePart"
 Cohesion: 0.02
-Nodes (55): TempFile, POIXMLDocument, CorePart, Package, POIXMLException, POIXMLProperties, CoreProperties, CustomProperties (+47 more)
+Nodes (64): POIXMLDocument, CorePart, Package, XSSFBHyperlinksTable, InvalidFormatException, OpenXml4NetException, OpenXML4NetRuntimeException, ContentTypeManager (+56 more)
 
-### Community 139 - "FormulaRecord"
+### Community 139 - "RecordFormatException"
 Cohesion: 0.02
-Nodes (84): SharedFormulaGroupComparator, SharedValueManager, ArrayRecord, ExtraDataSize, FormulaTokens, IsAlwaysRecalculate, IsCalculateOnOpen, Sid (+76 more)
+Nodes (99): FormulaRecordAggregate, Column, FormulaRecord, FormulaTokens, IsPartOfArrayFormula, RecordSize, Row, Sid (+91 more)
 
 ### Community 140 - "XWPFNumbering"
 Cohesion: 0.04
@@ -1322,19 +1391,19 @@ Nodes (37): MultiLevelType, HybridMultilevel, Multilevel, SingleLevel, XWPFAbstr
 
 ### Community 141 - "IHyperlink"
 Cohesion: 0.04
-Nodes (37): HSSFCreationHelper, ICreationHelper, HyperlinkType, Document, Email, File, Unknown, Url (+29 more)
+Nodes (43): HSSFCreationHelper, HSSFHyperlink, Address, FirstColumn, FirstRow, Label, LastColumn, LastRow (+35 more)
 
 ### Community 142 - "CT_TwoCellAnchor"
-Cohesion: 0.04
-Nodes (43): CT_AbsoluteCellAnchor, clientData, connector, ext, graphicFrame, groupShape, picture, pos (+35 more)
+Cohesion: 0.06
+Nodes (34): CT_AnchorClientData, fLocksWithSheet, fPrintsWithSheet, CT_OneCellAnchor, alternateContent, clientData, connector, ext (+26 more)
 
 ### Community 143 - "POIXMLDocumentPart"
-Cohesion: 0.04
-Nodes (25): Storage: a dynamic array is an array formula with cell metadata, POIXMLDocumentPart, Committed, NamespaceManager, RelationParts, RelationPart, DocumentPart, Relationship (+17 more)
-
-### Community 144 - "AreaEval"
 Cohesion: 0.02
-Nodes (78): AreaEval, FirstColumn, FirstRow, LastColumn, LastRow, IntersectionEval, NumericValueEval, NumberValue (+70 more)
+Nodes (56): POIXMLDocumentPart, Committed, NamespaceManager, RelationParts, RelationPart, DocumentPart, Relationship, POIXMLException (+48 more)
+
+### Community 144 - "DStarRunner"
+Cohesion: 0.04
+Nodes (50): NumericValueEval, NumberValue, DAverage, AllowEmptyMatchField, Result, DCount, AllowEmptyMatchField, Result (+42 more)
 
 ### Community 145 - "AutonumberScheme"
 Cohesion: 0.05
@@ -1344,145 +1413,137 @@ Nodes (42): AutonumberScheme, AlphabeticLowercaseParenthesesBoth, AlphabeticLowe
 Cohesion: 0.11
 Nodes (19): CT_Error, b, bc, c, cp, cpSpecified, f, fc (+11 more)
 
-### Community 147 - "XDDFTextParagraph"
-Cohesion: 0.03
-Nodes (49): TabAlignment, Center, Decimal, Left, Right, TabAlignmentExtensions, XDDFParagraphBulletProperties, BulletColor (+41 more)
+### Community 147 - "XDDFParagraphProperties"
+Cohesion: 0.06
+Nodes (20): TabAlignment, Center, Decimal, Left, Right, TabAlignmentExtensions, XDDFParagraphProperties, ExtensionList (+12 more)
 
-### Community 148 - "CT_DateAx"
-Cohesion: 0.02
-Nodes (65): AxisCrosses, AutoZero, Max, Min, AxisCrossesExtensions, AxisPosition, Bottom, Left (+57 more)
+### Community 148 - "CT_LineSer"
+Cohesion: 0.05
+Nodes (28): Series, XDDFLineChartData, CT_LineChart, axId, dLbls, dropLines, extLst, grouping (+20 more)
 
-### Community 149 - "CT_ScatterSer"
-Cohesion: 0.04
-Nodes (40): ScatterStyle, Line, LineMarker, Marker, None, Smooth, SmoothMarker, ScatterStyleExtensions (+32 more)
+### Community 149 - "CT_ScatterChart"
+Cohesion: 0.07
+Nodes (25): ScatterStyle, Line, LineMarker, Marker, None, Smooth, SmoothMarker, ScatterStyleExtensions (+17 more)
 
 ### Community 150 - "CT_OMathArg"
 Cohesion: 0.04
-Nodes (52): IRunBody, Document, Part, MathContainer, Accs, Document, Fs, Naries (+44 more)
+Nodes (55): IRunBody, Document, Part, MathContainer, Accs, Document, Fs, Naries (+47 more)
 
 ### Community 151 - "CT_ValAx"
 Cohesion: 0.04
-Nodes (36): AxisCrossBetween, Between, MidpointCategory, AxisCrossBetweenExtensions, XDDFValueAxis, CrossBetween, CT_CrossBetween, val (+28 more)
+Nodes (35): AxisCrossBetween, Between, MidpointCategory, AxisCrossBetweenExtensions, XDDFValueAxis, CrossBetween, CT_AxisUnit, val (+27 more)
 
 ### Community 152 - "ChunkedCipherInputStream"
-Cohesion: 0.10
-Nodes (6): ChunkedCipherInputStream, CanRead, CanSeek, CanWrite, Length, Position
+Cohesion: 0.07
+Nodes (7): Biff8DecryptingStream, ChunkedCipherInputStream, CanRead, CanSeek, CanWrite, Length, Position
 
-### Community 153 - "ZipPackage"
-Cohesion: 0.03
-Nodes (34): ZipSecurityException, NotOfficeXmlFileException, ODFNotOfficeXmlFileException, OLE2NotOfficeXmlFileException, FileHelper, ZipContentTypeManager, ZipHelper, ZipPackage (+26 more)
+### Community 153 - "Stream"
+Cohesion: 0.02
+Nodes (61): EscherDump, PropName, EmptyFileException, POIFSWriterListener, CloseIgnoringInputStream, CanRead, CanSeek, CanWrite (+53 more)
 
-### Community 154 - "LittleEndianByteArrayInputStream"
-Cohesion: 0.06
-Nodes (30): Array, ArrayDimension, ArrayHeader, NumberOfScalarValues, Type, Blob, ClipboardData, Value (+22 more)
+### Community 154 - ".SafelyAllocate"
+Cohesion: 0.08
+Nodes (21): Array, ArrayDimension, ArrayHeader, NumberOfScalarValues, Type, Blob, ClipboardData, Value (+13 more)
 
-### Community 155 - "SXSSFPicture"
+### Community 155 - "OneArg"
 Cohesion: 0.04
-Nodes (42): CompoundLineType, DoubleLines, None, SingleLine, ThickThin, ThinThick, TripleLines, LineEndingCapType (+34 more)
+Nodes (23): Degrees, Even, Exp, Int, Abs, Acos, Acosh, Asin (+15 more)
 
 ### Community 157 - "CT_TextListStyle"
 Cohesion: 0.08
 Nodes (12): CT_TextListStyle, defPPr, extLst, lvl1pPr, lvl2pPr, lvl3pPr, lvl4pPr, lvl5pPr (+4 more)
 
 ### Community 158 - "CT_ExternalLink"
-Cohesion: 0.04
-Nodes (40): CT_ExternalBook, definedNames, id, sheetDataSet, sheetNames, CT_ExternalDefinedName, name, refersTo (+32 more)
+Cohesion: 0.03
+Nodes (54): CT_ExternalBook, definedNames, id, sheetDataSet, sheetNames, CT_ExternalCell, r, t (+46 more)
 
 ### Community 159 - "CT_Arc"
-Cohesion: 0.04
-Nodes (50): CT_Arc, anchorlock, borderbottom, borderleft, borderright, bordertop, ClientData, endAngle (+42 more)
+Cohesion: 0.09
+Nodes (22): CT_Arc, anchorlock, borderbottom, borderleft, borderright, bordertop, ClientData, endAngle (+14 more)
 
 ### Community 160 - "CT_Style"
 Cohesion: 0.03
-Nodes (57): XWPFLatentStyles, NumberOfStyles, XWPFStyle, BasisStyleID, LinkStyleID, Name, NextStyleID, StyleId (+49 more)
+Nodes (64): XWPFDefaultParagraphStyle, SpacingAfter, XWPFDefaultRunStyle, FontSize, XWPFStyle, BasisStyleID, LinkStyleID, Name (+56 more)
 
-### Community 161 - "BATBlock"
-Cohesion: 0.07
-Nodes (21): BATManaged, CountBlocks, StartBlock, BATBlock, EntriesPerBlock, EntriesPerXBATBlock, HasFreeSectors, OurBlockIndex (+13 more)
+### Community 161 - "POIFSBigBlockSize"
+Cohesion: 0.04
+Nodes (33): POIFSBigBlockSize, POIFSConstants, BATManaged, CountBlocks, StartBlock, PropertyTable, CountBlocks, BATBlock (+25 more)
 
 ### Community 162 - "CT_CustomSheetView"
-Cohesion: 0.05
-Nodes (37): CT_CustomSheetView, autoFilter, colBreaks, colorId, extLst, filter, filterUnique, fitToPage (+29 more)
+Cohesion: 0.03
+Nodes (58): CT_CustomChartsheetView, guid, headerFooter, pageMargins, pageSetup, scale, state, zoomToFit (+50 more)
 
-### Community 163 - "CT_Inline"
-Cohesion: 0.06
-Nodes (30): CT_Drawing, anchor, inline, CT_Inline, cNvGraphicFramePr, distB, distBSpecified, distL (+22 more)
+### Community 163 - "XSSFSimpleShape"
+Cohesion: 0.04
+Nodes (37): TextAutofit, NONE, NORMAL, SHAPE, TextDirection, HORIZONTAL, None, STACKED (+29 more)
 
 ### Community 164 - "Section"
-Cohesion: 0.03
-Nodes (44): ClassID, Bytes, Length, HelperPropertySet, HPSFRuntimeException, IllegalPropertySetDataException, MissingSectionException, MutablePropertySet (+36 more)
+Cohesion: 0.07
+Nodes (14): MutableProperty, Property, ID, Type, Value, VariantName, Section, Codepage (+6 more)
 
 ### Community 165 - "CT_Shape"
 Cohesion: 0.03
-Nodes (53): XSSFVMLDrawing, CT_Shape, adj, anchorlock, borderbottom, borderleft, borderright, bordertop (+45 more)
+Nodes (52): CT_Shape, adj, anchorlock, borderbottom, borderleft, borderright, bordertop, ClientData (+44 more)
 
 ### Community 166 - "EscherRecord"
-Cohesion: 0.07
-Nodes (17): EscherRecord, ChildRecords, Instance, IsContainerRecord, Options, RecordId, RecordName, RecordSize (+9 more)
+Cohesion: 0.04
+Nodes (32): EscherPropertyFactory, DeleteEscherRecordHeader, Options, RecordId, RemainingBytes, EscherRecord, ChildRecords, Instance (+24 more)
 
 ### Community 167 - "CT_ManualLayout"
-Cohesion: 0.02
-Nodes (70): LayoutMode, Edge, Factor, LayoutModeExtensions, LayoutTarget, Inner, Outer, LayoutTargetExtensions (+62 more)
+Cohesion: 0.03
+Nodes (59): AxisOrientation, MaxMin, MinMax, AxisOrientationExtensions, LayoutMode, Edge, Factor, LayoutModeExtensions (+51 more)
 
-### Community 168 - "CT_Fill"
-Cohesion: 0.05
-Nodes (28): XSSFCellFill, CT_Fill, gradientFill, patternFill, CT_PatternFill, bgColor, fgColor, patternType (+20 more)
+### Community 168 - "XSSFBSheetHandler"
+Cohesion: 0.09
+Nodes (13): XSSFBComment, Address, Author, ClientAnchor, Column, Row, String, Visible (+5 more)
 
 ### Community 169 - "CT_Shapetype"
 Cohesion: 0.03
 Nodes (63): CT_Background, fill, fillcolor, filled, filledSpecified, id, CT_H, invx (+55 more)
 
-### Community 170 - "CT_ExtensionList"
-Cohesion: 0.03
-Nodes (74): CT_Extension, Any, uri, uriSpecified, CT_ExtensionList, ext, CT_RevisionSheetRename, extLst (+66 more)
+### Community 170 - "CT_SheetView"
+Cohesion: 0.04
+Nodes (43): CT_Pane, activePane, state, topLeftCell, xSplit, ySplit, CT_Selection, activeCell (+35 more)
 
-### Community 171 - "ObjRecord"
-Cohesion: 0.03
-Nodes (74): CommonObjectDataSubRecord, DataSize, IsAutoFill, IsAutoline, IsLocked, IsPrintable, ObjectId, ObjectType (+66 more)
+### Community 171 - "CommonObjectType"
+Cohesion: 0.06
+Nodes (32): CommonObjectType, Arc, Button, Chart, Checkbox, ComboBox, Comment, DialogBox (+24 more)
 
 ### Community 172 - "XSSFDialogsheet"
 Cohesion: 0.02
-Nodes (81): IDrawing, IFooter, IHeader, IShape, Anchor, CompoundLineType, CountOfAllChildren, FillColor (+73 more)
+Nodes (51): IAutoFilter, XSSFAutoFilter, XSSFDialogsheet, Autobreaks, ColumnBreaks, DefaultColumnWidth, DefaultRowHeight, DefaultRowHeightInPoints (+43 more)
 
 ### Community 173 - "CT_BlipFillProperties"
-Cohesion: 0.03
-Nodes (64): XDDFBulletStylePicture, XDDFPicture, XDDFPictureFillProperties, Dpi, IsRotatingWithShape, Picture, SourceRectangle, StretchInfoProperties (+56 more)
+Cohesion: 0.04
+Nodes (49): XDDFBulletStylePicture, XDDFPicture, XDDFPictureFillProperties, Dpi, IsRotatingWithShape, Picture, SourceRectangle, StretchInfoProperties (+41 more)
 
 ### Community 174 - "CT_GradientStop"
-Cohesion: 0.05
-Nodes (27): XDDFGradientFillProperties, IsRotatingWithShape, LinearShadeProperties, PathShadeProperties, TileFlipMode, TileRectangle, XDDFGradientStop, Color (+19 more)
+Cohesion: 0.06
+Nodes (19): XDDFGradientFillProperties, IsRotatingWithShape, LinearShadeProperties, PathShadeProperties, TileFlipMode, TileRectangle, XDDFGradientStop, Color (+11 more)
 
 ### Community 175 - "Property"
 Cohesion: 0.04
-Nodes (47): EntryNode, IsDeleteOK, IsDirectoryEntry, IsDocumentEntry, IsRoot, Name, Parent, Property (+39 more)
+Nodes (44): EntryNode, IsDeleteOK, IsDirectoryEntry, IsDocumentEntry, IsRoot, Name, Parent, Property (+36 more)
 
 ### Community 176 - ".Log"
 Cohesion: 0.07
-Nodes (12): HSSFUserException, EscherGraphics, Background, Clip, ClipBounds, Color, Font, WorkbookNotFoundException (+4 more)
+Nodes (11): HSSFUserException, EscherGraphics, Background, Clip, ClipBounds, Color, Font, POILogFactory (+3 more)
 
 ### Community 177 - "CT_CfRule"
 Cohesion: 0.02
-Nodes (85): IConditionFilterData, AboveAverage, Bottom, EqualAverage, Percent, Rank, StdDev, XSSFConditionFilterData (+77 more)
+Nodes (103): XSSFConditionFilterData, AboveAverage, Bottom, EqualAverage, Percent, Rank, StdDev, CT_IconFilter (+95 more)
 
 ### Community 178 - "CT_TextBodyProperties"
-Cohesion: 0.02
-Nodes (81): IXDDFAutoFit, FontScale, LineSpaceReduction, XDDFBodyProperties, Anchoring, AutoFit, BottomInset, ExtensionList (+73 more)
-
-### Community 179 - "HashAlgorithm"
-Cohesion: 0.05
-Nodes (10): CryptoFunctions, Mac, HashAlgorithm, XORCipherInputStream, XORDecryptor, XOREncryptionHeader, XOREncryptionInfoBuilder, XOREncryptionVerifier (+2 more)
-
-### Community 180 - "StringEval"
-Cohesion: 0.05
-Nodes (25): BoolEval, BooleanValue, NumberValue, StringValue, StringEval, StringValue, StringValueEval, StringValue (+17 more)
+Cohesion: 0.03
+Nodes (49): CT_TextBodyProperties, anchor, anchorCtr, anchorCtrSpecified, anchorSpecified, bIns, bInsSpecified, compatLnSpc (+41 more)
 
 ### Community 181 - "CT_PPrBase"
 Cohesion: 0.03
-Nodes (73): CT_PPrBase, adjustRightInd, autoSpaceDE, autoSpaceDN, bidi, cnfStyle, contextualSpacing, divId (+65 more)
+Nodes (58): CT_NumPr, ilvl, ins, numberingChange, numId, CT_TrackChangeNumbering, original, CT_PPrBase (+50 more)
 
-### Community 182 - "XSSFConditionalFormattingRule"
+### Community 182 - "IBorderFormatting"
 Cohesion: 0.02
-Nodes (105): FontFormatting, HSSFFontFormatting, EscapementType, FontColor, FontColorIndex, FontHeight, FontWeight, IsBold (+97 more)
+Nodes (79): PatternFormatting, HSSFPatternFormatting, FillBackgroundColor, FillBackgroundColorColor, FillForegroundColor, FillForegroundColorColor, FillPattern, PatternFormattingBlock (+71 more)
 
 ### Community 183 - "CT_RadarSer"
 Cohesion: 0.05
@@ -1490,23 +1551,23 @@ Nodes (31): RadarStyle, Filled, Marker, Standard, RadarStyleExtensions, Series, 
 
 ### Community 184 - "CT_Stylesheet"
 Cohesion: 0.04
-Nodes (51): StyleSheetDocument, CT_Borders, border, count, countSpecified, CT_CellStyleXfs, count, countSpecified (+43 more)
+Nodes (44): CT_Borders, border, count, countSpecified, CT_CellStyleXfs, count, countSpecified, xf (+36 more)
 
 ### Community 185 - "XDDFCustomGeometry2D"
-Cohesion: 0.14
-Nodes (10): XDDFCustomGeometry2D, Rectangle, XDDFGeometryGuide, Formula, Name, CT_GeomGuide, fmla, name (+2 more)
+Cohesion: 0.05
+Nodes (34): XDDFConnectionSite, XDDFCustomGeometry2D, Rectangle, XDDFGeometryGuide, Formula, Name, XDDFGeometryRectangle, XDDFPresetGeometry2D (+26 more)
 
 ### Community 186 - "CT_PivotField"
 Cohesion: 0.03
-Nodes (66): CT_AutoSortScope, pivotArea, CT_PivotField, allDrilled, autoShow, autoSortScope, avgSubtotal, axis (+58 more)
+Nodes (64): CT_PivotField, allDrilled, autoShow, autoSortScope, avgSubtotal, axis, axisSpecified, compact (+56 more)
 
 ### Community 187 - "ByteBuffer"
 Cohesion: 0.04
 Nodes (33): Follow-up #106: POIFS streaming/append write, Follow-up #107: HPSF bounded reads/types, Follow-up #108: HSSF record parsing gaps, Follow-up #109: OPC zip-bomb protection, Follow-up #110: Formula eval gaps, Follow-up #111: XSSF/SXSSF gaps, Follow-up #112: XWPF gaps, Kept: behavior / correctness question (low-medium, upstream POI parity) (+25 more)
 
 ### Community 188 - ".Write"
-Cohesion: 0.15
-Nodes (9): CT_SdtCell, sdtContent, sdtEndPr, sdtPr, CT_SdtContentCell, Items, ItemsElementName, CT_AltChunkPr (+1 more)
+Cohesion: 0.10
+Nodes (7): CT_SdtCell, sdtContent, sdtEndPr, sdtPr, CT_SdtContentCell, Items, ItemsElementName
 
 ### Community 189 - "CT_Stroke"
 Cohesion: 0.04
@@ -1516,17 +1577,17 @@ Nodes (53): CT_Stroke, color, color2, dashstyle, endarrow, endarrowlength, endar
 Cohesion: 0.03
 Nodes (68): ItemsChoiceType, Accel, Accel2, Anchor, AutoFill, AutoLine, AutoPict, AutoScale (+60 more)
 
-### Community 191 - "XSSFEventBasedExcelExtractor"
-Cohesion: 0.09
-Nodes (17): IExcelExtractor, AddTabEachEmptyCell, FormulasNotResults, IncludeCellComments, IncludeHeadersFooters, IncludeSheetNames, Text, XSSFBEventBasedExcelExtractor (+9 more)
+### Community 191 - "CT_BarSer"
+Cohesion: 0.05
+Nodes (33): Series, CT_BarSer, cat, dLbls, dPt, errBars, extLst, idx (+25 more)
 
-### Community 192 - "EvaluationConditionalFormatRule"
-Cohesion: 0.06
-Nodes (22): EvaluationConditionalFormatRule, Formatting, FormattingIndex, Formula1, Formula2, NumberFormat, Operator, Priority (+14 more)
+### Community 192 - ".Write"
+Cohesion: 0.07
+Nodes (14): CodePageString, Size, NoFormatIDException, ReadingNotSupportedException, TypeWriter, UnicodeString, Value, UnsupportedEncodingException (+6 more)
 
-### Community 193 - "ArrayList"
-Cohesion: 0.04
-Nodes (41): ICharacterRun, CharacterSpacing, FontName, FontSize, IsBold, IsCapitalized, IsDoubleStrikeThrough, IsEmbossed (+33 more)
+### Community 193 - "XWPFSharedRun"
+Cohesion: 0.05
+Nodes (31): FontCharRange, Ascii, CS, EastAsia, HAnsi, None, XWPFSharedRun, CharacterSpacing (+23 more)
 
 ### Community 194 - "CT_ExtendedProperties"
 Cohesion: 0.03
@@ -1536,17 +1597,17 @@ Nodes (48): CT_DigSigBlob, blob, CT_ExtendedProperties, Application, AppVersion,
 Cohesion: 0.03
 Nodes (67): ST_PivotFilterType, captionBeginsWith, captionBetween, captionContains, captionEndsWith, captionEqual, captionGreaterThan, captionGreaterThanOrEqual (+59 more)
 
-### Community 196 - "HSSFShapeGroup"
-Cohesion: 0.06
-Nodes (20): HSSFChildAnchor, Dx1, Dx2, Dy1, Dy2, IsHorizontallyFlipped, IsVerticallyFlipped, HSSFPolygon (+12 more)
+### Community 196 - "HSSFChildAnchor"
+Cohesion: 0.09
+Nodes (12): HSSFChildAnchor, Dx1, Dx2, Dy1, Dy2, IsHorizontallyFlipped, IsVerticallyFlipped, HSSFPolygon (+4 more)
 
 ### Community 197 - "SystemColor"
 Cohesion: 0.03
 Nodes (63): SystemColor, ActiveBorder, ActiveCaption, ApplicationWorkspace, Background, ButtonFace, ButtonHighlight, ButtonShadow (+55 more)
 
 ### Community 198 - "CT_Chartsheet"
-Cohesion: 0.05
-Nodes (37): XSSFChartSheet, ChartsheetDocument, CT_Chartsheet, customSheetViews, drawing, extLst, headerFooter, legacyDrawing (+29 more)
+Cohesion: 0.06
+Nodes (30): XSSFChartSheet, ChartsheetDocument, CT_Chartsheet, customSheetViews, drawing, extLst, headerFooter, legacyDrawing (+22 more)
 
 ### Community 199 - "CT_R"
 Cohesion: 0.06
@@ -1556,9 +1617,9 @@ Nodes (32): CT_Proxy, connectloc, connectlocSpecified, end, endSpecified, idref,
 Cohesion: 0.03
 Nodes (66): CT_Compat, adjustLineHeightInTable, alignTablesRowByRow, allowSpaceOfSameStyleInTable, applyBreakingRules, autofitToFirstFixedWidthCell, autoSpaceLikeWord95, balanceSingleByteDoubleByteWidth (+58 more)
 
-### Community 201 - "CFRule12Record"
-Cohesion: 0.03
-Nodes (58): ColorGradientFormatting, Colors, DataLength, IsAppliesToBackground, IsClampToCurve, NumControlPoints, Thresholds, ColorGradientThreshold (+50 more)
+### Community 201 - "DataBarFormatting"
+Cohesion: 0.09
+Nodes (18): DataBarFormatting, Color, DataLength, IsIconOnly, IsReversed, PercentMax, PercentMin, ThresholdMax (+10 more)
 
 ### Community 202 - "ST_ConstraintType"
 Cohesion: 0.03
@@ -1570,11 +1631,11 @@ Nodes (80): ST_Ext, backwardCompatible, edit, NONE, view, CT_ColorMenu, ext, ext
 
 ### Community 204 - "CellReference"
 Cohesion: 0.03
-Nodes (51): SharedFormulaGroup, FirstCell, SFR, SpreadsheetVersion, DefaultExtension, LastColumnIndex, LastColumnName, LastRowIndex (+43 more)
+Nodes (32): SpreadsheetVersion, DefaultExtension, LastColumnIndex, LastColumnName, LastRowIndex, MaxCellStyles, MaxColumns, MaxConditionalFormats (+24 more)
 
 ### Community 205 - "EscherAggregate"
-Cohesion: 0.05
-Nodes (18): DrawingManager2, Dgg, EscherAggregate, Patriarch, RecordName, RecordSize, Sid, TailRecords (+10 more)
+Cohesion: 0.06
+Nodes (13): EscherAggregate, Patriarch, RecordName, RecordSize, Sid, TailRecords, HSSFShapeContainer, Children (+5 more)
 
 ### Community 206 - "Func"
 Cohesion: 0.07
@@ -1593,172 +1654,172 @@ Cohesion: 0.18
 Nodes (11): CT_WebPublishObject, autoRepublish, destinationFile, divId, id, sourceObject, title, CT_WebPublishObjects (+3 more)
 
 ### Community 210 - ".PutShort"
-Cohesion: 0.15
-Nodes (4): EscherSerializationListener, NullEscherSerializationListener, ShortField, Value
+Cohesion: 0.13
+Nodes (8): EscherSerializationListener, DrawingGroupRecord, RawDataSize, RecordName, RecordSize, Sid, ShortField, Value
 
 ### Community 211 - "ColumnInfoRecordsAggregate"
-Cohesion: 0.08
+Cohesion: 0.07
 Nodes (19): CIRComparator, ColumnInfoRecordsAggregate, MaxColumnIndex, MaxOutlineLevel, MinColumnIndex, NumColumns, RecordSize, Sid (+11 more)
 
 ### Community 212 - "CT_ShapeProperties"
 Cohesion: 0.04
-Nodes (40): BlackWhiteMode, Auto, Black, BlackGray, BlackWhite, BlackWhiteModeExtensions, XDDFShapeProperties, ST_BlackWhiteMode (+32 more)
+Nodes (41): BlackWhiteMode, Auto, Black, BlackGray, BlackWhite, BlackWhiteModeExtensions, IHasShapeProperties, XDDFShapeProperties (+33 more)
 
-### Community 213 - "CT_Cfvo"
-Cohesion: 0.04
-Nodes (47): XSSFConditionalFormattingThreshold, CTCfvo, Formula, RangeType, Value, XSSFDataBarFormatting, Color, IsIconOnly (+39 more)
+### Community 213 - "CT_GradientFill"
+Cohesion: 0.14
+Nodes (12): CT_GradientFill, bottom, degree, left, right, stop, top, type (+4 more)
 
 ### Community 214 - "CT_PivotCacheDefinition"
 Cohesion: 0.05
-Nodes (39): CT_CalculatedItems, calculatedItem, count, countSpecified, CT_PivotCacheDefinition, backgroundQuery, cacheFields, cacheHierarchies (+31 more)
+Nodes (36): XSSFPivotCacheDefinition, CT_PivotCacheDefinition, backgroundQuery, cacheFields, cacheHierarchies, cacheSource, calculatedItems, calculatedMembers (+28 more)
 
 ### Community 215 - "CT_Anchor"
-Cohesion: 0.03
-Nodes (78): CT_Anchor, allowOverlap, behindDoc, cNvGraphicFramePr, distB, distBSpecified, distL, distLSpecified (+70 more)
+Cohesion: 0.02
+Nodes (89): CT_GraphicalObject, graphicData, CT_Anchor, allowOverlap, behindDoc, cNvGraphicFramePr, distB, distBSpecified (+81 more)
 
-### Community 216 - "LogicalFunction"
-Cohesion: 0.11
-Nodes (9): Isblank, Iserr, Iserror, Islogical, Isna, Isnontext, Isnumber, Istext (+1 more)
-
-### Community 217 - "ParagraphAlignment"
+### Community 216 - "CultureInfo"
 Cohesion: 0.07
-Nodes (27): EnumConverter, ParagraphAlignment, BOTH, CENTER, DISTRIBUTE, END, HIGH_KASHIDA, LEFT (+19 more)
+Nodes (10): CellFormatter, DateCellFormatType, ElapsedCellFormatType, GeneralCellFormatType, NumberCellFormatType, TextCellFormatType, CellGeneralFormatter, DateFormatConverter (+2 more)
+
+### Community 217 - "StringBuilder"
+Cohesion: 0.07
+Nodes (6): GeneralNumberFormatter, CellTextFormatter, PhoneFormat, SSNFormat, ZipPlusFourFormat, SheetTextExtractor
 
 ### Community 218 - "NumberFormat"
 Cohesion: 0.03
 Nodes (61): NumberFormat, Aiueo, AiueoFullWidth, ArabicAbjad, ArabicAlpha, Bullet, CardinalText, Chicago (+53 more)
 
-### Community 219 - "CT_Extension"
-Cohesion: 0.02
-Nodes (81): CT_BubbleChart, axId, bubble3D, bubbleScale, dLbls, extLst, ser, showNegBubbles (+73 more)
+### Community 219 - "CT_BubbleSer"
+Cohesion: 0.06
+Nodes (32): CT_BubbleChart, axId, bubble3D, bubbleScale, dLbls, extLst, ser, showNegBubbles (+24 more)
 
 ### Community 220 - "ST_NumberFormat"
 Cohesion: 0.03
 Nodes (61): ST_NumberFormat, aiueo, aiueoFullWidth, arabicAbjad, arabicAlpha, bullet, cardinalText, chicago (+53 more)
 
-### Community 221 - "LittleEndianByteArrayOutputStream"
-Cohesion: 0.10
-Nodes (4): DelayableLittleEndianOutput1, IDelayableLittleEndianOutput, LittleEndianByteArrayOutputStream, WriteIndex
+### Community 221 - "DocumentInputStream"
+Cohesion: 0.08
+Nodes (6): PropertySetFactory, SeekableMemoryStream, DocumentInputStream, Length, Position, LittleEndianInputStream
 
-### Community 222 - "CT_GroupShape"
-Cohesion: 0.03
-Nodes (75): XDDFPoint2D, X, Y, XDDFPositiveSize2D, X, Y, XDDFTransform2D, Extension (+67 more)
+### Community 222 - "CT_Transform2D"
+Cohesion: 0.04
+Nodes (49): XDDFPoint2D, X, Y, XDDFPositiveSize2D, X, Y, XDDFTransform2D, Extension (+41 more)
 
 ### Community 223 - "ItemsChoiceType13"
 Cohesion: 0.04
-Nodes (45): XWPFFieldRun, FieldInstruction, CT_SimpleField, dirty, dirtySpecified, fldData, fldLock, fldLockSpecified (+37 more)
+Nodes (43): CT_SimpleField, dirty, dirtySpecified, fldData, fldLock, fldLockSpecified, instr, Items (+35 more)
 
 ### Community 225 - "CT_Extrusion"
 Cohesion: 0.03
 Nodes (60): CT_Extrusion, autorotationcenter, autorotationcenterSpecified, backdepth, brightness, color, colormode, colormodeSpecified (+52 more)
 
-### Community 226 - "HSSFConditionalFormattingRule"
-Cohesion: 0.03
-Nodes (81): HSSFColorScaleFormatting, Colors, NumControlPoints, Thresholds, HSSFConditionalFormattingRule, BorderFormatting, CfRuleRecord, ColorScaleFormatting (+73 more)
+### Community 226 - "IConditionalFormattingThreshold"
+Cohesion: 0.02
+Nodes (92): HSSFColorScaleFormatting, Colors, NumControlPoints, Thresholds, HSSFConditionalFormattingThreshold, Formula, RangeType, Threshold (+84 more)
 
 ### Community 227 - ".AddColLabel"
-Cohesion: 0.09
-Nodes (15): DataConsolidateFunction, Name, Value, CT_ColFields, count, field, CT_Field, x (+7 more)
+Cohesion: 0.11
+Nodes (11): DataConsolidateFunction, Name, Value, CT_ColFields, count, field, CT_Field, x (+3 more)
 
 ### Community 228 - "CT_TileInfoProperties"
 Cohesion: 0.07
 Nodes (31): TileFlipMode, None, X, Xy, Y, TileFlipModeExtensions, XDDFTileInfoProperties, Alignment (+23 more)
 
-### Community 229 - "PaletteRecord"
-Cohesion: 0.10
-Nodes (9): PaletteRecord, DataSize, NumColors, Sid, PColor, CustomColor, Indexed, HSSFPalette (+1 more)
+### Community 229 - "HSSFPalette"
+Cohesion: 0.27
+Nodes (3): CustomColor, Indexed, HSSFPalette
 
 ### Community 230 - "CT_NonVisualDrawingProps"
-Cohesion: 0.05
-Nodes (37): XSSFChart, TitleFormula, TitleText, XSSFGraphicFrame, Anchor, Id, ID, Name (+29 more)
+Cohesion: 0.06
+Nodes (28): XSSFGraphicFrame, Anchor, Id, ID, Name, ShapeName, CT_GraphicalObjectFrame, fPublished (+20 more)
 
 ### Community 231 - "CT_SectPr"
 Cohesion: 0.04
 Nodes (45): CT_HdrFtrRef, type, CT_PageMar, bottom, footer, gutter, header, left (+37 more)
 
-### Community 232 - "CT_Odso"
-Cohesion: 0.04
-Nodes (51): CT_Lang, val, CT_RubyAlign, val, CT_RubyPr, dirty, hps, hpsBaseText (+43 more)
+### Community 232 - "ST_MailMergeSourceType"
+Cohesion: 0.17
+Nodes (12): CT_MailMergeSourceType, val, ST_MailMergeSourceType, addressBook, database, document1, document2, email (+4 more)
 
 ### Community 233 - "CT_SectPrBase"
 Cohesion: 0.04
 Nodes (54): CT_PaperSource, first, other, CT_SectType, val, valSpecified, ST_SectionMark, continuous (+46 more)
 
 ### Community 234 - "NPOIFSFileSystem"
-Cohesion: 0.09
-Nodes (11): ChainLoopDetector, NPOIFSFileSystem, Data, PreferArray, PropertyTable, Root, ShortDescription, Size (+3 more)
+Cohesion: 0.08
+Nodes (12): NPOIFSFileSystem, Data, PreferArray, PropertyTable, Root, ShortDescription, Size, ViewableArray (+4 more)
 
 ### Community 235 - "IEnumerator"
 Cohesion: 0.03
-Nodes (34): RowMajorCellAddressEnumerator, Current, ArrayIterator, Current, SSCellRange, Cells, FlattenedCells, Height (+26 more)
+Nodes (24): RowMajorCellAddressEnumerator, Current, CellIterator, Current, FilledCellIterator, Current, SXSSFRow, Cells (+16 more)
 
 ### Community 236 - "DocumentSummaryInformation"
 Cohesion: 0.03
-Nodes (59): DocumentSummaryInformation, ApplicationVersion, ByteCount, Category, CharCountWithSpaces, Company, ContentStatus, ContentType (+51 more)
+Nodes (47): DocumentSummaryInformation, ApplicationVersion, ByteCount, Category, CharCountWithSpaces, Company, ContentStatus, ContentType (+39 more)
 
-### Community 237 - "CT_Row"
-Cohesion: 0.04
-Nodes (42): CT_Row, Items, ItemsElementName, NamespaceManager, Parent, rsidDel, rsidR, rsidRPr (+34 more)
+### Community 237 - "PropertySet"
+Cohesion: 0.06
+Nodes (21): HPSFRuntimeException, IllegalPropertySetDataException, MissingSectionException, MutablePropertySet, MutableSection, NoSingleSectionException, PropertySet, ByteOrder (+13 more)
 
-### Community 238 - "CT_Scene3D"
-Cohesion: 0.07
-Nodes (29): XDDFScene3D, CT_SphereCoords, lat, lon, rev, CT_Camera, fov, fovSpecified (+21 more)
+### Community 238 - "CT_LightRig"
+Cohesion: 0.11
+Nodes (18): CT_LightRig, dir, rig, rot, ST_LightRigDirection, b, bl, br (+10 more)
 
 ### Community 239 - "IConditionalFormattingRule"
-Cohesion: 0.04
-Nodes (40): HSSFConditionalFormatting, CFRecordsAggregate, NumberOfRules, HSSFSheetConditionalFormatting, NumConditionalFormattings, ComparisonOperator, Between, Equal (+32 more)
+Cohesion: 0.02
+Nodes (91): HSSFConditionalFormatting, CFRecordsAggregate, NumberOfRules, HSSFConditionalFormattingRule, BorderFormatting, CfRuleRecord, ColorScaleFormatting, ComparisonOperation (+83 more)
 
-### Community 240 - "TwoDEval"
+### Community 240 - "AreaEval"
 Cohesion: 0.03
-Nodes (52): NotFoundAreaEval, FirstColumn, FirstRow, FirstSheetIndex, Height, IsColumn, IsRow, LastColumn (+44 more)
+Nodes (55): AreaEval, FirstColumn, FirstRow, LastColumn, LastRow, IntersectionEval, RangeEval, AverageIfs (+47 more)
 
 ### Community 241 - "XSSFTable"
-Cohesion: 0.07
-Nodes (19): XSSFTable, CellReferences, ColumnCount, DisplayName, EndCellReference, EndColIndex, EndRowIndex, HeaderRowCount (+11 more)
+Cohesion: 0.05
+Nodes (35): XSSFXmlColumnPr, Id, LocalXPath, MapId, XPath, XSSFTable, CellReferences, ColumnCount (+27 more)
 
 ### Community 242 - "NPOI.HSSF.Model"
-Cohesion: 0.06
-Nodes (5): NPOI.HSSF.Record.Aggregates.Chart, NPOI.HSSF.EventUserModel.DummyRecord, NPOI.HSSF.Record.Aggregates, NPOI.HSSF.Model, NPOI.HSSF.EventUserModel
+Cohesion: 0.08
+Nodes (3): NPOI.HSSF.Record.Aggregates.Chart, NPOI.HSSF.Record.Aggregates, NPOI.HSSF.Model
 
 ### Community 243 - "EscherDggRecord"
-Cohesion: 0.09
-Nodes (16): EscherDggRecord, DrawingsSaved, FileIdClusters, MaxDrawingGroupId, NumIdClusters, NumShapesSaved, RecordId, RecordName (+8 more)
+Cohesion: 0.06
+Nodes (25): EscherDggRecord, DrawingsSaved, FileIdClusters, MaxDrawingGroupId, NumIdClusters, NumShapesSaved, RecordId, RecordName (+17 more)
 
 ### Community 244 - "HSSFClientAnchor"
-Cohesion: 0.08
-Nodes (19): HSSFAnchor, Dx1, Dx2, Dy1, Dy2, IsHorizontallyFlipped, IsVerticallyFlipped, HSSFClientAnchor (+11 more)
-
-### Community 245 - "XSSFDrawing"
 Cohesion: 0.04
-Nodes (34): IChildAnchor, Dx1, Dx2, Dy1, Dy2, SXSSFDrawing, XSSFAnchor, Dx1 (+26 more)
+Nodes (42): EscherChildAnchorRecord, Dx1, Dx2, Dy1, Dy2, RecordId, RecordName, RecordSize (+34 more)
 
-### Community 246 - "CT_Title"
+### Community 245 - "XSSFShape"
 Cohesion: 0.06
-Nodes (19): XDDFTitle, Body, CT_Title, extLst, layout, overlay, spPr, tx (+11 more)
+Nodes (30): IChildAnchor, Dx1, Dx2, Dy1, Dy2, LineEndingCapType, Flat, None (+22 more)
 
-### Community 247 - "CT_DefinedName"
-Cohesion: 0.08
-Nodes (21): CT_DefinedName, comment, customMenu, description, function, functionGroupId, functionGroupIdSpecified, help (+13 more)
+### Community 246 - "CT_TextBody"
+Cohesion: 0.03
+Nodes (45): XDDFTitle, Body, CT_DispUnitsLbl, layout, spPr, tx, txPr, CT_DTable (+37 more)
+
+### Community 247 - "CustomProperties"
+Cohesion: 0.07
+Nodes (7): CustomProperties, Count, IsEmpty, IsPure, Size, CustomProperty, Name
 
 ### Community 248 - "ST_ParameterId"
-Cohesion: 0.04
-Nodes (56): ST_ParameterId, alignTx, ar, autoTxRot, begPts, begSty, bendPt, bkpt (+48 more)
+Cohesion: 0.03
+Nodes (75): CT_Algorithm, extLst, param, rev, type, CT_Parameter, type, val (+67 more)
 
 ### Community 249 - "ByteArrayInputStream"
 Cohesion: 0.06
 Nodes (14): CA2000 / CA1001 findings reviewed (NPOI.Core, net10.0: 44 unique), IDisposable / using audit (task #39), Other sites found by the sweep, CipherInputStream, NullCipher, StandardCipherOutputStream, BoundedInputStream, IsPropagateClose (+6 more)
 
 ### Community 250 - "IClientAnchor"
-Cohesion: 0.06
-Nodes (26): HSSFPicture, ClientAnchor, FileName, PictureData, PictureIndex, ShapeType, Sheet, AnchorType (+18 more)
+Cohesion: 0.03
+Nodes (75): HSSFPicture, ClientAnchor, FileName, PictureData, PictureIndex, ShapeType, Sheet, AnchorType (+67 more)
 
 ### Community 251 - "PresetPattern"
 Cohesion: 0.04
 Nodes (55): PresetPattern, Cross, DarkDownwardDiagonal, DarkHorizontal, DarkUpwardDiagonal, DarkVertical, DashDownwardDiagonal, DashHorizontal (+47 more)
 
 ### Community 252 - "CT_Workbook"
-Cohesion: 0.06
-Nodes (26): CT_Workbook, bookViews, calcPr, customWorkbookViews, definedNames, externalReferences, extLst, fileRecoveryPr (+18 more)
+Cohesion: 0.04
+Nodes (39): WorkbookDocument, Workbook, CT_Workbook, bookViews, calcPr, customWorkbookViews, definedNames, externalReferences (+31 more)
 
 ### Community 253 - "ST_PresetPatternVal"
 Cohesion: 0.04
@@ -1774,35 +1835,35 @@ Nodes (9): CT_Attr, name, uri, val, CT_CustomXmlPr, attr, placeholder, CT_SmartT
 
 ### Community 256 - "POIFSDocumentPath"
 Cohesion: 0.09
-Nodes (19): POIFSReader, POIFSReaderEvent, Name, Path, Stream, POIFSReaderEventArgs, Document, Name (+11 more)
+Nodes (18): POIFSReader, POIFSReaderEventArgs, Document, Name, Path, Stream, POIFSReaderListener, POIFSReaderRegistry (+10 more)
 
-### Community 257 - "SXSSFEvaluationCell"
-Cohesion: 0.08
-Nodes (19): SXSSFEvaluationCell, ArrayFormulaRange, BooleanCellValue, CachedFormulaResultType, CellType, CellTypeEnum, ColumnIndex, ErrorCellValue (+11 more)
+### Community 257 - "AttrPtg"
+Cohesion: 0.05
+Nodes (33): AttrPtg, ChooseFuncOffset, Data, IsBaxcel, IsOptimizedChoose, IsOptimizedIf, IsSemiVolatile, IsSkip (+25 more)
 
 ### Community 258 - "HyperlinkRecord"
-Cohesion: 0.05
-Nodes (35): HyperlinkRecord, Address, DataSize, FileOptions, FirstColumn, FirstRow, Guid, IsDocumentLink (+27 more)
+Cohesion: 0.07
+Nodes (25): HyperlinkRecord, Address, DataSize, FileOptions, FirstColumn, FirstRow, Guid, IsDocumentLink (+17 more)
 
 ### Community 259 - "CT_StyleMatrixReference"
-Cohesion: 0.05
-Nodes (41): ST_FontCollectionIndex, major, minor, none, CT_FontReference, hslClr, idx, prstClr (+33 more)
+Cohesion: 0.06
+Nodes (30): ST_FontCollectionIndex, major, minor, none, CT_FontReference, hslClr, idx, prstClr (+22 more)
 
 ### Community 260 - "SharedStringsTable"
-Cohesion: 0.06
-Nodes (24): ReadOnlySharedStringsTable, Count, Items, UniqueCount, SharedStringsTable, Count, IsLoaded, Items (+16 more)
+Cohesion: 0.09
+Nodes (16): SharedStringsTable, Count, IsLoaded, Items, SharedStringItems, UniqueCount, UseDirectWrite, UseXmlReader (+8 more)
 
 ### Community 261 - "ST_TableStyleType"
 Cohesion: 0.04
 Nodes (47): CT_TableStyle, count, countSpecified, name, pivot, table, tableStyleElement, CT_TableStyleElement (+39 more)
 
 ### Community 262 - "OPOIFSDocument"
-Cohesion: 0.07
-Nodes (23): POIFSViewable, PreferArray, ShortDescription, ViewableArray, ViewableIterator, BigBlockStore, Blocks, CountBlocks (+15 more)
+Cohesion: 0.05
+Nodes (32): POIFSViewable, PreferArray, ShortDescription, ViewableArray, ViewableIterator, DocumentNode, Document, IsDeleteOK (+24 more)
 
 ### Community 264 - "ItemsChoiceType1"
-Cohesion: 0.03
-Nodes (61): CT_Sources, SelectedStyle, Source, StyleName, URI, CT_SourceType, Items, ItemsElementName (+53 more)
+Cohesion: 0.04
+Nodes (53): ItemsChoiceType1, AbbreviatedCaseNumber, AlbumTitle, Author, BookTitle, Broadcaster, BroadcastTitle, CaseNumber (+45 more)
 
 ### Community 265 - "CT_StrokeChild"
 Cohesion: 0.03
@@ -1812,65 +1873,65 @@ Nodes (60): ST_StrokeArrowType, block, classic, diamond, none, open, oval, ST_St
 Cohesion: 0.08
 Nodes (25): CT_Lock, adjusthandles, adjusthandlesSpecified, aspectratio, aspectratioSpecified, cropping, croppingSpecified, ext (+17 more)
 
-### Community 267 - "HSSFCellStyle"
-Cohesion: 0.02
-Nodes (103): ExtendedFormatRecord, _123Prefix, AdtlDiagBorderPaletteIdx, AdtlDiagLineStyle, AdtlFillPattern, AdtlPaletteOptions, Alignment, AlignmentOptions (+95 more)
+### Community 267 - "ExtendedFormatRecord"
+Cohesion: 0.04
+Nodes (47): ExtendedFormatRecord, _123Prefix, AdtlDiagBorderPaletteIdx, AdtlDiagLineStyle, AdtlFillPattern, AdtlPaletteOptions, Alignment, AlignmentOptions (+39 more)
 
-### Community 268 - "CT_TblBorders"
+### Community 268 - "ICellRange"
+Cohesion: 0.07
+Nodes (18): ICellRange, Cells, FlattenedCells, Height, ReferenceText, Size, TopLeftCell, Width (+10 more)
+
+### Community 269 - "ThemesTable"
 Cohesion: 0.09
-Nodes (11): CT_TblBorders, bottom, insideH, insideV, left, right, top, CT_TblPr (+3 more)
-
-### Community 269 - "XSSFColor"
-Cohesion: 0.05
-Nodes (19): ThemesTable, CustomIndexedColorMap, IIndexedColorMap, XSSFColor, ARGB, HasAlpha, HasTint, Index (+11 more)
+Nodes (10): ThemesTable, CustomIndexedColorMap, IIndexedColorMap, ThemeDocument, CT_Colors, indexedColors, mruColors, CT_RgbColor (+2 more)
 
 ### Community 270 - "CT_Table"
-Cohesion: 0.05
-Nodes (37): TableDocument, CT_Table, autoFilter, comment, connectionId, connectionIdSpecified, dataCellStyle, dataDxfId (+29 more)
+Cohesion: 0.04
+Nodes (50): CT_Table, autoFilter, comment, connectionId, connectionIdSpecified, dataCellStyle, dataDxfId, dataDxfIdSpecified (+42 more)
 
 ### Community 271 - "CT_TupleCache"
 Cohesion: 0.07
-Nodes (24): CT_PCDSDTCEntries, count, countSpecified, Items, CT_Query, mdx, tpls, CT_QueryCache (+16 more)
+Nodes (28): CT_PCDSDTCEntries, count, countSpecified, Items, CT_Query, mdx, tpls, CT_QueryCache (+20 more)
 
 ### Community 272 - "CT_LineEndProperties"
 Cohesion: 0.09
 Nodes (26): LineEndLength, Large, Medium, Small, LineEndLengthExtensions, LineEndWidth, Large, Medium (+18 more)
 
 ### Community 273 - "ItemsChoiceType19"
-Cohesion: 0.03
-Nodes (64): T, TOC, CT_SdtBlock, sdtContent, sdtEndPr, sdtPr, CT_SdtContentBlock, Items (+56 more)
+Cohesion: 0.06
+Nodes (33): CT_SdtContentBlock, Items, ItemsElementName, ItemsChoiceType19, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart (+25 more)
 
-### Community 274 - "SheetDataWriter"
-Cohesion: 0.05
-Nodes (34): Fixed in this PR, HPSFPropertiesExtractor, DocumentSummaryInformationText, MetadataTextExtractor, SummaryInformationText, Text, ExcelExtractor, AddTabEachEmptyCell (+26 more)
+### Community 274 - "POIXMLProperties"
+Cohesion: 0.02
+Nodes (84): Fixed in this PR, HelperPropertySet, HPSFPropertiesExtractor, DocumentSummaryInformationText, MetadataTextExtractor, SummaryInformationText, Text, EventBasedExcelExtractor (+76 more)
 
-### Community 275 - "SeekOrigin"
-Cohesion: 0.05
-Nodes (12): POIFSDocumentWriter, CanRead, CanSeek, CanWrite, Length, Position, FileInputStream, CanRead (+4 more)
+### Community 275 - "POIFSDocumentWriter"
+Cohesion: 0.15
+Nodes (6): POIFSDocumentWriter, CanRead, CanSeek, CanWrite, Length, Position
 
 ### Community 276 - "NCellRange"
-Cohesion: 0.04
-Nodes (15): NCellRange, Address, BoundingBox, Cells, Formula, Height, Ranges, Sheet (+7 more)
+Cohesion: 0.05
+Nodes (14): NCellRange, Address, BoundingBox, Cells, Formula, Height, Ranges, Sheet (+6 more)
 
-### Community 277 - "XSSFSimpleShape"
-Cohesion: 0.02
-Nodes (66): XDDFTextBody, BodyProperties, DefaultProperties, Level1Properties, Level2Properties, Level3Properties, Level4Properties, Level5Properties (+58 more)
+### Community 277 - "XDDFTextParagraph"
+Cohesion: 0.03
+Nodes (49): XDDFTabStop, XDDFTextBody, BodyProperties, DefaultProperties, Level1Properties, Level2Properties, Level3Properties, Level4Properties (+41 more)
 
-### Community 278 - "CT_CacheField"
-Cohesion: 0.04
-Nodes (45): CT_CacheField, caption, databaseField, extLst, fieldGroup, formula, hierarchy, level (+37 more)
+### Community 278 - "CT_SharedItems"
+Cohesion: 0.10
+Nodes (21): CT_SharedItems, containsBlank, containsDate, containsInteger, containsMixedTypes, containsNonDate, containsNumber, containsSemiMixedTypes (+13 more)
 
 ### Community 279 - "CT_ElemPropSet"
 Cohesion: 0.03
 Nodes (66): CT_Pt, cxnId, extLst, modelId, prSet, spPr, t, type (+58 more)
 
 ### Community 280 - "CT_Image"
-Cohesion: 0.07
-Nodes (30): CT_Image, anchorlock, bilevel, bilevelSpecified, blacklevel, borderbottom, borderleft, borderright (+22 more)
+Cohesion: 0.05
+Nodes (36): CT_F, eqn, eqnSpecified, CT_Formulas, f, fSpecified, CT_Image, anchorlock (+28 more)
 
 ### Community 281 - "CT_ParaRPr"
 Cohesion: 0.04
-Nodes (45): CT_ParaRPr, b, bCs, bdr, caps, color, cs, del (+37 more)
+Nodes (53): CT_ParaRPr, b, bCs, bdr, caps, color, cs, del (+45 more)
 
 ### Community 282 - "ItemsChoiceType6"
 Cohesion: 0.04
@@ -1884,17 +1945,17 @@ Nodes (6): CT_CharacterSpacing, val, ST_CharacterSpacing, compressPunctuation, c
 Cohesion: 0.05
 Nodes (42): ST_TextAutonumberScheme, alphaLcParenBoth, alphaLcParenR, alphaLcPeriod, alphaUcParenBoth, alphaUcParenR, alphaUcPeriod, arabic1Minus (+34 more)
 
-### Community 285 - "CT_PPr"
+### Community 285 - "XDDFColor"
 Cohesion: 0.07
-Nodes (20): XWPFDefaultParagraphStyle, SpacingAfter, XWPFDefaultRunStyle, FontSize, CT_HpsMeasure, val, CT_PPr, IsEmpty (+12 more)
+Nodes (19): XDDFColor, ColorContainer, XDDFColorHsl, Hue, Luminance, Saturation, XDDFColorPreset, Value (+11 more)
 
-### Community 286 - "NameXPxg"
-Cohesion: 0.05
-Nodes (27): Area3DPxg, ExternalWorkbookNumber, LastSheetName, SheetName, Size, Deleted3DPxg, DefaultOperandClass, ExternalWorkbookNumber (+19 more)
+### Community 286 - "PropertyIDMap"
+Cohesion: 0.08
+Nodes (12): ClassID, Bytes, Length, PropertyIDMap, Count, DocumentSummaryInformationProperties, FallbackProperties, IsReadOnly (+4 more)
 
-### Community 287 - "CT_CtrlPr"
-Cohesion: 0.05
-Nodes (39): CT_CtrlPr, del, ins, rPr, CT_LimLow, e, lim, limLowPr (+31 more)
+### Community 287 - "CT_PhantPr"
+Cohesion: 0.20
+Nodes (10): CT_Phant, e, phantPr, CT_PhantPr, ctrlPr, show, transp, zeroAsc (+2 more)
 
 ### Community 288 - "RunItemsChoiceType"
 Cohesion: 0.06
@@ -1904,17 +1965,17 @@ Nodes (33): RunItemsChoiceType, annotationRef, br, commentReference, continuatio
 Cohesion: 0.09
 Nodes (10): VBAMacroExtractor, Module, ModuleMap, VBAMacroReader, RLEDecompressingInputStream, CanRead, CanSeek, CanWrite (+2 more)
 
-### Community 290 - "RecordInputStream"
-Cohesion: 0.01
-Nodes (117): BiffHeaderInput, ContinuableRecordInput, Biff8DecryptingStream, EmbeddedObjectRefSubRecord, DataSize, ObjectData, OLEClassName, Sid (+109 more)
+### Community 290 - "ILittleEndianInput"
+Cohesion: 0.02
+Nodes (116): IconMultiStateThreshold, DataLength, Threshold, DataLength, Formula, ParsedExpression, Type, Value (+108 more)
 
-### Community 291 - "PushbackStream"
-Cohesion: 0.12
-Nodes (6): PushbackStream, CanRead, CanSeek, CanWrite, Length, Position
+### Community 291 - "SeekOrigin"
+Cohesion: 0.05
+Nodes (12): CloseIgnoringInputStream, CanRead, CanSeek, CanWrite, Length, Position, PushbackStream, CanRead (+4 more)
 
 ### Community 292 - "AbstractFunctionPtg"
 Cohesion: 0.06
-Nodes (23): FunctionDataBuilder, FunctionMetadata, HasFixedArgsLength, HasUnlimitedVarags, Index, MaxParams, MinParams, Name (+15 more)
+Nodes (25): FunctionEval, FunctionID, FunctionDataBuilder, FunctionMetadata, HasFixedArgsLength, HasUnlimitedVarags, Index, MaxParams (+17 more)
 
 ### Community 293 - "CT_PageSetup"
 Cohesion: 0.04
@@ -1925,12 +1986,12 @@ Cohesion: 0.04
 Nodes (46): CT_Fill, alignshape, alignshapeSpecified, angle, angleSpecified, aspect, aspectSpecified, color (+38 more)
 
 ### Community 295 - "CT_OleObject"
-Cohesion: 0.05
-Nodes (38): CT_ObjectAnchor, from, moveWithCells, sizeWithCells, to, CT_ObjectPr, altText, anchor (+30 more)
+Cohesion: 0.07
+Nodes (26): IObjectData, Directory, FileName, ObjectData, OLE2ClassName, PictureData, ISimpleShape, CT_OleObject (+18 more)
 
-### Community 296 - ".AddPicture"
-Cohesion: 0.05
-Nodes (34): XSSFChildAnchor, Dx1, Dx2, Dy1, Dy2, XSSFFreeform, ID, Name (+26 more)
+### Community 296 - "CT_Picture"
+Cohesion: 0.06
+Nodes (35): CT_NonVisualPictureProperties, extLst, picLocks, preferRelativeResize, CT_Picture, blipFill, fPublished, fPublishedSpecified (+27 more)
 
 ### Community 297 - "CT_StyleDefinition"
 Cohesion: 0.07
@@ -1950,15 +2011,15 @@ Nodes (46): ST_XmlDataType, anyType, anyURI, base64Binary, boolean, @byte, date,
 
 ### Community 301 - "CT_ParaRPrOriginal"
 Cohesion: 0.04
-Nodes (46): CT_ParaRPrChange, rPr, CT_ParaRPrOriginal, b, bCs, bdr, caps, color (+38 more)
+Nodes (56): CT_ParaRPrChange, rPr, CT_ParaRPrOriginal, b, bCs, bdr, caps, color (+48 more)
 
-### Community 302 - "XSSFPicture"
-Cohesion: 0.08
-Nodes (25): XSSFPicture, ClientAnchor, CountOfAllChildren, FillColor, ID, LineStyle, LineStyleColor, LineWidth (+17 more)
+### Community 302 - "CT_GroupShape"
+Cohesion: 0.06
+Nodes (23): XSSFChildAnchor, Dx1, Dx2, Dy1, Dy2, XSSFFreeform, ID, Name (+15 more)
 
 ### Community 303 - "DateTime"
-Cohesion: 0.05
-Nodes (8): Util, HSSFDateUtil, DateParser, WorkdayCalculator, Days360, Days, DateUtil, LocaleUtil
+Cohesion: 0.03
+Nodes (31): HSSFDateUtil, WorkdayCalculator, Days360, Days, EDate, Effect, Gcd, GeStep (+23 more)
 
 ### Community 304 - "TableStyleType"
 Cohesion: 0.05
@@ -1968,9 +2029,9 @@ Nodes (39): IDifferentialStyleProvider, BorderFormatting, FontFormatting, Number
 Cohesion: 0.05
 Nodes (43): XSSFBRecordType, BrtAbsPath15, BrtBeginCellStyleXFS, BrtBeginCellXFs, BrtBeginComment, BrtBeginCommentAuthors, BrtBeginFmts, BrtBeginHeaderFooter (+35 more)
 
-### Community 306 - "MapInfo"
-Cohesion: 0.09
-Nodes (18): MapInfo, Workbook, XSSFMap, CT_MapInfo, Map, Schema, SelectionNamespaces, CT_Schema (+10 more)
+### Community 306 - "XSSFExportToXml"
+Cohesion: 0.03
+Nodes (47): XSSFExportToXml, MapInfo, Workbook, SingleXmlCells, XSSFSingleXmlCell, XSSFMap, CT_DataBinding, Any (+39 more)
 
 ### Community 307 - "ST_DocPartGallery"
 Cohesion: 0.05
@@ -1980,17 +2041,17 @@ Nodes (44): CT_DocPartCategory, gallery, name, CT_DocPartGallery, val, ST_DocPar
 Cohesion: 0.04
 Nodes (45): CT_RPrChange, rPr, CT_RPrOriginal, b, bCs, bdr, caps, color (+37 more)
 
-### Community 309 - "CT_TableProperties"
-Cohesion: 0.05
-Nodes (37): XDDFEffectContainer, CT_AlphaModulateEffect, cont, CT_BlendEffect, blend, cont, CT_EffectContainer, Items (+29 more)
+### Community 309 - "CT_BlipFillProperties"
+Cohesion: 0.02
+Nodes (115): CT_BackgroundFillStyleList, blipFill, gradFill, grpFill, noFill, pattFill, solidFill, CT_FillStyleList (+107 more)
 
 ### Community 310 - "TwoOperandNumericOperation"
 Cohesion: 0.10
 Nodes (7): AddEval, DivideEval, MultiplyEval, PowerEval, SubtractEval, ArrayEval, TwoOperandNumericOperation
 
-### Community 311 - "IntList"
-Cohesion: 0.08
-Nodes (8): IndexRecord, DataSize, FirstRow, LastRowAdd1, NumDbcells, Sid, IntList, Count
+### Community 311 - "CT_ConnectorLocking"
+Cohesion: 0.05
+Nodes (37): CT_Connector, fPublished, macro, nvCxnSpPr, spPr, style, CT_ConnectorNonVisual, cNvCxnSpPr (+29 more)
 
 ### Community 312 - "CT_RPR"
 Cohesion: 0.06
@@ -2000,17 +2061,17 @@ Nodes (31): CT_Box, boxPr, e, CT_BoxPr, aln, brk, ctrlPr, diff (+23 more)
 Cohesion: 0.18
 Nodes (8): AddrStructure, FirstColumn, FirstRow, LastColumn, LastRow, HSSFCellRangeAddress, AddRStructureNumber, Size
 
-### Community 314 - "AbstractEscherHolderRecord"
-Cohesion: 0.07
-Nodes (14): AbstractEscherHolderRecord, EscherRecords, RawData, RecordName, RecordSize, DrawingGroupRecord, RawDataSize, RecordName (+6 more)
+### Community 314 - "SdtPrElementType"
+Cohesion: 0.08
+Nodes (25): CT_SdtPr, Items, ItemsElementName, SdtPrElementType, alias, bibliography, citation, comboBox (+17 more)
 
 ### Community 315 - "XDDFLineProperties"
 Cohesion: 0.10
 Nodes (15): XDDFDashStop, DashLength, SpaceLength, XDDFLineProperties, CompoundLine, HeadEnd, LineCap, PenAlignment (+7 more)
 
 ### Community 316 - "AreaEvalBase"
-Cohesion: 0.08
-Nodes (15): ArgumentsEvaluator, NetworkdaysFunction, WorkdayFunction, WorkdayIntlFunction, AreaEvalBase, FirstColumn, FirstRow, FirstSheetIndex (+7 more)
+Cohesion: 0.09
+Nodes (11): AreaEvalBase, FirstColumn, FirstRow, FirstSheetIndex, Height, IsColumn, IsRow, LastColumn (+3 more)
 
 ### Community 317 - "UnderlineType"
 Cohesion: 0.05
@@ -2028,9 +2089,9 @@ Nodes (26): IgnoredErrorType, CalculatedColumn, EmptyCellReference, EvaluationEr
 Cohesion: 0.10
 Nodes (8): IXDDFFillProperties, XDDFNoFillProperties, XDDFPatternFillProperties, BackgroundColor, ForegroundColor, PresetPattern, XDDFSolidFillProperties, Color
 
-### Community 321 - "CT_View3D"
-Cohesion: 0.07
-Nodes (19): XDDFView3D, CT_DepthPercent, val, CT_HPercent, val, CT_Perspective, val, CT_RotX (+11 more)
+### Community 321 - "Chart.cs"
+Cohesion: 0.01
+Nodes (146): AxisCrosses, AutoZero, Max, Min, AxisCrossesExtensions, XDDFView3D, CT_BandFmt, idx (+138 more)
 
 ### Community 322 - "ST_TextShapeType"
 Cohesion: 0.04
@@ -2046,23 +2107,23 @@ Nodes (47): CT_DocProtect, algIdExt, algIdExtSource, cryptAlgorithmClass, cryptA
 
 ### Community 325 - "XWPFNary"
 Cohesion: 0.07
-Nodes (24): XWPFNary, Document, Element, NaryPr, Part, Subscript, Superscript, CT_LimLoc (+16 more)
+Nodes (26): XWPFNary, Document, Element, NaryPr, Part, Subscript, Superscript, CT_Char (+18 more)
 
 ### Community 326 - "BuildFreeForm"
 Cohesion: 0.07
 Nodes (19): Coords, x, y, DblVect2D, x, y, BuildFreeForm, Bottom (+11 more)
 
 ### Community 327 - "DOPERRecord"
-Cohesion: 0.05
-Nodes (35): DOPERComparisonCode, Equal, GreaterThan, Less, LessThan, More, NotEqual, Unknown (+27 more)
+Cohesion: 0.03
+Nodes (54): DOPERComparisonCode, Equal, GreaterThan, Less, LessThan, More, NotEqual, Unknown (+46 more)
 
 ### Community 328 - "HeaderBlock"
-Cohesion: 0.04
-Nodes (35): EmptyFileException, NotOLE2FileException, OfficeXmlFileException, HeaderBlock, BATArray, BATCount, BigBlockSize, PropertyStart (+27 more)
+Cohesion: 0.05
+Nodes (32): HeaderBlock, BATArray, BATCount, BigBlockSize, PropertyStart, SBATBlockCount, SBATCount, SBATStart (+24 more)
 
 ### Community 329 - "CT_HeaderFooter"
-Cohesion: 0.04
-Nodes (35): XSSFHeaderFooter, Center, Left, Right, Text, Value, XSSFEvenFooter, Text (+27 more)
+Cohesion: 0.06
+Nodes (17): XSSFHeaderFooterProperties, AlignWithMargins, DifferentFirst, DifferentOddEven, HeaderFooter, ScaleWithDoc, CT_HeaderFooter, alignWithMargins (+9 more)
 
 ### Community 330 - "CT_DateGroupItem"
 Cohesion: 0.05
@@ -2076,13 +2137,13 @@ Nodes (6): CT_MergeCell, @ref, CT_MergeCells, count, countSpecified, mergeCell
 Cohesion: 0.06
 Nodes (37): SchemeColor, Accent1, Accent2, Accent3, Accent4, Accent5, Accent6, Background1 (+29 more)
 
-### Community 333 - "XSSFXmlColumnPr"
+### Community 333 - "TOC"
 Cohesion: 0.09
-Nodes (13): XSSFXmlColumnPr, Id, LocalXPath, MapId, XPath, XSSFTableColumn, ColumnIndex, Id (+5 more)
+Nodes (6): TOC, CT_FtnEdnRef, customMarkFollows, customMarkFollowsSpecified, DomNode, id
 
 ### Community 334 - "CT_ShapeProperties"
-Cohesion: 0.04
-Nodes (40): XSSFConnector, ID, Name, ShapeName, ShapeType, CT_Connection, id, idx (+32 more)
+Cohesion: 0.05
+Nodes (32): XSSFConnector, ID, Name, ShapeName, ShapeType, CT_Connector, fPublished, macro (+24 more)
 
 ### Community 335 - "CT_ColHierarchiesUsage"
 Cohesion: 0.20
@@ -2101,75 +2162,75 @@ Cohesion: 0.05
 Nodes (40): ItemsChoiceType5, b, bCs, bdr, caps, color, cs, dstrike (+32 more)
 
 ### Community 339 - "CT_TcPrBase"
-Cohesion: 0.05
-Nodes (32): CT_HMerge, val, valSpecified, CT_TcBorders, bottom, insideH, insideV, left (+24 more)
+Cohesion: 0.04
+Nodes (49): CT_Shd, color, fill, themeColor, themeColorSpecified, themeFill, themeFillShade, themeFillSpecified (+41 more)
 
 ### Community 340 - "POIFSWriterEvent"
-Cohesion: 0.16
-Nodes (7): POIFSWriterListenerImpl, POIFSWriterEvent, Limit, Name, Path, Stream, DocumentOutputStream
+Cohesion: 0.14
+Nodes (7): EncryptedPackageWriter, POIFSWriterEvent, Limit, Name, Path, Stream, DocumentOutputStream
 
-### Community 341 - "OldExcelExtractor"
-Cohesion: 0.11
-Nodes (5): HPSFPropertiesOnlyDocument, OldExcelExtractor, BiffVersion, FileType, Text
+### Community 341 - "CT_ColorMapping"
+Cohesion: 0.06
+Nodes (35): ST_ColorSchemeIndex, accent1, accent2, accent3, accent4, accent5, accent6, dk1 (+27 more)
 
-### Community 342 - "XSSFPrintSetup"
-Cohesion: 0.02
-Nodes (71): PageOrder, Value, PaperSize, A3, A4, A4_EXTRA, A4_PLUS_PAPERSIZE, A4_ROTATED_PAPERSIZE (+63 more)
+### Community 342 - "PaperSize"
+Cohesion: 0.05
+Nodes (38): PaperSize, A3, A4, A4_EXTRA, A4_PLUS_PAPERSIZE, A4_ROTATED_PAPERSIZE, A4_Small, A4_TRANSVERSE_PAPERSIZE (+30 more)
 
 ### Community 343 - "ItemsChoiceType16"
-Cohesion: 0.07
-Nodes (30): CT_RubyContent, Items, ItemsElementName, ItemsChoiceType16, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart (+22 more)
+Cohesion: 0.05
+Nodes (34): CT_Ruby, rt, rubyBase, rubyPr, CT_RubyContent, Items, ItemsElementName, ItemsChoiceType16 (+26 more)
 
 ### Community 344 - "ST_Shd"
 Cohesion: 0.05
 Nodes (39): ST_Shd, clear, diagCross, diagStripe, horzCross, horzStripe, nil, pct10 (+31 more)
 
 ### Community 345 - "IDataValidationConstraint"
-Cohesion: 0.03
-Nodes (42): DVConstraint, ExplicitListValues, Formula1, Formula2, IsExplicitList, IsListValidationType, Operator, Value1 (+34 more)
+Cohesion: 0.10
+Nodes (8): HSSFDataValidationHelper, IDataValidationConstraint, ExplicitListValues, Formula1, Formula2, Operator, IDataValidationHelper, XSSFDataValidationHelper
 
 ### Community 346 - "CT_MPr"
 Cohesion: 0.07
 Nodes (29): CT_EqArr, e, eqArrPr, CT_EqArrPr, baseJc, ctrlPr, maxDist, objDist (+21 more)
 
 ### Community 347 - "CT_DataField"
-Cohesion: 0.05
-Nodes (36): CT_DataField, baseField, baseItem, extLst, fld, name, numFmtId, numFmtIdSpecified (+28 more)
+Cohesion: 0.07
+Nodes (26): CT_DataField, baseField, baseItem, extLst, fld, name, numFmtId, numFmtIdSpecified (+18 more)
 
 ### Community 348 - "ST_ThemeColor"
-Cohesion: 0.05
-Nodes (42): CT_TwipsMeasure, val, CT_FrameLayout, val, CT_Frameset, frameLayout, framesetSplitbar, Items (+34 more)
+Cohesion: 0.06
+Nodes (31): CT_TwipsMeasure, val, CT_FramesetSplitbar, color, flatBorders, noBorder, w, CT_Color (+23 more)
 
 ### Community 349 - "DataValidationEvaluator"
-Cohesion: 0.09
-Nodes (21): DataValidationContext, Evaluator, Formula1, Formula2, OffsetColumns, OffsetRows, Operator, Region (+13 more)
+Cohesion: 0.14
+Nodes (10): DataValidationEvaluator, ValidationEnum, ValidationEnum_ANY, ValidationEnum_DATE, ValidationEnum_DECIMAL, ValidationEnum_FORMULA, ValidationEnum_INTEGER, ValidationEnum_LIST (+2 more)
 
 ### Community 350 - "BidirectionalDictionary"
-Cohesion: 0.03
-Nodes (39): CustomProperties, Count, IsEmpty, IsPure, Size, CustomProperty, Name, MutableProperty (+31 more)
+Cohesion: 0.05
+Nodes (23): BidirectionalDictionary, Count, Inverse, IsReadOnly, KeyComparer, Keys, ValueComparer, Values (+15 more)
 
 ### Community 351 - "CT_Curve"
-Cohesion: 0.07
-Nodes (28): CT_Curve, anchorlock, borderbottom, borderleft, borderright, bordertop, ClientData, control1 (+20 more)
+Cohesion: 0.09
+Nodes (22): CT_Curve, anchorlock, borderbottom, borderleft, borderright, bordertop, ClientData, control1 (+14 more)
 
-### Community 352 - "POIFSBigBlockSize"
-Cohesion: 0.06
-Nodes (26): POIFSBigBlockSize, POIFSConstants, SmallBlockStore, Blocks, Valid, NPropertyTable, CountBlocks, PropertyTable (+18 more)
+### Community 352 - "OPOIFSFileSystem"
+Cohesion: 0.08
+Nodes (23): POIFSReaderEvent, Name, Path, Stream, OPOIFSFileSystem, BigBlockSize, PreferArray, Root (+15 more)
 
-### Community 353 - "XSSFClientAnchor"
+### Community 353 - "CT_Spacing"
 Cohesion: 0.07
-Nodes (25): XSSFClientAnchor, AnchorType, Cell1, Cell2, Col1, Col2, Dx1, Dx2 (+17 more)
+Nodes (21): LineSpacingRule, ATLEAST, AUTO, EXACT, CT_Spacing, after, afterAutospacing, afterAutospacingSpecified (+13 more)
 
 ### Community 354 - "CT_SheetPr"
 Cohesion: 0.07
 Nodes (21): CT_SheetPr, codeName, enableFormatConditionsCalculation, filterMode, outlinePr, pageSetUpPr, published, syncHorizontal (+13 more)
 
-### Community 355 - "ST_IconSetType"
-Cohesion: 0.04
-Nodes (49): IconSet, XSSFIconMultiStateFormatting, IconSet, IsIconOnly, IsReversed, Thresholds, CT_IconFilter, iconId (+41 more)
+### Community 355 - "CT_SortCondition"
+Cohesion: 0.13
+Nodes (15): CT_SortCondition, customList, descending, dxfId, dxfIdSpecified, iconId, iconIdSpecified, iconSet (+7 more)
 
 ### Community 356 - "ST_OnOff"
-Cohesion: 0.06
+Cohesion: 0.05
 Nodes (36): ST_OnOff, False, off, on, True, CT_DocPartName, decorated, decoratedSpecified (+28 more)
 
 ### Community 357 - "CT_DocVars"
@@ -2180,93 +2241,97 @@ Nodes (5): CT_DocVars, docVar, CT_DocVar, name, val
 Cohesion: 0.06
 Nodes (35): CT_LevelSuffix, val, CT_LevelText, @null, nullSpecified, val, CT_Lvl, ilvl (+27 more)
 
-### Community 359 - "StringBuilder"
-Cohesion: 0.06
-Nodes (18): CellNumberFormatter, GeneralNumberFormatter, Special, CellNumberPartHandler, DecimalPoint, Exponent, IsImproperFraction, Numerator (+10 more)
+### Community 359 - "CellNumberFormatter"
+Cohesion: 0.08
+Nodes (16): CellNumberFormatter, Special, CellNumberPartHandler, DecimalPoint, Exponent, IsImproperFraction, Numerator, Scale (+8 more)
 
 ### Community 360 - "EG_ColorTransform"
 Cohesion: 0.07
 Nodes (29): EG_ColorTransform, alpha, alphaMod, alphaOff, blue, blueMod, blueOff, comp (+21 more)
 
-### Community 362 - "HeaderFooter"
-Cohesion: 0.03
-Nodes (58): Field, ALL_FIELDS, Fields, AllFields, BOLD_FIELD, DATE_FIELD, DOUBLE_UNDERLINE_FIELD, FILE_FIELD (+50 more)
+### Community 361 - "MainForm"
+Cohesion: 0.10
+Nodes (6): MainForm, ZipEntryData, ChildData, Content, Name, Type
 
-### Community 363 - "NPOIFSStream"
-Cohesion: 0.07
-Nodes (11): Crypto FileStream sites (coordinated with #41, now closed), Decision: CA1001 on `NPOIFSStream`, Fixed in #71, Follow-up audit (task #71), BlockStore, NPOIFSStream, StreamBlockByteBuffer, StreamBlockByteBufferIterator (+3 more)
+### Community 362 - "HeaderFooter"
+Cohesion: 0.06
+Nodes (33): HeaderFooter, AreFieldsStripped, BOLD_FIELD, Center, Date, DATE_FIELD, DOUBLE_UNDERLINE_FIELD, EndBold (+25 more)
+
+### Community 363 - "NPOIFSDocument"
+Cohesion: 0.05
+Nodes (22): Crypto FileStream sites (coordinated with #41, now closed), Decision: CA1001 on `NPOIFSStream`, Fixed in #71, Follow-up audit (task #71), BlockStore, ChainLoopDetector, NDocumentOutputStream, NPOIFSDocument (+14 more)
 
 ### Community 364 - "RelationalOperationEval"
-Cohesion: 0.07
-Nodes (10): Switch, EqualEval, GreaterEqualEval, GreaterThanEval, LessEqualEval, LessThanEval, NotEqualEval, RelationalOperationEval (+2 more)
+Cohesion: 0.06
+Nodes (15): BoolEval, BooleanValue, NumberValue, StringValue, EqualEval, GreaterEqualEval, GreaterThanEval, LessEqualEval (+7 more)
 
-### Community 365 - "CT_ErrBars"
-Cohesion: 0.07
-Nodes (29): CT_ErrBars, errBarType, errDir, errValType, extLst, minus, noEndCap, plus (+21 more)
+### Community 365 - "DVConstraint"
+Cohesion: 0.09
+Nodes (15): DVConstraint, ExplicitListValues, Formula1, Formula2, IsExplicitList, IsListValidationType, Operator, Value1 (+7 more)
 
 ### Community 366 - "ChunkedCipherOutputStream"
-Cohesion: 0.05
-Nodes (16): BinaryRC4CipherOutputStream, ChunkedCipherOutputStream, Length, Position, EncryptedPackageWriter, SparseBitSet, IsEmpty, CryptoAPICipherOutputStream (+8 more)
+Cohesion: 0.08
+Nodes (8): ChunkedCipherOutputStream, Length, Position, SparseBitSet, IsEmpty, CryptoAPICipherOutputStream, FilterOutputStream, Position
 
 ### Community 367 - "SheetIterator"
-Cohesion: 0.10
+Cohesion: 0.09
 Nodes (18): SheetIterator, Current, Shapes, SheetComments, SheetName, SheetPart, SheetRelationships, XMLSheetRefReader (+10 more)
 
 ### Community 368 - "ShapeEffects.cs"
-Cohesion: 0.07
-Nodes (28): CT_AlphaBiLevelEffect, thresh, CT_AlphaCeilingEffect, CT_AlphaFloorEffect, CT_AlphaModulateFixedEffect, amt, CT_AlphaOutsetEffect, rad (+20 more)
+Cohesion: 0.03
+Nodes (68): XDDFEffectContainer, CT_AlphaBiLevelEffect, thresh, CT_AlphaCeilingEffect, CT_AlphaFloorEffect, CT_AlphaModulateEffect, cont, CT_AlphaModulateFixedEffect (+60 more)
 
 ### Community 370 - "CT_PivotArea"
-Cohesion: 0.03
-Nodes (71): CT_CalculatedItem, extLst, field, fieldSpecified, formula, pivotArea, CT_Format, action (+63 more)
+Cohesion: 0.06
+Nodes (36): CT_AutoSortScope, pivotArea, CT_ChartFormat, chart, format, pivotArea, series, CT_ChartFormats (+28 more)
 
 ### Community 371 - "CT_QueryTable"
 Cohesion: 0.06
 Nodes (36): CT_QueryTable, adjustColumnWidth, applyAlignmentFormats, applyAlignmentFormatsSpecified, applyBorderFormats, applyBorderFormatsSpecified, applyFontFormats, applyFontFormatsSpecified (+28 more)
 
 ### Community 372 - "CT_MailMerge"
-Cohesion: 0.05
-Nodes (42): CT_MailMerge, activeRecord, addressFieldName, checkErrors, connectString, dataSource, dataType, destination (+34 more)
+Cohesion: 0.03
+Nodes (69): CT_SdtDocPart, docPartCategory, docPartGallery, docPartUnique, CT_MailMerge, activeRecord, addressFieldName, checkErrors (+61 more)
 
 ### Community 373 - "FontGroup"
 Cohesion: 0.19
 Nodes (8): FontGroup, COMPLEX_SCRIPT, EAST_ASIAN, LATIN, SYMBOL, FontGroupExtension, FontGroupRange, Range
 
 ### Community 374 - "CT_TableStyle"
-Cohesion: 0.07
-Nodes (29): CT_EffectProperties, effectDag, effectLst, CT_TableBackgroundStyle, effect, effectRef, fill, fillRef (+21 more)
+Cohesion: 0.05
+Nodes (41): CT_TableCellBorderStyle, bottom, extLst, insideH, insideV, left, right, tl2br (+33 more)
 
 ### Community 375 - "ODocumentInputStream"
-Cohesion: 0.12
+Cohesion: 0.13
 Nodes (4): ODocumentInputStream, Length, Position, DataInputBlock
 
-### Community 376 - "CT_TableStyleInfo"
-Cohesion: 0.08
-Nodes (24): ITableStyleInfo, IsShowColumnStripes, IsShowFirstColumn, IsShowLastColumn, IsShowRowStripes, Name, Style, XSSFTableStyleInfo (+16 more)
+### Community 376 - "CT_EffectList"
+Cohesion: 0.07
+Nodes (30): XDDFEffectList, CT_BlurEffect, grow, rad, CT_EffectList, blur, fillOverlay, glow (+22 more)
 
 ### Community 377 - "CT_TableColumn"
-Cohesion: 0.07
-Nodes (30): CT_TableColumn, calculatedColumnFormula, dataCellStyle, dataDxfId, dataDxfIdSpecified, extLst, headerRowCellStyle, headerRowDxfId (+22 more)
+Cohesion: 0.05
+Nodes (39): CT_TableColumn, calculatedColumnFormula, dataCellStyle, dataDxfId, dataDxfIdSpecified, extLst, headerRowCellStyle, headerRowDxfId (+31 more)
 
 ### Community 378 - "CT_TextSpacing"
-Cohesion: 0.07
-Nodes (19): Kind, Percent, Points, XDDFSpacing, Type, XDDFSpacingPercent, Type, XDDFSpacingPoints (+11 more)
+Cohesion: 0.08
+Nodes (16): Kind, Percent, Points, XDDFSpacing, Type, XDDFSpacingPercent, Type, XDDFSpacingPoints (+8 more)
 
 ### Community 379 - "ItemChoiceType"
 Cohesion: 0.06
 Nodes (35): ItemChoiceType, array, blob, @bool, bstr, cf, clsid, cy (+27 more)
 
-### Community 380 - "PictureType"
-Cohesion: 0.11
-Nodes (15): PictureType, BMP, DIB, EMF, EPS, GIF, JPEG, None (+7 more)
+### Community 380 - "EscherPictBlip"
+Cohesion: 0.13
+Nodes (9): EscherPictBlip, Bounds, CompressedSize, IsCompressed, RecordSize, SizeEMU, UID, UncompressedSize (+1 more)
 
 ### Community 381 - "with"
 Cohesion: 0.08
 Nodes (27): concurrency, cancel-in-progress, group, jobs, ubuntu-latest, windows-latest, name, on (+19 more)
 
-### Community 382 - "ExtendedProperties"
-Cohesion: 0.08
-Nodes (23): ExtendedProperties, Application, AppVersion, Characters, CharactersWithSpaces, Company, HiddenSlides, HyperlinkBase (+15 more)
+### Community 382 - "CT_Cxn"
+Cohesion: 0.06
+Nodes (31): CT_Cxn, destId, destOrd, extLst, modelId, parTransId, presId, sibTransId (+23 more)
 
 ### Community 383 - "ItemsChoiceType6"
 Cohesion: 0.06
@@ -2277,40 +2342,40 @@ Cohesion: 0.06
 Nodes (33): CT_CustomWorkbookView, activeSheetId, autoUpdate, changesSavedWin, extLst, guid, includeHiddenRowCol, includePrintSettings (+25 more)
 
 ### Community 385 - "ParagraphItemsChoiceType"
-Cohesion: 0.05
-Nodes (36): CT_BookmarkRange, colFirst, colLast, ParagraphItemsChoiceType, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart (+28 more)
+Cohesion: 0.06
+Nodes (33): ParagraphItemsChoiceType, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart, customXml, customXmlDelRangeEnd, customXmlDelRangeStart (+25 more)
 
 ### Community 386 - "CT_Path2D"
-Cohesion: 0.09
-Nodes (18): XDDFPath, CT_Path2D, cubicBezTo, extrusionOk, fill, h, moveto, stroke (+10 more)
+Cohesion: 0.06
+Nodes (29): XDDFPath, CT_AdjPoint2D, x, y, CT_Path2D, cubicBezTo, extrusionOk, fill (+21 more)
 
-### Community 387 - "CT_OfPieChart"
+### Community 387 - "steps"
 Cohesion: 0.07
-Nodes (27): CT_SecondPieSize, val, CT_SplitType, val, ST_SplitType, auto, cust, percent (+19 more)
+Nodes (29): concurrency, cancel-in-progress, group, env, DEFAULT_BRANCH, GH_TOKEN, GRAPHIFY_BRANCH, if (+21 more)
 
 ### Community 388 - "BuiltinFormats"
 Cohesion: 0.06
 Nodes (33): BuiltinFormats, Accounting, AccountingDecimal, AccountingDecimalRed, AccountingRed, Currency, Date2, DateTime (+25 more)
 
 ### Community 389 - "CT_CalcChain"
-Cohesion: 0.11
+Cohesion: 0.10
 Nodes (14): CalculationChain, CT_CalcCell, a, i, iSpecified, l, r, s (+6 more)
 
-### Community 390 - "SingleXmlCells"
-Cohesion: 0.11
-Nodes (12): SingleXmlCells, XSSFSingleXmlCell, OOXMLFactory, SingleXmlCellsDocument, CT_SingleXmlCell, connectionId, extLst, id (+4 more)
+### Community 390 - "TextRecord"
+Cohesion: 0.07
+Nodes (28): TextRecord, DataLabelPlacement, DataSize, DisplayMode, Height, HorizontalAlignment, IndexOfColorValue, IsAutoBackground (+20 more)
 
 ### Community 391 - "ST_LightRigType"
 Cohesion: 0.07
 Nodes (28): ST_LightRigType, balanced, brightRoom, chilly, contrasting, flat, flood, freezing (+20 more)
 
-### Community 392 - "IDataValidation"
-Cohesion: 0.03
-Nodes (83): IDataValidation, EmptyCellAllowed, ErrorBoxText, ErrorBoxTitle, ErrorStyle, PromptBoxText, PromptBoxTitle, Regions (+75 more)
+### Community 392 - "CT_DataValidation"
+Cohesion: 0.07
+Nodes (25): CT_DataValidation, allowBlank, error, errorStyle, errorTitle, formula1, formula2, imeMode (+17 more)
 
-### Community 393 - "CT_RangePr"
-Cohesion: 0.05
-Nodes (38): CT_DiscretePr, count, countSpecified, x, CT_FieldGroup, @base, baseSpecified, discretePr (+30 more)
+### Community 393 - "CT_FieldGroup"
+Cohesion: 0.12
+Nodes (16): CT_DiscretePr, count, countSpecified, x, CT_FieldGroup, @base, baseSpecified, discretePr (+8 more)
 
 ### Community 394 - "CT_RevisionDefinedName"
 Cohesion: 0.06
@@ -2324,21 +2389,21 @@ Nodes (33): ItemsChoiceType24, bookmarkEnd, bookmarkStart, commentRangeEnd, comm
 Cohesion: 0.06
 Nodes (33): ItemsChoiceType25, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart, customXml, customXmlDelRangeEnd, customXmlDelRangeStart (+25 more)
 
-### Community 397 - "CT_PivotAreaReference"
-Cohesion: 0.07
-Nodes (28): CT_Index, v, CT_PivotAreaReference, avgSubtotal, byPosition, count, countASubtotal, countSpecified (+20 more)
+### Community 397 - "XSSFHyperlink"
+Cohesion: 0.08
+Nodes (18): XSSFHyperlink, Address, CellRef, FirstColumn, FirstRow, Label, LastColumn, LastRow (+10 more)
 
-### Community 398 - "NPOI.POIFS.Crypt.Dsig"
-Cohesion: 0.09
-Nodes (5): NPOI.POIFS.Crypt.Dsig, CertificateSecurityException, ExpiredCertificateSecurityException, RevokedCertificateSecurityException, TrustCertificateSecurityException
+### Community 398 - "XSSFPrintSetup"
+Cohesion: 0.07
+Nodes (27): XSSFPrintSetup, BottomMargin, CellError, Copies, Draft, EndNote, FitHeight, FitWidth (+19 more)
 
 ### Community 399 - "CellFormatPart"
-Cohesion: 0.03
-Nodes (35): CellDateFormatter, DatePartHandler, CellElapsedFormatter, ElapsedPartHandler, TimeSpec, CellFormat, GeneralCellFormat, CellFormatCondition (+27 more)
+Cohesion: 0.07
+Nodes (16): ElapsedPartHandler, CellFormatCondition, EQ_CellFormatCondition, GE_CellFormatCondition, GT_CellFormatCondition, LE_CellFormatCondition, LT_CellFormatCondition, NE_CellFormatCondition (+8 more)
 
-### Community 400 - "XWPFChart"
-Cohesion: 0.11
-Nodes (7): XWPFChart, ChartBottomMargin, ChartHeight, ChartLeftMargin, ChartRightMargin, ChartTopMargin, ChartWidth
+### Community 400 - "NumberPtg"
+Cohesion: 0.08
+Nodes (17): BoolPtg, Size, Value, ErrPtg, ErrorCode, Size, IntPtg, Size (+9 more)
 
 ### Community 401 - "with"
 Cohesion: 0.09
@@ -2352,16 +2417,16 @@ Nodes (18): DocPartViewer.Properties, NPOI.StyleViewer.Properties, XmlSerializat
 Cohesion: 0.09
 Nodes (26): concurrency, cancel-in-progress, group, name, runs-on, steps, timeout-minutes, name (+18 more)
 
-### Community 404 - "XSSFObjectData"
-Cohesion: 0.10
-Nodes (18): IObjectData, Directory, FileName, ObjectData, OLE2ClassName, PictureData, ISimpleShape, IPictureData (+10 more)
-
-### Community 405 - "CT_Trendline"
+### Community 404 - "PictureType"
 Cohesion: 0.08
-Nodes (26): CT_Order, val, CT_Period, val, CT_Trendline, backward, dispEq, dispRSqr (+18 more)
+Nodes (23): HSSFPictureData, Data, Format, MimeType, PictureType, PictureType, BMP, DIB (+15 more)
+
+### Community 405 - "XDDFBodyProperties"
+Cohesion: 0.08
+Nodes (22): IXDDFAutoFit, FontScale, LineSpaceReduction, XDDFBodyProperties, Anchoring, AutoFit, BottomInset, ExtensionList (+14 more)
 
 ### Community 406 - "XSSFTextRun"
-Cohesion: 0.07
+Cohesion: 0.06
 Nodes (23): TextCap, ALL, NONE, SMALL, XSSFLineBreak, XSSFTextRun, CharacterSpacing, FontColor (+15 more)
 
 ### Community 407 - "steps"
@@ -2382,7 +2447,7 @@ Nodes (31): CT_Path, arrowok, arrowokSpecified, connectangles, connectanglesSpec
 
 ### Community 411 - "DocumentBodyItemChoiceType"
 Cohesion: 0.05
-Nodes (35): CT_Body, Items, ItemsElementName, sectPr, DocumentBodyItemChoiceType, altChunk, bookmarkEnd, bookmarkStart (+27 more)
+Nodes (38): CT_Body, Items, ItemsElementName, sectPr, CT_Document, body, bodyList, DocumentBodyItemChoiceType (+30 more)
 
 ### Community 412 - "ItemsChoiceType7"
 Cohesion: 0.06
@@ -2392,29 +2457,29 @@ Nodes (31): ItemsChoiceType7, altChunk, bookmarkEnd, bookmarkStart, commentRange
 Cohesion: 0.06
 Nodes (31): ItemsChoiceType8, altChunk, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart, customXml, customXmlDelRangeEnd (+23 more)
 
-### Community 414 - "ItemsChoiceType50"
-Cohesion: 0.06
-Nodes (31): ItemsChoiceType50, altChunk, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart, customXml, customXmlDelRangeEnd (+23 more)
+### Community 414 - "Type"
+Cohesion: 0.12
+Nodes (6): ConstructorRecordCreator, I_RecordCreator, MethodRecordCreator, RecordFactory, LeftoverDataException, Number
 
 ### Community 415 - "ItemsChoiceType"
 Cohesion: 0.06
 Nodes (31): ItemsChoiceType, altChunk, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart, customXml, customXmlDelRangeEnd (+23 more)
 
-### Community 416 - "CacheAreaEval"
-Cohesion: 0.05
-Nodes (26): Dynamic-array formulas (task #152), Functions, Limitations, CacheAreaEval, ErrorEval, ErrorCode, ErrorString, Frequency (+18 more)
-
-### Community 417 - "FinanceFunction"
+### Community 416 - "ErrorEval"
 Cohesion: 0.11
-Nodes (6): FinanceFunction, FinanceLib, Fv, Nper, Pmt, Pv
+Nodes (13): ErrorEval, ErrorCode, ErrorString, BaseRef, FirstColumnIndex, FirstRowIndex, Height, Width (+5 more)
 
-### Community 418 - "XWPFAcc"
-Cohesion: 0.10
-Nodes (21): XWPFAcc, AccPr, Document, Element, Part, CT_Acc, accPr, e (+13 more)
+### Community 417 - "FinanceLib"
+Cohesion: 0.11
+Nodes (5): FinanceLib, Fv, Nper, Pmt, Pv
 
-### Community 419 - "CT_PictureBase"
-Cohesion: 0.29
-Nodes (6): CT_PictureBase, Items, ItemsElementName, ItemsChoiceType9, office, vml
+### Community 418 - "CT_GroupLocking"
+Cohesion: 0.07
+Nodes (27): CT_GroupShape, grpSpPr, Items, nvGrpSpPr, CT_GroupShapeNonVisual, cNvGrpSpPr, cNvPr, CT_GvmlGroupShape (+19 more)
+
+### Community 419 - "CT_Picture"
+Cohesion: 0.06
+Nodes (19): CT_Control, id, name, shapeid, CT_Object, control, dxaOrig, dxaOrigSpecified (+11 more)
 
 ### Community 420 - "CT_Connection"
 Cohesion: 0.07
@@ -2441,36 +2506,36 @@ Cohesion: 0.07
 Nodes (30): ItemsChoiceType26, bookmarkEnd, bookmarkStart, commentRangeEnd, commentRangeStart, customXml, customXmlDelRangeEnd, customXmlDelRangeStart (+22 more)
 
 ### Community 426 - "StyleDocumentInitializer"
-Cohesion: 0.36
+Cohesion: 0.22
 Nodes (3): StyleDocumentInitializer, WordStyle, TypeName
 
-### Community 427 - "RangeAddress"
-Cohesion: 0.11
-Nodes (11): RangeAddress, Address, FromCell, HasCell, HasRange, HasSheetName, Height, Range (+3 more)
+### Community 427 - "EscherArrayProperty"
+Cohesion: 0.10
+Nodes (9): EscherArrayEnumerator, Current, EscherArrayProperty, NumberOfElementsInArray, NumberOfElementsInMemory, SizeOfElements, EscherComplexProperty, ComplexData (+1 more)
 
-### Community 428 - "IName"
-Cohesion: 0.04
-Nodes (22): ExternalName, Ix, Name, Number, FormulaRenderer, IName, Comment, IsDeleted (+14 more)
+### Community 428 - "ExternalSheet"
+Cohesion: 0.10
+Nodes (10): ExternalName, Ix, Name, Number, ExternalSheet, SheetName, WorkbookName, ExternalSheetRange (+2 more)
 
 ### Community 429 - "ST_Underline"
 Cohesion: 0.07
 Nodes (27): CT_Underline, color, themeColor, themeColorSpecified, themeShade, themeTint, val, valSpecified (+19 more)
 
 ### Community 430 - "CT_Fonts"
-Cohesion: 0.06
-Nodes (30): FontCharRange, Ascii, CS, EastAsia, HAnsi, None, CT_Fonts, ascii (+22 more)
+Cohesion: 0.04
+Nodes (35): CT_Fonts, ascii, asciiTheme, cs, cstheme, eastAsia, eastAsiaTheme, hAnsi (+27 more)
 
-### Community 431 - "ITable"
-Cohesion: 0.15
-Nodes (13): ITable, EndColIndex, EndRowIndex, HeaderRowCount, IsHasTotalsRow, Name, SheetName, StartColIndex (+5 more)
+### Community 431 - "CellRangeAddressBase"
+Cohesion: 0.04
+Nodes (40): ITable, EndColIndex, EndRowIndex, HeaderRowCount, IsHasTotalsRow, Name, SheetName, StartColIndex (+32 more)
 
-### Community 432 - "CT_Item"
-Cohesion: 0.05
-Nodes (42): CT_colItems, count, countSpecified, i, CT_I, i, r, t (+34 more)
+### Community 432 - "ST_ItemType"
+Cohesion: 0.07
+Nodes (29): CT_colItems, count, countSpecified, i, CT_I, i, r, t (+21 more)
 
 ### Community 433 - "CT_MetadataType"
-Cohesion: 0.03
-Nodes (68): CT_XStringElement, v, CT_Mdx, f, Item, n, CT_MdxMetadata, count (+60 more)
+Cohesion: 0.07
+Nodes (29): CT_MetadataType, adjust, assign, cellMeta, clearAll, clearComments, clearContents, clearFormats (+21 more)
 
 ### Community 434 - "CT_OLEObject"
 Cohesion: 0.07
@@ -2497,32 +2562,32 @@ Cohesion: 0.08
 Nodes (24): AxcExtRecord, BaseUnit, CrossDate, DataSize, IsAutoBase, IsAutoCross, IsAutoDate, IsAutoMajor (+16 more)
 
 ### Community 440 - "Double"
-Cohesion: 0.09
-Nodes (20): Operator_BETWEEN, Operator_EQUAL, Operator_GREATER_OR_EQUAL, Operator_GREATER_THAN, Operator_LESS_OR_EQUAL, Operator_LESS_THAN, Operator_NOT_BETWEEN, Operator_NOT_EQUAL (+12 more)
+Cohesion: 0.04
+Nodes (38): Operator_BETWEEN, Operator_EQUAL, Operator_GREATER_OR_EQUAL, Operator_GREATER_THAN, Operator_LESS_OR_EQUAL, Operator_LESS_THAN, Operator_NOT_BETWEEN, Operator_NOT_EQUAL (+30 more)
 
 ### Community 441 - "PresetLineDash"
 Cohesion: 0.09
 Nodes (25): PresetLineDash, Dash, DashDot, Dot, LargeDash, LargeDashDot, LargeDashDotDot, Solid (+17 more)
 
-### Community 442 - "CT_Br"
-Cohesion: 0.07
-Nodes (23): BreakClear, ALL, LEFT, NONE, RIGHT, BreakType, COLUMN, PAGE (+15 more)
+### Community 442 - "ParagraphAlignment"
+Cohesion: 0.04
+Nodes (50): EnumConverter, BreakClear, ALL, LEFT, NONE, RIGHT, BreakType, COLUMN (+42 more)
 
 ### Community 443 - "CT_DLbl"
 Cohesion: 0.05
 Nodes (37): CT_DLbl, delete, dLblPos, extLst, idx, layout, numFmt, separator (+29 more)
 
 ### Community 444 - "CT_Macrosheet"
-Cohesion: 0.03
-Nodes (64): CT_AutoFilter, extLst, filterColumn, @ref, sortState, CT_SortState, caseSensitive, columnSort (+56 more)
+Cohesion: 0.05
+Nodes (43): CT_AutoFilter, extLst, filterColumn, @ref, sortState, CT_SortState, caseSensitive, columnSort (+35 more)
 
 ### Community 445 - "CT_BookView"
 Cohesion: 0.07
 Nodes (26): CT_BookView, activeTab, autoFilterDateGrouping, extLst, extLstSpecified, firstSheet, minimized, showHorizontalScroll (+18 more)
 
 ### Community 446 - "ST_BorderType"
-Cohesion: 0.07
-Nodes (28): ST_BorderType, dash, dashDotDot, dashDotStroked, dashedSmall, dot, dotDash, @double (+20 more)
+Cohesion: 0.06
+Nodes (34): CT_Border, shadow, shadowSpecified, type, typeSpecified, width, ST_BorderType, dash (+26 more)
 
 ### Community 447 - "CT_FramePr"
 Cohesion: 0.04
@@ -2532,33 +2597,33 @@ Nodes (56): CT_FramePr, anchorLock, anchorLockSpecified, dropCap, dropCapSpecifi
 Cohesion: 0.06
 Nodes (34): CT_EdnDocProps, endnote, CT_EdnPos, val, CT_EdnProps, numFmt, numRestart, numStart (+26 more)
 
-### Community 449 - "CT_SdtDate"
-Cohesion: 0.07
-Nodes (28): CT_CalendarType, val, valSpecified, CT_SdtDate, calendar, dateFormat, fullDate, fullDateSpecified (+20 more)
+### Community 449 - "CT_RubyPr"
+Cohesion: 0.04
+Nodes (46): CT_Lang, val, CT_RubyAlign, val, CT_RubyPr, dirty, hps, hpsBaseText (+38 more)
 
 ### Community 450 - "CT_WebSettings"
-Cohesion: 0.05
-Nodes (40): CT_WebSettings, allowPNG, divs, doNotOrganizeInFolder, doNotRelyOnCSS, doNotSaveAsSingleFile, doNotUseLongFileNames, encoding (+32 more)
+Cohesion: 0.04
+Nodes (45): CT_WebSettings, allowPNG, divs, doNotOrganizeInFolder, doNotRelyOnCSS, doNotSaveAsSingleFile, doNotUseLongFileNames, encoding (+37 more)
 
 ### Community 451 - "MemoryPackagePartOutputStream"
-Cohesion: 0.10
-Nodes (8): MemoryPackagePart, Size, MemoryPackagePartOutputStream, CanRead, CanSeek, CanWrite, Length, Position
+Cohesion: 0.08
+Nodes (10): RecyclableMemory, MemoryManager, MemoryPackagePart, Size, MemoryPackagePartOutputStream, CanRead, CanSeek, CanWrite (+2 more)
 
-### Community 452 - "CT_Scenario"
-Cohesion: 0.09
-Nodes (22): CT_InputCells, deleted, numFmtId, r, undone, val, CT_Scenario, comment (+14 more)
+### Community 452 - "NormalisedDecimal"
+Cohesion: 0.14
+Nodes (3): ExpandedDouble, NormalisedDecimal, NumberToTextConverter
 
 ### Community 453 - "CT_WebPublishItem"
 Cohesion: 0.09
 Nodes (22): CT_WebPublishItem, autoRepublish, destinationFile, divId, id, sourceObject, sourceRef, sourceType (+14 more)
 
 ### Community 454 - "CT_Hyperlink"
-Cohesion: 0.10
-Nodes (19): CT_Hyperlink, action, actionSpecified, endSnd, endSndSpecified, extLst, highlightClick, highlightClickSpecified (+11 more)
+Cohesion: 0.06
+Nodes (34): CT_EmbeddedWAVAudioFile, builtIn, embed, name, CT_Hyperlink, action, actionSpecified, endSnd (+26 more)
 
-### Community 455 - "CT_Map"
-Cohesion: 0.09
-Nodes (23): CT_DataBinding, Any, ConnectionID, ConnectionIDSpecified, DataBindingLoadMode, DataBindingName, FileBinding, FileBindingName (+15 more)
+### Community 455 - "SimpleDateFormat"
+Cohesion: 0.11
+Nodes (5): CellDateFormatter, DatePartHandler, ExcelStyleDateFormatter, SimpleDateFormat, Pattern
 
 ### Community 456 - "CT_PivotHierarchy"
 Cohesion: 0.04
@@ -2569,28 +2634,32 @@ Cohesion: 0.06
 Nodes (26): ST_TrueFalse, f, @false, t, @true, CT_Ink, annotation, annotationSpecified (+18 more)
 
 ### Community 459 - "HSSFBorderFormatting"
-Cohesion: 0.05
-Nodes (38): BorderFormatting, BorderBottom, BorderDiagonal, BorderLeft, BorderRight, BorderTop, BottomBorderColor, DataLength (+30 more)
-
-### Community 460 - "XSSFEvaluationCell"
 Cohesion: 0.08
-Nodes (18): Evaluation and spill, IDynamicArrayEvaluationCell, IsDynamicArrayFormula, XSSFEvaluationCell, ArrayFormulaRange, BooleanCellValue, CachedFormulaResultType, CellType (+10 more)
+Nodes (24): HSSFBorderFormatting, BorderBottom, BorderDiagonal, BorderHorizontal, BorderLeft, BorderRight, BorderTop, BorderVertical (+16 more)
+
+### Community 460 - "XSSFDataValidation"
+Cohesion: 0.08
+Nodes (25): XSSFDataValidation, EmptyCellAllowed, ErrorBoxText, ErrorBoxTitle, ErrorStyle, PromptBoxText, PromptBoxTitle, Regions (+17 more)
 
 ### Community 461 - "CT_SheetProtection"
-Cohesion: 0.04
-Nodes (47): CT_Dialogsheet, customSheetViews, drawing, extLst, headerFooter, legacyDrawing, legacyDrawingHF, oleObjects (+39 more)
+Cohesion: 0.08
+Nodes (22): CT_SheetProtection, algorithmName, autoFilter, deleteColumns, deleteRows, formatCells, formatColumns, formatRows (+14 more)
 
 ### Community 462 - "ST_PresetShadowVal"
 Cohesion: 0.10
 Nodes (21): ST_PresetShadowVal, shdw1, shdw10, shdw11, shdw12, shdw13, shdw14, shdw15 (+13 more)
+
+### Community 463 - "CT_PivotSelection"
+Cohesion: 0.08
+Nodes (25): ST_Axis, axisCol, axisPage, axisRow, axisValues, CT_PivotSelection, activeCol, activeRow (+17 more)
 
 ### Community 464 - "CT_Diagram"
 Cohesion: 0.08
 Nodes (26): CT_Diagram, autoformat, autoformatSpecified, autolayout, autolayoutSpecified, constrainbounds, dgmbasetextscale, dgmfontsize (+18 more)
 
 ### Community 465 - "CT_Border"
-Cohesion: 0.05
-Nodes (25): CT_PBdr, bar, between, bottom, left, right, top, CT_Border (+17 more)
+Cohesion: 0.06
+Nodes (20): CT_PBdr, bar, between, bottom, left, right, top, CT_Border (+12 more)
 
 ### Community 466 - "CT_TableCell"
 Cohesion: 0.10
@@ -2601,12 +2670,12 @@ Cohesion: 0.10
 Nodes (19): name, runs-on, steps, timeout-minutes, jobs, audit, name, on (+11 more)
 
 ### Community 468 - "Biff8RC4"
-Cohesion: 0.15
+Cohesion: 0.16
 Nodes (4): Biff8EncryptionKey, CurrentUserPassword, Biff8RC4, RC4
 
-### Community 469 - "EscherProperty"
-Cohesion: 0.12
-Nodes (14): AbstractEscherOptRecord, EscherProperties, PropertiesSize, RecordSize, EscherPropertyComparer, EscherProperty, Id, IsBlipId (+6 more)
+### Community 469 - "CT_Dialogsheet"
+Cohesion: 0.08
+Nodes (21): CT_Dialogsheet, customSheetViews, drawing, extLst, headerFooter, legacyDrawing, legacyDrawingHF, oleObjects (+13 more)
 
 ### Community 470 - "CT_PathShadeProperties"
 Cohesion: 0.11
@@ -2616,9 +2685,9 @@ Nodes (16): PathShadeType, Circle, Rectangle, Shape, PathShadeTypeExtensions, XD
 Cohesion: 0.23
 Nodes (7): XDDFBulletStyleAutoNumbered, Type, CT_TextAutonumberBullet, startAt, startAtSpecified, type, typeSpecified
 
-### Community 472 - "CT_PolarAdjustHandle"
-Cohesion: 0.12
-Nodes (15): XDDFAdjustHandlePolar, CT_PolarAdjustHandle, gdRefAng, gdRefAngSpecified, gdRefR, gdRefRSpecified, maxAng, maxAngSpecified (+7 more)
+### Community 472 - "Fields"
+Cohesion: 0.09
+Nodes (21): Field, ALL_FIELDS, Fields, AllFields, BOLD_FIELD, DATE_FIELD, DOUBLE_UNDERLINE_FIELD, FILE_FIELD (+13 more)
 
 ### Community 473 - "CT_PivotFilter"
 Cohesion: 0.10
@@ -2633,32 +2702,36 @@ Cohesion: 0.05
 Nodes (38): CT_ColorSchemeMapping, accent1, accent1Specified, accent2, accent2Specified, accent3, accent3Specified, accent4 (+30 more)
 
 ### Community 476 - "steps"
-Cohesion: 0.11
-Nodes (18): runs-on, steps, BASE_REF, PR_BODY, jobs, check-body, name, on (+10 more)
+Cohesion: 0.10
+Nodes (19): if, runs-on, steps, BASE_REF, PR_BODY, jobs, check-body, name (+11 more)
+
+### Community 477 - "CellCopyPolicy"
+Cohesion: 0.13
+Nodes (11): Builder, CellCopyPolicy, IsCondenseRows, IsCopyCellFormula, IsCopyCellStyle, IsCopyCellValue, IsCopyColumnWidth, IsCopyHyperlink (+3 more)
 
 ### Community 478 - "CT_Number"
 Cohesion: 0.11
 Nodes (19): CT_Number, b, bc, c, cp, cpSpecified, f, fc (+11 more)
 
-### Community 479 - "BOFRecord"
-Cohesion: 0.08
-Nodes (19): UnsupportedBOFType, Type, BOFRecord, Build, BuildYear, DataSize, HistoryBitMask, RequiredVersion (+11 more)
+### Community 479 - "CryptoAPIDecryptor"
+Cohesion: 0.14
+Nodes (6): CryptoAPICipherInputStream, CryptoAPIDecryptor, CryptoAPIEncryptionHeader, CryptoAPIEncryptionInfoBuilder, CryptoAPIEncryptionVerifier, CryptoAPIEncryptor
 
 ### Community 480 - "HSSFComment"
-Cohesion: 0.14
+Cohesion: 0.11
 Nodes (11): HSSFComment, Address, Author, ClientAnchor, Column, HasPosition, NoteRecord, Row (+3 more)
 
-### Community 481 - "NPOIFSDocument"
+### Community 481 - "CT_WrapTight"
 Cohesion: 0.09
-Nodes (12): NDocumentOutputStream, NPOIFSDocument, DocumentProperty, FileSystem, PreferArray, ShortDescription, Size, ViewableArray (+4 more)
+Nodes (24): CT_WrapPath, edited, editedSpecified, lineTo, start, CT_WrapThrough, distL, distLSpecified (+16 more)
 
 ### Community 482 - "NDocumentInputStream"
 Cohesion: 0.17
 Nodes (3): NDocumentInputStream, Length, Position
 
-### Community 483 - "Obsolete"
-Cohesion: 0.05
-Nodes (24): FileMagic, BIFF2, BIFF3, BIFF4, HTML, MSWRITE, OLE2, OOXML (+16 more)
+### Community 483 - "CT_TabStop"
+Cohesion: 0.09
+Nodes (22): CT_Tabs, tab, CT_TabStop, leader, leaderSpecified, pos, val, ST_TabJc (+14 more)
 
 ### Community 484 - "XSSFBHeaderFooter"
 Cohesion: 0.18
@@ -2669,12 +2742,12 @@ Cohesion: 0.11
 Nodes (19): CT_String, b, bc, c, cp, cpSpecified, f, fc (+11 more)
 
 ### Community 487 - "CT_PivotTableStyle"
-Cohesion: 0.08
-Nodes (24): IPivotTableStyleInfo, IsShowColumnHeaders, IsShowRowHeaders, XSSFPivotTableStyleInfo, IsShowColumnHeaders, IsShowColumnStripes, IsShowFirstColumn, IsShowLastColumn (+16 more)
+Cohesion: 0.17
+Nodes (12): CT_PivotTableStyle, name, showColHeaders, showColHeadersSpecified, showColStripes, showColStripesSpecified, showLastColumn, showLastColumnSpecified (+4 more)
 
 ### Community 488 - "CT_DiagramDefinition"
-Cohesion: 0.03
-Nodes (74): CT_Cxn, destId, destOrd, extLst, modelId, parTransId, presId, sibTransId (+66 more)
+Cohesion: 0.05
+Nodes (43): CT_Categories, cat, CT_Category, pri, type, CT_Description, lang, val (+35 more)
 
 ### Community 489 - "ST_AxisType"
 Cohesion: 0.14
@@ -2684,17 +2757,17 @@ Nodes (14): ST_AxisType, ancst, ancstOrSelf, ch, des, desOrSelf, follow, followS
 Cohesion: 0.08
 Nodes (24): ST_CalcMode, auto, autoNoTable, manual, CT_CalcPr, calcCompleted, calcId, calcIdSpecified (+16 more)
 
-### Community 491 - "CT_FldChar"
-Cohesion: 0.05
-Nodes (36): CT_OnOff, val, valSpecified, CT_FFCheckBox, @checked, @default, Item, CT_FFData (+28 more)
+### Community 491 - "FFDataItemsType"
+Cohesion: 0.08
+Nodes (21): CT_OnOff, val, valSpecified, CT_FFCheckBox, @checked, @default, Item, CT_FFData (+13 more)
 
 ### Community 492 - "CT_SignatureLine"
 Cohesion: 0.11
 Nodes (19): CT_SignatureLine, addlxml, allowcomments, allowcommentsSpecified, ext, extSpecified, id, issignatureline (+11 more)
 
 ### Community 493 - "HSSFObjectData"
-Cohesion: 0.09
-Nodes (11): HSSFObjectData, Directory, ObjectData, OLE2ClassName, HSSFShapeContainer, Children, X1, X2 (+3 more)
+Cohesion: 0.18
+Nodes (4): HSSFObjectData, Directory, ObjectData, OLE2ClassName
 
 ### Community 494 - "POIFSDocumentReader"
 Cohesion: 0.14
@@ -2708,21 +2781,21 @@ Nodes (22): CT_AnimationChartBuildProperties, animBg, bld, CT_AnimationDgmBuildP
 Cohesion: 0.09
 Nodes (23): CT_ImageData, bilevel, bilevelSpecified, blacklevel, chromakey, cropbottom, cropleft, cropright (+15 more)
 
-### Community 497 - ".ReadUShort"
-Cohesion: 0.02
-Nodes (111): AutoFilterRecord, DataSize, Doper1, Doper1RGCH, Doper2, Doper2RGCH, iEntry, IsFirstConditionSimple (+103 more)
+### Community 497 - ".ReadShort"
+Cohesion: 0.01
+Nodes (249): AutoFilterRecord, DataSize, Doper1, Doper1RGCH, Doper2, Doper2RGCH, iEntry, IsFirstConditionSimple (+241 more)
 
-### Community 498 - "IPrintSetup"
-Cohesion: 0.04
-Nodes (48): HSSFPrintSetup, CellError, Copies, Draft, EndNote, FitHeight, FitWidth, FooterMargin (+40 more)
+### Community 498 - "HSSFPrintSetup"
+Cohesion: 0.09
+Nodes (22): HSSFPrintSetup, CellError, Copies, Draft, EndNote, FitHeight, FitWidth, FooterMargin (+14 more)
 
-### Community 500 - "CT_ConnectionSite"
-Cohesion: 0.20
-Nodes (6): XDDFConnectionSite, CT_ConnectionSite, ang, pos, CT_ConnectionSiteList, cxn
+### Community 500 - "CellFormat"
+Cohesion: 0.14
+Nodes (6): CellFormat, GeneralCellFormat, CellFormatResult, Applies, Text, TextColor
 
-### Community 501 - "CT_CustomGeometry2D"
-Cohesion: 0.12
-Nodes (13): XDDFGeometryRectangle, CT_CustomGeometry2D, ahLst, avLst, cxnLst, gdLst, pathLst, rect (+5 more)
+### Community 501 - "NotFoundAreaEval"
+Cohesion: 0.10
+Nodes (11): NotFoundAreaEval, FirstColumn, FirstRow, FirstSheetIndex, Height, IsColumn, IsRow, LastColumn (+3 more)
 
 ### Community 502 - "ST_VectorBaseType"
 Cohesion: 0.07
@@ -2744,21 +2817,21 @@ Nodes (22): CT_WebPublishing, allowPng, codePage, codePageSpecified, css, dpi, l
 Cohesion: 0.09
 Nodes (22): CT_PolyLine, Items, ItemsElementName, points, ItemsChoiceType3, anchorlock, borderbottom, borderleft (+14 more)
 
-### Community 507 - "XSSFName"
-Cohesion: 0.14
-Nodes (10): XSSFName, Comment, Function, FunctionGroupId, IsDeleted, IsFunctionName, NameName, RefersToFormula (+2 more)
+### Community 507 - "ExternalLinksTable"
+Cohesion: 0.10
+Nodes (15): ExternalLinksTable, CTExternalLink, DefinedNames, LinkedFileName, SheetNames, ExternalName, Comment, IsDeleted (+7 more)
 
 ### Community 508 - "CT_CacheSource"
-Cohesion: 0.12
-Nodes (17): CT_CacheSource, connectionId, consolidation, extLst, Item, type, worksheetSource, CT_WorksheetSource (+9 more)
+Cohesion: 0.17
+Nodes (12): CT_CacheSource, connectionId, consolidation, extLst, Item, type, worksheetSource, ST_SourceType (+4 more)
 
 ### Community 509 - "ExtendedColor"
-Cohesion: 0.07
+Cohesion: 0.06
 Nodes (28): HSSFExtendedColor, ARGB, ExtendedColor, Index, IndexedRGB, IsAuto, IsIndexed, IsRGB (+20 more)
 
-### Community 510 - "FillPattern"
-Cohesion: 0.07
-Nodes (27): HSSFPatternFormatting, FillBackgroundColor, FillBackgroundColorColor, FillForegroundColor, FillForegroundColorColor, FillPattern, PatternFormattingBlock, FillPattern (+19 more)
+### Community 510 - "Ole10Native"
+Cohesion: 0.09
+Nodes (16): EncodingMode, compact, parsed, unparsed, Ole10Native, Command, DataBuffer, DataSize (+8 more)
 
 ### Community 511 - "CT_Missing"
 Cohesion: 0.11
@@ -2781,20 +2854,20 @@ Cohesion: 0.10
 Nodes (21): CT_Oval, Items, ItemsElementName, ItemsChoiceType2, anchorlock, borderbottom, borderleft, borderright (+13 more)
 
 ### Community 516 - "PosRecord"
-Cohesion: 0.12
-Nodes (15): PositionMode, MDABS, MDCHART, MDFX, MDKTH, MDPARENT, PosRecord, DataSize (+7 more)
+Cohesion: 0.07
+Nodes (21): AlRunsRecord, DataSize, Sid, CTFormat, FontIndex, Offset, PositionMode, MDABS (+13 more)
 
 ### Community 517 - "CT_PageBorders"
 Cohesion: 0.10
 Nodes (21): CT_PageBorders, bottom, display, displaySpecified, left, offsetFrom, offsetFromSpecified, right (+13 more)
 
 ### Community 518 - "CT_TblStylePr"
-Cohesion: 0.10
-Nodes (21): CT_TblStylePr, pPr, rPr, tblPr, tcPr, trPr, type, ST_TblStyleOverrideType (+13 more)
+Cohesion: 0.05
+Nodes (37): CT_TblStylePr, pPr, rPr, tblPr, tcPr, trPr, type, ST_TblStyleOverrideType (+29 more)
 
-### Community 519 - "ST_PTabLeader"
-Cohesion: 0.33
-Nodes (6): ST_PTabLeader, dot, hyphen, middleDot, none, underscore
+### Community 519 - "CT_PTab"
+Cohesion: 0.09
+Nodes (17): CT_PTab, alignment, leader, relativeTo, ST_PTabAlignment, center, left, right (+9 more)
 
 ### Community 520 - "CT_TblPPr"
 Cohesion: 0.07
@@ -2813,8 +2886,8 @@ Cohesion: 0.12
 Nodes (16): Op, Abs, Argument, Conjugate, Cos, Div, Exp, Ln (+8 more)
 
 ### Community 524 - "UDFFinder"
-Cohesion: 0.17
-Nodes (4): IStabilityClassifier, TotallyImmutable, AggregatingUDFFinder, UDFFinder
+Cohesion: 0.08
+Nodes (10): IStabilityClassifier, TotallyImmutable, NameXPtg, DefaultOperandClass, NameIndex, SheetRefIndex, Size, AggregatingUDFFinder (+2 more)
 
 ### Community 525 - "TextAlignment"
 Cohesion: 0.11
@@ -2824,17 +2897,17 @@ Nodes (17): TextAlignment, Center, Distributed, Justified, JustifiedLow, Left, R
 Cohesion: 0.12
 Nodes (11): IXDDFBulletSize, XDDFBulletSizeFollowText, XDDFBulletSizePercent, XDDFBulletSizePoints, CT_TextBulletSizeFollowText, CT_TextBulletSizePercent, val, valSpecified (+3 more)
 
-### Community 527 - "TextSegment"
-Cohesion: 0.14
-Nodes (13): PositionInParagraph, Char, Run, Text, TextSegment, BeginChar, BeginPos, BeginRun (+5 more)
+### Community 527 - "CT_Line"
+Cohesion: 0.09
+Nodes (22): CT_Line, anchorlock, borderbottom, borderleft, borderright, bordertop, ClientData, fill (+14 more)
 
-### Community 528 - "CT_Ind"
-Cohesion: 0.11
-Nodes (11): CT_Ind, firstLine, firstLineChars, firstLineSpecified, hanging, hangingChars, hangingSpecified, left (+3 more)
+### Community 528 - "IPrintSetup"
+Cohesion: 0.10
+Nodes (21): IPrintSetup, CellError, Copies, Draft, EndNote, FitHeight, FitWidth, FooterMargin (+13 more)
 
-### Community 529 - "ST_AlgorithmType"
-Cohesion: 0.11
-Nodes (19): CT_Algorithm, extLst, param, rev, type, CT_Parameter, type, val (+11 more)
+### Community 529 - "ListAutoNumber"
+Cohesion: 0.10
+Nodes (20): ListAutoNumber, ALPHA_LC_PARENT_BOTH, ALPHA_LC_PARENT_R, ALPHA_LC_PERIOD, ALPHA_UC_PARENT_BOTH, ALPHA_UC_PARENT_R, ALPHA_UC_PERIOD, ARABIC_PARENT_BOTH (+12 more)
 
 ### Community 530 - "CT_When"
 Cohesion: 0.15
@@ -2850,7 +2923,7 @@ Nodes (16): CT_PCDKPI, caption, displayFolder, goal, measureGroup, parent, statu
 
 ### Community 533 - "Properties"
 Cohesion: 0.11
-Nodes (5): FontDetails, StaticFontMetrics, Properties, Count, Keys
+Nodes (8): EscherProperties, EscherPropertyMetaData, Description, Type, StaticFontMetrics, Properties, Count, Keys
 
 ### Community 534 - "AxisLabelAlignment"
 Cohesion: 0.18
@@ -2901,8 +2974,8 @@ Cohesion: 0.10
 Nodes (20): ST_ObjectType, Button, Checkbox, Dialog, Drop, Edit, GBox, Group (+12 more)
 
 ### Community 546 - "CT_Caption"
-Cohesion: 0.06
-Nodes (31): CT_PageNumber, chapSep, chapSepSpecified, chapStyle, fmt, fmtSpecified, start, CT_Caption (+23 more)
+Cohesion: 0.05
+Nodes (39): CT_PageNumber, chapSep, chapSepSpecified, chapStyle, fmt, fmtSpecified, start, CT_AutoCaption (+31 more)
 
 ### Community 547 - "NPOI.Pack.csproj"
 Cohesion: 0.11
@@ -2912,25 +2985,25 @@ Nodes (18): net10.0, net472, net8.0, netstandard2.0, netstandard2.1, BouncyCastl
 Cohesion: 0.22
 Nodes (5): SimpleFraction, Denominator, Numerator, FractionFormat, SimpleFractionException
 
-### Community 550 - "CT_Shd"
-Cohesion: 0.14
-Nodes (12): CT_Shd, color, fill, themeColor, themeColorSpecified, themeFill, themeFillShade, themeFillSpecified (+4 more)
+### Community 550 - "CT_ObjectPr"
+Cohesion: 0.10
+Nodes (19): CT_ObjectAnchor, from, moveWithCells, sizeWithCells, to, CT_ObjectPr, altText, anchor (+11 more)
 
 ### Community 551 - "NPOI.Core.csproj"
 Cohesion: 0.11
 Nodes (17): net10.0, net472, net8.0, netstandard2.0, netstandard2.1, BouncyCastle.Cryptography, Enums.NET, ExtendedNumerics.BigDecimal (+9 more)
 
-### Community 553 - "DateFunc"
-Cohesion: 0.13
-Nodes (5): Task 110 deferred (F5 formula-eval items), CalendarFieldFunction, DateFunc, IDate1904AwareFunction, Text
+### Community 553 - "CT_CacheField"
+Cohesion: 0.10
+Nodes (20): CT_CacheField, caption, databaseField, extLst, fieldGroup, formula, hierarchy, level (+12 more)
 
 ### Community 554 - "SS.Formula unimplemented-function inventory (task #43)"
-Cohesion: 0.15
-Nodes (11): Already present (no work needed), Dynamic-array functions, Implemented in #43, Implemented in #59, Implemented in #60, Implemented in #61, Priority list, SS.Formula unimplemented-function inventory (task #43) (+3 more)
+Cohesion: 0.11
+Nodes (16): Dynamic-array formulas (task #152), Functions, Limitations, Storage: a dynamic array is an array formula with cell metadata, Already present (no work needed), Dynamic-array functions, Implemented in #43, Implemented in #59 (+8 more)
 
-### Community 555 - "CloseIgnoringInputStream"
-Cohesion: 0.15
-Nodes (6): CloseIgnoringInputStream, CanRead, CanSeek, CanWrite, Length, Position
+### Community 555 - "IDataValidation"
+Cohesion: 0.13
+Nodes (12): IDataValidation, EmptyCellAllowed, ErrorBoxText, ErrorBoxTitle, ErrorStyle, PromptBoxText, PromptBoxTitle, Regions (+4 more)
 
 ### Community 556 - "ST_SourceType"
 Cohesion: 0.11
@@ -2948,8 +3021,8 @@ Nodes (11): AxisTickMark, Cross, In, None, Out, AxisTickMarkExtensions, ST_TickM
 Cohesion: 0.10
 Nodes (20): CT_Constraint, extLst, fact, @for, forName, op, ptType, refFor (+12 more)
 
-### Community 560 - "DiagramLayoutVariables.cs"
-Cohesion: 0.05
+### Community 560 - "CT_LayoutVariablePropertySet"
+Cohesion: 0.04
 Nodes (48): CT_AnimLvl, val, CT_AnimOne, val, CT_BulletEnabled, val, CT_ChildMax, val (+40 more)
 
 ### Community 561 - "CT_BorderBoxPr"
@@ -2972,17 +3045,21 @@ Nodes (18): ItemsChoiceType5, anchorlock, borderbottom, borderleft, borderright,
 Cohesion: 0.11
 Nodes (18): ST_HighlightColor, black, blue, cyan, darkBlue, darkCyan, darkGray, darkGreen (+10 more)
 
+### Community 566 - "SignaturePart"
+Cohesion: 0.07
+Nodes (11): AgileCertificateEntry, IKeySelectorResult, KeyInfoKeySelector, OctetStreamData, OctetStream, Uri, OOXMLURIDereferencer, IData (+3 more)
+
 ### Community 567 - "CT_Set"
-Cohesion: 0.15
-Nodes (13): CT_Set, count, countSpecified, maxRank, queryFailed, setDefinition, sortByTuple, sortType (+5 more)
+Cohesion: 0.12
+Nodes (17): CT_Set, count, countSpecified, maxRank, queryFailed, setDefinition, sortByTuple, sortType (+9 more)
 
 ### Community 568 - "Remaining broad catches (non-priority areas)"
 Cohesion: 0.17
 Nodes (11): Broad catches on ole-extractor paths (POIFS / HPSF / HSSF / DDF / Util), Empty catch blocks (16) — all resolved, Exception-handling audit (task #37), ooxml crypt/Dsig, ooxml other, openxml4Net, POIFS/Crypt (main), Remaining broad catches (non-priority areas) (+3 more)
 
-### Community 569 - "ReplacingInputStream"
-Cohesion: 0.20
-Nodes (7): ReplacingInputStream, State, MATCHING, NOT_MATCHED, REPLACING, UNBUFFER, EvilUnclosedBRFixingInputStream
+### Community 569 - "IndexedColors"
+Cohesion: 0.11
+Nodes (10): Gold, Indexed, Lime, Indexed, RoyalBlue, Indexed, IndexedColors, HexString (+2 more)
 
 ### Community 570 - "ST_LineCap"
 Cohesion: 0.23
@@ -3004,44 +3081,40 @@ Nodes (17): FontElementNameType, b, charset, color, condense, extend, family, i 
 Cohesion: 0.12
 Nodes (17): CT_RevisionAutoFormatting, applyAlignmentFormats, applyAlignmentFormatsSpecified, applyBorderFormats, applyBorderFormatsSpecified, applyFontFormats, applyFontFormatsSpecified, applyNumberFormats (+9 more)
 
-### Community 576 - "CT_CellStyle"
-Cohesion: 0.06
-Nodes (16): CT_CellStyle, builtinId, builtinIdSpecified, customBuiltin, customBuiltinSpecified, extLst, hidden, hiddenSpecified (+8 more)
-
 ### Community 577 - "CT_Frame"
-Cohesion: 0.06
-Nodes (33): CT_PixelsMeasure, val, CT_String, val, CT_FFTextInput, @default, format, maxLength (+25 more)
+Cohesion: 0.04
+Nodes (48): CT_PixelsMeasure, val, CT_String, val, CT_FFDDList, @default, listEntry, result (+40 more)
 
-### Community 578 - ".Build"
-Cohesion: 0.20
-Nodes (11): CT_AdjPoint2D, x, y, CT_Path2DCubicBezierTo, pt, CT_Path2DLineTo, pt, CT_Path2DMoveTo (+3 more)
+### Community 578 - "MutableFPNumber"
+Cohesion: 0.21
+Nodes (3): MutableFPNumber, Rounder, TenPower
 
 ### Community 579 - "HSSFTextbox"
 Cohesion: 0.09
 Nodes (23): HorizontalTextAlignment, Center, Justify, Left, Right, TextOrientation, None, RotLeft (+15 more)
 
-### Community 580 - "CT_TableCellBorderStyle"
-Cohesion: 0.17
-Nodes (12): CT_TableCellBorderStyle, bottom, extLst, insideH, insideV, left, right, tl2br (+4 more)
+### Community 580 - "FormulaType"
+Cohesion: 0.18
+Nodes (8): FormulaType, Array, Cell, CondFormat, DataValidationList, NamedRange, Shared, OperandClassTransformer
 
 ### Community 581 - "CT_Boolean"
-Cohesion: 0.17
-Nodes (12): CT_Boolean, c, cp, cpSpecified, f, fSpecified, u, uSpecified (+4 more)
-
-### Community 582 - "ST_CellType"
-Cohesion: 0.17
-Nodes (12): ST_CellType, b, e, inlineStr, n, s, str, CT_ExternalCell (+4 more)
-
-### Community 583 - "CT_PageField"
-Cohesion: 0.14
-Nodes (13): CT_PageField, cap, extLst, fld, hier, hierSpecified, item, itemSpecified (+5 more)
-
-### Community 584 - "CT_SdtComboBox"
 Cohesion: 0.20
-Nodes (9): CT_SdtComboBox, lastValue, listItem, CT_SdtDropDownList, lastValue, listItem, CT_SdtListItem, displayText (+1 more)
+Nodes (10): CT_Boolean, c, cp, cpSpecified, f, fSpecified, u, uSpecified (+2 more)
+
+### Community 582 - "XSSFHeaderFooter"
+Cohesion: 0.13
+Nodes (13): IFooter, XSSFHeaderFooter, Center, Left, Right, Text, Value, XSSFEvenFooter (+5 more)
+
+### Community 583 - "CT_Item"
+Cohesion: 0.06
+Nodes (30): CT_Item, c, d, e, f, h, m, n (+22 more)
+
+### Community 584 - ".Write"
+Cohesion: 0.07
+Nodes (21): CT_Lock, val, valSpecified, CT_SdtComboBox, lastValue, listItem, CT_SdtDropDownList, lastValue (+13 more)
 
 ### Community 585 - "PanePosition"
-Cohesion: 0.29
+Cohesion: 0.26
 Nodes (5): PanePosition, LowerLeft, LowerRight, UpperLeft, UpperRight
 
 ### Community 586 - "CT_EastAsianLayout"
@@ -3056,10 +3129,6 @@ Nodes (9): CT_Dimensions, count, countSpecified, dimension, CT_PivotDimension, c
 Cohesion: 0.23
 Nodes (14): FrtHeader, FrtHeaderOld, FrtRefHeader, Ref8, XmlTkBlob, XmlTkBool, XmlTkDouble, XmlTkDWord (+6 more)
 
-### Community 589 - "SheetVisibility"
-Cohesion: 0.11
-Nodes (5): SheetVisibility, Hidden, VeryHidden, Visible, WorkbookUtil
-
 ### Community 590 - "CT_MeasureDimensionMaps"
 Cohesion: 0.20
 Nodes (9): CT_MeasureDimensionMap, dimension, dimensionSpecified, measureGroup, measureGroupSpecified, CT_MeasureDimensionMaps, count, countSpecified (+1 more)
@@ -3068,21 +3137,25 @@ Nodes (9): CT_MeasureDimensionMap, dimension, dimensionSpecified, measureGroup, 
 Cohesion: 0.17
 Nodes (4): ByteField, Value, FixedField, BufferUnderflowException
 
-### Community 592 - "CT_RevisionFormatting"
-Cohesion: 0.18
-Nodes (11): CT_RevisionFormatting, dxf, extLst, length, lengthSpecified, s, sheetId, sqref (+3 more)
+### Community 592 - "CT_ExtensionList"
+Cohesion: 0.03
+Nodes (67): CT_Extension, Any, uri, uriSpecified, CT_ExtensionList, ext, CT_RevisionFormatting, dxf (+59 more)
 
-### Community 593 - "CT_PresetGeometry2D"
-Cohesion: 0.24
-Nodes (5): XDDFPresetGeometry2D, Geometry, CT_PresetGeometry2D, avLst, prst
+### Community 593 - "ST_BevelPresetType"
+Cohesion: 0.12
+Nodes (17): CT_Bevel, h, prst, w, ST_BevelPresetType, angle, artDeco, circle (+9 more)
 
 ### Community 594 - "CT_LineNumber"
 Cohesion: 0.18
 Nodes (11): CT_LineNumber, countBy, distance, distanceSpecified, restart, restartSpecified, start, ST_LineNumberRestart (+3 more)
 
-### Community 595 - "ContentType"
-Cohesion: 0.17
-Nodes (3): ContentType, SubType, Type
+### Community 595 - "CT_FldChar"
+Cohesion: 0.12
+Nodes (13): CT_FldChar, dirty, dirtySpecified, ffData, fldCharType, fldData, fldLock, fldLockSpecified (+5 more)
+
+### Community 596 - "Default"
+Cohesion: 0.14
+Nodes (4): Program, Default, Program, Program
 
 ### Community 597 - "CT_NumericRule"
 Cohesion: 0.13
@@ -3129,8 +3202,8 @@ Cohesion: 0.20
 Nodes (10): CT_ForEach, axis, cnt, hideLastTrans, Items, name, ptType, @ref (+2 more)
 
 ### Community 609 - "CT_DateTime"
-Cohesion: 0.20
-Nodes (10): CT_DateTime, c, cp, cpSpecified, f, fSpecified, u, uSpecified (+2 more)
+Cohesion: 0.17
+Nodes (12): CT_DateTime, c, cp, cpSpecified, f, fSpecified, u, uSpecified (+4 more)
 
 ### Community 610 - "CT_Tuples"
 Cohesion: 0.20
@@ -3140,9 +3213,9 @@ Nodes (10): CT_Tuple, fld, fldSpecified, hier, hierSpecified, item, CT_Tuples, c
 Cohesion: 0.21
 Nodes (11): AxisTickLabelPosition, High, Low, NextTo, None, AxisTickLabelPositionExtensions, ST_TickLblPos, high (+3 more)
 
-### Community 612 - "CT_SharedUser"
+### Community 612 - "IDictionary"
 Cohesion: 0.20
-Nodes (10): CT_SharedUser, dateTime, extLst, guid, id, name, CT_Users, count (+2 more)
+Nodes (4): DictionaryDebugView, Items, ObjectExtensions, ReferenceEqualityComparer
 
 ### Community 613 - "PictureType"
 Cohesion: 0.14
@@ -3164,9 +3237,9 @@ Nodes (10): ST_FillType1, background, frame, gradient, gradientCenter, gradientR
 Cohesion: 0.07
 Nodes (30): CT_MdxSet, c, n, ns, o, CT_MdxTuple, b, bc (+22 more)
 
-### Community 618 - "CT_TcPr"
-Cohesion: 0.12
-Nodes (16): CT_CellMergeTrackChange, vMerge, vMergeOrig, vMergeOrigSpecified, vMergeSpecified, CT_TcPr, tcPrChange, CT_TcPrChange (+8 more)
+### Community 618 - "HSSFColor"
+Cohesion: 0.17
+Nodes (6): Automatic, HSSFColor, Indexed, Indexed2, RGB, DefaultIndexedColorMap
 
 ### Community 619 - "FontFamily"
 Cohesion: 0.23
@@ -3186,23 +3259,23 @@ Nodes (13): ChartTypes, AREA, AREA3D, BAR, BAR3D, LINE, LINE3D, PIE (+5 more)
 
 ### Community 623 - "XSSFPivotTable"
 Cohesion: 0.06
-Nodes (18): XSSFPivotCache, XSSFPivotCacheDefinition, XSSFPivotCacheRecords, IPivotTableReferenceConfigurator, XSSFPivotTable, ParentSheet, PivotCache, Style (+10 more)
+Nodes (22): IPivotTableReferenceConfigurator, XSSFPivotTable, ParentSheet, PivotCache, Style, StyleName, StylesSource, PivotTableReferenceConfigurator1 (+14 more)
 
 ### Community 625 - "CT_Zoom"
-Cohesion: 0.22
+Cohesion: 0.17
 Nodes (9): CT_Zoom, percent, val, valSpecified, ST_Zoom, bestFit, fullPage, none (+1 more)
 
 ### Community 626 - "CT_Variant"
 Cohesion: 0.15
 Nodes (13): CT_Variant, i2, i2Specified, i4, i4Specified, i8, i8Specified, lpstr (+5 more)
 
-### Community 627 - "List"
-Cohesion: 0.02
-Nodes (89): Format, StdevP, StdevS, VarP, X509Data, Content, RevocationData, X509CRL (+81 more)
+### Community 627 - "CT_Shape"
+Cohesion: 0.13
+Nodes (15): CT_Adj, idx, val, CT_AdjLst, adj, CT_Shape, adjLst, blip (+7 more)
 
-### Community 628 - "XWPFBorderType"
-Cohesion: 0.22
-Nodes (9): XWPFBorderType, DASHED, DOT_DASH, DOTTED, DOUBLE, NIL, NONE, SINGLE (+1 more)
+### Community 628 - "ICharacterRun"
+Cohesion: 0.12
+Nodes (16): ICharacterRun, CharacterSpacing, FontName, FontSize, IsBold, IsCapitalized, IsDoubleStrikeThrough, IsEmbossed (+8 more)
 
 ### Community 629 - "CT_DdeItem"
 Cohesion: 0.08
@@ -3212,9 +3285,9 @@ Nodes (25): CT_DdeItem, advise, name, ole, preferPic, values, CT_DdeItems, ddeIt
 Cohesion: 0.15
 Nodes (13): ST_BWMode, auto, black, blackTextAndLines, color, grayOutline, grayScale, hide (+5 more)
 
-### Community 631 - "CT_FontCollection"
-Cohesion: 0.22
-Nodes (9): CT_FontCollection, cs, ea, extLst, font, latin, CT_SupplementalFont, script (+1 more)
+### Community 631 - "CT_TableStyleTextStyle"
+Cohesion: 0.08
+Nodes (25): CT_FontCollection, cs, ea, extLst, font, latin, CT_SupplementalFont, script (+17 more)
 
 ### Community 632 - "CT_MeasureGroups"
 Cohesion: 0.25
@@ -3224,25 +3297,25 @@ Nodes (7): CT_MeasureGroup, caption, name, CT_MeasureGroups, count, countSpecifi
 Cohesion: 0.25
 Nodes (8): CT_PresentationOf, axis, cnt, extLst, hideLastTrans, ptType, st, step
 
-### Community 634 - "ST_SortType"
-Cohesion: 0.25
-Nodes (8): ST_SortType, ascending, ascendingAlpha, ascendingNatural, descending, descendingAlpha, descendingNatural, none
+### Community 634 - "ST_PresetMaterialType"
+Cohesion: 0.12
+Nodes (16): ST_PresetMaterialType, clear, dkEdge, flat, legacyMatte, legacyMetal, legacyPlastic, legacyWireframe (+8 more)
 
-### Community 635 - "DVRecord"
-Cohesion: 0.08
-Nodes (19): DVRecord, CellRangeAddress, ConditionOperator, DataSize, DataType, EmptyCellAllowed, ErrorStyle, ErrorText (+11 more)
+### Community 635 - "HSSFDataValidation"
+Cohesion: 0.10
+Nodes (13): HSSFDataValidation, Constraint, EmptyCellAllowed, ErrorBoxText, ErrorBoxTitle, ErrorStyle, PromptBoxText, PromptBoxTitle (+5 more)
 
-### Community 636 - "CT_ChartFormat"
-Cohesion: 0.25
-Nodes (8): CT_ChartFormat, chart, format, pivotArea, series, CT_ChartFormats, chartFormat, count
+### Community 636 - "CT_CellStyle"
+Cohesion: 0.12
+Nodes (16): CT_CellStyle, builtinId, builtinIdSpecified, customBuiltin, customBuiltinSpecified, extLst, hidden, hiddenSpecified (+8 more)
 
 ### Community 637 - "CT_SmartTagType"
 Cohesion: 0.29
 Nodes (6): CT_SmartTagType, name, namespaceUri, url, CT_SmartTagTypes, smartTagType
 
-### Community 638 - "HideObjRecord"
-Cohesion: 0.38
-Nodes (3): HideObjRecord, DataSize, Sid
+### Community 638 - "ConditionFilterType"
+Cohesion: 0.13
+Nodes (15): ConditionFilterType, ABOVE_AVERAGE, BEGINS_WITH, CONTAINS_BLANKS, CONTAINS_ERRORS, CONTAINS_TEXT, DUPLICATE_VALUES, ENDS_WITH (+7 more)
 
 ### Community 639 - "TableRowAlign"
 Cohesion: 0.38
@@ -3260,13 +3333,13 @@ Nodes (6): CT_Schema, manifestLocation, schemaLocation, uri, CT_SchemaLibrary, s
 Cohesion: 0.18
 Nodes (11): CT_AbsSizeAnchor, ext, from, Item, CT_Marker, x, y, CT_RelSizeAnchor (+3 more)
 
-### Community 643 - "CT_TransformEffect"
-Cohesion: 0.29
-Nodes (7): CT_TransformEffect, kx, ky, sx, sy, tx, ty
+### Community 643 - "LegendPosition"
+Cohesion: 0.17
+Nodes (13): LegendPosition, Bottom, Left, Right, Top, TopRight, LegendPositionExtensions, ST_LegendPos (+5 more)
 
-### Community 644 - "STAThread"
-Cohesion: 0.29
-Nodes (3): Program, Program, Program
+### Community 644 - "ST_TextAnchoringType"
+Cohesion: 0.17
+Nodes (13): AnchorType, Bottom, Center, Distributed, Justified, Top, AnchorTypeExtensions, ST_TextAnchoringType (+5 more)
 
 ### Community 645 - "CT_ExternalReferences"
 Cohesion: 0.40
@@ -3292,13 +3365,13 @@ Nodes (3): ExternSheetSubRecord, RecordSize, Sid
 Cohesion: 0.33
 Nodes (6): CT_FileVersion, appName, codeName, lastEdited, lowestEdited, rupBuild
 
-### Community 652 - "CT_WorkbookProtection"
-Cohesion: 0.33
-Nodes (6): CT_WorkbookProtection, lockRevision, lockStructure, lockWindows, revisionsPassword, workbookPassword
+### Community 652 - ".PrivateHeaderBlock"
+Cohesion: 0.15
+Nodes (9): NPOI.XSSF, OldExcelFormatException, OldFileFormatException, OfficeXmlFileException, UnsupportedFileFormatException, XLSBUnsupportedException, NotOfficeXmlFileException, ODFNotOfficeXmlFileException (+1 more)
 
-### Community 653 - "FloorCeilingMathBase"
-Cohesion: 0.23
-Nodes (3): CeilingMath, FloorCeilingMathBase, FloorMath
+### Community 653 - "NumberEval"
+Cohesion: 0.03
+Nodes (31): ArgumentsEvaluator, NetworkdaysFunction, TextJoinFunction, WorkdayFunction, WorkdayIntlFunction, YearFrac, NumberEval, NumberValue (+23 more)
 
 ### Community 654 - "MSOFillType"
 Cohesion: 0.18
@@ -3340,9 +3413,9 @@ Nodes (11): CT_MdxKPI, n, np, p, ST_MdxKPIProperty, g, m, s (+3 more)
 Cohesion: 0.33
 Nodes (6): CT_MultiLevelType, val, ST_MultiLevelType, hybridMultilevel, multilevel, singleLevel
 
-### Community 665 - "ST_TotalsRowFunction"
-Cohesion: 0.18
-Nodes (11): ST_TotalsRowFunction, average, count, countNums, custom, max, min, none (+3 more)
+### Community 665 - "HPSFException"
+Cohesion: 0.16
+Nodes (12): HPSFException, Reason, IllegalVariantTypeException, MarkUnsupportedException, NoPropertySetStreamException, Thumbnail, ClipboardFormatTag, ThumbnailData (+4 more)
 
 ### Community 666 - "CT_Background"
 Cohesion: 0.08
@@ -3352,13 +3425,13 @@ Nodes (26): CT_DocPart, docPartBody, docPartPr, CT_DocPartPr, Items, ItemsElemen
 Cohesion: 0.33
 Nodes (6): CT_DocType, val, ST_DocType, eMail, letter, notSpecified
 
-### Community 668 - "ZipEntryData"
-Cohesion: 0.20
-Nodes (8): ZipEntryData, ChildData, Content, Name, Type, ZipEntryType, Directory, File
+### Community 668 - "ZipEntryType"
+Cohesion: 0.67
+Nodes (3): ZipEntryType, Directory, File
 
-### Community 669 - "CT_TcMar"
-Cohesion: 0.33
-Nodes (5): CT_TcMar, bottom, left, right, top
+### Community 669 - "IHeader"
+Cohesion: 0.14
+Nodes (11): IHeader, IHeaderFooter, Center, Left, Right, XSSFEvenHeader, Text, XSSFFirstHeader (+3 more)
 
 ### Community 670 - "ST_DisplacedByCustomXml"
 Cohesion: 0.33
@@ -3368,9 +3441,9 @@ Nodes (6): CT_TrackChangeRange, displacedByCustomXml, displacedByCustomXmlSpecif
 Cohesion: 0.40
 Nodes (5): ZipLimits, GraceEntrySize, MaxEntryCount, MaxEntrySize, MinInflateRatio
 
-### Community 672 - "CT_FileRecoveryPr"
-Cohesion: 0.40
-Nodes (5): CT_FileRecoveryPr, autoRecover, crashSave, dataExtractLoad, repairLoad
+### Community 672 - "CT_TextNormalAutofit"
+Cohesion: 0.20
+Nodes (6): XDDFNormalAutoFit, FontScale, LineSpaceReduction, CT_TextNormalAutofit, fontScale, lnSpcReduction
 
 ### Community 674 - "NPOI.OOXML.Core.csproj"
 Cohesion: 0.20
@@ -3380,13 +3453,13 @@ Nodes (9): net10.0, net472, net8.0, netstandard2.0, netstandard2.1, Microsoft.So
 Cohesion: 0.40
 Nodes (5): CT_LongHexNumber, val, CT_DocRsids, rsid, rsidRoot
 
-### Community 676 - "CT_DataBinding"
-Cohesion: 0.40
-Nodes (4): CT_DataBinding, prefixMappings, storeItemID, xpath
+### Community 676 - "CT_PivotCacheRecords"
+Cohesion: 0.16
+Nodes (8): XSSFPivotCacheRecords, CT_PivotCacheRecord, fields, CT_PivotCacheRecords, count, countSpecified, extLst, r
 
-### Community 677 - "CT_ShapeLocking"
-Cohesion: 0.05
-Nodes (42): CT_Shape, fLocksText, fPublished, macro, nvSpPr, spPr, style, textlink (+34 more)
+### Community 677 - "CT_OfficeArtExtensionList"
+Cohesion: 0.03
+Nodes (85): CT_AudioCD, end, extLst, st, CT_AudioCDTime, time, track, CT_AudioFile (+77 more)
 
 ### Community 678 - "Security Policy"
 Cohesion: 0.40
@@ -3396,21 +3469,21 @@ Nodes (4): Reporting a Vulnerability, Requirements for a Valid Report, Security 
 Cohesion: 0.14
 Nodes (14): CT_DocPartType, val, CT_DocPartTypes, all, allSpecified, Items, ST_DocPartType, autoExp (+6 more)
 
-### Community 681 - "CT_TextEffect"
-Cohesion: 0.20
-Nodes (10): CT_TextEffect, val, ST_TextEffect, antsBlack, antsRed, blinkBackground, lights, none (+2 more)
+### Community 681 - "CT_Format"
+Cohesion: 0.14
+Nodes (14): CT_Format, action, dxfId, dxfIdSpecified, extLst, pivotArea, CT_Formats, count (+6 more)
 
-### Community 683 - "ST_OnOffStyleType"
-Cohesion: 0.50
-Nodes (4): ST_OnOffStyleType, def, off, on
+### Community 683 - "CT_PhoneticPr"
+Cohesion: 0.14
+Nodes (14): CT_PhoneticPr, alignment, fontId, type, ST_PhoneticAlignment, center, distributed, left (+6 more)
 
 ### Community 684 - "ST_Qualifier"
 Cohesion: 0.50
 Nodes (4): ST_Qualifier, doubleQuote, none, singleQuote
 
-### Community 685 - "ST_TableType"
-Cohesion: 0.50
-Nodes (4): ST_TableType, queryTable, worksheet, xml
+### Community 685 - "NumberListFuncBase"
+Cohesion: 0.17
+Nodes (7): NumberListFuncBase, AllowEmptyList, ErrorOnEmptyList, StdevP, StdevS, VarP, VarS
 
 ### Community 686 - "NPOI.OpenXml4Net.Core.csproj"
 Cohesion: 0.22
@@ -3420,9 +3493,9 @@ Nodes (7): net10.0, net472, net8.0, netstandard2.0, netstandard2.1, Microsoft.So
 Cohesion: 0.22
 Nodes (8): CT_Cf, format, Value, CT_Empty, CT_Null, CT_Vstream, Value, version
 
-### Community 688 - "ST_FontScheme"
-Cohesion: 0.50
-Nodes (4): ST_FontScheme, major, minor, none
+### Community 688 - "CT_Scene3D"
+Cohesion: 0.17
+Nodes (12): XDDFScene3D, CT_Camera, fov, fovSpecified, prst, rot, zoom, CT_Scene3D (+4 more)
 
 ### Community 689 - "ST_FunctionType"
 Cohesion: 0.22
@@ -3436,13 +3509,17 @@ Nodes (8): net10.0, net472, net8.0, netstandard2.0, netstandard2.1, Microsoft.So
 Cohesion: 0.15
 Nodes (13): CT_CalculatedMember, extLst, hierarchy, mdx, memberName, name, parent, set (+5 more)
 
-### Community 692 - "ST_VerticalAlignRun"
-Cohesion: 0.50
-Nodes (4): ST_VerticalAlignRun, baseline, subscript, superscript
+### Community 692 - "XSSFDataValidationConstraint"
+Cohesion: 0.19
+Nodes (5): XSSFDataValidationConstraint, ExplicitListValues, Formula1, Formula2, Operator
 
-### Community 693 - "ST_PTabAlignment"
-Cohesion: 0.50
-Nodes (4): ST_PTabAlignment, center, left, right
+### Community 693 - "CT_RangePr"
+Cohesion: 0.15
+Nodes (13): CT_RangePr, autoEnd, autoStart, endDate, endDateSpecified, endNum, endNumSpecified, groupBy (+5 more)
+
+### Community 697 - "ST_DataValidationImeMode"
+Cohesion: 0.17
+Nodes (12): ST_DataValidationImeMode, disabled, fullAlpha, fullHangul, fullKatakana, halfAlpha, halfHangul, halfKatakana (+4 more)
 
 ### Community 698 - "ST_View"
 Cohesion: 0.22
@@ -3456,25 +3533,85 @@ Nodes (5): NPOI.Benchmarks, _build, NPOI.TestCases.Core, NPOI.OOXML.TestCases.Co
 Cohesion: 0.17
 Nodes (4): _read_stdin(), check(), _read_stdin(), _skip()
 
-### Community 710 - "CT_GraphicalObjectFrameLocking"
-Cohesion: 0.06
-Nodes (31): CT_GraphicFrame, fPublished, graphic, macro, nvGraphicFramePr, xfrm, CT_GraphicFrameNonVisual, cNvGraphicFramePr (+23 more)
+### Community 702 - "ST_MdxFunctionType"
+Cohesion: 0.17
+Nodes (12): CT_Mdx, f, Item, n, ST_MdxFunctionType, c, k, m (+4 more)
 
-### Community 716 - "CT_Location"
+### Community 703 - "DocumentFactoryHelper"
+Cohesion: 0.27
+Nodes (5): DocumentFactoryHelper, OfficeProtectType, Other, ProtectedOffice, ProtectedOOXML
+
+### Community 704 - "DataValidationContext"
+Cohesion: 0.18
+Nodes (11): DataValidationContext, Evaluator, Formula1, Formula2, OffsetColumns, OffsetRows, Operator, Region (+3 more)
+
+### Community 705 - "ArrayPtg"
 Cohesion: 0.25
-Nodes (7): CT_Location, colPageCount, firstDataCol, firstDataRow, firstHeaderRow, @ref, rowPageCount
+Nodes (6): ArrayPtg, ColumnCount, DefaultOperandClass, IsBaseToken, RowCount, Size
+
+### Community 707 - "CT_Metadata"
+Cohesion: 0.18
+Nodes (11): CT_MdxMetadata, count, mdx, CT_Metadata, cellMetadata, extLst, futureMetadata, mdxMetadata (+3 more)
+
+### Community 708 - "RelationshipTransformService"
+Cohesion: 0.22
+Nodes (5): RelationshipTransformService, InputTypes, OutputTypes, SourceIds, SourceTypes
+
+### Community 709 - "CT_CalculatedItem"
+Cohesion: 0.20
+Nodes (10): CT_CalculatedItem, extLst, field, fieldSpecified, formula, pivotArea, CT_CalculatedItems, calculatedItem (+2 more)
+
+### Community 710 - "ST_ShowDataAs"
+Cohesion: 0.20
+Nodes (10): ST_ShowDataAs, difference, index, normal, percent, percentDiff, percentOfCol, percentOfRow (+2 more)
+
+### Community 712 - "CT_LinearShadeProperties"
+Cohesion: 0.25
+Nodes (8): XDDFLinearShadeProperties, Angle, Scaled, CT_LinearShadeProperties, ang, angSpecified, scaled, scaledSpecified
+
+### Community 714 - "ST_GroupBy"
+Cohesion: 0.22
+Nodes (9): ST_GroupBy, days, hours, minutes, months, quarters, range, seconds (+1 more)
+
+### Community 715 - "CT_RevisionMove"
+Cohesion: 0.22
+Nodes (9): CT_RevisionMove, destination, Items, ra, rId, sheetId, source, sourceSheetId (+1 more)
+
+### Community 716 - "ST_DataValidationOperator"
+Cohesion: 0.22
+Nodes (9): ST_DataValidationOperator, between, equal, greaterThan, greaterThanOrEqual, lessThan, lessThanOrEqual, notBetween (+1 more)
+
+### Community 717 - "Filetime"
+Cohesion: 0.29
+Nodes (3): Filetime, High, Low
+
+### Community 719 - "NameIdentifier"
+Cohesion: 0.25
+Nodes (6): NameIdentifier, IsQuoted, Name, SheetRangeIdentifier, FirstSheetIdentifier, LastSheetIdentifier
+
+### Community 720 - "CT_Sources"
+Cohesion: 0.25
+Nodes (8): CT_Sources, SelectedStyle, Source, StyleName, URI, CT_SourceType, Items, ItemsElementName
 
 ### Community 721 - "ST_DocPartBehavior"
 Cohesion: 0.25
 Nodes (8): CT_DocPartBehavior, val, CT_DocPartBehaviors, Items, ST_DocPartBehavior, content, p, pg
 
-### Community 722 - "CT_Lock"
-Cohesion: 0.22
-Nodes (8): CT_Lock, val, valSpecified, ST_Lock, contentLocked, sdtContentLocked, sdtLocked, unlocked
+### Community 722 - "CT_SSubSup"
+Cohesion: 0.25
+Nodes (8): CT_SSubSup, e, sSubSupPr, sub, sup, CT_SSubSupPr, alnScr, ctrlPr
 
 ### Community 723 - "CT_Proof"
 Cohesion: 0.25
 Nodes (8): CT_Proof, grammar, grammarSpecified, spelling, spellingSpecified, ST_Proof, clean, dirty
+
+### Community 724 - "CT_MetadataBlocks"
+Cohesion: 0.25
+Nodes (8): CT_MetadataBlock, rc, CT_MetadataBlocks, bk, count, CT_MetadataRecord, t, v
+
+### Community 725 - "UnknownPtg"
+Cohesion: 0.29
+Nodes (4): UnknownPtg, DefaultOperandClass, IsBaseToken, Size
 
 ### Community 726 - "ValueOperatorPtg"
 Cohesion: 0.03
@@ -3484,6 +3621,10 @@ Nodes (50): AddPtg, NumberOfOperands, Sid, ConcatPtg, NumberOfOperands, Sid, Div
 Cohesion: 0.29
 Nodes (7): ItemsChoiceType, arcTo, close, cubicBezTo, lnTo, moveTo, quadBezTo
 
+### Community 729 - "CT_DatastoreItem"
+Cohesion: 0.29
+Nodes (7): CT_DatastoreItem, itemID, schemaRefs, CT_DatastoreSchemaRef, uri, CT_DatastoreSchemaRefs, schemaRef
+
 ### Community 730 - "CT_RevisionInsertSheet"
 Cohesion: 0.29
 Nodes (7): CT_RevisionInsertSheet, name, ra, rId, sheetId, sheetPosition, ua
@@ -3492,13 +3633,65 @@ Nodes (7): CT_RevisionInsertSheet, name, ra, rId, sheetId, sheetPosition, ua
 Cohesion: 0.29
 Nodes (7): ST_SmartTagShow, all, noIndicator, none, CT_SmartTagPr, embed, show
 
+### Community 732 - "CT_Choose"
+Cohesion: 0.29
+Nodes (7): CT_Choose, @else, @if, name, CT_Otherwise, Items, name
+
+### Community 733 - "ST_Style"
+Cohesion: 0.29
+Nodes (7): CT_Style, val, ST_Style, b, bi, i, p
+
 ### Community 734 - "ST_ScreenSize"
 Cohesion: 0.29
 Nodes (7): ST_ScreenSize, Item1024768, Item1152862, Item544376, Item640480, Item720512, Item800600
 
+### Community 735 - "DisplayCellErrorType"
+Cohesion: 0.33
+Nodes (5): DisplayCellErrorType, ErrorAsBlank, ErrorAsDashes, ErrorAsNA, ErrorDisplayOnSheet
+
+### Community 736 - "CT_RecipientData"
+Cohesion: 0.33
+Nodes (6): CT_RecipientData, active, column, uniqueTag, CT_Recipients, recipientData
+
+### Community 737 - "Blue"
+Cohesion: 0.40
+Nodes (3): Blue, Indexed, Indexed2
+
+### Community 738 - "BrightGreen"
+Cohesion: 0.40
+Nodes (3): BrightGreen, Indexed, Indexed2
+
+### Community 739 - "DarkBlue"
+Cohesion: 0.40
+Nodes (3): DarkBlue, Indexed, Indexed2
+
 ### Community 740 - "bug_report.md"
 Cohesion: 0.33
 Nodes (5): File Type, Issue Description, NPOI Version, Reproduce Steps, Upload the Excel File
+
+### Community 741 - "DarkRed"
+Cohesion: 0.40
+Nodes (3): DarkRed, Indexed, Indexed2
+
+### Community 742 - "LightTurquoise"
+Cohesion: 0.40
+Nodes (3): LightTurquoise, Indexed, Indexed2
+
+### Community 743 - "Pink"
+Cohesion: 0.40
+Nodes (3): Pink, Indexed, Indexed2
+
+### Community 744 - "Plum"
+Cohesion: 0.40
+Nodes (3): Plum, Indexed, Indexed2
+
+### Community 745 - "Teal"
+Cohesion: 0.40
+Nodes (3): Teal, Indexed, Indexed2
+
+### Community 746 - "Turquoise"
+Cohesion: 0.40
+Nodes (3): Turquoise, Indexed, Indexed2
 
 ### Community 747 - "CT_Top10"
 Cohesion: 0.33
@@ -3512,13 +3705,21 @@ Nodes (5): CT_Extension, Any, uri, CT_ExtensionList, ext
 Cohesion: 0.33
 Nodes (6): CT_RevisionConflict, ra, rId, sheetId, sheetIdSpecified, ua
 
-### Community 751 - "ST_UnderlineValues"
-Cohesion: 0.33
-Nodes (6): ST_UnderlineValues, @double, doubleAccounting, none, single, singleAccounting
+### Community 750 - "Violet"
+Cohesion: 0.40
+Nodes (3): Violet, Indexed, Indexed2
+
+### Community 751 - "Yellow"
+Cohesion: 0.40
+Nodes (3): Yellow, Indexed, Indexed2
 
 ### Community 752 - "ST_CF"
 Cohesion: 0.33
 Nodes (6): ST_CF, Bitmap, Pict, PictOld, PictPrint, PictScreen
+
+### Community 753 - "UserModel/Font.cs"
+Cohesion: 0.40
+Nodes (4): FontColor, None, Normal, Red
 
 ### Community 755 - "build.sh"
 Cohesion: 0.50
@@ -3535,6 +3736,18 @@ Nodes (3): FontCharsetInfo, Charset, NativeId
 ### Community 758 - "AxisLineType"
 Cohesion: 0.40
 Nodes (5): AxisLineType, AxisLine, MajorGridLine, MinorGridLine, WallsOrFloorOf3D
+
+### Community 759 - "ST_EditAs"
+Cohesion: 0.40
+Nodes (5): ST_EditAs, absolute, NONE, oneCell, twoCell
+
+### Community 760 - "CT_MetadataStrings"
+Cohesion: 0.40
+Nodes (5): CT_XStringElement, v, CT_MetadataStrings, count, s
+
+### Community 761 - "ST_TblWidth"
+Cohesion: 0.40
+Nodes (5): ST_TblWidth, auto, dxa, nil, pct
 
 ### Community 782 - "CertificateEmbeddingOption.cs"
 Cohesion: 0.40
@@ -3570,7 +3783,7 @@ Nodes (5): ST_ConnectorType, curved, elbow, none, straight
 
 ### Community 799 - "XMLSlideShow"
 Cohesion: 0.02
-Nodes (76): Code exploration: use graphify, Project Conventions -- npoi (yoavarad fork), Read first, YDK workflow, NPOI contributors, Benchmarks, Branch Protection (main), Knowledge Graph (graphify) (+68 more)
+Nodes (75): Code exploration: use graphify, Project Conventions -- npoi (yoavarad fork), Read first, YDK workflow, NPOI contributors, Benchmarks, Branch Protection (main), Knowledge Graph (graphify) (+67 more)
 
 ### Community 800 - "task.md"
 Cohesion: 0.50
@@ -3579,6 +3792,14 @@ Nodes (3): Acceptance Criteria, Description, Test Strategy
 ### Community 801 - "PULL_REQUEST_TEMPLATE.md"
 Cohesion: 0.50
 Nodes (3): Changes, Spec refs, Verification Proof
+
+### Community 803 - "ST_TextVertOverflowType"
+Cohesion: 0.50
+Nodes (4): ST_TextVertOverflowType, clip, ellipsis, overflow
+
+### Community 808 - "CT_MetadataTypes"
+Cohesion: 0.67
+Nodes (3): CT_MetadataTypes, count, metadataType
 
 ### Community 814 - "CT_ColorFilter"
 Cohesion: 0.50
@@ -3606,23 +3827,23 @@ Nodes (3): ItemsChoiceHdrFtrRefType, footerReference, headerReference
 
 ## Knowledge Gaps
 - **18866 isolated node(s):** `characteristic`, `name`, `relation`, `val`, `vocabulary` (+18861 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 20594 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **52 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 20614 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **86 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `System.Collections.Generic` connect `System.Collections.Generic` to `system`, `NPOI.SS.UserModel`, `NPOI`, `system_linq`, `FreeRefFunction`, `Math.cs`, `NPOI.SS.Formula.Eval`, `NPOI.POIFS.Crypt.Dsig`, `CertificateEmbeddingOption.cs`, `Chart.cs`, `system_collections`, `NPOI.POIFS.FileSystem`, `DocumentPropertiesVariantTypes.cs`, `DiagramLayoutVariables.cs`, `NPOIStyleViewerException.cs`, `Spreadsheet/Sheet.cs`, `BidirectionalDictionary`, `Function`, `CT_OfficeArtExtensionList`, `ShapeEffects.cs`, `NPOI.HSSF.Model`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `System.Collections.Generic` connect `System.Collections.Generic` to `system`, `NPOI.SS.UserModel`, `NPOI`, `system_linq`, `Math.cs`, `NPOI.SS.Formula.Eval`, `CertificateEmbeddingOption.cs`, `EncryptionOption.cs`, `system_collections`, `NPOI.POIFS.FileSystem`, `DateTime`, `Function`, `DocumentPropertiesVariantTypes.cs`, `NPOIStyleViewerException.cs`, `Spreadsheet/Sheet.cs`, `Chart.cs`, `BidirectionalDictionary`, `Drawing/BaseTypes.cs`, `ShapeEffects.cs`, `NPOI.HSSF.Model`?**
+  _High betweenness centrality (0.051) - this node is a cross-community bridge._
 - **What connects `characteristic`, `name`, `relation` to the rest of the system?**
   _18866 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `system` be split into smaller, more focused modules?**
-  _Cohesion score 0.011835027650756459 - nodes in this community are weakly interconnected._
-- **Why does `CT_P` connect `CT_P` to `ArrayList`, `System.Collections.Generic`, `ParagraphItemsChoiceType`, `XWPFTableCell`, `CT_Comment`, `CT_Shapetype`, `XWPFParagraph`, `XWPFFootnote`, `ItemsChoiceType19`, `ItemsChoiceType12`, `List`, `.Parse`, `.Write`, `DocumentBodyItemChoiceType`, `XWPFHeaderFooter`, `CT_PPr`, `ItemsChoiceType13`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
-- **Should `.ShortToHex` be split into smaller, more focused modules?**
-  _Cohesion score 0.027829313543599257 - nodes in this community are weakly interconnected._
-- **Why does `PresetGeometry` connect `PresetGeometry` to `CT_PresetGeometry2D`, `system_collections`, `PresetGeometryExtensions`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+  _Cohesion score 0.011220447431943914 - nodes in this community are weakly interconnected._
+- **Why does `XWPFParagraph` connect `XWPFParagraph` to `system_linq`, `XWPFRun`, `XWPFNumbering`, `POIXMLDocumentPart`, `List`, `CT_OMathArg`, `Borders`, `XWPFComment`, `CT_Comment`, `CT_Shapetype`, `String`, `ParagraphAlignment`, `XWPFSDT`, `TOC`, `CT_Border`, `CT_P`, `ST_Shd`, `StringBuilder`, `XWPFTable`, `XWPFHeaderFooter`, `CT_Spacing`, `XWPFTableCell`, `IEnumerator`, `XWPFDocument`?**
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+- **Should `ParseNode` be split into smaller, more focused modules?**
+  _Cohesion score 0.12857142857142856 - nodes in this community are weakly interconnected._
+- **Why does `ValueEval` connect `ValueEval` to `NumberEval`, `OperationEvaluationContext`, `DStarRunner`, `ICell`, `OneArg`, `ErrorEval`, `ExternalSheet`, `NumberListFuncBase`, `DateTime`, `Function`, `ComplexFunction`, `TwoOperandNumericOperation`, `Double`, `AreaEvalBase`, `DataValidationEvaluator`, `EvaluationException`, `IEvaluationCell`, `TwoDEval`, `RelationalOperationEval`, `AreaEval`, `RefEval`, `NotFoundAreaEval`?**
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Should `System.Collections.Generic` be split into smaller, more focused modules?**
-  _Cohesion score 0.01918142807524677 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.027068004459308806 - nodes in this community are weakly interconnected._
